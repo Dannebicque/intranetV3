@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Twig/Components/TrombinoscopeComponent.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 03/06/2024 15:53
+ * @lastUpdate 06/07/2024 19:17
  */
 
 namespace App\Twig\Components;
@@ -17,13 +17,13 @@ use App\Entity\TypeGroupe;
 use App\Exception\DiplomeNotFoundException;
 use App\Repository\EtudiantRepository;
 use App\Repository\GroupeRepository;
-use App\Repository\SemestreRepository;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveAction;
 use Symfony\UX\LiveComponent\Attribute\LiveProp;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
+use Symfony\UX\TwigComponent\Attribute\PostMount;
 
 #[AsLiveComponent('trombinoscope')]
 class TrombinoscopeComponent extends AbstractController
@@ -33,7 +33,6 @@ class TrombinoscopeComponent extends AbstractController
     #[LiveProp(writable: true)]
     public bool $separation = false;
 
-    #[LiveProp(writable: true, onUpdated: 'onSemestreUpdated')]
     public ?Semestre $semestre = null;
 
     #[LiveProp(writable: true)]
@@ -45,51 +44,46 @@ class TrombinoscopeComponent extends AbstractController
     #[LiveProp(writable: true)]
     public string $recherche = '';
 
-    #[LiveProp(writable: true)]
     /** @var TypeGroupe[] */
     public ?Collection $typeGroupes = null;
 
     /** @var Groupe[] */
-    #[LiveProp(writable: true)]
     public $groupes = [];
 
     public function __construct(
         private DataUserSession    $dataUserSession,
-        private SemestreRepository $semestreRepository,
         private EtudiantRepository $etudiantRepository,
         private GroupeRepository   $groupeRepository,
     )
     {
     }
 
-    public function getSemestres(): array
-    {
-        $semestres = [];
-        foreach ($this->dataUserSession->getSemestresActifs() as $semestre) {
-            if (!array_key_exists($semestre->getOrdreLmd(), $semestres)) {
-                $semestres[$semestre->getOrdreLmd()] = [];
-            }
-            $semestres[$semestre->getOrdreLmd()][] = $semestre;
-        }
-
-        return $semestres;
-    }
-
     #[LiveAction]
     public function cleanFiltre(): void
     {
-        $this->semestre = null;
         $this->typegroupe = null;
         $this->groupe = null;
         $this->recherche = '';
     }
+
+    #[PostMount]
+    public function postMount(): void
+    {
+        $this->typeGroupes = $this->semestre->getTypeGroupess();
+        foreach ($this->typeGroupes as $typeGroupe) {
+            if (true === $typeGroupe->getDefaut()) {
+                $this->typegroupe = $typeGroupe;
+                $this->groupes = GetGroupeFromSemestre::GetGroupeFromSemestre($this->semestre, $this->typegroupe);
+            }
+        }
+    }
+
 
     public function getElements(): array
     {
         if ($this->semestre === null) {
             return [];
         }
-        $this->typeGroupes = $this->semestre->getTypeGroupess();
         if (null !== $this->semestre->getDiplome() && null !== $this->semestre->getDiplome()->getParent()) {
             $dip = $this->semestre->getDiplome()?->getParent();
         } else {

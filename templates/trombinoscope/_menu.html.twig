@@ -1,0 +1,55 @@
+{% for num, semestre in user_data.semestresTrombi %}
+    {% if semestre|length == 1 %}
+        <li>
+            <a class="dropdown-item"
+               href="{{ path('trombinoscope_etudiant_index', {semestre: semestre[0].id}) }}">
+                {{ semestre[0].display }} <small>({{ semestre[0].etudiants|length }})</small>
+            </a>
+        </li>
+    {% else %}
+        <li>
+            <hr class="dropdown-divider">
+        </li>
+        <li>
+            <span class="dropdown-subtitle">S{{ num }}</span>
+        </li>
+        {% for sem in semestre %}
+            <li>
+                <a class="dropdown-item"
+                   href="{{ path('trombinoscope_etudiant_index', {semestre: sem.id}) }}">
+                    {{ sem.display }}
+                    <small>({{ sem.etudiants|length }})</small>
+                </a>
+            </li>
+        {% endfor %}
+    {% endif %}
+{% endfor %}
+<li>
+    <hr class="dropdown-divider">
+</li>
+<li>
+    <span class="dropdown-subtitle">
+        Enseignants
+    </span>
+</li>
+<li>
+    <a class="dropdown-item"
+       href="
+{{ path('trombinoscope_personnel_index', {type: 'permanent'}) }}">
+        Permanents
+    </a>
+</li>
+<li>
+    <a class="dropdown-item"
+       href="{{ path('trombinoscope_personnel_index', {type: 'vacataire'}) }}">
+        Vacataires
+    </a>
+</li>
+{% if settings('AFFICHAGE_TROMBI') == 'separation' %}
+    <li>
+        <a class="dropdown-item"
+           href="{{ path('trombinoscope_personnel_index', {type: 'administratif'}) }}">
+            Administratifs
+        </a>
+    </li>
+{% endif %}

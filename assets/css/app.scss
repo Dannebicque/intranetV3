@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/css/app.scss
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 29/06/2024 07:05
+// @lastUpdate 07/07/2024 16:32
 
 @import "./theme-troyes.scss";
 @import "./theme-rcc.scss";
@@ -545,9 +545,23 @@ th.th_titre {
   width: var(--avatar-size);
 }
 
+.avatar-sm {
+  background-color: var(--colorPrimary);
+  height: var(--avatar-size);
+  text-align: center;
+  width: var(--avatar-size);
+}
+
 .avatar-circle-md {
   background-color: var(--colorPrimary);
   border-radius: 50%;
+  height: var(--avatar-size-md);
+  text-align: center;
+  width: var(--avatar-size-md);
+}
+
+.avatar-md {
+  background-color: var(--colorPrimary);
   height: var(--avatar-size-md);
   text-align: center;
   width: var(--avatar-size-md);
@@ -561,7 +575,23 @@ th.th_titre {
   width: var(--avatar-size-xxl);
 }
 
+.avatar-xxl {
+  background-color: var(--colorPrimary);
+  height: var(--avatar-size-xxl);
+  text-align: center;
+  width: var(--avatar-size-xxl);
+}
+
 .avatar-circle-sm .initials {
+  color: var(--colorIUTComplementaire);
+  font-weight: bold;
+  font-size: calc(var(--avatar-size) / 2); /* 50% of parent */
+  line-height: 1;
+  position: relative;
+  top: calc(var(--avatar-size) / 4); /* 25% of parent */
+}
+
+.avatar-sm .initials {
   color: var(--colorIUTComplementaire);
   font-weight: bold;
   font-size: calc(var(--avatar-size) / 2); /* 50% of parent */
@@ -579,7 +609,25 @@ th.th_titre {
   top: calc(var(--avatar-size-md) / 4); /* 25% of parent */
 }
 
+.avatar-md .initials {
+  color: var(--colorIUTComplementaire);
+  font-weight: bold;
+  font-size: calc(var(--avatar-size-md) / 2); /* 50% of parent */
+  line-height: 1;
+  position: relative;
+  top: calc(var(--avatar-size-md) / 4); /* 25% of parent */
+}
+
 .avatar-circle-xxl .initials {
+  color: var(--colorIUTComplementaire);
+  font-weight: bold;
+  font-size: calc(var(--avatar-size-xxl) / 2); /* 50% of parent */
+  line-height: 1;
+  position: relative;
+  top: calc(var(--avatar-size-xxl) / 4); /* 25% of parent */
+}
+
+.avatar-xxl .initials {
   color: var(--colorIUTComplementaire);
   font-weight: bold;
   font-size: calc(var(--avatar-size-xxl) / 2); /* 50% of parent */
@@ -1003,4 +1051,20 @@ fieldset {
   height: 100%;
   padding-left: 10px;
   padding-right: 10px
+}
+
+.dropdown-subtitle {
+  color: var(--colorIUTComplementaire);
+  font-weight: bold;
+  padding: 4px 12px;
+  width: auto;
+  margin: 4px;
+  -webkit-transition: 0.15s linear;
+  transition: 0.15s linear;
+}
+
+a.menu-link:focus {
+  background-color: var(--colorIUT);
+  color: var(--colorIUTComplementaire);
+
 }

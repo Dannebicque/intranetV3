@@ -65,7 +65,7 @@
 {% endblock %}
 
 {% block content %}
-    {{ component('trombinoscope', {separation: settings('AFFICHAGE_TROMBI') == 'separation'}) }}
+    {{ component('trombinoscope', {semestre: semestre}) }}
 
     {#    <div data-trombinoscope-target="contentSemestre"> #}
     {#        {% if user_data.semestres|length > 0 %} #}

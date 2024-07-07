@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/DataUserSession.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/06/2024 21:58
+ * @lastUpdate 07/07/2024 16:48
  */
 
 namespace App\Classes;
@@ -277,6 +277,19 @@ class DataUserSession
         }
 
         return '- err année universitaire -';
+    }
+
+    public function semestresTrombi(): array
+    {
+        $semestres = [];
+        foreach ($this->getSemestresActifs() as $semestre) {
+            if (!array_key_exists($semestre->getOrdreLmd(), $semestres)) {
+                $semestres[$semestre->getOrdreLmd()] = [];
+            }
+            $semestres[$semestre->getOrdreLmd()][] = $semestre;
+        }
+
+        return $semestres;
     }
 
     public function getSemestresActifs(): array

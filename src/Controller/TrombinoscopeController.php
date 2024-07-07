@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/TrombinoscopeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 03/07/2024 08:52
+ * @lastUpdate 07/07/2024 16:48
  */
 
 namespace App\Controller;
@@ -38,21 +38,23 @@ use Twig\Error\SyntaxError;
 #[Route('/trombinoscope')]
 class TrombinoscopeController extends BaseController
 {
-    #[Route('/', name: 'trombinoscope_index')]
-    public function index(): Response
+    #[Route('/{semestre}', name: 'trombinoscope_etudiant_index', requirements: ['semestre' => '\d+'])]
+    public function trombinoscopeEtudiant(Semestre $semestre): Response
     {
-        $this->breadcrumbHelper->addItem('trombinoscope', 'trombinoscope_index');
-        $semestres = [];
-        foreach ($this->dataUserSession->getSemestresActifs() as $semestre) {
-            if (!array_key_exists($semestre->getOrdreLmd(), $semestres))
-            {
-                $semestres[$semestre->getOrdreLmd()] = [];
-            }
-            $semestres[$semestre->getOrdreLmd()][] = $semestre;
-        }
+        $this->breadcrumbHelper->addItem('trombinoscope', 'trombinoscope_etudiant_index', ['semestre' => $semestre->getId()]);
 
         return $this->render('trombinoscope/index.html.twig', [
-            'semestres' => $semestres
+            'semestre' => $semestre
+        ]);
+    }
+
+    #[Route('/{type}', name: 'trombinoscope_personnel_index')]
+    public function trombinoscopePersonnel(string $type): Response
+    {
+        $this->breadcrumbHelper->addItem('trombinoscope', 'trombinoscope_personnel_index', ['type' => $type]);
+
+        return $this->render('trombinoscope/index.html.twig', [
+            'type' => $type
         ]);
     }
 

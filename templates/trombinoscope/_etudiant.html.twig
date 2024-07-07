@@ -1,75 +1,73 @@
-<div class="row h-100">
-    <div class="col-12 d-flex justify-content-center">
-        <a href="{{ path('user_profil', {type:'etudiant', slug: etudiant.slug}) }}" target="_blank">
-            {% if etudiant.photoName != null and etudiant.photoName !=
-                'noimage.png' %}
-                <img class="avatar avatar-xxxl avatar-bordered rounded"
-                     src="{{ asset('upload/etudiants/'~etudiant.photoName)|imagine_filter('thumb') }}"
-                     alt="photo de {{ etudiant.displayPr }}">
-            {% else %}
-                {{ include('composants/_avatar.html.twig',
-                    {user:etudiant, size:'xxl'}) }}
-            {% endif %}
-        </a>
-    </div>
-    <div class="col-12 d-flex justify-content-center">
-        <div>
-            {% if etudiantGroupes[etudiant.id] is defined %}
-                {% for grEtu in etudiantGroupes[etudiant.id] %}<span
-                        class="badge bg-primary">{{ grEtu }}</span> {% endfor %}
-            {% endif %}
-        </div>
-        <div>
-
-            <a href="mailto:{{ etudiant.mailUniv }}" target="_blank"
-               title="{{ 'contacter'|trans }}" data-bs-toggle="tooltip" data-bs-placement="bottom"
-            >
-                <i class="fa fa-fw fa-envelope w-20px"></i>
-                <span class="sr-only">{{ 'contacter'|trans }}</span>
-            </a>
-        </div>
-        {% if (is_granted('ROLE_ETUDIANT') and siteperso == true) or
-            is_granted('ROLE_PERMANENT') %}
-            <div>
-                {% if etudiant.siteUniv != '' and etudiant.siteUniv != null %}
-                    <a href="{{ etudiant.siteUniv }}"
-                       target="_blank" title="{{ 'site_universitaire'|trans }}" data-bs-toggle="tooltip"
-                       data-bs-placement="bottom"
-                    >
-                        <i class="fa fa-fw fa-globe w-20px"></i>
-                        <span class="sr-only">{{ 'site_universitaire'|trans }}</span>
-                    </a>
-                {% endif %}
-                {% if etudiant.sitePerso != '' and etudiant.sitePerso != null %}
-                    <a href="{{ etudiant.sitePerso }}"
-                       target="_blank" title="{{ 'site_personnel'|trans }}" data-bs-toggle="tooltip"
-                       data-bs-placement="bottom"
-                    >
-                        <i class="fa fa-fw fa-link"></i>
-                        <span class="sr-only">{{ 'site_personnel'|trans }}</span>
-                    </a>
-                {% endif %}
-                {#                {% if semestre.diplome.typeDiplome.apc == true %} #}
-                {#                    <a href="#" #}
-                {#                       class="text-white" #}
-                {#                       target="_blank" title="{{ 'portfolio_de_comptences'|trans }}" #}
-                {#                       data-bs-toggle="tooltip" data-bs-placement="bottom" #}
-                {#                    > #}
-                {#                        <i class="fa fa-fw fa-book-open"></i> #}
-                {#                        {{ 'portfolio_comptences'|trans }} #}
-                {#                    </a> #}
-                {#                {% endif %} #}
-            </div>
+<div class="justify-content-center">
+    <a href="{{ path('user_profil', {type:'etudiant', slug: etudiant.slug}) }}" target="_blank">
+        {% if etudiant.photoName != null and etudiant.photoName !=
+            'noimage.png' %}
+            <img class="avatar avatar-xxxl avatar-bordered"
+                 src="{{ asset('upload/etudiants/'~etudiant.photoName)|imagine_filter('thumb') }}"
+                 alt="photo de {{ etudiant.displayPr }}">
+        {% else %}
+            {{ include('composants/_avatar.html.twig',
+                {user:etudiant, size:'xxl'}) }}
+        {% endif %}
+    </a>
+</div>
+<div class="justify-content-center">
+    <div>
+        {% if etudiantGroupes[etudiant.id] is defined %}
+            {% for grEtu in etudiantGroupes[etudiant.id] %}<span
+                    class="badge bg-primary">{{ grEtu }}</span> {% endfor %}
         {% endif %}
     </div>
-    <div class="col-12 d-flex justify-content-center">
-        <h4>
-            <a class="text-wrap" data-bs-toggle="tooltip" data-bs-placement="bottom"
-               target="_blank"
-               title="Profil" href="{{ path('user_profil', {type:'etudiant', slug: etudiant.slug}) }}">
-                {{ etudiant.displayPr }}
-            </a>
-        </h4>
+    <div>
+
+        <a href="mailto:{{ etudiant.mailUniv }}" target="_blank"
+           title="{{ 'contacter'|trans }}" data-bs-toggle="tooltip" data-bs-placement="bottom"
+        >
+            <i class="fa fa-fw fa-envelope w-20px"></i>
+            <span class="sr-only">{{ 'contacter'|trans }}</span>
+        </a>
     </div>
+    {% if (is_granted('ROLE_ETUDIANT') and siteperso == true) or
+        is_granted('ROLE_PERMANENT') %}
+        <div>
+            {% if etudiant.siteUniv != '' and etudiant.siteUniv != null %}
+                <a href="{{ etudiant.siteUniv }}"
+                   target="_blank" title="{{ 'site_universitaire'|trans }}" data-bs-toggle="tooltip"
+                   data-bs-placement="bottom"
+                >
+                    <i class="fa fa-fw fa-globe w-20px"></i>
+                    <span class="sr-only">{{ 'site_universitaire'|trans }}</span>
+                </a>
+            {% endif %}
+            {% if etudiant.sitePerso != '' and etudiant.sitePerso != null %}
+                <a href="{{ etudiant.sitePerso }}"
+                   target="_blank" title="{{ 'site_personnel'|trans }}" data-bs-toggle="tooltip"
+                   data-bs-placement="bottom"
+                >
+                    <i class="fa fa-fw fa-link"></i>
+                    <span class="sr-only">{{ 'site_personnel'|trans }}</span>
+                </a>
+            {% endif %}
+            {#                {% if semestre.diplome.typeDiplome.apc == true %} #}
+            {#                    <a href="#" #}
+            {#                       class="text-white" #}
+            {#                       target="_blank" title="{{ 'portfolio_de_comptences'|trans }}" #}
+            {#                       data-bs-toggle="tooltip" data-bs-placement="bottom" #}
+            {#                    > #}
+            {#                        <i class="fa fa-fw fa-book-open"></i> #}
+            {#                        {{ 'portfolio_comptences'|trans }} #}
+            {#                    </a> #}
+            {#                {% endif %} #}
+        </div>
+    {% endif %}
+</div>
+<div class="d-flex justify-content-center">
+    <h4>
+        <a class="text-wrap" data-bs-toggle="tooltip" data-bs-placement="bottom"
+           target="_blank"
+           title="Profil" href="{{ path('user_profil', {type:'etudiant', slug: etudiant.slug}) }}">
+            {{ etudiant.displayPr }}
+        </a>
+    </h4>
 </div>
 

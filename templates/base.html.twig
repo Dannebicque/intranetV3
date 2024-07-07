@@ -187,10 +187,10 @@
                             <span class="fas fa-home fa-3x fa-color-home"></span>
                             <span class="title">Dashboard</span>
                         </a>
-                        <a class="dropdown-item col-4" href="{{ path('trombinoscope_index') }}">
-                            <span class="fas fa-images fa-3x fa-color-trombi"></span>
-                            <span class="title">Trombinoscope</span>
-                        </a>
+                        {#                        <a class="dropdown-item col-4" href="{{ path('trombinoscope_index') }}"> #}
+                        {#                            <span class="fas fa-images fa-3x fa-color-trombi"></span> #}
+                        {#                            <span class="title">Trombinoscope</span> #}
+                        {#                        </a> #}
                         <a class="dropdown-item col-4" href="{{ path('agenda_index') }}">
                             <span class="fas fa-calendar-alt fa-3x  fa-color-agenda"></span>
                             <span class="title">Agenda</span>
@@ -309,12 +309,24 @@
                         </a>
                     </li>
 
-                    <li class="menu-item" id="menu-trombinoscope">
-                        <a class="menu-link" href="{{ path('trombinoscope_index') }}">
-                            <i class="{{ iconMenuTrombi }} fa-2x"><span class="sr-only">group</span></i>
+                    <li class="menu-item dropdown" id="menu-trombinoscope">
+                        <a class="menu-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                           aria-expanded="false">
+                            <i class="{{ iconMenuTrombi }} fa-2x"><span
+                                        class="sr-only">trombinoscope</span></i>
                             <span class="title">{{ 'menu.trombinoscope'|trans }}</span>
                         </a>
+                        <ul class="dropdown-menu">
+                            {{ include('trombinoscope/_menu.html.twig') }}
+                        </ul>
                     </li>
+
+                    {#                    <li class="menu-item" id="menu-trombinoscope"> #}
+                    {#                        <a class="menu-link" href="{{ path('trombinoscope_index') }}"> #}
+                    {#                            <i class="{{ iconMenuTrombi }} fa-2x"><span class="sr-only">group</span></i> #}
+                    {#                            <span class="title">{{ 'menu.trombinoscope'|trans }}</span> #}
+                    {#                        </a> #}
+                    {#                    </li> #}
                     {% if user_data.departement.optEdt == true %}
                         <li class="menu-item" id="menu-agenda">
                             <a class="menu-link" href="{{ path('agenda_index') }}">
