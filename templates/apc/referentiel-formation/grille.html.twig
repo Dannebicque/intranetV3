@@ -38,7 +38,7 @@
                     <div class="tab-pane {% if loop.first %}fade active show{% endif %}"
                          id="semestre{{ semestre.id }}">
                         {{ render_esi(controller(
-                            'App\\Controller\\administration\\apc\\ApcReferentielFormationController::grilleCoefficientsSemestre', {semestre:semestre.id, parcours: parcours.id}
+                            'App\\Controller\\administration\\apc\\ApcReferentielFormationController::grilleCoefficientsSemestre', {semestre:semestre.id, parcours: parcours != null ? parcours.id : null}
                         )) }}
                     </div>
                 {% endfor %}
