@@ -18,7 +18,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 #[AsCommand(
     name: 'edusign:delete-groupes',
-    description: 'suppression des groupes sur edusign',
+    description: 'archiver tous les groupes groupes sur edusign',
 )]
 class EduSignDeleteGroupeCommand extends Command
 {

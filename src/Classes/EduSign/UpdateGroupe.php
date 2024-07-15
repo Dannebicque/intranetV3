@@ -25,65 +25,87 @@ class UpdateGroupe
     {
     }
 
-    public function update(?string $keyEduSign): bool
+    public function update(?string $keyEduSign): array
     {
+        // on prépare la structure du résultat
+        $result = ['success' => true, 'messages' => []];
+
+        // on vérifie si la clé EduSign est présente
         if ($keyEduSign === null) {
-            return false;
-        } else {
+            $result['success'] = false;
+            $result['messages'][] = 'Clé EduSign manquante.';
+            return $result;
+        }
+
+        try {
             // on récupère les diplomes qui ont la clé EduSign
             $diplomes = $this->diplomeRepository->findBy(['keyEduSign' => $keyEduSign]);
-        }
-        foreach ($diplomes as $diplome) {
-            // on récupère la clé API propre au département
-            $cleApi = $diplome->getKeyEduSign();
+            foreach ($diplomes as $diplome) {
+                // on récupère la clé API propre au diplome
+                $cleApi = $diplome->getKeyEduSign();
+                // on récupère les semestres du diplome
+                $semestres = $this->semestreRepository->findByDiplome($diplome);
 
-            $semestres = $this->semestreRepository->findByDiplome($diplome);
+                // -------------
+                // ------------- GROUPES PARENTS
+                // -------------
 
-            foreach ($semestres as $semestre) {
-                // on récupère les groupes du semestre
-                // et on créé des objets Groupe adaptés pour EduSign
-                $groupe = (new IntranetGroupeEduSignAdapter($semestre))->getGroupe();
-                // Si le groupe n'a pas encore été envoyé à EduSign
-                if ($semestre->getIdEduSign() === null) {
-                    // on envoie le groupe à EduSign
-                    $this->apiEduSign->addGroupe($groupe, $cleApi, 'semestre');
-                    $bilan['success']['semestres'] = ['id' => $semestre->getId(), 'libelle' => $semestre->getLibelle(), 'idEduSign' => $semestre->getIdEduSign()];
+                foreach ($semestres as $semestre) {
+                    // si le semestre a déjà un id EduSign, on ne fait rien
+                    if ($semestre->getIdEduSign() === null) {
+                        // on créé des objets Groupe adaptés pour EduSign à partir des semestres
+                        $groupe = (new IntranetGroupeEduSignAdapter($semestre))->getGroupe();
+                        if ($semestre->getIdEduSign() === null) {
+                            // on envoie les groupes à EduSign
+                            $this->apiEduSign->addGroupe($groupe, $cleApi, 'semestre');
+                            $result['messages'][] = "Groupe ajouté pour le semestre {$semestre->getLibelle()}.";
+                        }
+                    }
                 }
-            }
 
-            $departement = $diplome->getDepartement();
-        }
+                $departement = $diplome->getDepartement();
 
-        // on va chercher les groupes parents
-        $semestres = $this->semestreRepository->findSemestreEduSignDept($departement);
-//        dd($semestres);
+                // -------------
+                // ------------- GROUPES ENFANTS
+                // -------------
 
-        foreach ($semestres as $parent) {
-            // on vérifie si le groupe parent a un parcours pour récupérer les groupes
-            $parcours = $parent->getDiplome()->getApcParcours();
-            if ($parcours) {
-                $groupes = $parcours->getGroupes();
-            } else {
-                $groupes = $this->groupeRepository->findBySemestre($parent);
-            }
-//            dump($groupes);
-            foreach ($groupes as $groupe) {
-                // on vérifie si le groupe est un TD ou un TP
-                if ($groupe->getTypeGroupe() !== null && ($groupe->getTypeGroupe()->getLibelle() === 'TD' || $groupe->getTypeGroupe()->getLibelle() === 'TP')) {
-                    // on vérifie si le semestre du groupe est le même que le semestre parent
-                    foreach ($groupe->getTypeGroupe()->getSemestres() as $semestre) {
-                        if ($semestre === $parent) {
-                            // on créé un objet Groupe adapté pour EduSign
-                            $groupea = (new IntranetGroupeEduSignAdapter($groupe, $parent->getIdEduSign()))->getGroupe();
-                            if ($groupe->getIdEduSign() === null) {
-                                // on envoie le groupe à EduSign
-                                $this->apiEduSign->addGroupe($groupea, $cleApi, 'groupe');
+                // on récupère les groupes parents
+                $semestres = $this->semestreRepository->findSemestreEduSignDept($departement);
+
+                foreach ($semestres as $parent) {
+                    // on vérifie si le groupe parent a un parcours pour récupérer les groupes
+                    $parcours = $parent->getDiplome()->getApcParcours();
+                    if ($parcours) {
+                        $groupes = $parcours->getGroupes();
+                    } else {
+                        $groupes = $this->groupeRepository->findBySemestre($parent);
+                    }
+                    foreach ($groupes as $groupe) {
+                        if ($groupe->getIdEduSign() === null) {
+                            // on vérifie si le groupe est un TD ou un TP
+                            if ($groupe->getTypeGroupe() !== null && ($groupe->getTypeGroupe()->getLibelle() === 'TD' || $groupe->getTypeGroupe()->getLibelle() === 'TP')) {
+                                // on vérifie si le semestre du groupe est le même que le semestre parent
+                                foreach ($groupe->getTypeGroupe()->getSemestres() as $semestre) {
+                                    if ($semestre === $parent) {
+                                        // on créé un objet Groupe adapté pour EduSign
+                                        $groupea = (new IntranetGroupeEduSignAdapter($groupe, $parent->getIdEduSign()))->getGroupe();
+                                        if ($groupe->getIdEduSign() === null) {
+                                            // on envoie le groupe à EduSign
+                                            $this->apiEduSign->addGroupe($groupea, $cleApi, 'groupe');
+                                            $result['messages'][] = "Groupe ajouté pour le groupe {$groupe->getLibelle()}.";
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
                 }
             }
+        } catch (\Exception $e) {
+            $result['success'] = false;
+            $result['messages'][] = 'Erreur lors de la mise à jour des groupes : ' . $e->getMessage();
         }
-        return true;
+
+        return $result;
     }
 }

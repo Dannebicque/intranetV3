@@ -77,26 +77,56 @@ class EduSignController extends BaseController
         ]);
     }
 
-    #[Route('/init/{id}', name: 'app_edu_sign_init')]
-    public function init(?int $id, UpdateGroupe $updateGroupe, UpdateEtudiant $updateEtudiant): RedirectResponse
-    {
-        if ($id !== 0) {
-            $departement = $this->departementRepository->find($id);
-            $diplomes = $this->diplomeRepository->findByDepartement($departement);
-            $keyEduSign = null;
-            foreach ($diplomes as $diplome) {
-                if ($diplome->getKeyEduSign() !== null) {
-                    $keyEduSign = $diplome->getKeyEduSign();
-                }
-            }
-            $updateGroupe->update($keyEduSign);
-            $updateEtudiant->update($keyEduSign);
+#[Route('/init/{id}', name: 'app_edu_sign_init')]
+public function init(?int $id, UpdateGroupe $updateGroupe, UpdateEtudiant $updateEtudiant, MailerInterface $mailer): RedirectResponse
+{
+    $departement = $this->departementRepository->find($id);
+    $diplomesErrors = []; // Structure to store errors by diplôme
 
-            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'Les données ont été mises à jour sur EduSign');
-        }
-
+    if (!$departement) {
+        $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'Département introuvable.');
         return $this->redirectToRoute('app_edu_sign');
     }
+
+    $diplomes = $this->diplomeRepository->findAllWithEduSignDepartement($departement);
+
+    foreach ($diplomes as $diplome) {
+        $keyEduSign = $diplome->getKeyEduSign();
+        $updateGroupeResult = $updateGroupe->update($keyEduSign);
+        $updateEtudiantResult = $updateEtudiant->update($keyEduSign);
+        $errors = [];
+
+        if (!$updateGroupeResult['success']) {
+            foreach ($updateGroupeResult['messages'] as $message) {
+                $errors[] = $message;
+            }
+        }
+
+        if (!$updateEtudiantResult['success']) {
+            foreach ($updateEtudiantResult['messages'] as $message) {
+                $errors[] = $message;
+            }
+        }
+
+        if (!empty($errors)) {
+            $diplomesErrors[$diplome->getLibelle()] = $errors;
+        }
+    }
+
+//    if (!empty($diplomesErrors)) {
+        $email = (new TemplatedEmail())
+            ->from('no-reply@univ-reims.fr')
+            ->to('cyndel.herolt@univ-reims.fr')
+            ->subject('EduSign init - error report')
+            ->htmlTemplate('emails/error_report.html.twig')
+            ->context([
+                'diplomesErrors' => $diplomesErrors,
+            ]);
+        $mailer->send($email);
+//    }
+
+    return $this->redirectToRoute('app_edu_sign');
+}
 
     #[Route('/update/etudiants/{id}', name: 'app_edu_sign_update_etudiants')]
     public function updateEtudiants(?int $id, UpdateGroupe $updateGroupe, UpdateEtudiant $updateEtudiant): RedirectResponse

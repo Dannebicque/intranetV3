@@ -23,7 +23,7 @@ class IntranetEtudiantEduSignAdapter
         $this->etudiant->firstname = $etudiant->getPrenom();
         $this->etudiant->lastname = $etudiant->getNom();
         $this->etudiant->email = $etudiant->getMailUniv();
-//        $this->etudiant->email = $etudiant->getId().'etudiant1@test.fr';
+//        $this->etudiant->email = $etudiant->getPrenom().'.'.$etudiant->getNom().'@etudiant_test.univ-reims.fr';
         $this->etudiant->groups = $groupes;
         $this->etudiant->tags = [];
         $this->etudiant->api_id = $etudiant->getId();
