@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/HrsController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/04/2024 19:31
+ * @lastUpdate 15/07/2024 10:18
  */
 
 namespace App\Controller\administration;
@@ -70,27 +70,27 @@ class HrsController extends BaseController
         ]);
     }
 
-//    #[Route(path: '/{annee}/post', name: 'administration_hrs_post_index', requirements: ['annee' => '\d+'], options: ['expose' => true], methods: 'POST')]
-//    /** @deprecated */
-//    public function addHrs(Request $request, int $annee): Response
-//    {
-//        $hrs = new Hrs($this->getDepartement(), $annee);
-//        $form = $this->createForm(HrsType::class, $hrs, [
-//            'departement' => $this->getDepartement(),
-//            'attr' => [
-//                'data-provide' => 'validation',
-//            ],
-//        ]);
-//
-//        $form->handleRequest($request);
-//        if ($form->isSubmitted() && $form->isValid()) {
-//            $this->entityManager->persist($hrs);
-//            $this->entityManager->flush();
-//            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'hrs.add.success.flash');
-//        }
-//
-//        return $this->redirectToRoute('administration_hrs_index', ['annee' => $annee]);
-//    }
+    #[Route(path: '/{annee}/post', name: 'administration_hrs_post_index', requirements: ['annee' => '\d+'], options: ['expose' => true], methods: 'POST')]
+    /** @deprecated */
+    public function addHrs(Request $request, int $annee): Response
+    {
+        $hrs = new Hrs($this->getDepartement(), $annee);
+        $form = $this->createForm(HrsType::class, $hrs, [
+            'departement' => $this->getDepartement(),
+            'attr' => [
+                'data-provide' => 'validation',
+            ],
+        ]);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->entityManager->persist($hrs);
+            $this->entityManager->flush();
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'hrs.add.success.flash');
+        }
+
+        return $this->redirectToRoute('administration_hrs_index', ['annee' => $annee]);
+    }
 
     #[Route(path: '/new', name: 'administration_hrs_new', methods: 'GET|POST')]
     public function new(

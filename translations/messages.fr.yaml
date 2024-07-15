@@ -275,7 +275,7 @@ adm:
     add.heading: 'Ajout d''étudiants'
     edit.heading: 'Modification des données de l''étudiant %etudiant%'
     import.photo.heading: 'Importer une photo'
-    semestre.parcours.heading: 'Parcours d''un étudiant'
+    semestre.parcours.heading: 'Parcours des étudiants du semestre'
     edit.success.flash: 'Données de l''étudiant modifiées avec succès'
   etudiants: Etudiants
   examens: Examens
@@ -1269,13 +1269,13 @@ gestion:
   categorie.materiel: 'Gestion des catégories de matériel'
   cohorte:
     choix.annee.heading: 'Gestion des cohortes, choisir l''année'
-    heading: 'Gestion <strong>des cohortes de la promotion %annee%</strong>'
-  des.absences: 'Gestion des <strong>Absences</strong>'
+    heading: 'Gestion des cohortes de la promotion %annee%'
+  des.absences: 'Gestion des absences'
   des.emprunts: 'Gestion des emprunts'
-  des.etudiants: 'Gestion des <strong>Etudiants</strong>'
-  des.groupes.semestre.heading: 'Gestion <strong>des groupes du semestre %libelle%</strong>'
-  des.notes: 'Gestion des <strong>Notes</strong>'
-  du.semestre.heading: 'Gestion du <strong>semestre %libelle%</strong>'
+  des.etudiants: 'Gestion des Etudiants'
+  des.groupes.semestre.heading: 'Gestion des groupes du semestre %libelle%'
+  des.notes: 'Gestion des notes'
+  du.semestre.heading: 'Gestion du semestre %libelle%'
   materiel_commun: 'Gestion du matériel commun'
   materiel: 'Gestion du matériel'
   personnel.droit.access: 'Gestion des droits d''accès des personnels'
@@ -1384,7 +1384,7 @@ juin: Juin
 justificatif.absence.semestre.heading: 'Justificatifs d''absence du semestre'
 justificatif.absence.semestre.ajout.heading: 'Ajout d''un justificatifs d''absence'
 justifiee: Justifiée
-justifier.absences.heading: 'Justifier des <strong>absences du semestre %semestre%</strong>'
+justifier.absences.heading: 'Justifier des absences du semestre %semestre%'
 justifier.les.absences: 'Justifier des absences'
 l.assistant.e: 'L''assistant(e)'
 label:
@@ -1450,10 +1450,10 @@ like: 'j''aime'
 lire.toutes.les.notifications: 'Lire toutes les notifications'
 
 liste: liste
-liste.absence.semestre.heading: 'Liste des <strong>absences du semestre %semestre%</strong>'
-liste.des.notes.du.semestre: 'Liste des <strong>notes du semestre %libelle%</strong>'
+liste.absence.semestre.heading: 'Liste des absences du semestre %semestre%'
+liste.des.notes.du.semestre: 'Liste des notes du semestre %libelle%'
 liste.destinataires: 'Liste des destinataires'
-liste.etudiants.semestre: 'Liste des <strong>étudiants du semestre %libelle%</strong>'
+liste.etudiants.semestre: 'Liste des étudiants du semestre %libelle%'
 liste.justificatifs: 'Liste des justificatifs'
 
 lock: Vérrouiller
@@ -1665,6 +1665,7 @@ preparer.sous-commission: 'Préparer la sous-commission'
 Présence: Présence
 
 previsionnel:
+  synthese.hrs.heading: 'Synthèse des HRS/Primes'
   saisie.matiere.heading: 'Saisie par matière'
   saisie.enseignant.heading: 'Saisie par enseignant'
   saisie.semestre.heading: 'Saisie par semestre'
@@ -1678,6 +1679,8 @@ previsionnel:
   synthese:
     personnel:
       heading: 'Synthèse par intervenant'
+    semestre:
+      heading: 'Synthèse par semestre'
   actions:
     heading: 'Autres opérations'
 
@@ -2476,5 +2479,5 @@ label.VCJ: VCJ
 label.VCA: VCA
 label.BL: Blanchiment
 label.DR: Décision reportée
-
+ajouter.prime: 'Ajouter une prime/HRS'
 
