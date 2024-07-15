@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/webpack.config.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 03/06/2024 21:37
+// @lastUpdate 14/07/2024 10:17
 
 const Encore = require('@symfony/webpack-encore')
 const path = require('path')
@@ -70,6 +70,8 @@ Encore
 
   // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
   .enableStimulusBridge('./assets/controllers.json')
+
+  .enableTypeScriptLoader()
 
   // will require an extra script tag for runtime.js
   // but, you probably want this, unless you're building a single-page app
