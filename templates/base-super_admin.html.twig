@@ -11,76 +11,90 @@
 {% endblock %}
 
 {% block sidebar_menu %}
-    <li class="menu-item active" id="menu-dashboard">
-        <a class="menu-link" href="{{ path('super_admin_homepage') }}">
-            <i class="{{ iconDashboard }} fa-2x"><span class="sr-only">dashboard</span></i>
-            <span class="title">{{ 'menu.dashboard'|trans }}</span>
-        </a>
-    </li>
-    {% if is_granted('ROLE_SCOLARITE') or is_granted('ROLE_SUPER_ADMIN') %}
-        <li class="menu-item active" id="menu-etudiants">
-            <a class="menu-link" href="{{ path('sa_etudiant_index') }}">
-                <i class="{{ iconStudent}} fa-2x"></i>
-                <span class="title">{{ 'menu.etudiants'|trans }}</span>
-            </a>
-        </li>
-        <li class="menu-item active" id="menu-scolarite">
-            <a class="menu-link" href="{{ path('sa_scolarite_index') }}">
-                <i class="{{ iconScolarite }} fa-2x"></i>
-                <span class="title">{{ 'menu.scolarite'|trans }}</span>
-            </a>
-        </li>
-    {% endif %}
-    {% if is_granted('ROLE_RH') or is_granted('ROLE_SUPER_ADMIN') %}
-        <li class="menu-item active" id="menu-ressources-humaines">
-            <a class="menu-link" href="{{ path('sa_rh_index') }}">
-                <i class="{{ iconPersonnel }} fa-2x"></i>
-                <span class="title">{{ 'menu.rh'|trans }}</span>
-            </a>
-        </li>
-        <li class="menu-item active" id="menu-previsionnel">
-            <a class="menu-link" href="{{ path('sa_previsionnel_index') }}">
-                <i class="{{ iconPrevi }} fa-2x"></i>
-                <span class="title">{{ 'menu.previsionnel'|trans }}</span>
-            </a>
-        </li>
-    {% endif %}
-    {% if is_granted('ROLE_SUPER_ADMIN') %}
-        <li class="menu-item active" id="menu-celcat">
-            <a class="menu-link" href="{{ path('sa_celcat_index') }}">
-                <i class="{{ iconAgenda }} fa-2x"></i>
-                <span class="title">{{ 'menu.celcat'|trans }}</span>
-            </a>
-        </li>
-        <li class="menu-item active" id="menu-apogee">
-            <a class="menu-link" href="{{ path('sa_apogee_index') }}">
-                <i class="{{ iconApogee }} fa-2x"></i>
-                <span class="title">{{ 'menu.apogee'|trans }}</span>
-            </a>
-        </li>
-    {% endif %}
-    {% if is_granted('ROLE_QUALITE') or is_granted('ROLE_SUPER_ADMIN') %}
-        <li class="menu-item" id="menu-enquete">
-            <a class="menu-link" href="{{ path('sa_qualite_index') }}">
-                <i class="{{ iconQualite }} fa-2x"></i>
-                <span class="title">{{ 'menu.qualite'|trans }}</span>
-            </a>
-        </li>
-        <li class="menu-item" id="menu-enquete">
-            <a class="menu-link" href="{{ path('sa_qualite_documents_index', {source:'originaux'}) }}">
-                <i class="{{ iconOriginaux }} fa-2x"></i>
-                <span class="title">{{ 'menu.originaux'|trans }}</span>
-            </a>
-        </li>
-    {% endif %}
-    {% if is_granted('ROLE_FINANCE') or is_granted('ROLE_SUPER_ADMIN') or is_granted('ROLE_ADMINISTRATIF') %}
-        <li class="menu-item" id="menu-enquete">
-            <a class="menu-link" href="{{ path('sa_compta_index') }}">
-                <i class="{{ iconCompta }} fa-2x"></i>
-                <span class="title">{{ 'menu.compta'|trans }}</span>
-            </a>
-        </li>
-    {% endif %}
+    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
+        <li class="menu-item active" id="menu-dashboard">
+            <a class="menu-link" href="{{ path('super_admin_homepage') }}">
+                <i class="{{ iconDashboard }} fa-2x"><span class="sr-only">dashboard</span></i>
+                <span class="title">{{ 'menu.dashboard'|trans }}</span>
+            </a>
+        </li>
+        {% if is_granted('ROLE_SCOLARITE') or is_granted('ROLE_SUPER_ADMIN') %}
+            <li class="menu-item dropdown" id="menu-trombinoscope">
+                <a class="menu-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                   aria-expanded="false">
+                    <i class="{{ iconStudent }} fa-2x"><span
+                                class="sr-only">{{ 'menu.etudiants'|trans }}</span></i>
+                    <span class="title">{{ 'menu.etudiants'|trans }}</span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a class="dropdown-item"
+                           href="{{ path('sa_etudiant_index') }}">{{ 'menu.etudiants'|trans }}</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item"
+                           href="{{ path('sa_scolarite_index') }}">{{ 'menu.scolarite'|trans }}</a>
+                    </li>
+                </ul>
+            </li>
+        {% endif %}
+        {% if is_granted('ROLE_RH') or is_granted('ROLE_SUPER_ADMIN') %}
+            <li class="menu-item dropdown" id="menu-trombinoscope">
+                <a class="menu-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                   aria-expanded="false">
+                    <i class="{{ iconPersonnel }} fa-2x"><span
+                                class="sr-only">{{ 'menu.rh'|trans }}</span></i>
+                    <span class="title">{{ 'menu.rh'|trans }}</span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a class="dropdown-item"
+                           href="{{ path('sa_rh_index') }}">{{ 'menu.rh'|trans }}</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item"
+                           href="{{ path('sa_previsionnel_index') }}">{{ 'menu.previsionnel'|trans }}</a>
+                    </li>
+                </ul>
+            </li>
+        {% endif %}
+        {% if is_granted('ROLE_SUPER_ADMIN') %}
+            <li class="menu-item active" id="menu-celcat">
+                <a class="menu-link" href="{{ path('sa_celcat_index') }}">
+                    <i class="{{ iconAgenda }} fa-2x"></i>
+                    <span class="title">{{ 'menu.celcat'|trans }}</span>
+                </a>
+            </li>
+            <li class="menu-item active" id="menu-apogee">
+                <a class="menu-link" href="{{ path('sa_apogee_index') }}">
+                    <i class="{{ iconApogee }} fa-2x"></i>
+                    <span class="title">{{ 'menu.apogee'|trans }}</span>
+                </a>
+            </li>
+        {% endif %}
+        {% if is_granted('ROLE_QUALITE') or is_granted('ROLE_SUPER_ADMIN') %}
+            <li class="menu-item" id="menu-enquete">
+                <a class="menu-link" href="{{ path('sa_qualite_index') }}">
+                    <i class="{{ iconQualite }} fa-2x"></i>
+                    <span class="title">{{ 'menu.qualite'|trans }}</span>
+                </a>
+            </li>
+            <li class="menu-item" id="menu-enquete">
+                <a class="menu-link" href="{{ path('sa_qualite_documents_index', {source:'originaux'}) }}">
+                    <i class="{{ iconOriginaux }} fa-2x"></i>
+                    <span class="title">{{ 'menu.originaux'|trans }}</span>
+                </a>
+            </li>
+        {% endif %}
+        {% if is_granted('ROLE_FINANCE') or is_granted('ROLE_SUPER_ADMIN') or is_granted('ROLE_ADMINISTRATIF') %}
+            <li class="menu-item" id="menu-enquete">
+                <a class="menu-link" href="{{ path('sa_compta_index') }}">
+                    <i class="{{ iconCompta }} fa-2x"></i>
+                    <span class="title">{{ 'menu.compta'|trans }}</span>
+                </a>
+            </li>
+        {% endif %}
+    </ul>
 {% endblock %}
 

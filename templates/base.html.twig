@@ -298,99 +298,103 @@
             </ul>
         </div>
     </header>
+
     <nav id="topbar-navigation">
         <nav class="navbar navbar-expand-lg">
             <div class="container-fluid">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="menu-item active" id="menu-tableau-de-bord">
-                        <a class="menu-link" href="{{ path('default_homepage') }}">
-                            <i class="{{ iconMenuDashboard }} fa-2x"><span class="sr-only">dashboard</span></i>
-                            <span class="title">{{ 'menu.dashboard'|trans }}</span>
-                        </a>
-                    </li>
-
-                    <li class="menu-item dropdown" id="menu-trombinoscope">
-                        <a class="menu-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                           aria-expanded="false">
-                            <i class="{{ iconMenuTrombi }} fa-2x"><span
-                                        class="sr-only">trombinoscope</span></i>
-                            <span class="title">{{ 'menu.trombinoscope'|trans }}</span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            {{ include('trombinoscope/_menu.html.twig') }}
-                        </ul>
-                    </li>
-
-                    {#                    <li class="menu-item" id="menu-trombinoscope"> #}
-                    {#                        <a class="menu-link" href="{{ path('trombinoscope_index') }}"> #}
-                    {#                            <i class="{{ iconMenuTrombi }} fa-2x"><span class="sr-only">group</span></i> #}
-                    {#                            <span class="title">{{ 'menu.trombinoscope'|trans }}</span> #}
-                    {#                        </a> #}
-                    {#                    </li> #}
-                    {% if user_data.departement.optEdt == true %}
-                        <li class="menu-item" id="menu-agenda">
-                            <a class="menu-link" href="{{ path('agenda_index') }}">
-                                <i class="{{ iconMenuAgenda }} fa-2x"><span class="sr-only">calendar</span></i>
-                                <span class="title">{{ 'menu.agenda'|trans }}</span>
+                {% block sidebar_menu %}
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="menu-item active" id="menu-tableau-de-bord">
+                            <a class="menu-link" href="{{ path('default_homepage') }}">
+                                <i class="{{ iconMenuDashboard }} fa-2x"><span class="sr-only">dashboard</span></i>
+                                <span class="title">{{ 'menu.dashboard'|trans }}</span>
                             </a>
                         </li>
-                    {% endif %}
 
-                    <li class="menu-item dropdown" id="menu-application">
-                        <a class="menu-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                           aria-expanded="false">
-                            <i class="{{ iconMenuApplications }} fa-2x"><span
-                                        class="sr-only">applications</span></i>
-                            <span class="title">{{ 'menu.applications'|trans }}</span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            {{ include('application/_menu.html.twig') }}
-                            {#                            <li><a class="dropdown-item" href="#">Action</a></li> #}
-                            {#                            <li><a class="dropdown-item" href="#">Another action</a></li> #}
-                            {#                            <li> #}
-                            {#                                <hr class="dropdown-divider"> #}
-                            {#                            </li> #}
-                            {#                            <li><a class="dropdown-item" href="#">Something else here</a></li> #}
-                        </ul>
-                    </li>
+                        <li class="menu-item dropdown" id="menu-trombinoscope">
+                            <a class="menu-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                               aria-expanded="false">
+                                <i class="{{ iconMenuTrombi }} fa-2x"><span
+                                            class="sr-only">trombinoscope</span></i>
+                                <span class="title">{{ 'menu.trombinoscope'|trans }}</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                {{ include('trombinoscope/_menu.html.twig') }}
+                            </ul>
+                        </li>
 
-                    <li class="menu-item" id="menu-document">
-                        <a class="menu-link" href="{{ path('document_index', {source:'document'}) }}">
-                            <i class="{{ iconDocuments }} fa-2x"><span class="sr-only">Documents</span></i>
-                            <span class="title">{{ 'menu.documents'|trans }}</span>
-                        </a>
-                    </li>
+                        {#                    <li class="menu-item" id="menu-trombinoscope"> #}
+                        {#                        <a class="menu-link" href="{{ path('trombinoscope_index') }}"> #}
+                        {#                            <i class="{{ iconMenuTrombi }} fa-2x"><span class="sr-only">group</span></i> #}
+                        {#                            <span class="title">{{ 'menu.trombinoscope'|trans }}</span> #}
+                        {#                        </a> #}
+                        {#                    </li> #}
+                        {% if user_data.departement.optEdt == true %}
+                            <li class="menu-item" id="menu-agenda">
+                                <a class="menu-link" href="{{ path('agenda_index') }}">
+                                    <i class="{{ iconMenuAgenda }} fa-2x"><span class="sr-only">calendar</span></i>
+                                    <span class="title">{{ 'menu.agenda'|trans }}</span>
+                                </a>
+                            </li>
+                        {% endif %}
 
-                    {% if is_granted('ROLE_PERMANENT') and user_data.user.accessOriginaux == true %}
-                        <li class="menu-item" id="menu-originaux">
-                            <a class="menu-link" href="{{ path('document_index', {source: 'originaux'}) }}">
-                                <i class="{{ iconOriginaux }} fa-2x"><span class="sr-only">Originaux</span></i>
-                                <span class="title">{{ 'menu.originaux'|trans }}</span>
+                        <li class="menu-item dropdown" id="menu-application">
+                            <a class="menu-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                               aria-expanded="false">
+                                <i class="{{ iconMenuApplications }} fa-2x"><span
+                                            class="sr-only">applications</span></i>
+                                <span class="title">{{ 'menu.applications'|trans }}</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                {{ include('application/_menu.html.twig') }}
+                                {#                            <li><a class="dropdown-item" href="#">Action</a></li> #}
+                                {#                            <li><a class="dropdown-item" href="#">Another action</a></li> #}
+                                {#                            <li> #}
+                                {#                                <hr class="dropdown-divider"> #}
+                                {#                            </li> #}
+                                {#                            <li><a class="dropdown-item" href="#">Something else here</a></li> #}
+                            </ul>
+                        </li>
+
+                        <li class="menu-item" id="menu-document">
+                            <a class="menu-link" href="{{ path('document_index', {source:'document'}) }}">
+                                <i class="{{ iconDocuments }} fa-2x"><span class="sr-only">Documents</span></i>
+                                <span class="title">{{ 'menu.documents'|trans }}</span>
                             </a>
                         </li>
-                    {% endif %}
-                    {% if user_data.isGoodDepartement('ROLE_CDD') or
-                        user_data.isGoodDepartement('ROLE_RP') or
-                        user_data.isGoodDepartement('ROLE_DDE') or
-                        user_data.isGoodDepartement('ROLE_ASS') or
-                        user_data.isGoodDepartement('ROLE_STA') or
-                        user_data.isGoodDepartement('ROLE_ABS') or
-                        user_data.isGoodDepartement('ROLE_NOTES') or
-                        user_data.isGoodDepartement('ROLE_PRJ') or
-                        user_data.isGoodDepartement('ROLE_EDT') %}
-                        <li class="menu-item" id="menu-administration">
-                            <a class="menu-link" href="{{ path('administration_index') }}">
-                                <i class="{{ iconAdmin }} fa-2x"><span class="sr-only">Administration</span></i>
-                                <span class="title">{{ 'menu.administration'|trans }}</span>
-                            </a>
-                        </li>
-                    {% endif %}
+
+                        {% if is_granted('ROLE_PERMANENT') and user_data.user.accessOriginaux == true %}
+                            <li class="menu-item" id="menu-originaux">
+                                <a class="menu-link" href="{{ path('document_index', {source: 'originaux'}) }}">
+                                    <i class="{{ iconOriginaux }} fa-2x"><span class="sr-only">Originaux</span></i>
+                                    <span class="title">{{ 'menu.originaux'|trans }}</span>
+                                </a>
+                            </li>
+                        {% endif %}
+                        {% if user_data.isGoodDepartement('ROLE_CDD') or
+                            user_data.isGoodDepartement('ROLE_RP') or
+                            user_data.isGoodDepartement('ROLE_DDE') or
+                            user_data.isGoodDepartement('ROLE_ASS') or
+                            user_data.isGoodDepartement('ROLE_STA') or
+                            user_data.isGoodDepartement('ROLE_ABS') or
+                            user_data.isGoodDepartement('ROLE_NOTES') or
+                            user_data.isGoodDepartement('ROLE_PRJ') or
+                            user_data.isGoodDepartement('ROLE_EDT') %}
+                            <li class="menu-item" id="menu-administration">
+                                <a class="menu-link" href="{{ path('administration_index') }}">
+                                    <i class="{{ iconAdmin }} fa-2x"><span class="sr-only">Administration</span></i>
+                                    <span class="title">{{ 'menu.administration'|trans }}</span>
+                                </a>
+                            </li>
+                        {% endif %}
 
 
-                </ul>
+                    </ul>
+                {% endblock %}
             </div>
         </nav>
     </nav>
+
     <!-- END Topbar -->
 
     <!-- Main container -->

@@ -17,7 +17,7 @@
         <div class="card-body">
             <div class="row">
                 {% for periode in projetPeriodes %}
-                    <div class="col-6 d-grid d-block  mb-2">
+                    <div class="col-12 mb-2">
                         <a href="{{ path('administration_projet_periode_gestion', {uuid:periode.uuidString}) }}">
                             Période : <strong>{{ periode.libelle }}
                                 ({% for semestre in periode.semestres %}{{ semestre.display }}{% endfor %})</strong></a>

@@ -1,14 +1,24 @@
 <div class="col-md-12 col-lg-12  col-sm-12">
     <h2 class="card-top-title">
-        <i class="fa-solid fa-users text-primary"></i>
-        {{ 'adm.etudiants'|trans }}
+        <i class="fa-solid fa-clock text-primary"></i>
+        Absences en temps réel | {{ 'now'|date('d/m/Y') }}
     </h2>
     <div class="card administration">
         <div class="card-body p-0">
             {{ render_esi(controller(
                 'App\\Controller\\administration\\AbsenceController::listeTempsReel'
             )) }}
+        </div>
+    </div>
+</div>
 
+<div class="col-md-12 col-lg-12  col-sm-12 mt-4">
+    <h2 class="card-top-title">
+        <i class="fa-solid fa-users text-primary"></i>
+        {{ 'adm.etudiants'|trans }}
+    </h2>
+    <div class="card administration">
+        <div class="card-body p-0">
             <div class="row">
                 <div class="col-lg-3 col-10 d-grid d-block mb-2 etudiant_bloc">
                     <div class="admin_links_bloc_header">

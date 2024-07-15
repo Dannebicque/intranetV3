@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/js/pages/adm.apcCoefficients.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 18/06/2024 23:15
+// @lastUpdate 07/07/2024 17:37
 
 import Routing from 'fos-router'
 import { post } from '../fetch'
@@ -13,16 +13,16 @@ function updateRapportsSaeRessource(comp, semestre) {
   let totalSae = 0
   cells.forEach((cell) => {
     if (cell.dataset.semestre === semestre) {
-      total += parseInt(cell.value)
+      total += parseInt(cell.value, 10)
       if (cell.dataset.sae) {
-        totalSae += parseInt(cell.value)
+        totalSae += parseInt(cell.value, 10)
       }
     }
   })
   const zonePourcentage = document.querySelector(`#rapport_sae_comp_${comp}`)
   document.querySelector(`#total_comp_${comp}`).innerText = total
   document.querySelector(`#total_sae_comp_${comp}`).innerText = totalSae
-  const pourcentage = totalSae / total * 100
+  const pourcentage = (totalSae / total) * 100
   zonePourcentage.innerText = `${pourcentage.toFixed(2)}%`
   if (pourcentage > 60 || pourcentage < 40) {
     zonePourcentage.classList.add('bg-danger')
@@ -38,7 +38,7 @@ function updateTotalMatiere(matiere) {
   let total = 0
   cells.forEach((cell) => {
     if (cell.value !== '') {
-      total += parseInt(cell.value)
+      total += parseInt(cell.value, 10)
     }
   })
   document.querySelector(`#nb_${matiere}`).innerText = total
@@ -52,7 +52,7 @@ document.querySelectorAll('.mcc').forEach((element) => {
 })
 
 document.querySelectorAll('.changeCoefficientSae').forEach((element) => {
-  element.addEventListener('blur', (elem) => {
+  element.addEventListener('blur', () => {
     post(Routing.generate('administration_apc_referentiel_formation_ajax', {
       id: element.dataset.matiere,
       competence: element.dataset.competence,
@@ -66,7 +66,7 @@ document.querySelectorAll('.changeCoefficientSae').forEach((element) => {
 })
 
 document.querySelectorAll('.changeCoefficientRessource').forEach((element) => {
-  element.addEventListener('blur', (elem) => {
+  element.addEventListener('blur', () => {
     post(Routing.generate('administration_apc_referentiel_formation_ajax', {
       id: element.dataset.matiere,
       competence: element.dataset.competence,
@@ -81,7 +81,7 @@ document.querySelectorAll('.changeCoefficientRessource').forEach((element) => {
 })
 
 document.querySelectorAll('.changeNbNotesSae').forEach((element) => {
-  element.addEventListener('blur', (elem) => {
+  element.addEventListener('blur', () => {
     post(Routing.generate('administration_apc_referentiel_formation_nb_notes_ajax', {
       id: element.dataset.matiere,
       type: 'sae',
@@ -92,7 +92,7 @@ document.querySelectorAll('.changeNbNotesSae').forEach((element) => {
 })
 
 document.querySelectorAll('.changeNbNotesRessource').forEach((element) => {
-  element.addEventListener('blur', (elem) => {
+  element.addEventListener('blur', () => {
     post(Routing.generate('administration_apc_referentiel_formation_nb_notes_ajax', {
       id: element.dataset.matiere,
       type: 'ressource',
