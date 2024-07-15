@@ -2,6 +2,53 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.19.11](https://github.com/Dannebicque/intranetV3/compare/v3.19.10...v3.19.11) (2024-07-15)
+
+
+### Features
+
+* Gestion de coefficients différents sur une même ressource par différent parcours ([b3017bd](https://github.com/Dannebicque/intranetV3/commit/b3017bd584df4ef187445c295688d40e05ccaffd))
+* Gestion des groupes avec Stimulus ([2f19aee](https://github.com/Dannebicque/intranetV3/commit/2f19aee2c40aefdeb12d9171680db32798d16c14))
+* nouveau template super-admin ([8cda565](https://github.com/Dannebicque/intranetV3/commit/8cda565a46267e17253a56ddd779cff0fce3e2d1))
+* nouvelle mise en page ([30a63ff](https://github.com/Dannebicque/intranetV3/commit/30a63ff0f2d895217de9c5c8df6ad947069c26cc))
+* page application + corrections design des pages applications + breadcrumb ([32dc95d](https://github.com/Dannebicque/intranetV3/commit/32dc95d0f1d8a196361b27fb9803fd78439154d9))
+* Refonte menu du trombi + trombi. ([4e910cd](https://github.com/Dannebicque/intranetV3/commit/4e910cd41bb81589cb100aec8879615c29d8381d))
+* refonte menu en horizontal + changement de la partie application + CSS ([5fe1a81](https://github.com/Dannebicque/intranetV3/commit/5fe1a81b6d56d9770b1c1ee27349aee28032010f))
+* refonte pages admin semestre + breadcrumbs ([654ef00](https://github.com/Dannebicque/intranetV3/commit/654ef0040367907a94e6ff914aa4064444d00c04))
+* refonte partie trombinoscope ([2d0e09b](https://github.com/Dannebicque/intranetV3/commit/2d0e09b641206931cc4f08e7e817c818f3bef4ae))
+* refonte partie trombinoscope ([dedc4d7](https://github.com/Dannebicque/intranetV3/commit/dedc4d70d7fc4b84398fbbbf81866f35bff340bd))
+* refonte partie trombinoscope ([0c04e61](https://github.com/Dannebicque/intranetV3/commit/0c04e61af41c929fa43cf04898616d5ea14c9b89))
+* typescript ([6010e07](https://github.com/Dannebicque/intranetV3/commit/6010e074fcbf56d438e1963e7f49281cb0912681))
+
+
+### Bug Fixes
+
+* breadcrumbs ([faf5bf8](https://github.com/Dannebicque/intranetV3/commit/faf5bf863bbbfd841b5a7c417870764d188a66b2))
+* coefficient ([ffa91f3](https://github.com/Dannebicque/intranetV3/commit/ffa91f36a8a78dcea83d3c3c04b6769fba0bb7db))
+* coefficient ([3e87658](https://github.com/Dannebicque/intranetV3/commit/3e876580fdd7678af2af810d4634d3a233ac05f6))
+* data Usersession ([4e9cb70](https://github.com/Dannebicque/intranetV3/commit/4e9cb70518de5692fa8625f96a6778e57e19d190))
+* DecisionEnum badge ([393b50d](https://github.com/Dannebicque/intranetV3/commit/393b50d83d529f3d59f9f12b09515c9596a76a82))
+* division par 0 ([933cfc8](https://github.com/Dannebicque/intranetV3/commit/933cfc80c6c5cb257eba772f72c67807c09a09e1))
+* Division par 0 ([3d36a72](https://github.com/Dannebicque/intranetV3/commit/3d36a72ad78ce2e98d5b355f95dcb401a439bb78))
+* edition feuilles salle d'exam + messagerie ([5c42176](https://github.com/Dannebicque/intranetV3/commit/5c4217638dd0a9e94b201712d71d8708f2d8601a))
+* export relevés ([66b8056](https://github.com/Dannebicque/intranetV3/commit/66b8056562f264248a5ffddfbdaf5f377bf003f4))
+* export relevés ([93102fe](https://github.com/Dannebicque/intranetV3/commit/93102fe2cd1f5c3e2366dcc3cb89683270e690f2))
+* export relevés ([2b6f1d7](https://github.com/Dannebicque/intranetV3/commit/2b6f1d75dbd17c992ad8e8e66c588a52d071dead))
+* export relevés ([f99f54d](https://github.com/Dannebicque/intranetV3/commit/f99f54d4dcc5af4f1273a757fdc7b2541224921d))
+* export relevés ([f1c4f66](https://github.com/Dannebicque/intranetV3/commit/f1c4f6676bd47f7b8901e7e41e38012ddc7ddafa))
+* Force l'affichage d'un type Enum en Excel ([f6f206b](https://github.com/Dannebicque/intranetV3/commit/f6f206b4f9294b545af1c8d9de6d0067d7833d4d))
+* Force l'affichage d'un type Enum en Excel ([c69afdd](https://github.com/Dannebicque/intranetV3/commit/c69afdde7eaf2b7aad703b63eb04f7770202e133))
+* pages applications partie étudiant ([7e10ad3](https://github.com/Dannebicque/intranetV3/commit/7e10ad3ff65b2b422c27116d42a2302cff0985be))
+* partie profil, paramètres, settings ([bb119c9](https://github.com/Dannebicque/intranetV3/commit/bb119c936359b9168e8d298423c082268ee0a676))
+* previsionnel avec hrs ([6b2eb05](https://github.com/Dannebicque/intranetV3/commit/6b2eb057c64dd17d74faa9b8f12d23783d329f8d))
+* prévisionnel partie HRS ([260085d](https://github.com/Dannebicque/intranetV3/commit/260085dd45a0ef08a973dc40150ebc2017063e68))
+* questionnaires extérieurs ([a7d1eea](https://github.com/Dannebicque/intranetV3/commit/a7d1eea3ad96a4d89829ca1c0446bf14a77c0288))
+* stimulus controller initialisé au mauvais endroit sur edt ([b7c8414](https://github.com/Dannebicque/intranetV3/commit/b7c84141bc6ac0d42a70d934d956c2bb80aa4b82))
+* structure semestre ([d9149f1](https://github.com/Dannebicque/intranetV3/commit/d9149f1385106177fcfd292f44cbd3fc76337bd0))
+* suppression jquery progressivement ([4f3cf57](https://github.com/Dannebicque/intranetV3/commit/4f3cf57e8e15e78b17d0e8499631a929234b0086))
+* Suppression partie HRS, maintenant intégrée dans le prévisionnel ([63008a1](https://github.com/Dannebicque/intranetV3/commit/63008a1e94118e321c4d91a204ba343bb4e37d4b))
+* temporaire pour partie projet ([5ab147f](https://github.com/Dannebicque/intranetV3/commit/5ab147fdfe25cfee7ad970bb1e9da6f497b5b4f1))
+
 ### [3.19.10](https://github.com/Dannebicque/intranetV3/compare/v3.19.9...v3.19.10) (2024-07-06)
 
 
