@@ -1,6 +1,5 @@
 {
   "devDependencies": {
-    "webpack-notifier": "^1.15.0",
     "@babel/core": "^7.19.3",
     "@babel/preset-env": "^7.19.4",
     "@dannebicque/table-bundle": "file:vendor/dannebicque/table-bundle/assets",
@@ -25,9 +24,12 @@
     "regenerator-runtime": "^0.13.9",
     "sass-loader": "^13.0.0",
     "stimulus-clipboard": "^1.0.0",
+    "ts-loader": "^9.0.0",
+    "typescript": "^5.5.3",
     "webpack": "^5.74.0",
     "webpack-bundle-analyzer": "^4.4.2",
-    "webpack-cli": "^4.10.0"
+    "webpack-cli": "^4.10.0",
+    "webpack-notifier": "^1.15.0"
   },
   "license": "MPL-2.0",
   "private": true,
@@ -60,7 +62,7 @@
     "unreleased": true,
     "commitLimit": false
   },
-  "version": "3.19.10",
+  "version": "3.19.11",
   "author": "David Annebicque",
   "name": "intranetv3",
   "repository": {

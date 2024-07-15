@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.19.11](https://github.com/Dannebicque/intranetV3/compare/v3.19.10...v3.19.11) (2024-07-15)
+
+
+### Bug Fixes
+
+* Temporairement retour sur HRS/Prime ancienne version ([a90e468](https://github.com/Dannebicque/intranetV3/commit/a90e468ad78c0c327eda1e6a1ac95a67aad33243))
+
 ### [3.19.10](https://github.com/Dannebicque/intranetV3/compare/v3.19.9...v3.19.10) (2024-07-06)
 
 
