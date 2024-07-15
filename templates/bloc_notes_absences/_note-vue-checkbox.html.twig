@@ -1,0 +1,21 @@
+<div
+    {{ stimulus_controller('note-vue', {
+        urlPointerNote: path('bloc_notes_absences_pointer', {'id': note.id}),
+        isVue: note.vue,
+    }) }}
+>
+    <input
+        type="checkbox"
+        data-action="note-vue#pointerNote"
+        data-note-vue-target="checkbox"
+        autocomplete="off"
+    />
+    <div
+        class="spinner-border spinner-border-sm d-none"
+        role="status"
+        sty
+        data-note-vue-target="spinner"
+    >
+        <span class="sr-only">Loading...</span>
+    </div>
+</div>
