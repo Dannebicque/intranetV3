@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/UserController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/06/2024 22:21
+ * @lastUpdate 16/07/2024 19:01
  */
 
 namespace App\Controller;
@@ -41,23 +41,12 @@ class UserController extends BaseController
         ]);
     }
 
-    #[Route(path: '/liste-departement', name: 'user_get_departements', options: ['expose' => true])]
+    #[Route(path: '/liste-departement', name: 'user_get_departements')]
     public function listeDepartements(): Response
     {
-        //todo: utilisé ou?
-        $departements = $this->getUser()->getPersonnelDepartements();
-
-        $departementsArray = [];
-        foreach ($departements as $departement) {
-            $t['defaut'] = $departement->getDefaut();
-            $d = $departement->getDepartement();
-            $t['uuid'] = $d->getUuidString();
-            $t['couleur'] = $d->getCouleur();
-            $t['libelleInitiales'] = $d->libelleInitiales();
-            $departementsArray[] = $t;
-        }
-
-        return $this->json($departementsArray);
+        return $this->render('user/_liste_departements.html.twig', [
+            'departements' => $this->getUser()->getPersonnelDepartements(),
+        ]);
     }
 
     /**

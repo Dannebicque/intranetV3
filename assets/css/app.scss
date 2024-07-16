@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/css/app.scss
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 07/07/2024 16:32
+// @lastUpdate 15/07/2024 19:30
 
 @import "./theme-troyes.scss";
 @import "./theme-rcc.scss";
@@ -54,7 +54,7 @@ $dropdown-link-hover-bg: var(--colorIUT);
   top: 40px;
   right: 0;
   left: 0;
-  z-index: 995;
+  z-index: 800;
   -webkit-transition: margin-left 0.3s ease;
   transition: margin-left 0.3s ease;
   -webkit-box-shadow: 4px 0 5px rgba(0, 0, 0, 0.08);

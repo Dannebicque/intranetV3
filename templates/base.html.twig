@@ -45,7 +45,6 @@
           let toasts = {{ app.flashes('toast')|json_encode|raw }};
         </script>
         {{ encore_entry_script_tags('app') }}
-        {#        <script src="{{ asset('bundles/dannebicquetable/table.js') }}" defer></script> #}
     {% endblock %}
     <script data-provide="sweetalert"></script>
     <noscript>Votre navigateur ne supporte pas le javascript. Celui-ci est indispensable pour le fonctionnement de
@@ -208,16 +207,22 @@
             </div>
 
             {% if (is_granted('ROLE_PERMANENT') and user_data.departementMultiple == true) %}
-                <div class="dropdown">
-                <span class="topbar-btn" data-bs-toggle="dropdown" id="changeDepartement"
-                      data-bs-placement="bottom"
-                      data-controller="interface--tooltip"
-                      title="Changer de département"
+                <div class="dropdown"
+                        {{ stimulus_controller('change-departement', {
+                            url: path('user_get_departements')
+                        }) }}
                 >
-                    <i class="fas fa-random"></i>
+                <span class="topbar-btn" data-bs-toggle="dropdown"
+                        {{ stimulus_action('change-departement', 'changeDepartement', 'click') }}
+                >
+                    <i class="fas fa-random"
+                       data-bs-placement="bottom"
+                       data-controller="interface--tooltip"
+                       title="Changer de département"
+                    ></i>
                 </span>
                     <div class="dropdown-menu dropdown-grid">
-                        <div class="row max-height-300px" id="listeChangeDepartement">
+                        <div class="row max-height-300px" {{ stimulus_target('change-departement', 'listeChangeDepartement') }}>
                         </div>
                     </div>
                 </div>

@@ -1,0 +1,10 @@
+{% for departement in departements %}
+    {% set d = departement.departement %}
+    <a class="dropdown-item {% if departement.defaut == true %}is-default{% endif %} col-4"
+       href="{{ path('security_change_departement', { departement: d.uuid }) }}">
+        <div class="avatar-departement"
+             style="background-color: {{ d.couleur }}">
+            <span class="initials">{{ d.libelleInitiales|raw }}</span>
+        </div>
+    </a>
+{% endfor %}
