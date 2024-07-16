@@ -11,17 +11,17 @@ namespace App\Classes\EduSign\Adapter;
 
 use App\Classes\EduSign\DTO\EduSignGroupe;
 use App\Classes\EduSign\GroupeInterface;
+use App\Entity\AnneeUniversitaire;
 
 class IntranetGroupeEduSignAdapter
 {
     private ?EduSignGroupe $groupe;
 
-    public function __construct(GroupeInterface $groupe, ?string $parent = '')
+    public function __construct(AnneeUniversitaire $anneeUniversitaire, GroupeInterface $groupe, ?string $parent = '')
     {
-
         $this->groupe = new EduSignGroupe();
 
-        $this->groupe->name = $groupe->getLibelle();
+        $this->groupe->name = $groupe->getLibelle().' | '.$anneeUniversitaire->getLibelle();
         $this->groupe->description = '';
         $this->groupe->students = [];
         $this->groupe->parent = $parent;

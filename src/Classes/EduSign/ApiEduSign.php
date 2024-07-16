@@ -226,7 +226,7 @@ class ApiEduSign
                     $this->semestreRepository->save($semestre);
                 }
             }
-        } elseif($type === 'groupe') {
+        } elseif ($type === 'groupe') {
             $groupeAdd = $this->groupeRepository->findOneBy(['id' => $groupe->api_id]);
             if ($groupeAdd && $groupeAdd instanceof Groupe) {
                 if ($groupeAdd && $groupeAdd->getIdEduSign() === null) {
@@ -236,7 +236,7 @@ class ApiEduSign
             }
         }
 
-            return $content;
+        return $content;
     }
 
     public function deleteGroupe(EduSignGroupe $groupe, string $cleApi): void
@@ -253,10 +253,14 @@ class ApiEduSign
         $statusCode = $response->getStatusCode();
         $content = $response->getContent();
 
-        $groupe = $this->groupeRepository->findOneBy(['idEduSign' => $groupe->id_edu_sign]);
+        $groupe = $this->groupeRepository->findOneBy(['idEduSign' => $groupe->id_edu_sign]) ?? $this->semestreRepository->findOneBy(['idEduSign' => $groupe->id_edu_sign]);
         if ($groupe) {
             $groupe->setIdEduSign(null);
-            $this->groupeRepository->save($groupe);
+            if ($groupe instanceof Groupe) {
+                $this->groupeRepository->save($groupe);
+            } elseif ($groupe instanceof Semestre) {
+                $this->semestreRepository->save($groupe);
+            }
         }
 
     }
@@ -276,7 +280,7 @@ class ApiEduSign
 
         $data = json_decode($content, true);
         // accéder à la valeur de l'ID
-        $id = $data['result']['ID'] ?? "";
+        $id = $data['result']['ID'] ?? null;
 
         $etudiant = $this->etudiantRepository->findOneBy(['id' => $etudiant->api_id]);
         if ($etudiant && null === $etudiant) {
@@ -311,7 +315,7 @@ class ApiEduSign
     {
         $client = HttpClient::create();
 
-        $response = $client->request('GET', 'https://ext.edusign.fr/v1/student/'.$etudiant, [
+        $response = $client->request('GET', 'https://ext.edusign.fr/v1/student/' . $etudiant, [
             'headers' => [
                 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . $this->getCleApi->getCleApi($cleApi),
@@ -322,7 +326,7 @@ class ApiEduSign
         // convertit JSON en tableau associatif PHP
         $data = json_decode($content, true);
 
-        return $data['result'] ?? "";
+        return $data['result'] ?? null;
     }
 
     public function updateEtudiant(EduSignEtudiant $etudiant, string $cleApi): void

@@ -10,6 +10,7 @@
 namespace App\Classes\EduSign;
 
 use App\Classes\EduSign\Adapter\IntranetGroupeEduSignAdapter;
+use App\Repository\AnneeUniversitaireRepository;
 use App\Repository\DiplomeRepository;
 use App\Repository\GroupeRepository;
 use App\Repository\SemestreRepository;
@@ -21,12 +22,15 @@ class UpdateGroupe
         protected DiplomeRepository  $diplomeRepository,
         protected SemestreRepository $semestreRepository,
         protected GroupeRepository   $groupeRepository,
+        private readonly AnneeUniversitaireRepository $anneeUniversitaireRepository
     )
     {
     }
 
     public function update(?string $keyEduSign): array
     {
+        $anneeUniv = $this->anneeUniversitaireRepository->findOneBy(['active' => true]);
+
         // on prépare la structure du résultat
         $result = ['success' => true, 'messages' => []];
 
@@ -54,7 +58,7 @@ class UpdateGroupe
                     // si le semestre a déjà un id EduSign, on ne fait rien
                     if ($semestre->getIdEduSign() === null) {
                         // on créé des objets Groupe adaptés pour EduSign à partir des semestres
-                        $groupe = (new IntranetGroupeEduSignAdapter($semestre))->getGroupe();
+                        $groupe = (new IntranetGroupeEduSignAdapter($anneeUniv,$semestre))->getGroupe();
                         if ($semestre->getIdEduSign() === null) {
                             // on envoie les groupes à EduSign
                             $this->apiEduSign->addGroupe($groupe, $cleApi, 'semestre');
@@ -88,7 +92,7 @@ class UpdateGroupe
                                 foreach ($groupe->getTypeGroupe()->getSemestres() as $semestre) {
                                     if ($semestre === $parent) {
                                         // on créé un objet Groupe adapté pour EduSign
-                                        $groupea = (new IntranetGroupeEduSignAdapter($groupe, $parent->getIdEduSign()))->getGroupe();
+                                        $groupea = (new IntranetGroupeEduSignAdapter($anneeUniv,$groupe, $parent->getIdEduSign()))->getGroupe();
                                         if ($groupe->getIdEduSign() === null) {
                                             // on envoie le groupe à EduSign
                                             $this->apiEduSign->addGroupe($groupea, $cleApi, 'groupe');
