@@ -16,25 +16,27 @@ use App\Repository\PersonnelRepository;
 
 class CreateEnseignant
 {
-
-    private UpdateManager $updateManager;
-
     public function __construct(
-        private readonly ApiEduSign $apiEduSign,
+        private readonly ApiEduSign   $apiEduSign,
         protected PersonnelRepository $personnelRepository)
     {
     }
 
-    public function setUpdateManager(UpdateManager $updateManager): void
+    public function update(Personnel $personnel, Departement $departement, string $cleApi): array
     {
-        $this->updateManager = $updateManager;
-    }
+        try {
+            // Construit les objets associés selon le modèle EduSign
+            $enseignant = (new IntranetEnseignantEduSignAdapter($personnel))->getEnseignant();
+            // Envoi une requête pour ajouter les éléments
+            $result = $this->apiEduSign->addEnseignant($enseignant, $personnel, $departement, $cleApi);
 
-    public function update(Personnel $personnel, Departement $departement, string $cleApi): void
-    {
-        //construit les objets associés selon le modèle EduSign
-        $enseignant = (new IntranetEnseignantEduSignAdapter($personnel))->getEnseignant();
-        //envoi une requete pour ajouter les éléments
-        $this->apiEduSign->addEnseignant($enseignant, $personnel, $departement, $cleApi);
+            if (!$result['success']) {
+                return ['success' => false, 'error' => $result['error']];
+            }
+
+            return ['success' => true];
+        } catch (\Exception $e) {
+            return ['success' => false, 'error' => $e->getMessage()];
+        }
     }
 }

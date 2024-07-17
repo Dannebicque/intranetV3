@@ -82,19 +82,6 @@ class UpdateEtudiant
     {
         $result = ['success' => true, 'messages' => []];
 
-//        if ($keyEduSign === null) {
-//            $result['success'] = false;
-//            $result['messages'][] = 'Clé EduSign manquante pour la mise à jour des étudiants.';
-//            return $result;
-//        }
-//
-//        $diplomes = $this->diplomeRepository->findBy(['keyEduSign' => $keyEduSign]);
-//        if (empty($diplomes)) {
-//            $result['success'] = false;
-//            $result['messages'][] = 'Aucun diplôme trouvé pour la clé EduSign fournie.';
-//            return $result;
-//        }
-
         foreach ($diplomes as $diplome) {
             $departement = $diplome->getDepartement();
             $semestres = $this->semestreRepository->findSemestreEduSignDept($departement);

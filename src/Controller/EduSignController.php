@@ -134,7 +134,7 @@ class EduSignController extends BaseController
             $errorMessage = implode("\n", $allErrors);
 
             // afficher les erreurs
-            $this->addFlash('danger', $errorMessage);
+            $this->addFlashBag(Constantes::FLASHBAG_ERROR, $errorMessage);
         }
 
         return $this->redirectToRoute('app_edu_sign');
@@ -186,7 +186,7 @@ class EduSignController extends BaseController
         $errorMessage = implode("\n", $allErrors);
 
         // Utiliser addFlash pour afficher les erreurs
-        $this->addFlash('danger', $errorMessage);
+        $this->addFlashBag(Constantes::FLASHBAG_ERROR, $errorMessage);
 
         if (!empty($diplomesErrors)) {
             // Concaténer tous les messages d'erreur en une seule chaîne
@@ -199,7 +199,9 @@ class EduSignController extends BaseController
             $errorMessage = implode("\n", $allErrors);
 
             // Utiliser addFlash pour afficher les erreurs
-            $this->addFlash('danger', $errorMessage);
+            $this->addFlashBag(Constantes::FLASHBAG_ERROR, $errorMessage);
+        } else {
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'Mise à jour des groupes effectuée avec succès');
         }
 
         return $this->redirectToRoute('app_edu_sign');
