@@ -83,14 +83,14 @@ class EduSignController extends BaseController
                     if ($this->evenement->dateObjet->isBetween($start, $end)) {
                         $matieres = $this->matiereRepository->findBySemestre($semestre);
                         // ajouter $matieresSemestre dans $this->evenement
-                        $this->evenement->matieresSemestre = $matieres;
+                        $this->evenement->matieresSemestre = $matieresSemestre;
                         $cours[] = $this->evenement;
                     }
                 }
             }
         }
 
-        dd($cours);
+//        dd($cours);
 
         $page = $request->query->getInt('page', 1);
 
@@ -101,6 +101,7 @@ class EduSignController extends BaseController
             'departement' => $departement,
             'pagination' => $pagination,
             'personnelsDepartement' => $filteredPersonnelsDepartement,
+            'cours' => $cours
         ]);
     }
 

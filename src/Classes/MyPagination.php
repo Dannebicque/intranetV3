@@ -57,7 +57,8 @@ class MyPagination
         $this->page = $page;
         $this->link = $link;
 
-        $debut = $page * $resultsPerPage - 2;
+//        $debut = $page * $resultsPerPage - 2;
+        $debut = $page * $resultsPerPage - $resultsPerPage;
 
         $this->nbMaxResult = count($data);
         $this->data = array_slice($data, $debut, $resultsPerPage);

@@ -97,6 +97,7 @@
                     <table class="table-edt">
                         <thead>
                         <tr>
+                            <th>id</th>
                             <th>Date - Heure</th>
                             <th>Matière</th>
                             <th>Groupe</th>
@@ -108,6 +109,9 @@
                         {% for cours in pagination.data %}
                             <tbody>
                             <tr>
+                                <td>
+                                    {{ cours.id }}
+                                </td>
                                 <td>
                                     {% if cours.date is not null and cours.date != "" %}
                                         {{ cours.date|date('d/m/Y') }}
@@ -128,6 +132,7 @@
                                     {% if cours.code_matiere is not null %}
                                         {{ cours.code_matiere }}
                                     {% endif %}
+
                                     {% if cours.matiere is not null and cours.matiere != "Inconnue" and cours.matiere != "" %}
                                         {{ cours.matiere }}
                                     {% elseif cours.texte is not null and cours.texte != "" %}
@@ -138,7 +143,7 @@
                                         <select name="matiere" id="matiere">
                                             <option value="0">** Pas de matière **</option>
                                             {% for matiere in cours.matieresSemestre %}
-                                                <option value="{{ matiere.id }}">{{ matiere.nom }}</option>
+                                                <option value="{{ matiere.id }}">{{ matiere.libelle }}</option>
                                             {% endfor %}
                                         </select>
                                     {% endif %}
