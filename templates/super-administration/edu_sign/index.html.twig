@@ -64,36 +64,6 @@
         </div>
         <div class="card-body">
             <div class="alert alert-info">
-                <span>{{ 'adm.edusign.commands.info-update'|trans }}</span>
-            </div>
-            {% for dept in departements %}
-                <button class="btn btn-secondary" type="button" data-bs-toggle="modal"
-                        data-bs-target="#grpModal{{ dept.id }}">{{ dept.libelle }}</button>
-                <!-- Modal -->
-                <div class="modal fade" id="grpModal{{ dept.id }}" tabindex="-1"
-                     aria-labelledby="grpModalLabel{{ dept.id }}" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="grpModalLabel{{ dept.id }}">Mise à jour des groupes
-                                    pour le département {{ dept.libelle }}</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                Cette action va mettre à jour les étudiants et leurs groupes
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                                <a href="{{ path('app_edu_sign_update_etudiants', {'id': dept.id}) }}"
-                                   class="btn btn-secondary">Confirmer</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            {% endfor %}
-            <hr>
-            <div class="alert alert-info">
                 <span>{{ 'adm.edusign.commands.info-annee'|trans }}</span>
             </div>
 
@@ -202,21 +172,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <hr>
-        <div class="card-body">
-            <h5 class="card-title">{{ 'adm.edusign.form.enseignant.heading'|trans }}</h5>
-            <form action="{{ path('app_edu_sign_create_personnel', {'deptId': departementSelect.id}) }}"
-                  class="d-flex flex-row gap-3 justify-content-end">
-                <select class="form-select" name="personnel" id="">
-                    <option value="" id="personnel">Choisir un enseignant</option>
-                    {% for p in personnelsDepartement %}
-                        <option value="{{ p.personnel.id }}"
-                                id="personnel">{{ p.personnel.nom }} {{ p.personnel.prenom }}</option>
-                    {% endfor %}
-                </select>
-                <button class="btn btn-primary">Valider</button>
-            </form>
         </div>
         <hr>
         <div class="card-body">

@@ -154,7 +154,7 @@ class ApiEduSign
         // convertit JSON en tableau associatif PHP
         $data = json_decode($content, true);
 
-        return $data['result'] ?? "";
+        return $data['result'] ?? null;
     }
 
     public function deleteCourse(?string $course, string $cleApi): string

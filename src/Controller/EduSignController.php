@@ -140,73 +140,6 @@ class EduSignController extends BaseController
         return $this->redirectToRoute('app_edu_sign');
     }
 
-    #[Route('/update/etudiants/{id}', name: 'app_edu_sign_update_etudiants')]
-    public function updateEtudiants(?int $id, UpdateGroupe $updateGroupe, UpdateEtudiant $updateEtudiant, MailerInterface $mailer): RedirectResponse
-    {
-        $departement = $this->departementRepository->find($id);
-        $diplomesErrors = [];
-
-        if (!$departement) {
-            $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'Département introuvable.');
-            return $this->redirectToRoute('app_edu_sign');
-        }
-
-        $diplomes = $this->diplomeRepository->findAllWithEduSignDepartement($departement);
-
-        $changeSemestreResult = $updateEtudiant->changeSemestre($diplomes);
-
-        if (!$changeSemestreResult['success']) {
-            foreach ($changeSemestreResult['messages'] as $message) {
-                $errors[] = $message;
-            }
-        }
-
-        if (!empty($errors)) {
-            $diplomesErrors[$departement->getLibelle()] = $errors;
-        }
-
-
-        $email = (new TemplatedEmail())
-            ->from('no-reply@univ-reims.fr')
-            ->to('cyndel.herolt@univ-reims.fr')
-            ->subject('EduSign updateEtudiants - error report')
-            ->htmlTemplate('emails/error_report.html.twig')
-            ->context([
-                'diplomesErrors' => $diplomesErrors,
-            ]);
-        $mailer->send($email);
-
-        // Concaténer tous les messages d'erreur en une seule chaîne
-        $allErrors = [];
-        foreach ($diplomesErrors as $diplome => $errors) {
-            foreach ($errors as $error) {
-                $allErrors[] = "[$diplome] $error";
-            }
-        }
-        $errorMessage = implode("\n", $allErrors);
-
-        // Utiliser addFlash pour afficher les erreurs
-        $this->addFlashBag(Constantes::FLASHBAG_ERROR, $errorMessage);
-
-        if (!empty($diplomesErrors)) {
-            // Concaténer tous les messages d'erreur en une seule chaîne
-            $allErrors = [];
-            foreach ($diplomesErrors as $diplome => $errors) {
-                foreach ($errors as $error) {
-                    $allErrors[] = "[$diplome] $error";
-                }
-            }
-            $errorMessage = implode("\n", $allErrors);
-
-            // Utiliser addFlash pour afficher les erreurs
-            $this->addFlashBag(Constantes::FLASHBAG_ERROR, $errorMessage);
-        } else {
-            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'Mise à jour des groupes effectuée avec succès');
-        }
-
-        return $this->redirectToRoute('app_edu_sign');
-    }
-
     #[Route('/create-courses/{opt}/{id}', name: 'app_edu_sign_create_courses')]
     public function createCourses(?int $opt, ?int $id, UpdateEdt $updateEdt, FixCourses $fixCourses, MailerInterface $mailer): Response
     {
@@ -239,31 +172,6 @@ class EduSignController extends BaseController
 //            }
 //                dd($data);
 
-        }
-
-        return $this->redirectToRoute('app_edu_sign');
-    }
-
-    #[Route('/create-personnel/{deptId}', name: 'app_edu_sign_create_personnel')]
-    public function createPersonnel(?int $deptId, Request $request): RedirectResponse
-    {
-        if ($deptId !== 0) {
-            $departement = $this->departementRepository->find($deptId);
-            $diplomes = $this->diplomeRepository->findByDepartement($departement);
-            $keyEduSign = null;
-            foreach ($diplomes as $diplome) {
-                if ($diplome->getKeyEduSign() !== null) {
-                    $keyEduSign = $diplome->getKeyEduSign();
-                }
-            }
-
-            $personnelId = $request->get('personnel');
-
-            $personnel = $this->personnelRepository->find($personnelId);
-
-            $this->createEnseignant->update($personnel, $departement, $keyEduSign);
-
-            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'Les données ont été mises à jour sur EduSign');
         }
 
         return $this->redirectToRoute('app_edu_sign');

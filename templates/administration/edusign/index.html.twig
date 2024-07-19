@@ -61,7 +61,7 @@
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler
                                     </button>
-                                    <a href="{{ path('app_edu_sign_create_courses', {'opt': 1, 'id': departement.id}) }}"
+                                    <a href="{{ path('app_admin_edu_sign_create_courses', {'opt': 1}) }}"
                                        class="btn btn-primary">Confirmer</a>
                                 </div>
                             </div>
@@ -85,13 +85,123 @@
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler
                                     </button>
-                                    <a href="{{ path('app_edu_sign_create_courses', {'opt': 2, 'id': departement.id}) }}"
+                                    <a href="{{ path('app_admin_edu_sign_create_courses', {'opt': 2}) }}"
                                        class="btn btn-primary">Confirmer</a>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                <form action="">
+                    <table class="table-edt">
+                        <thead>
+                        <tr>
+                            <th>Date - Heure</th>
+                            <th>Matière</th>
+                            <th>Groupe</th>
+                            <th>Salle</th>
+                            <th>Enseignant</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        {% for cours in pagination.data %}
+                            <tbody>
+                            <tr>
+                                <td>
+                                    {% if cours.date is not null and cours.date != "" %}
+                                        {{ cours.date|date('d/m/Y') }}
+                                    {% else %}
+                                        <span class="text-danger">
+                                    ** Pas de date **
+                                    </span>
+                                    {% endif %}
+                                    {% if cours.heureDebut is not null and cours.heureDebut != "" %}
+                                        {{ cours.heureDebut|date('H:i') }} - {{ cours.heureFin|date('H:i') }}
+                                    {% else %}
+                                        <span class="text-danger">
+                                    ** Pas d'heure **
+                                    </span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if cours.code_matiere is not null %}
+                                        {{ cours.code_matiere }}
+                                    {% endif %}
+                                    {% if cours.matiere is not null and cours.matiere != "Inconnue" and cours.matiere != "" %}
+                                        {{ cours.matiere }}
+                                    {% elseif cours.texte is not null and cours.texte != "" %}
+                                        {{ cours.texte }}
+                                    {% else %}
+{#                                        <label for="matiere">Matière</label>#}
+{#                                        <input type="text" id="matiere" placeholder="** Pas de matière **">#}
+                                        <select name="matiere" id="matiere">
+                                            <option value="0">** Pas de matière **</option>
+                                            {% for matiere in cours.matieresSemestre %}
+                                                <option value="{{ matiere.id }}">{{ matiere.nom }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if cours.semestre is not null and cours.semestre != "" %}
+                                        {{ cours.semestre }}
+                                    {% else %}
+                                        <span class="text-danger">
+                                    ** Pas de semestre **
+                                </span>
+                                    {% endif %}
+                                    {% if cours.groupe is not null and cours.groupe != "" %}
+                                        {{ cours.groupe }}
+                                    {% else %}
+                                        <span class="text-danger">
+                                    ** Pas de groupe **
+                                </span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if cours.salle is not null and cours.salle != "" %}
+                                        {{ cours.salle }}
+                                    {% else %}
+                                        <span class="text-danger">
+                                    ** Pas de salle **
+                                </span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if cours.personnel is not null and cours.personnel != "" and cours.personnel != "-" %}
+                                        {{ cours.personnel }}
+                                    {% else %}
+                                        <span class="text-danger">
+                                    ** Pas d'enseignant **
+                                </span>
+                                    {% endif %}
+                                </td>
+                                <td class="p-1">
+                                    <a href="{{ path('app_admin_edu_sign_update_cours', {'id': cours.id}) }}"
+                                       class="btn btn-primary">Envoyer dans EduSign</a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        {% endfor %}
+                    </table>
+                </form>
+
+                <nav>
+                    <ul class="pagination">
+                        <li class="page-item {{ not pagination.hasPreviousLink ? 'disabled' : '' }}">
+                            <a class="page-link" href="{{ pagination.previousLink }}">Précédent</a>
+                        </li>
+                        {% for i in 1..pagination.nbPages %}
+                            <li class="page-item {{ i == pagination.currentPage ? 'active' : '' }}">
+                                <a class="page-link" href="{{ pagination.getLinkPage(i) }}">{{ i }}</a>
+                            </li>
+                        {% endfor %}
+                        <li class="page-item {{ not pagination.hasNextLink ? 'disabled' : '' }}">
+                            <a class="page-link" href="{{ pagination.nextLink }}">Suivant</a>
+                        </li>
+                    </ul>
+                </nav>
             </div>
             <hr>
             <div>
@@ -99,17 +209,17 @@
 
                 <form action="{{ path('app_admin_edu_sign_create_personnel') }}"
                       method="POST">
-                <div class="accordion w-50" id="accordionPersonnel">
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingOne">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                                Sélectionner les enseignants
-                            </button>
-                        </h2>
-                        <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
-                             data-bs-parent="#accordionPersonnel" style="max-height: 300px; overflow-y: auto;">
-                            <div class="accordion-body">
+                    <div class="accordion w-50" id="accordionPersonnel">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingOne">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                    Sélectionner les enseignants
+                                </button>
+                            </h2>
+                            <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
+                                 data-bs-parent="#accordionPersonnel" style="max-height: 300px; overflow-y: auto;">
+                                <div class="accordion-body">
                                     {% for p in personnelsDepartement %}
                                         <div class="form-check">
                                             <input class="form-check-input" type="checkbox" name="personnel[]"
@@ -119,11 +229,11 @@
                                             </label>
                                         </div>
                                     {% endfor %}
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <button type="submit" class="btn btn-secondary mt-3">Valider</button>
+                    <button type="submit" class="btn btn-secondary mt-3">Valider</button>
                 </form>
             </div>
             <hr>
