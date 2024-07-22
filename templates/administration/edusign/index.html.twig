@@ -128,7 +128,7 @@
                                     </span>
                                     {% endif %}
                                 </td>
-                                <td>
+                                <td class="p-1">
                                     {% if cours.code_matiere is not null %}
                                         {{ cours.code_matiere }}
                                     {% endif %}
@@ -138,9 +138,7 @@
                                     {% elseif cours.texte is not null and cours.texte != "" %}
                                         {{ cours.texte }}
                                     {% else %}
-{#                                        <label for="matiere">Matière</label>#}
-{#                                        <input type="text" id="matiere" placeholder="** Pas de matière **">#}
-                                        <select name="matiere" id="matiere">
+                                        <select name="matiere" id="matiere" class="form-select">
                                             <option value="0">** Pas de matière **</option>
                                             {% for matiere in cours.matieresSemestre %}
                                                 <option value="{{ matiere.id }}">{{ matiere.libelle }}</option>
@@ -150,7 +148,7 @@
                                 </td>
                                 <td>
                                     {% if cours.semestre is not null and cours.semestre != "" %}
-                                        {{ cours.semestre }}
+                                        {{ cours.semestre }} |
                                     {% else %}
                                         <span class="text-danger">
                                     ** Pas de semestre **

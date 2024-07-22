@@ -8,10 +8,13 @@ use App\Classes\EduSign\FixCourses;
 use App\Classes\EduSign\UpdateEdt;
 use App\Classes\EduSign\UpdateEtudiant;
 use App\Classes\Matieres\MatiereManager;
+use App\Classes\Matieres\TypeMatiereManager;
 use App\Classes\MyPagination;
 use App\Controller\BaseController;
 use App\DTO\EvenementEdt;
 use App\Entity\Constantes;
+use App\Entity\Departement;
+use App\Entity\Diplome;
 use App\Entity\Semestre;
 use App\Repository\CalendrierRepository;
 use App\Repository\DiplomeRepository;
@@ -41,10 +44,10 @@ class EduSignController extends BaseController
         private readonly CreateEnseignant               $createEnseignant,
         private readonly CalendrierRepository           $CalendrierRepository,
         private readonly SemestreRepository             $semestreRepository,
-        private readonly MatiereManager                 $typeMatiereManager,
+        private readonly MatiereManager                 $matiereManager,
         private readonly GroupeRepository               $groupeRepository,
         private readonly EdtManager                     $edtManager,
-        private readonly MatiereRepository              $matiereRepository,
+        private readonly TypeMatiereManager             $typeMatiereManager,
     )
     {
     }
@@ -74,6 +77,8 @@ class EduSignController extends BaseController
             foreach ($semestres as $semestre) {
                 $eventSemaine = $this->CalendrierRepository->findOneBy(['semaineReelle' => $semaineReelle, 'anneeUniversitaire' => $semestre->getAnneeUniversitaire()]);
                 $semaine = $eventSemaine->getSemaineFormation();
+
+
                 $matieresSemestre = $this->getMatieresSemestre($semestre);
 
                 $groupes = $this->groupeRepository->findBySemestre($semestre);
@@ -81,7 +86,6 @@ class EduSignController extends BaseController
 
                 foreach ($edt->evenements as $this->evenement) {
                     if ($this->evenement->dateObjet->isBetween($start, $end)) {
-                        $matieres = $this->matiereRepository->findBySemestre($semestre);
                         // ajouter $matieresSemestre dans $this->evenement
                         $this->evenement->matieresSemestre = $matieresSemestre;
                         $cours[] = $this->evenement;
@@ -89,8 +93,6 @@ class EduSignController extends BaseController
                 }
             }
         }
-
-//        dd($cours);
 
         $page = $request->query->getInt('page', 1);
 
@@ -108,6 +110,7 @@ class EduSignController extends BaseController
     public function getMatieresSemestre(Semestre $semestre): array
     {
         $matieres = $this->typeMatiereManager->findBySemestre($semestre);
+
         $matieresSemestre = [];
         foreach ($matieres as $matiere) {
             // si $matiere n'est pas un array
@@ -124,6 +127,33 @@ class EduSignController extends BaseController
             }
         }
         return $matieresSemestre;
+    }
+
+    public function getMatieresDiplome(Diplome $diplome): array
+    {
+        $matieres = $this->typeMatiereManager->findByDiplome($diplome);
+        $matieresDiplome = [];
+        foreach ($matieres as $matiere) {
+            if (!is_array($matiere)) {
+                $matieresDiplome[$matiere->getTypeIdMatiere()] = $matiere;
+            } else {
+                foreach ($matiere as $m) {
+                    $matieresDiplome[$m->getTypeIdMatiere()] = $m;
+                }
+
+            }
+        }
+        return $matieresDiplome;
+    }
+
+    public function getMatieresDepartement(Departement $departement): array
+    {
+        $matieres = $this->typeMatiereManager->findByDepartement($departement);
+        $matieresDepartement = [];
+        foreach ($matieres as $matiere) {
+            $matieresDepartement[$matiere->getTypeIdMatiere()] = $matiere;
+        }
+        return $matieresDepartement;
     }
 
     #[Route('/update/etudiants/', name: 'app_admin_edu_sign_update_etudiants')]
