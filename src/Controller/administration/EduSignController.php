@@ -18,10 +18,13 @@ use App\Entity\Diplome;
 use App\Entity\Semestre;
 use App\Repository\CalendrierRepository;
 use App\Repository\DiplomeRepository;
+use App\Repository\EdtCelcatRepository;
+use App\Repository\EdtPlanningRepository;
 use App\Repository\GroupeRepository;
 use App\Repository\MatiereRepository;
 use App\Repository\PersonnelDepartementRepository;
 use App\Repository\PersonnelRepository;
+use App\Repository\SalleRepository;
 use App\Repository\SemestreRepository;
 use Carbon\Carbon;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
@@ -48,6 +51,9 @@ class EduSignController extends BaseController
         private readonly GroupeRepository               $groupeRepository,
         private readonly EdtManager                     $edtManager,
         private readonly TypeMatiereManager             $typeMatiereManager,
+        private readonly EdtCelcatRepository            $edtCelcatRepository,
+        private readonly EdtPlanningRepository          $edtPlanningRepository,
+        private readonly SalleRepository                $salleRepository
     )
     {
     }
@@ -84,10 +90,16 @@ class EduSignController extends BaseController
                 $groupes = $this->groupeRepository->findBySemestre($semestre);
                 $edt = $this->edtManager->getPlanningSemestreSemaine($semestre, $semaine, $semestre->getAnneeUniversitaire(), $matieresSemestre, $groupes);
 
+                $salles = $this->salleRepository->findAll();
+
                 foreach ($edt->evenements as $this->evenement) {
                     if ($this->evenement->dateObjet->isBetween($start, $end)) {
                         // ajouter $matieresSemestre dans $this->evenement
                         $this->evenement->matieresSemestre = $matieresSemestre;
+                        $this->evenement->semestresGroupe = $semestre;
+                        $this->evenement->groupesSemestre = $groupes;
+                        $this->evenement->salles = $salles;
+                        $this->evenement->enseignants = $personnelsDepartement;
                         $cours[] = $this->evenement;
                     }
                 }
@@ -283,10 +295,17 @@ class EduSignController extends BaseController
         return $this->redirectToRoute('administration_edusign_index');
     }
 
-    #[Route('/update-course/{id}', name: 'app_admin_edu_sign_update_cours')]
-    public function updateCourse(int $id, UpdateEdt $updateEdt, MailerInterface $mailer): Response
+    #[Route('/update-course/{source}/{id}/', name: 'app_admin_edu_sign_update_cours')]
+    public function updateCourse(int $id, string $source, UpdateEdt $updateEdt, Request $request): Response
     {
-//        dd($id);
+
+        $matiere = $request->query->get('matiere');
+        $semestre = $request->query->get('semestre');
+        $groupe = $request->query->get('groupe');
+        $enseignant = $request->query->get('personnel');
+        $salle = $request->query->get('salle');
+
+        $this->edtManager->updateCourse($id, $source, $matiere, $semestre, $groupe, $enseignant, $salle);
 
         return $this->redirectToRoute('administration_edusign_index');
     }

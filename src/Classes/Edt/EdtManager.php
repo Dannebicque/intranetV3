@@ -17,11 +17,18 @@ use App\DTO\EvenementEdt;
 use App\DTO\EvenementEdtCollection;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Groupe;
+use App\Entity\Matiere;
 use App\Entity\Personnel;
+use App\Entity\Salle;
 use App\Entity\Semestre;
 use App\Enums\TypeGroupeEnum;
 use App\Repository\EdtCelcatRepository;
 use App\Repository\EdtPlanningRepository;
+use App\Repository\GroupeRepository;
+use App\Repository\MatiereRepository;
+use App\Repository\PersonnelRepository;
+use App\Repository\SalleRepository;
+use App\Repository\SemestreRepository;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class EdtManager
@@ -38,16 +45,21 @@ class EdtManager
         private readonly SourceEdtRegistry     $sourceEdtRegistry,
         private readonly EdtPlanningRepository $edtPlanningRepository,
         private readonly EdtCelcatRepository   $edtCelcatRepository,
+        private readonly SemestreRepository    $semestreRepository,
+        private readonly GroupeRepository      $groupeRepository,
+        private readonly PersonnelRepository    $personnelRepository,
+        private readonly SalleRepository        $salleRepository,
+        private readonly MatiereRepository     $matiereRepository,
     )
     {
         $this->tabSources = $this->sourceEdtRegistry->getSourcesEdt();
     }
 
     public function getPlanningSemestre(
-        Semestre $semestre,
-        array    $matieres,
+        Semestre           $semestre,
+        array              $matieres,
         AnneeUniversitaire $anneeUniversitaire,
-        array    $groupes
+        array              $groupes
     ): ?EvenementEdtCollection
     {
         switch ($this->getSourceEdt($semestre)) {
@@ -81,11 +93,11 @@ class EdtManager
     }
 
     public function getPlanningSemestreSemaine(
-        Semestre $semestre,
-        int      $semaine,
+        Semestre           $semestre,
+        int                $semaine,
         AnneeUniversitaire $anneeUniversitaire,
-        array    $matieres,
-        array    $groupes
+        array              $matieres,
+        array              $groupes
     ): ?EvenementEdtCollection
     {
         switch ($this->getSourceEdt($semestre)) {
@@ -102,10 +114,10 @@ class EdtManager
         }
     }
 
-    public function getPlanningEduSign(Semestre $semestre,
-                                       array    $matieres,
+    public function getPlanningEduSign(Semestre           $semestre,
+                                       array              $matieres,
                                        AnneeUniversitaire $anneeUniversitaire,
-                                       array    $groupes): ?EvenementEdtCollection
+                                       array              $groupes): ?EvenementEdtCollection
     {
         switch ($this->getSourceEdt($semestre)) {
             case self::EDT_CELCAT:
@@ -122,11 +134,11 @@ class EdtManager
     }
 
     public function initSemestre(
-        Semestre   $semestre,
-        Calendrier $semaine,
+        Semestre           $semestre,
+        Calendrier         $semaine,
         AnneeUniversitaire $anneeUniversitaire,
-        array      $matieres = [],
-        array      $groupes = [],
+        array              $matieres = [],
+        array              $groupes = [],
     ): EvenementEdtCollection
     {
         switch ($this->getSourceEdt($semestre)) {
@@ -159,10 +171,10 @@ class EdtManager
     }
 
     public function recupereEDTBornes(
-        int      $semaineFormation,
-        Semestre $semestre,
-        string   $jourSemaine,
-        array    $matieres,
+        int                $semaineFormation,
+        Semestre           $semestre,
+        string             $jourSemaine,
+        array              $matieres,
         array              $groupes,
         AnneeUniversitaire $anneeUniversitaire
     ): EvenementEdtCollection
@@ -249,7 +261,7 @@ class EdtManager
                 foreach ($matieres as $matiere) {
                     $tMatieres[$matiere->getTypeIdMatiere()] = $matiere;
                 }
-            break;
+                break;
         }
 
         return $tMatieres;
@@ -297,4 +309,20 @@ class EdtManager
             $this->edtCelcatRepository->save($cours);
         }
     }
+
+    public function updateCourse(?int $id, ?string $source, ?int $matiereId, ?int $semestreId, ?int $groupeId, ?int $enseignantId, ?int $salleId) {
+
+        $matiere = $this->matiereRepository->find($matiereId);
+        $semestre = $this->semestreRepository->find($semestreId);
+        $groupe = $this->groupeRepository->find($groupeId);
+        $enseignant = $this->personnelRepository->find($enseignantId);
+        $salle = $this->salleRepository->find($salleId);
+
+        if ($source === 'intranet') {
+            $this->edtPlanningRepository->updateCourse($id, $matiere, $semestre, $groupe, $enseignant, $salle);
+        } elseif ($source === 'celcat') {
+            $this->edtCelcatRepository->updateCourse($id, $matiere, $semestre, $groupe, $enseignant, $salle);
+        }
+    }
+
 }

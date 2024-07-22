@@ -13,7 +13,10 @@ use App\Entity\AnneeUniversitaire;
 use App\Entity\Departement;
 use App\Entity\EdtPlanning;
 use App\Entity\Etudiant;
+use App\Entity\Groupe;
+use App\Entity\Matiere;
 use App\Entity\Personnel;
+use App\Entity\Salle;
 use App\Entity\Semestre;
 use App\Enums\TypeGroupeEnum;
 use Carbon\Carbon;
@@ -496,6 +499,19 @@ class EdtPlanningRepository extends ServiceEntityRepository
             ->addOrderBy('p.groupe', Order::Ascending->value)
             ->getQuery()
             ->getResult();
+    }
+
+    public function updateCourse($id, Matiere $matiere, Semestre $semestre, Groupe $groupe, Personnel $enseignant, Salle $salle)
+    {
+        $cours = $this->find($id);
+
+        $cours->setIdMatiere($matiere->getId());
+        $cours->setSemestre($semestre);
+        $cours->setGroupe($groupe->getId());
+        $cours->setIntervenant($enseignant);
+        $cours->setSalle($salle->getLibelle());
+
+        $this->save($cours);
     }
 
     public function save(EdtPlanning $edtPlanning): void

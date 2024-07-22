@@ -9,11 +9,16 @@
 
 namespace App\Repository;
 
+use App\Classes\Matieres\MatiereManager;
+use App\Classes\Matieres\TypeMatiereManager;
 use App\Entity\Annee;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\EdtCelcat;
 use App\Entity\Etudiant;
+use App\Entity\Groupe;
+use App\Entity\Matiere;
 use App\Entity\Personnel;
+use App\Entity\Salle;
 use App\Entity\Semestre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Collections\Order;
@@ -32,7 +37,9 @@ class EdtCelcatRepository extends ServiceEntityRepository
     private string $chaine = '';
     private array $params = [];
 
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(
+        ManagerRegistry    $registry,
+    )
     {
         parent::__construct($registry, EdtCelcat::class);
     }
@@ -203,7 +210,8 @@ class EdtCelcatRepository extends ServiceEntityRepository
 //            ->getResult();
 //    }
 
-public function findEdtSemestreSemaine(Semestre $semestre, int $semaineFormationIUT, AnneeUniversitaire $anneeUniversitaire) {
+    public function findEdtSemestreSemaine(Semestre $semestre, int $semaineFormationIUT, AnneeUniversitaire $anneeUniversitaire)
+    {
         $query = $this->createQueryBuilder('p')
             ->where('p.semestre = :semestre')
             ->andwhere('p.semaineFormation = :semaine')
@@ -219,7 +227,7 @@ public function findEdtSemestreSemaine(Semestre $semestre, int $semaineFormation
         return $query->getQuery()
             ->getResult();
 
-}
+    }
 
     public function findEdtEduSign()
     {
@@ -242,14 +250,30 @@ public function findEdtSemestreSemaine(Semestre $semestre, int $semaineFormation
             ->andWhere('p.personnel = :personnel')
             ->setParameters([
                 'date' => $date,
-                'debut' => '%'.$debut.'%',
-                'fin' => '%'.$fin.'%',
+                'debut' => '%' . $debut . '%',
+                'fin' => '%' . $fin . '%',
                 'salle' => $salle,
                 'personnel' => $personnel,
             ])
             ->getQuery()
 //            ->getOneOrNullResult();
             ->getResult();
+    }
+
+    public function updateCourse($id, Matiere $matiere, Semestre $semestre, Groupe $groupe, Personnel $enseignant, Salle $salle)
+    {
+        $cours = $this->find($id);
+
+        $cours->setIdMatiere($matiere->getId());
+        $cours->setSemestre($semestre);
+        $cours->setLibGroupe($groupe->getLibelle());
+        $cours->setCodeGroupe($groupe->getCodeApogee());
+        $cours->setPersonnel($enseignant);
+        $cours->setCodePersonnel($enseignant->getNumeroHarpege());
+        $cours->setLibPersonnel($enseignant->getNom() . " " . $enseignant->getPrenom());
+        $cours->setLibSalle($salle->getLibelle());
+
+        $this->save($cours);
     }
 
     public function save(EdtCelcat $edtCelcat): void

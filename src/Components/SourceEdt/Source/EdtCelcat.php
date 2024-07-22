@@ -16,6 +16,7 @@ use App\DTO\EvenementEdtCollection;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Constantes;
 use App\Entity\Etudiant;
+use App\Entity\Matiere;
 use App\Entity\Personnel;
 use App\Entity\Semestre;
 use App\Repository\EdtCelcatRepository;
@@ -163,6 +164,13 @@ class EdtCelcat extends AbstractEdt implements EdtInterface
         }
 
         return false;
+    }
+
+    public function setMatiere(Matiere $matiere)
+    {
+        $this->matiere = $matiere;
+
+
     }
 
     public function getCurrentEventEtudiant(Etudiant $user, AnneeUniversitaire $anneeUniversitaire): ?EvenementEdt
