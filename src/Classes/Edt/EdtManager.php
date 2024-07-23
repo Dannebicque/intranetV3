@@ -47,8 +47,8 @@ class EdtManager
         private readonly EdtCelcatRepository   $edtCelcatRepository,
         private readonly SemestreRepository    $semestreRepository,
         private readonly GroupeRepository      $groupeRepository,
-        private readonly PersonnelRepository    $personnelRepository,
-        private readonly SalleRepository        $salleRepository,
+        private readonly PersonnelRepository   $personnelRepository,
+        private readonly SalleRepository       $salleRepository,
         private readonly MatiereRepository     $matiereRepository,
     )
     {
@@ -310,18 +310,20 @@ class EdtManager
         }
     }
 
-    public function updateCourse(?int $id, ?string $source, ?int $matiereId, ?int $semestreId, ?int $groupeId, ?int $enseignantId, ?int $salleId) {
-
-        $matiere = $this->matiereRepository->find($matiereId);
-        $semestre = $this->semestreRepository->find($semestreId);
-        $groupe = $this->groupeRepository->find($groupeId);
-        $enseignant = $this->personnelRepository->find($enseignantId);
-        $salle = $this->salleRepository->find($salleId);
+    public function updateCourse(
+        $cours,
+        ?string $source,
+        ?Matiere    $matiere,
+        ?Semestre    $semestre,
+        ?Groupe    $groupe,
+        ?Personnel    $enseignant,
+        ?Salle    $salle)
+    {
 
         if ($source === 'intranet') {
-            $this->edtPlanningRepository->updateCourse($id, $matiere, $semestre, $groupe, $enseignant, $salle);
+            $this->edtPlanningRepository->updateCourse($cours, $matiere, $semestre, $groupe, $enseignant, $salle);
         } elseif ($source === 'celcat') {
-            $this->edtCelcatRepository->updateCourse($id, $matiere, $semestre, $groupe, $enseignant, $salle);
+            $this->edtCelcatRepository->updateCourse($cours, $matiere, $semestre, $groupe, $enseignant, $salle);
         }
     }
 

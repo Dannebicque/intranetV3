@@ -3,6 +3,8 @@
 namespace App\Controller\administration;
 
 use App\Classes\Edt\EdtManager;
+use App\Classes\EduSign\Adapter\IntranetEdtEduSignAdapter;
+use App\Classes\EduSign\ApiEduSign;
 use App\Classes\EduSign\CreateEnseignant;
 use App\Classes\EduSign\FixCourses;
 use App\Classes\EduSign\UpdateEdt;
@@ -44,16 +46,16 @@ class EduSignController extends BaseController
         private readonly PersonnelDepartementRepository $personnelDepartementRepository,
         private readonly DiplomeRepository              $diplomeRepository,
         private readonly PersonnelRepository            $personnelRepository,
+        private readonly MatiereRepository              $matiereRepository,
         private readonly CreateEnseignant               $createEnseignant,
         private readonly CalendrierRepository           $CalendrierRepository,
         private readonly SemestreRepository             $semestreRepository,
-        private readonly MatiereManager                 $matiereManager,
         private readonly GroupeRepository               $groupeRepository,
         private readonly EdtManager                     $edtManager,
         private readonly TypeMatiereManager             $typeMatiereManager,
-        private readonly EdtCelcatRepository            $edtCelcatRepository,
         private readonly EdtPlanningRepository          $edtPlanningRepository,
-        private readonly SalleRepository                $salleRepository
+        private readonly SalleRepository                $salleRepository,
+        private readonly ApiEduSign                     $apiEduSign
     )
     {
     }
@@ -299,13 +301,38 @@ class EduSignController extends BaseController
     public function updateCourse(int $id, string $source, UpdateEdt $updateEdt, Request $request): Response
     {
 
-        $matiere = $request->query->get('matiere');
-        $semestre = $request->query->get('semestre');
-        $groupe = $request->query->get('groupe');
-        $enseignant = $request->query->get('personnel');
-        $salle = $request->query->get('salle');
+        $matiere = $this->matiereRepository->find($request->query->get('matiere'));
+        $semestre = $this->semestreRepository->find($request->query->get('semestre'));
+        $groupe = $this->groupeRepository->find($request->query->get('groupe'));
+        $enseignant = $this->personnelRepository->find($request->query->get('personnel'));
+        $salle = $this->salleRepository->find($request->query->get('salle'));
 
-        $this->edtManager->updateCourse($id, $source, $matiere, $semestre, $groupe, $enseignant, $salle);
+        $cours = $this->edtPlanningRepository->find($id);
+
+        $this->edtManager->updateCourse($cours, $source, $matiere, $semestre, $groupe, $enseignant, $salle);
+
+        $diplome = $cours->getSemestre()->getDiplome();
+        $keyEduSign = $diplome->getKeyEduSign();
+
+        $course = (new IntranetEdtEduSignAdapter($cours))->getCourse();
+
+        $eduSignCourse = $this->apiEduSign->getCourseIdByApiId($this->evenement->id, $keyEduSign);
+        if ($course->id_edu_sign == null && !$eduSignCourse) {
+            $enseignant = $this->evenement->personnelObjet;
+            $departement = $diplome->getDepartement();
+            if ($enseignant) {
+                if ($enseignant->getIdEduSign() == '' || $enseignant->getIdEduSign() == null || !array_key_exists($departement->getId(), $enseignant->getIdEduSign())) {
+                    $this->createEnseignant->update($enseignant, $departement, $keyEduSign);
+                }
+
+                if ($course !== null) {
+                    $this->apiEduSign->addCourse($course, $keyEduSign);
+                    $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'Cours ajouté avec succès');
+                } else {
+                    $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'Erreur lors de l\'ajout du cours');
+                }
+            }
+        }
 
         return $this->redirectToRoute('administration_edusign_index');
     }

@@ -260,10 +260,8 @@ class EdtCelcatRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function updateCourse($id, Matiere $matiere, Semestre $semestre, Groupe $groupe, Personnel $enseignant, Salle $salle)
+    public function updateCourse($cours, Matiere $matiere, Semestre $semestre, Groupe $groupe, Personnel $enseignant, Salle $salle)
     {
-        $cours = $this->find($id);
-
         $cours->setIdMatiere($matiere->getId());
         $cours->setSemestre($semestre);
         $cours->setLibGroupe($groupe->getLibelle());
