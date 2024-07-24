@@ -260,16 +260,30 @@ class EdtCelcatRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function updateCourse($cours, Matiere $matiere, Semestre $semestre, Groupe $groupe, Personnel $enseignant, Salle $salle)
+    public function updateCourse($cours, ?Matiere $matiere, ?Semestre $semestre, ?Groupe $groupe, ?Personnel $enseignant, ?Salle $salle)
     {
-        $cours->setIdMatiere($matiere->getId());
-        $cours->setSemestre($semestre);
-        $cours->setLibGroupe($groupe->getLibelle());
-        $cours->setCodeGroupe($groupe->getCodeApogee());
-        $cours->setPersonnel($enseignant);
-        $cours->setCodePersonnel($enseignant->getNumeroHarpege());
-        $cours->setLibPersonnel($enseignant->getNom() . " " . $enseignant->getPrenom());
-        $cours->setLibSalle($salle->getLibelle());
+        if (null !== $matiere) {
+            $cours->setIdMatiere($matiere->getId());
+        }
+
+        if (null !== $semestre) {
+            $cours->setSemestre($semestre);
+        }
+
+        if (null !== $groupe) {
+            $cours->setLibGroupe($groupe->getLibelle());
+            $cours->setCodeGroupe($groupe->getCodeApogee());
+        }
+
+        if (null !== $enseignant) {
+            $cours->setPersonnel($enseignant);
+            $cours->setCodePersonnel($enseignant->getNumeroHarpege());
+            $cours->setLibPersonnel($enseignant->getNom() . " " . $enseignant->getPrenom());
+        }
+
+        if (null !== $salle) {
+            $cours->setLibSalle($salle->getLibelle());
+        }
 
         $this->save($cours);
     }

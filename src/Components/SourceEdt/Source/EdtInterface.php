@@ -26,6 +26,8 @@ interface EdtInterface
 
     public function find(int $event, array $matieres = [], array $groupes = []): EvenementEdt;
 
+    public function findOne(int $eventId): EvenementEdt;
+
     public function recupereEdtJourBorne(Semestre $semestre, array $matieres, int $jourSemaine, int $semaineFormation, array $groupes, AnneeUniversitaire $anneeUniversitaire): EvenementEdtCollection;
 
     public function getCurrentEventEtudiant(Etudiant $user, AnneeUniversitaire $anneeUniversitaire): ?EvenementEdt;

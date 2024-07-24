@@ -14,10 +14,15 @@ use App\Classes\Edt\EdtManager;
 use App\DTO\EvenementEdt;
 use App\DTO\EvenementEdtCollection;
 use App\Entity\Constantes;
+use App\Repository\GroupeRepository;
 use Carbon\Carbon;
 
 class EdtIntranetAdapter extends AbstractEdtAdapter implements EdtAdapterInterface
 {
+    public function __construct()
+    {
+    }
+
     public function collection(array $events, array $matieres, array $groupes): EvenementEdtCollection
     {
         $collection = new EvenementEdtCollection();
@@ -32,7 +37,6 @@ class EdtIntranetAdapter extends AbstractEdtAdapter implements EdtAdapterInterfa
     public function single(mixed $evt, array $matieres = [], array $groupes = []): ?EvenementEdt
     {
         $event = new EvenementEdt();
-
         if (array_key_exists($evt->getTypeIdMatiere(), $matieres)) {
 
             $matiere = $matieres[$evt->getTypeIdMatiere()];

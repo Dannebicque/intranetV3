@@ -65,6 +65,11 @@ class EdtCelcat extends AbstractEdt implements EdtInterface
         return $this->edtCelcatAdapter->single($evt, $matieres, $groupes);
     }
 
+    public function findOne(int $eventId): EvenementEdt
+    {
+        // TODO: Implement findOne() method.
+    }
+
     public function recupereEdtJourBorne(
         Semestre $semestre,
         array $matieres,

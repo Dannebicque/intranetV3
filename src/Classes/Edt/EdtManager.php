@@ -114,6 +114,11 @@ class EdtManager
         }
     }
 
+    public function getCourse(string $source, string $idEvent, $matiere, $groupe): ?EvenementEdt
+    {
+        return $this->getManager($source)?->findOne($idEvent, $matiere, $groupe);
+    }
+
     public function getPlanningEduSign(Semestre           $semestre,
                                        array              $matieres,
                                        AnneeUniversitaire $anneeUniversitaire,

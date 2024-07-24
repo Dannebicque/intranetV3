@@ -301,11 +301,11 @@ class EduSignController extends BaseController
     public function updateCourse(int $id, string $source, UpdateEdt $updateEdt, Request $request): Response
     {
 
-        $matiere = $this->matiereRepository->find($request->query->get('matiere'));
-        $semestre = $this->semestreRepository->find($request->query->get('semestre'));
-        $groupe = $this->groupeRepository->find($request->query->get('groupe'));
-        $enseignant = $this->personnelRepository->find($request->query->get('personnel'));
-        $salle = $this->salleRepository->find($request->query->get('salle'));
+        $matiere = $this->matiereRepository->findOneBy(['id' => $request->query->get('matiere')]);
+        $semestre = $this->semestreRepository->findOneBy(['id' => $request->query->get('semestre')]);
+        $groupe = $this->groupeRepository->findOneBy(['id' => $request->query->get('groupe')]);
+        $enseignant = $this->personnelRepository->findOneBy(['id' => $request->query->get('personnel')]);
+        $salle = $this->salleRepository->findOneBy(['id' => $request->query->get('salle')]);
 
         $cours = $this->edtPlanningRepository->find($id);
 
@@ -314,11 +314,27 @@ class EduSignController extends BaseController
         $diplome = $cours->getSemestre()->getDiplome();
         $keyEduSign = $diplome->getKeyEduSign();
 
-        $course = (new IntranetEdtEduSignAdapter($cours))->getCourse();
+//        $matiere = $this->matiereRepository->findBy(['id' => $cours->getIdMatiere()]);
 
-        $eduSignCourse = $this->apiEduSign->getCourseIdByApiId($this->evenement->id, $keyEduSign);
+        $matiere = $this->typeMatiereManager->findOneById($cours->getIdMatiere());
+
+        // ajouter typeIdMatiere comme key pour chaque matiere
+//        foreach ($matiere as $matiereObject) {
+//            $typeIdMatiere = $cours->getTypeMatiere() . '_' . $matiereObject->getId();
+//            $matiereObject[$typeIdMatiere] = $matiereObject;
+//        }
+
+        $groupe = $this->groupeRepository->findBy(['id' => $cours->getGroupe()]);
+        $event = $this->edtManager->getCourse($source, $cours->getId(), $matiere, $groupe);
+//        dd($event);
+
+        $course = (new IntranetEdtEduSignAdapter($event))->getCourse();
+//        dd($course);
+
+
+        $eduSignCourse = $this->apiEduSign->getCourseIdByApiId($event->id, $keyEduSign);
         if ($course->id_edu_sign == null && !$eduSignCourse) {
-            $enseignant = $this->evenement->personnelObjet;
+            $enseignant = $event->personnelObjet;
             $departement = $diplome->getDepartement();
             if ($enseignant) {
                 if ($enseignant->getIdEduSign() == '' || $enseignant->getIdEduSign() == null || !array_key_exists($departement->getId(), $enseignant->getIdEduSign())) {
