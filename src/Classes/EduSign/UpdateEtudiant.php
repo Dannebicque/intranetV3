@@ -94,6 +94,10 @@ class UpdateEtudiant
                     foreach ($etudiant->getGroupes() as $groupe) {
                         $groupes[] = $groupe->getIdEduSign();
                     }
+                    // retirer les entrées vides
+                    $groupes = array_filter($groupes);
+                    // retirer les keys
+                    $groupes = array_values($groupes);
 
                     $etudiantEduSign = (new IntranetEtudiantEduSignAdapter($etudiant, $groupes))->getEtudiant();
 

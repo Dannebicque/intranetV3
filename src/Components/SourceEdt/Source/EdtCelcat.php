@@ -65,9 +65,27 @@ class EdtCelcat extends AbstractEdt implements EdtInterface
         return $this->edtCelcatAdapter->single($evt, $matieres, $groupes);
     }
 
-    public function findOne(int $eventId): EvenementEdt
+    public function findOne(int $eventId, array $matieres = [], array $groupes = []): EvenementEdt
     {
         // TODO: Implement findOne() method.
+        $evt = $this->edtCelcatRepository->find($eventId);
+        $typeIdMatiere = $evt->getTypeIdMatiere();
+        $tGroupes = [];
+        foreach ($groupes as $groupe) {
+            $tGroupes[$groupe->getId()] = $groupe;
+        }
+
+        return $this->edtCelcatAdapter->single($evt, $this->transformeMatiere($matieres, $typeIdMatiere), $tGroupes);
+    }
+
+    private function transformeMatiere(array $matieres, $typeIdMatiere): array
+    {
+        $tMatieres = [];
+        foreach ($matieres as $matiere) {
+            $tMatieres[$typeIdMatiere] = $matiere;
+        }
+
+        return $tMatieres;
     }
 
     public function recupereEdtJourBorne(

@@ -20,6 +20,7 @@ class IntranetEtudiantEduSignAdapter
     {
         $this->etudiant = new EduSignEtudiant();
 
+        $this->etudiant->id = $etudiant->getIdEduSign() ?? null;
         $this->etudiant->firstname = $etudiant->getPrenom();
         $this->etudiant->lastname = $etudiant->getNom();
 //        $this->etudiant->email = $etudiant->getMailUniv();

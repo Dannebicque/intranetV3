@@ -40,6 +40,8 @@ class EdtIntranetAdapter extends AbstractEdtAdapter implements EdtAdapterInterfa
         if (array_key_exists($evt->getTypeIdMatiere(), $matieres)) {
 
             $matiere = $matieres[$evt->getTypeIdMatiere()];
+//            dd($matiere->getSemestres()->first());
+
 
             $event->matiere = $matiere->display;
             $event->code_matiere = $matiere->codeMatiere;

@@ -150,9 +150,10 @@
                                         <label for="semestre" class="text-danger">** Pas de semestre **</label>
                                         <select name="semestre" id="semestre" class="form-select">
                                             <option value="0">Sélectionner le semestre</option>
-                                            {#                                                {% for semestre in cours.semestresGroupe %} #}
+                                            {% for semestre in semestres %}
+                                                <option value="{{ semestre.id }}">{{ semestre.libelle }}</option>
+                                            {% endfor %}
                                             <option value="{{ cours.semestresGroupe.id }}">{{ cours.semestresGroupe.libelle }}</option>
-                                            {#                                                {% endfor %} #}
                                         </select>
                                     {% endif %}
                                     {% if cours.groupe is not null and cours.groupe != "" %}

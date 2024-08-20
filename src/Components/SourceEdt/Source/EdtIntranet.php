@@ -80,7 +80,11 @@ class EdtIntranet extends AbstractEdt implements EdtInterface
     {
         $evt = $this->edtPlanningRepository->find($eventId);
         $typeIdMatiere = $evt->getTypeIdMatiere();
-        return $this->edtIntranetAdapter->single($evt, $this->transformeMatiere($matieres, $typeIdMatiere), $this->transformeGroupe($groupes));
+        $tGroupes = [];
+        foreach ($groupes as $groupe) {
+            $tGroupes[$groupe->getId()] = $groupe;
+        }
+        return $this->edtIntranetAdapter->single($evt, $this->transformeMatiere($matieres, $typeIdMatiere), $tGroupes);
     }
 
     public function recupereEdtJourBorne(Semestre $semestre, array $matieres, int $jourSemaine, int $semaineFormation, array $groupes, AnneeUniversitaire $anneeUniversitaire): EvenementEdtCollection

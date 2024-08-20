@@ -331,6 +331,7 @@ class ApiEduSign
 
     public function updateEtudiant(EduSignEtudiant $etudiant, string $cleApi): void
     {
+
         $client = HttpClient::create();
 
         $response = $client->request('PATCH', 'https://ext.edusign.fr/v1/student/', [
@@ -340,7 +341,7 @@ class ApiEduSign
             ],
             'json' => ['student' => $etudiant->toArray()],
         ]);
-
+        $content = $response->getContent();
     }
 
     public function deleteEtudiant(int $etudiant, string $cleApi): void

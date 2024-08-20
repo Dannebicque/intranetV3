@@ -315,6 +315,20 @@ class EdtManager
         }
     }
 
+    public function findCourse(
+        ?string $source,
+        ?int $eventId,
+    )
+    {
+        if ($source === 'intranet') {
+            return $this->edtPlanningRepository->find($eventId);
+        } elseif ($source === 'celcat') {
+            return $this->edtCelcatRepository->find($eventId);
+        }
+
+        return null;
+    }
+
     public function updateCourse(
         $cours,
         ?string $source,

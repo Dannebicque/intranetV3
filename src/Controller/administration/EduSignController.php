@@ -22,6 +22,7 @@ use App\Repository\CalendrierRepository;
 use App\Repository\DiplomeRepository;
 use App\Repository\EdtCelcatRepository;
 use App\Repository\EdtPlanningRepository;
+use App\Repository\EtudiantRepository;
 use App\Repository\GroupeRepository;
 use App\Repository\MatiereRepository;
 use App\Repository\PersonnelDepartementRepository;
@@ -29,6 +30,7 @@ use App\Repository\PersonnelRepository;
 use App\Repository\SalleRepository;
 use App\Repository\SemestreRepository;
 use Carbon\Carbon;
+use Doctrine\Common\Collections\Order;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -55,6 +57,7 @@ class EduSignController extends BaseController
         private readonly TypeMatiereManager             $typeMatiereManager,
         private readonly EdtPlanningRepository          $edtPlanningRepository,
         private readonly SalleRepository                $salleRepository,
+        private readonly EtudiantRepository            $etudiantRepository,
         private readonly ApiEduSign                     $apiEduSign
     )
     {
@@ -90,12 +93,15 @@ class EduSignController extends BaseController
                 $matieresSemestre = $this->getMatieresSemestre($semestre);
 
                 $groupes = $this->groupeRepository->findBySemestre($semestre);
+
                 $edt = $this->edtManager->getPlanningSemestreSemaine($semestre, $semaine, $semestre->getAnneeUniversitaire(), $matieresSemestre, $groupes);
+
 
                 $salles = $this->salleRepository->findAll();
 
                 foreach ($edt->evenements as $this->evenement) {
                     if ($this->evenement->dateObjet->isBetween($start, $end)) {
+
                         // ajouter $matieresSemestre dans $this->evenement
                         $this->evenement->matieresSemestre = $matieresSemestre;
                         $this->evenement->semestresGroupe = $semestre;
@@ -113,10 +119,13 @@ class EduSignController extends BaseController
         $pagination = new MyPagination($router);
         $pagination->calculPaginationFromArray($cours, ['path' => 'administration_edusign_index', 'args' => []], 10, $page);
 
+        $semestres = $this->semestreRepository->findByDepartementActif($departement);
+
         return $this->render('administration/edusign/index.html.twig', [
             'departement' => $departement,
             'pagination' => $pagination,
             'personnelsDepartement' => $filteredPersonnelsDepartement,
+            'semestres' => $semestres,
             'cours' => $cours
         ]);
     }
@@ -300,6 +309,7 @@ class EduSignController extends BaseController
     #[Route('/update-course/{source}/{id}/', name: 'app_admin_edu_sign_update_cours')]
     public function updateCourse(int $id, string $source, UpdateEdt $updateEdt, Request $request): Response
     {
+        // todo: ! si PTUT : matiere = null
 
         $matiere = $this->matiereRepository->findOneBy(['id' => $request->query->get('matiere')]);
         $semestre = $this->semestreRepository->findOneBy(['id' => $request->query->get('semestre')]);
@@ -307,16 +317,21 @@ class EduSignController extends BaseController
         $enseignant = $this->personnelRepository->findOneBy(['id' => $request->query->get('personnel')]);
         $salle = $this->salleRepository->findOneBy(['id' => $request->query->get('salle')]);
 
-        $cours = $this->edtPlanningRepository->find($id);
+        $cours = $this->edtManager->findCourse($source, $id);
 
         $this->edtManager->updateCourse($cours, $source, $matiere, $semestre, $groupe, $enseignant, $salle);
 
         $diplome = $cours->getSemestre()->getDiplome();
         $keyEduSign = $diplome->getKeyEduSign();
 
-//        $matiere = $this->matiereRepository->findBy(['id' => $cours->getIdMatiere()]);
-
         $matiere = $this->typeMatiereManager->findOneById($cours->getIdMatiere());
+
+        foreach ($matiere as $item) {
+            $matiere = [];
+            if ($item->typeMatiere === $cours->getTypeMatiere()) {
+                $matiere[] = $item;
+            }
+        }
 
         // ajouter typeIdMatiere comme key pour chaque matiere
 //        foreach ($matiere as $matiereObject) {
@@ -324,12 +339,14 @@ class EduSignController extends BaseController
 //            $matiereObject[$typeIdMatiere] = $matiereObject;
 //        }
 
-        $groupe = $this->groupeRepository->findBy(['id' => $cours->getGroupe()]);
+        if ($source === 'intranet') {
+            $groupe = $this->groupeRepository->findBy(['id' => $cours->getGroupe()]);
+        } else {
+            $groupe = $this->groupeRepository->findBy(['codeApogee' => $cours->getCodeGroupe()]);
+        }
         $event = $this->edtManager->getCourse($source, $cours->getId(), $matiere, $groupe);
-//        dd($event);
 
         $course = (new IntranetEdtEduSignAdapter($event))->getCourse();
-//        dd($course);
 
 
         $eduSignCourse = $this->apiEduSign->getCourseIdByApiId($event->id, $keyEduSign);
