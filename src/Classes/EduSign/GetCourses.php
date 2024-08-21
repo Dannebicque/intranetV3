@@ -10,6 +10,8 @@
 namespace App\Classes\EduSign;
 
 use App\Classes\Edt\EdtManager;
+use App\Classes\EduSign\Api\ApiCours;
+use App\Classes\EduSign\Api\ApiEduSign;
 use App\Classes\Matieres\TypeMatiereManager;
 use App\Entity\Absence;
 use App\Event\AbsenceEvent;
@@ -35,7 +37,7 @@ class GetCourses
 {
 
     public function __construct(
-        private readonly ApiEduSign            $apiEduSign,
+        private readonly ApiCours               $apiCours,
         private readonly EdtManager            $edtManager,
         private readonly TypeMatiereManager    $typeMatiereManager,
         protected SemestreRepository           $semestreRepository,
@@ -103,7 +105,7 @@ class GetCourses
                             $id = $evenement->getIdEduSign();
 
                             if ($id !== null) {
-                                $course = $this->apiEduSign->getCourses($id, $cleApi);
+                                $course = $this->apiCours->getCourses($id, $cleApi);
                                 $this->newAbsence($course);
                             }
 //                            else {
@@ -165,7 +167,7 @@ class GetCourses
                             $id = $evenement->getIdEduSign();
 
                             if ($id !== null) {
-                                $course = $this->apiEduSign->getCourses($id, $cleApi);
+                                $course = $this->apiCours->getCourses($id, $cleApi);
 //                                if (is_array($course) && isset($course['ID']) && $course['ID'] == "zf84nci0h3krqdw") {
 //                                    dump($course['STUDENTS']);
                                     $this->newAbsence($course);

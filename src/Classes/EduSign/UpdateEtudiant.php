@@ -10,6 +10,7 @@
 namespace App\Classes\EduSign;
 
 use App\Classes\EduSign\Adapter\IntranetEtudiantEduSignAdapter;
+use App\Classes\EduSign\Api\ApiEtudiant;
 use App\Classes\EduSign\DTO\EduSignEtudiant;
 use App\Repository\DiplomeRepository;
 use App\Repository\EtudiantRepository;
@@ -18,7 +19,7 @@ use App\Repository\SemestreRepository;
 class UpdateEtudiant
 {
     public function __construct(
-        private readonly ApiEduSign  $apiEduSign,
+        private readonly ApiEtudiant $apiEtudiant,
         protected DiplomeRepository  $diplomeRepository,
         protected SemestreRepository $semestreRepository,
         protected EtudiantRepository $etudiantRepository,
@@ -32,40 +33,42 @@ class UpdateEtudiant
         $result = ['success' => true, 'messages' => []];
 
         if ($keyEduSign === null) {
-            $result['success'] = false;
-            $result['messages'][] = 'Clé EduSign manquante pour la mise à jour des étudiants.';
-            return $result;
+            return ['success' => false, 'messages' => ['Clé EduSign manquante pour la mise à jour des étudiants.']];
         }
 
         $diplomes = $this->diplomeRepository->findBy(['keyEduSign' => $keyEduSign]);
         if (empty($diplomes)) {
-            $result['success'] = false;
-            $result['messages'][] = 'Aucun diplôme trouvé pour la clé EduSign fournie.';
-            return $result;
+            return ['success' => false, 'messages' => ['Aucun diplôme trouvé pour la clé EduSign fournie.']];
         }
 
         foreach ($diplomes as $diplome) {
-            $departement = $diplome->getDepartement();
-            $semestres = $this->semestreRepository->findSemestreEduSignDept($departement);
+            $semestres = $this->semestreRepository->findSemestreEduSignDept($diplome->getDepartement());
 
             foreach ($semestres as $semestre) {
                 $etudiants = $this->etudiantRepository->findBySemestre($semestre);
 
                 foreach ($etudiants as $etudiant) {
-                    $groupes = [$etudiant->getSemestre()->getIdEduSign()];
-                    foreach ($etudiant->getGroupes() as $groupe) {
-                        $groupes[] = $groupe->getIdEduSign();
-                    }
-
+                    $groupes = array_merge(
+                        [$etudiant->getSemestre()->getIdEduSign()],
+                        array_map(fn($g) => $g->getIdEduSign(), $etudiant->getGroupes()->toArray())
+                    );
                     $etudiantEduSign = (new IntranetEtudiantEduSignAdapter($etudiant, $groupes))->getEtudiant();
+//                    dd($etudiantEduSign);
 
                     try {
                         if ($etudiant->getIdEduSign() === null) {
-                            $this->apiEduSign->addEtudiant($etudiantEduSign, $keyEduSign);
-                            $result['messages'][] = "Étudiant ajouté : {$etudiant->getNom()} {$etudiant->getPrenom()}.";
+                            $response = $this->apiEtudiant->addEtudiant($etudiantEduSign, $keyEduSign);
                         } else {
-                            $this->apiEduSign->updateEtudiant($etudiantEduSign, $keyEduSign);
-                            $result['messages'][] = "Étudiant mis à jour : {$etudiant->getNom()} {$etudiant->getPrenom()}.";
+                            $response = $this->apiEtudiant->updateEtudiant($etudiantEduSign, $keyEduSign);
+                        }
+
+                        if ($response['success']) {
+                            $result['messages'][] = $etudiant->getIdEduSign() === null
+                                ? "Étudiant ajouté : {$etudiant->getNom()} {$etudiant->getPrenom()}."
+                                : "Étudiant mis à jour : {$etudiant->getNom()} {$etudiant->getPrenom()}.";
+                        } else {
+                            $result['success'] = false;
+                            $result['messages'][] = "Erreur lors de la mise à jour de l'étudiant {$etudiant->getNom()} {$etudiant->getPrenom()}: " . $response['error'];
                         }
                     } catch (\Exception $e) {
                         $result['success'] = false;
@@ -83,36 +86,28 @@ class UpdateEtudiant
         $result = ['success' => true, 'messages' => []];
 
         foreach ($diplomes as $diplome) {
-            $departement = $diplome->getDepartement();
-            $semestres = $this->semestreRepository->findSemestreEduSignDept($departement);
+            $semestres = $this->semestreRepository->findSemestreEduSignDept($diplome->getDepartement());
 
             foreach ($semestres as $semestre) {
                 $etudiants = $this->etudiantRepository->findBySemestre($semestre);
 
                 foreach ($etudiants as $etudiant) {
-                    $groupes = [$etudiant->getSemestre()->getIdEduSign()];
-                    foreach ($etudiant->getGroupes() as $groupe) {
-                        $groupes[] = $groupe->getIdEduSign();
-                    }
-                    // retirer les entrées vides
-                    $groupes = array_filter($groupes);
-                    // retirer les keys
-                    $groupes = array_values($groupes);
+                    $groupes = array_merge([$etudiant->getSemestre()->getIdEduSign()], array_map(fn($g) => $g->getIdEduSign(), $etudiant->getGroupes()));
+                    $groupes = array_values(array_filter($groupes)); // Remove empty entries and reindex
 
                     $etudiantEduSign = (new IntranetEtudiantEduSignAdapter($etudiant, $groupes))->getEtudiant();
 
                     try {
                         if ($etudiant->getIdEduSign() === null) {
-                            $this->apiEduSign->addEtudiant($etudiantEduSign, $diplome->getKeyEduSign());
+                            $this->apiEtudiant->addEtudiant($etudiantEduSign, $diplome->getKeyEduSign());
                             $result['messages'][] = "Étudiant ajouté : {$etudiant->getNom()} {$etudiant->getPrenom()}.";
                         } else {
-                            $this->apiEduSign->updateEtudiant($etudiantEduSign, $diplome->getKeyEduSign());
+                            $this->apiEtudiant->updateEtudiant($etudiantEduSign, $diplome->getKeyEduSign());
                             $result['messages'][] = "Étudiant mis à jour : {$etudiant->getNom()} {$etudiant->getPrenom()}.";
                         }
                     } catch (\Exception $e) {
                         $result['success'] = false;
-                        $result['messages'][] = "Erreur lors de la mise à jour de l'étudiant
-                        {$etudiant->getNom()} {$etudiant->getPrenom()}: " . $e->getMessage();
+                        $result['messages'][] = "Erreur lors de la mise à jour de l'étudiant {$etudiant->getNom()} {$etudiant->getPrenom()}: " . $e->getMessage();
                     }
                 }
             }

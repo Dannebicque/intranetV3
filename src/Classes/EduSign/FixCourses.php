@@ -12,6 +12,8 @@ namespace App\Classes\EduSign;
 use App\Classes\Edt\EdtManager;
 use App\Classes\EduSign\Adapter\EduSignEdtCelcatAdapter;
 use App\Classes\EduSign\Adapter\EduSignEdtIntranetAdapter;
+use App\Classes\EduSign\Api\ApiCours;
+use App\Classes\EduSign\Api\ApiEduSign;
 use App\Classes\EduSign\DTO\EduSignCourse;
 use App\Entity\Constantes;
 use App\Repository\AbsenceRepository;
@@ -33,7 +35,7 @@ class FixCourses
     protected ?string $source;
 
     public function __construct(
-        private readonly ApiEduSign            $apiEduSign,
+        private readonly ApiCours                $apiCours,
         protected SemestreRepository           $semestreRepository,
         protected PersonnelRepository          $personnelRepository,
         protected EtudiantRepository           $etudiantRepository,
@@ -62,7 +64,7 @@ class FixCourses
             $cleApi = $diplome->getKeyEduSign();
 
             // on récupère tous les cours
-            $courses = $this->apiEduSign->getAllCourses($cleApi);
+            $courses = $this->apiCours->getAllCourses($cleApi);
 
             if ($courses) {
                 foreach ($courses as $course) {
@@ -114,14 +116,14 @@ class FixCourses
                                 $this->edusignCourse->professor = $course['PROFESSOR'];
                                 $this->edusignCourse->school_group = $course['SCHOOL_GROUP'];
 
-                                $this->apiEduSign->updateCourse($this->edusignCourse, $cleApi);
+                                $this->apiCours->updateCourse($this->edusignCourse, $cleApi);
 
-                                $response[$this->apiEduSign->updateCourse($this->edusignCourse, $cleApi)]['cours_maj']['intranet'][] = ['id' => $course['API_ID'], 'date' => $cours->date, 'debut' => $cours->heureDebut, 'fin' => $cours->heureFin, 'salle' => $cours->salle, 'intervenant' => $cours->personnelObjet];
+                                $response[$this->apiCours->updateCourse($this->edusignCourse, $cleApi)]['cours_maj']['intranet'][] = ['id' => $course['API_ID'], 'date' => $cours->date, 'debut' => $cours->heureDebut, 'fin' => $cours->heureFin, 'salle' => $cours->salle, 'intervenant' => $cours->personnelObjet];
 
                             } elseif ($coursIntranet === null && $course['API_ID'] !== null) {
-                                $this->apiEduSign->deleteCourse($course['ID'], $cleApi);
+                                $this->apiCours->deleteCourse($course['ID'], $cleApi);
 
-                                $response[$this->apiEduSign->deleteCourse($course['ID'], $cleApi)]['cours_supprimés']['edusign'][] = ['id' => $course['API_ID'], 'date' => $cours->date, 'debut' => $cours->heureDebut, 'fin' => $cours->heureFin, 'salle' => $cours->salle, 'intervenant' => $cours->personnelObjet];
+                                $response[$this->apiCours->deleteCourse($course['ID'], $cleApi)]['cours_supprimés']['edusign'][] = ['id' => $course['API_ID'], 'date' => $cours->date, 'debut' => $cours->heureDebut, 'fin' => $cours->heureFin, 'salle' => $cours->salle, 'intervenant' => $cours->personnelObjet];
 
                             } elseif ($coursIntranet !== null && ($coursIntranet->getIdEduSign() === null && $course['API_ID'] !== null)) {
                                 $coursIntranet->setIdEduSign($course['ID']);

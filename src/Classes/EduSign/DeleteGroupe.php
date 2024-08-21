@@ -10,6 +10,8 @@
 namespace App\Classes\EduSign;
 
 use App\Classes\EduSign\Adapter\IntranetGroupeEduSignAdapter;
+use App\Classes\EduSign\Api\ApiEduSign;
+use App\Classes\EduSign\Api\ApiGroupe;
 use App\Repository\DiplomeRepository;
 use App\Repository\GroupeRepository;
 use App\Repository\SemestreRepository;
@@ -17,7 +19,7 @@ use App\Repository\SemestreRepository;
 class DeleteGroupe
 {
     public function __construct(
-        private readonly ApiEduSign  $apiEduSign,
+        private readonly ApiGroupe   $apiGroupe,
         protected GroupeRepository   $groupeRepository,
         protected SemestreRepository $semestreRepository,
         protected DiplomeRepository  $diplomeRepository,
@@ -44,7 +46,7 @@ class DeleteGroupe
                     // on créé des objets Groupe adaptés pour EduSign à partir des parents
                     $parent = (new IntranetGroupeEduSignAdapter($parent))->getGroupe();
                     // on envoie les groupes à EduSign pour suppression
-                    $this->apiEduSign->deleteGroupe($parent, $cleApi);
+                    $this->apiGroupe->deleteGroupe($parent, $cleApi);
                 }
 
                 foreach ($groupes as $groupe) {
@@ -52,7 +54,7 @@ class DeleteGroupe
                         // on créé des objets Groupe adaptés pour EduSign à partir des enfants
                         $group = (new IntranetGroupeEduSignAdapter($groupe))->getGroupe();
                         // on envoie les groupes à EduSign pour suppression
-                        $this->apiEduSign->deleteGroupe($group, $cleApi);
+                        $this->apiGroupe->deleteGroupe($group, $cleApi);
                     }
                 }
             }

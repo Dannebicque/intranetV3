@@ -11,6 +11,7 @@ namespace App\Classes\EduSign;
 
 use App\Classes\Edt\EdtManager;
 use App\Classes\EduSign\Adapter\IntranetEdtEduSignAdapter;
+use App\Classes\EduSign\Api\ApiCours;
 use App\Classes\Matieres\TypeMatiereManager;
 use App\DTO\EvenementEdt;
 use App\Entity\Diplome;
@@ -32,7 +33,7 @@ class UpdateEdt
     private ?string $cleApi;
 
     public function __construct(
-        private readonly ApiEduSign         $apiEduSign,
+        private readonly ApiCours         $apiCours,
         private readonly EdtManager         $edtManager,
         private readonly TypeMatiereManager $typeMatiereManager,
         protected SemestreRepository        $semestreRepository,
@@ -101,7 +102,7 @@ class UpdateEdt
 //
 //                            $course = (new IntranetEdtEduSignAdapter($this->evenement))->getCourse();
 //
-//                            $eduSignCourse = $this->apiEduSign->getCourseIdByApiId($this->evenement->id, $this->cleApi);
+//                            $eduSignCourse = $this->apiCours->getCourseIdByApiId($this->evenement->id, $this->cleApi);
 //
 //                            if ($course->id_edu_sign == null && !$eduSignCourse) {
 //
@@ -269,7 +270,7 @@ class UpdateEdt
     {
         if (!($this->evenement->matiere === null || $this->evenement->matiere === "Inconnue" || $this->evenement->groupeObjet === null || $this->evenement->personnelObjet === null || $this->evenement->semestre === null)) {
             $course = (new IntranetEdtEduSignAdapter($this->evenement))->getCourse();
-            $eduSignCourse = $this->apiEduSign->getCourseIdByApiId($this->evenement->id, $this->cleApi);
+            $eduSignCourse = $this->apiCours->getCourseIdByApiId($this->evenement->id, $this->cleApi);
             if ($course->id_edu_sign == null && !$eduSignCourse) {
                 $enseignant = $this->evenement->personnelObjet;
                 $departement = $diplome->getDepartement();
@@ -287,7 +288,7 @@ class UpdateEdt
     {
         $course = (new IntranetEdtEduSignAdapter($this->evenement))->getCourse();
         if ($course !== null) {
-            $this->apiEduSign->addCourse($course, $this->cleApi);
+            $this->apiCours->addCourse($course, $this->cleApi);
             $response = 'cours ajouté - id : ' . $this->evenement->id;
         } else {
             $response = 'cours non trouvé - id : ' . $this->evenement->id;

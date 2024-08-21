@@ -11,6 +11,8 @@ namespace App\Classes\EduSign;
 
 use App\Classes\Edt\EdtManager;
 use App\Classes\EduSign\Adapter\IntranetEdtEduSignAdapter;
+use App\Classes\EduSign\Api\ApiCours;
+use App\Classes\EduSign\Api\ApiEduSign;
 use App\Classes\Matieres\TypeMatiereManager;
 use App\Repository\ApcReferentielRepository;
 use App\Repository\DepartementRepository;
@@ -21,7 +23,7 @@ use App\Repository\SemestreRepository;
 class DeleteCourse
 {
     public function __construct(
-        private readonly ApiEduSign        $apiEduSign,
+        private readonly ApiCours              $apiCours,
         protected EdtPlanningRepository    $edtPlanningRepository,
         protected DepartementRepository    $departementRepository,
         protected SemestreRepository       $semestreRepository,
@@ -59,7 +61,7 @@ class DeleteCourse
                     $course = (new IntranetEdtEduSignAdapter($evenement))->getCourse();
 
                     if ($course !== null) {
-                        $this->apiEduSign->deleteCourse($course, $cleApi);
+                        $this->apiCours->deleteCourse($course, $cleApi);
                     }
                 }
             }

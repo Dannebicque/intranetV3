@@ -10,7 +10,7 @@
 
 namespace App\Controller;
 
-use App\Classes\EduSign\ApiEduSign;
+use App\Classes\EduSign\Api\ApiGroupe;
 use App\Classes\EduSign\CreateEnseignant;
 use App\Classes\EduSign\FixCourses;
 use App\Classes\EduSign\UpdateEdt;
@@ -39,7 +39,7 @@ class EduSignController extends BaseController
         protected PersonnelDepartementRepository $personnelDepartementRepository,
         protected PersonnelRepository            $personnelRepository,
         protected CreateEnseignant               $createEnseignant,
-        protected ApiEduSign                     $apiEduSign,
+        protected ApiGroupe                      $apiGroupe,
         protected SemestreRepository             $semestreRepository,
         protected GroupeRepository               $groupeRepository,
     )
@@ -81,31 +81,28 @@ class EduSignController extends BaseController
     public function init(?int $id, UpdateGroupe $updateGroupe, UpdateEtudiant $updateEtudiant, MailerInterface $mailer): RedirectResponse
     {
         $departement = $this->departementRepository->find($id);
-        $diplomesErrors = []; // Structure to store errors by diplôme
-
         if (!$departement) {
             $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'Département introuvable.');
             return $this->redirectToRoute('app_edu_sign');
         }
 
         $diplomes = $this->diplomeRepository->findAllWithEduSignDepartement($departement);
+        $diplomesErrors = [];
 
         foreach ($diplomes as $diplome) {
             $keyEduSign = $diplome->getKeyEduSign();
-            $updateGroupeResult = $updateGroupe->update($keyEduSign);
-            $updateEtudiantResult = $updateEtudiant->update($keyEduSign);
             $errors = [];
 
+            // Update groups and students, collect errors
+            $updateGroupeResult = $updateGroupe->update($keyEduSign);
+            $updateEtudiantResult = $updateEtudiant->update($keyEduSign);
+
             if (!$updateGroupeResult['success']) {
-                foreach ($updateGroupeResult['messages'] as $message) {
-                    $errors[] = $message;
-                }
+                $errors = array_merge($errors, $updateGroupeResult['messages']);
             }
 
             if (!$updateEtudiantResult['success']) {
-                foreach ($updateEtudiantResult['messages'] as $message) {
-                    $errors[] = $message;
-                }
+                $errors = array_merge($errors, $updateEtudiantResult['messages']);
             }
 
             if (!empty($errors)) {
@@ -124,17 +121,9 @@ class EduSignController extends BaseController
         $mailer->send($email);
 
         if (!empty($diplomesErrors)) {
-            // Concaténer tous les messages d'erreur en une seule chaîne
-            $allErrors = [];
-            foreach ($diplomesErrors as $diplome => $errors) {
-                foreach ($errors as $error) {
-                    $allErrors[] = "[$diplome] $error";
-                }
-            }
-            $errorMessage = implode("\n", $allErrors);
-
-            // afficher les erreurs
-            $this->addFlashBag(Constantes::FLASHBAG_ERROR, $errorMessage);
+            $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'Une erreur est survenue lors de l\'initialisation des données sur EduSign, le détail des erreurs a été envoyé par mail.');
+        } else {
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'Les données ont été initialisées sur EduSign.');
         }
 
         return $this->redirectToRoute('app_edu_sign');
@@ -208,7 +197,7 @@ class EduSignController extends BaseController
         foreach ($diplomes as $diplome) {
             if ($diplome->getKeyEduSign() !== null) {
                 $keyEduSign = $diplome->getKeyEduSign();
-                $groupesEduSign = $this->apiEduSign->getAllGroups($keyEduSign);
+                $groupesEduSign = $this->apiGroupe->getAllGroups($keyEduSign);
 
                 $semestres = $this->semestreRepository->findByDiplome($diplome);
 

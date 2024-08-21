@@ -10,6 +10,8 @@
 namespace App\Classes\EduSign;
 
 use App\Classes\EduSign\Adapter\IntranetEnseignantEduSignAdapter;
+use App\Classes\EduSign\Api\ApiEduSign;
+use App\Classes\EduSign\Api\ApiPersonnel;
 use App\Entity\Departement;
 use App\Entity\Personnel;
 use App\Repository\PersonnelRepository;
@@ -17,7 +19,7 @@ use App\Repository\PersonnelRepository;
 class CreateEnseignant
 {
     public function __construct(
-        private readonly ApiEduSign   $apiEduSign,
+        private readonly ApiPersonnel $apiPersonnel,
         protected PersonnelRepository $personnelRepository)
     {
     }
@@ -28,7 +30,7 @@ class CreateEnseignant
             // Construit les objets associés selon le modèle EduSign
             $enseignant = (new IntranetEnseignantEduSignAdapter($personnel))->getEnseignant();
             // Envoi une requête pour ajouter les éléments
-            $result = $this->apiEduSign->addEnseignant($enseignant, $personnel, $departement, $cleApi);
+            $result = $this->apiPersonnel->addEnseignant($enseignant, $personnel, $departement, $cleApi);
 
             if (!$result['success']) {
                 return ['success' => false, 'error' => $result['error']];

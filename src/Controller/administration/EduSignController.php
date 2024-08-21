@@ -4,12 +4,11 @@ namespace App\Controller\administration;
 
 use App\Classes\Edt\EdtManager;
 use App\Classes\EduSign\Adapter\IntranetEdtEduSignAdapter;
-use App\Classes\EduSign\ApiEduSign;
+use App\Classes\EduSign\Api\ApiCours;
 use App\Classes\EduSign\CreateEnseignant;
 use App\Classes\EduSign\FixCourses;
 use App\Classes\EduSign\UpdateEdt;
 use App\Classes\EduSign\UpdateEtudiant;
-use App\Classes\Matieres\MatiereManager;
 use App\Classes\Matieres\TypeMatiereManager;
 use App\Classes\MyPagination;
 use App\Controller\BaseController;
@@ -20,9 +19,6 @@ use App\Entity\Diplome;
 use App\Entity\Semestre;
 use App\Repository\CalendrierRepository;
 use App\Repository\DiplomeRepository;
-use App\Repository\EdtCelcatRepository;
-use App\Repository\EdtPlanningRepository;
-use App\Repository\EtudiantRepository;
 use App\Repository\GroupeRepository;
 use App\Repository\MatiereRepository;
 use App\Repository\PersonnelDepartementRepository;
@@ -30,7 +26,6 @@ use App\Repository\PersonnelRepository;
 use App\Repository\SalleRepository;
 use App\Repository\SemestreRepository;
 use Carbon\Carbon;
-use Doctrine\Common\Collections\Order;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -55,10 +50,8 @@ class EduSignController extends BaseController
         private readonly GroupeRepository               $groupeRepository,
         private readonly EdtManager                     $edtManager,
         private readonly TypeMatiereManager             $typeMatiereManager,
-        private readonly EdtPlanningRepository          $edtPlanningRepository,
         private readonly SalleRepository                $salleRepository,
-        private readonly EtudiantRepository            $etudiantRepository,
-        private readonly ApiEduSign                     $apiEduSign
+        private readonly ApiCours                       $apiCours,
     )
     {
     }
@@ -349,7 +342,7 @@ class EduSignController extends BaseController
         $course = (new IntranetEdtEduSignAdapter($event))->getCourse();
 
 
-        $eduSignCourse = $this->apiEduSign->getCourseIdByApiId($event->id, $keyEduSign);
+        $eduSignCourse = $this->apiCours->getCourseIdByApiId($event->id, $keyEduSign);
         if ($course->id_edu_sign == null && !$eduSignCourse) {
             $enseignant = $event->personnelObjet;
             $departement = $diplome->getDepartement();
@@ -359,7 +352,7 @@ class EduSignController extends BaseController
                 }
 
                 if ($course !== null) {
-                    $this->apiEduSign->addCourse($course, $keyEduSign);
+                    $this->apiCours->addCourse($course, $keyEduSign);
                     $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'Cours ajouté avec succès');
                 } else {
                     $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'Erreur lors de l\'ajout du cours');
