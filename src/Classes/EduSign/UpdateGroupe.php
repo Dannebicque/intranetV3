@@ -38,10 +38,13 @@ class UpdateGroupe
                 $semestres = $this->semestreRepository->findByDiplome($diplome);
 
                 foreach ($semestres as $semestre) {
-                    if ($semestre->getIdEduSign() === null) {
                         $groupe = (new IntranetGroupeEduSignAdapter($anneeUniv, $semestre))->getGroupe();
+                    if ($semestre->getIdEduSign() === null) {
                         $this->apiGroupe->addGroupe($groupe, $cleApi, 'semestre');
                         $result['messages'][] = "Groupe ajouté pour le semestre {$semestre->getLibelle()}.";
+                    } else {
+                        $this->apiGroupe->updateGroupe($groupe, $cleApi, 'semestre');
+                        $result['messages'][] = "Groupe mis à jour pour le semestre {$semestre->getLibelle()}.";
                     }
                 }
 
@@ -56,13 +59,21 @@ class UpdateGroupe
                             foreach ($groupe->getTypeGroupe()->getSemestres() as $semestre) {
                                 if ($semestre === $parent) {
                                     $groupea = (new IntranetGroupeEduSignAdapter($anneeUniv, $groupe, $parent->getIdEduSign()))->getGroupe();
-                                    $this->apiGroupe->addGroupe($groupea, $cleApi, 'groupe');
+                                    if ($groupe->getIdEduSign() === null) {
+                                        $this->apiGroupe->addGroupe($groupea, $cleApi, 'groupe');
+                                    } else {
+                                        $this->apiGroupe->updateGroupe($groupea, $cleApi);
+                                    }
                                     $result['messages'][] = "Groupe ajouté pour le groupe {$groupe->getLibelle()}.";
                                 }
                             }
                         }
                     }
                 }
+
+                // vérifier qu'il n'y a pas de groupe orphelin dans EduSign
+                $allGroupes = $this->apiGroupe->getAllGroupes($cleApi);
+                // todo: vérifier pour chaque groupe quil existe dans la db + ajouter avant une variable pr identifier les semestres et les groupes
             }
         } catch (\Exception $e) {
             $result['success'] = false;

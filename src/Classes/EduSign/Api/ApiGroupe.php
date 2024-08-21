@@ -78,29 +78,81 @@ class ApiGroupe
         return $content;
     }
 
-    public function deleteGroupe(EduSignGroupe $groupe, string $cleApi): void
+    public function updateGroupe(EduSignGroupe $groupe, string $cleApi): mixed
     {
-        $client = HttpClient::create();
+        try {
+            $client = HttpClient::create();
 
-        $response = $client->request('DELETE', 'https://ext.edusign.fr/v1/group/' . $groupe->id_edu_sign, [
-            'headers' => [
-                'Content-Type' => 'application/json',
-                'Authorization' => 'Bearer ' . $this->getCleApi->getCleApi($cleApi),
-            ],
-        ]);
+            $response = $client->request('PATCH', 'https://ext.edusign.fr/v1/group', [
+                'json' => ['group' => $groupe->toArray()],
+                'headers' => [
+                    'Authorization' => 'Bearer ' . $this->getCleApi->getCleApi($cleApi),
+                    'accept' => 'application/json',
+                    'content-type' => 'application/json',
+                ],
+            ]);
 
-        $statusCode = $response->getStatusCode();
-        $content = $response->getContent();
+            $content = $response->getContent();
+            $data = json_decode($content, true);
 
-        $groupe = $this->groupeRepository->findOneBy(['idEduSign' => $groupe->id_edu_sign]) ?? $this->semestreRepository->findOneBy(['idEduSign' => $groupe->id_edu_sign]);
-        if ($groupe) {
-            $groupe->setIdEduSign(null);
-            if ($groupe instanceof Groupe) {
-                $this->groupeRepository->save($groupe);
-            } elseif ($groupe instanceof Semestre) {
-                $this->semestreRepository->save($groupe);
+            if (isset($data['status']) && $data['status'] === 'error') {
+                return ['success' => false, 'error' => $data['message']];
             }
+
+            return ['success' => true, 'data' => $data];
+        } catch (\Exception $e) {
+            return ['success' => false, 'error' => $e->getMessage()];
         }
 
+    }
+
+    public function deleteGroupe(EduSignGroupe $groupe, string $cleApi): array
+    {
+        try {
+            $client = HttpClient::create();
+
+            $response = $client->request('DELETE', 'https://ext.edusign.fr/v1/group/' . $groupe->id_edu_sign, [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'Authorization' => 'Bearer ' . $this->getCleApi->getCleApi($cleApi),
+                ],
+            ]);
+
+            $content = $response->getContent();
+            $data = json_decode($content, true);
+
+            if (isset($data['status']) && $data['status'] === 'error') {
+                return ['success' => false, 'error' => $data['message']];
+            }
+
+            return ['success' => true, 'data' => $data];
+        } catch (\Exception $e) {
+            return ['success' => false, 'error' => $e->getMessage()];
+        }
+    }
+
+    public function getAllGroupes(string $cleApi): mixed
+    {
+        try {
+            $client = HttpClient::create();
+
+            $response = $client->request('GET', 'https://ext.edusign.fr/v1/group', [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'Authorization' => 'Bearer ' . $this->getCleApi->getCleApi($cleApi),
+                ]
+            ]);
+
+            $content = $response->getContent();
+            $data = json_decode($content, true);
+
+            if (isset($data['status']) && $data['status'] === 'error') {
+                return ['success' => false, 'error' => $data['message']];
+            }
+
+            return $data['result'] ?? null;
+        } catch (\Exception $e) {
+            return ['success' => false, 'error' => $e->getMessage()];
+        }
     }
 }
