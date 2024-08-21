@@ -115,15 +115,16 @@
         </tr>
     {% else %}
         <tr>
-            <td colspan="11" class="text-center">
+            <td colspan="7" class="text-center">
                 <span class="badge bg-warning">Aucune prime n'a été saisie</span>
             </td>
         </tr>
     {% endfor %}
+    {# todo: todo mettre dans une ligne complete de tableau avc un background pour différencier  #}
     <tr>
-        <td colspan="11" class="bg-complementary">
+        <td colspan="7" class="bg-complementary">
             <div class="row">
-                <div class="col-6">
+                <div class="col-3">
                     <label class="sr-only" for="addPersonnel">Choisir un intervenant à ajouter</label>
                     <select id="addPersonnel"
                             {{ stimulus_controller('symfony/ux-autocomplete/autocomplete') }}
@@ -137,13 +138,34 @@
                         {% endfor %}
                     </select>
                 </div>
-                <div class="col-6">
+                <div class="col-3">
+                    <label class="sr-only" for="addTypeHrs">Choisir type de prime</label>
+                    <select id="addTypeHrs"
+                            {{ stimulus_controller('symfony/ux-autocomplete/autocomplete') }}
+                            class="form-select"
+                    >
+                        <option value="">{{ 'choisir.prime'|trans }}</option>
+                        {% for type in typesHrs %}
+                            <option value="{{ type.id }}">
+                                {{ type.libelle }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-2">
+                    <label class="sr-only" for="nbHeurePrime">Nb Heures eq. TD</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Nb Heures eq. TD"
+                               aria-label="Nb Heures eq. TD" aria-describedby="basic-addon2" id="nbHeurePrime">
+                        <span class="input-group-text" id="basic-addon2">H. Eq. TD</span>
+                    </div>
+                </div>
+                <div class="col-4">
                     <div class="d-grid ">
                         <button class="btn btn-success d-block text-white"
-                                {#                        {{ stimulus_action('adm--previsionnel', 'ajoutPrime', 'click', { #}
-                                {#                            personnel: personnel.id, #}
-                                {#                            annee: annee, #}
-                                {#                        }) }} #}
+                                {{ stimulus_action('adm--previsionnel', 'ajoutPrimeHrsSynthese', 'click', {
+                                    annee: annee,
+                                }) }}
                         ><i class="fas fa-plus"></i> {{ 'ajouter.prime'|trans }}
                         </button>
                     </div>
@@ -151,18 +173,27 @@
             </div>
 
         </td>
-    </tr>
+    </tr
 
     <tr>
-        <th rowspan="{{ categorieHrs|length + 1 }}" colspan="3">Vérification des heures</th>
-        <td class="text-center">Type</td>
-        <td class="text-center">Nb heures saisies</td>
-        <td class="text-center">Nb heures maximum</td>
-        <td class="text-center">Différence</td>
+        <td colspan="7" class="bg-complementary">
+            <div class="d-grid ">
+                <span class="btn d-block text-white">
+                    Synthèse
+                </span>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <th class="text-center" colspan="3">Type</th>
+        <th class="text-center">Nb heures saisies</th>
+        <th class="text-center">Nb heures maximum</th>
+        <th class="text-center">Différence</th>
+        <th></th>
     </tr>
     {% for categorie in categorieHrs %}
         <tr>
-            <th>{{ categorie.value }}</th>
+            <th colspan="3">{{ categorie.value }}</th>
             <td class="text-center">{{ primes.totalTypeHrs[categorie.value]|nombreHeure }}</td>
             <td class="text-center">{{ categorie.maxHeures|nombreHeure }}</td>
             <td class="text-center">
@@ -174,18 +205,8 @@
                     <span class="badge bg-danger">Dépassement *</span>
                 {% endif %}
             </td>
+            <td></td>
         </tr>
     {% endfor %}
-
-    <tr>
-        <td colspan="8" class="bg-complementary">
-            <div class="d-grid ">
-                <span class="btn d-block text-white">
-                    Synthèse
-                </span>
-            </div>
-
-        </td>
-    </tr>
     </tbody>
 </table>

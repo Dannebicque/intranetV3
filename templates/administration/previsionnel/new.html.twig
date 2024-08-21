@@ -65,15 +65,15 @@
                    role="tab"> {{ 'previsionnel.actions.heading'|trans }}</a>
             </li>
         </ul>
+    </div>
+{% endblock %}
 
-        <div class="button">
-            <a href="{{ path('administration_previsionnel_export_omega') }}" class="btn btn-info btn-sm btn-float"
-               title="{{ 'atitle.export_omega'|trans }}" data-bs-toggle="tooltip" data-bs-placement="bottom"
-            ><i class="fas fa-table"></i></a>
-            <a href="{{ path('administration_previsionnel_index') }}" class="btn btn-primary btn-float"
-               title="{{ 'atitle.retour_liste'|trans }}" data-bs-toggle="tooltip" data-bs-placement="bottom"
-            ><i class="fas fa-arrow-left"></i></a>
-        </div>
+{% block headerright %}
+    <div class="gap-items-2">
+        {# todo: prévoir dropdown avec plusieurs exports ? #}
+        <a href="{{ path('administration_previsionnel_export_omega') }}" class="btn btn-info"
+           title="{{ 'atitle.export_omega'|trans }}" data-bs-toggle="tooltip" data-bs-placement="bottom"
+        ><i class="fas fa-table"></i></a>
     </div>
 {% endblock %}
 

@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/controllers/adm/previsionnel_controller.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 06/07/2024 16:27
+// @lastUpdate 21/08/2024 19:14
 
 import { Controller } from '@hotwired/stimulus'
 import { addCallout } from '../../js/util'
@@ -285,6 +285,26 @@ export default class extends Controller {
       personnel,
     })
     await this._updatePersonnel(params)
+  }
+
+  async ajoutPrimeHrsSynthese(e) {
+    // fetch pour l'ajouter et refresh
+    const { annee } = e.params
+
+    const body = new FormData()
+    body.append('personnel', document.getElementById('addPersonnel').value)
+    body.append('typeHrs', document.getElementById('addTypeHrs').value)
+    body.append('nbHeures', document.getElementById('nbHeurePrime').value)
+    body.append('annee', annee)
+
+    await fetch(this.urlAddPrimeValue, {
+      method: 'POST',
+      body,
+    })
+    const params = new URLSearchParams({
+      annee,
+    })
+    await this._updateSyntheseHrs(params)
   }
 
   async changeShowMatiere(e) {
