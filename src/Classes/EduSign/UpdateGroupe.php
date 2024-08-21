@@ -3,7 +3,6 @@
 namespace App\Classes\EduSign;
 
 use App\Classes\EduSign\Adapter\IntranetGroupeEduSignAdapter;
-use App\Classes\EduSign\Api\ApiEduSign;
 use App\Classes\EduSign\Api\ApiGroupe;
 use App\Repository\AnneeUniversitaireRepository;
 use App\Repository\DiplomeRepository;

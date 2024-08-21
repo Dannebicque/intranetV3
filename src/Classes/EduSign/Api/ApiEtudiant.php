@@ -37,6 +37,18 @@ class ApiEtudiant
                 return ['success' => false, 'error' => $data['message']];
             }
 
+            $id = $data['result']['ID'] ?? "";
+
+            $etudiant = $this->etudiantRepository->findOneBy(['id' => $etudiant->api_id]);
+            if ($etudiant && null === $etudiant) {
+                return ['success' => false, 'error' => 'Etudiant non trouvé'];
+            }
+
+            if ($etudiant && $etudiant->getIdEduSign() === null) {
+                $etudiant->setIdEduSign($id);
+                $this->etudiantRepository->save($etudiant);
+            }
+
             return ['success' => true, 'data' => $data];
         } catch (\Exception $e) {
             return ['success' => false, 'error' => $e->getMessage()];
@@ -48,12 +60,13 @@ class ApiEtudiant
         try {
             $client = HttpClient::create();
 
-            $response = $client->request('PATCH', 'https://ext.edusign.fr/v1/student/' . $etudiant->id, [
+            $response = $client->request('PATCH', 'https://ext.edusign.fr/v1/student', [
+                'json' => ['student' => $etudiant->toArray()],
                 'headers' => [
-                    'Content-Type' => 'application/json',
                     'Authorization' => 'Bearer ' . $this->getCleApi->getCleApi($cleApi),
+                    'accept' => 'application/json',
+                    'content-type' => 'application/json',
                 ],
-                'json' => $etudiant->toArray(),
             ]);
 
             $content = $response->getContent();

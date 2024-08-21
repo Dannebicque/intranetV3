@@ -52,8 +52,10 @@ class UpdateEtudiant
                         [$etudiant->getSemestre()->getIdEduSign()],
                         array_map(fn($g) => $g->getIdEduSign(), $etudiant->getGroupes()->toArray())
                     );
+                    // retirer les entrées vides et réindexer
+                    $groupes = array_values(array_filter($groupes));
+
                     $etudiantEduSign = (new IntranetEtudiantEduSignAdapter($etudiant, $groupes))->getEtudiant();
-//                    dd($etudiantEduSign);
 
                     try {
                         if ($etudiant->getIdEduSign() === null) {

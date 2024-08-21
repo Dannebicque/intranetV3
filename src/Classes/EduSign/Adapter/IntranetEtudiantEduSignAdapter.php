@@ -11,7 +11,6 @@ namespace App\Classes\EduSign\Adapter;
 
 use App\Classes\EduSign\DTO\EduSignEtudiant;
 use App\Entity\Etudiant;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class IntranetEtudiantEduSignAdapter
 {
