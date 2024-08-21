@@ -460,10 +460,72 @@
             <!-- Footer -->
             <footer class="site-footer">
                 <div class="row">
+                    <div class="col-sm-12 col-md-4">
+                        <h2 class="footer">Liens utiles</h2>
+                        {# todo: rendre configurable ? #}
+                        <ul class="list-unstyled">
+                            <li>
+                                <a href="https://www.univ-reims.fr" target="_blank">Site web de l’URCA</a>
+                            </li>
+                            <li>
+                                <a href="https://www.iut-troyes.univ-reims.fr" target="_blank">Site web de l’IUT</a>
+                            </li>
+                            <li>
+                                <a href="https://ebureau.univ-reims.fr" target="_blank">Bureau virtuel URCA</a>
+                            </li>
+                            <li>
+                                <a href="https://cours.univ-reims.fr" target="_blank">Moodle</a>
+                            </li>
+                            <li>
+                                <a href="https://webmail.univ-reims.fr" target="_blank">Webmail URCA</a>
+                            </li>
+                            <li>
+                                <a href="https://app.edusign.fr" target="_blank">EduSign</a>
+                            </li>
+                            <li>
+                                <a href="https://portfolio.iut-troyes.univ-reims.fr" target="_blank">UniFolio</a>
+                            </li>
+                            <li>
+                                <a href="https://studea.univ-reims.fr" target="_blank">Studea</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-12 col-md-8">
+                        <h2 class="footer">Contacts</h2>
+                        <div class="row">
+                            {% for diplome in user_data.diplomes|filter(diplome => diplome.actif == true and (diplome.parent == null or diplome.apcParcours.formationContinue == true)) %}
+                                <div class="col-6">
+                                    <h3 class="footer">{{ diplome.typeDiplome.sigle }} {{ diplome.libelle }}
+                                        ({{ diplome.sigle }})</h3>
+                                    <dl>
+                                        {% if diplome.responsableDiplome != null %}
+                                            <dt class="col-sm-4">Responsable :</dt>
+                                            <dd class="col-sm-6"><a
+                                                        href="{{ path('user_profil', {slug: diplome.responsableDiplome.slug,
+                                                            type: 'personnel'}) }}"
+                                                        target="_blank">{{ diplome.responsableDiplome.displayPr }}</a>
+                                            </dd>
+                                        {% endif %}
+                                        {% if diplome.parent == null and diplome.assistantDiplome != null %}
+                                            <dt class="col-sm-4">Assistant(e) :</dt>
+                                            <dd class="col-sm-6"><a
+                                                        href="{{ path('user_profil', {slug: diplome.assistantDiplome.slug, type:
+                                                            'personnel'}) }}"
+                                                        target="_blank">{{ diplome.assistantDiplome.displayPr }}</a>
+                                            </dd>
+                                        {% endif %}
+                                    </dl>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
                     <div class="col-md-6">
                         <p class="text-md-left">Copyright © 2018-{{ 'now'|date('Y') }}
-                            <a href="https://www.davidannebicque.fr" target="_blank">@DavidAnnebicque</a>. All rights
-                            reserved. | Version {{ version.version }}</p>
+                            <a href="https://www.davidannebicque.fr" target="_blank">@DavidAnnebicque</a> | <a
+                                    href="https://cyndelherolt.fr/" target="_blank">@CyndelHerolt</a>. All rights
+                            reserved | Version {{ version.version }}</p>
                     </div>
 
                     <div class="col-md-6">

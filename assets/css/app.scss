@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/css/app.scss
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 15/07/2024 19:30
+// @lastUpdate 21/08/2024 19:40
 
 @import "./theme-troyes.scss";
 @import "./theme-rcc.scss";
@@ -1067,4 +1067,24 @@ a.menu-link:focus {
   background-color: var(--colorIUT);
   color: var(--colorIUTComplementaire);
 
+}
+
+h2.footer {
+  /* Liens utiles */
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 21px;
+  /* txt */
+  color: var(--colorIUTComplementaire);
+}
+
+h3.footer {
+  /* Liens utiles */
+  font-style: normal;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 16px;
+  /* txt */
+  color: var(--colorIUTComplementaire);
 }
