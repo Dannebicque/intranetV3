@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/GetGroupeFromSemestre.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/11/2023 15:34
+ * @lastUpdate 21/08/2024 16:29
  */
 
 namespace App\Classes;
@@ -33,5 +33,16 @@ abstract class GetGroupeFromSemestre
         }
 
         return $t;
+    }
+
+    public static function GetGroupeFromSemestreToArray(Semestre $semestre, TypeGroupe $typeGroupe): array
+    {
+        $t = self::GetGroupeFromSemestre($semestre, $typeGroupe);
+        $tab = [];
+        foreach ($t as $groupe) {
+            $tab[] = ['id' => $groupe->getId(), 'libelle' => $groupe->getLibelle()];
+        }
+
+        return $tab;
     }
 }

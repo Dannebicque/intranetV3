@@ -4,29 +4,28 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/TrombinoscopeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/07/2024 16:48
+ * @lastUpdate 21/08/2024 19:12
  */
 
 namespace App\Controller;
 
-use App\Classes\Configuration;
+use App\Classes\Etudiant\GetEtudiants;
 use App\Classes\GetGroupeFromSemestre;
 use App\Classes\MyExport;
 use App\Classes\MyExportListing;
 use App\Classes\MySerializer;
 use App\Classes\Pdf\PdfManager;
+use App\Classes\Personnels\GetPersonnels;
 use App\Entity\Constantes;
 use App\Entity\Groupe;
 use App\Entity\Semestre;
 use App\Entity\TypeGroupe;
-use App\Exception\DiplomeNotFoundException;
-use App\Repository\EtudiantRepository;
-use App\Repository\GroupeRepository;
+use App\Exception\SemestreNotFoundException;
 use App\Repository\PersonnelRepository;
 use App\Repository\SemestreRepository;
+use App\Repository\TypeGroupeRepository;
 use JsonException;
 use PhpOffice\PhpSpreadsheet\Exception;
-use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -38,13 +37,58 @@ use Twig\Error\SyntaxError;
 #[Route('/trombinoscope')]
 class TrombinoscopeController extends BaseController
 {
+    #[Route(path: '/get-groupe', name: 'trombinoscope_get_groupe')]
+    public function getGroupes(
+        SemestreRepository   $semestreRepository,
+        TypeGroupeRepository $typeGroupeRepository,
+        Request              $request
+    ): Response
+    {
+        //en partant de typegroupes, récupérer les groupes
+        if ($request->request->has('semestre')) {
+            $semestre = $semestreRepository->find($request->request->get('semestre'));
+        } else {
+            $semestre = null;
+        }
+
+        if ($semestre === null) {
+            throw new SemestreNotFoundException();
+        }
+
+        if ($request->request->has('typegroupe')) {
+            $typeGroupe = $typeGroupeRepository->find($request->request->get('typegroupe'));
+        } else {
+            $typeGroupe = null;
+        }
+
+        if ($typeGroupe === null) {
+            return $this->json([]);
+        }
+
+        $groupes = GetGroupeFromSemestre::GetGroupeFromSemestreToArray($semestre, $typeGroupe);
+
+        return $this->json($groupes);
+    }
+
     #[Route('/{semestre}', name: 'trombinoscope_etudiant_index', requirements: ['semestre' => '\d+'])]
     public function trombinoscopeEtudiant(Semestre $semestre): Response
     {
         $this->breadcrumbHelper->addItem('trombinoscope', 'trombinoscope_etudiant_index', ['semestre' => $semestre->getId()]);
-
+        $typeGroupes = $semestre->getTypeGroupess()->toArray();
+        //groupe par défaut
+        $typegroupe = null;
+        foreach ($typeGroupes as $typeGroupe) {
+            if ($typeGroupe->getDefaut()) {
+                $groupes = GetGroupeFromSemestre::GetGroupeFromSemestre($semestre, $typeGroupe);
+                $typegroupe = $typeGroupe;
+            }
+        }
         return $this->render('trombinoscope/index.html.twig', [
-            'semestre' => $semestre
+            'type' => 'etudiant',
+            'semestre' => $semestre,
+            'typeGroupes' => $typeGroupes,
+            'groupes' => $groupes,
+            'selectedTypeGroupe' => $typegroupe,
         ]);
     }
 
@@ -122,78 +166,36 @@ class TrombinoscopeController extends BaseController
                 'groupes' => $typeGroupe->getGroupes(),
                 'semestre' => $typeGroupe->getSemestre(),
             ],
-            null !== $typeGroupe->getSemestre() ? 'trombinoscope-'.$typeGroupe->getSemestre()->getLibelle() : ''
+            null !== $typeGroupe->getSemestre() ? 'trombinoscope-' . $typeGroupe->getSemestre()->getLibelle() : ''
         );
     }
 
-    /**
-     * @throws DiplomeNotFoundException
-     */
-    #[Route(path: '/etudiant/{semestre<\d+>}', name: 'trombinoscope_etudiant_semestre', options: ['expose' => true])]
-    #[Route(path: '/etudiant/{semestre<\d+>}/{typegroupe<\d+>}', name: 'trombinoscope_etudiant_semestre_type_groupe', options: ['expose' => true])]
-    public function trombiEtudiantSemestre(
-        EtudiantRepository $etudiantRepository,
-        GroupeRepository $groupeRepository,
-        Semestre $semestre,
-        #[MapEntity(mapping: ['typegroupe' => 'id'])]
-        ?TypeGroupe $typegroupe = null
-    ): Response {
-        if (null !== $semestre->getDiplome() && null !== $semestre->getDiplome()->getParent()) {
-            $dip = $semestre->getDiplome()?->getParent();
+    #[Route(path: '/get-data/{type}', name: 'trombinoscope_get_data')]
+    public function getDataTrombinoscope(
+        GetPersonnels $getPersonnels,
+        GetEtudiants  $getEtudiants,
+        string        $type,
+        Request       $req
+    ): Response
+    {
+        if ($type === 'etudiant') {
+            $elements = $getEtudiants->getEtudiants($req->request);
         } else {
-            $dip = $semestre->getDiplome();
+            $elements = $getPersonnels->getPersonnels($req->request, $type, $this->getDepartement());
         }
 
-        if (null === $dip) {
-            throw new DiplomeNotFoundException();
-        }
-
-        $typeGroupes = $semestre->getTypeGroupess();
-
-        $groupes = null;
-        if (null !== $typegroupe) {
-            $groupes = GetGroupeFromSemestre::GetGroupeFromSemestre($semestre, $typegroupe);
-        } else {
-            foreach ($typeGroupes as $typeGroupe) {
-                if (true === $typeGroupe->getDefaut()) {
-                    $typegroupe = $typeGroupe;
-                    $groupes = GetGroupeFromSemestre::GetGroupeFromSemestre($semestre, $typegroupe);
-                }
-            }
-        }
-        if (null !== $typegroupe) {
-            $etudiants = $groupeRepository->getEtudiantsByGroupes($typegroupe);
-        } else {
-            $etudiants = [];
-        }
-
-        return $this->render('trombinoscope/trombiEtudiant.html.twig', [
-            'parcours' => $semestre->getDiplome()->getApcParcours(),
-            'semestre' => $semestre,
-            'selectedTypeGroupe' => $typegroupe,
-            'typeGroupes' => $typeGroupes,
-            'groupes' => $groupes,
-            'etudiants' => $etudiants,
-            'siteperso' => $semestre->getDiplome()->getOptEspacePersoVisible(),
-            'etudiantGroupes' => $etudiantRepository->getEtudiantGroupes($semestre),
-        ]);
-    }
-
-    #[Route(path: '/personnel/{type}', name: 'trombinoscope_personnel', options: ['expose' => true])]
-    public function trombiPersonnel(
-        Configuration $configuration,
-        PersonnelRepository $personnelRepository,
-        string $type
-    ): Response {
-        $personnels = $personnelRepository->findByType(
-            $type,
-            $this->getDepartement(),
-            $configuration->get('AFFICHAGE_TROMBI')
-        );
-
-        return $this->render('trombinoscope/trombiPersonnel.html.twig', [
-            'personnels' => $personnels,
+        return $this->render('trombinoscope/_trombi.html.twig', [
+            'elements' => $elements,
             'type' => $type,
+            'getEtudiants' => $getEtudiants->getData(),
+//            'parcours' => $semestre->getDiplome()->getApcParcours(),
+//            'semestre' => $semestre,
+//            'selectedTypeGroupe' => $typegroupe,
+//            'typeGroupes' => $typeGroupes,
+//            'groupes' => $groupes,
+//            'etudiants' => $etudiants,
+//            'siteperso' => $semestre->getDiplome()->getOptEspacePersoVisible(),
+//            'etudiantGroupes' => $etudiantRepository->getEtudiantGroupes($semestre),
         ]);
     }
 
@@ -204,11 +206,12 @@ class TrombinoscopeController extends BaseController
     #[IsGranted('ROLE_PERMANENT')]
     public function trombiPersonnelExport(
         MySerializer $mySerializer,
-        MyExport $myExport,
+        MyExport     $myExport,
         PersonnelRepository $personnelRepository,
-        string $type,
-        string $_format
-    ): Response {
+        string       $type,
+        string       $_format
+    ): Response
+    {
         $personnels = $personnelRepository->findByType($type, $this->dataUserSession->getDepartement());
 
         $data = $mySerializer->getDataFromSerialization(
@@ -224,7 +227,7 @@ class TrombinoscopeController extends BaseController
         return $myExport->genereFichierGeneriqueFromData(
             $_format,
             $data,
-            'listing_'.$type,
+            'listing_' . $type,
         );
     }
 }

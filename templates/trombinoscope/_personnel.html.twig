@@ -1,0 +1,63 @@
+<div class="text-dark card-body bg-secondary py-20 {{ personnel.statut|border }}"
+     style="min-height: 230px">
+    <div class="flexbox">
+        <a href="{{ path('user_profil', {type: 'personnel', slug: personnel.slug}) }}">
+            {% if personnel.photoName != null and personnel.photoName !=
+                'noimage.png' %}
+                <img class="avatar avatar-xxxl avatar-bordered rounded" src="{{ asset
+                    ('upload/personnels/'~personnel.photoName)|imagine_filter('thumb') }}"
+                     alt="photo de {{ personnel.displayPr }}">
+            {% else %}
+                {{ include('composants/_avatar.html.twig', {user:personnel, size:'xxl'}) }}
+            {% endif %}
+        </a>
+        <div class="flex-grow pl-20">
+            <h4>
+                <a class="text-dark trombinoscope_nom" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                   target="_blank"
+                   title="Profil"
+                   href="{{ path('user_profil', {type: 'personnel', slug: personnel.slug}) }}">
+                    {{ personnel.displayPr }}
+                </a></h4>
+            <div><i class="fa fa-fw fa-map-marker w-20px"></i>
+                {% if personnel.statut == 'VAC' %}
+                    {{ personnel.entreprise }}
+                {% else %}
+                    {{ personnel.bureau1 }} {{ personnel.bureau2 }}
+                {% endif %}
+            </div>
+            {% if personnel.siteUniv != '' or personnel.siteUniv != null %}
+                <div>
+                    <i class="fa fa-fw fa-globe w-20px"></i>
+                    <a href="{{ personnel.siteUniv }}"
+                       class="text-dark"
+                       target="_blank" title="Site Universitaire" data-bs-toggle="tooltip"
+                       data-bs-placement="bottom"
+                    >Site Web</a>
+                </div>
+            {% endif %}
+            <div>
+                <i class="fa fa-fw fa-envelope w-20px"></i>
+                <a href="mailto:{{ personnel.mailUniv }}" target="_blank"
+                   class="text-dark"
+                   title="Contacter" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                >Contacter
+                </a>
+            </div>
+            {% if personnel.sitePerso != '' or personnel.sitePerso != null %}
+                <div>
+                    <i class="fa fa-fw fa-link"></i>
+                    <a href="{{ personnel.sitePerso }}"
+                       class="text-dark"
+                       target="_blank" title="Site personnel" data-bs-toggle="tooltip"
+                       data-bs-placement="bottom"
+                    >Site Perso
+                    </a>
+
+                </div>
+            {% endif %}
+
+        </div>
+    </div>
+</div>
+

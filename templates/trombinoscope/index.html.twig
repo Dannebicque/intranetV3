@@ -4,84 +4,103 @@
 
 {% block stimulus %}
     {{ stimulus_controller('trombinoscope', {
-
+        url: path('trombinoscope_get_data', {type:type}),
+        urlGroupe: path('trombinoscope_get_groupe'),
+        type: type,
     }) }}
 {% endblock %}
 
 {% block header %}
-    {{ 'trombinoscope.heading'|trans }}
-{% endblock %}
-
-{% block headeractions %}
-    {#    <div class="header-action"> #}
-    {#        <ul class="nav nav-tabs" role="tablist"> #}
-    {#            {% for num, semestre in semestres %} #}
-    {#                {% if semestre|length == 1 %} #}
-    {#                    <li class="nav-item"> #}
-    {#                        <a class="nav-link {% if loop.first %}active show{% endif %} semestretrombi" data-bs-toggle="tab" #}
-    {#                           href="#" data-sem="{{ semestre[0].id }}" role="tab" #}
-    {#                           data-action="click->trombinoscope#changementSemestre" #}
-    {#                        >{{ semestre[0].display }} #}
-    {#                            <small>({{ semestre[0].etudiants|length }})</small> #}
-    {#                        </a> #}
-    {#                    </li> #}
-    {#                {% else %} #}
-    {#                    <li class="nav-item dropdown"> #}
-    {#                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" #}
-    {#                           aria-expanded="false">S{{ num }}</a> #}
-    {#                        <ul class="dropdown-menu"> #}
-    {#                            {% for sem in semestre %} #}
-    {#                                <li> #}
-    {#                                    <a class="dropdown-item semestretrombi" data-bs-toggle="tab" #}
-    {#                                       href="#" data-sem="{{ sem.id }}" role="tab" #}
-    {#                                       data-action="click->trombinoscope#changementSemestre" #}
-    {#                                    >{{ sem.display }} #}
-    {#                                        <small>({{ sem.etudiants|length }})</small> #}
-    {#                                    </a> #}
-    {#                                </li> #}
-    {#                            {% endfor %} #}
-    {#                        </ul> #}
-    {#                    </li> #}
-    {#                {% endif %} #}
-    {#            {% endfor %} #}
-    {#            <li class="nav-item"> #}
-    {#                <a class="nav-link" data-bs-toggle="tab" href="#" data-type="permanent" #}
-    {#                   data-action="click->trombinoscope#changementPersonnel" #}
-    {#                   role="tab"> {{ 'permanents.heading'|trans }}</a> #}
-    {#            </li> #}
-    {#            <li class="nav-item"> #}
-    {#                <a class="nav-link" data-bs-toggle="tab" href="#" data-action="click->trombinoscope#changementPersonnel" #}
-    {#                   data-type="vacataire" role="tab"> {{ 'vacataires.heading'|trans }}</a> #}
-    {#            </li> #}
-    {#            {% if settings('AFFICHAGE_TROMBI') == 'separation' %} #}
-    {#                <li class="nav-item"> #}
-    {#                    <a class="nav-link" data-action="click->trombinoscope#changementPersonnel" #}
-    {#                       data-bs-toggle="tab" href="#" data-type="administratif" role="tab"> #}
-    {#                        {{ 'administratifs.et.techniques.heading'|trans }}</a> #}
-    {#                </li> #}
-    {#            {% endif %} #}
-    {#        </ul> #}
-    {#    </div> #}
+    {{ 'trombinoscope.heading'|trans({'%type%':('trombi.'~type)|trans()}) }}
 {% endblock %}
 
 {% block content %}
-    {{ component('trombinoscope', {semestre: semestre}) }}
+    {% if type == 'etudiant' %}
+        <div class="card">
+            <div class="card-body">
+                <input type="hidden" name="semestre" id="semestre" value="{{ semestre.id }}">
+                <div class="row">
+                    <div class="col-3">
+                        <label for="typegroupe" class="form-label">Type de Groupe</label>
+                        <select class="form-select" id="typegroupe"
+                                {{ stimulus_action('trombinoscope', 'changeTypeGroupe') }}
+                        >
+                            <option value="">Type Groupe</option>
+                            {% for tg in typeGroupes %}
+                                <option value="{{ tg.id }}"
+                                        {% if selectedTypeGroupe != null and tg.id == selectedTypeGroupe.id %}selected{% endif %}
+                                >
+                                    {{ tg.display }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-3">
+                        <label for="groupe" class="form-label">Groupe</label>
+                        <select class="form-select" id="groupe"
+                                {{ stimulus_action('trombinoscope', 'changeGroupe') }}
+                        >
+                            {% if selectedTypeGroupe != null %}
+                                <option value="">
+                                    Choisir un groupe
+                                </option>
+                                {% for groupe in groupes %}
+                                    <option value="{{ groupe.id }}"
+                                            {% if groupes|length == 1 and loop.first %}selected{% endif %}>
+                                        {{ groupe.display }}
+                                    </option>
+                                {% endfor %}
+                            {% else %}
+                                <option value="">Choisir un type de groupe en premier</option>
+                            {% endif %}
+                        </select>
+                    </div>
+                    <div class="col-3">
+                        <label for="rechercher" class="form-label">
+                            Rechercher (nom, prénom, login)</label>
+                        <input type="search" class="form-control"
+                                {{ stimulus_action('trombinoscope', 'recherche') }}
+                               id="rechercher"
+                               placeholder="Rechercher">
+                    </div>
+                    <div class="col-1">&nbsp;</div>
+                    <div class="col-2 d-grid">
+                        <button class="btn btn-danger d-block"
+                                {{ stimulus_action('trombinoscope', 'cleanFiltre') }}
+                        >
+                            <i class="fas fa-times"></i> Effacer filtre
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-3">
+                        <label for="rechercher" class="form-label">
+                            Rechercher (nom, prénom, login)</label>
+                        <input type="search" class="form-control"
+                                {{ stimulus_action('trombinoscope', 'recherche') }}
+                               id="rechercher"
+                               placeholder="Rechercher">
+                    </div>
+                    <div class="col-7">&nbsp;</div>
+                    <div class="col-2 d-grid">
+                        <button class="btn btn-danger d-block"
+                                {{ stimulus_action('trombinoscope', 'cleanFiltre') }}
+                        >
+                            <i class="fas fa-times"></i> Effacer filtre
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
 
-    {#    <div data-trombinoscope-target="contentSemestre"> #}
-    {#        {% if user_data.semestres|length > 0 %} #}
-    {#            {% for semestre in user_data.semestresActifs %} #}
-    {#                {% if loop.first %} #}
-    {#                    {% set semestreActif = semestre.id %} #}
-    {#                {% endif %} #}
-    {#            {% endfor %} #}
-    {#            {{ render(controller( #}
-    {#                'App\\Controller\\TrombinoscopeController::trombiEtudiantSemestre', {'semestre':semestreActif} #}
-    {#            )) }} #}
-    {#        {% else %} #}
-    {#            {{ render(controller( #}
-    {#                'App\\Controller\\TrombinoscopeController::trombiPersonnel', {'type':'permanent'} #}
-    {#            )) }} #}
-    {#        {% endif %} #}
-    {#    </div> #}
+    <div class="row" {{ stimulus_target('trombinoscope', 'content') }}>
+
+    </div>
 {% endblock %}
 

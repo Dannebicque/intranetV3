@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/PersonnelRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/04/2024 17:54
+ * @lastUpdate 21/08/2024 19:12
  */
 
 namespace App\Repository;
@@ -211,7 +211,8 @@ class PersonnelRepository extends ServiceEntityRepository
     public function findPersonnelByPrevisionnelBuilder(
         Previsionnel $previsionnel,
         AnneeUniversitaire $anneeUniversitaire
-    ): QueryBuilder {
+    ): QueryBuilder
+    {
         return $this->createQueryBuilder('p')
             ->join('p.previsionnels', 'i')
             ->where('i.idMatiere = :idMatiere')
@@ -238,5 +239,34 @@ class PersonnelRepository extends ServiceEntityRepository
             ->setParameter('cle', '%' . $cle . '%')
             ->getQuery()
             ->getOneOrNullResult();
+    }
+
+    public function searchPersonnelTrombinoscope(string $needle, string $type, Departement $departement, string $filtreAdm): array
+    {
+        $query = $this->createQueryBuilder('p')
+            ->innerJoin(PersonnelDepartement::class, 'f', 'WITH', 'f.personnel = p.id')
+            ->where('p.typeUser = :type')
+            ->andWhere('f.departement = :departement')
+            ->setParameter('departement', $departement);
+
+        if ('separation' === $filtreAdm) {
+            if ('administratif' === $type) {
+                $query->andWhere('(' . $query->expr()->orX('p.statut = ' . $query->expr()->literal('TEC')) . ' OR ' . $query->expr()->orX('p.statut = ' . $query->expr()->literal('ASS')) . ')')
+                    ->setParameter('type', 'permanent');
+            } else {
+                $query->andWhere('(' . $query->expr()->andX('p.statut <> ' . $query->expr()->literal('TEC')) . ' AND ' . $query->expr()->andX('p.statut <> ' . $query->expr()->literal('ASS')) . ')')
+                    ->setParameter('type', $type);
+            }
+        } else {
+            $query->setParameter('type', $type);
+        }
+
+        return $query
+            ->andWhere('p.nom LIKE :needle OR p.prenom LIKE :needle OR p.username LIKE :needle OR p.mailUniv LIKE :needle')
+            ->setParameter('needle', '%' . $needle . '%')
+            ->orderBy('p.nom', Order::Ascending->value)
+            ->addOrderBy('p.prenom', Order::Ascending->value)
+            ->getQuery()
+            ->getResult();
     }
 }

@@ -37,6 +37,7 @@ twig:
     iconPrevi: '%env(resolve:ICON_PREVI)%' #fas fa-clock'
     iconApogee: '%env(resolve:ICON_APOGEE)%' #fas fa-chart-pie'
     iconCompta: '%env(resolve:ICON_COMPTA)%' #fas fa-comments-dollar'
+    iconExport: '%env(resolve:ICON_EXPORT)%' #fas fa-comments-dollar'
 
     linuxpath: '%env(resolve:BASE_URL)%'
 

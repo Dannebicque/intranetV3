@@ -1,0 +1,80 @@
+{% if type == 'etudiant' %}
+    {% if getEtudiants.typegroupe != null or getEtudiants.groupe != null or getEtudiants.recherche != '' %}
+        {% set semestre = getEtudiants.semestre %}
+        {% set typeGroupe = getEtudiants.typegroupe %}
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-9">
+
+                            {% if typeGroupe == null and getEtudiants.groupe == null %}
+                                <strong>{{ elements|length }}</strong> étudiants dans le semestre
+                                <strong>{{ semestre.display }}</strong>, quelque soit le type de groupe.
+                            {% elseif typeGroupe != null and getEtudiants.groupe == null %}
+                                <strong>{{ elements|length }}</strong> étudiants dans le semestre
+                                <strong>{{ semestre.display }}</strong>, pour le type de groupe
+                                <strong>{{ typeGroupe.libelle }}</strong>, quelque soit le groupe.
+                            {% elseif typeGroupe != null and getEtudiants.groupe != null %}
+                                <strong>{{ elements|length }}</strong> étudiants dans le semestre
+                                <strong>{{ semestre.display }}</strong>, pour le type de groupe
+                                <strong>{{ typeGroupe.libelle }}</strong>, pour le groupe
+                                <strong>{{ getEtudiants.groupe.libelle }}</strong>.
+                            {% endif %}
+                        </div>
+                        <div class="col-sm-12 col-md-3 text-end">
+                            {% if is_granted('ROLE_PERMANENT') %}
+                                {% if typeGroupe != null %}
+                                    <div class="btn-group">
+                                        <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle"
+                                                title="Télécharger des documents" data-bs-placement="bottom"
+                                                data-bs-toggle="dropdown">
+                                            <i class="{{ iconExport }}"></i> Exporter
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1" style="">
+                                            <a href="{{ path('trombinoscope_etudiant_export', {_format:'pdf', typeGroupe: typeGroupe.id, semestre: semestre.id}) }}"
+                                               class="dropdown-item"><i
+                                                        class="fa fa-file-pdf"></i> {{ 'exporter.pdf'|trans }}</a>
+                                            <a href="{{ path('trombinoscope_etudiant_export', {_format:'xlsx', typeGroupe: typeGroupe.id, semestre: semestre.id}) }}"
+                                               class="dropdown-item"><i
+                                                        class="fa fa-file-excel"></i> {{ 'exporter.xlsx'|trans }}
+                                            </a>
+                                            <a href="{{ path('trombinoscope_etudiant_export', {_format:'csv', typeGroupe: typeGroupe.id, semestre: semestre.id}) }}"
+                                               class="dropdown-item"><i
+                                                        class="fa fa-file-csv"></i> {{ 'exporter.csv'|trans }}
+                                            </a>
+                                            <a href="{{ path('trombinoscope_etudiant_image', {typeGroupe: typeGroupe.id}) }}"
+                                               class="dropdown-item"><i
+                                                        class="fa fa-file-csv"></i> {{ 'exporter.trombi'|trans }}
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endif %}
+
+{% for element in elements %}
+    <div class="col-xl-3 col-lg-3 col-sm-6">
+        <div class="card">
+            <div class="card-body">
+                {% if type == 'etudiant' %}
+                    {{ include('trombinoscope/_etudiant.html.twig', {etudiant:element}) }}
+                {% else %}
+                    {{ include('trombinoscope/_personnel.html.twig', {personnel:element}) }}
+
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% else %}
+    <div class="col-12">
+        <twig:Alert type="warning">Aucun élément à afficher ou pas de filtre selectionné</twig:Alert>
+    </div>
+{% endfor %}

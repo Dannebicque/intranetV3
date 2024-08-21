@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/EtudiantRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/04/2024 17:54
+ * @lastUpdate 21/08/2024 17:26
  */
 
 namespace App\Repository;
@@ -13,7 +13,9 @@ use App\Entity\Annee;
 use App\Entity\Departement;
 use App\Entity\Diplome;
 use App\Entity\Etudiant;
+use App\Entity\Groupe;
 use App\Entity\Semestre;
+use App\Entity\TypeGroupe;
 use Carbon\CarbonInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Collections\Collection;
@@ -41,7 +43,8 @@ class EtudiantRepository extends ServiceEntityRepository
 
     public function getByDepartement(
         Departement $departement
-    ): mixed {
+    ): mixed
+    {
         $qb = $this->createQueryBuilder('u');
         $qb
             ->leftJoin(Semestre::class, 's', 'WITH', 's.id=u.semestre')
@@ -102,7 +105,7 @@ class EtudiantRepository extends ServiceEntityRepository
             $tt['avatarInitiales'] = $etudiant->getAvatarInitiales();
             $gr = '';
             foreach ($etudiant->getGroupes() as $groupe) {
-                $gr .= $groupe->getLibelle().', ';
+                $gr .= $groupe->getLibelle() . ', ';
             }
             $tt['groupes'] = mb_substr($gr, 0, -2);
             $t[] = $tt;
@@ -116,7 +119,7 @@ class EtudiantRepository extends ServiceEntityRepository
         $query = $this->createQueryBuilder('e');
         $i = 1;
         foreach ($annee->getSemestres() as $semestre) {
-            $query->orWhere('e.semestre = ?'.$i)
+            $query->orWhere('e.semestre = ?' . $i)
                 ->setParameter($i, $semestre->getId());
             ++$i;
         }
@@ -137,7 +140,7 @@ class EtudiantRepository extends ServiceEntityRepository
             ->orWhere('p.numEtudiant LIKE :needle')
             ->orWhere('p.numIne LIKE :needle')
             ->andWhere('p.departement = :departement')
-            ->setParameter('needle', '%'.$needle.'%')
+            ->setParameter('needle', '%' . $needle . '%')
             ->setParameter('departement', $departement->getId())
             ->orderBy('p.nom', Order::Ascending->value)
             ->addOrderBy('p.prenom', Order::Ascending->value)
@@ -154,7 +157,7 @@ class EtudiantRepository extends ServiceEntityRepository
             ->orWhere('p.mailUniv LIKE :needle')
             ->orWhere('p.numEtudiant LIKE :needle')
             ->orWhere('p.numIne LIKE :needle')
-            ->setParameter('needle', '%'.$needle.'%')
+            ->setParameter('needle', '%' . $needle . '%')
             ->orderBy('p.nom', Order::Ascending->value)
             ->addOrderBy('p.prenom', Order::Ascending->value)
             ->getQuery()
@@ -288,7 +291,6 @@ class EtudiantRepository extends ServiceEntityRepository
             ->innerJoin(Semestre::class, 's', 'WITH', 'e.semestre=s.id')
             ->innerJoin(Annee::class, 'a', 'WITH', 'a.id=s.annee')
             ->innerJoin(Diplome::class, 'd', 'WITH', 'd.id=a.diplome')
-
             ->where('d.id = :diplome')
             ->orWhere('d.parent = :diplome')
             ->andWhere('s.ordreLmd = :ordreLmd')
@@ -314,5 +316,18 @@ class EtudiantRepository extends ServiceEntityRepository
     {
         $this->_em->persist($etudiant);
         $this->_em->flush();
+    }
+
+    public function searchEtudiantTrombinoscope(string $needle, Semestre $semestre, ?TypeGroupe $typegroupe, ?Groupe $groupe)
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.semestre = :semestre')
+            ->andWhere('p.nom LIKE :needle OR p.prenom LIKE :needle OR p.username LIKE :needle OR p.mailUniv LIKE :needle OR p.numEtudiant LIKE :needle OR p.numIne LIKE :needle')
+            ->setParameter('needle', '%' . $needle . '%')
+            ->setParameter('semestre', $semestre->getId())
+            ->orderBy('p.nom', Order::Ascending->value)
+            ->addOrderBy('p.prenom', Order::Ascending->value)
+            ->getQuery()
+            ->getResult();
     }
 }

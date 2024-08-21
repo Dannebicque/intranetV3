@@ -27,6 +27,7 @@ parameters:
   iconEdit: '%env(resolve:ICON_EDIT)%'
   iconDelete: '%env(resolve:ICON_DELETE)%'
   iconPrint: '%env(resolve:ICON_PRINT)%'
+  iconExport: '%env(resolve:ICON_EXPORT)%'
   iconDuplicate: '%env(resolve:ICON_DUPLICATE)%'
   iconAdd: '%env(resolve:ICON_ADD)%'
   iconHelp: '%env(resolve:ICON_HELP)%'
