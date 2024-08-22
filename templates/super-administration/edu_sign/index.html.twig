@@ -60,38 +60,39 @@
 
     <div class="card">
         <div class="card-header d-flex flex-column align-items-start">
-            <h4 class="card-title">{{ 'adm.edusign.context.update'|trans }}</h4>
+            <h4 class="card-title">{{ 'adm.edusign.context.change'|trans }}</h4>
         </div>
         <div class="card-body">
             <div class="alert alert-info">
                 <span>{{ 'adm.edusign.commands.info-annee'|trans }}</span>
             </div>
 
-            <button class="btn btn-secondary" type="button" data-bs-toggle="modal"
-                    data-bs-target="#newYearModal">Changer d'année
-            </button>
-            <!-- Modal -->
-            <div class="modal fade" id="newYearModal" tabindex="-1"
-                 aria-labelledby="newYearModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="newYearModalLabel">Mise à jour des groupes
-                                pour une nouvelle année</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            Cette action va mettre à jour les étudiants et leurs groupes
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                            <a href=""
-                               class="btn btn-secondary">Confirmer</a>
+            {% for dept in departements %}
+                <button class="btn btn-secondary" type="button" data-bs-toggle="modal"
+                        data-bs-target="#chgtAnneeModal{{ dept.id }}">{{ dept.libelle }}</button>
+                <!-- Modal -->
+                <div class="modal fade" id="chgtAnneeModal{{ dept.id }}" tabindex="-1"
+                     aria-labelledby="chgtAnneeModalLabel{{ dept.id }}" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="chgtAnneeModalLabel{{ dept.id }}">Initialisation du
+                                    département {{ dept.libelle }}</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                Cette action va mettre à jour les données pour la nouvelle année
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                                <a href="{{ path('app_edu_sign_update_annee', {'id': dept.id}) }}"
+                                   class="btn btn-primary">Confirmer</a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            {% endfor %}
         </div>
     </div>
 

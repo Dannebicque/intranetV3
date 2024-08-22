@@ -113,7 +113,7 @@ class EduSignController extends BaseController
         $email = (new TemplatedEmail())
             ->from('no-reply@univ-reims.fr')
             ->to('cyndel.herolt@univ-reims.fr')
-            ->subject('EduSign init - error report')
+            ->subject('EduSign init - rapport')
             ->htmlTemplate('emails/error_report.html.twig')
             ->context([
                 'diplomesErrors' => $diplomesErrors,
@@ -128,6 +128,56 @@ class EduSignController extends BaseController
 
         return $this->redirectToRoute('app_edu_sign');
     }
+
+    #[Route('/update-annee/{id}', name: 'app_edu_sign_update_annee')]
+    public function updateAnnee(?int $id, UpdateGroupe $updateGroupe, UpdateEtudiant $updateEtudiant, MailerInterface $mailer): RedirectResponse
+    {
+//        set_time_limit(300);
+        $departement = $this->departementRepository->find($id);
+        if (!$departement) {
+            $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'Département introuvable.');
+            return $this->redirectToRoute('app_edu_sign');
+        }
+
+        $diplomes = $this->diplomeRepository->findAllWithEduSignDepartement($departement);
+        $diplomesErrors = [];
+
+        foreach ($diplomes as $diplome) {
+            $keyEduSign = $diplome->getKeyEduSign();
+            $errors = [];
+
+            // Update groups and students, collect errors
+            $updateResults = [
+                $updateGroupe->deleteMissingGroupes($keyEduSign),
+                $updateGroupe->update($keyEduSign),
+                $updateEtudiant->update($keyEduSign)
+            ];
+
+            foreach ($updateResults as $result) {
+                if (!$result['success']) {
+                    $errors = array_merge($errors, $result['messages']);
+                }
+            }
+
+            if (!empty($errors)) {
+                $diplomesErrors[$diplome->getLibelle()] = $errors;
+            }
+        }
+
+        $email = (new TemplatedEmail())
+            ->from('no-reply@univ-reims.fr')
+            ->to('cyndel.herolt@univ-reims.fr')
+            ->subject('EduSign changement année - rapport')
+            ->htmlTemplate('emails/error_report.html.twig')
+            ->context(['diplomesErrors' => $diplomesErrors]);
+        $mailer->send($email);
+
+        $flashMessage = empty($diplomesErrors) ? 'Les données ont été mises à jour sur EduSign.' : 'Une erreur est survenue lors de la mise à jour des données sur EduSign.';
+        $this->addFlashBag(empty($diplomesErrors) ? Constantes::FLASHBAG_SUCCESS : Constantes::FLASHBAG_ERROR, $flashMessage);
+
+        return $this->redirectToRoute('app_edu_sign');
+    }
+
 
     #[Route('/create-courses/{opt}/{id}', name: 'app_edu_sign_create_courses')]
     public function createCourses(?int $opt, ?int $id, UpdateEdt $updateEdt, FixCourses $fixCourses, MailerInterface $mailer): Response
@@ -161,27 +211,6 @@ class EduSignController extends BaseController
 //            }
 //                dd($data);
 
-        }
-
-        return $this->redirectToRoute('app_edu_sign');
-    }
-
-    #[Route('/update-annee/{id}', name: 'app_edu_sign_update_annee')]
-    public function updateAnnee(?int $id, UpdateGroupe $updateGroupe, UpdateEtudiant $updateEtudiant): RedirectResponse
-    {
-        if ($id !== 0) {
-            $departement = $this->departementRepository->find($id);
-            $diplomes = $this->diplomeRepository->findByDepartement($departement);
-            $keyEduSign = null;
-            foreach ($diplomes as $diplome) {
-                if ($diplome->getKeyEduSign() !== null) {
-                    $keyEduSign = $diplome->getKeyEduSign();
-                }
-            }
-            $updateGroupe->update($keyEduSign);
-            $updateEtudiant->update($keyEduSign);
-
-            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'Les données ont été mises à jour sur EduSign');
         }
 
         return $this->redirectToRoute('app_edu_sign');

@@ -17,7 +17,7 @@ class IntranetGroupeEduSignAdapter
 {
     private ?EduSignGroupe $groupe;
 
-    public function __construct(AnneeUniversitaire $anneeUniversitaire, GroupeInterface $groupe, ?string $parent = '')
+    public function __construct(AnneeUniversitaire $anneeUniversitaire, GroupeInterface $groupe, ?string $type, ?string $parent = '')
     {
         $this->groupe = new EduSignGroupe();
 
@@ -27,6 +27,7 @@ class IntranetGroupeEduSignAdapter
         $this->groupe->parent = $parent;
         $this->groupe->api_id = $groupe->getId();
         $this->groupe->id_edu_sign = $groupe->getIdEduSign();
+        $this->api_type = $type;
     }
 
     public function getGroupe(): ?EduSignGroupe
