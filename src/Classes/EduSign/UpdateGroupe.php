@@ -4,12 +4,10 @@ namespace App\Classes\EduSign;
 
 use App\Classes\EduSign\Adapter\IntranetGroupeEduSignAdapter;
 use App\Classes\EduSign\Api\ApiGroupe;
-use App\Entity\Semestre;
 use App\Repository\AnneeUniversitaireRepository;
 use App\Repository\DiplomeRepository;
 use App\Repository\GroupeRepository;
 use App\Repository\SemestreRepository;
-use function PHPUnit\Framework\isEmpty;
 
 class UpdateGroupe
 {
@@ -44,7 +42,7 @@ class UpdateGroupe
                         $this->apiGroupe->addGroupe($groupe, $keyEduSign, 'semestre');
                         $result['messages'][] = "Groupe ajouté pour le semestre {$semestre->getLibelle()}.";
                     } else {
-                        $this->apiGroupe->updateGroupe($groupe, $keyEduSign);
+                        $this->apiGroupe->updateGroupe($groupe, $keyEduSign, 'semestre');
                         $result['messages'][] = "Groupe mis à jour pour le semestre {$semestre->getLibelle()}.";
                     }
                 }
@@ -56,17 +54,15 @@ class UpdateGroupe
                     $groupes = $parent->getDiplome()->getApcParcours()?->getGroupes() ?? $this->groupeRepository->findBySemestre($parent);
 
                     foreach ($groupes as $groupe) {
-                        if ($groupe->getIdEduSign() === null && in_array($groupe->getTypeGroupe()?->getLibelle(), ['TD', 'TP'])) {
-                            foreach ($groupe->getTypeGroupe()->getSemestres() as $semestre) {
-                                if ($semestre === $parent) {
-                                    $groupea = (new IntranetGroupeEduSignAdapter($anneeUniv, $groupe, $parent->getIdEduSign(), 'groupe'))->getGroupe();
-                                    if ($groupe->getIdEduSign() === null) {
-                                        $this->apiGroupe->addGroupe($groupea, $keyEduSign, 'groupe');
-                                    } else {
-                                        $this->apiGroupe->updateGroupe($groupea, $keyEduSign);
-                                    }
-                                    $result['messages'][] = "Groupe ajouté pour le groupe {$groupe->getLibelle()}.";
+                        foreach ($groupe->getTypeGroupe()->getSemestres() as $semestre) {
+                            if ($semestre === $parent) {
+                                $groupea = (new IntranetGroupeEduSignAdapter($anneeUniv, $groupe, 'groupe', $parent->getIdEduSign()))->getGroupe();
+                                if ($groupe->getIdEduSign() === null || $groupe->getIdEduSign() === '') {
+                                    $this->apiGroupe->addGroupe($groupea, $keyEduSign, 'groupe');
+                                } else {
+                                    $this->apiGroupe->updateGroupe($groupea, $keyEduSign, 'groupe');
                                 }
+                                $result['messages'][] = "Groupe ajouté pour le groupe {$groupe->getLibelle()}.";
                             }
                         }
                     }

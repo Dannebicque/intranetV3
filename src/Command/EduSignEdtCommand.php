@@ -31,8 +31,6 @@ class EduSignEdtCommand extends Command
     )
     {
         parent::__construct();
-
-
     }
 
 

@@ -78,7 +78,7 @@ class ApiGroupe
         return $content;
     }
 
-    public function updateGroupe(EduSignGroupe $groupe, string $cleApi): mixed
+    public function updateGroupe(EduSignGroupe $groupe, string $cleApi, ?string $type): mixed
     {
         try {
             $client = HttpClient::create();
@@ -94,6 +94,26 @@ class ApiGroupe
 
             $content = $response->getContent();
             $data = json_decode($content, true);
+            // accéder à la valeur de l'ID
+            $id = $data['result']['ID'] ?? "";
+
+            if ($type === 'semestre') {
+                $semestre = $this->semestreRepository->findOneBy(['id' => $groupe->api_id]);
+                if ($semestre && $semestre instanceof Semestre) {
+                    if ($semestre->getIdEduSign() === null || $semestre->getIdEduSign() === '') {
+                        $semestre->setIdEduSign($id);
+                        $this->semestreRepository->save($semestre);
+                    }
+                }
+            } elseif ($type === 'groupe') {
+                $groupeAdd = $this->groupeRepository->findOneBy(['id' => $groupe->api_id]);
+                if ($groupeAdd && $groupeAdd instanceof Groupe) {
+                    if ($groupeAdd && $groupeAdd->getIdEduSign() === null || $groupeAdd->getIdEduSign() === '') {
+                        $groupeAdd->setIdEduSign($id);
+                        $this->groupeRepository->save($groupeAdd);
+                    }
+                }
+            }
 
             if (isset($data['status']) && $data['status'] === 'error') {
                 return ['success' => false, 'error' => $data['message']];
@@ -106,12 +126,12 @@ class ApiGroupe
 
     }
 
-    public function deleteGroupe(EduSignGroupe $groupe, string $cleApi): array
+    public function deleteGroupe(string $groupeId, string $cleApi): array
     {
         try {
             $client = HttpClient::create();
 
-            $response = $client->request('DELETE', 'https://ext.edusign.fr/v1/group/' . $groupe->id_edu_sign, [
+            $response = $client->request('DELETE', 'https://ext.edusign.fr/v1/group/' . $groupeId, [
                 'headers' => [
                     'Content-Type' => 'application/json',
                     'Authorization' => 'Bearer ' . $this->getCleApi->getCleApi($cleApi),

@@ -1,12 +1,10 @@
 {% extends 'base-super_admin.html.twig' %}
 
-
 {% block header %}
     {{ 'adm.edusign.index.heading'|trans }}
 {% endblock %}
 
 {% block headeractions %}
-
     <div class="header-action">
         <div class="buttons">
             <a href="{{ path('super_admin_homepage') }}" class="btn btn-primary btn-float" data-bs-toggle="tooltip"
@@ -19,7 +17,7 @@
 
 {% block content %}
     <div class="card">
-        <div class="card-header d-flex flex-column align-items-start">
+        <div class="card-header">
             <h4 class="card-title">{{ 'adm.edusign.context.new'|trans }}</h4>
             <small>Pour récupérer la clé API d'un département :
                 <a href="https://edusign.app/school/settings/api">https://edusign.app/school/settings/api</a>
@@ -32,7 +30,6 @@
             {% for dept in departements %}
                 <button class="btn btn-secondary" type="button" data-bs-toggle="modal"
                         data-bs-target="#initModal{{ dept.id }}">{{ dept.libelle }}</button>
-                <!-- Modal -->
                 <div class="modal fade" id="initModal{{ dept.id }}" tabindex="-1"
                      aria-labelledby="initModalLabel{{ dept.id }}" aria-hidden="true">
                     <div class="modal-dialog">
@@ -48,8 +45,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                                <a href="{{ path('app_edu_sign_init', {'id': dept.id}) }}"
-                                   class="btn btn-primary">Confirmer</a>
+                                <a href="{{ path('app_edu_sign_init', {'id': dept.id}) }}" class="btn btn-primary">Confirmer</a>
                             </div>
                         </div>
                     </div>
@@ -59,18 +55,16 @@
     </div>
 
     <div class="card">
-        <div class="card-header d-flex flex-column align-items-start">
+        <div class="card-header">
             <h4 class="card-title">{{ 'adm.edusign.context.change'|trans }}</h4>
         </div>
         <div class="card-body">
             <div class="alert alert-info">
                 <span>{{ 'adm.edusign.commands.info-annee'|trans }}</span>
             </div>
-
             {% for dept in departements %}
                 <button class="btn btn-secondary" type="button" data-bs-toggle="modal"
                         data-bs-target="#chgtAnneeModal{{ dept.id }}">{{ dept.libelle }}</button>
-                <!-- Modal -->
                 <div class="modal fade" id="chgtAnneeModal{{ dept.id }}" tabindex="-1"
                      aria-labelledby="chgtAnneeModalLabel{{ dept.id }}" aria-hidden="true">
                     <div class="modal-dialog">
@@ -100,8 +94,7 @@
         <h4 class="card-title">{{ 'adm.edusign.commands.heading'|trans }}</h4>
         <nav class="nav nav-tabs">
             {% for departement in departements %}
-                <a class="nav-link {% if ((departementSelect != null and departementSelect
-                .id == departement.id) or (departementSelect == null)) %}active{% endif %}"
+                <a class="nav-link {% if ((departementSelect != null and departementSelect.id == departement.id) or (departementSelect == null)) %}active{% endif %}"
                    href="{{ path('app_edu_sign', {'dept': departement.id}) }}">{{ departement.libelle }}</a>
             {% endfor %}
         </nav>
@@ -126,7 +119,6 @@
                     </li>
                 </ul>
 
-                <!-- Modal -->
                 <div class="modal fade" id="newCoursesWeekModal{{ departementSelect.id }}" tabindex="-1"
                      aria-labelledby="newCoursesWeekModalLabel{{ departementSelect.id }}" aria-hidden="true">
                     <div class="modal-dialog">
@@ -149,7 +141,7 @@
                         </div>
                     </div>
                 </div>
-                <!-- Modal -->
+
                 <div class="modal fade" id="newCoursesDayModal{{ departementSelect.id }}" tabindex="-1"
                      aria-labelledby="newCoursesDayModalLabel{{ departementSelect.id }}" aria-hidden="true">
                     <div class="modal-dialog">
@@ -177,9 +169,8 @@
         <hr>
         <div class="card-body">
             <h5 class="card-title">{{ 'adm.edusign.context.groups'|trans }}</h5>
-            <a href="{{ path('app_edu_sign_groupes', {'id': departementSelect.id}) }}"
-               class="btn btn-secondary">Afficher les groupes
-            </a>
+            <a href="{{ path('app_edu_sign_groupes', {'id': departementSelect.id}) }}" class="btn btn-secondary">Afficher
+                les groupes</a>
         </div>
     </div>
 {% endblock %}

@@ -48,17 +48,19 @@ class UpdateEtudiant
                 $etudiants = $this->etudiantRepository->findBySemestre($semestre);
 
                 foreach ($etudiants as $etudiant) {
+                    // faire un tableau qui regroupe $etudiant->getSemestre()->getIdEduSign() et les id des groupes
                     $groupes = array_merge(
                         [$etudiant->getSemestre()->getIdEduSign()],
                         array_map(fn($g) => $g->getIdEduSign(), $etudiant->getGroupes()->toArray())
                     );
+//                    dd($etudiant->getGroupes());
                     // retirer les entrées vides et réindexer
                     $groupes = array_values(array_filter($groupes));
 
                     $etudiantEduSign = (new IntranetEtudiantEduSignAdapter($etudiant, $groupes))->getEtudiant();
 
                     try {
-                        if ($etudiant->getIdEduSign() === null) {
+                        if ($etudiant->getIdEduSign() === null || $etudiant->getIdEduSign() === '') {
                             $response = $this->apiEtudiant->addEtudiant($etudiantEduSign, $keyEduSign);
                         } else {
                             $response = $this->apiEtudiant->updateEtudiant($etudiantEduSign, $keyEduSign);
@@ -100,7 +102,7 @@ class UpdateEtudiant
                     $etudiantEduSign = (new IntranetEtudiantEduSignAdapter($etudiant, $groupes))->getEtudiant();
 
                     try {
-                        if ($etudiant->getIdEduSign() === null) {
+                        if ($etudiant->getIdEduSign() === null || $etudiant->getIdEduSign() === '') {
                             $this->apiEtudiant->addEtudiant($etudiantEduSign, $diplome->getKeyEduSign());
                             $result['messages'][] = "Étudiant ajouté : {$etudiant->getNom()} {$etudiant->getPrenom()}.";
                         } else {

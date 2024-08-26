@@ -148,8 +148,8 @@ class EduSignController extends BaseController
             // Update groups and students, collect errors
             $updateResults = [
                 $updateGroupe->update($keyEduSign),
-                $updateEtudiant->update($keyEduSign),
-                $updateGroupe->deleteMissingGroupes($keyEduSign)
+//                $updateEtudiant->update($keyEduSign),
+//                $updateGroupe->deleteMissingGroupes($keyEduSign)
             ];
 
             foreach ($updateResults as $result) {
@@ -192,23 +192,7 @@ class EduSignController extends BaseController
             }
             //créer les cours pour la semaine
             $updateEdt->update($keyEduSign, $opt);
-//            dd($updateEdt->update($keyEduSign, $opt));
-
             $fixCourses->fixCourse($keyEduSign);
-
-//            if ($updateEdt->update($keyEduSign, $opt) !== null) {
-//                $data = $updateEdt->update($keyEduSign, $opt);
-//            }
-//            if ($fixCourses->fixCourse($keyEduSign) !== null) {
-//                // ajouter le tableau retourné par la méthode fixCourse() dans le tableau data
-//                $data['fix'] = $fixCourses->fixCourse($keyEduSign);
-//            }
-//            if (!empty($data)) {
-//                // ajouter $departement->getLibelle() comme key du tableau data
-//                $data['header']['dept'] = $departement->getLibelle();
-//                $this->sendEmail($data, $mailer);
-//            }
-//                dd($data);
 
         }
 
