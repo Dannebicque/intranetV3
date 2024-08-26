@@ -21,109 +21,131 @@
 <br>
 <div class="row hide-on-small">
     <div class="col-sm-12">
-        <div class="schedule-individual " aria-labelledby="schedule-heading">
-            {{ include('edt/_header_edt2.html.twig') }}
-            {% for ligne in 0..24 %}
-                <h2 class="time-slot" style="grid-row: time-{{ tabHeures[ligne][0] }};">
-                    {{ tabHeures[ligne][1] }}
-                </h2>
-                {% for j in 1..5 %}
-                    {% if edt[j][ligne] is defined %}
-                        <div class="session {{ edt[j][ligne].couleurEdt }}" style="grid-column: track-{{ j }}; grid-row:
-                                time-{{ edt[j][ligne].gridStart }} / time-{{ edt[j][ligne].gridEnd }};">
-                            <div class="session-body">
-                                <a href="{{ path('application_personnel_absence_from_planning',{
-                                    'event':edt[j][ligne].id,
-                                    'source': edt[j][ligne].source,
-                                    'semestre': edt[j][ligne].semestre.id}) }}">
-                                    <span class="session-title">{{ edt[j][ligne].matiere|raw }}</span>
-                                    <span class="session-time">{{ edt[j][ligne].heureDebut|format_time('short') }} - {{ edt
-                                        [j][ligne].heureFin|format_time('short') }}</span>
-                                    <span class="session-track">{{ edt[j][ligne].groupe }}</span>
-                                    <span class="session-room">{{ edt[j][ligne].salle }}</span>
-                                </a>
-                            </div>
-
-                            <div class="session-footer">
-                                <div class="row no-gutters ">
-                                    {% if date(edt[j][ligne].date) <= date() %}
-                                        <div class="col-4 d-grid d-block">
-                                            <button
-                                                    {{ stimulus_controller('modal', {
-                                                        size: 'lg',
-                                                        modalTitle: 'cahier.texte.enseignant.heading'|trans,
-                                                        modalUrl: path('app_personnel_plan_cours_realise',
-                                                            {'event': edt[j][ligne].getTypeIdEvent}) }) }}
-                                                    data-action="click->modal#openModal"
-                                                    class="btn btn-purple no-radius"
-                                                    data-size="lg"
-                                                    data-bs-toggle="tooltip"
-                                                    data-bs-placement="bottom"
-                                                    title="Cahier de texte enseignant"
-                                            >
-                                                <i class="fas fa-book-open"></i>
-                                            </button>
-                                        </div>
-
-
-                                        <div class="col-4 d-grid d-block">
-                                            <button class="btn btn-warning no-radius"
-                                                    data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                                    data-action="edt-personnel#btnPasAbsent"
-                                                    data-event="{{ edt[j][ligne].getTypeIdEvent }}"
-                                                    data-semestre="{{ edt[j][ligne].semestre.id }}"
-                                                    title="Marquer comme Appel fait, pas d'absents"
-                                                    {% if suiviAppel[edt[j][ligne].typeIdMatiere] is defined and
-                                                        suiviAppel[edt[j][ligne].typeIdMatiere][edt
-                                                        [j][ligne].dateObjet|date('Y-m-d')] is defined
-                                                        and suiviAppel[edt[j][ligne].typeIdMatiere][edt
-                                                    [j][ligne].dateObjet|date('Y-m-d')][edt[j][ligne]
-                                                    .heureDebut|date('H:i')] is defined %}
-                                                        disabled="disabled"
-                                                    {% endif %}
-                                            >
-                                                <i class="fas fa-users-slash"></i>
-                                            </button>
-                                        </div>
-
-                                        <div class="col-4 d-grid d-block">
-                                            {% if suiviAppel[edt[j][ligne].typeIdMatiere] is defined and
-                                                suiviAppel[edt[j][ligne].typeIdMatiere][edt
-                                                [j][ligne].dateObjet|date('Y-m-d')] is defined
-                                                and suiviAppel[edt[j][ligne].typeIdMatiere][edt
-                                            [j][ligne].dateObjet|date('Y-m-d')][edt[j][ligne]
-                                            .heureDebut|date('H:i')] is defined %}
-                                                <button class="btn btn-block btn-success no-radius"
-                                                        data-bs-toggle="tooltip"
-                                                        data-bs-placement="bottom"
-                                                        title="Appel réalisé"
-                                                >
-                                                    <i class="fas fa-check"></i>
-                                                </button>
-                                            {% else %}
-                                                <button class="btn btn-danger no-radius"
-                                                        data-bs-toggle="tooltip"
-                                                        id="pointage{{ edt[j][ligne].getTypeIdEvent }}"
-                                                        data-edt-personnel-target="etatAppel"
-                                                        data-bs-placement="bottom" title="Appel à faire">
-                                                    <i class="fas fa-times"></i>
-                                                </button>
-                                            {% endif %}
-                                        </div>
-                                    {% else %}
-                                        <div class="col-12 d-grid d-block">
-                                            <button class="btn btn-warning no-radius">
-                                                Evènement à venir
-                                            </button>
-                                        </div>
-                                    {% endif %}
-                                </div>
-                            </div>
-                        </div>
-                    {% endif %}
-                {% endfor %}
-            {% endfor %}
+        <div class="schedule" id="schedule">
+            <!-- En-têtes des jours de la semaine -->
+            <div class="header col-edt-header
+                 {% if 'now'|date('N') != 1 %}col-edt-hide{% endif %}
+                 {% if 'now'|date('N') == 1 %}active{% endif %}"
+            >
+                Lundi {{ calendrier.tabJour.lundi|date('d/m') }}
+            </div>
+            <div class="header col-edt-header
+{% if 'now'|date('N') != 2 %}col-edt-hide{% endif %}
+{% if 'now'|date('N') == 2 %}active{% endif %}">
+                Mardi {{ calendrier.tabJour.mardi|date('d/m') }}
+            </div>
+            <div class="header col-edt-header {% if 'now'|date('N') != 3 %}col-edt-hide{% endif %} {% if 'now'|date('N') == 3 %}active{% endif %}">
+                Mercredi {{ calendrier.tabJour.mercredi|date('d/m') }}
+            </div>
+            <div class="header col-edt-header {% if 'now'|date('N') != 4 %}col-edt-hide{% endif %} {% if 'now'|date('N') == 4 %}active{% endif %}">
+                Jeudi {{ calendrier.tabJour.jeudi|date('d/m') }}
+            </div>
+            <div class="header col-edt-header {% if 'now'|date('N') != 5 %}col-edt-hide{% endif %} {% if 'now'|date('N') == 5 %}active{% endif %}">
+                Vendredi {{ calendrier.tabJour.vendredi|date('d/m') }}
+            </div>
         </div>
+        {#        <div class="schedule-individual " aria-labelledby="schedule-heading"> #}
+        {#            {{ include('edt/_header_edt2.html.twig') }} #}
+        {#                    {% for ligne in 0..24 %} #}
+        {#                        <h2 class="time-slot" style="grid-row: time-{{ tabHeures[ligne][0] }};"> #}
+        {#                            {{ tabHeures[ligne][1] }} #}
+        {#                        </h2> #}
+        {#                        {% for j in 1..5 %} #}
+        {#                            {% if edt[j][ligne] is defined %} #}
+        {#                                <div class="session edt-{{ edt[j][ligne].couleur }} border_top_{{ edt[j][ligne].couleur }}" #}
+        {#                                     style="grid-column: track-{{ j }}; grid-row: #}
+        {#                                             time-{{ edt[j][ligne].gridStart }} / time-{{ edt[j][ligne].gridEnd }};"> #}
+        {#                                    <div class="session-body"> #}
+        {#                                        <a href="{{ path('application_personnel_absence_from_planning',{ #}
+        {#                                            'event':edt[j][ligne].id, #}
+        {#                                            'source': edt[j][ligne].source, #}
+        {#                                            'semestre': edt[j][ligne].semestre.id}) }}"> #}
+        {#                                             <span class="session-time"> #}
+        {#                                                 {{ edt[j][ligne].heureDebut|format_time('short') }} - {{ edt #}
+        {#                                                 [j][ligne].heureFin|format_time('short') }} | {{ edt[j][ligne].salle }} - {{ edt[j][ligne].groupe }} #}
+        {#                                             </span> #}
+        {#                                            <span class="session-title">{{ edt[j][ligne].matiere|raw }}</span> #}
+        {#                                        </a> #}
+        {#                                        <hr class="session-divider  hr_{{ edt[j][ligne].couleur }}"> #}
+        {#                                        <div class="session-actions"> #}
+        {#                                            <div class="row no-gutters "> #}
+        {#                                                {% if date(edt[j][ligne].date) <= date() %} #}
+        {#                                                    <div class="col-4 d-grid d-block"> #}
+        {#                                                        <button #}
+        {#                                                                {{ stimulus_controller('modal', { #}
+        {#                                                                    size: 'lg', #}
+        {#                                                                    modalTitle: 'cahier.texte.enseignant.heading'|trans, #}
+        {#                                                                    modalUrl: path('app_personnel_plan_cours_realise', #}
+        {#                                                                        {'event': edt[j][ligne].getTypeIdEvent}) }) }} #}
+        {#                                                                data-action="click->modal#openModal" #}
+        {#                                                                class="btn btn-purple no-radius" #}
+        {#                                                                data-size="lg" #}
+        {#                                                                data-bs-toggle="tooltip" #}
+        {#                                                                data-bs-placement="bottom" #}
+        {#                                                                title="Cahier de texte enseignant" #}
+        {#                                                        > #}
+        {#                                                            <i class="fas fa-book-open"></i> #}
+        {#                                                        </button> #}
+        {#                                                    </div> #}
+        {#                                                    <div class="col-4 d-grid d-block"> #}
+        {#                                                        <button class="btn btn-warning no-radius" #}
+        {#                                                                data-bs-toggle="tooltip" data-bs-placement="bottom" #}
+        {#                                                                data-action="edt-personnel#btnPasAbsent" #}
+        {#                                                                data-event="{{ edt[j][ligne].getTypeIdEvent }}" #}
+        {#                                                                data-semestre="{{ edt[j][ligne].semestre.id }}" #}
+        {#                                                                title="Marquer comme Appel fait, pas d'absents" #}
+        {#                                                                {% if suiviAppel[edt[j][ligne].typeIdMatiere] is defined and #}
+        {#                                                                    suiviAppel[edt[j][ligne].typeIdMatiere][edt #}
+        {#                                                                    [j][ligne].dateObjet|date('Y-m-d')] is defined #}
+        {#                                                                    and suiviAppel[edt[j][ligne].typeIdMatiere][edt #}
+        {#                                                                [j][ligne].dateObjet|date('Y-m-d')][edt[j][ligne] #}
+        {#                                                                .heureDebut|date('H:i')] is defined %} #}
+        {#                                                                    disabled="disabled" #}
+        {#                                                                {% endif %} #}
+        {#                                                        > #}
+        {#                                                            <i class="fas fa-users-slash"></i> #}
+        {#                                                        </button> #}
+        {#                                                    </div> #}
+        {#                                                    <div class="col-4 d-grid d-block"> #}
+        {#                                                        {% if suiviAppel[edt[j][ligne].typeIdMatiere] is defined and #}
+        {#                                                            suiviAppel[edt[j][ligne].typeIdMatiere][edt #}
+        {#                                                            [j][ligne].dateObjet|date('Y-m-d')] is defined #}
+        {#                                                            and suiviAppel[edt[j][ligne].typeIdMatiere][edt #}
+        {#                                                        [j][ligne].dateObjet|date('Y-m-d')][edt[j][ligne] #}
+        {#                                                        .heureDebut|date('H:i')] is defined %} #}
+        {#                                                            <button class="btn btn-block btn-success no-radius" #}
+        {#                                                                    data-bs-toggle="tooltip" #}
+        {#                                                                    data-bs-placement="bottom" #}
+        {#                                                                    title="Appel réalisé" #}
+        {#                                                            > #}
+        {#                                                                <i class="fas fa-check"></i> #}
+        {#                                                            </button> #}
+        {#                                                        {% else %} #}
+        {#                                                            <button class="btn btn-danger no-radius" #}
+        {#                                                                    data-bs-toggle="tooltip" #}
+        {#                                                                    id="pointage{{ edt[j][ligne].getTypeIdEvent }}" #}
+        {#                                                                    data-edt-personnel-target="etatAppel" #}
+        {#                                                                    data-bs-placement="bottom" title="Appel à faire"> #}
+        {#                                                                <i class="fas fa-times"></i> #}
+        {#                                                            </button> #}
+        {#                                                        {% endif %} #}
+        {#                                                    </div> #}
+        {#                                                {% else %} #}
+        {#                                                    <div class="col-12 d-grid d-block"> #}
+        {#                                                        <button class="btn btn-warning no-radius"> #}
+        {#                                                            Evènement à venir #}
+        {#                                                        </button> #}
+        {#                                                    </div> #}
+        {#                                                {% endif %} #}
+        {#                                            </div> #}
+        {#                                        </div> #}
+
+        {#                                    </div> #}
+        {#                                </div> #}
+        {#                            {% endif %} #}
+        {#                        {% endfor %} #}
+        {#                    {% endfor %} #}
+        {#        </div> #}
     </div>
 </div>
 <div class="hide-on-large">

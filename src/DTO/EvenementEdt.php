@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/DTO/EvenementEdt.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/02/2024 08:48
+ * @lastUpdate 23/08/2024 08:38
  */
 
 namespace App\DTO;
@@ -96,19 +96,19 @@ class EvenementEdt
 
     public function getClassCss(): string
     {
-        return mb_strtolower($this->type_cours).'_'.$this->couleur;
+        return mb_strtolower($this->type_cours) . '_' . $this->couleur;
     }
 
     public function getIdMatiere(): int
     {
-        $t = explode('_', (string) $this->typeIdMatiere);
+        $t = explode('_', (string)$this->typeIdMatiere);
 
-        return (int) $t[1];
+        return (int)$t[1];
     }
 
     public function getTypeMatiere(): string
     {
-        $t = explode('_', (string) $this->typeIdMatiere);
+        $t = explode('_', (string)$this->typeIdMatiere);
 
         return $t[0];
     }
@@ -148,7 +148,7 @@ class EvenementEdt
 
     public function couleurEdt(): string
     {
-        return strtolower($this->type_cours).'_'.$this->couleur;
+        return strtolower($this->type_cours) . '_' . $this->couleur;
     }
 
     public function displayEdt(): string
@@ -193,18 +193,18 @@ class EvenementEdt
             return $matiere;
         }
 
-        return '* '.$matiere.' *';
+        return '* ' . $matiere . ' *';
     }
 
     public function getTypeIdEvent(): string
     {
-        return $this->source.'_'.$this->id;
+        return $this->source . '_' . $this->id;
     }
 
     public function appelFait(): ?string
     {
         if (null !== $this->dateObjet && null !== $this->heureDebut) {
-            return $this->dateObjet->format('Ymd').'_'.$this->heureDebut->format('Hi').'_'.$this->typeIdMatiere.'_'.$this->ordreGroupe;
+            return $this->dateObjet->format('Ymd') . '_' . $this->heureDebut->format('Hi') . '_' . $this->typeIdMatiere . '_' . $this->ordreGroupe;
         }
 
         return null;
@@ -213,6 +213,11 @@ class EvenementEdt
     public function getJour(): string
     {
         return $this->jour;
+    }
+
+    public function toJson()
+    {
+        return ['id' => $this->id, 'date' => $this->date, 'jour' => $this->jour, 'heureDebut' => $this->heureDebut->format('H:i:s'), 'heureFin' => $this->heureFin->format('H:i:s'), 'matiere' => $this->matiere, 'salle' => $this->salle, 'personnel' => $this->personnel, 'groupe' => $this->groupe, 'couleur' => $this->couleur, 'evaluation' => $this->evaluation, 'display' => $this->isEvaluation(), 'codeelement' => $this->codeelement, 'indexDebut' => $this->indexDebut, 'ordreGroupe' => $this->ordreGroupe, 'largeur' => $this->largeur, 'duree' => $this->duree, 'heureTexte' => $this->heureTexte, 'diplome' => $this->diplome->getDisplay(), 'ordreSemestre' => $this->ordreSemestre, 'idEduSign' => $this->idEduSign, 'typeCours' => $this->type_cours];
     }
 
 

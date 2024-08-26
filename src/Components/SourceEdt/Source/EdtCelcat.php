@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/SourceEdt/Source/EdtCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 19/04/2024 18:06
+ * @lastUpdate 26/08/2024 09:19
  */
 
 namespace App\Components\SourceEdt\Source;
@@ -115,14 +115,31 @@ class EdtCelcat extends AbstractEdt implements EdtInterface
         Calendrier $calendrier,
         AnneeUniversitaire $anneeUniversitaire,
         array $matieres = []
-    ): array {
+    ): EvenementEdtCollection
+    {
         $this->calendrier = $calendrier;
         $this->user = $personnel;
         $this->matieres = $matieres;
         $this->init($anneeUniversitaire, Constantes::FILTRE_EDT_PROF, $personnel->getId(), $calendrier->semaine);
         $this->calculEdt();
 
-        return $this->getEvenementsAsArray();
+        return $this->evenements;
+    }
+
+    public function initEtudiant(
+        Etudiant           $etudiant,
+        AnneeUniversitaire $anneeUniversitaire,
+        int                $semaine = 0,
+        array              $matieres = []
+    ): EvenementEdtCollection
+    {
+        $this->anneeUniversitaire = $anneeUniversitaire;
+        $this->matieres = $matieres; // todo: vériifer que pas vide
+        $this->user = $etudiant;
+        $this->init($anneeUniversitaire, 'etudiant', $etudiant->getId(), $semaine);
+        $this->calculEdt();
+
+        return $this->evenements;
     }
 
     public function initSemestre(

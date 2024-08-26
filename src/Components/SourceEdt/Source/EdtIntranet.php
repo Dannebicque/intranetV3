@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/SourceEdt/Source/EdtIntranet.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 19/04/2024 18:06
+ * @lastUpdate 26/08/2024 09:19
  */
 
 namespace App\Components\SourceEdt\Source;
@@ -126,9 +126,9 @@ class EdtIntranet extends AbstractEdt implements EdtInterface
     public function initPersonnel(
         Personnel  $personnel,
         Calendrier $calendrier,
-        ?AnneeUniversitaire $anneeUniversitaire,
+        AnneeUniversitaire $anneeUniversitaire,
         array      $matieres
-    ): array
+    ): EvenementEdtCollection
     {
         $this->calendrier = $calendrier;
         $this->user = $personnel;
@@ -136,7 +136,29 @@ class EdtIntranet extends AbstractEdt implements EdtInterface
         $this->init($anneeUniversitaire, Constantes::FILTRE_EDT_PROF, $personnel->getId(), $calendrier->semaine);
         $this->calculEdt();
 
-        return $this->getEvenementsAsArray();
+        return $this->evenements;
+    }
+
+    public function initEtudiant(
+        Etudiant           $etudiant,
+        AnneeUniversitaire $anneeUniversitaire,
+        array              $matieres = [],
+        int                $semaine = 0
+    ): EvenementEdtCollection
+    {
+        $this->user = $etudiant;
+        $this->anneeUniversitaire = $anneeUniversitaire;
+        $this->matieres = $matieres;
+
+        if ($semaine === 0) {
+            $semaine = (int)date('W');
+        }
+
+        $this->semaine = $semaine;
+        $this->init($anneeUniversitaire, Constantes::FILTRE_EDT_ETUDIANT, $etudiant->getId(), $semaine);
+        $this->calculEdt();
+
+        return $this->evenements;
     }
 
     public function initSemestre(
@@ -168,18 +190,9 @@ class EdtIntranet extends AbstractEdt implements EdtInterface
                 $this->evenements = $this->findEdtProf($this->user,
                     $this->calendrier->semaineFormationIUT, $this->anneeUniversitaire);
                 break;
-//            case Constantes::FILTRE_EDT_ETUDIANT:
-//                $this->groupes();
-//                $pl = $this->edtPlanningRepository->findEdtEtu($this->user, $this->semaineFormationIUT,
-//                    $this->anneeUniversitaire);
-//
-//                if (null !== $pl) {
-//                    $this->semestre = $this->user->getSemestre();
-//                    $this->planning = $this->transformeEtudiant($pl, $this->semestre->getAnnee()->getCouleur());
-//                } else {
-//                    return false;
-//                }
-//                break;
+            case Constantes::FILTRE_EDT_ETUDIANT:
+                $this->evenements = $this->findEdtEtu();
+                break;
 //            case Constantes::FILTRE_EDT_MODULE:
 //                $this->module = $this->typeMatiereManager->getMatiereFromSelect($this->valeur);
 //                $this->semestre = $this->module->getSemestres()->first(); // todo: pas idéal, comment récupérer le semestre du module ? En fait ne doit pas dépendre du semestre... si un module est sur plusieurs semestres.
@@ -263,5 +276,21 @@ class EdtIntranet extends AbstractEdt implements EdtInterface
         }
 
         return null;
+    }
+
+    private function findEdtEtu(): EvenementEdtCollection
+    {
+        $evts = $this->edtPlanningRepository->findEdtEtu(
+            $this->user,
+            $this->semaine,
+            $this->anneeUniversitaire
+        );
+
+        $tGroupes = [];
+//        foreach ($this->groupes as $groupe) {
+//            $tGroupes[$groupe->getCodeApogee()] = $groupe;
+//        }
+
+        return $this->edtIntranetAdapter->collection($evts, $this->matieres, $tGroupes, $this->user->getSemestre());
     }
 }

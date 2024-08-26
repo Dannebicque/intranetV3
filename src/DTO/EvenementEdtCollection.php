@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/DTO/EvenementEdtCollection.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:40
+ * @lastUpdate 22/08/2024 16:05
  */
 
 namespace App\DTO;
@@ -52,5 +52,27 @@ class EvenementEdtCollection
         }
 
         return $planning;
+    }
+
+    public function getEvenementsAsArray(): array
+    {
+        $t = [];
+        foreach ($this->evenements as $evt) {
+            if (null !== $evt->jour && null !== $evt->indexDebut) {
+                $t[$evt->jour][$evt->indexDebut] = $evt;
+            }
+        }
+
+        return $t;
+    }
+
+    public function getEvenementsAsJson(): array
+    {
+        $t = [];
+        foreach ($this->evenements as $evt) {
+            $t[] = $evt->toJson();
+        }
+
+        return $t;
     }
 }

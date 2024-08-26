@@ -1,8 +1,9 @@
 <div class="card">
     <header class="card-header">
         <h4 class="card-title">{{ 'heading.edt.dashboard'|trans }} |
-                                                                   Semaine {{ edt.semaine }}
-                                                                   (semaine formation {{ edt.semaineFormation }})</h4>
+            Semaine {{ calendrier.semaine }}
+            (semaine formation {{ calendrier.semaineFormationIUT }})
+        </h4>
 
         <div class="card-header-actions">
 
@@ -10,7 +11,8 @@
             <ul class="card-controls">
                 <li class="dropdown">
                     <a data-bs-toggle="dropdown" href="#"><i
-                                class="fas fa-ellipsis-h rotate-90" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Options d'export ou de synchronisation"></i><span class="sr-only">Options d'export ou de synchronisation</span></a>
+                                class="fas fa-ellipsis-h rotate-90" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                title="Options d'export ou de synchronisation"></i><span class="sr-only">Options d'export ou de synchronisation</span></a>
                     <div class="dropdown-menu dropdown-menu-right">
                         {# todo:                    <a href="{{ path('edt_etudiant_export_semaine_courante', {semaine:edt.semaine}) }}" #}
                         {# class="dropdown-item"><i #}
@@ -21,7 +23,7 @@
                         <a href="#"
                                 {{ stimulus_controller('modal', {
                                     modalTitle: 'edt.intervenant.synchro.ical.heading'|trans,
-                                    modalUrl:  path('edt_affiche_ical') })}}
+                                    modalUrl:  path('edt_affiche_ical') }) }}
                            data-action="click->modal#openModal"
                            data-bs-toggle="tooltip" data-bs-placement="bottom"
                            title="{{ 'atitle.lien_ical'|trans }}"
@@ -38,37 +40,43 @@
                 <div class="btn-group">
                     {% if user_data.user.diplome.optSemainesVisibles > 2 or user_data.user.diplome
                     .optSemainesVisibles == 0 %}
-                        <a class="btn btn-primary" href="{{ path('agenda_index', {semaine:edt.semainePrecedente,
+                        <a class="btn btn-primary" href="{{ path('agenda_index', {semaine:calendrier.semainePrecedente,
                             filtre:'etudiant'}) }}"
                            data-bs-toggle="tooltip" data-bs-placement="bottom"
                            title="Semaine précédente"
                            id="semainePrecedente"><i
                                     class="fa fa-caret-left"></i><span class="sr-only">Semaine précédente</span></a>
-                        <a class="btn btn-secondary d-block" href="{{ path('agenda_index', {semaine:'now'|date('W')}) }}"
+                        <a class="btn btn-secondary d-block"
+                           href="{{ path('agenda_index', {semaine:'now'|date('W')}) }}"
                            data-bs-toggle="tooltip" data-bs-placement="bottom" title="Cette semaine"><i class="fa
 	fa-calendar"></i> Semaine</a>
-                        <a class="btn btn-primary" href="{{ path('agenda_index', {semaine:edt.semaineSuivante,filtre:'etudiant'}) }}"
+                        <a class="btn btn-primary"
+                           href="{{ path('agenda_index', {semaine:calendrier.semaineSuivante,filtre:'etudiant'}) }}"
                            data-bs-toggle="tooltip" data-bs-placement="bottom"
                            title="Semaine suivante"
                            id="semaineSuivante"><i
                                     class="fa fa-caret-right"></i><span class="sr-only">Semaine suivante</span></a>
                     {% else %}
-                        {% if edt.semaine=='now'|date('W') %}
-                            <a class="btn btn-secondary" href="{{ path('agenda_index', {semaine:'now'|date('W')}) }}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Cette semaine"><i class="fa
+                        {% if calendrier.semaine=='now'|date('W') %}
+                            <a class="btn btn-secondary" href="{{ path('agenda_index', {semaine:'now'|date('W')}) }}"
+                               data-bs-toggle="tooltip" data-bs-placement="bottom" title="Cette semaine"><i class="fa
 	fa-calendar"></i> Semaine</a>
-                            <a class="btn btn-primary" href="{{ path('agenda_index', {semaine:edt.semaineSuivante,filtre:'etudiant'}) }}"
+                            <a class="btn btn-primary"
+                               href="{{ path('agenda_index', {semaine:calendrier.semaineSuivante,filtre:'etudiant'}) }}"
                                data-bs-toggle="tooltip" data-bs-placement="bottom"
                                title="Semaine suivante"
                                id="semaineSuivante"><i
                                         class="fa fa-caret-right"></i><span class="sr-only">Semaine suivante</span></a>
                         {% else %}
-                            <a class="btn btn-primary" href="{{ path('agenda_index', {semaine:edt.semainePrecedente,filtre:'etudiant'
-                            }) }}"
+                            <a class="btn btn-primary"
+                               href="{{ path('agenda_index', {semaine:calendrier.semainePrecedente,filtre:'etudiant'
+                               }) }}"
                                data-bs-toggle="tooltip" data-bs-placement="bottom"
                                title="Semaine précédente"
                                id="semainePrecedente"><i
                                         class="fa fa-caret-left"></i><span class="sr-only">Semaine précédente</span></a>
-                            <a class="btn btn-secondary" href="{{ path('agenda_index', {semaine:'now'|date('W')}) }}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Cette semaine"><i class="fa
+                            <a class="btn btn-secondary" href="{{ path('agenda_index', {semaine:'now'|date('W')}) }}"
+                               data-bs-toggle="tooltip" data-bs-placement="bottom" title="Cette semaine"><i class="fa
 	fa-calendar"></i> Semaine</a>
                         {% endif %}
                     {% endif %}
@@ -76,54 +84,125 @@
             </div>
             <div class="col-sm-12 d-md-none d-md-block mt-2 d-grid">
                 <div class="btn-group" role="group">
-                    <a class="btn btn-primary w-25" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Jour précédent"
+                    <a class="btn btn-primary w-25" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                       title="Jour précédent"
                        id="jourPrecedent"><i
                                 class="fa fa-caret-left"></i><span class="sr-only">Jour précédent</span></a>
-                    <a class="btn btn-secondary" href="" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Aujourd'hui" id="jourCourant"><i
+                    <a class="btn btn-secondary" href="" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                       title="Aujourd'hui" id="jourCourant"><i
                                 class="fa
 	fa-calendar"></i> Aujourd'hui</a>
-                    <a class="btn btn-primary w-25" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Jour suivant" id="jourSuivant"><i
+                    <a class="btn btn-primary w-25" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                       title="Jour suivant" id="jourSuivant"><i
                                 class="fa fa-caret-right"></i><span class="sr-only">Jour suivant</span></a>
                 </div>
             </div>
         </div>
         <br>
-        <div class="wrapper-edt-etudiant">
+        <div class="schedule" id="schedule">
             {{ include('edt/_header_edt.html.twig') }}
-            {% for ligne in 1..7 %}
-                <div class="edt-etudiant-col1 col-edt-heure col-edt-visible">{{ tabHeures[ligne][0] }}
-                    <br>{{ tabHeures[ligne][1] }}</div>
-                {% for j in 1..5 %}
-                    {% if edt.planning[j][ligne] is defined %}
-                        <div class="edt-etudiant-col1 edt-cours edt-jour-{{ j - 1 }}  {% if 'now'|date('N') != j %}col-edt-hide{% endif %} {{ edt.planning[j][ligne].couleur }}"
-                             style="color:{{ edt.planning[j][ligne].couleurTexte }};">
-                            {% if edt.planning[j][ligne].id != '' %}
-                            <a href="#"
-                                    {{ stimulus_controller('modal', {
-                                        modalTitle: 'edt.etudiant.details'|trans,
-                                        modalUrl:  path('edt_etudiant_detail_event', {'event': edt.planning[j][ligne].id,type: 'planning'}) })}}
-                               data-action="click->modal#openModal"
-                               title="{{ 'atitle.details'|trans }}"
-                               style="color:{{ edt.planning[j][ligne].couleurTexte }};"
-                            >
-                                {% endif %}
-                                {{ edt.planning[j][ligne].texte|raw }}
-                                {% if edt.planning[j][ligne].format == 'nok' %}
-                                    <br/>
-                                    <span class="edt-extra-time">{{ convertHeureEdt(edt
-                                            .planning[j][ligne].debut) }} à  {{ convertHeureEdt(edt
-                                            .planning[j][ligne].fin) }}</span>
-                                {% endif %}
-                                {% if edt.planning[j][ligne].id != '' %}
-                            </a>
-                            {% endif %}
-                        </div>
-                    {% else %}
-                        <div class="edt-etudiant-col1 edt-cours edt-vide edt-jour-{{ j - 1 }}  {% if 'now'|date('N') != j %}col-edt-hide{% endif %}"></div>
-                    {% endif %}
-                {% endfor %}
-            {% endfor %}
+            {#            {% for ligne in 1..7 %} #}
+            {#                <div class="edt-etudiant-col1 col-edt-heure col-edt-visible">{{ tabHeures[ligne][0] }} #}
+            {#                    <br>{{ tabHeures[ligne][1] }}</div> #}
+            {#                {% for j in 1..5 %} #}
+            {#                    {% if edt.planning[j][ligne] is defined %} #}
+            {#                        <div class="edt-etudiant-col1 edt-cours edt-jour-{{ j - 1 }}  {% if 'now'|date('N') != j %}col-edt-hide{% endif %} {{ edt.planning[j][ligne].couleur }}" #}
+            {#                             style="color:{{ edt.planning[j][ligne].couleurTexte }};"> #}
+            {#                            {% if edt.planning[j][ligne].id != '' %} #}
+            {#                            <a href="#" #}
+            {#                                    {{ stimulus_controller('modal', { #}
+            {#                                        modalTitle: 'edt.etudiant.details'|trans, #}
+            {#                                        modalUrl:  path('edt_etudiant_detail_event', {'event': edt.planning[j][ligne].id,type: 'planning'}) })}} #}
+            {#                               data-action="click->modal#openModal" #}
+            {#                               title="{{ 'atitle.details'|trans }}" #}
+            {#                               style="color:{{ edt.planning[j][ligne].couleurTexte }};" #}
+            {#                            > #}
+            {#                                {% endif %} #}
+            {#                                {{ edt.planning[j][ligne].texte|raw }} #}
+            {#                                {% if edt.planning[j][ligne].format == 'nok' %} #}
+            {#                                    <br/> #}
+            {#                                    <span class="edt-extra-time">{{ convertHeureEdt(edt #}
+            {#                                            .planning[j][ligne].debut) }} à  {{ convertHeureEdt(edt #}
+            {#                                            .planning[j][ligne].fin) }}</span> #}
+            {#                                {% endif %} #}
+            {#                                {% if edt.planning[j][ligne].id != '' %} #}
+            {#                            </a> #}
+            {#                            {% endif %} #}
+            {#                        </div> #}
+            {#                    {% else %} #}
+            {#                        <div class="edt-etudiant-col1 edt-cours edt-vide edt-jour-{{ j - 1 }}  {% if 'now'|date('N') != j %}col-edt-hide{% endif %}"></div> #}
+            {#                    {% endif %} #}
+            {#                {% endfor %} #}
+            {#            {% endfor %} #}
         </div>
     </div>
 </div>
+
+<script type="module">
+
+  function formatTime (dateTime) {
+    return new Intl.DateTimeFormat('fr-FR', {
+      hour: '2-digit',
+      minute: '2-digit',
+    }).format(dateTime)
+  }
+
+  function _generateGrid (slotDuration) {
+    const schedule = document.getElementById('schedule')
+    const startHour = 8
+    const endHour = 19
+    const slotsPerHour = 60 / slotDuration
+
+    schedule.style.gridTemplateRows = `repeat(${(endHour - startHour) * slotsPerHour}, 1fr)`
+
+    for (let hour = startHour; hour < endHour; hour++) {
+      for (let minute = 0; minute < 60; minute += slotDuration) {
+        for (let day = 0; day < 5; day++) {
+          const cell = document.createElement('div')
+          cell.className = 'day-column'
+          schedule.appendChild(cell)
+        }
+      }
+    }
+  }
+
+  function _placeEvents (events, slotDuration) {
+    const schedule = document.getElementById('schedule')
+    const slotsPerHour = 60 / slotDuration
+
+    events.forEach((event) => {
+      const start = new Date(`1970-01-01T${event.heureDebut}`)
+      const end = new Date(`1970-01-01T${event.heureFin}`)
+      const duration = (end - start) / (1000 * 60 * slotDuration) // Durée en créneaux de slotDuration minutes
+
+      const startHour = start.getHours()
+      const startMinute = start.getMinutes()
+
+      const rowIndex = ((startHour - 8) * slotsPerHour + (startMinute / slotDuration)) + 1 // Index de la ligne
+      const colIndex = parseInt(event.jour, 10) - 1 // Index de la colonne
+
+      const cell = schedule.children[rowIndex * 5 + colIndex]
+      cell.className = `session edt-${event.couleur} border-top-${event.couleur} ${event.typeCours.toLowerCase()}`
+
+      cell.innerHTML = `
+    <span class="session-time">${formatTime(start)} - ${formatTime(end)} | <span class="badge bg-edt-${event.typeCours.toLowerCase()}">${event.groupe}</span> - ${event.salle}</span>
+        <span class="session-title">${event.display}</span>
+        <hr class="session-divider hr-${event.couleur}" />
+<span class="session-teacher">${event.personnel}</span>`
+      cell.style.setProperty('--span', duration)
+
+      // Sauter les créneaux horaires couverts par cet événement
+      for (let i = 1; i < duration; i++) {
+        const emptyCell = schedule.children[(rowIndex + i) * 5 + colIndex]
+        emptyCell.style.display = 'none'
+      }
+    })
+  }
+
+  _generateGrid(30)
+  const events = {{ events|raw }}
+    console.log(events)
+  _placeEvents(events, 30)
+
+</script>
 

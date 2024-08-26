@@ -1,8 +1,8 @@
-// Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/Sites/intranetV3/assets/css/color.scss
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 01/09/2022 16:32
+// @lastUpdate 23/08/2024 08:42
 @use "sass:map";
 
 
@@ -17,17 +17,49 @@
 
 
 $colors: (
-        blue:#1971c2,
-        indigo: #6741d9,
-        purple: #9c36b5,
-        pink: #c2255c,
-        red: #e03131,
-        orange: #e8590c,
-        yellow: #f08c00,
-        green: #2f9e44,
-        teal: #099268,
-        cyan: #0c8599,
-        lime: #66a80f
+        "red": #D32F2F,
+        "orange": #E64A19,
+        "yellow": #FBC02D,
+        "lime-green": #AFB42B,
+        "green": #388E3C,
+        "emerald-green": #00796B,
+        "cyan": #00838F,
+        "sky-blue": #1976D2,
+        "blue": #4961B7,
+        "indigo": #303F9F,
+        "purple": #7B1FA2,
+        "magenta": #C2185B,
+        "pink": #D81B60,
+        "brown": #5D4037,
+        "grey": #616161,
+        "blue-grey": #455A64,
+        "amber": #FFA000,
+        "lime": #AFB42B,
+        "teal": #00796B,
+        "lavender": #7B1FA2
+);
+
+$colorsBackgrounds: (
+        "red": #FFEBEE,
+        "orange": #FFF3E0,
+        "yellow": #FFFDE7,
+        "lime-green": #F9FBE7,
+        "green": #E8F5E9,
+        "emerald-green": #E0F2F1,
+        "cyan": #E0F7FA,
+        "sky-blue": #E3F2FD,
+        "blue": #EBF1FE,
+        "indigo": #E8EAF6,
+        "purple": #F3E5F5,
+        "magenta": #FCE4EC,
+        "pink": #FCE4EC,
+        "brown": #EFEBE9,
+        "grey": #FAFAFA,
+        "blue-grey": #ECEFF1,
+        "amber": #FFF8E1,
+        "lime": #F9FBE7,
+        "teal": #E0F7FA,
+        "lavender": #F3E5F5
 );
 
 $colorsTypesGroupes: (
@@ -39,6 +71,15 @@ $colorsTypesGroupes: (
 
 
 @each $color-key, $color-value in $colors {
+
+  .border-top-#{$color-key} {
+    border-top-color: $color-value !important;
+  }
+
+  .hr-#{$color-key} {
+    border-color: $color-value;
+  }
+
   .cm_#{$color-key} {
     background-color: $color-value;
     color: text-clr($color-value);
@@ -69,12 +110,21 @@ $colorsTypesGroupes: (
   }
 }
 
+@each $color-key, $color-value in $colorsBackgrounds {
+  .edt-#{$color-key} {
+    background-color: $color-value;
+    color: #353873 !important;
+  }
+}
+
 @each $color-key, $color-value in $colorsTypesGroupes {
-  .bg-#{$color-key} {
+  .bg-edt-#{$color-key} {
     background-color: $color-value;
     color: text-clr($color-value);
   }
 }
+
+
 
 
 

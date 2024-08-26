@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/SourceEdt/Source/AbstractEdt.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/02/2024 08:59
+ * @lastUpdate 26/08/2024 09:20
  */
 
 namespace App\Components\SourceEdt\Source;
@@ -38,6 +38,8 @@ abstract class AbstractEdt
     protected mixed $filtre;
     protected mixed $valeur;
     protected ?EvenementEdtCollection $evenements;
+    protected ?int $groupetd;
+    protected ?int $groupetp;
 
     #[Required]
     public function setTypeMatiereManager(TypeMatiereManager $typeMatiereManager): void
@@ -98,22 +100,8 @@ abstract class AbstractEdt
         return $this->evenements;
     }
 
-    public function getEvenementsAsArray(): array
-    {
-        $t = [];
-        foreach ($this->evenements->evenements as $evt) {
-            if (null !== $evt->jour && null !== $evt->indexDebut) {
-                $t[$evt->jour][$evt->indexDebut] = $evt;
-            }
-        }
-
-        return $t;
-    }
-
     private function getEvenementsAsArrayPromo(): array
     {
         return [];
     }
-
-
 }

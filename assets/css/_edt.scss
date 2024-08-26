@@ -2,14 +2,14 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/css/_edt.scss
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 19/04/2024 17:57
+// @lastUpdate 26/08/2024 09:19
 
 //.semestre_borne {
 //  max-height: 80vh;
 //}
 
 
-@media screen and (min-width:640px) {
+@media screen and (min-width: 640px) {
   .schedule-individual {
     display: grid;
     grid-gap: 0.1em;
@@ -43,46 +43,45 @@
       [time-2000] 1fr;
     align-self: center;
     grid-template-columns:
-      [times] 4em
       [track-1-start] 1fr
       [track-1-end track-2-start] 1fr
       [track-2-end track-3-start] 1fr
       [track-3-end track-4-start] 1fr
       [track-4-end track-5-start] 1fr
       [track-5-end];
-    grid-template-areas: "time jour1 jour2 jour3 jour4 jour5"
-    "time jour1a jour2a jour3a jour4a jour5a"
-    "time jour1b jour2b jour3b jour4b jour5b"
-    "time jour1c jour2c jour3c jour4c jour5c"
+    grid-template-areas: "jour1 jour2 jour3 jour4 jour5"
+    "jour1a jour2a jour3a jour4a jour5a"
+    "jour1b jour2b jour3b jour4b jour5b"
+    "jour1c jour2c jour3c jour4c jour5c"
 
-    "time jour1d jour2d jour3d jour4d jour5d"
-    "time jour1e jour2e jour3e jour4e jour5e"
-    "time jour1f jour2f jour3f jour4f jour5f"
-    "time jour1g jour2g jour3g jour4g jour5g"
+    "jour1d jour2d jour3d jour4d jour5d"
+    "jour1e jour2e jour3e jour4e jour5e"
+    "jour1f jour2f jour3f jour4f jour5f"
+    "jour1g jour2g jour3g jour4g jour5g"
 
-    "time jour1h jour2h jour3h jour4h jour5h"
-    "time jour1i jour2i jour3i jour4i jour5i"
-    "time jour1j jour2j jour3j jour4j jour5j"
+    "jour1h jour2h jour3h jour4h jour5h"
+    "jour1i jour2i jour3i jour4i jour5i"
+    "jour1j jour2j jour3j jour4j jour5j"
 
-    "time jour1k jour2k jour3k jour4k jour5k"
-    "time jour1l jour2l jour3l jour4l jour5l"
-    "time jour1m jour2m jour3m jour4m jour5m"
+    "jour1k jour2k jour3k jour4k jour5k"
+    "jour1l jour2l jour3l jour4l jour5l"
+    "jour1m jour2m jour3m jour4m jour5m"
 
-    "time jour1n jour2n jour3n jour4n jour5n"
-    "time jour1o jour2o jour3o jour4o jour5o"
-    "time jour1p jour2p jour3p jour4p jour5p"
+    "jour1n jour2n jour3n jour4n jour5n"
+    "jour1o jour2o jour3o jour4o jour5o"
+    "jour1p jour2p jour3p jour4p jour5p"
 
-    "time jour1q jour2q jour3q jour4q jour5q"
-    "time jour1r jour2r jour3r jour4r jour5r"
-    "time jour1s jour2s jour3s jour4s jour5s"
+    "jour1q jour2q jour3q jour4q jour5q"
+    "jour1r jour2r jour3r jour4r jour5r"
+    "jour1s jour2s jour3s jour4s jour5s"
 
-    "time jour1t jour2t jour3t jour4t jour5t"
-    "time jour1u jour2u jour3u jour4u jour5u"
-    "time jour1v jour2v jour3v jour4v jour5v"
+    "jour1t jour2t jour3t jour4t jour5t"
+    "jour1u jour2u jour3u jour4u jour5u"
+    "jour1v jour2v jour3v jour4v jour5v"
 
-    "time jour1w jour2w jour3w jour4w jour5w"
-    "time jour1x jour2x jour3x jour4x jour5x"
-    "time jour1y jour2y jour3y jour4y jour5y";
+    "jour1w jour2w jour3w jour4w jour5w"
+    "jour1x jour2x jour3x jour4x jour5x"
+    "jour1y jour2y jour3y jour4y jour5y";
   }
   .schedule-semestre-8 {
     display: grid;
@@ -116,7 +115,6 @@
       [time-2000] 1fr;
     align-self: center;
     grid-template-columns:
-      [times] 4em
       [track-1-start] 1fr
       [track-1-end track-2-start] 1fr
       [track-2-end track-3-start] 1fr
@@ -159,7 +157,6 @@
       [time-2000] 1fr;
     align-self: center;
     grid-template-columns:
-      [times] 4em
       [track-1-start] 1fr
       [track-1-end track-2-start] 1fr
       [track-2-end];
@@ -170,9 +167,9 @@
   @each $lettre in a, c, e, g, i, k, m, o, q, s, u, w, y {
     .jour#{$i}#{$lettre} {
       grid-area: jour#{$i}#{$lettre};
-      /* background-color: var(--backgroundEdtVide, #f4f4f4);*/
-      border-bottom: 1px dashed var(--colorIUTComplementaire);
-      border-right: 1px solid var(--colorIUTComplementaire);
+      ///* background-color: var(--backgroundEdtVide, #f4f4f4);*/
+      //border-bottom: 1px dashed var(--colorIUTComplementaire);
+      //border-right: 1px solid var(--colorIUTComplementaire);
     }
   }
 
@@ -180,8 +177,8 @@
     .jour#{$i}#{$lettre} {
       grid-area: jour#{$i}#{$lettre};
       //background-color: var(--backgroundEdtVidePair, #f4f4f4);
-      border-bottom: 1px solid var(--colorIUTComplementaire);
-      border-right: 1px solid var(--colorIUTComplementaire);
+      //border-bottom: 1px solid var(--colorIUTComplementaire);
+      //border-right: 1px solid var(--colorIUTComplementaire);
 
     }
   }
@@ -191,8 +188,8 @@
   display: none; /* hidden on small screens and browsers without grid support */
 }
 
-@supports( display:grid ) {
-  @media screen and (min-width:640px) {
+@supports ( display:grid ) {
+  @media screen and (min-width: 640px) {
     .track-slot {
       display: block;
       padding: 10px 5px 5px;
@@ -206,10 +203,11 @@
 
 /* Small-screen & fallback styles */
 .session {
-  margin-bottom:  1em;
+  margin-bottom: 1em;
+  grid-row: span var(--span);
 }
 
-@supports( display:grid ) {
+@supports ( display:grid ) {
   @media screen and (min-width: 640px) {
     .session {
       margin: 0;
@@ -217,30 +215,52 @@
   }
 }
 
+.schedule {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0 2px;
+}
+
+.day-column {
+  background-color: #f9f9f9;
+}
+
+.schedule div {
+  padding: 5px;
+  //text-align: center;
+}
+
+.schedule.header {
+
+}
+
+.schedule.header.active {
+  background-color: var(--colorIUTComplementaire, #4d3677);
+  color: white;
+}
+
 /*************************
  * VISUAL STYLES
  * Design-y stuff ot particularly important to the demo
  *************************/
 .session {
-  justify-content: center;
+  justify-content: left;
   padding-bottom: 0;
-  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.03);
-  display: flex;
+  //box-shadow: 0 2px 3px rgba(0, 0, 0, 0.03);
+  //display: flex;
   flex-wrap: wrap;
+  border-radius: 5px;
+  border-top-style: solid;
+  border-top-width: 5px;
 }
 
 .session-body {
-  text-align: center;
   padding: .5em;
 }
 
 .session-footer {
   align-self: flex-end;
   width: 100%;
-}
-
-.session-body a {
-  color: white;
 }
 
 .session-tableau-body {
@@ -263,7 +283,18 @@
 
 .session-title {
   margin: 0;
-  font-size: 1em;
+  font-size: 1.2em;
+  font-weight: 400;
+  text-align: left;
+}
+
+.session-divider {
+  border-top: 1px solid;
+  width: 80%;
+  margin: auto;
+  margin-top: 8px;
+  margin-bottom: 2px;
+  padding-top: 10px;
 }
 
 .time-slot {
@@ -278,7 +309,7 @@
 .track-slot,
 .time-slot {
   font-weight: bold;
-  font-size:.75em;
+  font-size: .75em;
 }
 
 .track-all {

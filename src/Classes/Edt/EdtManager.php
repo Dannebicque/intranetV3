@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/EdtManager.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 19/04/2024 18:06
+ * @lastUpdate 26/08/2024 09:19
  */
 
 namespace App\Classes\Edt;
@@ -16,6 +16,7 @@ use App\Components\SourceEdt\SourceEdtRegistry;
 use App\DTO\EvenementEdt;
 use App\DTO\EvenementEdtCollection;
 use App\Entity\AnneeUniversitaire;
+use App\Entity\Etudiant;
 use App\Entity\Groupe;
 use App\Entity\Personnel;
 use App\Entity\Semestre;
@@ -198,7 +199,7 @@ class EdtManager
         Personnel          $user,
         AnneeUniversitaire $anneeUniversitaire,
         array              $matieres,
-    ): array
+    ): EvenementEdtCollection
     {
         switch ($source) {
             case self::EDT_CELCAT:
@@ -210,7 +211,27 @@ class EdtManager
 
                 return $this->edtIntranet->initPersonnel($user, $calendrier, $anneeUniversitaire, $matieres);
             default:
-                return [];
+                return new EvenementEdtCollection();
+        }
+    }
+
+    public function initEtudiant(
+        string             $source,
+        Etudiant           $user,
+        AnneeUniversitaire $anneeUniversitaire,
+        Calendrier         $calendrier,
+        array              $matieres = [],
+    ): EvenementEdtCollection
+    {
+        switch ($source) {
+            case self::EDT_CELCAT:
+                $this->source = self::EDT_CELCAT;
+                return $this->edtCelcat->initEtudiant($user, $anneeUniversitaire, $matieres, $calendrier->semaine);
+            case self::EDT_INTRANET:
+                $this->source = self::EDT_INTRANET;
+                return $this->edtIntranet->initEtudiant($user, $anneeUniversitaire, $matieres, $calendrier->semaineFormationIUT);
+            default:
+                return new EvenementEdtCollection();
         }
     }
 

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/SourceEdt/Adapter/EdtIntranetAdapter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/02/2024 08:59
+ * @lastUpdate 25/08/2024 13:09
  */
 
 namespace App\Components\SourceEdt\Adapter;
@@ -14,22 +14,23 @@ use App\Classes\Edt\EdtManager;
 use App\DTO\EvenementEdt;
 use App\DTO\EvenementEdtCollection;
 use App\Entity\Constantes;
+use App\Entity\Semestre;
 use Carbon\Carbon;
 
 class EdtIntranetAdapter extends AbstractEdtAdapter implements EdtAdapterInterface
 {
-    public function collection(array $events, array $matieres, array $groupes): EvenementEdtCollection
+    public function collection(array $events, array $matieres, array $groupes, ?Semestre $semestre = null): EvenementEdtCollection
     {
         $collection = new EvenementEdtCollection();
 
         foreach ($events as $event) {
-            $collection->add($this->single($event, $matieres, $groupes));
+            $collection->add($this->single($event, $matieres, $groupes, $semestre));
         }
 
         return $collection;
     }
 
-    public function single(mixed $evt, array $matieres = [], array $groupes = []): ?EvenementEdt
+    public function single(mixed $evt, array $matieres = [], array $groupes = [], ?Semestre $semestre = null): ?EvenementEdt
     {
         $event = new EvenementEdt();
 
@@ -40,10 +41,12 @@ class EdtIntranetAdapter extends AbstractEdtAdapter implements EdtAdapterInterfa
             $event->matiere = $matiere->display;
             $event->code_matiere = $matiere->codeMatiere;
             $event->semestre = $matiere->getSemestres()->first();
-            $event->couleur = $event->semestre->getAnnee()?->getCouleur();
+            $event->couleur = $semestre !== null ? $semestre->getAnnee()->getCouleur() : $event->semestre->getAnnee()?->getCouleur();
         } elseif ($evt->getTexte() === null) {
             $event->matiere = 'Inconnue';
-            $event->couleur = '#cccccc';
+            $event->couleur = $semestre !== null ? $semestre->getAnnee()->getCouleur() : '#cccccc';
+        } else {
+            $event->couleur = $semestre !== null ? $semestre->getAnnee()->getCouleur() : '#cccccc';
         }
         $event->largeur = $this->getLargeur($evt);
         $event->source = EdtManager::EDT_INTRANET;
