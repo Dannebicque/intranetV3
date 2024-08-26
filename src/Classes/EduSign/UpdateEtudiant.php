@@ -53,7 +53,6 @@ class UpdateEtudiant
                         [$etudiant->getSemestre()->getIdEduSign()],
                         array_map(fn($g) => $g->getIdEduSign(), $etudiant->getGroupes()->toArray())
                     );
-//                    dd($etudiant->getGroupes());
                     // retirer les entrées vides et réindexer
                     $groupes = array_values(array_filter($groupes));
 

@@ -148,8 +148,8 @@ class EduSignController extends BaseController
             // Update groups and students, collect errors
             $updateResults = [
                 $updateGroupe->update($keyEduSign),
-//                $updateEtudiant->update($keyEduSign),
-//                $updateGroupe->deleteMissingGroupes($keyEduSign)
+                $updateEtudiant->update($keyEduSign),
+                $updateGroupe->deleteMissingGroupes($keyEduSign)
             ];
 
             foreach ($updateResults as $result) {

@@ -54,13 +54,16 @@ class UpdateEdt
         $result = ['success' => true, 'messages' => []];
 
         if ($keyEduSign === null) {
-            return ['success' => false, 'messages' => ['Clé EduSign manquante.']];
+            $diplomes = $this->diplomeRepository->findAllWithEduSign();
+        } else {
+            $diplomes = $this->diplomeRepository->findBy(['keyEduSign' => $keyEduSign]);
         }
 
         try {
-            $diplomes = $this->diplomeRepository->findBy(['keyEduSign' => $keyEduSign]);
-
             foreach ($diplomes as $diplome) {
+                if ($keyEduSign === null) {
+                    $keyEduSign = $diplome->getKeyEduSign();
+                }
                 $semestres = $this->semestreRepository->findByDiplome($diplome);
 
                 list($start, $end) = $this->calculStartEndDates($opt, $date);
@@ -75,7 +78,6 @@ class UpdateEdt
                     $matieresSemestre = $this->getMatieresSemestre($semestre);
                     $groupes = $this->groupeRepository->findBySemestre($semestre);
                     $edt = $this->edtManager->getPlanningSemestreSemaine($semestre, $semaine, $semestre->getAnneeUniversitaire(), $matieresSemestre, $groupes);
-
                     foreach ($edt->evenements as $this->evenement) {
                         if ($this->evenement->dateObjet->isBetween($start, $end)) {
                             $this->processEvent($diplome, $keyEduSign);
