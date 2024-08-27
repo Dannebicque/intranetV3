@@ -132,12 +132,12 @@ class ApiEtudiant
         }
     }
 
-    public function deleteEtudiant(int $etudiant, string $cleApi): void
+    public function deleteEtudiant(string $etudiantId, string $cleApi): mixed
     {
         try {
             $client = HttpClient::create();
 
-            $response = $client->request('DELETE', 'https://ext.edusign.fr/v1/student/' . $etudiant, [
+            $response = $client->request('DELETE', 'https://ext.edusign.fr/v1/student/' . $etudiantId, [
                 'headers' => [
                     'Content-Type' => 'application/json',
                     'Authorization' => 'Bearer ' . $this->getCleApi->getCleApi($cleApi),
@@ -148,10 +148,12 @@ class ApiEtudiant
             $data = json_decode($content, true);
 
             if (isset($data['status']) && $data['status'] === 'error') {
-                throw new \Exception($data['message']);
+                return ['success' => false, 'error' => $data['message']];
             }
+
+            return $data['result'] ?? null;
         } catch (\Exception $e) {
-            throw new \Exception($e->getMessage());
+            return ['success' => false, 'error' => $e->getMessage()];
         }
     }
 }

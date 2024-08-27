@@ -21,6 +21,7 @@ class IntranetGroupeEduSignAdapter
     {
         $this->groupe = new EduSignGroupe();
 
+        $this->groupe->id = $groupe->getIdEduSign();
         $this->groupe->name = $groupe->getLibelle().' | '.$anneeUniversitaire->getLibelle();
         $this->groupe->description = '';
         $this->groupe->students = [];

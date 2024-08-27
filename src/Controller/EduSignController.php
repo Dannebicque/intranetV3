@@ -132,6 +132,9 @@ class EduSignController extends BaseController
     #[Route('/update-annee/{id}', name: 'app_edu_sign_update_annee')]
     public function updateAnnee(?int $id, UpdateGroupe $updateGroupe, UpdateEtudiant $updateEtudiant, MailerInterface $mailer): RedirectResponse
     {
+        // Augmenter la limite de temps d'exécution
+        set_time_limit(1000000);
+
         $departement = $this->departementRepository->find($id);
         if (!$departement) {
             $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'Département introuvable.');
@@ -145,10 +148,10 @@ class EduSignController extends BaseController
             $keyEduSign = $diplome->getKeyEduSign();
             $errors = [];
 
-            // Update groups and students, collect errors
             $updateResults = [
-                $updateGroupe->update($keyEduSign),
+//                $updateGroupe->update($keyEduSign),
                 $updateEtudiant->update($keyEduSign),
+                $updateEtudiant->deleteMissingEtudiants($keyEduSign),
                 $updateGroupe->deleteMissingGroupes($keyEduSign)
             ];
 
