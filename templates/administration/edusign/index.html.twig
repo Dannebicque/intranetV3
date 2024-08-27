@@ -61,7 +61,7 @@
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler
                                     </button>
-                                    <a href="{{ path('app_admin_edu_sign_create_courses', {'opt': 1}) }}"
+                                    <a href="{{ path('app_edu_sign_create_courses', {'opt': 1, 'id': departement.id}) }}"
                                        class="btn btn-primary">Confirmer</a>
                                 </div>
                             </div>
@@ -85,7 +85,7 @@
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler
                                     </button>
-                                    <a href="{{ path('app_admin_edu_sign_create_courses', {'opt': 2}) }}"
+                                    <a href="{{ path('app_edu_sign_create_courses', {'opt': 2, 'id': departement.id}) }}"
                                        class="btn btn-primary">Confirmer</a>
                                 </div>
                             </div>

@@ -81,7 +81,7 @@ class TypeMatiereManager
         return $t;
     }
 
-    // todo: ?? retourne plusieurs résultats
+    // todo: ?? retourne plusieurs résultats : 1 pour chaque matiere
     public function findOneById(int $id): array
     {
         $t = [];

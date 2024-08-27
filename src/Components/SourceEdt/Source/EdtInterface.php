@@ -17,6 +17,8 @@ use App\DTO\EvenementEdt;
 use App\DTO\EvenementEdtCollection;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Etudiant;
+use App\Entity\Groupe;
+use App\Entity\Matiere;
 use App\Entity\Personnel;
 use App\Entity\Semestre;
 
@@ -26,7 +28,7 @@ interface EdtInterface
 
     public function find(int $event, array $matieres = [], array $groupes = []): EvenementEdt;
 
-    public function findOne(int $eventId): EvenementEdt;
+    public function findOne(int $eventId, Matiere $matiere, Groupe $groupe): EvenementEdt;
 
     public function recupereEdtJourBorne(Semestre $semestre, array $matieres, int $jourSemaine, int $semaineFormation, array $groupes, AnneeUniversitaire $anneeUniversitaire): EvenementEdtCollection;
 

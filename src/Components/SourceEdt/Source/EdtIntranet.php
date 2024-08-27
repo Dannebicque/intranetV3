@@ -17,6 +17,8 @@ use App\Entity\AnneeUniversitaire;
 use App\Entity\Constantes;
 use App\Entity\EdtPlanning;
 use App\Entity\Etudiant;
+use App\Entity\Groupe;
+use App\Entity\Matiere;
 use App\Entity\Personnel;
 use App\Entity\Semestre;
 use App\Repository\CalendrierRepository;
@@ -76,15 +78,10 @@ class EdtIntranet extends AbstractEdt implements EdtInterface
         return $this->edtIntranetAdapter->single($evt, $matieres, $this->transformeGroupe($groupes));
     }
 
-    public function findOne(int $eventId, array $matieres = [], array $groupes = []): EvenementEdt
+    public function findOne(int $eventId, ?Matiere $matiere, ?Groupe $groupe): EvenementEdt
     {
         $evt = $this->edtPlanningRepository->find($eventId);
-        $typeIdMatiere = $evt->getTypeIdMatiere();
-        $tGroupes = [];
-        foreach ($groupes as $groupe) {
-            $tGroupes[$groupe->getId()] = $groupe;
-        }
-        return $this->edtIntranetAdapter->single($evt, $this->transformeMatiere($matieres, $typeIdMatiere), $tGroupes);
+        dd($evt);
     }
 
     public function recupereEdtJourBorne(Semestre $semestre, array $matieres, int $jourSemaine, int $semaineFormation, array $groupes, AnneeUniversitaire $anneeUniversitaire): EvenementEdtCollection

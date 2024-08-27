@@ -149,7 +149,7 @@ class EduSignController extends BaseController
             $errors = [];
 
             $updateResults = [
-//                $updateGroupe->update($keyEduSign),
+                $updateGroupe->update($keyEduSign),
                 $updateEtudiant->update($keyEduSign),
                 $updateEtudiant->deleteMissingEtudiants($keyEduSign),
                 $updateGroupe->deleteMissingGroupes($keyEduSign)
@@ -179,7 +179,6 @@ class EduSignController extends BaseController
 
         return $this->redirectToRoute('app_edu_sign');
     }
-
 
     #[Route('/create-courses/{opt}/{id}', name: 'app_edu_sign_create_courses')]
     public function createCourses(?int $opt, ?int $id, UpdateEdt $updateEdt, FixCourses $fixCourses, MailerInterface $mailer): Response

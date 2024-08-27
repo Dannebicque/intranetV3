@@ -31,7 +31,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\RouterInterface;
 
 #[Route('/administration/edusign')]
@@ -40,21 +40,19 @@ class EduSignController extends BaseController
     private ?EvenementEdt $evenement;
 
     public function __construct(
-        private readonly PersonnelDepartementRepository $personnelDepartementRepository,
-        private readonly DiplomeRepository              $diplomeRepository,
-        private readonly PersonnelRepository            $personnelRepository,
-        private readonly MatiereRepository              $matiereRepository,
-        private readonly CreateEnseignant               $createEnseignant,
-        private readonly CalendrierRepository           $CalendrierRepository,
-        private readonly SemestreRepository             $semestreRepository,
-        private readonly GroupeRepository               $groupeRepository,
-        private readonly EdtManager                     $edtManager,
-        private readonly TypeMatiereManager             $typeMatiereManager,
-        private readonly SalleRepository                $salleRepository,
-        private readonly ApiCours                       $apiCours,
-    )
-    {
-    }
+        private PersonnelDepartementRepository $personnelDepartementRepository,
+        private DiplomeRepository $diplomeRepository,
+        private PersonnelRepository $personnelRepository,
+        private MatiereRepository $matiereRepository,
+        private CreateEnseignant $createEnseignant,
+        private CalendrierRepository $CalendrierRepository,
+        private SemestreRepository $semestreRepository,
+        private GroupeRepository $groupeRepository,
+        private EdtManager $edtManager,
+        private TypeMatiereManager $typeMatiereManager,
+        private SalleRepository $salleRepository,
+        private ApiCours $apiCours,
+    ) {}
 
     #[Route('/', name: 'administration_edusign_index')]
     public function index(Request $request, RouterInterface $router): Response
@@ -62,10 +60,7 @@ class EduSignController extends BaseController
         $departement = $this->getDepartement();
         $personnelsDepartement = $this->personnelDepartementRepository->findBy(['departement' => $departement]);
 
-        $filteredPersonnelsDepartement = array_filter($personnelsDepartement, function ($p) use ($departement) {
-            $idEduSignArray = $p->getPersonnel()->getIdEduSign() ?? [];
-            return empty($idEduSignArray) || !array_key_exists($departement->getId(), $idEduSignArray);
-        });
+        $filteredPersonnelsDepartement = array_filter($personnelsDepartement, fn($p) => empty($p->getPersonnel()->getIdEduSign() ?? []) || !array_key_exists($departement->getId(), $p->getPersonnel()->getIdEduSign()));
 
         $diplomes = $this->diplomeRepository->findAllWithEduSignDepartement($departement);
         $cours = [];
@@ -74,28 +69,18 @@ class EduSignController extends BaseController
             $semestres = $this->semestreRepository->findByDiplome($diplome);
             $start = Carbon::createFromFormat('d/m/Y', '15/01/2024');
             $end = Carbon::createFromFormat('d/m/Y', '19/01/2024');
-            // récupérer la semaine réelle de $start
             $semaineReelle = 3;
-//            $semaineReelle = date('W');
 
             foreach ($semestres as $semestre) {
                 $eventSemaine = $this->CalendrierRepository->findOneBy(['semaineReelle' => $semaineReelle, 'anneeUniversitaire' => $semestre->getAnneeUniversitaire()]);
                 $semaine = $eventSemaine->getSemaineFormation();
-
-
                 $matieresSemestre = $this->getMatieresSemestre($semestre);
-
                 $groupes = $this->groupeRepository->findBySemestre($semestre);
-
                 $edt = $this->edtManager->getPlanningSemestreSemaine($semestre, $semaine, $semestre->getAnneeUniversitaire(), $matieresSemestre, $groupes);
-
-
                 $salles = $this->salleRepository->findAll();
 
                 foreach ($edt->evenements as $this->evenement) {
                     if ($this->evenement->dateObjet->isBetween($start, $end)) {
-
-                        // ajouter $matieresSemestre dans $this->evenement
                         $this->evenement->matieresSemestre = $matieresSemestre;
                         $this->evenement->semestresGroupe = $semestre;
                         $this->evenement->groupesSemestre = $groupes;
@@ -108,10 +93,8 @@ class EduSignController extends BaseController
         }
 
         $page = $request->query->getInt('page', 1);
-
         $pagination = new MyPagination($router);
         $pagination->calculPaginationFromArray($cours, ['path' => 'administration_edusign_index', 'args' => []], 10, $page);
-
         $semestres = $this->semestreRepository->findByDepartementActif($departement);
 
         return $this->render('administration/edusign/index.html.twig', [
@@ -126,15 +109,12 @@ class EduSignController extends BaseController
     public function getMatieresSemestre(Semestre $semestre): array
     {
         $matieres = $this->typeMatiereManager->findBySemestre($semestre);
-
         $matieresSemestre = [];
+
         foreach ($matieres as $matiere) {
-            // si $matiere n'est pas un array
-            if (!is_array($matiere)) {
-                if ($matiere->getSemestres()->contains($semestre)) {
-                    $matieresSemestre[$matiere->getTypeIdMatiere()] = $matiere;
-                }
-            } else {
+            if (!is_array($matiere) && $matiere->getSemestres()->contains($semestre)) {
+                $matieresSemestre[$matiere->getTypeIdMatiere()] = $matiere;
+            } elseif (is_array($matiere)) {
                 foreach ($matiere as $m) {
                     if ($m->getSemestres()->contains($semestre)) {
                         $matieresSemestre[$m->getTypeIdMatiere()] = $m;
@@ -149,6 +129,7 @@ class EduSignController extends BaseController
     {
         $matieres = $this->typeMatiereManager->findByDiplome($diplome);
         $matieresDiplome = [];
+
         foreach ($matieres as $matiere) {
             if (!is_array($matiere)) {
                 $matieresDiplome[$matiere->getTypeIdMatiere()] = $matiere;
@@ -156,7 +137,6 @@ class EduSignController extends BaseController
                 foreach ($matiere as $m) {
                     $matieresDiplome[$m->getTypeIdMatiere()] = $m;
                 }
-
             }
         }
         return $matieresDiplome;
@@ -166,6 +146,7 @@ class EduSignController extends BaseController
     {
         $matieres = $this->typeMatiereManager->findByDepartement($departement);
         $matieresDepartement = [];
+
         foreach ($matieres as $matiere) {
             $matieresDepartement[$matiere->getTypeIdMatiere()] = $matiere;
         }
@@ -184,7 +165,6 @@ class EduSignController extends BaseController
         }
 
         $diplomes = $this->diplomeRepository->findAllWithEduSignDepartement($departement);
-
         $changeSemestreResult = $updateEtudiant->changeSemestre($diplomes);
 
         if (!$changeSemestreResult['success']) {
@@ -197,19 +177,15 @@ class EduSignController extends BaseController
             $diplomesErrors[$departement->getLibelle()] = $errors;
         }
 
-
         $email = (new TemplatedEmail())
             ->from('no-reply@univ-reims.fr')
             ->to('cyndel.herolt@univ-reims.fr')
             ->subject('EduSign updateEtudiants - error report')
             ->htmlTemplate('emails/error_report.html.twig')
-            ->context([
-                'diplomesErrors' => $diplomesErrors,
-            ]);
+            ->context(['diplomesErrors' => $diplomesErrors]);
         $mailer->send($email);
 
         if (!empty($diplomesErrors)) {
-            // Concaténer tous les messages d'erreur en une seule chaîne
             $allErrors = [];
             foreach ($diplomesErrors as $diplome => $errors) {
                 foreach ($errors as $error) {
@@ -217,8 +193,6 @@ class EduSignController extends BaseController
                 }
             }
             $errorMessage = implode("\n", $allErrors);
-
-            // Utiliser addFlash pour afficher les erreurs
             $this->addFlashBag(Constantes::FLASHBAG_ERROR, $errorMessage);
         } else {
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'Mise à jour des groupes effectuée avec succès');
@@ -252,9 +226,7 @@ class EduSignController extends BaseController
             ->to('cyndel.herolt@univ-reims.fr')
             ->subject('EduSign createPersonnel - error report')
             ->htmlTemplate('emails/error_report.html.twig')
-            ->context([
-                'errors' => $errors,
-            ]);
+            ->context(['diplomesErrors' => $errors]);
         $mailer->send($email);
 
         if (!empty($errors)) {
@@ -302,8 +274,6 @@ class EduSignController extends BaseController
     #[Route('/update-course/{source}/{id}/', name: 'app_admin_edu_sign_update_cours')]
     public function updateCourse(int $id, string $source, UpdateEdt $updateEdt, Request $request): Response
     {
-        // todo: ! si PTUT : matiere = null
-
         $matiere = $this->matiereRepository->findOneBy(['id' => $request->query->get('matiere')]);
         $semestre = $this->semestreRepository->findOneBy(['id' => $request->query->get('semestre')]);
         $groupe = $this->groupeRepository->findOneBy(['id' => $request->query->get('groupe')]);
@@ -311,54 +281,14 @@ class EduSignController extends BaseController
         $salle = $this->salleRepository->findOneBy(['id' => $request->query->get('salle')]);
 
         $cours = $this->edtManager->findCourse($source, $id);
-
         $this->edtManager->updateCourse($cours, $source, $matiere, $semestre, $groupe, $enseignant, $salle);
 
-        $diplome = $cours->getSemestre()->getDiplome();
-        $keyEduSign = $diplome->getKeyEduSign();
+        $matiere = ($this->matiereRepository->findOneBy(['id' => $cours->getIdMatiere()]));
+        $groupe = $this->groupeRepository->findOneBy(['id' => $cours->getGroupe()]);
 
-        $matiere = $this->typeMatiereManager->findOneById($cours->getIdMatiere());
+        $course = $this->edtManager->getCourseEduSign($source, $cours->getId(), $matiere, $groupe);
 
-        foreach ($matiere as $item) {
-            $matiere = [];
-            if ($item->typeMatiere === $cours->getTypeMatiere()) {
-                $matiere[] = $item;
-            }
-        }
-
-        // ajouter typeIdMatiere comme key pour chaque matiere
-//        foreach ($matiere as $matiereObject) {
-//            $typeIdMatiere = $cours->getTypeMatiere() . '_' . $matiereObject->getId();
-//            $matiereObject[$typeIdMatiere] = $matiereObject;
-//        }
-
-        if ($source === 'intranet') {
-            $groupe = $this->groupeRepository->findBy(['id' => $cours->getGroupe()]);
-        } else {
-            $groupe = $this->groupeRepository->findBy(['codeApogee' => $cours->getCodeGroupe()]);
-        }
-        $event = $this->edtManager->getCourse($source, $cours->getId(), $matiere, $groupe);
-
-        $course = (new IntranetEdtEduSignAdapter($event))->getCourse();
-
-
-        $eduSignCourse = $this->apiCours->getCourseIdByApiId($event->id, $keyEduSign);
-        if ($course->id_edu_sign == null && !$eduSignCourse) {
-            $enseignant = $event->personnelObjet;
-            $departement = $diplome->getDepartement();
-            if ($enseignant) {
-                if ($enseignant->getIdEduSign() == '' || $enseignant->getIdEduSign() == null || !array_key_exists($departement->getId(), $enseignant->getIdEduSign())) {
-                    $this->createEnseignant->update($enseignant, $departement, $keyEduSign);
-                }
-
-                if ($course !== null) {
-                    $this->apiCours->addCourse($course, $keyEduSign);
-                    $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'Cours ajouté avec succès');
-                } else {
-                    $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'Erreur lors de l\'ajout du cours');
-                }
-            }
-        }
+        dd($cours);
 
         return $this->redirectToRoute('administration_edusign_index');
     }
