@@ -1,8 +1,8 @@
-// Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/Sites/intranetV3/.eslintrc.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 11/12/2022 10:29
+// @lastUpdate 26/06/2024 16:54
 
 module.exports = {
   env: {
@@ -22,6 +22,7 @@ module.exports = {
   rules: {
     semi: 0,
     'no-underscore-dangle': 0,
+    'import/extensions': 0,
     'cypress/no-assigning-return-values': 'error',
     'cypress/no-unnecessary-waiting': 'error',
     'cypress/assertion-before-screenshot': 'warn',
