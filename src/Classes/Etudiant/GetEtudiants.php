@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Etudiant/GetEtudiants.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/08/2024 19:12
+ * @lastUpdate 29/08/2024 08:24
  */
 
 namespace App\Classes\Etudiant;
@@ -87,6 +87,8 @@ class GetEtudiants
             'typegroupe' => $this->typegroupe,
             'groupe' => $this->groupe,
             'semestre' => $this->semestre,
+            'sitePerso' => $this->semestre->getDiplome()?->getOptEspacePersoVisible()
         ];
+
     }
 }

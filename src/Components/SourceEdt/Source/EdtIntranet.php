@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/SourceEdt/Source/EdtIntranet.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/08/2024 09:19
+ * @lastUpdate 26/08/2024 15:03
  */
 
 namespace App\Components\SourceEdt\Source;
@@ -133,7 +133,7 @@ class EdtIntranet extends AbstractEdt implements EdtInterface
         $this->calendrier = $calendrier;
         $this->user = $personnel;
         $this->matieres = $matieres;
-        $this->init($anneeUniversitaire, Constantes::FILTRE_EDT_PROF, $personnel->getId(), $calendrier->semaine);
+        $this->init($anneeUniversitaire, Constantes::FILTRE_EDT_PROF, $personnel->getId(), $calendrier->semaineFormationIUT);
         $this->calculEdt();
 
         return $this->evenements;

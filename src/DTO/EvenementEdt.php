@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/DTO/EvenementEdt.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/08/2024 08:38
+ * @lastUpdate 27/08/2024 09:55
  */
 
 namespace App\DTO;
@@ -217,7 +217,7 @@ class EvenementEdt
 
     public function toJson()
     {
-        return ['id' => $this->id, 'date' => $this->date, 'jour' => $this->jour, 'heureDebut' => $this->heureDebut->format('H:i:s'), 'heureFin' => $this->heureFin->format('H:i:s'), 'matiere' => $this->matiere, 'salle' => $this->salle, 'personnel' => $this->personnel, 'groupe' => $this->groupe, 'couleur' => $this->couleur, 'evaluation' => $this->evaluation, 'display' => $this->isEvaluation(), 'codeelement' => $this->codeelement, 'indexDebut' => $this->indexDebut, 'ordreGroupe' => $this->ordreGroupe, 'largeur' => $this->largeur, 'duree' => $this->duree, 'heureTexte' => $this->heureTexte, 'diplome' => $this->diplome->getDisplay(), 'ordreSemestre' => $this->ordreSemestre, 'idEduSign' => $this->idEduSign, 'typeCours' => $this->type_cours];
+        return ['id' => $this->id, 'date' => $this->date, 'jour' => $this->jour, 'heureDebut' => $this->heureDebut->format('H:i:s'), 'heureFin' => $this->heureFin->format('H:i:s'), 'matiere' => $this->matiere, 'salle' => $this->salle, 'personnel' => $this->personnel, 'groupe' => $this->groupe, 'couleur' => $this->couleur, 'evaluation' => $this->evaluation, 'display' => $this->isEvaluation(), 'codeelement' => $this->codeelement, 'indexDebut' => $this->indexDebut, 'ordreGroupe' => $this->ordreGroupe, 'largeur' => $this->largeur, 'duree' => $this->duree, 'heureTexte' => $this->heureTexte, 'diplome' => $this->diplome->getDisplay(), 'ordreSemestre' => $this->ordreSemestre, 'idEduSign' => $this->idEduSign, 'typeCours' => $this->type_cours, 'idSemestre' => $this->semestre?->getId(), 'source' => $this->source];
     }
 
 

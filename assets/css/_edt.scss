@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/css/_edt.scss
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/08/2024 09:19
+// @lastUpdate 26/08/2024 15:14
 
 //.semestre_borne {
 //  max-height: 80vh;
@@ -230,12 +230,8 @@
   //text-align: center;
 }
 
-.schedule.header {
-
-}
-
 .schedule.header.active {
-  background-color: var(--colorIUTComplementaire, #4d3677);
+  background-color: var(colorIUT, #4d3677);
   color: white;
 }
 
@@ -328,4 +324,5 @@
   margin-bottom: 2px;
   text-align: center;
 }
+
 

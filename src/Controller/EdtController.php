@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/EdtController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/08/2024 09:19
+ * @lastUpdate 26/08/2024 15:09
  */
 
 namespace App\Controller;
@@ -177,15 +177,16 @@ class EdtController extends BaseController
     ): Response
     {
         $semaine = (int)$request->query->get('semaine');
-        $filtre = $request->query->get('filtre');
-        $valeur = $request->query->get('valeur');
-        $mode = $request->query->get('mode');
+//        $filtre = $request->query->get('filtre');
+//        $valeur = $request->query->get('valeur');
+//        $mode = $request->query->get('mode');
 
-        $source = null !== $this->getDepartement() && $this->getDepartement()->isOptUpdateCelcat() ? 'celcat' : 'intranet';
+        $source = null !== $this->getDepartement() && $this->getDepartement()->isOptUpdateCelcat() ? EdtManager::EDT_CELCAT : EdtManager::EDT_INTRANET;
         $calendrier = $this->calendrier->calculSemaine($semaine, $this->getAnneeUniversitaire());
         $matieres = $this->typeMatiereManager->findByDepartementArray($this->getDepartement());
         $edt = $edtManager->initPersonnel($source, $calendrier, $this->getUser(),
             $this->getAnneeUniversitaire(), $matieres);
+
         // récupération des absences ou des marquages de "pas d'absence"
         $suiviAppel[] = $absenceEtatAppelRepository->findBySemaineAndUserArray($calendrier->semaineFormationLundi,
             $this->getUser());

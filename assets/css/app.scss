@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/css/app.scss
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 21/08/2024 19:40
+// @lastUpdate 29/08/2024 08:24
 
 @import "./theme-troyes.scss";
 @import "./theme-rcc.scss";
@@ -253,7 +253,6 @@ fieldset legend {
   grid-row-gap: 1em;
 }
 
-
 .edt-etudiant-col1 {
 
 }
@@ -269,6 +268,7 @@ fieldset legend {
   color: white;
   text-align: center;
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.03);
+  margin-bottom: 4px;
 }
 
 .col-edt-heure {
@@ -288,6 +288,10 @@ fieldset legend {
 
 .edt-vide {
   background-color: #EBEAEA;
+}
+
+.col-edt-header.active-date {
+  background-color: var(--colorIUT) !important;
 }
 
 table {

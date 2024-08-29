@@ -1,4 +1,6 @@
-<div class="card">
+<div class="card" {{ stimulus_controller('edt-etudiant', {
+    events: events|raw
+}) }}>
     <header class="card-header">
         <h4 class="card-title">{{ 'heading.edt.dashboard'|trans }} |
             Semaine {{ calendrier.semaine }}
@@ -138,71 +140,71 @@
     </div>
 </div>
 
-<script type="module">
+{# <script type="module"> #}
 
-  function formatTime (dateTime) {
-    return new Intl.DateTimeFormat('fr-FR', {
-      hour: '2-digit',
-      minute: '2-digit',
-    }).format(dateTime)
-  }
+{#  function formatTime (dateTime) { #}
+{#    return new Intl.DateTimeFormat('fr-FR', { #}
+{#      hour: '2-digit', #}
+{#      minute: '2-digit', #}
+{#    }).format(dateTime) #}
+{#  } #}
 
-  function _generateGrid (slotDuration) {
-    const schedule = document.getElementById('schedule')
-    const startHour = 8
-    const endHour = 19
-    const slotsPerHour = 60 / slotDuration
+{#  function _generateGrid (slotDuration) { #}
+{#    const schedule = document.getElementById('schedule') #}
+{#    const startHour = 8 #}
+{#    const endHour = 19 #}
+{#    const slotsPerHour = 60 / slotDuration #}
 
-    schedule.style.gridTemplateRows = `repeat(${(endHour - startHour) * slotsPerHour}, 1fr)`
+{#    schedule.style.gridTemplateRows = `repeat(${(endHour - startHour) * slotsPerHour}, 1fr)` #}
 
-    for (let hour = startHour; hour < endHour; hour++) {
-      for (let minute = 0; minute < 60; minute += slotDuration) {
-        for (let day = 0; day < 5; day++) {
-          const cell = document.createElement('div')
-          cell.className = 'day-column'
-          schedule.appendChild(cell)
-        }
-      }
-    }
-  }
+{#    for (let hour = startHour; hour < endHour; hour++) { #}
+{#      for (let minute = 0; minute < 60; minute += slotDuration) { #}
+{#        for (let day = 0; day < 5; day++) { #}
+{#          const cell = document.createElement('div') #}
+{#          cell.className = 'day-column' #}
+{#          schedule.appendChild(cell) #}
+{#        } #}
+{#      } #}
+{#    } #}
+{#  } #}
 
-  function _placeEvents (events, slotDuration) {
-    const schedule = document.getElementById('schedule')
-    const slotsPerHour = 60 / slotDuration
+{#  function _placeEvents (events, slotDuration) { #}
+{#    const schedule = document.getElementById('schedule') #}
+{#    const slotsPerHour = 60 / slotDuration #}
 
-    events.forEach((event) => {
-      const start = new Date(`1970-01-01T${event.heureDebut}`)
-      const end = new Date(`1970-01-01T${event.heureFin}`)
-      const duration = (end - start) / (1000 * 60 * slotDuration) // Durée en créneaux de slotDuration minutes
+{#    events.forEach((event) => { #}
+{#      const start = new Date(`1970-01-01T${event.heureDebut}`) #}
+{#      const end = new Date(`1970-01-01T${event.heureFin}`) #}
+{#      const duration = (end - start) / (1000 * 60 * slotDuration) // Durée en créneaux de slotDuration minutes #}
 
-      const startHour = start.getHours()
-      const startMinute = start.getMinutes()
+{#      const startHour = start.getHours() #}
+{#      const startMinute = start.getMinutes() #}
 
-      const rowIndex = ((startHour - 8) * slotsPerHour + (startMinute / slotDuration)) + 1 // Index de la ligne
-      const colIndex = parseInt(event.jour, 10) - 1 // Index de la colonne
+{#      const rowIndex = ((startHour - 8) * slotsPerHour + (startMinute / slotDuration)) + 1 // Index de la ligne #}
+{#      const colIndex = parseInt(event.jour, 10) - 1 // Index de la colonne #}
 
-      const cell = schedule.children[rowIndex * 5 + colIndex]
-      cell.className = `session edt-${event.couleur} border-top-${event.couleur} ${event.typeCours.toLowerCase()}`
+{#      const cell = schedule.children[rowIndex * 5 + colIndex] #}
+{#      cell.className = `session edt-${event.couleur} border-top-${event.couleur} ${event.typeCours.toLowerCase()}` #}
 
-      cell.innerHTML = `
-    <span class="session-time">${formatTime(start)} - ${formatTime(end)} | <span class="badge bg-edt-${event.typeCours.toLowerCase()}">${event.groupe}</span> - ${event.salle}</span>
-        <span class="session-title">${event.display}</span>
-        <hr class="session-divider hr-${event.couleur}" />
-<span class="session-teacher">${event.personnel}</span>`
-      cell.style.setProperty('--span', duration)
+{#      cell.innerHTML = ` #}
+{#    <span class="session-time">${formatTime(start)} - ${formatTime(end)} | <span class="badge bg-edt-${event.typeCours.toLowerCase()}">${event.groupe}</span> - ${event.salle}</span> #}
+{#        <span class="session-title">${event.display}</span> #}
+{#        <hr class="session-divider hr-${event.couleur}" /> #}
+{# <span class="session-teacher">${event.personnel}</span>` #}
+{#      cell.style.setProperty('--span', duration) #}
 
-      // Sauter les créneaux horaires couverts par cet événement
-      for (let i = 1; i < duration; i++) {
-        const emptyCell = schedule.children[(rowIndex + i) * 5 + colIndex]
-        emptyCell.style.display = 'none'
-      }
-    })
-  }
+{#      // Sauter les créneaux horaires couverts par cet événement #}
+{#      for (let i = 1; i < duration; i++) { #}
+{#        const emptyCell = schedule.children[(rowIndex + i) * 5 + colIndex] #}
+{#        emptyCell.style.display = 'none' #}
+{#      } #}
+{#    }) #}
+{#  } #}
 
-  _generateGrid(30)
-  const events = {{ events|raw }}
-    console.log(events)
-  _placeEvents(events, 30)
+{#  _generateGrid(30) #}
+{#  const events = {{ events|raw }} #}
+{#    console.log(events) #}
+{#  _placeEvents(events, 30) #}
 
-</script>
+{# </script> #}
 

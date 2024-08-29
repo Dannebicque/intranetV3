@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtImport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 31/08/2023 11:23
+ * @lastUpdate 28/08/2024 16:57
  */
 
 /*
@@ -113,12 +113,18 @@ class MyEdtImport
                  * 10 => type,
                  * 11 => groupe
                  *
+                 * --- fichier Régis ---
+                 *
+                 * 0 => nom
+                 * 1 => matiere
+                 * 2 => type
+                 * 3 => date
+                 * 4 => heure
+                 * 5 => groupe
+                 * 6 => salle
                  */
 
-                //todo: importer toutes les semaines en un seul fichier => comment gérer la suppression des semaines ?
-                //todo: CMFI (sur 2 TD => Gérer la saisie depuis EDT et sa prise en compte ? lien avec la structure des groupes?
-
-                if ($phrase !== false && count($phrase) === 12) {
+                if ($phrase !== false && count($phrase) === 7) {
                     if (null === $this->calendrier) {
                         $this->semaine = mb_substr($phrase[0], 1, 2);
                         $this->calendrier = $this->calendrierRepository->findOneBy([

@@ -2,13 +2,13 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/controllers/edt-personnel-controller.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/08/2024 09:19
+// @lastUpdate 27/08/2024 09:47
 
 import { Controller } from '@hotwired/stimulus'
 import flatpickr from 'flatpickr'
 import { post } from '../js/fetch'
 import { addCallout } from '../js/util'
-import { formatTime } from '../js/DateTime'
+import { _generateGrid, _placeEvents } from '../js/Edt'
 
 export default class extends Controller {
   static targets = ['etatAppel', 'zoneEdt']
@@ -108,7 +108,6 @@ export default class extends Controller {
       const response = await fetch(`${this.urlEdtValue}?${params.toString()}`)
       this.zoneEdtTarget.innerHTML = await response.text()
       const events = await fetch(`${this.urlEdtDataValue}?${params.toString()}`).then((resp) => resp.json())
-      console.log(events)
       this._updateJs(events)
     }
   }
@@ -118,61 +117,12 @@ export default class extends Controller {
       const options = []
       options.dateFormat = 'W'
       options.weekNumbers = true
-      options.locale = da.LANG
+      options.locale = window.da.LANG
       flatpickr(elem, options)
     })
 
-    this._generateGrid(30)
-    this._placeEvents(events, 30)
-  }
-
-  _generateGrid(slotDuration) {
-    const schedule = document.getElementById('schedule')
-    const startHour = 8
-    const endHour = 19
-    const slotsPerHour = 60 / slotDuration
-
-    schedule.style.gridTemplateRows = `repeat(${(endHour - startHour) * slotsPerHour}, 1fr)`
-
-    for (let hour = startHour; hour < endHour; hour++) {
-      for (let minute = 0; minute < 60; minute += slotDuration) {
-        for (let day = 0; day < 5; day++) {
-          const cell = document.createElement('div')
-          cell.className = 'day-column'
-          schedule.appendChild(cell)
-        }
-      }
-    }
-  }
-
-  _placeEvents(events, slotDuration) {
-    const schedule = document.getElementById('schedule')
-    const slotsPerHour = 60 / slotDuration
-
-    events.forEach((event) => {
-      const start = new Date(`1970-01-01T${event.heureDebut}`)
-      const end = new Date(`1970-01-01T${event.heureFin}`)
-      const duration = (end - start) / (1000 * 60 * slotDuration) // Durée en créneaux de slotDuration minutes
-
-      const startHour = start.getHours()
-      const startMinute = start.getMinutes()
-
-      const rowIndex = ((startHour - 8) * slotsPerHour + (startMinute / slotDuration)) + 1 // Index de la ligne
-      const colIndex = parseInt(event.jour, 10) - 1 // Index de la colonne
-
-      const cell = schedule.children[rowIndex * 5 + colIndex]
-      cell.className = `session edt-${event.couleur} border-top-${event.couleur} ${event.typeCours.toLowerCase()}`
-
-      cell.innerHTML = `<span class="session-time">${formatTime(start)} - ${formatTime(end)} | <span class="badge bg-edt-${event.typeCours.toLowerCase()}">${event.groupe}</span> - ${event.salle}</span><br>
-        <span class="session-title">${event.display}</span><hr class="session-divider hr-${event.couleur}" />`
-      cell.style.setProperty('--span', duration)
-
-      // Sauter les créneaux horaires couverts par cet événement
-      for (let i = 1; i < duration; i++) {
-        const emptyCell = schedule.children[(rowIndex + i) * 5 + colIndex]
-        emptyCell.style.display = 'none'
-      }
-    })
+    _generateGrid(30)
+    _placeEvents(events, 30, 'personnel')
   }
 
   btnPasAbsent(e) {
@@ -182,7 +132,10 @@ export default class extends Controller {
 
     post(this.urlPasDAbsentValue, { event, semestre: btn.dataset.semestre }).then((data) => {
       if (data === true) {
-        const element = document.getElementById(`pointage${event}`)
+        const element = document.getElementById(`
+        pointage$
+        {event}
+        `)
         btn.disabled = true
         element.classList.remove('btn-danger')
         element.firstElementChild.classList.remove('fa-times')
