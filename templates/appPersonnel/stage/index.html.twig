@@ -102,7 +102,8 @@
                                     {% else %} - {% endif %}</td>
                                 <td>
                                     <a href="{{ path('app_personnel_stage_fiche_suivi_index',
-                                        {stage: stage.id}) }}" class="btn btn-info">Suivi</a>
+                                        {stage: stage.id}) }}" class="btn btn-info">Suivi
+                                        ({{ stage.stageFicheSuivis|length }})</a>
                                     <a href="{{ path('app_personnel_stage_fiche_imprimer',
                                         {id: stage.id}) }}" class="btn btn-info btn-outline-info"><i
                                                 class="{{ iconPrint }}"></i> Imprimer</a>
@@ -175,7 +176,8 @@
                                 <td>
                                     {% if alternance.entreprise != null %}
                                         <a href="{{ path('application_personnel_alternance_fiche_suivi_alternance',{'alternance': alternance.id}) }}"
-                                           class="btn btn-info">Suivi</a>
+                                           class="btn btn-info">Suivi ({{ alternance.alternanceFicheSuivis|length }}
+                                            )</a>
                                     {% else %}
                                         <a href="#" class="btn btn-warning" title="Attente de la saisie des informations
                                     par le stagiaire" data-bs-toggle="tooltip" data-bs-placement="bottom">Attente des

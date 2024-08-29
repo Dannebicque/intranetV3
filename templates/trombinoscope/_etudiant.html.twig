@@ -27,7 +27,7 @@
             <span class="sr-only">{{ 'contacter'|trans }}</span>
         </a>
     </div>
-    {% if (is_granted('ROLE_ETUDIANT') and siteperso == true) or
+    {% if (is_granted('ROLE_ETUDIANT') and getEtudiants.sitePerso == true) or
         is_granted('ROLE_PERMANENT') %}
         <div>
             {% if etudiant.siteUniv != '' and etudiant.siteUniv != null %}

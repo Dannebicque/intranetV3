@@ -111,11 +111,11 @@
                 departement: user_data.departement,
             }) }}
         {% elseif is_granted('ROLE_ETUDIANT') %}
-            <div class="col-12">
-                {{ render_esi(controller(
-                    'App\\Controller\\BlocNotesAbsencesController::etudiantAbsences'
-                )) }}
-            </div>
+            {#            <div class="col-12"> #}
+            {#                {{ render_esi(controller( #}
+            {#                    'App\\Controller\\BlocNotesAbsencesController::etudiantAbsences' #}
+            {#                )) }} #}
+            {#            </div> #}
 
             <div class="col-12">
                 {{ render_esi(controller(
@@ -123,9 +123,9 @@
                 )) }}
             </div>
 
-            {{ render_esi(controller(
-                'App\\Controller\\BlocNotesAbsencesController::mccSemestre'
-            )) }}
+            {#            {{ render_esi(controller( #}
+            {#                'App\\Controller\\BlocNotesAbsencesController::mccSemestre' #}
+            {#            )) }} #}
         {% endif %}
 
         {% if is_granted('ROLE_PERMANENT') %}

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appPersonnel/AbsenceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/02/2024 08:28
+ * @lastUpdate 26/08/2024 15:25
  */
 
 namespace App\Controller\appPersonnel;
@@ -71,6 +71,7 @@ class AbsenceController extends BaseController
     #[Route('/edt/{event}/{source}/{semestre}',
         name: 'application_personnel_absence_from_planning',
         requirements: ['event' => "\d+"],
+        options: ['expose' => true],
         methods: ['GET'])]
     public function saisieFromEdt(
         GroupeRepository $groupeRepository,
