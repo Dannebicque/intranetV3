@@ -9,6 +9,8 @@
 
 namespace App\Classes\EduSign;
 
+use App\Classes\EduSign\Api\ApiEduSign;
+use App\Classes\EduSign\Api\ApiPersonnel;
 use App\Classes\EduSign\DTO\EduSignEnseignant;
 use App\Repository\DiplomeRepository;
 use App\Repository\PersonnelRepository;
@@ -18,7 +20,7 @@ class UpdateEnseignant
     private string $cleApi = '';
 
     public function __construct(
-        private readonly ApiEduSign   $apiEduSign,
+        private readonly ApiPersonnel   $apiPersonnel,
         protected PersonnelRepository $personnelRepository,
         protected DiplomeRepository   $diplomeRepository,
         protected EduSignEnseignant   $edusignEnseignant,
@@ -32,7 +34,7 @@ class UpdateEnseignant
 
         foreach ($diplomes as $diplome) {
             $this->cleApi = $diplome->getKeyEduSign();
-            $intervenants = $this->apiEduSign->getEnseignant($this->cleApi);
+            $intervenants = $this->apiPersonnel->getEnseignant($this->cleApi);
 
             foreach ($intervenants as $intervenant) {
 
@@ -69,7 +71,7 @@ class UpdateEnseignant
                         $this->edusignEnseignant->api_id = $enseignant->getId();
                         $this->edusignEnseignant->tags[] = null;
 
-                        $this->apiEduSign->updateEnseignant($this->edusignEnseignant, $this->cleApi);
+                        $this->apiPersonnel->updateEnseignant($this->edusignEnseignant, $this->cleApi);
 
                         dump('enseignant mis à jour' . $enseignant->getNom() . ' ' . $enseignant->getPrenom());
 

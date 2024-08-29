@@ -17,6 +17,8 @@ use App\Entity\AnneeUniversitaire;
 use App\Entity\Constantes;
 use App\Entity\EdtPlanning;
 use App\Entity\Etudiant;
+use App\Entity\Groupe;
+use App\Entity\Matiere;
 use App\Entity\Personnel;
 use App\Entity\Semestre;
 use App\Repository\CalendrierRepository;
@@ -76,6 +78,12 @@ class EdtIntranet extends AbstractEdt implements EdtInterface
         return $this->edtIntranetAdapter->single($evt, $matieres, $this->transformeGroupe($groupes));
     }
 
+    public function findOne(int $eventId, ?Matiere $matiere, ?Groupe $groupe): EvenementEdt
+    {
+        $evt = $this->edtPlanningRepository->find($eventId);
+        dd($evt);
+    }
+
     public function recupereEdtJourBorne(Semestre $semestre, array $matieres, int $jourSemaine, int $semaineFormation, array $groupes, AnneeUniversitaire $anneeUniversitaire): EvenementEdtCollection
     {
         $evts = $this->edtPlanningRepository->recupereEdtBorne($semaineFormation, $semestre, $jourSemaine, $anneeUniversitaire);
@@ -109,6 +117,16 @@ class EdtIntranet extends AbstractEdt implements EdtInterface
         }
 
         return $tGroupes;
+    }
+
+    private function transformeMatiere(array $matieres, $typeIdMatiere): array
+    {
+        $tMatieres = [];
+        foreach ($matieres as $matiere) {
+            $tMatieres[$typeIdMatiere] = $matiere;
+        }
+
+        return $tMatieres;
     }
 
     public function findEdtProf(Personnel $personnel, int $semaineFormation, AnneeUniversitaire $anneeUniversitaire, array $groupes = []): EvenementEdtCollection

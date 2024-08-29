@@ -139,6 +139,7 @@ actualite:
 adm:
   edusign:
     index.heading: 'EduSign'
+    card.heading: 'Gestion des données EduSign'
     context:
       new: 'Initialisation'
       update: 'Mise à jour des groupes'
@@ -149,12 +150,12 @@ adm:
       heading: 'Gestion par département'
       cours: 'Gestion des cours'
       info-create: 'La création des cours se fait automatiquement tous les samedi pour la semaine suivante - mais vous pouvez forcer la création ici (par exemple si il y a un changement de dernière minute)'
-      info-update: 'Permet de faire la bascule entre les semestres'
+      info-update: 'Permet de faire la bascule entre les semestres - **Attention il faut que les semestres soient à jour dans l''Intranet**'
       info-annee: 'A lancer en début d''année universitaire'
       create: 'Mettre à jour'
     form:
       enseignant:
-        heading: 'Ajouter un enseignant'
+        heading: 'Ajouter des enseignants'
   plan_cours:
     diplome.heading: 'Suivi des plans de cours'
     index.heading: 'Suivi des plans de cours'

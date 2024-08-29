@@ -16,6 +16,8 @@ use App\DTO\EvenementEdtCollection;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Constantes;
 use App\Entity\Etudiant;
+use App\Entity\Groupe;
+use App\Entity\Matiere;
 use App\Entity\Personnel;
 use App\Entity\Semestre;
 use App\Repository\EdtCelcatRepository;
@@ -62,6 +64,22 @@ class EdtCelcat extends AbstractEdt implements EdtInterface
         $evt = $this->edtCelcatRepository->find($event);
 
         return $this->edtCelcatAdapter->single($evt, $matieres, $groupes);
+    }
+
+    public function findOne(int $eventId, ?Matiere $matiere, ?Groupe $groupe): EvenementEdt
+    {
+        $evt = $this->edtCelcatRepository->find($eventId);
+        dd($evt);
+    }
+
+    private function transformeMatiere(array $matieres, $typeIdMatiere): array
+    {
+        $tMatieres = [];
+        foreach ($matieres as $matiere) {
+            $tMatieres[$typeIdMatiere] = $matiere;
+        }
+
+        return $tMatieres;
     }
 
     public function recupereEdtJourBorne(
@@ -163,6 +181,13 @@ class EdtCelcat extends AbstractEdt implements EdtInterface
         }
 
         return false;
+    }
+
+    public function setMatiere(Matiere $matiere)
+    {
+        $this->matiere = $matiere;
+
+
     }
 
     public function getCurrentEventEtudiant(Etudiant $user, AnneeUniversitaire $anneeUniversitaire): ?EvenementEdt

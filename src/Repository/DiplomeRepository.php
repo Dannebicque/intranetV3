@@ -102,6 +102,16 @@ class DiplomeRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function findAllWithEduSignDepartement(Departement $departement): array
+    {
+        return $this->createQueryBuilder('d')
+            ->where('d.keyEduSign IS NOT NULL')
+            ->andWhere('d.departement = :departement')
+            ->setParameter('departement', $departement)
+            ->getQuery()
+            ->getResult();
+    }
+
     public function save(Diplome $diplome): void
     {
         $this->_em->persist($diplome);

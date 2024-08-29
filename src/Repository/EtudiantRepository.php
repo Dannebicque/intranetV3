@@ -315,4 +315,13 @@ class EtudiantRepository extends ServiceEntityRepository
         $this->_em->persist($etudiant);
         $this->_em->flush();
     }
+
+    public function findEduSignOutdated(): array
+    {
+        return $this->createQueryBuilder('e')
+            ->where('e.idEduSign IS NOT NULL')
+            ->andWhere('e.anneeSortie != 0')
+            ->getQuery()
+            ->getResult();
+    }
 }

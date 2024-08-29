@@ -265,6 +265,11 @@ class EdtPlanning extends BaseEntity
         ];
     }
 
+    public function getTypeIdMatiere(): ?string
+    {
+        return $this->getTypeMatiere().'_'.$this->getIdMatiere();
+    }
+
     public function getJour(): ?int
     {
         return $this->jour;

@@ -10,7 +10,7 @@
 
 namespace App\Controller;
 
-use App\Classes\EduSign\ApiEduSign;
+use App\Classes\EduSign\Api\ApiGroupe;
 use App\Classes\EduSign\CreateEnseignant;
 use App\Classes\EduSign\FixCourses;
 use App\Classes\EduSign\UpdateEdt;
@@ -39,7 +39,7 @@ class EduSignController extends BaseController
         protected PersonnelDepartementRepository $personnelDepartementRepository,
         protected PersonnelRepository            $personnelRepository,
         protected CreateEnseignant               $createEnseignant,
-        protected ApiEduSign                     $apiEduSign,
+        protected ApiGroupe                      $apiGroupe,
         protected SemestreRepository             $semestreRepository,
         protected GroupeRepository               $groupeRepository,
     )
@@ -78,43 +78,104 @@ class EduSignController extends BaseController
     }
 
     #[Route('/init/{id}', name: 'app_edu_sign_init')]
-    public function init(?int $id, UpdateGroupe $updateGroupe, UpdateEtudiant $updateEtudiant): RedirectResponse
+    public function init(?int $id, UpdateGroupe $updateGroupe, UpdateEtudiant $updateEtudiant, MailerInterface $mailer): RedirectResponse
     {
-        if ($id !== 0) {
-            $departement = $this->departementRepository->find($id);
-            $diplomes = $this->diplomeRepository->findByDepartement($departement);
-            $keyEduSign = null;
-            foreach ($diplomes as $diplome) {
-                if ($diplome->getKeyEduSign() !== null) {
-                    $keyEduSign = $diplome->getKeyEduSign();
-                }
-            }
-            $updateGroupe->update($keyEduSign);
-            $updateEtudiant->update($keyEduSign);
+        $departement = $this->departementRepository->find($id);
+        if (!$departement) {
+            $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'Département introuvable.');
+            return $this->redirectToRoute('app_edu_sign');
+        }
 
-            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'Les données ont été mises à jour sur EduSign');
+        $diplomes = $this->diplomeRepository->findAllWithEduSignDepartement($departement);
+        $diplomesErrors = [];
+
+        foreach ($diplomes as $diplome) {
+            $keyEduSign = $diplome->getKeyEduSign();
+            $errors = [];
+
+            // Update groups and students, collect errors
+            $updateGroupeResult = $updateGroupe->update($keyEduSign);
+            $updateEtudiantResult = $updateEtudiant->update($keyEduSign);
+
+            if (!$updateGroupeResult['success']) {
+                $errors = array_merge($errors, $updateGroupeResult['messages']);
+            }
+
+            if (!$updateEtudiantResult['success']) {
+                $errors = array_merge($errors, $updateEtudiantResult['messages']);
+            }
+
+            if (!empty($errors)) {
+                $diplomesErrors[$diplome->getLibelle()] = $errors;
+            }
+        }
+
+        $email = (new TemplatedEmail())
+            ->from('no-reply@univ-reims.fr')
+            ->to('cyndel.herolt@univ-reims.fr')
+            ->subject('EduSign init - rapport')
+            ->htmlTemplate('emails/error_report.html.twig')
+            ->context([
+                'diplomesErrors' => $diplomesErrors,
+            ]);
+        $mailer->send($email);
+
+        if (!empty($diplomesErrors)) {
+            $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'Une erreur est survenue lors de l\'initialisation des données sur EduSign, le détail des erreurs a été envoyé par mail.');
+        } else {
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'Les données ont été initialisées sur EduSign.');
         }
 
         return $this->redirectToRoute('app_edu_sign');
     }
 
-    #[Route('/update/etudiants/{id}', name: 'app_edu_sign_update_etudiants')]
-    public function updateEtudiants(?int $id, UpdateGroupe $updateGroupe, UpdateEtudiant $updateEtudiant): RedirectResponse
+    #[Route('/update-annee/{id}', name: 'app_edu_sign_update_annee')]
+    public function updateAnnee(?int $id, UpdateGroupe $updateGroupe, UpdateEtudiant $updateEtudiant, MailerInterface $mailer): RedirectResponse
     {
-        if ($id !== 0) {
-            $departement = $this->departementRepository->find($id);
-            $diplomes = $this->diplomeRepository->findByDepartement($departement);
-            $keyEduSign = null;
-            foreach ($diplomes as $diplome) {
-                if ($diplome->getKeyEduSign() !== null) {
-                    $keyEduSign = $diplome->getKeyEduSign();
+        // Augmenter la limite de temps d'exécution
+        set_time_limit(1000000);
+
+        $departement = $this->departementRepository->find($id);
+        if (!$departement) {
+            $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'Département introuvable.');
+            return $this->redirectToRoute('app_edu_sign');
+        }
+
+        $diplomes = $this->diplomeRepository->findAllWithEduSignDepartement($departement);
+        $diplomesErrors = [];
+
+        foreach ($diplomes as $diplome) {
+            $keyEduSign = $diplome->getKeyEduSign();
+            $errors = [];
+
+            $updateResults = [
+                $updateGroupe->update($keyEduSign),
+                $updateEtudiant->update($keyEduSign),
+                $updateEtudiant->deleteMissingEtudiants($keyEduSign),
+                $updateGroupe->deleteMissingGroupes($keyEduSign)
+            ];
+
+            foreach ($updateResults as $result) {
+                if (!$result['success']) {
+                    $errors = array_merge($errors, $result['messages']);
                 }
             }
 
-            $updateEtudiant->changeSemestre($keyEduSign);
-
-            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'Les données ont été mises à jour sur EduSign');
+            if (!empty($errors)) {
+                $diplomesErrors[$diplome->getLibelle()] = $errors;
+            }
         }
+
+        $email = (new TemplatedEmail())
+            ->from('no-reply@univ-reims.fr')
+            ->to('cyndel.herolt@univ-reims.fr')
+            ->subject('EduSign changement année - rapport')
+            ->htmlTemplate('emails/error_report.html.twig')
+            ->context(['diplomesErrors' => $diplomesErrors]);
+        $mailer->send($email);
+
+        $flashMessage = empty($diplomesErrors) ? 'Les données ont été mises à jour sur EduSign.' : 'Une erreur est survenue lors de la mise à jour des données sur EduSign.';
+        $this->addFlashBag(empty($diplomesErrors) ? Constantes::FLASHBAG_SUCCESS : Constantes::FLASHBAG_ERROR, $flashMessage);
 
         return $this->redirectToRoute('app_edu_sign');
     }
@@ -133,70 +194,8 @@ class EduSignController extends BaseController
             }
             //créer les cours pour la semaine
             $updateEdt->update($keyEduSign, $opt);
-//            dd($updateEdt->update($keyEduSign, $opt));
-
             $fixCourses->fixCourse($keyEduSign);
 
-//            if ($updateEdt->update($keyEduSign, $opt) !== null) {
-//                $data = $updateEdt->update($keyEduSign, $opt);
-//            }
-//            if ($fixCourses->fixCourse($keyEduSign) !== null) {
-//                // ajouter le tableau retourné par la méthode fixCourse() dans le tableau data
-//                $data['fix'] = $fixCourses->fixCourse($keyEduSign);
-//            }
-//            if (!empty($data)) {
-//                // ajouter $departement->getLibelle() comme key du tableau data
-//                $data['header']['dept'] = $departement->getLibelle();
-//                $this->sendEmail($data, $mailer);
-//            }
-//                dd($data);
-
-        }
-
-        return $this->redirectToRoute('app_edu_sign');
-    }
-
-    #[Route('/create-personnel/{deptId}', name: 'app_edu_sign_create_personnel')]
-    public function createPersonnel(?int $deptId, Request $request): RedirectResponse
-    {
-        if ($deptId !== 0) {
-            $departement = $this->departementRepository->find($deptId);
-            $diplomes = $this->diplomeRepository->findByDepartement($departement);
-            $keyEduSign = null;
-            foreach ($diplomes as $diplome) {
-                if ($diplome->getKeyEduSign() !== null) {
-                    $keyEduSign = $diplome->getKeyEduSign();
-                }
-            }
-
-            $personnelId = $request->get('personnel');
-
-            $personnel = $this->personnelRepository->find($personnelId);
-
-            $this->createEnseignant->update($personnel, $departement, $keyEduSign);
-
-            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'Les données ont été mises à jour sur EduSign');
-        }
-
-        return $this->redirectToRoute('app_edu_sign');
-    }
-
-    #[Route('/update-annee/{id}', name: 'app_edu_sign_update_annee')]
-    public function updateAnnee(?int $id, UpdateGroupe $updateGroupe, UpdateEtudiant $updateEtudiant): RedirectResponse
-    {
-        if ($id !== 0) {
-            $departement = $this->departementRepository->find($id);
-            $diplomes = $this->diplomeRepository->findByDepartement($departement);
-            $keyEduSign = null;
-            foreach ($diplomes as $diplome) {
-                if ($diplome->getKeyEduSign() !== null) {
-                    $keyEduSign = $diplome->getKeyEduSign();
-                }
-            }
-            $updateGroupe->update($keyEduSign);
-            $updateEtudiant->update($keyEduSign);
-
-            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'Les données ont été mises à jour sur EduSign');
         }
 
         return $this->redirectToRoute('app_edu_sign');
@@ -212,7 +211,7 @@ class EduSignController extends BaseController
         foreach ($diplomes as $diplome) {
             if ($diplome->getKeyEduSign() !== null) {
                 $keyEduSign = $diplome->getKeyEduSign();
-                $groupesEduSign = $this->apiEduSign->getAllGroups($keyEduSign);
+                $groupesEduSign = $this->apiGroupe->getAllGroups($keyEduSign);
 
                 $semestres = $this->semestreRepository->findByDiplome($diplome);
 

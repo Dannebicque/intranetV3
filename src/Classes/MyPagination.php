@@ -52,6 +52,20 @@ class MyPagination
         $this->nbPages = ceil($this->nbMaxResult / Constantes::NB_RESULTS_PER_PAGE);
     }
 
+    public function calculPaginationFromArray(array $data, array $link, ?int $resultsPerPage, int $page = 1): void
+    {
+        $this->page = $page;
+        $this->link = $link;
+
+//        $debut = $page * $resultsPerPage - 2;
+        $debut = $page * $resultsPerPage - $resultsPerPage;
+
+        $this->nbMaxResult = count($data);
+        $this->data = array_slice($data, $debut, $resultsPerPage);
+
+        $this->nbPages = ceil($this->nbMaxResult / $resultsPerPage);
+    }
+
     public function getNbPages(): int
     {
         return $this->nbPages;

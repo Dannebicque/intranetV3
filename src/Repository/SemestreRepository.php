@@ -56,6 +56,7 @@ class SemestreRepository extends ServiceEntityRepository
             ->where('d.departement = :departement')
             ->andWhere('s.actif = 1')
             ->setParameter('departement', $departement)
+            ->orderBy('s.ordreLmd', Order::Ascending->value)
             ->getQuery()
             ->getResult();
     }

@@ -11,8 +11,11 @@ namespace App\Classes\EduSign;
 
 use App\Classes\Edt\EdtManager;
 use App\Classes\EduSign\Adapter\IntranetEdtEduSignAdapter;
+use App\Classes\EduSign\Api\ApiCours;
 use App\Classes\Matieres\TypeMatiereManager;
 use App\DTO\EvenementEdt;
+use App\Entity\Diplome;
+use App\Entity\Semestre;
 use App\Repository\ApcReferentielRepository;
 use App\Repository\CalendrierRepository;
 use App\Repository\DepartementRepository;
@@ -30,7 +33,7 @@ class UpdateEdt
     private ?string $cleApi;
 
     public function __construct(
-        private readonly ApiEduSign         $apiEduSign,
+        private readonly ApiCours           $apiCours,
         private readonly EdtManager         $edtManager,
         private readonly TypeMatiereManager $typeMatiereManager,
         protected SemestreRepository        $semestreRepository,
@@ -48,158 +51,109 @@ class UpdateEdt
 
     public function update(?string $keyEduSign, ?int $opt, string $date = ''): ?array
     {
+        $result = ['success' => true, 'messages' => []];
+
         if ($keyEduSign === null) {
             $diplomes = $this->diplomeRepository->findAllWithEduSign();
         } else {
             $diplomes = $this->diplomeRepository->findBy(['keyEduSign' => $keyEduSign]);
         }
 
-        foreach ($diplomes as $diplome) {
+        try {
+            foreach ($diplomes as $diplome) {
+                if ($keyEduSign === null) {
+                    $keyEduSign = $diplome->getKeyEduSign();
+                }
+                $semestres = $this->semestreRepository->findByDiplome($diplome);
 
-            $this->cleApi = $diplome->getKeyEduSign();
+                list($start, $end) = $this->calculStartEndDates($opt, $date);
 
-            $semestres = $this->semestreRepository->findByDiplome($diplome);
-            if ($opt === 1) {
-                $start = Carbon::today();
-                $end = Carbon::today()->next('saturday');
-            } elseif ($opt === 2) {
-                $start = Carbon::create('yesterday');
-                $end = Carbon::create('today');
-            } elseif ($opt === 3 && $date !== '') {
-                $start = Carbon::createFromFormat('d-m-Y', $date);
-                $end = Carbon::createFromFormat('d-m-Y', $date)?->next('saturday');
-            }
-            // changer le format de $start en d-m-Y
-            $startFormat = $start->format('d/m/Y');
-            // changer le format de $end en d-m-Y
-            $endFormat = $end->format('d/m/Y');
-            $bilan['header'] = ['type' => 'Mise à jour Edt', 'periode' => $startFormat . ' | ' . $endFormat];
-            $semaineReelle = date('W');
+//                $semaineReelle = date('W');
+                $semaineReelle = 3;
 
-            foreach ($semestres as $semestre) {
-                $eventSemaine = $this->CalendrierRepository->findOneBy(['semaineReelle' => $semaineReelle, 'anneeUniversitaire' => $semestre->getAnneeUniversitaire()]);
-                $semaine = $eventSemaine->getSemaineFormation();
+                foreach ($semestres as $semestre) {
+                    $eventSemaine = $this->CalendrierRepository->findOneBy(['semaineReelle' => $semaineReelle, 'anneeUniversitaire' => $semestre->getAnneeUniversitaire()]);
+                    $semaine = $eventSemaine->getSemaineFormation();
 
-                $matieres = $this->typeMatiereManager->findBySemestre($semestre);
-                $matieresSemestre = [];
-                foreach ($matieres as $matiere) {
-                    if ($matiere->getSemestres()->contains($semestre)) {
-                        $matieresSemestre[$matiere->getTypeIdMatiere()] = $matiere;
+                    $matieresSemestre = $this->getMatieresSemestre($semestre);
+                    $groupes = $this->groupeRepository->findBySemestre($semestre);
+                    $edt = $this->edtManager->getPlanningSemestreSemaine($semestre, $semaine, $semestre->getAnneeUniversitaire(), $matieresSemestre, $groupes);
+                    foreach ($edt->evenements as $this->evenement) {
+                        if ($this->evenement->dateObjet->isBetween($start, $end)) {
+                            $this->processEvent($diplome, $keyEduSign);
+                        }
                     }
                 }
+            }
+        } catch (\Exception $e) {
+            $result['success'] = false;
+            $result['messages'][] = $e->getMessage();
+        }
 
-                $groupes = $this->groupeRepository->findBySemestre($semestre);
+        return $result;
+    }
 
-                //récupère les edt de l'intranet depuis EdtManager.php
-                $edt = $this->edtManager->getPlanningSemestreSemaine($semestre, $semaine, $semestre->getAnneeUniversitaire(), $matieresSemestre, $groupes);
+    private function calculStartEndDates(?int $opt, string $date): array
+    {
+        switch ($opt) {
+            case 1:
+//                $start = Carbon::today();
+//                $end = Carbon::today()->next('saturday');
+                $start = Carbon::createFromFormat('d/m/Y', '15/01/2024');
+                $end = Carbon::createFromFormat('d/m/Y', '19/01/2024');
+                break;
+            case 2:
+                $start = Carbon::yesterday();
+                $end = Carbon::today();
+                break;
+            case 3:
+                $start = Carbon::createFromFormat('d-m-Y', $date);
+                $end = Carbon::createFromFormat('d-m-Y', $date)->next('saturday');
+                break;
+            default:
+                $start = Carbon::today();
+                $end = Carbon::today()->next('saturday');
+        }
+        return [$start, $end];
+    }
 
-                foreach ($edt->evenements as $this->evenement) {
+    public function getMatieresSemestre(Semestre $semestre): array
+    {
+        $matieres = $this->typeMatiereManager->findBySemestre($semestre);
+        $matieresSemestre = [];
+        foreach ($matieres as $matiere) {
+            if ($matiere->getSemestres()->contains($semestre)) {
+                $matieresSemestre[$matiere->getTypeIdMatiere()] = $matiere;
+            }
+        }
+        return $matieresSemestre;
+    }
 
-                    if ($this->evenement->dateObjet->isBetween($start, $end)) {
-
-                        if (!($this->evenement->matiere === null || $this->evenement->matiere === "Inconnue" || $this->evenement->groupeObjet === null || $this->evenement->personnelObjet === null || $this->evenement->semestre === null)) {
-
-                            $course = (new IntranetEdtEduSignAdapter($this->evenement))->getCourse();
-
-                            $eduSignCourse = $this->apiEduSign->getCourseIdByApiId($this->evenement->id, $this->cleApi);
-
-                            if ($course->id_edu_sign == null && !$eduSignCourse) {
-
-                                $enseignant = $this->evenement->personnelObjet;
-
-                                $departement = $diplome->getDepartement();
-                                if ($enseignant) {
-                                    if ($enseignant->getIdEduSign() == '' || $enseignant->getIdEduSign() == null || !array_key_exists($departement->getId(), $enseignant->getIdEduSign())) {
-                                        $this->createEnseignant->update($enseignant, $departement, $this->cleApi);
-                                    }
-                                    $this->sendUpdate();
-//                                    $bilan['success'][] = ['id: ' . $this->evenement->id . ' - ' . $course->name . ' - ' . $enseignant->getPrenom() . ' ' . $enseignant->getNom() . ' - ' . $course->start . '|' . $course->end . ' - ' . $this->evenement->semestre . '|' . $this->evenement->groupe];
-                                }
-                            }
-                        }
-//                        else {
-//                            //tester les données manquantes
-//                            if ($this->evenement->id === null) {
-//                                $id = 'null';
-//                            } elseif ($this->evenement->id === '') {
-//                                $id = 'empty';
-//                            } else {
-//                                $id = $this->evenement->id;
-//                            }
-//
-//                            if ($this->evenement->groupeObjet === null) {
-//                                $groupe = 'null';
-//                            } else {
-//                                $groupe = $this->evenement->groupeObjet->getLibelle();
-//                            }
-//
-//                            if ($this->evenement->semestre === null) {
-//                                $semestre = 'null';
-//                            } elseif ($this->evenement->semestre === '') {
-//                                $semestre = 'empty';
-//                            } else {
-//                                $semestre = $this->evenement->semestre->getLibelle();
-//                            }
-//
-//                            if ($this->evenement->personnelObjet === null) {
-//                                $enseignant = 'null';
-//                            } else {
-//                                $enseignant = $this->evenement->personnelObjet->getPrenom() . ' ' . $this->evenement->personnelObjet->getNom();
-//                            }
-//
-//                            if ($this->evenement->matiere === '') {
-//                                $matiere = 'empty';
-//                            } elseif ($this->evenement->matiere === null) {
-//                                $matiere = 'null';
-//                            } else {
-//                                $matiere = $this->evenement->matiere;
-//                            }
-//
-//                            if ($this->evenement->salle === null) {
-//                                $salle = 'null';
-//                            } elseif ($this->evenement->salle === '') {
-//                                $salle = 'empty';
-//                            } else {
-//                                $salle = $this->evenement->salle;
-//                            }
-//
-//                            if ($this->evenement->heureDebut === null) {
-//                                $heureDebut = 'null';
-//                            } elseif ($this->evenement->heureDebut === '') {
-//                                $heureDebut = 'empty';
-//                            } else {
-//                                $heureDebut = $this->evenement->heureDebut;
-//                            }
-//
-//                            if ($this->evenement->heureFin === null) {
-//                                $heureFin = 'null';
-//                            } elseif ($this->evenement->heureFin === '') {
-//                                $heureFin = 'empty';
-//                            } else {
-//                                $heureFin = $this->evenement->heureFin;
-//                            }
-//
-//                            if (($this->evenement->texteEvt() !== "PTUT") && ($this->evenement->texteEvt() !== "Entreprise") && ($this->evenement->texteEvt() !== "Inconnue") && ($this->evenement->texteEvt() !== "Stages")) {
-//                                $bilan['error']['cours_incomplets'][] = ['id' => $id, 'matiere' => $matiere, 'texteEvt' => $this->evenement->texteEvt(), 'groupe' => $groupe, 'semestre' => $semestre, 'enseignant' => $enseignant, 'salle' => $salle, 'date' => $this->evenement->dateObjet, 'horaires' => $heureDebut . ' - ' . $heureFin];
-//                            }
-//                        }
+    public function processEvent(Diplome $diplome, ?string $keyEduSign): void
+    {
+        if (!($this->evenement->matiere === null || $this->evenement->matiere === "Inconnue" || $this->evenement->groupeObjet === null || $this->evenement->personnelObjet === null || $this->evenement->semestre === null)) {
+            $course = (new IntranetEdtEduSignAdapter($this->evenement))->getCourse();
+            $eduSignCourse = $this->apiCours->getCourseIdByApiId($this->evenement->id, $keyEduSign);
+            if ($course->id_edu_sign == null && !$eduSignCourse) {
+                $enseignant = $this->evenement->personnelObjet;
+                $departement = $diplome->getDepartement();
+                if ($enseignant) {
+                    if ($enseignant->getIdEduSign() == '' || $enseignant->getIdEduSign() == null || !array_key_exists($departement->getId(), $enseignant->getIdEduSign())) {
+                        $this->createEnseignant->update($enseignant, $departement, $keyEduSign);
                     }
+                    $this->sendUpdate($keyEduSign);
                 }
             }
         }
-        return $bilan ?? null;
-
     }
 
-    public function sendUpdate(): string
+    public function sendUpdate(?string $keyEduSign): string
     {
         $course = (new IntranetEdtEduSignAdapter($this->evenement))->getCourse();
         if ($course !== null) {
-            $this->apiEduSign->addCourse($course, $this->cleApi);
-//            $response = $this->apiEduSign->addCourse($course, $this->cleApi);
+            $this->apiCours->addCourse($course, $keyEduSign);
             $response = 'cours ajouté - id : ' . $this->evenement->id;
-        }
-        else {
+        } else {
             $response = 'cours non trouvé - id : ' . $this->evenement->id;
         }
         return $response;

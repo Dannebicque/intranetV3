@@ -9,6 +9,7 @@
 
 namespace App\Classes\EduSign;
 
+use App\Entity\Etudiant;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class GetCleApi

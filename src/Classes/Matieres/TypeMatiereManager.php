@@ -81,6 +81,20 @@ class TypeMatiereManager
         return $t;
     }
 
+    // todo: ?? retourne plusieurs résultats : 1 pour chaque matiere
+    public function findOneById(int $id): array
+    {
+        $t = [];
+        foreach ($this->managers as $manager) {
+            $matiere = $manager->find($id);
+            if (null !== $matiere) {
+                $t[] = $matiere;
+            }
+        }
+
+        return $t;
+    }
+
     public function findByDepartement(Departement $departement): array
     {
         $t = [];
