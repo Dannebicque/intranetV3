@@ -2,6 +2,29 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.19.12](https://github.com/Dannebicque/intranetV3/compare/v3.19.11...v3.19.12) (2024-08-31)
+
+
+### Features
+
+* Import EDT modèle RHU ([ccf1412](https://github.com/Dannebicque/intranetV3/commit/ccf14126c1a2ceceac1de8fe7ff8c19fd78e9138))
+
+
+### Bug Fixes
+
+* bascule semestre process - gestion des erreurs ([d2d6fd5](https://github.com/Dannebicque/intranetV3/commit/d2d6fd5d21d7ed3ce09f3e93046b4503cb1bc905))
+* create enseignant - gestion des erreurs + interface admin pour les assistant(e)s ([fe0da82](https://github.com/Dannebicque/intranetV3/commit/fe0da82319e36d4c2535df23bf5c5e4a8b90d97a))
+* Edusign - chgt annee ([fb9297f](https://github.com/Dannebicque/intranetV3/commit/fb9297f2f9b0bcbbebb6739c43930a3143e7fdfe))
+* Edusign - chgt annee ([5605440](https://github.com/Dannebicque/intranetV3/commit/5605440603584ef228381ea6566c2748a58685fc))
+* Edusign - chgt année ([2650ea4](https://github.com/Dannebicque/intranetV3/commit/2650ea4451071c67da7c8308224f650a85db08e0))
+* Edusign - chgt année ([7c54749](https://github.com/Dannebicque/intranetV3/commit/7c5474942f5db193ac859afd5ac6bc322f7a3c63))
+* Edusign - create courses ([cda5f4c](https://github.com/Dannebicque/intranetV3/commit/cda5f4c6b41159ab76d02a51acc0ade1a2c90b89))
+* Edusign - init groupes + chgt annee ([10cb25a](https://github.com/Dannebicque/intranetV3/commit/10cb25a762229c496e7db4e7710ce3d790195975))
+* Edusign - init groupes + etudiants ([3322bc8](https://github.com/Dannebicque/intranetV3/commit/3322bc8c52fa00f83d2e3cfcdb9779882f862dab))
+* Edusign - init groupes + etudiants ([886fa7d](https://github.com/Dannebicque/intranetV3/commit/886fa7d52c38ea3a1846fcab705434affba56e72))
+* Edusign - init groupes + etudiants ([06cc72e](https://github.com/Dannebicque/intranetV3/commit/06cc72ed46b8302819aab6227cb710ede9415c84))
+* init process - gestion des erreurs ([3daf321](https://github.com/Dannebicque/intranetV3/commit/3daf32180cdfba1fe1a21c01f1b19bcad90653ce))
+
 ### [3.19.11](https://github.com/Dannebicque/intranetV3/compare/v3.19.10...v3.19.11) (2024-07-15)
 
 
