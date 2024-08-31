@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtImport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 31/08/2024 08:26
+ * @lastUpdate 31/08/2024 11:25
  */
 
 /*
@@ -236,11 +236,13 @@ class MyEdtImport
             $pl->setDiplome($this->diplome);
             $this->addGroupe($pl, $phrase[5]);
             $pl->setHeureDebut($heureDebut);
+            //extraire le nombre après les deux premiers caractères de $phrase[2]
+            $pl->setOrdre(mb_substr($phrase[2], 2, strlen($phrase[2])));
             $pl->setHeureFin($heureFin);
             $pl->setDebut(Constantes::TAB_HEURES_INDEX[$heureDebut->format('H:i:s')]);
             $pl->setFin(Constantes::TAB_HEURES_INDEX[$heureFin->format('H:i:s')]);
 
-            $pl->setSemaine($this->semaine);
+            $pl->setSemaine((int)$this->semaine + 1);//décalage avec Celcat
             $pl->setEvaluation(false);
             $this->entityManager->persist($pl);
             $this->log->addItem('Ajout du cours ' . implode('.', $phrase), 'success');
