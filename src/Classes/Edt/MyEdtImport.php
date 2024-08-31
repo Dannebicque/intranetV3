@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtImport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 31/08/2024 15:44
+ * @lastUpdate 31/08/2024 15:47
  */
 
 /*
@@ -210,7 +210,7 @@ class MyEdtImport
             }
 
             $pl->setJour($date->dayOfWeek()); // à déduire de la date
-            $pl->setSalle($salle);
+            $pl->setSalle(mb_strtoupper($salle));
             $pl->setDate($date);
             $pl->setType(strtoupper(mb_substr($phrase[2], 0, 2)));
             $pl->setDiplome($this->diplome);
