@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EdtActionsController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:17
+ * @lastUpdate 30/08/2024 21:47
  */
 
 namespace App\Controller\administration;
@@ -42,6 +42,7 @@ class EdtActionsController extends BaseController
         // récupérer le fichier
         $fichier = $upload->upload($request->files->get('fichieredt'));
         $myEdtImport->init($fichier, $this->getDepartement(), $this->getAnneeUniversitaire())->traite();
+        dd('fin');
         /* fin necessaire ? */
         $s = $myEdtImport->getCalendrier();
         if ($s) {

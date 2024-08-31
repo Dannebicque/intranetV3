@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtImport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/08/2024 16:57
+ * @lastUpdate 31/08/2024 08:26
  */
 
 /*
@@ -17,6 +17,7 @@ use App\Classes\Matieres\TypeMatiereManager;
 use App\Components\Logger\LogHelper;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Calendrier;
+use App\Entity\Constantes;
 use App\Entity\Departement;
 use App\Entity\Diplome;
 use App\Entity\EdtPlanning;
@@ -26,6 +27,7 @@ use App\Repository\DiplomeRepository;
 use App\Repository\EdtPlanningRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\SemestreRepository;
+use Carbon\Carbon;
 use Carbon\CarbonInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
@@ -85,8 +87,8 @@ class MyEdtImport
         // Récupérer la liste des profs avec initiales
         $this->tabIntervenants = $this->personnelRepository->tableauIntervenants($this->departement);
         $this->tabMatieres = $this->typeMatiereManager->tableauMatieres($this->departement);
-        $this->tabSemestre = $this->semestreRepository->tableauSemestres($this->departement);
-        $this->tabdebut = [1 => 1, 2 => 4, 3 => 7, 4 => 13, 5 => 16, 6 => 19, 7 => 22];
+//        $this->tabSemestre = $this->semestreRepository->tableauSemestres($this->departement);
+//        $this->tabdebut = [1 => 1, 2 => 4, 3 => 7, 4 => 13, 5 => 16, 6 => 19, 7 => 22];
 
         $handle = fopen($this->nomfile, 'rb');
         $this->tSemaineClear = []; // tableau pour mémoriser les semaines à supprimer
@@ -100,31 +102,19 @@ class MyEdtImport
                 $phrase = fgetcsv($handle, 1024);
 
                 /*
-                 * 0 => semaine,
-                 * 1 => jour,
-                 * 2 => horaire,
-                 * 3 => nb_creneaux,
-                 * 4 => semestre,
-                 * 5 => parcours,
-                 * 6 => matiere,
-                 * 7 => texte,
-                 * 8 => prof,
-                 * 9 => salle,
-                 * 10 => type,
-                 * 11 => groupe
-                 *
                  * --- fichier Régis ---
                  *
-                 * 0 => nom
-                 * 1 => matiere
+                 * 0 => initiales profs
+                 * 1 => code MMI matiere
                  * 2 => type
                  * 3 => date
                  * 4 => heure
                  * 5 => groupe
                  * 6 => salle
+                 * 7 => semaine
                  */
 
-                if ($phrase !== false && count($phrase) === 7) {
+                if ($phrase !== false && count($phrase) === 9) {
                     if (null === $this->calendrier) {
                         $this->semaine = mb_substr($phrase[0], 1, 2);
                         $this->calendrier = $this->calendrierRepository->findOneBy([
@@ -144,9 +134,8 @@ class MyEdtImport
 
     private function traiteLigne(array $phrase): void
     {
-        $this->semaine = mb_substr($phrase[0], 1, 2); // on ne récupère pas le S
-
-        $semestre = $phrase[4];
+        $this->semaine = $phrase[7];
+        $semestre = mb_substr($phrase[8], 1, 2);
         $this->verifieSiSemaineDoitEtreEffacee($semestre);
         $this->addCours($phrase, $semestre);
     }
@@ -176,9 +165,12 @@ class MyEdtImport
         $this->entityManager->flush();
     }
 
-    private function convertToDate(int $jour): CarbonInterface
+    private function convertToDate(string $jour): CarbonInterface
     {
-        return $this->calendrier->getDateLundi()->addDays($jour - 1);
+        //convertir "Le 4/9/2024" en 2024-09-04
+        $jour = str_replace(array('Le ', '/'), array('', '-'), $jour);
+
+        return Carbon::createFromFormat('d-m-Y', $jour);
     }
 
     private function verifieSiSemaineDoitEtreEffacee(string $semestre): void
@@ -195,83 +187,70 @@ class MyEdtImport
     private function addCours(array $phrase, string $semestre): void
     {
         /*
-         * 0 => semaine,
-         * 1 => jour,
-         * 2 => horaire,
-         * 3 => nb_creneaux,
-         * 4 => semestre,
-         * 5 => parcours,
-         * 6 => matiere,
-         * 7 => texte,
-         * 8 => prof,
-         * 9 => salle,
-         * 10 => type,
-         * 11 => groupe
+         * nom,matiere,type,date,heure,groupe,salle,semaine,semestre
+            AHA,WRA315S,td2,Le 4/9/2024,17h00-18h30,I3,h201,1,S3
+         * 0 => nom
+         * 1 => matiere
+         * 2 => type
+         * 3 => date
+         * 4 => heure
+         * 5 => groupe
+         * 6 => salle
+         * 7 => semaine
+         * 8 => semestre
          */
+        $date = $this->convertToDate($phrase[3]);
+        // Séparer la chaîne pour obtenir les heures de début et de fin
+        list($startTime, $endTime) = explode('-', $phrase[4]);
 
+// Supprimer les caractères 'h' pour pouvoir construire les objets Carbon
+        $startTime = str_replace('h', ':', $startTime);
+        $endTime = str_replace('h', ':', $endTime);
 
-        $jour = $phrase[1];
-        $heure = $phrase[2]; // a convertir
-        $date = $this->convertToDate((int)$jour);
-        $prof = $phrase[8];
-        $ordreSemestre = (int)mb_substr($semestre, 1, 1);
-        $matiere = $phrase[6];
-        $salle = $phrase[9];
-        $pl = new EdtPlanning();
-        $pl->setAnneeUniversitaire($this->anneeUniversitaire);
-        $pl->setOrdreSemestre($ordreSemestre);
+// Créer les objets Carbon pour les heures de début et de fin
+        $heureDebut = Carbon::createFromFormat('H:i', $startTime);
+        $heureFin = Carbon::createFromFormat('H:i', $endTime);
+
+        $prof = $phrase[0];
+        $matiere = $phrase[1];
+        $salle = $phrase[6];
         if ('' !== $matiere && array_key_exists($matiere, $this->tabMatieres)) {
+            $pl = new EdtPlanning();
+            $pl->setAnneeUniversitaire($this->anneeUniversitaire);
+
             $pl->setIdMatiere($this->tabMatieres[$matiere]->id);
             $pl->setTypeMatiere($this->tabMatieres[$matiere]->typeMatiere);
             $pl->setTexte(null);
-        } else {
-            $pl->setTexte(utf8_encode($phrase[7]));
-        }
-        if ('' !== $prof && 'DOE' !== $prof && 'PRJ' !== $prof && array_key_exists($prof, $this->tabIntervenants)) {
-            $pl->setIntervenant($this->tabIntervenants[$prof]);
-        } else {
-            $pl->setIntervenant(null);
-        }
+            $pl->setOrdreSemestre($semestre);
 
-        $pl->setJour($jour);
-        $pl->setSalle($salle);
-        $pl->setDate($date);
-        $pl->setType(mb_substr($phrase[10], 0, 2));//juste CM, TD ou TP
-        $pl->setDiplome($this->diplome);
-        $this->addGroupe($pl, $phrase[10], $phrase[11]);
-        $pl->setDebut($this->tabdebut[$heure]);
-        $pl->setFin($this->tabdebut[$heure] + 3 * $phrase[3]);//$phrase[3] = nombre de créneaux
-        $pl->setSemaine($this->semaine);
-        $pl->setEvaluation(false);
-        $this->entityManager->persist($pl);
-        $this->log->addItem('Ajout du cours ' . implode('.', $phrase), 'success');
+            if ('' !== $prof && 'DOE' !== $prof && 'PRJ' !== $prof && array_key_exists($prof, $this->tabIntervenants)) {
+                $pl->setIntervenant($this->tabIntervenants[$prof]);
+            } else {
+                $pl->setIntervenant(null);
+            }
+
+            $pl->setJour($date->dayOfWeek()); // à déduire de la date
+            $pl->setSalle($salle);
+            $pl->setDate($date);
+            $pl->setType(strtoupper(mb_substr($phrase[2], 0, 2)));
+            $pl->setDiplome($this->diplome);
+            $this->addGroupe($pl, $phrase[5]);
+            $pl->setHeureDebut($heureDebut);
+            $pl->setHeureFin($heureFin);
+            $pl->setDebut(Constantes::TAB_HEURES_INDEX[$heureDebut->format('H:i:s')]);
+            $pl->setFin(Constantes::TAB_HEURES_INDEX[$heureFin->format('H:i:s')]);
+
+            $pl->setSemaine($this->semaine);
+            $pl->setEvaluation(false);
+            $this->entityManager->persist($pl);
+            $this->log->addItem('Ajout du cours ' . implode('.', $phrase), 'success');
+        }
 
     }
 
-    private function addGroupe(EdtPlanning $pl, string $typeGroupe, string $groupes): void
+    private function addGroupe(EdtPlanning $pl, string $groupe): void
     {
-        $typecours = mb_substr($typeGroupe, 0, 2);
-        $typeGroupeComplement = mb_substr($typeGroupe, 2);
-        $pl->setType(mb_strtoupper($typecours));
-
-        if ($typecours === 'CM' && str_starts_with($typeGroupeComplement, 'S')) {
-            $pl->setGroupe(1); //CM Classique sur tous les groupes
-        } elseif ($typecours === 'TD' && strlen($groupes) === 2) {
-            if (ord($groupes[0]) === ord($groupes[1]) - 1) {
-                $pl->setGroupe(ord($groupes[0]) - 64); // deux lettre qui se suivent, donc TD classique ou CM particulier
-            } else {
-                $pl->setGroupe(40 + ord($groupes[0]) - 64); // on ajoute 40 pour indiquer que c'est sur 4 ?
-            }
-        } elseif ($typecours === 'TP' && strlen($groupes) === 1) {
-            //TP classique
-            $pl->setGroupe(ord($groupes[0]) - 64);
-        } elseif ($typecours === 'CM' && str_starts_with($typeGroupeComplement, 'FI')) {
-            //S3 CM sur les deux groupes FI, on a donc groupes = ABCD
-            if (ord($groupes[0]) === ord($groupes[strlen($groupes) - 1]) - 1) {
-                $pl->setGroupe(ord($groupes[0]) - 64); // deux lettre qui se suivent, donc TD classique ou CM particulier
-            } else {
-                $pl->setGroupe(40 + ord($groupes[0]) - 64); // on ajoute 40 pour indiquer que c'est sur 4 ?
-            }
-        }
+        $groupe = mb_substr($groupe, 0, 1);
+        $pl->setGroupe(ord($groupe) - 64);
     }
 }
