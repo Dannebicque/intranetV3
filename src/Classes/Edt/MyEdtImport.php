@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtImport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 31/08/2024 11:25
+ * @lastUpdate 31/08/2024 15:44
  */
 
 /*
@@ -22,11 +22,9 @@ use App\Entity\Departement;
 use App\Entity\Diplome;
 use App\Entity\EdtPlanning;
 use App\Entity\Semestre;
-use App\Repository\CalendrierRepository;
 use App\Repository\DiplomeRepository;
 use App\Repository\EdtPlanningRepository;
 use App\Repository\PersonnelRepository;
-use App\Repository\SemestreRepository;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
 use Doctrine\ORM\EntityManagerInterface;
@@ -46,7 +44,7 @@ class MyEdtImport
     protected ?Diplome $diplome = null;
     private ?string $nomfile = null;
 
-    private mixed $semaine;
+    private int $semaine;
 
     private ?Semestre $semestre = null;
     private ?Calendrier $calendrier = null;
@@ -58,10 +56,8 @@ class MyEdtImport
      */
     public function __construct(
         private readonly EdtPlanningRepository $edtPlanningRepository,
-        private readonly CalendrierRepository  $calendrierRepository,
         private readonly PersonnelRepository   $personnelRepository,
         private readonly TypeMatiereManager    $typeMatiereManager,
-        private readonly SemestreRepository    $semestreRepository,
         private readonly EntityManagerInterface $entityManager,
         DiplomeRepository                      $diplomeRepository,
     )
@@ -87,8 +83,6 @@ class MyEdtImport
         // Récupérer la liste des profs avec initiales
         $this->tabIntervenants = $this->personnelRepository->tableauIntervenants($this->departement);
         $this->tabMatieres = $this->typeMatiereManager->tableauMatieres($this->departement);
-//        $this->tabSemestre = $this->semestreRepository->tableauSemestres($this->departement);
-//        $this->tabdebut = [1 => 1, 2 => 4, 3 => 7, 4 => 13, 5 => 16, 6 => 19, 7 => 22];
 
         $handle = fopen($this->nomfile, 'rb');
         $this->tSemaineClear = []; // tableau pour mémoriser les semaines à supprimer
@@ -115,13 +109,6 @@ class MyEdtImport
                  */
 
                 if ($phrase !== false && count($phrase) === 9) {
-                    if (null === $this->calendrier) {
-                        $this->semaine = mb_substr($phrase[0], 1, 2);
-                        $this->calendrier = $this->calendrierRepository->findOneBy([
-                            'semaineFormation' => $this->semaine,
-                            'anneeUniversitaire' => $this->anneeUniversitaire->getId(),
-                        ]);
-                    }
                     $this->traiteLigne($phrase);
                 }
             }
@@ -134,7 +121,7 @@ class MyEdtImport
 
     private function traiteLigne(array $phrase): void
     {
-        $this->semaine = $phrase[7];
+        $this->semaine = (int)$phrase[7] + 1; //par rapport à celcat
         $semestre = mb_substr($phrase[8], 1, 2);
         $this->verifieSiSemaineDoitEtreEffacee($semestre);
         $this->addCours($phrase, $semestre);
@@ -145,17 +132,10 @@ class MyEdtImport
         return $this->semestre;
     }
 
-    public function getCalendrier(): ?Calendrier
+    private function clearSemaine(): void
     {
-        return $this->calendrier;
-    }
-
-    private function clearSemaine(string $semaine, string $semestre): void
-    {
-        $ordreSemestre = (int)mb_substr($semestre, 1, 1);
         $sem = $this->edtPlanningRepository->findBy([
-            'semaine' => $semaine,
-            'ordreSemestre' => $ordreSemestre,
+            'semaine' => $this->semaine,
             'anneeUniversitaire' => $this->anneeUniversitaire,
         ]);
 
@@ -175,12 +155,12 @@ class MyEdtImport
 
     private function verifieSiSemaineDoitEtreEffacee(string $semestre): void
     {
-        if (!array_key_exists($semestre, $this->tSemaineClear)) {
+        if (!array_key_exists($this->semaine, $this->tSemaineClear)) {
             // si la clé n'est pas dans le tableau, la semaine n'a pas encore été effacée, on supprime
-            $this->clearSemaine($this->semaine, $semestre); // on envoie l'ordre du semestre et pas son id pour le BUT et les parcours
+            $this->clearSemaine(); // on envoie l'ordre du semestre et pas son id pour le BUT et les parcours
             // on mémorise le semestre
-            $this->log->addItem('Le semestre ' . $semestre . ' pour l\'ensemble des parcours a été effacé avant l\'import.');
-            $this->tSemaineClear[$semestre] = true;
+            $this->log->addItem('La semaine ' . $this->semaine . ' pour l\'ensemble des parcours a été effacé avant l\'import.');
+            $this->tSemaineClear[$this->semaine] = true;
         }
     }
 
@@ -242,7 +222,7 @@ class MyEdtImport
             $pl->setDebut(Constantes::TAB_HEURES_INDEX[$heureDebut->format('H:i:s')]);
             $pl->setFin(Constantes::TAB_HEURES_INDEX[$heureFin->format('H:i:s')]);
 
-            $pl->setSemaine((int)$this->semaine + 1);//décalage avec Celcat
+            $pl->setSemaine((int)$this->semaine);//décalage avec Celcat
             $pl->setEvaluation(false);
             $this->entityManager->persist($pl);
             $this->log->addItem('Ajout du cours ' . implode('.', $phrase), 'success');
