@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/EdtPlanning.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 31/08/2023 16:02
+ * @lastUpdate 31/08/2024 08:30
  */
 
 namespace App\Entity;
@@ -77,6 +77,12 @@ class EdtPlanning extends BaseEntity
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $idEduSign = null;
+
+    #[ORM\Column(type: Types::TIME_MUTABLE, nullable: true)]
+    private ?CarbonInterface $heureDebut = null;
+
+    #[ORM\Column(type: Types::TIME_MUTABLE, nullable: true)]
+    private ?CarbonInterface $heureFin = null;
 
     public function getOrdre(): ?string
     {
@@ -265,11 +271,6 @@ class EdtPlanning extends BaseEntity
         ];
     }
 
-    public function getTypeIdMatiere(): ?string
-    {
-        return $this->getTypeMatiere().'_'.$this->getIdMatiere();
-    }
-
     public function getJour(): ?int
     {
         return $this->jour;
@@ -398,6 +399,30 @@ class EdtPlanning extends BaseEntity
     public function setIdEduSign(?string $idEduSign): static
     {
         $this->idEduSign = $idEduSign;
+
+        return $this;
+    }
+
+    public function getHeureDebut(): ?CarbonInterface
+    {
+        return $this->heureDebut;
+    }
+
+    public function setHeureDebut(?CarbonInterface $heureDebut): static
+    {
+        $this->heureDebut = $heureDebut;
+
+        return $this;
+    }
+
+    public function getHeureFin(): ?CarbonInterface
+    {
+        return $this->heureFin;
+    }
+
+    public function setHeureFin(?CarbonInterface $heureFin): static
+    {
+        $this->heureFin = $heureFin;
 
         return $this;
     }

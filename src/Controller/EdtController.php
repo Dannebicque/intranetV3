@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/EdtController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/04/2024 07:30
+ * @lastUpdate 31/08/2024 08:30
  */
 
 namespace App\Controller;
@@ -133,17 +133,20 @@ class EdtController extends BaseController
 
         $source = null !== $this->getDepartement() && $this->getDepartement()->isOptUpdateCelcat() ? 'celcat' : 'intranet';
         $calendrier = $this->calendrier->calculSemaine($semaine, $this->getAnneeUniversitaire());
-        $matieres = $this->typeMatiereManager->findByDepartementArray($this->getDepartement());
-        $edt = $edtManager->initPersonnel($source, $calendrier, $this->getUser(),
-            $this->getAnneeUniversitaire(), $matieres);
+
+
         // récupération des absences ou des marquages de "pas d'absence"
-        $suiviAppel[] = $absenceEtatAppelRepository->findBySemaineAndUserArray($calendrier->semaineFormationLundi,
-            $this->getUser());
-        $suiviAppel[] = $absenceRepository->findBySemaineAndUserArray($calendrier->semaineFormationLundi,
-            $this->getUser());
-        $suiviAppel = array_merge_recursive(...$suiviAppel);
+
 
         if ($mode === 'tableau') {
+            $matieres = $this->typeMatiereManager->findByDepartementArray($this->getDepartement());
+            $edt = $edtManager->initPersonnel($source, $calendrier, $this->getUser(),
+                $this->getAnneeUniversitaire(), $matieres);
+            $suiviAppel[] = $absenceEtatAppelRepository->findBySemaineAndUserArray($calendrier->semaineFormationLundi,
+                $this->getUser());
+            $suiviAppel[] = $absenceRepository->findBySemaineAndUserArray($calendrier->semaineFormationLundi,
+                $this->getUser());
+            $suiviAppel = array_merge_recursive(...$suiviAppel);
             return $this->render('edt/_edt_intervenant_tableau.html.twig', [
                 'edt' => $edt,
                 'filtre' => $filtre,
@@ -152,23 +155,62 @@ class EdtController extends BaseController
                 'valeur' => $valeur,
                 'tabHeures' => Constantes::TAB_HEURES_EDT_2,
                 'suiviAppel' => $suiviAppel,
-                'source' => 'intranet',
+                'source' => $source,
             ]);
         }
 
         return $this->render('edt/_edt_intervenant.html.twig', [
-            'edt' => $edt,
             'filtre' => $filtre,
             'calendrier' => $calendrier,
             'semaine' => $semaine,
             'valeur' => $valeur,
-            'tabHeures' => Constantes::TAB_HEURES_EDT_2,
-            'suiviAppel' => $suiviAppel,
-            'source' => 'intranet',
+            'source' => $source,
         ]);
     }
 
-    public function navPersonnel(
+    #[Route(path: '/ajax/edt-personnel-data', name: 'edt_personnel_ajax_data')]
+    public function edtPersonnelData(
+        EdtManager                 $edtManager,
+        AbsenceEtatAppelRepository $absenceEtatAppelRepository,
+        AbsenceRepository          $absenceRepository,
+        Request                    $request,
+    ): Response
+    {
+        $semaine = (int)$request->query->get('semaine');
+//        $filtre = $request->query->get('filtre');
+//        $valeur = $request->query->get('valeur');
+//        $mode = $request->query->get('mode');
+
+        $source = null !== $this->getDepartement() && $this->getDepartement()->isOptUpdateCelcat() ? EdtManager::EDT_CELCAT : EdtManager::EDT_INTRANET;
+        $calendrier = $this->calendrier->calculSemaine($semaine, $this->getAnneeUniversitaire());
+        $matieres = $this->typeMatiereManager->findByDepartementArray($this->getDepartement());
+        $edt = $edtManager->initPersonnel($source, $calendrier, $this->getUser(),
+            $this->getAnneeUniversitaire(), $matieres);
+
+        // récupération des absences ou des marquages de "pas d'absence"
+        $suiviAppel[] = $absenceEtatAppelRepository->findBySemaineAndUserArray($calendrier->semaineFormationLundi,
+            $this->getUser());
+        $suiviAppel[] = $absenceRepository->findBySemaineAndUserArray($calendrier->semaineFormationLundi,
+            $this->getUser());
+        $suiviAppel = array_merge_recursive(...$suiviAppel);
+
+
+        return $this->json($edt->getEvenementsAsJson());
+
+//        return $this->render('edt/_edt_intervenant.html.twig', [
+//            'edt' => $edt,
+//            'filtre' => $filtre,
+//            'calendrier' => $calendrier,
+//            'semaine' => $semaine,
+//            'valeur' => $valeur,
+//            'tabHeures' => Constantes::TAB_HEURES_EDT_2,
+//            'suiviAppel' => $suiviAppel,
+//            'source' => 'intranet',
+//        ]);
+    }
+
+    public
+    function navPersonnel(
         string    $filtre,
         string    $valeur,
         Calendrier $calendrier,
@@ -183,7 +225,8 @@ class EdtController extends BaseController
         ]);
     }
 
-    #[Route(path: '/ajax/edt-personnel-semestre', name: 'edt_personnel_semestre_ajax')]
+    #[
+        Route(path: '/ajax/edt-personnel-semestre', name: 'edt_personnel_semestre_ajax')]
     public function personnelSemestre(
         Request          $request,
         GroupeRepository $groupeRepository,
@@ -228,35 +271,56 @@ class EdtController extends BaseController
     public function dashboardEtudiant(int $semaine = 0): Response
     {
         $calendrier = $this->calendrier->calculSemaine($semaine, $this->getAnneeUniversitaire());
-
         if (null !== $this->getAnneeUniversitaire()) {
             $matieres = $this->typeMatiereManager->tableauMatieresSemestreCodeApogee($this->getUser()->getSemestre());
-            // todo: passer pour l'edt manager
             if (null !== $this->getUser()->getDiplome() && $this->getUser()->getDiplome()?->isOptUpdateCelcat()) {
-                $this->myEdtCelcat->initEtudiant($this->getUser(),
-                    $this->getAnneeUniversitaire(), $semaine, $matieres);
-
-                return $this->render('edt/_etudiant2.html.twig', [
-                    'edt' => $this->myEdtCelcat,
-                    'source' => 'celcat',
-                    'calendrier' => $calendrier,
-                    'tabHeures' => Constantes::TAB_HEURES_EDT_2,
-                ]);
+                $source = EdtManager::EDT_CELCAT;
+            } else {
+                $source = EdtManager::EDT_INTRANET;
             }
-            $this->myEdtIntranet->initEtudiant($this->getUser(),
+            $events = $this->edtManager->initEtudiant($source, $this->getUser(),
                 $this->getAnneeUniversitaire(),
-                $semaine);
+                $calendrier, $matieres);
 
             return $this->render('edt/_etudiant.html.twig', [
-                'edt' => $this->myEdtIntranet,
-                'source' => 'intranet',
+                'events' => json_encode($events->getEvenementsAsJson(), JSON_HEX_APOS | JSON_HEX_QUOT),
+                'source' => $source,
                 'calendrier' => $calendrier,
-                'tabHeures' => Constantes::TAB_HEURES_EDT,
+                'semaine' => $semaine
             ]);
         }
 
         return $this->render('edt/_error.html.twig');
     }
+//
+//    #[Route(path: '/ajax/edt-etudiant-data/{semaine}', name: 'edt_etudiant_ajax_data')]
+//    public function edtEtudiantData(int $semaine = 0): Response
+//    {
+//        $calendrier = $this->calendrier->calculSemaine($semaine, $this->getAnneeUniversitaire());
+//
+//        if (null !== $this->getAnneeUniversitaire()) {
+//            $matieres = $this->typeMatiereManager->tableauMatieresSemestreCodeApogee($this->getUser()->getSemestre());
+//            // todo: passer pour l'edt manager
+//            if (null !== $this->getUser()->getDiplome() && $this->getUser()->getDiplome()?->isOptUpdateCelcat()) {
+//                $this->myEdtCelcat->initEtudiant($this->getUser(),
+//                    $this->getAnneeUniversitaire(), $semaine, $matieres);
+//
+//                return $this->render('edt/_etudiant2.html.twig', [
+//                    'edt' => $this->myEdtCelcat,
+//                    'source' => 'celcat',
+//                    'calendrier' => $calendrier,
+//                    'tabHeures' => Constantes::TAB_HEURES_EDT_2,
+//                ]);
+//            }
+//            $edt = $this->edtManager->initEtudiant(EdtManager::EDT_INTRANET ,$this->getUser(),
+//                $this->getAnneeUniversitaire(),
+//                $semaine);
+//
+//            return $this->json($edt->getEvenementsAsJson());
+//        }
+//
+//        return $this->render('edt/_error.html.twig');
+//    }
 
     #[Route(path: '/intervenant/export/semaine/{semaine}', name: 'edt_intervenant_export_semaine_courante')]
     public function exportIntervenantSemaine(): void
