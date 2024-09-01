@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtImport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/09/2024 14:53
+ * @lastUpdate 01/09/2024 14:59
  */
 
 /*
@@ -306,9 +306,9 @@ class MyEdtImport
 
         $prof = $phrase[0];
 
-        if ($semestre === 3) {
+        if ((int)$semestre === 3) {
             $matiere = self::CORRESPONDANCE_S3[$phrase[1]];
-        } elseif ($semestre === 5) {
+        } elseif ((int)$semestre === 5) {
             $matiere = self::CORRESPONDANCE_S5[$phrase[1]];
         } else {
             $matiere = $phrase[1];
