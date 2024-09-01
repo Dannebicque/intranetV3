@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtImport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/09/2024 12:46
+ * @lastUpdate 01/09/2024 12:51
  */
 
 /*
@@ -356,7 +356,7 @@ class MyEdtImport
         //si semestre 3 et type CM et groupe = A alors ajouter 40
         $groupe = mb_substr($groupe, 0, 1);
         $offset = 0;
-        if ($pl->getOrdreSemestre() === 3 && $pl->getTypeMatiere() === 'CM' && $groupe === 'A') {
+        if ($pl->getOrdreSemestre() === 3 && $pl->getType() === 'CM' && $groupe === 'A') {
             $offset = 40;
         }
 
