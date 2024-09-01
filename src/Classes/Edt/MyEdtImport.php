@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtImport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 31/08/2024 15:47
+ * @lastUpdate 01/09/2024 11:44
  */
 
 /*
@@ -16,7 +16,6 @@ namespace App\Classes\Edt;
 use App\Classes\Matieres\TypeMatiereManager;
 use App\Components\Logger\LogHelper;
 use App\Entity\AnneeUniversitaire;
-use App\Entity\Calendrier;
 use App\Entity\Constantes;
 use App\Entity\Departement;
 use App\Entity\Diplome;
@@ -35,21 +34,135 @@ class MyEdtImport
 {
     protected array $tabIntervenants;
     protected array $tabMatieres;
-    protected array $tabSemestre;
-    protected array $tabdebut;
     protected array $tSemaineClear;
     protected ?Departement $departement;
 
     protected AnneeUniversitaire $anneeUniversitaire;
     protected ?Diplome $diplome = null;
     private ?string $nomfile = null;
-
     private int $semaine;
-
     private ?Semestre $semestre = null;
-    private ?Calendrier $calendrier = null;
-
     private LogHelper $log;
+
+    private const CORRESPONDANCE_S3 = [
+        'WR301D' => 'WR301D',
+        'WR302D' => 'WR302D',
+        'WR303D' => 'WR303D',
+        'WR304D' => 'WR304D',
+        'WR305D' => 'WR305D',
+        'WR306D' => 'WR306D',
+        'WR307D' => 'WR307D',
+        'WR308D' => 'WR308D',
+        'WR309D' => 'WR309D',
+        'WR310D' => 'WR310D',
+        'WR311D' => 'WR311D',
+        'WR312D' => 'WR312D',
+        'WR313D' => 'WR313D',
+        'WR314D' => 'WR314D',
+        'WR315D' => 'WR315D',
+        'WR316D' => 'WR316D',
+        'WR317D' => 'WR317D',
+        'WR318D' => 'WR318D',
+        'WR319D' => 'WR319D',
+        'WRA301D' => 'WRA301',
+        'WRA302D' => 'WRA302',
+        'WRA303D' => 'WRA303D',
+        'WRA304D' => 'WRA304',
+        'WRA305D' => 'WRA305D',
+        'WRA306D' => 'WRA306',
+        'WRA307D' => 'WRA307',
+        'WRA308D' => 'WRA308D',
+        'WRA309D' => 'WRA309D',
+        'WRA310D' => 'WRA310D',
+        'WRA311D' => 'WRA311D',
+        'WRA312D' => 'WRA312D',
+        'WRA313D' => 'WRA313D',
+        'WRA314D' => 'WRA314D',
+        'WRA315D' => 'WRA315',
+        'WRA316D' => 'WRA316',
+        'WRA317D' => 'WRA317',
+        'WRA318D' => 'WRA318',
+        'WRA319D' => 'WRA319D',
+        'WRA301C' => 'WRA301',
+        'WRA302C' => 'WRA302',
+        'WRA303C' => 'WRA303C',
+        'WRA304C' => 'WRA304',
+        'WRA305C' => 'WRA305C',
+        'WRA306C' => 'WRA306',
+        'WRA307C' => 'WRA307',
+        'WRA308C' => 'WRA308C',
+        'WRA309C' => 'WRA309C',
+        'WRA310C' => 'WRA310C',
+        'WRA311C' => 'WRA311C',
+        'WRA312C' => 'WRA312C',
+        'WRA313C' => 'WRA313C',
+        'WRA314C' => 'WRA314C',
+        'WRA315C' => 'WRA315',
+        'WRA316C' => 'WRA316',
+        'WRA317C' => 'WRA317',
+        'WRA318C' => 'WRA318',
+        'WRA319C' => 'WRA319C',
+        'WRA301S' => 'WRA301',
+        'WRA302S' => 'WRA302',
+        'WRA303S' => 'WRA303S',
+        'WRA304S' => 'WRA304',
+        'WRA305S' => 'WRA305S',
+        'WRA306S' => 'WRA306',
+        'WRA307S' => 'WRA307',
+        'WRA308S' => 'WRA308S',
+        'WRA309S' => 'WRA309S',
+        'WRA310S' => 'WRA310S',
+        'WRA311S' => 'WRA311S',
+        'WRA312S' => 'WRA312S',
+        'WRA313S' => 'WRA313S',
+        'WRA314S' => 'WRA314S',
+        'WRA315S' => 'WRA315',
+        'WRA316S' => 'WRA316',
+        'WRA317S' => 'WRA317',
+        'WRA318S' => 'WRA318',
+        'WRA319S' => 'WRA319S',
+        'WRA320S' => 'WRA320S',
+    ];
+
+    private const CORRESPONDANCE_S5 = [
+        'WR501D' => 'WR501D',
+        'WR502D' => 'WR502D',
+        'WR503D' => 'WR503D',
+        'WR504D' => 'WR504D',
+        'WR505D' => 'WR505D',
+        'WR506D' => 'WR506D',
+        'WR507D' => 'WR507D',
+        'WR508D' => 'WR508D',
+        'WR509D' => 'WR509D',
+        'WR510D' => 'WR510D',
+        'WRA501D' => 'WRA501',
+        'WRA502D' => 'WRA502',
+        'WRA503D' => 'WRA503',
+        'WRA504D' => 'WRA504',
+        'WRA505D' => 'WRA505D',
+        'WRA506D' => 'WRA506D',
+        'WRA507D' => 'WRA507D',
+        'WRA508D' => 'WRA508D',
+        'WRA509D' => 'WRA509D',
+        'WRA510D' => 'WRA510D',
+        'WRA501C' => 'WRA501',
+        'WRA502C' => 'WRA502',
+        'WRA503C' => 'WRA503',
+        'WRA504C' => 'WRA504',
+        'WRA505C' => 'WRA505C',
+        'WRA506C' => 'WRA506C',
+        'WRA507C' => 'WRA507C',
+        'WRA508C' => 'WRA508C',
+        'WRA501S' => 'WRA501',
+        'WRA502S' => 'WRA502',
+        'WRA503S' => 'WRA503',
+        'WRA504S' => 'WRA504',
+        'WRA505S' => 'WRA505S',
+        'WRA506S' => 'WRA506S',
+        'WRA507S' => 'WRA507S',
+        'WRA508S' => 'WRA508S',
+        'WRA509S' => 'WRA509S',
+    ];
 
     /**
      * MyEdtImport constructor.
@@ -192,7 +305,15 @@ class MyEdtImport
         $heureFin = Carbon::createFromFormat('H:i', $endTime);
 
         $prof = $phrase[0];
-        $matiere = $phrase[1];
+
+        if ($semestre === 3) {
+            $matiere = self::CORRESPONDANCE_S3[$phrase[1]];
+        } elseif ($semestre === 5) {
+            $matiere = self::CORRESPONDANCE_S5[$phrase[1]];
+        } else {
+            $matiere = $phrase[1];
+        }
+
         $salle = $phrase[6];
         if ('' !== $matiere && array_key_exists($matiere, $this->tabMatieres)) {
             $pl = new EdtPlanning();
