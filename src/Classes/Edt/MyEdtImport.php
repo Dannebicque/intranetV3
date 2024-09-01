@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtImport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/09/2024 12:51
+ * @lastUpdate 01/09/2024 14:53
  */
 
 /*
@@ -104,18 +104,18 @@ class MyEdtImport
         'WRA319C' => 'WRA319C',
         'WRA301S' => 'WRA301',
         'WRA302S' => 'WRA302',
-        'WRA303S' => 'WRA303S',
+        'WRA303S' => 'WRA303C',
         'WRA304S' => 'WRA304',
         'WRA305S' => 'WRA305S',
         'WRA306S' => 'WRA306',
         'WRA307S' => 'WRA307',
-        'WRA308S' => 'WRA308S',
-        'WRA309S' => 'WRA309S',
-        'WRA310S' => 'WRA310S',
-        'WRA311S' => 'WRA311S',
-        'WRA312S' => 'WRA312S',
-        'WRA313S' => 'WRA313S',
-        'WRA314S' => 'WRA314S',
+        'WRA308S' => 'WRA308C',
+        'WRA309S' => 'WRA309C',
+        'WRA310S' => 'WRA310C',
+        'WRA311S' => 'WRA311C',
+        'WRA312S' => 'WRA312C',
+        'WRA313S' => 'WRA313C',
+        'WRA314S' => 'WRA314C',
         'WRA315S' => 'WRA315',
         'WRA316S' => 'WRA316',
         'WRA317S' => 'WRA317',
