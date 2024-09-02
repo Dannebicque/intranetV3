@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtImport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/09/2024 14:59
+ * @lastUpdate 02/09/2024 14:00
  */
 
 /*
@@ -64,6 +64,9 @@ class MyEdtImport
         'WR317D' => 'WR317D',
         'WR318D' => 'WR318D',
         'WR319D' => 'WR319D',
+        'WS301D' => 'WS301D',
+        'WS302D' => 'WS302D',
+        'WS303D' => 'WS303D',
         'WRA301D' => 'WRA301',
         'WRA302D' => 'WRA302',
         'WRA303D' => 'WRA303D',
@@ -83,6 +86,8 @@ class MyEdtImport
         'WRA317D' => 'WRA317',
         'WRA318D' => 'WRA318',
         'WRA319D' => 'WRA319D',
+        'WSA301D' => 'WSA301D',
+        'WSA302D' => 'WSA302D',
         'WRA301C' => 'WRA301',
         'WRA302C' => 'WRA302',
         'WRA303C' => 'WRA303C',
@@ -135,6 +140,8 @@ class MyEdtImport
         'WR508D' => 'WR508D',
         'WR509D' => 'WR509D',
         'WR510D' => 'WR510D',
+        'WS501D' => 'WS501D',
+        'WS502D' => 'WS502D',
         'WRA501D' => 'WRA501',
         'WRA502D' => 'WRA502',
         'WRA503D' => 'WRA503',
@@ -145,6 +152,8 @@ class MyEdtImport
         'WRA508D' => 'WRA508D',
         'WRA509D' => 'WRA509D',
         'WRA510D' => 'WRA510D',
+        'WSA501D' => 'WSA501D',
+        'WSA502D' => 'WSA502',
         'WRA501C' => 'WRA501',
         'WRA502C' => 'WRA502',
         'WRA503C' => 'WRA503',
@@ -153,6 +162,8 @@ class MyEdtImport
         'WRA506C' => 'WRA506C',
         'WRA507C' => 'WRA507C',
         'WRA508C' => 'WRA508C',
+        'WSA501C' => 'WSA501C',
+        'WSA502C' => 'WSA502',
         'WRA501S' => 'WRA501',
         'WRA502S' => 'WRA502',
         'WRA503S' => 'WRA503',
@@ -162,6 +173,8 @@ class MyEdtImport
         'WRA507S' => 'WRA507S',
         'WRA508S' => 'WRA508S',
         'WRA509S' => 'WRA509S',
+        'WSA501S' => 'WSA501S',
+        'WSA502S' => 'WSA502',
     ];
 
     /**
