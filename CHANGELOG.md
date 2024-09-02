@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.19.13](https://github.com/Dannebicque/intranetV3/compare/v3.19.12...v3.19.13) (2024-09-02)
+
+
+### Bug Fixes
+
+* Correspondance EDT->Intranet ([8689ff0](https://github.com/Dannebicque/intranetV3/commit/8689ff0beca59d5805d13aa8b618800f627781e3))
+* Correspondance EDT->Intranet ([f72197c](https://github.com/Dannebicque/intranetV3/commit/f72197c5cbeb245d68be8db5c53f67597049cd05))
+* Correspondance EDT->Intranet ([258ef68](https://github.com/Dannebicque/intranetV3/commit/258ef682fd4ff63b0f2285fa5d448ba0cee182eb))
+* Correspondance EDT->Intranet ([8f5adf0](https://github.com/Dannebicque/intranetV3/commit/8f5adf0c7371e6292b26774ecae05c107959c4b0))
+* Correspondance EDT->Intranet ([81a394f](https://github.com/Dannebicque/intranetV3/commit/81a394f3ad3937e6f16543faa645d892d791b65c))
+* EDT version 3 intranet ([9043642](https://github.com/Dannebicque/intranetV3/commit/9043642b4e0830d1bff49c4c68b63edf1c83cd24))
+* EDT version 3 intranet ([7507bc9](https://github.com/Dannebicque/intranetV3/commit/7507bc964e0cef4727c6460434a30a8ebb63709e))
+* Import EDT ([941b74b](https://github.com/Dannebicque/intranetV3/commit/941b74b1a1d7b5041d35e9d530ddeb59bb91313e))
+* Import EDT ([bd32637](https://github.com/Dannebicque/intranetV3/commit/bd3263766b265dae3035ca2d63197bf9e27ac964))
+* Import EDT ([1dacbdd](https://github.com/Dannebicque/intranetV3/commit/1dacbdd8261c372832e981e71887a429d684603e))
+* Scolarité si pas APC ([5682dc4](https://github.com/Dannebicque/intranetV3/commit/5682dc42e478bae181ae132fbe72ee91b7bc56eb))
+
 ### [3.19.12](https://github.com/Dannebicque/intranetV3/compare/v3.19.11...v3.19.12) (2024-08-31)
 
 
