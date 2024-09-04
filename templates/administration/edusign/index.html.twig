@@ -93,18 +93,18 @@
                     </div>
                 </div>
 
-                    <table class="table-edt">
-                        <thead>
-                        <tr>
-                            <th>Date - Heure</th>
-                            <th>Matière</th>
-                            <th>Groupe</th>
-                            <th>Salle</th>
-                            <th>Enseignant</th>
-                            <th>Actions</th>
-                        </tr>
-                        </thead>
-                        {% for cours in pagination.data %}
+                <table class="table-edt">
+                    <thead>
+                    <tr>
+                        <th>Date - Heure</th>
+                        <th>Matière</th>
+                        <th>Groupe</th>
+                        <th>Salle</th>
+                        <th>Enseignant</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    {% for cours in pagination.data %}
                         <form action="{{ path('app_admin_edu_sign_update_cours', {'id': cours.id, 'source': cours.source}) }}">
                             <tbody>
                             <tr>
@@ -125,75 +125,62 @@
                                     {% endif %}
                                 </td>
                                 <td class="p-1">
-                                    {% if cours.code_matiere is not null %}
-                                        {{ cours.code_matiere }}
-                                    {% endif %}
+                                    <label for="matiere" class="text-danger">
+                                        {{ cours.matiere is null or cours.matiere == "Inconnue" or cours.matiere == "" ? '** Pas de matière **' : cours.texte }}
+                                    </label>
+                                    <select name="matiere" id="matiere" class="form-select">
+                                        {% if cours.texte is not null and cours.texte != "" %}
+                                            <option value="{{ cours.texte }}" selected>{{ cours.texte }}</option>
+                                        {% endif %}
+                                        {% if (cours.matiere is null or cours.matiere == "Inconnue" or cours.matiere == "") and (cours.texte is null or cours.texte == "") %}
+                                            <option value="0">Sélectionner une matière</option>
+                                        {% endif %}
+                                        {% for matiere in matieres %}
+                                            <option value="{{ matiere.typeIdMatiere }}" {{ matiere.libelle in cours.matiere ? 'selected' }}>{{ matiere.codeMatiere }} - {{ matiere.libelle }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </td>
+                                <td class="p-1">
+                                    <label for="semestre"
+                                           class="text-danger">{{ cours.semestre is null ? '** Pas de semestre **' }}</label>
+                                    <select name="semestre" id="semestre" class="form-select">
+                                        <option value="0">{{ cours.semestre is not null ? cours.semestre : 'Sélectionner un semestre' }}</option>
+                                        {% for semestre in semestres %}
+                                            <option value="{{ semestre.id }}" {{ semestre.libelle == cours.semestre ? 'selected' : '' }}>{{ semestre.libelle }}</option>
+                                        {% endfor %}
+                                    </select>
 
-                                    {% if cours.matiere is not null and cours.matiere != "Inconnue" and cours.matiere != "" %}
-                                        {{ cours.matiere }}
-                                    {% elseif cours.texte is not null and cours.texte != "" %}
-                                        {{ cours.texte }}
-                                    {% else %}
-                                        <label for="matiere" class="text-danger">** Pas de matière **</label>
-                                        <select name="matiere" id="matiere" class="form-select">
-                                            <option value="0">Sélectionner la matière</option>
-                                            {% for matiere in cours.matieresSemestre %}
-                                                <option value="{{ matiere.id }}">{{ matiere.libelle }}</option>
+                                    <label for="groupe"
+                                           class="text-danger">{{ cours.groupe is null ? '** Pas de groupe **' }}</label>
+                                    <select name="groupe" id="groupe" class="form-select">
+                                        <option value="0">{{ cours.groupe is not null ? cours.groupe : 'Sélectionner un groupe' }}</option>
+                                        {% for key, semestre in groupesSemestres %}
+                                            {% for groupe in semestre %}
+                                                <option value="{{ groupe.id }}" {{ groupe.libelle == cours.groupe ? 'selected' : '' }}>{{ key }} | {{ groupe.libelle }}</option>
                                             {% endfor %}
-                                        </select>
-                                    {% endif %}
+{#                                            <option value="{{ groupe.id }}" {{ groupe.libelle == cours.groupe ? 'selected' : '' }}>{{ groupe.libelle }}</option>#}
+                                        {% endfor %}
+                                    </select>
                                 </td>
                                 <td class="p-1">
-                                    {% if cours.semestre is not null and cours.semestre != "" %}
-                                        {{ cours.semestre }} |
-                                    {% else %}
-                                        <label for="semestre" class="text-danger">** Pas de semestre **</label>
-                                        <select name="semestre" id="semestre" class="form-select">
-                                            <option value="0">Sélectionner le semestre</option>
-                                            {% for semestre in semestres %}
-                                                <option value="{{ semestre.id }}">{{ semestre.libelle }}</option>
-                                            {% endfor %}
-                                            <option value="{{ cours.semestresGroupe.id }}">{{ cours.semestresGroupe.libelle }}</option>
-                                        </select>
-                                    {% endif %}
-                                    {% if cours.groupe is not null and cours.groupe != "" %}
-                                        {{ cours.groupe }}
-                                    {% else %}
-                                        <label for="groupe" class="text-danger">** Pas de groupe **</label>
-                                        <select name="groupe" id="groupe" class="form-select">
-                                            <option value="0">Sélectionner le groupe</option>
-                                            <span>{{ cours.semestre.libelle }}</span>
-                                            {% for groupe in cours.groupesSemestre %}
-                                                <option value="{{ groupe.id }}">{{ groupe.libelle }}</option>
-                                            {% endfor %}
-                                        </select>
-                                    {% endif %}
+                                    <label for="salle"
+                                           class="text-danger">{{ cours.salle is null or cours.salle == "" ? '** Pas de salle **' }}</label>
+                                    <select name="salle" id="salle" class="form-select">
+                                        <option value="0">{{ cours.salle is not null and cours.salle != "" ? cours.salle : 'Sélectionner une salle' }}</option>
+                                        {% for salle in cours.salles %}
+                                            <option value="{{ salle.id }}" {{ salle.libelle == cours.salle ? 'selected' : '' }}>{{ salle.libelle }}</option>
+                                        {% endfor %}
+                                    </select>
                                 </td>
                                 <td class="p-1">
-                                    {% if cours.salle is not null and cours.salle != "" %}
-                                        {{ cours.salle }}
-                                    {% else %}
-                                        <label for="salle" class="text-danger">** Pas de salle **</label>
-                                        <select name="salle" id="salle" class="form-select">
-                                            <option value="0">Sélectionner la salle</option>
-                                            {% for salle in cours.salles %}
-                                                <option value="{{ salle.id }}">{{ salle.libelle }}</option>
-                                            {% endfor %}
-                                        </select>
-                                    {% endif %}
-                                </td>
-                                <td class="p-1">
-                                    {% if cours.personnel is not null and cours.personnel != "" and cours.personnel != "-" %}
-                                        {{ cours.personnel }}
-                                    {% else %}
-                                        <label for="personnel" class="text-danger">** Pas d'enseignant' **</label>
-                                        <select name="personnel" id="personnel" class="form-select">
-                                            <option value="0">Sélectionner l'enseignant</option>
-                                            {% for enseignant in cours.enseignants %}
-                                                <option value="{{ enseignant.personnel.id }}">{{ enseignant.personnel.prenom }} {{ enseignant.personnel.nom }}</option>
-                                            {% endfor %}
-                                        </select>
-                                    {% endif %}
+                                    <label for="personnel"
+                                           class="text-danger">{{ cours.personnel is null or cours.personnel == "" or cours.personnel == "-" ? '** Pas d\'enseignant **' }}</label>
+                                    <select name="personnel" id="personnel" class="form-select">
+                                        <option value="0">{{ cours.personnel is not null and cours.personnel != "" and cours.personnel != "-" ? cours.personnel : 'Sélectionner un.e enseignant.e' }}</option>
+                                        {% for enseignant in cours.enseignants %}
+                                            <option value="{{ enseignant.personnel.id }}" {{ enseignant.personnel.prenom ~ ' ' ~ enseignant.personnel.nom == cours.personnel ? 'selected' : '' }}>{{ enseignant.personnel.prenom }} {{ enseignant.personnel.nom }}</option>
+                                        {% endfor %}
+                                    </select>
                                 </td>
                                 <td class="p-1">
                                     <button type="submit" class="btn btn-primary">Envoyer dans EduSign</button>
@@ -201,8 +188,8 @@
                             </tr>
                             </tbody>
                         </form>
-                        {% endfor %}
-                    </table>
+                    {% endfor %}
+                </table>
 
                 <nav>
                     <ul class="pagination">

@@ -41,18 +41,19 @@ class EduSignController extends BaseController
 
     public function __construct(
         private PersonnelDepartementRepository $personnelDepartementRepository,
-        private DiplomeRepository $diplomeRepository,
-        private PersonnelRepository $personnelRepository,
-        private MatiereRepository $matiereRepository,
-        private CreateEnseignant $createEnseignant,
-        private CalendrierRepository $CalendrierRepository,
-        private SemestreRepository $semestreRepository,
-        private GroupeRepository $groupeRepository,
-        private EdtManager $edtManager,
-        private TypeMatiereManager $typeMatiereManager,
-        private SalleRepository $salleRepository,
-        private ApiCours $apiCours,
-    ) {}
+        private DiplomeRepository              $diplomeRepository,
+        private PersonnelRepository            $personnelRepository,
+        private CreateEnseignant               $createEnseignant,
+        private CalendrierRepository           $CalendrierRepository,
+        private SemestreRepository             $semestreRepository,
+        private GroupeRepository               $groupeRepository,
+        private EdtManager                     $edtManager,
+        private TypeMatiereManager             $typeMatiereManager,
+        private SalleRepository                $salleRepository,
+        private ApiCours                       $apiCours,
+    )
+    {
+    }
 
     #[Route('/', name: 'administration_edusign_index')]
     public function index(Request $request, RouterInterface $router): Response
@@ -76,8 +77,14 @@ class EduSignController extends BaseController
                 $semaine = $eventSemaine->getSemaineFormation();
                 $matieresSemestre = $this->getMatieresSemestre($semestre);
                 $groupes = $this->groupeRepository->findBySemestre($semestre);
+                // récupérer uniquement les groupes propres au semestre
+                $groupesSemestres[$semestre->getLibelle()] = array_filter($groupes, function ($groupe) use ($semestre) {
+                    return $groupe->getApcParcours()?->getDiplomes()->contains($semestre->getDiplome());
+                });
+
                 $edt = $this->edtManager->getPlanningSemestreSemaine($semestre, $semaine, $semestre->getAnneeUniversitaire(), $matieresSemestre, $groupes);
                 $salles = $this->salleRepository->findAll();
+
 
                 foreach ($edt->evenements as $this->evenement) {
                     if ($this->evenement->dateObjet->isBetween($start, $end)) {
@@ -95,13 +102,17 @@ class EduSignController extends BaseController
         $page = $request->query->getInt('page', 1);
         $pagination = new MyPagination($router);
         $pagination->calculPaginationFromArray($cours, ['path' => 'administration_edusign_index', 'args' => []], 10, $page);
-        $semestres = $this->semestreRepository->findByDepartementActif($departement);
+        $semestres = $this->semestreRepository->findByDepartementActifFc($departement);
+        $matieres = $this->typeMatiereManager->findByDepartement($departement);
+
 
         return $this->render('administration/edusign/index.html.twig', [
             'departement' => $departement,
             'pagination' => $pagination,
             'personnelsDepartement' => $filteredPersonnelsDepartement,
             'semestres' => $semestres,
+            'matieres' => $matieres,
+            'groupesSemestres' => $groupesSemestres,
             'cours' => $cours
         ]);
     }
@@ -271,24 +282,38 @@ class EduSignController extends BaseController
         return $this->redirectToRoute('administration_edusign_index');
     }
 
+//    todo: transformer en LiveComponent pour changer les datas des select en fct des autres select
     #[Route('/update-course/{source}/{id}/', name: 'app_admin_edu_sign_update_cours')]
     public function updateCourse(int $id, string $source, UpdateEdt $updateEdt, Request $request): Response
     {
-        $matiere = $this->matiereRepository->findOneBy(['id' => $request->query->get('matiere')]);
+        $cours = $this->edtManager->findCourse($source, $id);
+
+        $matiere = $request->query->get('matiere');
+
+        $objmatiere = $this->typeMatiereManager->getMatiereFromSelect($matiere);
+
+
         $semestre = $this->semestreRepository->findOneBy(['id' => $request->query->get('semestre')]);
+
         $groupe = $this->groupeRepository->findOneBy(['id' => $request->query->get('groupe')]);
+        if (null != $groupe) {
+            $groupeOrdre = $groupe->getOrdre();
+            $groupeType = $groupe->getTypeGroupe()->getLibelle();
+        }
+
         $enseignant = $this->personnelRepository->findOneBy(['id' => $request->query->get('personnel')]);
+
         $salle = $this->salleRepository->findOneBy(['id' => $request->query->get('salle')]);
 
-        $cours = $this->edtManager->findCourse($source, $id);
-        $this->edtManager->updateCourse($cours, $source, $matiere, $semestre, $groupe, $enseignant, $salle);
+        $cours = $this->edtManager->updateCourse($cours, $source, $objmatiere, $semestre, $groupe, $groupeOrdre ?? null, $groupeType ?? null, $enseignant, $salle);
 
-        $matiere = ($this->matiereRepository->findOneBy(['id' => $cours->getIdMatiere()]));
-        $groupe = $this->groupeRepository->findOneBy(['id' => $cours->getGroupe()]);
+        $course = $this->edtManager->getCourseEduSign($source, $cours->getId(), $objmatiere, $groupe);
 
-        $course = $this->edtManager->getCourseEduSign($source, $cours->getId(), $matiere, $groupe);
+        $courseEdusign = (new IntranetEdtEduSignAdapter($course))->getCourse();
+//        dd($courseEdusign);
+        $keyEduSign = $cours->getSemestre()->getDiplome()->getKeyEduSign();
 
-        dd($cours);
+        $this->apiCours->addCourse($courseEdusign, $keyEduSign);
 
         return $this->redirectToRoute('administration_edusign_index');
     }

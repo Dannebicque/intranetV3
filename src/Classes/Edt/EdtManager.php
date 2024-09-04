@@ -17,7 +17,7 @@ use App\DTO\EvenementEdt;
 use App\DTO\EvenementEdtCollection;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Groupe;
-use App\Entity\Matiere;
+use App\DTO\Matiere;
 use App\Entity\Personnel;
 use App\Entity\Salle;
 use App\Entity\Semestre;
@@ -317,7 +317,7 @@ class EdtManager
 
     public function findCourse(
         ?string $source,
-        ?int $eventId,
+        ?int    $eventId,
     )
     {
         if ($source === 'intranet') {
@@ -332,18 +332,27 @@ class EdtManager
     public function updateCourse(
         $cours,
         ?string $source,
-        ?Matiere    $matiere,
-        ?Semestre    $semestre,
-        ?Groupe    $groupe,
-        ?Personnel    $enseignant,
-        ?Salle    $salle)
+        ?Matiere $matiere,
+        ?Semestre $semestre,
+        ?Groupe $groupe,
+        ?int $groupeOrdre,
+        ?string $groupeType,
+        ?Personnel $enseignant,
+        ?Salle $salle)
     {
-
         if ($source === 'intranet') {
-            $this->edtPlanningRepository->updateCourse($cours, $matiere, $semestre, $groupe, $enseignant, $salle);
+
+            foreach (['Intervenant' => $enseignant, 'Salle' => $salle->getLibelle(), 'Groupe' => $groupeOrdre, 'Type' => $groupeType, 'IdMatiere' => $matiere->id, 'TypeMatiere' => $matiere->typeMatiere, 'Semestre' => $semestre] as $method => $value) {
+                if (null !== $value) {
+                    $cours->{"set$method"}($value);
+                }
+            }
+            $this->edtPlanningRepository->updateCourse($cours);
         } elseif ($source === 'celcat') {
             $this->edtCelcatRepository->updateCourse($cours, $matiere, $semestre, $groupe, $enseignant, $salle);
         }
+
+        return $cours;
     }
 
 }

@@ -17,7 +17,7 @@ use App\Entity\AnneeUniversitaire;
 use App\Entity\Constantes;
 use App\Entity\Etudiant;
 use App\Entity\Groupe;
-use App\Entity\Matiere;
+use App\DTO\Matiere;
 use App\Entity\Personnel;
 use App\Entity\Semestre;
 use App\Repository\EdtCelcatRepository;
@@ -68,8 +68,7 @@ class EdtCelcat extends AbstractEdt implements EdtInterface
 
     public function findOne(int $eventId, ?Matiere $matiere, ?Groupe $groupe): EvenementEdt
     {
-        $evt = $this->edtCelcatRepository->find($eventId);
-        dd($evt);
+        return $this->edtCelcatRepository->find($eventId);
     }
 
     private function transformeMatiere(array $matieres, $typeIdMatiere): array

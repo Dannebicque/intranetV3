@@ -18,7 +18,7 @@ use App\Entity\Constantes;
 use App\Entity\EdtPlanning;
 use App\Entity\Etudiant;
 use App\Entity\Groupe;
-use App\Entity\Matiere;
+use App\DTO\Matiere;
 use App\Entity\Personnel;
 use App\Entity\Semestre;
 use App\Repository\CalendrierRepository;
@@ -31,11 +31,11 @@ class EdtIntranet extends AbstractEdt implements EdtInterface
     public const SOURCE = 'intranet';
 
     public function __construct(
-        private readonly GroupeRepository     $groupeRepository,
-        private readonly CalendrierRepository $calendrierRepository,
-        private readonly EdtIntranetAdapter   $adapter,
+        private readonly GroupeRepository      $groupeRepository,
+        private readonly CalendrierRepository  $calendrierRepository,
+        private readonly EdtIntranetAdapter    $adapter,
         private readonly EdtPlanningRepository $edtPlanningRepository,
-        private readonly EdtIntranetAdapter   $edtIntranetAdapter)
+        private readonly EdtIntranetAdapter    $edtIntranetAdapter)
     {
     }
 
@@ -81,7 +81,11 @@ class EdtIntranet extends AbstractEdt implements EdtInterface
     public function findOne(int $eventId, ?Matiere $matiere, ?Groupe $groupe): EvenementEdt
     {
         $evt = $this->edtPlanningRepository->find($eventId);
-        dd($evt);
+
+        $matiere = $matiere ? [$matiere] : [];
+        $groupe = $groupe ? [$groupe] : $evt->getGroupe();
+
+        return $this->edtIntranetAdapter->single($evt, $this->transformeMatiere($matiere, $evt->getTypeIdMatiere()), $this->transformeGroupe($groupe));
     }
 
     public function recupereEdtJourBorne(Semestre $semestre, array $matieres, int $jourSemaine, int $semaineFormation, array $groupes, AnneeUniversitaire $anneeUniversitaire): EvenementEdtCollection
@@ -92,11 +96,11 @@ class EdtIntranet extends AbstractEdt implements EdtInterface
     }
 
     public function getPlanningSemestreSemaine(
-        Semestre $semestre,
-        int      $semaine,
+        Semestre           $semestre,
+        int                $semaine,
         AnneeUniversitaire $anneeUniversitaire,
-        array    $matieres,
-        array    $groupes
+        array              $matieres,
+        array              $groupes
     ): EvenementEdtCollection
     {
         $evts = $this->edtPlanningRepository->findEdtSemestreSemaine($semestre, $semaine, $anneeUniversitaire);
@@ -142,10 +146,10 @@ class EdtIntranet extends AbstractEdt implements EdtInterface
     }
 
     public function initPersonnel(
-        Personnel  $personnel,
-        Calendrier $calendrier,
+        Personnel           $personnel,
+        Calendrier          $calendrier,
         ?AnneeUniversitaire $anneeUniversitaire,
-        array      $matieres
+        array               $matieres
     ): array
     {
         $this->calendrier = $calendrier;
@@ -158,11 +162,11 @@ class EdtIntranet extends AbstractEdt implements EdtInterface
     }
 
     public function initSemestre(
-        Semestre   $semestre,
-        Calendrier $calendrier,
+        Semestre           $semestre,
+        Calendrier         $calendrier,
         AnneeUniversitaire $anneeUniversitaire,
-        array      $matieres = [],
-        array      $groupes = [],
+        array              $matieres = [],
+        array              $groupes = [],
     ): EvenementEdtCollection
     {
         $this->calendrier = $calendrier;
