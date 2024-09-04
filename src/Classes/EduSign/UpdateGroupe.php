@@ -54,7 +54,7 @@ class UpdateGroupe
                     $groupes = $parent->getDiplome()->getApcParcours()?->getGroupes() ?? $this->groupeRepository->findBySemestre($parent);
 
                     foreach ($groupes as $groupe) {
-                        foreach ($groupe->getTypeGroupe()->getSemestres() as $semestre) {
+                        foreach ($groupe->getTypeGroupe()?->getSemestres() as $semestre) {
                             if ($semestre === $parent) {
                                 $groupea = (new IntranetGroupeEduSignAdapter($anneeUniv, $groupe, 'groupe', $parent->getIdEduSign()))->getGroupe();
                                 if ($groupe->getIdEduSign() === null || $groupe->getIdEduSign() === '') {

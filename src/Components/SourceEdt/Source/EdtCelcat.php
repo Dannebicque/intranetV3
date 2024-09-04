@@ -28,7 +28,7 @@ class EdtCelcat extends AbstractEdt implements EdtInterface
 
     public function __construct(
         private readonly EdtCelcatRepository $edtCelcatRepository,
-        private readonly EdtCelcatAdapter $edtCelcatAdapter)
+        private readonly EdtCelcatAdapter    $edtCelcatAdapter,)
     {
     }
 
@@ -68,7 +68,23 @@ class EdtCelcat extends AbstractEdt implements EdtInterface
 
     public function findOne(int $eventId, ?Matiere $matiere, ?Groupe $groupe): EvenementEdt
     {
-        return $this->edtCelcatRepository->find($eventId);
+        $evt = $this->edtCelcatRepository->find($eventId);
+        $matiere = $matiere ? [$matiere] : [];
+        $groupe = $groupe ? [$groupe] : [];
+        $groupe = $this->transformeGroupe($groupe);
+        $matiere = $this->transformeMatiere($matiere, $evt->getTypeIdMatiere());
+
+        return $this->edtCelcatAdapter->single($evt, $matiere, $groupe);
+    }
+
+    private function transformeGroupe(array $groupes): array
+    {
+        $tGroupes = [];
+        foreach ($groupes as $groupe) {
+            $tGroupes[$groupe->getCodeApogee()] = $groupe;
+        }
+
+        return $tGroupes;
     }
 
     private function transformeMatiere(array $matieres, $typeIdMatiere): array

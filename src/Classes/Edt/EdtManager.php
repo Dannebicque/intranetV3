@@ -349,7 +349,13 @@ class EdtManager
             }
             $this->edtPlanningRepository->updateCourse($cours);
         } elseif ($source === 'celcat') {
-            $this->edtCelcatRepository->updateCourse($cours, $matiere, $semestre, $groupe, $enseignant, $salle);
+            foreach (['Personnel' => $enseignant, 'LibPersonnel' => $enseignant->getNom().' '.$enseignant->getPrenom(), 'CodePersonnel' => $enseignant->getNumeroHarpege(),
+                         'LibSalle' => $salle->getLibelle(), 'CodeGroupe' => $groupe->getCodeApogee(), 'LibGroupe' => $groupe->getLibelle(), 'Type' => $groupeType, 'IdMatiere' => $matiere->id, 'TypeMatiere' => $matiere->typeMatiere, 'Semestre' => $semestre, 'LibModule'=>$matiere->libelle, 'CodeModule'=>$matiere->codeMatiere] as $method => $value) {
+                if (null !== $value) {
+                    $cours->{"set$method"}($value);
+                }
+            }
+            $this->edtCelcatRepository->updateCourse($cours);
         }
 
         return $cours;

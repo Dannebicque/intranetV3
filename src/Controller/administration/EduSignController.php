@@ -307,10 +307,14 @@ class EduSignController extends BaseController
 
         $cours = $this->edtManager->updateCourse($cours, $source, $objmatiere, $semestre, $groupe, $groupeOrdre ?? null, $groupeType ?? null, $enseignant, $salle);
 
+
         $course = $this->edtManager->getCourseEduSign($source, $cours->getId(), $objmatiere, $groupe);
 
+        if ($course->personnelObjet->getIdEduSign() === null) {
+            $this->createEnseignant->update($course->personnelObjet, $course->diplome->getDepartement(), $course->diplome->getKeyEduSign());
+        }
+
         $courseEdusign = (new IntranetEdtEduSignAdapter($course))->getCourse();
-//        dd($courseEdusign);
         $keyEduSign = $cours->getSemestre()->getDiplome()->getKeyEduSign();
 
         $this->apiCours->addCourse($courseEdusign, $keyEduSign);
