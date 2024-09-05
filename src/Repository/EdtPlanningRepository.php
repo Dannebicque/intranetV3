@@ -501,29 +501,9 @@ class EdtPlanningRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function updateCourse($id, ?Matiere $matiere, ?Semestre $semestre, ?Groupe $groupe, ?Personnel $enseignant, ?Salle $salle)
+    public function updateCourse($id)
     {
         $cours = $this->find($id);
-
-        if (null !== $matiere) {
-            $cours->setIdMatiere($matiere->getId());
-        }
-
-        if (null !== $semestre) {
-            $cours->setSemestre($semestre);
-        }
-
-        if (null !== $groupe) {
-            $cours->setGroupe($groupe->getId());
-        }
-
-        if (null !== $enseignant) {
-            $cours->setIntervenant($enseignant);
-        }
-
-        if (null !== $salle) {
-            $cours->setSalle($salle->getLibelle());
-        }
 
         $this->save($cours);
     }

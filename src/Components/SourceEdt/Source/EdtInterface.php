@@ -18,7 +18,7 @@ use App\DTO\EvenementEdtCollection;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Etudiant;
 use App\Entity\Groupe;
-use App\Entity\Matiere;
+use App\DTO\Matiere;
 use App\Entity\Personnel;
 use App\Entity\Semestre;
 

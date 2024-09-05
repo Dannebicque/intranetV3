@@ -41,9 +41,9 @@ class EdtIntranetAdapter extends AbstractEdtAdapter implements EdtAdapterInterfa
 
             $matiere = $matieres[$evt->getTypeIdMatiere()];
 
-            $event->matiere = $matiere->display;
-            $event->code_matiere = $matiere->codeMatiere;
-            $event->semestre = $matiere->getSemestres()->first();
+            $event->matiere = $matiere->display ?? $matiere->getDisplay();
+            $event->code_matiere = $matiere->codeMatiere ?? $matiere->getCodeMatiere();
+            $event->semestre = $matiere->getSemestres()->first() ?? $matiere->getSemestre();
             $event->couleur = $event->semestre->getAnnee()?->getCouleur();
         } elseif ($evt->getTexte() === null) {
             $event->matiere = 'Inconnue';
@@ -61,7 +61,6 @@ class EdtIntranetAdapter extends AbstractEdtAdapter implements EdtAdapterInterfa
         $event->heureFin = Carbon::createFromTimeString($evt->getFinTexte());
         $event->typeIdMatiere = $evt->getTypeIdMatiere();
         $event->texte = $evt->getTexte();
-
         $event->salle = $evt->getSalle();
         $event->dateObjet = $evt->getDate();
         $event->gridStart = Constantes::TAB_HEURES_EDT_2[$evt->getDebut() - 1][0];

@@ -167,16 +167,16 @@ class GroupeRepository extends ServiceEntityRepository
 
         /** @var Groupe $g */
         foreach ($gtp as $g) {
-            $groupes[$i]['id'] = 'TP-'.$g->getOrdre();
-            $groupes[$i]['display'] = 'TP'.$g->getLibelle().' | TP '.$g->getLibelle();
+            $groupes[$i]['id'] = 'TP-' . $g->getOrdre();
+            $groupes[$i]['display'] = 'TP' . $g->getLibelle() . ' | TP ' . $g->getLibelle();
             ++$i;
         }
 
         /** @var Groupe $g */
         foreach ($gtd as $g) {
             $or = $g->getOrdre();
-            $groupes[$i]['id'] = 'TD-'.$or;
-            $groupes[$i]['display'] = 'TD'.$g->getLibelle().' | TD '.$g->getLibelle();
+            $groupes[$i]['id'] = 'TD-' . $or;
+            $groupes[$i]['display'] = 'TD' . $g->getLibelle() . ' | TD ' . $g->getLibelle();
             ++$i;
         }
 
@@ -246,7 +246,7 @@ class GroupeRepository extends ServiceEntityRepository
 //            ->addSelect('g')
 //            ->addSelect('t')
             ->innerJoin('t.semestres', 's')
-          //  ->addSelect('s')
+            //  ->addSelect('s')
             ->innerJoin(Annee::class, 'a', 'WITH', 's.annee = a.id')
             ->innerJoin(Diplome::class, 'd', 'WITH', 'a.diplome = d.id')
             ->where('d.id = :diplome')

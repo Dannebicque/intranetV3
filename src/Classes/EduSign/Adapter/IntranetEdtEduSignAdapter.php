@@ -13,6 +13,7 @@ class IntranetEdtEduSignAdapter
     public function __construct(EvenementEdt $edt)
     {
         $diplome = $edt->semestre?->getDiplome();
+
         $departement = $diplome?->getDepartement();
 
         if ($departement) {

@@ -184,6 +184,16 @@ class Matiere extends AbstractMatiere implements MatiereEntityInterface
         return null;
     }
 
+    public function getSemestres(): Collection
+    {
+        $semestres = new ArrayCollection();
+        if (null !== $this->getUe() && null !== $this->getUe()->getSemestre()) {
+            $semestres->add($this->getUe()->getSemestre());
+        }
+
+        return $semestres;
+    }
+
     public function getUe(): ?Ue
     {
         return $this->ue;

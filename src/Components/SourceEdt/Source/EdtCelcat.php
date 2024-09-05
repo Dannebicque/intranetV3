@@ -17,7 +17,7 @@ use App\Entity\AnneeUniversitaire;
 use App\Entity\Constantes;
 use App\Entity\Etudiant;
 use App\Entity\Groupe;
-use App\Entity\Matiere;
+use App\DTO\Matiere;
 use App\Entity\Personnel;
 use App\Entity\Semestre;
 use App\Repository\EdtCelcatRepository;
@@ -28,7 +28,7 @@ class EdtCelcat extends AbstractEdt implements EdtInterface
 
     public function __construct(
         private readonly EdtCelcatRepository $edtCelcatRepository,
-        private readonly EdtCelcatAdapter $edtCelcatAdapter)
+        private readonly EdtCelcatAdapter    $edtCelcatAdapter,)
     {
     }
 
@@ -69,7 +69,22 @@ class EdtCelcat extends AbstractEdt implements EdtInterface
     public function findOne(int $eventId, ?Matiere $matiere, ?Groupe $groupe): EvenementEdt
     {
         $evt = $this->edtCelcatRepository->find($eventId);
-        dd($evt);
+        $matiere = $matiere ? [$matiere] : [];
+        $groupe = $groupe ? [$groupe] : [];
+        $groupe = $this->transformeGroupe($groupe);
+        $matiere = $this->transformeMatiere($matiere, $evt->getTypeIdMatiere());
+
+        return $this->edtCelcatAdapter->single($evt, $matiere, $groupe);
+    }
+
+    private function transformeGroupe(array $groupes): array
+    {
+        $tGroupes = [];
+        foreach ($groupes as $groupe) {
+            $tGroupes[$groupe->getCodeApogee()] = $groupe;
+        }
+
+        return $tGroupes;
     }
 
     private function transformeMatiere(array $matieres, $typeIdMatiere): array
