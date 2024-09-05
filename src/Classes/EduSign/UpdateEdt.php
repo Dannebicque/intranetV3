@@ -68,8 +68,7 @@ class UpdateEdt
 
                 list($start, $end) = $this->calculStartEndDates($opt, $date);
 
-//                $semaineReelle = date('W');
-                $semaineReelle = 3;
+                $semaineReelle = date('W');
 
                 foreach ($semestres as $semestre) {
                     $eventSemaine = $this->CalendrierRepository->findOneBy(['semaineReelle' => $semaineReelle, 'anneeUniversitaire' => $semestre->getAnneeUniversitaire()]);
@@ -97,10 +96,8 @@ class UpdateEdt
     {
         switch ($opt) {
             case 1:
-//                $start = Carbon::today();
-//                $end = Carbon::today()->next('saturday');
-                $start = Carbon::createFromFormat('d/m/Y', '15/01/2024');
-                $end = Carbon::createFromFormat('d/m/Y', '19/01/2024');
+                $start = Carbon::today();
+                $end = Carbon::today()->next('saturday');
                 break;
             case 2:
                 $start = Carbon::yesterday();

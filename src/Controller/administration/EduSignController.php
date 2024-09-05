@@ -68,9 +68,9 @@ class EduSignController extends BaseController
 
         foreach ($diplomes as $diplome) {
             $semestres = $this->semestreRepository->findByDiplome($diplome);
-            $start = Carbon::createFromFormat('d/m/Y', '15/01/2024');
-            $end = Carbon::createFromFormat('d/m/Y', '19/01/2024');
-            $semaineReelle = 3;
+            $start = Carbon::today();
+            $end = Carbon::today()->next('saturday');
+            $semaineReelle = date('W');
 
             foreach ($semestres as $semestre) {
                 $eventSemaine = $this->CalendrierRepository->findOneBy(['semaineReelle' => $semaineReelle, 'anneeUniversitaire' => $semestre->getAnneeUniversitaire()]);
@@ -306,7 +306,6 @@ class EduSignController extends BaseController
         $salle = $this->salleRepository->findOneBy(['id' => $request->query->get('salle')]);
 
         $cours = $this->edtManager->updateCourse($cours, $source, $objmatiere, $semestre, $groupe, $groupeOrdre ?? null, $groupeType ?? null, $enseignant, $salle);
-
 
         $course = $this->edtManager->getCourseEduSign($source, $cours->getId(), $objmatiere, $groupe);
 
