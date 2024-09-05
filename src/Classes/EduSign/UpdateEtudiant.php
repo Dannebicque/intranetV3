@@ -127,8 +127,11 @@ class UpdateEtudiant
                 $etudiants = $this->etudiantRepository->findBySemestre($semestre);
 
                 foreach ($etudiants as $etudiant) {
-                    $groupes = array_merge([$etudiant->getSemestre()->getIdEduSign()], array_map(fn($g) => $g->getIdEduSign(), $etudiant->getGroupes()));
-                    $groupes = array_values(array_filter($groupes)); // Remove empty entries and reindex
+                    $groupes = array_merge(
+    [$etudiant->getSemestre()->getIdEduSign()],
+    array_map(fn($g) => $g->getIdEduSign(), $etudiant->getGroupes()->toArray())
+);
+$groupes = array_values(array_filter($groupes));
 
                     $etudiantEduSign = (new IntranetEtudiantEduSignAdapter($etudiant, $groupes))->getEtudiant();
 

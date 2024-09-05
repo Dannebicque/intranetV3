@@ -112,7 +112,7 @@ class EduSignController extends BaseController
             'personnelsDepartement' => $filteredPersonnelsDepartement,
             'semestres' => $semestres,
             'matieres' => $matieres,
-            'groupesSemestres' => $groupesSemestres,
+            'groupesSemestres' => $groupesSemestres ?? null,
             'cours' => $cours
         ]);
     }
@@ -317,7 +317,11 @@ class EduSignController extends BaseController
         $courseEdusign = (new IntranetEdtEduSignAdapter($course))->getCourse();
         $keyEduSign = $cours->getSemestre()->getDiplome()->getKeyEduSign();
 
-        $this->apiCours->addCourse($courseEdusign, $keyEduSign);
+        if ($courseEdusign->id_edu_sign == null) {
+            $this->apiCours->addCourse($courseEdusign, $keyEduSign);
+        } else {
+            $this->apiCours->updateCourse($courseEdusign, $keyEduSign);
+        }
 
         return $this->redirectToRoute('administration_edusign_index');
     }

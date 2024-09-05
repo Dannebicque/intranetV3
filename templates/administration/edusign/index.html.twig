@@ -61,7 +61,7 @@
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler
                                     </button>
-                                    <a href="{{ path('app_edu_sign_create_courses', {'opt': 1, 'id': departement.id}) }}"
+                                    <a href="{{ path('app_admin_edu_sign_create_courses', {'opt': 1, 'id': departement.id}) }}"
                                        class="btn btn-primary">Confirmer</a>
                                 </div>
                             </div>
@@ -85,7 +85,7 @@
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler
                                     </button>
-                                    <a href="{{ path('app_edu_sign_create_courses', {'opt': 2, 'id': departement.id}) }}"
+                                    <a href="{{ path('app_admin_edu_sign_create_courses', {'opt': 2, 'id': departement.id}) }}"
                                        class="btn btn-primary">Confirmer</a>
                                 </div>
                             </div>
@@ -101,6 +101,7 @@
                         <th>Groupe</th>
                         <th>Salle</th>
                         <th>Enseignant</th>
+                        <th>EduSign</th>
                         <th>Actions</th>
                     </tr>
                     </thead>
@@ -169,7 +170,7 @@
                                     <select name="salle" id="salle" class="form-select">
                                         <option value="0">{{ cours.salle is not null and cours.salle != "" ? cours.salle : 'Sélectionner une salle' }}</option>
                                         {% for salle in cours.salles %}
-                                            <option value="{{ salle.id }}" {{ salle.libelle in cours.salle ? 'selected' : '' }}>{{ salle.libelle }}</option>
+                                            <option value="{{ salle.id }}" {{ salle.libelle == cours.salle ? 'selected' : '' }}>{{ salle.libelle }}</option>
                                         {% endfor %}
                                     </select>
                                 </td>
@@ -182,6 +183,9 @@
                                             <option value="{{ enseignant.personnel.id }}" {{ enseignant.personnel.nom ~ ' ' ~ enseignant.personnel.prenom == cours.personnel or enseignant.personnel.prenom ~ ' ' ~ enseignant.personnel.nom == cours.personnel ? 'selected' : '' }}>{{ enseignant.personnel.prenom }} {{ enseignant.personnel.nom }}</option>
                                         {% endfor %}
                                     </select>
+                                </td>
+                                <td class="p-1">
+                                    {{ cours.idEdusign is null or cours.idEdusign == "" ? '<i class="fa-solid fa-square-xmark fa-2x text-danger"></i>' : '<i class="fa-solid fa-square-check fa-2x text-success"></i>' }}
                                 </td>
                                 <td class="p-1">
                                     <button type="submit" class="btn btn-primary">Envoyer dans EduSign</button>
