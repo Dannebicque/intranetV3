@@ -61,7 +61,7 @@
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler
                                     </button>
-                                    <a href="{{ path('app_edu_sign_create_courses', {'opt': 1, 'id': departement.id}) }}"
+                                    <a href="{{ path('app_admin_edu_sign_create_courses', {'opt': 1, 'id': departement.id}) }}"
                                        class="btn btn-primary">Confirmer</a>
                                 </div>
                             </div>
@@ -85,7 +85,7 @@
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler
                                     </button>
-                                    <a href="{{ path('app_edu_sign_create_courses', {'opt': 2, 'id': departement.id}) }}"
+                                    <a href="{{ path('app_admin_edu_sign_create_courses', {'opt': 2, 'id': departement.id}) }}"
                                        class="btn btn-primary">Confirmer</a>
                                 </div>
                             </div>
@@ -101,6 +101,7 @@
                         <th>Groupe</th>
                         <th>Salle</th>
                         <th>Enseignant</th>
+                        <th>EduSign</th>
                         <th>Actions</th>
                     </tr>
                     </thead>
@@ -169,7 +170,7 @@
                                     <select name="salle" id="salle" class="form-select">
                                         <option value="0">{{ cours.salle is not null and cours.salle != "" ? cours.salle : 'Sélectionner une salle' }}</option>
                                         {% for salle in cours.salles %}
-                                            <option value="{{ salle.id }}" {{ salle.libelle in cours.salle ? 'selected' : '' }}>{{ salle.libelle }}</option>
+                                            <option value="{{ salle.id }}" {{ salle.libelle == cours.salle ? 'selected' : '' }}>{{ salle.libelle }}</option>
                                         {% endfor %}
                                     </select>
                                 </td>
@@ -182,6 +183,9 @@
                                             <option value="{{ enseignant.personnel.id }}" {{ enseignant.personnel.nom ~ ' ' ~ enseignant.personnel.prenom == cours.personnel or enseignant.personnel.prenom ~ ' ' ~ enseignant.personnel.nom == cours.personnel ? 'selected' : '' }}>{{ enseignant.personnel.prenom }} {{ enseignant.personnel.nom }}</option>
                                         {% endfor %}
                                     </select>
+                                </td>
+                                <td class="p-1">
+                                    {{ cours.idEdusign is null or cours.idEdusign == "" ? '<i class="fa-solid fa-square-xmark fa-2x text-danger"></i>' : '<i class="fa-solid fa-square-check fa-2x text-success"></i>' }}
                                 </td>
                                 <td class="p-1">
                                     <button type="submit" class="btn btn-primary">Envoyer dans EduSign</button>
@@ -267,39 +271,6 @@
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
                                 <a href="{{ path('app_admin_edu_sign_update_etudiants') }}"
-                                   class="btn btn-secondary">Confirmer</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <hr>
-            <div>
-                <h3>{{ 'adm.edusign.context.change'|trans }}</h3>
-                <div class="alert alert-info">
-                    <span>{{ 'adm.edusign.commands.info-annee'|trans }}</span>
-                </div>
-
-                <button class="btn btn-secondary" type="button" data-bs-toggle="modal"
-                        data-bs-target="#newYearModal">Changer d'année
-                </button>
-                <!-- Modal -->
-                <div class="modal fade" id="newYearModal" tabindex="-1"
-                     aria-labelledby="newYearModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="newYearModalLabel">Mise à jour des groupes
-                                    pour une nouvelle année</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                Cette action va mettre à jour les étudiants et leurs groupes
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                                <a href=""
                                    class="btn btn-secondary">Confirmer</a>
                             </div>
                         </div>

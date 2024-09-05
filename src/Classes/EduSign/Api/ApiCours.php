@@ -66,14 +66,13 @@ class ApiCours
     {
         $client = HttpClient::create();
 
-        $response = $client->request('PATCH', 'https://ext.edusign.fr/v1/professor/', [
+        $response = $client->request('PATCH', 'https://ext.edusign.fr/v1/course/', [
             'headers' => [
                 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . $this->getCleApi->getCleApi($cleApi),
             ],
             'json' => ['course' => $course->toArray()],
         ]);
-
         $statusCode = $response->getStatusCode();
         $content = $response->getContent();
 
