@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.19.15](https://github.com/Dannebicque/intranetV3/compare/v3.19.14...v3.19.15) (2024-09-06)
+
+
+### Bug Fixes
+
+* groupes IJ en BUT ([628f6f7](https://github.com/Dannebicque/intranetV3/commit/628f6f785aaad180ad45c8c534f645756d41054f))
+
 ### [3.19.14](https://github.com/Dannebicque/intranetV3/compare/v3.19.13...v3.19.14) (2024-09-06)
 
 
