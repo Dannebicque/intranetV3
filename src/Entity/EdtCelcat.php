@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/EdtCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/09/2022 12:44
+ * @lastUpdate 06/09/2024 11:39
  */
 
 namespace App\Entity;
@@ -66,7 +66,7 @@ class EdtCelcat extends BaseEntity
     #[ORM\Column(type: Types::STRING, length: 30)]
     private ?string $codeGroupe = null;
 
-    #[ORM\Column(type: Types::STRING, length: 30)]
+    #[ORM\Column(type: Types::STRING, length: 50)]
     private ?string $libGroupe = null;
 
     #[ORM\ManyToOne(targetEntity: AnneeUniversitaire::class)]
