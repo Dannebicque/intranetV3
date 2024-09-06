@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/EdtPlanning.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 31/08/2024 08:30
+ * @lastUpdate 06/09/2024 17:15
  */
 
 namespace App\Entity;
@@ -150,7 +150,7 @@ class EdtPlanning extends BaseEntity
                 if (1 === $this->groupe) {
                     return 'CM TOUS';
                 }
-                $tab = ['', 'AB', '', 'CD', '', 'EF', '', 'GH'];
+            $tab = ['', 'AB', '', 'CD', '', 'EF', '', 'GH', '', 'IJ'];
                 if ($this->groupe > 40) {
                     return 'CM FI';
                 }
@@ -158,7 +158,7 @@ class EdtPlanning extends BaseEntity
                 return 'CM '.$tab[$this->groupe];
             case 'TD':
             case 'td':
-                $tab = ['', 'AB', '', 'CD', '', 'EF', '', 'GH'];
+            $tab = ['', 'AB', '', 'CD', '', 'EF', '', 'GH', '', 'IJ'];
                 if ($this->groupe > 40) {
                     return 'CM FI';
                 }
