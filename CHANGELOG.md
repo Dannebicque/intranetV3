@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.19.14](https://github.com/Dannebicque/intranetV3/compare/v3.19.13...v3.19.14) (2024-09-06)
+
+
+### Features
+
+* commande mise à jour des logins ([45c5edd](https://github.com/Dannebicque/intranetV3/commit/45c5edd79c977dfa6b1c50460c1cfb778b3e4967))
+* Edusign - update cours table - coursCelcat ([c8ce798](https://github.com/Dannebicque/intranetV3/commit/c8ce798049ddea18f5aba37efb1fd5a378f248f6))
+* Edusign - update cours table - coursIntranet ([aa37ce3](https://github.com/Dannebicque/intranetV3/commit/aa37ce3707c81d899166bb606fe39b0b600a449e))
+
+
+### Bug Fixes
+
+* Code Import EDT ([7a4ed88](https://github.com/Dannebicque/intranetV3/commit/7a4ed88fa8ebe1f9411cf95d7a21c2460eb2fe4f))
+* Edusign - retrait de l'option de chgt année pr les assistant.e.s ([7d87e80](https://github.com/Dannebicque/intranetV3/commit/7d87e8086ed7922e7062548c63bbcfce1c071f67))
+* Edusign - update cours table - coursCelcat ([897c1c0](https://github.com/Dannebicque/intranetV3/commit/897c1c02774232e98f6e3e5e75cc20e50160b6db))
+* mes plus plates excuses, je réintègre la loutre car ça avait l'air vraiment essentiel :) ([a5242dd](https://github.com/Dannebicque/intranetV3/commit/a5242ddb90d70f4cdb6dd88ed4dc9d33e9f267a8))
+* Scolarité si pas APC ([51553f9](https://github.com/Dannebicque/intranetV3/commit/51553f9ac02c013a7a9b4f180823f3b30ce0fb3b))
+* Semestre dans les profils ([8886ad0](https://github.com/Dannebicque/intranetV3/commit/8886ad092ab47971fa815c1463bf14a541fbde99))
+* taille groupe celcat ([1c64796](https://github.com/Dannebicque/intranetV3/commit/1c64796e2b994e5f1ecae673e71937129261d1f1))
+
 ### [3.19.13](https://github.com/Dannebicque/intranetV3/compare/v3.19.12...v3.19.13) (2024-09-02)
 
 
