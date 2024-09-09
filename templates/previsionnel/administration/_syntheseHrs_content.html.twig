@@ -19,8 +19,8 @@
                 <select class="form-select" name="prime_{{ loop.index }}"
                         {{ stimulus_controller('symfony/ux-autocomplete/autocomplete') }}
                         id="prime_{{ loop.index }}"
-                        {{ stimulus_action('adm--previsionnel', 'changePrime', 'change', {
-                            personnel: prime.personnel.id,
+                        {{ stimulus_action('adm--previsionnel', 'changeSyntheseHrs', 'change', {
+                            prime: prime.id,
                             annee: annee,
                             field: 'typeHrs',
                             url: path('administration_hrs_change_data', {id:prime.id}) }) }}>
@@ -37,8 +37,8 @@
                 <label for="libelle_{{ loop.index }}" class="sr-only">Libellé {{ loop.index }}</label>
                 <input type="text" name="libelle_{{ loop.index }}" id="libelle_{{ loop.index }}"
                        value="{{ prime.libelle }}"
-                        {{ stimulus_action('adm--previsionnel', 'changePrime', 'change', {
-                            personnel: prime.personnel.id,
+                        {{ stimulus_action('adm--previsionnel', 'changeSyntheseHrs', 'change', {
+                            prime: prime.id,
                             annee: annee,
                             field: 'libelle',
                             url: path('administration_hrs_change_data', {id:prime.id}) }) }}
@@ -49,18 +49,18 @@
                 <select class="form-select" name="semestre_{{ loop.index }}"
                         {{ stimulus_controller('symfony/ux-autocomplete/autocomplete') }}
                         id="semestre_{{ loop.index }}"
-                        {{ stimulus_action('adm--previsionnel', 'changePrime', 'change', {
-                            personnel: prime.personnel.id,
+                        {{ stimulus_action('adm--previsionnel', 'changeSyntheseHrs', 'change', {
+                            prime: prime.id,
                             field: 'semestre',
                             annee: annee,
                             url: path('administration_hrs_change_data', {id:prime.id}) }) }}>
                     <option value="">{{ 'choisir.semestre'|trans }}</option>
-                    {#                {% for type in types %} #}
-                    {#                    <option value="{{ type.id }}" #}
-                    {#                            {% if prime.typeId == type.id %}selected{% endif %}> #}
-                    {#                        {{ type.display }} #}
-                    {#                    </option> #}
-                    {#                {% endfor %} #}
+                    {% for semestre in semestres %}
+                        <option value="{{ semestre.id }}"
+                                {% if prime.semestre != null and prime.semestre.id == semestre.id %}selected{% endif %}>
+                            {{ semestre.display }}
+                        </option>
+                    {% endfor %}
                 </select>
             </td>
             <td>
@@ -68,26 +68,26 @@
                 <select class="form-select" name="diplome_{{ loop.index }}"
                         {{ stimulus_controller('symfony/ux-autocomplete/autocomplete') }}
                         id="diplome_{{ loop.index }}"
-                        {{ stimulus_action('adm--previsionnel', 'changePrime', 'change', {
-                            personnel: prime.personnel.id,
+                        {{ stimulus_action('adm--previsionnel', 'changeSyntheseHrs', 'change', {
+                            prime: prime.id,
                             field: 'diplome',
                             annee: annee,
                             url: path('administration_hrs_change_data', {id:prime.id}) }) }}>
                     <option value="">{{ 'choisir.diplome'|trans }}</option>
-                    {#                {% for type in types %} #}
-                    {#                    <option value="{{ type.id }}" #}
-                    {#                            {% if prime.typeId == type.id %}selected{% endif %}> #}
-                    {#                        {{ type.display }} #}
-                    {#                    </option> #}
-                    {#                {% endfor %} #}
+                    {% for diplome in diplomes %}
+                        <option value="{{ diplome.id }}"
+                                {% if prime.diplome != null and prime.diplome.id == diplome.id %}selected{% endif %}>
+                            {{ diplome.display }}
+                        </option>
+                    {% endfor %}
                 </select>
             </td>
             <td>
                 <label for="heures_{{ loop.index }}" class="sr-only">Heures Eq TD {{ loop.index }}</label>
                 <input type="text" name="heures_{{ loop.index }}" id="heures_{{ loop.index }}"
                        value="{{ prime.nbHeuresTd }}"
-                        {{ stimulus_action('adm--previsionnel', 'changePrime', 'change', {
-                            personnel: prime.personnel.id,
+                        {{ stimulus_action('adm--previsionnel', 'changeSyntheseHrs', 'change', {
+                            prime: prime.id,
                             annee: annee,
                             field: 'nbHeuresTd',
                             url: path('administration_hrs_change_data', {id:prime.id}) }) }}

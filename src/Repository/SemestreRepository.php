@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/SemestreRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/04/2024 17:54
+ * @lastUpdate 09/09/2024 14:26
  */
 
 namespace App\Repository;
@@ -222,5 +222,10 @@ class SemestreRepository extends ServiceEntityRepository
     {
         $this->_em->persist($semestre);
         $this->_em->flush();
+    }
+
+    public function findSemestresActif(): array
+    {
+        return $this->findSemestresActifBuilder()->getQuery()->getResult();
     }
 }

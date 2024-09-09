@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/PrevisionnelController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/07/2024 15:12
+ * @lastUpdate 09/09/2024 14:36
  */
 
 namespace App\Controller\administration;
@@ -22,6 +22,7 @@ use App\Enums\TypeHrsEnum;
 use App\Exception\MatiereNotFoundException;
 use App\Exception\PersonnelNotFoundException;
 use App\Form\ImportPrevisionnelType;
+use App\Repository\DiplomeRepository;
 use App\Repository\HrsRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\PrevisionnelRepository;
@@ -159,11 +160,15 @@ class PrevisionnelController extends BaseController
 
     #[Route('/new/charge-content-hrs', name: 'administration_previsionnel_charge_content_hrs', methods: ['GET', 'POST'])]
     public function loadContentHrs(
+        DiplomeRepository  $diplomeRepository,
+        SemestreRepository $semestreRepository,
         HrsRepository     $hrsRepository,
         TypeHrsRepository $typeHrsRepository,
         Request           $request): Response
     {
         $annee = $request->query->get('annee');
+        $semestres = $semestreRepository->findByDepartement($this->getDepartement());
+        $diplomes = $diplomeRepository->findByDepartement($this->getDepartement());
 
         $hrs = $hrsRepository->findByDepartement($this->getDepartement(), $annee);
         $hrsCollection = new HrsCollection();
@@ -175,7 +180,9 @@ class PrevisionnelController extends BaseController
             'annee' => $annee,
             'primes' => $hrsCollection,
             'typesHrs' => $typeHrsRepository->findAll(),
-            'categorieHrs' => TypeHrsEnum::cases()
+            'categorieHrs' => TypeHrsEnum::cases(),
+            'semestres' => $semestres,
+            'diplomes' => $diplomes
         ]);
     }
 

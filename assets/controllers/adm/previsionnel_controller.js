@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/controllers/adm/previsionnel_controller.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 06/07/2024 16:27
+// @lastUpdate 09/09/2024 15:25
 
 import { Controller } from '@hotwired/stimulus'
 import { addCallout } from '../../js/util'
@@ -109,6 +109,20 @@ export default class extends Controller {
     }).then(() => {
       addCallout('Donnée modifiée', 'success')
       this._loadContent('personnel', e.params)
+    })
+  }
+
+  async changeSyntheseHrs(e) {
+    const body = new FormData()
+    body.append('field', e.params.field)
+    body.append('valeur', e.currentTarget.value)
+
+    await fetch(e.params.url, {
+      method: 'POST',
+      body,
+    }).then(() => {
+      addCallout('Donnée modifiée', 'success')
+      this._loadContent('synthese-hrs', e.params)
     })
   }
 
