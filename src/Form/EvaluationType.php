@@ -62,7 +62,7 @@ class EvaluationType extends AbstractType
                     'disabled' => $personnelDisabled,
                     'class' => Personnel::class,
                     'choice_label' => 'displayPr',
-                    'query_builder' => fn (PersonnelRepository $personnelRepository
+                    'query_builder' => fn(PersonnelRepository $personnelRepository
                     ) => $personnelRepository->findByDepartementBuilder($this->semestre->getAnnee()->getDiplome()->getDepartement()),
                 ])
             ->add('libelle', TextType::class,
@@ -96,19 +96,23 @@ class EvaluationType extends AbstractType
             ->add('visible', YesNoType::class,
                 ['label' => 'label.evaluation.visible', 'help' => 'help.evaluation.visible'])
             ->add('typeGroupe', EntityType::class, [
-              // 'data' => true === $options['enfant'] ? ($options['groupeEnfant']?->first()->getTypeGroupe()) : null,
+                // 'data' => true === $options['enfant'] ? ($options['groupeEnfant']?->first()->getTypeGroupe()) : null,
                 // todo: en attendant mieux. Car peut y avoir plusieurs groupes, et donc plusieurs types groupes.)
                 'class' => TypeGroupe::class,
                 'label' => 'label.evaluation_type_groupe',
                 'choice_label' => 'libelle',
                 'disabled' => $autorise || ($options['enfant'] && null !== $options['groupeEnfant']),
                 'query_builder' => function (TypeGroupeRepository $typeGroupeRepository) {
-                    if (true === $this->semestre->getDiplome()?->isApc()) {
-                        return $typeGroupeRepository->findByDiplomeAndOrdreSemestreBuilder($this->semestre->getDiplome(),
-                            $this->semestre->getOrdreLmd()); // todo: fusionner quand gestion par semestres
+                    $queryBuilder = $this->semestre->getDiplome()?->isApc()
+                        ? $typeGroupeRepository->findByDiplomeAndOrdreSemestreBuilder($this->semestre->getDiplome(), $this->semestre->getOrdreLmd())
+                        : $typeGroupeRepository->findBySemestreBuilder($this->semestre);
+
+                    if (null !== $this->semestre->getDiplome()->getApcParcours()) {
+                        $queryBuilder->andWhere('t.libelle NOT LIKE :cm')
+                            ->setParameter('cm', '%CM%');
                     }
 
-                    return $typeGroupeRepository->findBySemestreBuilder($this->semestre);
+                    return $queryBuilder;
                 },
                 'required' => true,
                 'expanded' => true,
@@ -121,7 +125,7 @@ class EvaluationType extends AbstractType
                 'disabled' => $autorise,
                 'choice_label' => 'display',
                 'attr' => ['class' => ''],
-                'query_builder' => fn (PersonnelRepository $personnelRepository
+                'query_builder' => fn(PersonnelRepository $personnelRepository
                 ) => $personnelRepository->findByDepartementBuilder($this->departement),
                 'required' => true,
                 'expanded' => true,
