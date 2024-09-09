@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.19.16](https://github.com/Dannebicque/intranetV3/compare/v3.19.15...v3.19.16) (2024-09-09)
+
+
+### Bug Fixes
+
+* affichage décision dans le suivi de cohorte ([dc408b1](https://github.com/Dannebicque/intranetV3/commit/dc408b1a1288757227cc4789ec98c487e7f42a0d))
+* footer intranet ([ece7711](https://github.com/Dannebicque/intranetV3/commit/ece77110d7b5eccb695f24fa174a3c51e285cae7))
+* interdire la saisie des notes en CM quand il y a des parcours ([1c65c23](https://github.com/Dannebicque/intranetV3/commit/1c65c2352efdfa31e6d5657271bda772378fd944))
+* Modification d'un étudiant ([c6a2480](https://github.com/Dannebicque/intranetV3/commit/c6a24806a64d1de74fc717e63ed64d6359e137b5))
+* previsionnel HRS ([92c4c78](https://github.com/Dannebicque/intranetV3/commit/92c4c78801901a2edc91633abae0f2f7da1591f5))
+
 ### [3.19.15](https://github.com/Dannebicque/intranetV3/compare/v3.19.14...v3.19.15) (2024-09-06)
 
 
