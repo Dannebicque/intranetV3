@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EtudiantController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/04/2024 06:24
+ * @lastUpdate 10/09/2024 19:22
  */
 
 namespace App\Controller\administration;
@@ -57,7 +57,7 @@ class EtudiantController extends BaseController
     #[Route('/edit/{id}/{origin}', name: 'administration_etudiant_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Etudiant $etudiant, string $origin = 'semestre'): Response
     {
-        $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $etudiant->getSemestre());
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $etudiant->getSemestre());
 
         $form = $this->createForm(
             EtudiantType::class,
