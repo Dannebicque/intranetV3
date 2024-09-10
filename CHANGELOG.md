@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.19.17](https://github.com/Dannebicque/intranetV3/compare/v3.19.16...v3.19.17) (2024-09-10)
+
+
+### Bug Fixes
+
+* taille des fichiers sur les périodes de stage ([ad8a908](https://github.com/Dannebicque/intranetV3/commit/ad8a9089ed04c866f88a81c5758b60b6b1e2a003))
+
 ### [3.19.16](https://github.com/Dannebicque/intranetV3/compare/v3.19.15...v3.19.16) (2024-09-09)
 
 
