@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.19.18](https://github.com/Dannebicque/intranetV3/compare/v3.19.17...v3.19.18) (2024-09-10)
+
+
+### Bug Fixes
+
+* limite trop restrictive sur la gestion des étudiants ([d3cd145](https://github.com/Dannebicque/intranetV3/commit/d3cd145f7648ce61ae2de236e1306dcb61f50a7d))
+
 ### [3.19.17](https://github.com/Dannebicque/intranetV3/compare/v3.19.16...v3.19.17) (2024-09-10)
 
 
