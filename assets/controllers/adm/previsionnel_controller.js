@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/controllers/adm/previsionnel_controller.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 09/09/2024 15:25
+// @lastUpdate 11/09/2024 20:43
 
 import { Controller } from '@hotwired/stimulus'
 import { addCallout } from '../../js/util'
@@ -88,6 +88,10 @@ export default class extends Controller {
         semestre: document.getElementById('previ_semestre').value,
         annee: document.getElementById('previ_annee_previsionnel').value,
       }
+    } else if (type === 'synthese-hrs') {
+      params = {
+        annee: document.getElementById('previ_annee_previsionnel').value,
+      }
     } else {
       addCallout('Type de prévisionnel inconnu', 'danger')
       return false
@@ -108,7 +112,9 @@ export default class extends Controller {
       body,
     }).then(() => {
       addCallout('Donnée modifiée', 'success')
-      this._loadContent('personnel', e.params)
+      if (e.params.field === 'nbHeuresTd') {
+        document.getElementById('alertPreviHeure').classList.remove('d-none')
+      }
     })
   }
 
@@ -122,7 +128,10 @@ export default class extends Controller {
       body,
     }).then(() => {
       addCallout('Donnée modifiée', 'success')
-      this._loadContent('synthese-hrs', e.params)
+      if (e.params.field === 'nbHeuresTd') {
+        document.getElementById('alertPreviHeure').classList.remove('d-none')
+      }
+      // this._loadContent('synthese-hrs', e.params)
     })
   }
 
@@ -176,7 +185,11 @@ export default class extends Controller {
         },
       }).then(() => {
         addCallout('Prime supprimée', 'success')
-        this._loadContent('personnel', e.params)
+        if (e.params.source === 'personnel') {
+          this._loadContent('personnel', e.params)
+        } else {
+          this._loadContent('synthese-hrs', e.params)
+        }
       })
     }
   }
@@ -299,6 +312,36 @@ export default class extends Controller {
       personnel,
     })
     await this._updatePersonnel(params)
+  }
+
+  async ajoutPrimeSynthese(e) {
+    // fetch pour l'ajouter et refresh
+    const personnel = document.getElementById('addPersonnel').value
+    const annee = document.getElementById('previ_annee_previsionnel').value
+
+    if (personnel === '' || annee === '') {
+      addCallout('Veuillez sélectionner un personnel et une année', 'danger')
+      return false
+    }
+
+    const body = new FormData()
+    body.append('personnel', personnel)
+    body.append('annee', annee)
+    body.append('typeHrs', document.getElementById('prime_new').value)
+    body.append('libelle', document.getElementById('libelle_new').value)
+    body.append('semestre', document.getElementById('semestre_new').value)
+    body.append('diplome', document.getElementById('diplome_new').value)
+    body.append('nbHeuresTd', document.getElementById('heures_new').value)
+
+    await fetch(this.urlAddPrimeValue, {
+      method: 'POST',
+      body,
+    })
+    const params = new URLSearchParams({
+      annee,
+      personnel,
+    })
+    await this._updateSyntheseHrs(params)
   }
 
   async changeShowMatiere(e) {

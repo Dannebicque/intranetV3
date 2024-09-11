@@ -257,6 +257,7 @@
             <td colspan="2">
                 <label for="semestre_{{ loop.index }}" class="sr-only">Semestre {{ loop.index }}</label>
                 <select class="form-select" name="semestre_{{ loop.index }}"
+
                         {{ stimulus_controller('symfony/ux-autocomplete/autocomplete') }}
                         id="semestre_{{ loop.index }}"
                         {{ stimulus_action('adm--previsionnel', 'changePrime', 'change', {
@@ -265,12 +266,12 @@
                             annee: annee,
                             url: path('administration_hrs_change_data', {id:prime.id}) }) }}>
                     <option value="">{{ 'choisir.semestre'|trans }}</option>
-                    {#                {% for type in types %} #}
-                    {#                    <option value="{{ type.id }}" #}
-                    {#                            {% if prime.typeId == type.id %}selected{% endif %}> #}
-                    {#                        {{ type.display }} #}
-                    {#                    </option> #}
-                    {#                {% endfor %} #}
+                    {% for semestre in semestres %}
+                        <option value="{{ semestre.id }}"
+                                {% if prime.semestre != null and prime.semestre.id == semestre.id %}selected{% endif %}>
+                            {{ semestre.display }}
+                        </option>
+                    {% endfor %}
                 </select>
             </td>
             <td colspan="2">
@@ -284,12 +285,12 @@
                             annee: annee,
                             url: path('administration_hrs_change_data', {id:prime.id}) }) }}>
                     <option value="">{{ 'choisir.diplome'|trans }}</option>
-                    {#                {% for type in types %} #}
-                    {#                    <option value="{{ type.id }}" #}
-                    {#                            {% if prime.typeId == type.id %}selected{% endif %}> #}
-                    {#                        {{ type.display }} #}
-                    {#                    </option> #}
-                    {#                {% endfor %} #}
+                    {% for diplome in diplomes %}
+                        <option value="{{ diplome.id }}"
+                                {% if prime.diplome != null and prime.diplome.id == diplome.id %}selected{% endif %}>
+                            {{ diplome.display }}
+                        </option>
+                    {% endfor %}
                 </select>
             </td>
             <td colspan="2">
@@ -316,6 +317,7 @@
                         {{ stimulus_action('adm--previsionnel', 'supprPrime', 'click',{
                             personnel: personnel.id,
                             annee: annee,
+                            source: 'personnel'
                         }) }}
                    data-csrf="{{ csrf_token('delete' ~ prime.id) }}"
                    class="btn btn-danger btn-outline btn-xs">
@@ -343,7 +345,19 @@
             </div>
         </td>
     </tr>
-
+    <tr id="alertPreviHeure" class="d-none">
+        <td colspan="11">
+            <div class="alert alert-warning">
+                Les heures des primes ont été modifiées mais ne sont pas prises en compte dans le total des heures
+                ci-dessous. Vous pouvez actualiser les informations en cliquant sur
+                <button class="btn btn-sm btn-outline-info"
+                        {{ stimulus_action('adm--previsionnel', 'actualiser', 'click', {type:'personnel'}) }}
+                >Actualiser les heures
+                </button>
+                .
+            </div>
+        </td>
+    </tr>
     <tr>
         <th rowspan="{{ categorieHrs|length + 1 }}" colspan="3">Vérification des heures</th>
         <td colspan="2" class="text-center">Type</td>
@@ -351,6 +365,7 @@
         <td colspan="2" class="text-center">Nb heures maximum</td>
         <td colspan="2" class="text-center">Différence</td>
     </tr>
+
     {% for categorie in categorieHrs %}
         <tr>
             <th colspan="2">{{ categorie.value }}</th>

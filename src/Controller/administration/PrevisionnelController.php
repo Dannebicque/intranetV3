@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/PrevisionnelController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/09/2024 14:36
+ * @lastUpdate 11/09/2024 16:37
  */
 
 namespace App\Controller\administration;
@@ -124,6 +124,8 @@ class PrevisionnelController extends BaseController
 
     #[Route('/new/charge-content-personnel', name: 'administration_previsionnel_charge_content_personnel', methods: ['GET', 'POST'])]
     public function loadContentPersonnel(
+        DiplomeRepository  $diplomeRepository,
+        SemestreRepository $semestreRepository,
         HrsRepository       $hrsRepository,
         TypeHrsRepository   $typeHrsRepository,
         TypeMatiereManager  $typeMatiereManager,
@@ -133,6 +135,8 @@ class PrevisionnelController extends BaseController
     {
         $personnel = $personnelRepository->find($request->query->get('personnel'));
         $annee = $request->query->get('annee');
+        $semestres = $semestreRepository->findByDepartement($this->getDepartement());
+        $diplomes = $diplomeRepository->findByDepartement($this->getDepartement());
 
         if ($personnel === null) {
             return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
@@ -154,7 +158,9 @@ class PrevisionnelController extends BaseController
             'previsionnel' => $previsionnel,
             'primes' => $hrsCollection,
             'typesHrs' => $typeHrsRepository->findAll(),
-            'categorieHrs' => TypeHrsEnum::cases()
+            'categorieHrs' => TypeHrsEnum::cases(),
+            'semestres' => $semestres,
+            'diplomes' => $diplomes
         ]);
     }
 

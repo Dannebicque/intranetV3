@@ -632,4 +632,6 @@ allday: Toute la journée
 qui_concerne: Qui est concerné ?
 typedate: Type d'événement
 semestres_date: Semestres concernées
-
+intituleSecuriteSociale: 'Intitulé de la sécurité sociale'
+adresseSecuriteSociale: 'Adresse de la sécurité sociale'
+adresseParentale: 'Adresse parentale'

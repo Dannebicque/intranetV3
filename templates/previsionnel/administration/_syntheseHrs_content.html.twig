@@ -106,6 +106,7 @@
                         {{ stimulus_action('adm--previsionnel', 'supprPrime', 'click',{
                             personnel: prime.personnel.id,
                             annee: annee,
+                            source: 'synthese-hrs',
                         }) }}
                    data-csrf="{{ csrf_token('delete' ~ prime.id) }}"
                    class="btn btn-danger btn-outline btn-xs">
@@ -121,38 +122,115 @@
         </tr>
     {% endfor %}
     <tr>
-        <td colspan="11" class="bg-complementary">
-            <div class="row">
-                <div class="col-6">
-                    <label class="sr-only" for="addPersonnel">Choisir un intervenant à ajouter</label>
-                    <select id="addPersonnel"
-                            {{ stimulus_controller('symfony/ux-autocomplete/autocomplete') }}
-                            class="form-select"
-                    >
-                        <option value="">{{ 'choisir.intervenant'|trans }}</option>
-                        {% for personnel in user_data.personnels %}
-                            <option value="{{ personnel.id }}">
-                                {{ personnel.displayPr }}
-                            </option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <div class="col-6">
-                    <div class="d-grid ">
-                        <button class="btn btn-success d-block text-white"
-                                {#                        {{ stimulus_action('adm--previsionnel', 'ajoutPrime', 'click', { #}
-                                {#                            personnel: personnel.id, #}
-                                {#                            annee: annee, #}
-                                {#                        }) }} #}
-                        ><i class="fas fa-plus"></i> {{ 'ajouter.prime'|trans }}
-                        </button>
-                    </div>
-                </div>
+        <td colspan="7" class="bg-complementary">
+            <div class="d-grid ">
+                <span class="btn d-block text-white">
+                    Ajouter une prime
+                </span>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <label class="sr-only" for="addPersonnel">Choisir un intervenant à ajouter</label>
+            <select id="addPersonnel"
+                    {{ stimulus_controller('symfony/ux-autocomplete/autocomplete') }}
+                    class="form-select"
+            >
+                <option value="">{{ 'choisir.intervenant'|trans }}</option>
+                {% for personnel in user_data.personnels %}
+                    <option value="{{ personnel.id }}">
+                        {{ personnel.displayPr }}
+                    </option>
+                {% endfor %}
+            </select>
+        </td>
+        <td>
+            <label for="prime_new" class="sr-only">Type de prime new</label>
+            <select class="form-select" name="prime_new"
+                    {{ stimulus_controller('symfony/ux-autocomplete/autocomplete') }}
+                    id="prime_new">
+                <option value="">{{ 'choisir.prime'|trans }}</option>
+                {% for type in typesHrs %}
+                    <option value="{{ type.id }}">
+                        {{ type.libelle }}
+                    </option>
+                {% endfor %}
+            </select>
+        </td>
+        <td>
+            <label for="libelle_new" class="sr-only">Libellé new</label>
+            <input type="text" name="libelle_new" id="libelle_new"
+                   class="form-control">
+        </td>
+        <td>
+            <label for="semestre_new" class="sr-only">Semestre new</label>
+            <select class="form-select" name="semestre_new"
+                    {{ stimulus_controller('symfony/ux-autocomplete/autocomplete') }}
+                    id="semestre_new">
+                <option value="">{{ 'choisir.semestre'|trans }}</option>
+                {% for semestre in semestres %}
+                    <option value="{{ semestre.id }}">
+                        {{ semestre.display }}
+                    </option>
+                {% endfor %}
+            </select>
+        </td>
+        <td>
+            <label for="diplome_new" class="sr-only">Diplôme</label>
+            <select class="form-select" name="diplome_new"
+                    {{ stimulus_controller('symfony/ux-autocomplete/autocomplete') }}
+                    id="diplome_new">
+                <option value="">{{ 'choisir.diplome'|trans }}</option>
+                {% for diplome in diplomes %}
+                    <option value="{{ diplome.id }}">
+                        {{ diplome.display }}
+                    </option>
+                {% endfor %}
+            </select>
+        </td>
+        <td>
+            <label for="heures_new" class="sr-only">Heures Eq TD new</label>
+            <input type="text" name="heures_new" id="heures_new"
+                   class="form-control">
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td colspan="3">&nbsp;</td>
+        <td colspan="4">
+            <div class="d-grid ">
+                <button class="btn btn-success d-block text-white"
+                        {{ stimulus_action('adm--previsionnel', 'ajoutPrimeSynthese') }}
+                ><i class="fas fa-plus"></i> {{ 'ajouter.prime'|trans }}
+                </button>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="8" class="bg-complementary">
+            <div class="d-grid ">
+                <span class="btn d-block text-white">
+                    Synthèse
+                </span>
             </div>
 
         </td>
     </tr>
 
+    <tr id="alertPreviHeure" class="d-none">
+        <td colspan="11">
+            <div class="alert alert-warning">
+                Les heures des primes ont été modifiées mais ne sont pas prises en compte dans le total des heures
+                ci-dessous. Vous pouvez actualiser les informations en cliquant sur
+                <button class="btn btn-sm btn-outline-info"
+                        {{ stimulus_action('adm--previsionnel', 'actualiser', 'click', {type:'synthese-hrs'}) }}
+                >Actualiser les heures
+                </button>
+                .
+            </div>
+        </td>
+    </tr>
     <tr>
         <th rowspan="{{ categorieHrs|length + 1 }}" colspan="3">Vérification des heures</th>
         <td class="text-center">Type</td>
@@ -177,15 +255,6 @@
         </tr>
     {% endfor %}
 
-    <tr>
-        <td colspan="8" class="bg-complementary">
-            <div class="d-grid ">
-                <span class="btn d-block text-white">
-                    Synthèse
-                </span>
-            </div>
 
-        </td>
-    </tr>
     </tbody>
 </table>

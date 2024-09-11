@@ -2481,4 +2481,5 @@ label.VCA: VCA
 label.BL: Blanchiment
 label.DR: Décision reportée
 ajouter.prime: 'Ajouter une prime/HRS'
-
+choisir.diplome: 'Choisir un diplôme'
+choisir.prime: 'Choisir un type de prime/HRS'
