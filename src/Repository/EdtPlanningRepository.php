@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/EdtPlanningRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/04/2024 17:54
+ * @lastUpdate 11/09/2024 21:54
  */
 
 namespace App\Repository;
@@ -13,10 +13,7 @@ use App\Entity\AnneeUniversitaire;
 use App\Entity\Departement;
 use App\Entity\EdtPlanning;
 use App\Entity\Etudiant;
-use App\Entity\Groupe;
-use App\Entity\Matiere;
 use App\Entity\Personnel;
-use App\Entity\Salle;
 use App\Entity\Semestre;
 use App\Enums\TypeGroupeEnum;
 use Carbon\Carbon;
@@ -489,9 +486,9 @@ class EdtPlanningRepository extends ServiceEntityRepository
             ->where('p.ordreSemestre = :semestre')
             ->andWhere('p.semaine = :semaine')
             ->andWhere('p.anneeUniversitaire = :anneeUniversitaire')
-            ->andWhere('p.diplome = :diplome')
+            //->andWhere('p.diplome = :diplome')
             ->setParameter('semestre', $semestre->getOrdreLmd())
-            ->setParameter('diplome', null !== $semestre->getDiplome()->getParent() ? $semestre->getDiplome()->getParent()->getId() : $semestre->getDiplome()->getId())
+//            ->setParameter('diplome', null !== $semestre->getDiplome()?->getParent() ? $semestre->getDiplome()?->getParent()?->getId() : $semestre->getDiplome()?->getId())
             ->setParameter('semaine', $semaine)
             ->setParameter('anneeUniversitaire', $anneeUniversitaire->getId())
             ->addOrderBy('p.jour', Order::Ascending->value)
