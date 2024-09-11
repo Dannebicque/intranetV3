@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtImport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/09/2024 14:00
+ * @lastUpdate 11/09/2024 12:24
  */
 
 /*
@@ -21,9 +21,11 @@ use App\Entity\Departement;
 use App\Entity\Diplome;
 use App\Entity\EdtPlanning;
 use App\Entity\Semestre;
+use App\Repository\DepartementRepository;
 use App\Repository\DiplomeRepository;
 use App\Repository\EdtPlanningRepository;
 use App\Repository\PersonnelRepository;
+use App\Repository\SemestreRepository;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
 use Doctrine\ORM\EntityManagerInterface;
@@ -34,6 +36,7 @@ class MyEdtImport
 {
     protected array $tabIntervenants;
     protected array $tabMatieres;
+    protected array $tabSemestres;
     protected array $tSemaineClear;
     protected ?Departement $departement;
 
@@ -177,18 +180,68 @@ class MyEdtImport
         'WSA502S' => 'WSA502',
     ];
 
+    private const CORRESPONDANCE_SEMESTRE = [
+        'S1' => [
+            'A1' => 79,
+            'B1' => 79,
+            'C1' => 79,
+            'D1' => 79,
+            'E1' => 79,
+            'F1' => 79,
+            'G1' => 79,
+            'H1' => 79
+        ],
+        'S3' => [
+            'A3' => 101,
+            'B3' => 101,
+            'C3' => 101,
+            'D3' => 101,
+            'E3' => 165,
+            'F3' => 165,
+            'G3' => 183,
+            'H3' => 183,
+            'I3' => 161,
+            'J3' => 161,
+        ],
+        'S5' => [
+            'A5' => 103,
+            'B5' => 103,
+            'C5' => 103,
+            'D5' => 103,
+            'E5' => 167,
+            'F5' => 167,
+            'G5' => 185,
+            'H5' => 185,
+            'I5' => 163,
+            'J5' => 163,
+        ],
+    ];
+
     /**
      * MyEdtImport constructor.
      */
     public function __construct(
+        DepartementRepository                  $departementRepository,
         private readonly EdtPlanningRepository $edtPlanningRepository,
         private readonly PersonnelRepository   $personnelRepository,
         private readonly TypeMatiereManager    $typeMatiereManager,
         private readonly EntityManagerInterface $entityManager,
+        private readonly SemestreRepository    $semestreRepository,
         DiplomeRepository                      $diplomeRepository,
     )
     {
-        $this->diplome = $diplomeRepository->find(27);
+        $departement = $departementRepository->find(1);
+        //todo: Attention toujours 27, pas le cas selon le semestre et la matière
+        $diplomes = $diplomeRepository->findByDepartement($departement);
+        foreach ($diplomes as $diplome) {
+            if ($diplome->getActif()) {
+                $semestres = $this->semestreRepository->findByDiplome($diplome);
+                foreach ($semestres as $semestre) {
+                    $this->tabSemestres[$semestre->getId()] = $semestre;
+                }
+            }
+        }
+
     }
 
     /**
@@ -336,6 +389,13 @@ class MyEdtImport
             $pl->setTypeMatiere($this->tabMatieres[$matiere]->typeMatiere);
             $pl->setTexte(null);
             $pl->setOrdreSemestre($semestre);
+            if (array_key_exists($phrase[8], self::CORRESPONDANCE_SEMESTRE) && array_key_exists($phrase[5], self::CORRESPONDANCE_SEMESTRE[$phrase[8]])) {
+                $pl->setSemestre($this->tabSemestres[self::CORRESPONDANCE_SEMESTRE[$phrase[8]][$phrase[5]]] ?? null
+                );
+            } else {
+                $pl->setSemestre(null);
+            }
+
 
             if ('' !== $prof && 'DOE' !== $prof && 'PRJ' !== $prof && array_key_exists($prof, $this->tabIntervenants)) {
                 $pl->setIntervenant($this->tabIntervenants[$prof]);
@@ -347,7 +407,7 @@ class MyEdtImport
             $pl->setSalle(mb_strtoupper($salle));
             $pl->setDate($date);
             $pl->setType(strtoupper(mb_substr($phrase[2], 0, 2)));
-            $pl->setDiplome($this->diplome);
+            $pl->setDiplome($pl->getSemestre()?->getDiplome());
             $this->addGroupe($pl, $phrase[5]);
             $pl->setHeureDebut($heureDebut);
             //extraire le nombre après les deux premiers caractères de $phrase[2]
