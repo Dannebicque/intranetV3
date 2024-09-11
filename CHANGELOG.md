@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.19.22](https://github.com/Dannebicque/intranetV3/compare/v3.19.21...v3.19.22) (2024-09-11)
+
+
+### Bug Fixes
+
+* filtre diplome non nécessaire sur EdtPlanning. ([4c21287](https://github.com/Dannebicque/intranetV3/commit/4c2128719f514596e7d16069e2cc977439eaac75))
+
 ### [3.19.21](https://github.com/Dannebicque/intranetV3/compare/v3.19.20...v3.19.21) (2024-09-11)
 
 
