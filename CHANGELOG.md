@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.19.21](https://github.com/Dannebicque/intranetV3/compare/v3.19.20...v3.19.21) (2024-09-11)
+
+
+### Bug Fixes
+
+* Amélioration de l'ergonomie de la saisie des HRS ([7b5768a](https://github.com/Dannebicque/intranetV3/commit/7b5768ad89a6763ee224fbe62e3eb8aa9eb4645d))
+* Organisation page settings etudiants ([d931be2](https://github.com/Dannebicque/intranetV3/commit/d931be2d5b916a27ac90c9953d7b88f31f8cdb9d))
+* suppression template inutile ([0fa58c5](https://github.com/Dannebicque/intranetV3/commit/0fa58c56ca36e166802862f5c9e033e3b193fc41))
+
 ### [3.19.20](https://github.com/Dannebicque/intranetV3/compare/v3.19.19...v3.19.20) (2024-09-11)
 
 
