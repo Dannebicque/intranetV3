@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.19.20](https://github.com/Dannebicque/intranetV3/compare/v3.19.19...v3.19.20) (2024-09-11)
+
+
+### Bug Fixes
+
+* import avec semestre et diplôme sur EdtIntranet ([ef6c1e8](https://github.com/Dannebicque/intranetV3/commit/ef6c1e83938946b7034f19a97d1bd68c3aad6789))
+
 ### [3.19.19](https://github.com/Dannebicque/intranetV3/compare/v3.19.18...v3.19.19) (2024-09-10)
 
 
