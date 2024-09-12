@@ -104,6 +104,7 @@ class UpdateGroupe
                 }
 
                 if ($groupeObject === null) {
+                    dd($groupe);
                     $this->apiGroupe->deleteGroupe($groupe['ID'], $keyEduSign);
                     // retirer la clé eduSign du groupe ou du semestre
                     $groupeFinal = $groupe['PARENT'] === ''
