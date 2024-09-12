@@ -38,12 +38,10 @@ class EdtIntranetAdapter extends AbstractEdtAdapter implements EdtAdapterInterfa
     {
         $event = new EvenementEdt();
         if (array_key_exists($evt->getTypeIdMatiere(), $matieres)) {
-
             $matiere = $matieres[$evt->getTypeIdMatiere()];
-
             $event->matiere = $matiere->display ?? $matiere->getDisplay();
             $event->code_matiere = $matiere->codeMatiere ?? $matiere->getCodeMatiere();
-            $event->semestre = $matiere->getSemestres()->first() ?? $matiere->getSemestre();
+            $event->semestre = $evt->getSemestre() ?? $matiere->getSemestres()->first() ?? $matiere->getSemestre();
             $event->couleur = $event->semestre->getAnnee()?->getCouleur();
         } elseif ($evt->getTexte() === null) {
             $event->matiere = 'Inconnue';

@@ -498,6 +498,26 @@ class EdtPlanningRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function findEdtSemestreSemaineNew(
+        Semestre           $semestre,
+        int                $semaine,
+        AnneeUniversitaire $anneeUniversitaire
+    ): array
+    {
+        return $this->createQueryBuilder('p')
+            ->where('p.semestre = :semestre')
+            ->andWhere('p.semaine = :semaine')
+            ->andWhere('p.anneeUniversitaire = :anneeUniversitaire')
+            ->setParameter('semestre', $semestre)
+            ->setParameter('semaine', $semaine)
+            ->setParameter('anneeUniversitaire', $anneeUniversitaire->getId())
+            ->addOrderBy('p.jour', Order::Ascending->value)
+            ->addOrderBy('p.debut', Order::Ascending->value)
+            ->addOrderBy('p.groupe', Order::Ascending->value)
+            ->getQuery()
+            ->getResult();
+    }
+
     public function updateCourse($id)
     {
         $cours = $this->find($id);

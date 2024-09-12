@@ -107,7 +107,6 @@ class EdtManager
                 return $this->edtCelcat->getPlanningSemestreSemaine($semestre, $semaine, $anneeUniversitaire, $matieres, $groupes);
             case self::EDT_INTRANET:
                 $this->source = self::EDT_INTRANET;
-
                 return $this->edtIntranet->getPlanningSemestreSemaine($semestre, $semaine, $anneeUniversitaire, $matieres, $groupes);
             default:
                 return null;

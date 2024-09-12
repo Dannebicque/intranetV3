@@ -75,20 +75,20 @@ class EduSignController extends BaseController
             foreach ($semestres as $semestre) {
                 $eventSemaine = $this->CalendrierRepository->findOneBy(['semaineReelle' => $semaineReelle, 'anneeUniversitaire' => $semestre->getAnneeUniversitaire()]);
                 $semaine = $eventSemaine->getSemaineFormation();
-                $matieresSemestre = $this->getMatieresSemestre($semestre);
+                $matieresDiplome = $this->getMatieresDiplome($semestre->getDiplome());
                 $groupes = $this->groupeRepository->findBySemestre($semestre);
                 // récupérer uniquement les groupes propres au semestre
                 $groupesSemestres[$semestre->getLibelle()] = array_filter($groupes, function ($groupe) use ($semestre) {
                     return $groupe->getApcParcours()?->getDiplomes()->contains($semestre->getDiplome());
                 });
 
-                $edt = $this->edtManager->getPlanningSemestreSemaine($semestre, $semaine, $semestre->getAnneeUniversitaire(), $matieresSemestre, $groupes);
-                $salles = $this->salleRepository->findAll();
+                $edt = $this->edtManager->getPlanningSemestreSemaine($semestre, $semaine, $semestre->getAnneeUniversitaire(), $matieresDiplome, $groupes);
 
+                $salles = $this->salleRepository->findAll();
 
                 foreach ($edt->evenements as $this->evenement) {
                     if ($this->evenement->dateObjet->isBetween($start, $end)) {
-                        $this->evenement->matieresSemestre = $matieresSemestre;
+                        $this->evenement->matieresDiplome = $matieresDiplome;
                         $this->evenement->semestresGroupe = $semestre;
                         $this->evenement->groupesSemestre = $groupes;
                         $this->evenement->salles = $salles;
