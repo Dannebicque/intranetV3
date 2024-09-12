@@ -165,18 +165,12 @@ class EduSignController extends BaseController
     }
 
     #[Route('/update/etudiants/', name: 'app_admin_edu_sign_update_etudiants')]
-    public function updateEtudiants(UpdateEtudiant $updateEtudiant, MailerInterface $mailer): RedirectResponse
+    public function updateEtudiants(int $id, UpdateEtudiant $updateEtudiant, MailerInterface $mailer): RedirectResponse
     {
-        $departement = $this->getDepartement();
         $diplomesErrors = [];
 
-        if (!$departement) {
-            $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'Département introuvable.');
-            return $this->redirectToRoute('app_edu_sign');
-        }
-
-        $diplomes = $this->diplomeRepository->findAllWithEduSignDepartement($departement);
-        $changeSemestreResult = $updateEtudiant->changeSemestre($diplomes);
+        $diplome = $this->diplomeRepository->findOneBy(['id' => $id]);
+        $changeSemestreResult = $updateEtudiant->changeSemestre($diplome);
 
         if (!$changeSemestreResult['success']) {
             foreach ($changeSemestreResult['messages'] as $message) {
@@ -185,7 +179,7 @@ class EduSignController extends BaseController
         }
 
         if (!empty($errors)) {
-            $diplomesErrors[$departement->getLibelle()] = $errors;
+            $diplomesErrors[$diplome->getLibelle()] = $errors;
         }
 
         $email = (new TemplatedEmail())
