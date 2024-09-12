@@ -105,9 +105,18 @@ class EduSignController extends BaseController
         $semestres = $this->semestreRepository->findByDepartementActifFc($departement);
         $matieres = $this->typeMatiereManager->findByDepartement($departement);
 
+        $diplome = null;
+        if ($request->query->get('diplome')) {
+            $diplome = $this->diplomeRepository->findOneBy(['id' => $request->query->get('diplome')]);
+        } else {
+            $diplome = $diplomes[array_key_first($diplomes)] ?? null;
+        }
+
 
         return $this->render('administration/edusign/index.html.twig', [
             'departement' => $departement,
+            'diplomes' => $diplomes,
+            'diplomeSelect' => $diplome,
             'pagination' => $pagination,
             'personnelsDepartement' => $filteredPersonnelsDepartement,
             'semestres' => $semestres,
@@ -164,19 +173,13 @@ class EduSignController extends BaseController
         return $matieresDepartement;
     }
 
-    #[Route('/update/etudiants/', name: 'app_admin_edu_sign_update_etudiants')]
-    public function updateEtudiants(UpdateEtudiant $updateEtudiant, MailerInterface $mailer): RedirectResponse
+    #[Route('/update/etudiants/{id}', name: 'app_admin_edu_sign_update_etudiants')]
+    public function updateEtudiants(?int $id, UpdateEtudiant $updateEtudiant, MailerInterface $mailer): RedirectResponse
     {
-        $departement = $this->getDepartement();
         $diplomesErrors = [];
 
-        if (!$departement) {
-            $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'Département introuvable.');
-            return $this->redirectToRoute('app_edu_sign');
-        }
-
-        $diplomes = $this->diplomeRepository->findAllWithEduSignDepartement($departement);
-        $changeSemestreResult = $updateEtudiant->changeSemestre($diplomes);
+        $diplome = $this->diplomeRepository->findOneBy(['id' => $id]);
+        $changeSemestreResult = $updateEtudiant->changeSemestre($diplome);
 
         if (!$changeSemestreResult['success']) {
             foreach ($changeSemestreResult['messages'] as $message) {
@@ -185,7 +188,7 @@ class EduSignController extends BaseController
         }
 
         if (!empty($errors)) {
-            $diplomesErrors[$departement->getLibelle()] = $errors;
+            $diplomesErrors[$diplome->getLibelle()] = $errors;
         }
 
         $email = (new TemplatedEmail())

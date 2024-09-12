@@ -242,16 +242,24 @@
                     <span>{{ 'adm.edusign.commands.info-update'|trans }}</span>
                 </div>
 
+                <nav class="nav nav-tabs">
+                    {% for diplome in diplomes %}
+                        <a class="nav-link {% if ((diplomeSelect != null and diplomeSelect.id == diplome.id) or (diplomeSelect == null)) %}active{% endif %}"
+                           href="{{ path('administration_edusign_index', {'diplome': diplome.id}) }}">{{ diplome.sigle }}</a>
+                    {% endfor %}
+                </nav>
+                <!-- Bouton pour mettre à jour les étudiants et leurs groupes -->
                 <button class="btn btn-secondary" type="button" data-bs-toggle="modal"
-                        data-bs-target="#grpModal">Mettre à jour
+                        data-bs-target="#grpModal{{ diplomeSelect.id }}">Mettre à jour
                 </button>
+
                 <!-- Modal -->
-                <div class="modal fade" id="grpModal" tabindex="-1"
-                     aria-labelledby="grpModalLabel" aria-hidden="true">
+                <div class="modal fade" id="grpModal{{ diplomeSelect.id }}" tabindex="-1"
+                     aria-labelledby="grpModal{{ diplomeSelect.id }}Label" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="grpModalLabel">Mise à jour des groupes</h1>
+                                <h1 class="modal-title fs-5" id="grpModal{{ diplomeSelect.id }}Label">Mise à jour des groupes pour {{ diplomeSelect.sigle }}</h1>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
                             </div>
@@ -260,7 +268,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                                <a href="{{ path('app_admin_edu_sign_update_etudiants') }}"
+                                <a href="{{ path('app_admin_edu_sign_update_etudiants', {'id': diplomeSelect.id}) }}"
                                    class="btn btn-secondary">Confirmer</a>
                             </div>
                         </div>
