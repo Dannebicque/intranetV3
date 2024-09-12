@@ -48,7 +48,7 @@ class UpdateGroupe
                 }
 
                 $departement = $diplome->getDepartement();
-                $semestres = $this->semestreRepository->findSemestreEduSignDept($departement);
+                $semestres = $diplome->getSemestres();
 
                 foreach ($semestres as $parent) {
                     $groupes = $parent->getDiplome()->getApcParcours()?->getGroupes() ?? $this->groupeRepository->findBySemestre($parent);
