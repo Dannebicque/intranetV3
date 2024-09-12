@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EtudiantController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/04/2024 06:24
+ * @lastUpdate 10/09/2024 19:25
  */
 
 namespace App\Controller\administration;
@@ -37,7 +37,7 @@ class EtudiantController extends BaseController
     #[Route('/', name: 'administration_etudiant_index', options: ['expose' => true])]
     public function index(Request $request): Response
     {
-        $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $this->getDepartement());
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
 
         $table = $this->createTable(EtudiantDepartementTableType::class, [
             'departement' => $this->getDepartement(),
@@ -57,7 +57,7 @@ class EtudiantController extends BaseController
     #[Route('/edit/{id}/{origin}', name: 'administration_etudiant_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Etudiant $etudiant, string $origin = 'semestre'): Response
     {
-        $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $etudiant->getSemestre());
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
 
         $form = $this->createForm(
             EtudiantType::class,
@@ -100,7 +100,7 @@ class EtudiantController extends BaseController
     #[Route('/add', name: 'administration_etudiant_add', methods: ['POST'])]
     public function create(Request $request): Response
     {
-        $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $this->getDepartement());
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
 
         $etudiant = new Etudiant();
 
@@ -132,7 +132,7 @@ class EtudiantController extends BaseController
     Etudiant                                     $etudiant, string $etat): JsonResponse
     {
         //todo: utilisé ?
-        $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $etudiant->getSemestre());
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
         $etudiantScolarite->setEtudiant($etudiant);
         $etudiantScolarite->changeEtat($etat);
 
@@ -167,7 +167,7 @@ class EtudiantController extends BaseController
     #[Route('/edit-ajax/{id}', name: 'adm_etudiant_edit_ajax', options: ['expose' => true], methods: ['POST'])]
     public function editAjax(EtudiantUpdate $etudiantUpdate, Request $request, Etudiant $etudiant): JsonResponse
     {
-        $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $etudiant->getDepartement());
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
         $parametersAsArray = JsonRequest::getFromRequest($request);
         if (array_key_exists('field', $parametersAsArray) && array_key_exists('value', $parametersAsArray)) {
             $etudiantUpdate->update($etudiant, $parametersAsArray['field'], $parametersAsArray['value']);
@@ -182,7 +182,7 @@ class EtudiantController extends BaseController
         methods: ['GET'])]
     public function export(MySerializer $mySerializer, MyExport $myExport, EtudiantRepository $etudiantRepository, string $_format): Response
     {
-        $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $this->getDepartement());
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
         $etudiants = $etudiantRepository->getByDepartement($this->getDepartement());
         $data = $mySerializer->getDataFromSerialization(
             $etudiants,

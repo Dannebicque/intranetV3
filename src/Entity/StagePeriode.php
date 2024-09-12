@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/StagePeriode.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/02/2024 08:30
+ * @lastUpdate 10/09/2024 19:17
  */
 
 namespace App\Entity;
@@ -32,7 +32,7 @@ class StagePeriode extends BaseEntity
     use UuidTrait;
     use LifeCycleTrait;
 
-    #[ORM\Column(type: Types::STRING, length: 50)]
+    #[ORM\Column(type: Types::STRING, length: 100)]
     private ?string $documentName = '';
 
     #[Vich\UploadableField(mapping: 'ficheRenseignement', fileNameProperty: 'documentName')]

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/EdtController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/04/2024 07:30
+ * @lastUpdate 31/08/2024 09:29
  */
 
 namespace App\Controller;
@@ -356,8 +356,8 @@ class EdtController extends BaseController
     public function detailEvent(
         MyEdtIntranet $myEdt,
         EdtPlanningRepository $edtPlanningRepository,
-                      $event,
-                      $type
+        $event,
+        $type
     ): ?Response
     {
         if ('planning' === $type) {

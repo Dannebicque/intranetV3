@@ -205,11 +205,12 @@
             {% if (is_granted('ROLE_PERMANENT') and user_data.departementMultiple == true) %}
                 <div class="dropdown">
                 <span class="topbar-btn" data-bs-toggle="dropdown" id="changeDepartement"
-                      data-bs-placement="bottom"
-                      data-controller="interface--tooltip"
-                      title="Changer de département"
                 >
-                    <i class="fas fa-random"></i>
+                    <i class="fas fa-random"
+                       data-bs-placement="bottom"
+                       data-controller="interface--tooltip"
+                       title="Changer de département"
+                    ></i>
                 </span>
                     <div class="dropdown-menu dropdown-grid">
                         <div class="row max-height-300px" id="listeChangeDepartement">
@@ -365,8 +366,9 @@
             <div class="row">
                 <div class="col-md-6">
                     <p class="text-md-left">Copyright © 2018-{{ 'now'|date('Y') }}
-                        <a href="https://www.davidannebicque.fr" target="_blank">@DavidAnnebicque</a>. All rights
-                        reserved. | Version {{ version.version }}</p>
+                        <a href="https://www.davidannebicque.fr" target="_blank">@DavidAnnebicque</a> | <a
+                                href="https://cyndelherolt.fr/" target="_blank">@CyndelHerolt</a>. All rights
+                        reserved | Version {{ version.version }}</p>
                 </div>
 
                 <div class="col-md-6">
