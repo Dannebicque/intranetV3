@@ -87,7 +87,7 @@ class UpdateEtudiant
         return $result;
     }
 
-    public function deleteMissingEtudiants(?string $keyEduSign): array
+    public function deleteMissingEtudiants(?string $keyEduSign, ?array $semestres): array
     {
         $result = ['success' => true, 'messages' => []];
 
@@ -95,22 +95,29 @@ class UpdateEtudiant
             return ['success' => false, 'messages' => ['Clé EduSign manquante pour la mise à jour des étudiants.']];
         }
 
-        $etudiantOut = $this->etudiantRepository->findEduSignOutdated();
+        $etudiantOut[] = $this->etudiantRepository->findEduSignOutdated();
 
-        foreach ($etudiantOut as $etudiant) {
-            try {
-                $response = $this->apiEtudiant->deleteEtudiant($etudiant->getIdEduSign(), $keyEduSign);
-                if ($response['success']) {
-                    $result['messages'][] = "Étudiant supprimé : {$etudiant->getNom()} {$etudiant->getPrenom()}.";
-                    $etudiant->setIdEduSign(null);
-                    $this->etudiantRepository->save($etudiant);
-                } else {
-                    $result['success'] = false;
-                    $result['messages'][] = "Erreur lors de la suppression de l'étudiant {$etudiant->getNom()} {$etudiant->getPrenom()}: " . $response['error'];
+        $allEtudiants = $this->apiEtudiant->getAllEtudiants($keyEduSign);
+
+        foreach ($allEtudiants as $etudiant) {
+            foreach ($semestres as $semestre) {
+                $etudiantSemestres = $this->etudiantRepository->findBySemestre($semestre);
+                if (!in_array($etudiant, $etudiantSemestres) || in_array($etudiant, $etudiantOut)) {
+                    try {
+                        $response = $this->apiEtudiant->deleteEtudiant($etudiant->getIdEduSign(), $keyEduSign);
+                        if ($response['success']) {
+                            $result['messages'][] = "Étudiant supprimé : {$etudiant->getNom()} {$etudiant->getPrenom()}.";
+                            $etudiant->setIdEduSign(null);
+                            $this->etudiantRepository->save($etudiant);
+                        } else {
+                            $result['success'] = false;
+                            $result['messages'][] = "Erreur lors de la suppression de l'étudiant {$etudiant->getNom()} {$etudiant->getPrenom()}: " . $response['error'];
+                        }
+                    } catch (\Exception $e) {
+                        $result['success'] = false;
+                        $result['messages'][] = "Erreur lors de la suppression de l'étudiant {$etudiant->getNom()} {$etudiant->getPrenom()}: " . $e->getMessage();
+                    }
                 }
-            } catch (\Exception $e) {
-                $result['success'] = false;
-                $result['messages'][] = "Erreur lors de la suppression de l'étudiant {$etudiant->getNom()} {$etudiant->getPrenom()}: " . $e->getMessage();
             }
         }
 

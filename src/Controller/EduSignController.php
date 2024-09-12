@@ -171,8 +171,8 @@ class EduSignController extends BaseController
         $updateResults = [
             $updateGroupe->update($keyEduSign),
             $updateEtudiant->update($keyEduSign),
-            $updateEtudiant->deleteMissingEtudiants($keyEduSign),
-            $updateGroupe->deleteMissingGroupes($keyEduSign)
+            $updateEtudiant->deleteMissingEtudiants($keyEduSign, $diplome->getSemestres()),
+            $updateGroupe->deleteMissingGroupes($keyEduSign, $diplome->getSemestres())
         ];
 
         foreach ($updateResults as $result) {

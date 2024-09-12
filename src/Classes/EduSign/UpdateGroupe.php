@@ -4,6 +4,8 @@ namespace App\Classes\EduSign;
 
 use App\Classes\EduSign\Adapter\IntranetGroupeEduSignAdapter;
 use App\Classes\EduSign\Api\ApiGroupe;
+use App\Entity\Groupe;
+use App\Entity\Semestre;
 use App\Repository\AnneeUniversitaireRepository;
 use App\Repository\DiplomeRepository;
 use App\Repository\GroupeRepository;
@@ -76,7 +78,7 @@ class UpdateGroupe
         return $result;
     }
 
-    public function deleteMissingGroupes(?string $keyEduSign): array
+    public function deleteMissingGroupes(?string $keyEduSign, ?array $semestres): array
     {
         $result = ['success' => true, 'messages' => []];
 
@@ -92,8 +94,28 @@ class UpdateGroupe
                     ? $this->semestreRepository->findOneBy(['idEduSign' => $groupe['ID']])
                     : $this->groupeRepository->findOneBy(['idEduSign' => $groupe['ID']]);
 
+                foreach ($semestres as $semestre) {
+                    $groupes = $semestre->getDiplome()->getApcParcours()?->getGroupes() ?? $this->groupeRepository->findBySemestre($semestre);
+
+                    // si $groupeObject n'est pas dans $groupes et n'est pas dans $semestres
+                    if (!$groupes->contains($groupeObject) && !in_array($groupeObject, $semestres)) {
+                        $groupeObject = null;
+                    }
+                }
+
                 if ($groupeObject === null) {
                     $this->apiGroupe->deleteGroupe($groupe['ID'], $keyEduSign);
+                    // retirer la clé eduSign du groupe ou du semestre
+                    $groupeFinal = $groupe['PARENT'] === ''
+                        ? $this->semestreRepository->findOneBy(['idEduSign' => $groupe['ID']])?->setIdEduSign(null)
+                        : $this->groupeRepository->findOneBy(['idEduSign' => $groupe['ID']])?->setIdEduSign(null);
+                    // sauvegarder le groupe ou le semestre dans le bon repository en fonction de $groupeFinal
+                    if ($groupeFinal instanceof Groupe) {
+                        $this->groupeRepository->save($groupeFinal);
+                    } elseif ($groupeFinal instanceof Semestre) {
+                        $this->semestreRepository->save($groupeFinal);
+                    }
+
                     $result['messages'][] = "Groupe supprimé : {$groupe['NAME']}.";
                 }
             }
