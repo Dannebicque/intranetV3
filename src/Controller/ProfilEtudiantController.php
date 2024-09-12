@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/ProfilEtudiantController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:35
+ * @lastUpdate 02/09/2024 10:49
  */
 
 namespace App\Controller;
@@ -82,7 +82,7 @@ class ProfilEtudiantController extends BaseController
 
         $tabUes = [];
         //uniquement si APC
-        if ($etudiant->getDiplome()->isApc()) {
+        if ($etudiant->getDiplome() !== null && $etudiant->getDiplome()?->isApc()) {
             foreach ($scolarite as $scol) {
                 $bilanAnnees[$scol->getSemestre()->getAnnee()->getOrdre()][$scol->getSemestre()->getOrdreLmd()] = $scol->getMoyennesUes();
 

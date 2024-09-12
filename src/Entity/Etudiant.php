@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Etudiant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/02/2024 08:46
+ * @lastUpdate 09/09/2024 12:21
  */
 
 namespace App\Entity;
@@ -660,7 +660,7 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
         return $this->amenagementsParticuliers;
     }
 
-    public function setAmenagementsParticuliers(string $amenagementsParticuliers): self
+    public function setAmenagementsParticuliers(?string $amenagementsParticuliers = null): self
     {
         $this->amenagementsParticuliers = $amenagementsParticuliers;
 

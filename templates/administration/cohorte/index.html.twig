@@ -99,11 +99,9 @@
                         {% set nbs=0 %}
                         {% set last = '' %}
                         {% for parcour in parcours|filter(parcour => parcour.etudiant == etudiant) %}
-                            <td><span class="
-			                                {% if parcour.decision=='V' %} label label-success
-			                                {% elseif parcour.decision == 'NV' or parcour.decision =='MNC' %}
-			                                label label-warning
-			                                {% endif %}">{{ parcour.semestre.libelle }}</span></td>
+                            <td>
+                                <span class="badge bg-{{ parcour.decision|badgeColorDecision }}">
+                                    {{ parcour.semestre.libelle }}</span></td>
                             {% set nbs=nbs+1 %}
                             {% set i=i+1 %}
                             {% set last = parcour.decision %}
@@ -112,7 +110,7 @@
                             <td> -</td>
                         {% endfor %}
                         <td>{{ nbs }}</td>
-                        <td>{{ last }}</td>
+                        <td>{{ last.value }}</td>
                         <td><a href="{{ path('user_profil',{slug:etudiant.slug, type:'etudiant'}) }}" target="_blank"
                                class="btn
                     btn-info"

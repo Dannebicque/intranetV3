@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/DataUserSession.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/05/2024 19:47
+ * @lastUpdate 04/09/2024 11:04
  */
 
 namespace App\Classes;
@@ -86,7 +86,7 @@ class DataUserSession
     public function initDataUserSession(UserInterface $user): void
     {
         if (!$this->isInit) {
-
+            $this->init = true;
             //todo: fait car session vide après connexion dans cette classe ?
             if ($user instanceof Etudiant) {
                 $this->type_user = 'e';
@@ -130,6 +130,8 @@ class DataUserSession
      */
     public function getSemestres(): array
     {
+        $this->initDataUserSession($this->getUser());
+
         return $this->semestres;
     }
 
