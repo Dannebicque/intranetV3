@@ -105,9 +105,18 @@ class EduSignController extends BaseController
         $semestres = $this->semestreRepository->findByDepartementActifFc($departement);
         $matieres = $this->typeMatiereManager->findByDepartement($departement);
 
+        $diplome = null;
+        if ($request->query->get('diplome')) {
+            $diplome = $this->diplomeRepository->findOneBy(['id' => $request->query->get('diplome')]);
+        } else {
+            $diplome = $diplomes[array_key_first($diplomes)] ?? null;
+        }
+
 
         return $this->render('administration/edusign/index.html.twig', [
             'departement' => $departement,
+            'diplomes' => $diplomes,
+            'diplomeSelect' => $diplome,
             'pagination' => $pagination,
             'personnelsDepartement' => $filteredPersonnelsDepartement,
             'semestres' => $semestres,
@@ -164,8 +173,8 @@ class EduSignController extends BaseController
         return $matieresDepartement;
     }
 
-    #[Route('/update/etudiants/', name: 'app_admin_edu_sign_update_etudiants')]
-    public function updateEtudiants(int $id, UpdateEtudiant $updateEtudiant, MailerInterface $mailer): RedirectResponse
+    #[Route('/update/etudiants/{id}', name: 'app_admin_edu_sign_update_etudiants')]
+    public function updateEtudiants(?int $id, UpdateEtudiant $updateEtudiant, MailerInterface $mailer): RedirectResponse
     {
         $diplomesErrors = [];
 
