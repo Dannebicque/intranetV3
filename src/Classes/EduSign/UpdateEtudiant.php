@@ -104,18 +104,21 @@ class UpdateEtudiant
                 $etudiantSemestres = $this->etudiantRepository->findBySemestre($semestre);
                 if (!in_array($etudiant, $etudiantSemestres) || in_array($etudiant, $etudiantOut)) {
                     try {
-                        $response = $this->apiEtudiant->deleteEtudiant($etudiant->getIdEduSign(), $keyEduSign);
+                        $response = $this->apiEtudiant->deleteEtudiant($etudiant['ID'], $keyEduSign);
                         if ($response['success']) {
-                            $result['messages'][] = "Étudiant supprimé : {$etudiant->getNom()} {$etudiant->getPrenom()}.";
-                            $etudiant->setIdEduSign(null);
-                            $this->etudiantRepository->save($etudiant);
+                            $result['messages'][] = "Étudiant supprimé : {$etudiant['LASTNAME']} {$etudiant['FIRSTNAME']}.";
+                            $etudiantObject = $this->etudiantRepository->findOneBy(['idEduSign' => $etudiant['ID']]);
+                            $etudiantObject->setIdEduSign(null);
+                            $this->etudiantRepository->save($etudiantObject);
                         } else {
                             $result['success'] = false;
-                            $result['messages'][] = "Erreur lors de la suppression de l'étudiant {$etudiant->getNom()} {$etudiant->getPrenom()}: " . $response['error'];
+                            $result['messages'][] = "Erreur lors de la suppression de l'étudiant {$etudiant['LASTNAME']} {$etudiant['FIRSTNAME']}: " . $response['error'];
+
                         }
                     } catch (\Exception $e) {
                         $result['success'] = false;
-                        $result['messages'][] = "Erreur lors de la suppression de l'étudiant {$etudiant->getNom()} {$etudiant->getPrenom()}: " . $e->getMessage();
+                        $result['messages'][] = "Erreur lors de la suppression de l'étudiant {$etudiant['LASTNAME']} {$etudiant['FIRSTNAME']}: " . $e->getMessage();
+
                     }
                 }
             }
