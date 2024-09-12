@@ -144,7 +144,7 @@ class EdtPlanning extends BaseEntity
                 if (1 === $this->groupe) {
                     return 'CM TOUS';
                 }
-                $tab = ['', 'AB', '', 'CD', '', 'EF', '', 'GH'];
+                $tab = ['', 'AB', '', 'CD', '', 'EF', '', 'GH', '', 'IJ'];
                 if ($this->groupe > 40) {
                     return 'CM FI';
                 }
@@ -152,7 +152,7 @@ class EdtPlanning extends BaseEntity
                 return 'CM '.$tab[$this->groupe];
             case 'TD':
             case 'td':
-                $tab = ['', 'AB', '', 'CD', '', 'EF', '', 'GH'];
+                $tab = ['', 'AB', '', 'CD', '', 'EF', '', 'GH', '', 'IJ'];
                 if ($this->groupe > 40) {
                     return 'CM FI';
                 }

@@ -137,30 +137,20 @@
                                             <option value="0">Sélectionner une matière</option>
                                         {% endif %}
                                         {% for matiere in matieres %}
-                                            <option value="{{ matiere.typeIdMatiere }}" {{ matiere.libelle in cours.matiere ? 'selected' }}>{{ matiere.codeMatiere }} - {{ matiere.libelle }}</option>
+                                            <option value="{{ matiere.typeIdMatiere }}" {{ matiere.typeIdMatiere == cours.typeIdMatiere ? 'selected' }}>{{ matiere.codeMatiere }} - {{ matiere.libelle }}</option>
                                         {% endfor %}
                                     </select>
                                 </td>
                                 <td class="p-1">
-                                    <label for="semestre"
-                                           class="text-danger">{{ cours.semestre is null ? '** Pas de semestre **' }}</label>
-                                    <select name="semestre" id="semestre" class="form-select">
-                                        <option value="0">{{ cours.semestre is not null ? cours.semestre : 'Sélectionner un semestre' }}</option>
-                                        {% for semestre in semestres %}
-                                            {{ semestre.libelle }} - {{ cours.semestre }}
-                                            <option value="{{ semestre.id }}" {{ semestre.libelle == cours.semestre ? 'selected' : '' }}>{{ semestre.libelle }}</option>
-                                        {% endfor %}
-                                    </select>
-
                                     <label for="groupe"
                                            class="text-danger">{{ cours.groupe is null ? '** Pas de groupe **' }}</label>
                                     <select name="groupe" id="groupe" class="form-select">
-                                        <option value="0">{{ cours.groupe is not null ? cours.groupe : 'Sélectionner un groupe' }}</option>
+{#                                        <option value="0">{{ cours.groupe is not null ? cours.groupe : 'Sélectionner un groupe' }}</option>#}
+                                        <option value="0">{{ cours.groupe is null ? '** Pas de groupe **' }}</option>
                                         {% for key, semestre in groupesSemestres %}
                                             {% for groupe in semestre %}
-                                                <option value="{{ groupe.id }}" {{ groupe.libelle == cours.groupe ? 'selected' : '' }}>{{ key }} | {{ groupe.libelle }}</option>
+                                                <option value="{{ groupe.id }}" {{ groupe.id == cours.groupeObjet.id ? 'selected' : '' }}>{{ key }} | {{ groupe.libelle }}</option>
                                             {% endfor %}
-{#                                            <option value="{{ groupe.id }}" {{ groupe.libelle == cours.groupe ? 'selected' : '' }}>{{ groupe.libelle }}</option>#}
                                         {% endfor %}
                                     </select>
                                 </td>

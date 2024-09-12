@@ -117,7 +117,7 @@ class EdtCelcat extends AbstractEdt implements EdtInterface
         array $groupes
     ): EvenementEdtCollection {
         $evts = $this->edtCelcatRepository->findEdtSemestreSemaine($semestre, $semaine, $anneeUniversitaire);
-
+//        dd($evts);
         $tGroupes = [];
         foreach ($groupes as $groupe) {
             $tGroupes[$groupe->getCodeApogee()] = $groupe;
