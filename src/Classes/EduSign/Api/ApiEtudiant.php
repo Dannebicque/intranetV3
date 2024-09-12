@@ -143,7 +143,6 @@ class ApiEtudiant
                     'Authorization' => 'Bearer ' . $this->getCleApi->getCleApi($cleApi),
                 ]
             ]);
-
             $content = $response->getContent();
             $data = json_decode($content, true);
 
