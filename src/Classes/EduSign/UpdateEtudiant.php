@@ -87,7 +87,7 @@ class UpdateEtudiant
         return $result;
     }
 
-    public function deleteMissingEtudiants(?string $keyEduSign, ?array $semestres): array
+    public function deleteMissingEtudiants(?string $keyEduSign): array
     {
         $result = ['success' => true, 'messages' => []];
 
@@ -95,38 +95,44 @@ class UpdateEtudiant
             return ['success' => false, 'messages' => ['Clé EduSign manquante pour la mise à jour des étudiants.']];
         }
 
+        $diplomes = $this->diplomeRepository->findBy(['keyEduSign' => $keyEduSign]);
+
         $etudiantOut[] = $this->etudiantRepository->findEduSignOutdated();
 
-        $allEtudiants = $this->apiEtudiant->getAllEtudiants($keyEduSign);
+        try {
+            foreach ($diplomes as $diplome) {
+                $semestres = $this->semestreRepository->findByDiplome($diplome);
+                $allEtudiants = $this->apiEtudiant->getAllEtudiants($keyEduSign);
 
-        if ($allEtudiants['success'] !== false) {
-            foreach ($allEtudiants as $etudiant) {
-                if (!is_array($etudiant)) {
-                    continue; // Skip if $etudiant is not an array
-                }
-                foreach ($semestres as $semestre) {
-                    $etudiantSemestres = $this->etudiantRepository->findBySemestre($semestre);
-                    if (!in_array($etudiant, $etudiantSemestres) || in_array($etudiant, $etudiantOut)) {
-                        try {
-                            $response = $this->apiEtudiant->deleteEtudiant($etudiant['ID'], $keyEduSign);
-                            if ($response['success']) {
-                                $result['messages'][] = "Étudiant supprimé : {$etudiant['LASTNAME']} {$etudiant['FIRSTNAME']}.";
-                                $etudiantObject = $this->etudiantRepository->findOneBy(['idEduSign' => $etudiant['ID']]);
-                                $etudiantObject->setIdEduSign(null);
-                                $this->etudiantRepository->save($etudiantObject);
-                            } else {
-                                $result['success'] = false;
-                                $result['messages'][] = "Erreur lors de la suppression de l'étudiant {$etudiant['LASTNAME']} {$etudiant['FIRSTNAME']}: " . $response['error'];
+                if ($allEtudiants['success'] !== false) {
+                    foreach ($allEtudiants as $etudiant) {
+                        if (!is_array($etudiant)) {
+                            continue; // Skip if $etudiant is not an array
+                        }
+                        foreach ($semestres as $semestre) {
+                            $etudiantSemestres = $this->etudiantRepository->findBySemestre($semestre);
+                            if (!in_array($etudiant, $etudiantSemestres) || in_array($etudiant, $etudiantOut)) {
+                                $response = $this->apiEtudiant->deleteEtudiant($etudiant['ID'], $keyEduSign);
+                                if ($response['success']) {
+                                    $result['messages'][] = "Étudiant supprimé : {$etudiant['LASTNAME']} {$etudiant['FIRSTNAME']}.";
+                                    $etudiantObject = $this->etudiantRepository->findOneBy(['idEduSign' => $etudiant['ID']]);
+                                    $etudiantObject->setIdEduSign(null);
+                                    $this->etudiantRepository->save($etudiantObject);
+                                } else {
+                                    $result['success'] = false;
+                                    $result['messages'][] = "Erreur lors de la suppression de l'étudiant {$etudiant['LASTNAME']} {$etudiant['FIRSTNAME']}: " . $response['error'];
 
+                                }
                             }
-                        } catch (\Exception $e) {
-                            $result['success'] = false;
-                            $result['messages'][] = "Erreur lors de la suppression de l'étudiant {$etudiant['LASTNAME']} {$etudiant['FIRSTNAME']}: " . $e->getMessage();
-
                         }
                     }
                 }
             }
+        } catch
+        (\Exception $e) {
+            $result['success'] = false;
+            $result['messages'][] = "Erreur lors de la suppression de l'étudiant {$etudiant['LASTNAME']} {$etudiant['FIRSTNAME']}: " . $e->getMessage();
+
         }
 
         return $result;

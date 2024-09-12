@@ -78,7 +78,7 @@ class UpdateGroupe
         return $result;
     }
 
-    public function deleteMissingGroupes(?string $keyEduSign, ?array $semestres): array
+    public function deleteMissingGroupes(?string $keyEduSign): array
     {
         $result = ['success' => true, 'messages' => []];
 
@@ -86,38 +86,42 @@ class UpdateGroupe
             return ['success' => false, 'messages' => ['Clé EduSign manquante.']];
         }
 
+        $diplomes = $this->diplomeRepository->findBy(['keyEduSign' => $keyEduSign]);
+
         try {
-            $allGroupes = $this->apiGroupe->getAllGroupes($keyEduSign);
+            foreach ($diplomes as $diplome) {
+                $semestres = $this->semestreRepository->findByDiplome($diplome);
+                $allGroupes = $this->apiGroupe->getAllGroupes($keyEduSign);
 
-            foreach ($allGroupes as $groupe) {
-                $groupeObject = $groupe['PARENT'] === ''
-                    ? $this->semestreRepository->findOneBy(['idEduSign' => $groupe['ID']])
-                    : $this->groupeRepository->findOneBy(['idEduSign' => $groupe['ID']]);
+                foreach ($allGroupes as $groupe) {
+                    $groupeObject = $groupe['PARENT'] === ''
+                        ? $this->semestreRepository->findOneBy(['idEduSign' => $groupe['ID']])
+                        : $this->groupeRepository->findOneBy(['idEduSign' => $groupe['ID']]);
 
-                foreach ($semestres as $semestre) {
-                    $groupes = $semestre->getDiplome()->getApcParcours()?->getGroupes() ?? $this->groupeRepository->findBySemestre($semestre);
+                    foreach ($semestres as $semestre) {
+                        $groupes = $semestre->getDiplome()->getApcParcours()?->getGroupes() ?? $this->groupeRepository->findBySemestre($semestre);
 
-                    // si $groupeObject n'est pas dans $groupes et n'est pas dans $semestres
-                    if (!$groupes->contains($groupeObject) && !in_array($groupeObject, $semestres)) {
-                        $groupeObject = null;
-                    }
-                }
-
-                if ($groupeObject === null) {
-                    dd($groupe);
-                    $this->apiGroupe->deleteGroupe($groupe['ID'], $keyEduSign);
-                    // retirer la clé eduSign du groupe ou du semestre
-                    $groupeFinal = $groupe['PARENT'] === ''
-                        ? $this->semestreRepository->findOneBy(['idEduSign' => $groupe['ID']])?->setIdEduSign(null)
-                        : $this->groupeRepository->findOneBy(['idEduSign' => $groupe['ID']])?->setIdEduSign(null);
-                    // sauvegarder le groupe ou le semestre dans le bon repository en fonction de $groupeFinal
-                    if ($groupeFinal instanceof Groupe) {
-                        $this->groupeRepository->save($groupeFinal);
-                    } elseif ($groupeFinal instanceof Semestre) {
-                        $this->semestreRepository->save($groupeFinal);
+                        // si $groupeObject n'est pas dans $groupes et n'est pas dans $semestres
+                        if (!$groupes->contains($groupeObject) && !in_array($groupeObject, $semestres)) {
+                            $groupeObject = null;
+                        }
                     }
 
-                    $result['messages'][] = "Groupe supprimé : {$groupe['NAME']}.";
+                    if ($groupeObject === null) {
+                        $this->apiGroupe->deleteGroupe($groupe['ID'], $keyEduSign);
+                        // retirer la clé eduSign du groupe ou du semestre
+                        $groupeFinal = $groupe['PARENT'] === ''
+                            ? $this->semestreRepository->findOneBy(['idEduSign' => $groupe['ID']])?->setIdEduSign(null)
+                            : $this->groupeRepository->findOneBy(['idEduSign' => $groupe['ID']])?->setIdEduSign(null);
+                        // sauvegarder le groupe ou le semestre dans le bon repository en fonction de $groupeFinal
+                        if ($groupeFinal instanceof Groupe) {
+                            $this->groupeRepository->save($groupeFinal);
+                        } elseif ($groupeFinal instanceof Semestre) {
+                            $this->semestreRepository->save($groupeFinal);
+                        }
+
+                        $result['messages'][] = "Groupe supprimé : {$groupe['NAME']}.";
+                    }
                 }
             }
         } catch (\Exception $e) {
