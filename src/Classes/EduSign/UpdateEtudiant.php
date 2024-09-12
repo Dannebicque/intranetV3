@@ -43,7 +43,7 @@ class UpdateEtudiant
         }
 
         foreach ($diplomes as $diplome) {
-            $semestres = $this->semestreRepository->findSemestreEduSignDept($diplome->getDepartement());
+            $semestres = $diplome->getSemestres();
 
             foreach ($semestres as $semestre) {
                 $etudiants = $this->etudiantRepository->findBySemestre($semestre);
@@ -121,7 +121,7 @@ class UpdateEtudiant
     {
         $result = ['success' => true, 'messages' => []];
 
-        $semestres = $this->semestreRepository->findSemestreEduSignDept($diplome->getDepartement());
+        $semestres = $diplome->getSemestres();
 
         foreach ($semestres as $semestre) {
             $etudiants = $this->etudiantRepository->findBySemestre($semestre);
