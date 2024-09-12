@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.19.23](https://github.com/Dannebicque/intranetV3/compare/v3.19.22...v3.19.23) (2024-09-12)
+
+
+### Bug Fixes
+
+* sous-comm avec les sous-comm validée et non une liste d'étudiant du semestre. ([70d891e](https://github.com/Dannebicque/intranetV3/commit/70d891e27889f30bd1862ee842b769332bf5e60b))
+
 ### [3.19.22](https://github.com/Dannebicque/intranetV3/compare/v3.19.21...v3.19.22) (2024-09-11)
 
 
