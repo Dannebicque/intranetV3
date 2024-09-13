@@ -27,6 +27,12 @@
                     <span>{{ 'adm.edusign.commands.info-create'|trans }}</span>
                 </div>
 
+                <nav class="nav nav-tabs">
+                    {% for diplome in diplomes %}
+                        <a class="nav-link {% if ((diplomeSelect != null and diplomeSelect.id == diplome.id) or (diplomeSelect == null)) %}active{% endif %}"
+                           href="{{ path('administration_edusign_index', {'diplome': diplome.id}) }}">{{ diplome.sigle }}</a>
+                    {% endfor %}
+                </nav>
                 <div class="dropdown mb-5">
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
                             data-bs-toggle="dropdown" aria-expanded="false">
@@ -56,12 +62,12 @@
                                 </div>
                                 <div class="modal-body">
                                     Cette action va créer les nouveaux cours et corriger les cours déjà existants si
-                                    nécessaire
+                                    nécessaire pour {{ diplomeSelect.sigle }}
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler
                                     </button>
-                                    <a href="{{ path('app_admin_edu_sign_create_courses', {'opt': 1, 'id': departement.id}) }}"
+                                    <a href="{{ path('app_admin_edu_sign_create_courses', {'opt': 1, 'id': diplomeSelect.id}) }}"
                                        class="btn btn-primary">Confirmer</a>
                                 </div>
                             </div>
@@ -85,13 +91,20 @@
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler
                                     </button>
-                                    <a href="{{ path('app_admin_edu_sign_create_courses', {'opt': 2, 'id': departement.id}) }}"
+                                    <a href="{{ path('app_admin_edu_sign_create_courses', {'opt': 2, 'id': diplomeSelect.id}) }}"
                                        class="btn btn-primary">Confirmer</a>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                {% if pagination.data is empty or pagination.data is null %}
+                    <div class="alert alert-success">
+                        <span>Aucun cours pour cette semaine :)</span>
+                    </div>
+                {% else %}
+
 
                 <table class="table-edt">
                     <thead>
@@ -109,6 +122,26 @@
                         <form action="{{ path('app_admin_edu_sign_update_cours', {'id': cours.id, 'source': cours.source}) }}">
                             <tbody>
                             <tr>
+{#                               todo: nouvelle structure pr modifer date et heure à adapter dans la méthode #}
+{#                                <td class="p-1">
+                                        <label for="date" class="text-danger">
+                                            {{ cours.date is null or cours.date == "" ? '** Pas de date **' : cours.date|date('d/m/Y') }}
+                                        </label>
+                                        <input type="date" name="date" id="date" class="form-control"
+                                               value="{{ cours.date ? cours.date|date('Y-m-d') : '' }}">
+                                    </td>
+                                    <td class="p-1">
+                                        <label for="heureDebut" class="text-danger">
+                                            {{ cours.heureDebut is null or cours.heureDebut == "" ? '** Pas d\'heure de début **' : cours.heureDebut|date('H:i') }}
+                                        </label>
+                                        <input type="time" name="heureDebut" id="heureDebut" class="form-control"
+                                               value="{{ cours.heureDebut ? cours.heureDebut|date('H:i') : '' }}">
+                                        <label for="heureFin" class="text-danger">
+                                            {{ cours.heureFin is null or cours.heureFin == "" ? '** Pas d\'heure de fin **' : cours.heureFin|date('H:i') }}
+                                        </label>
+                                        <input type="time" name="heureFin" id="heureFin" class="form-control"
+                                               value="{{ cours.heureFin ? cours.heureFin|date('H:i') : '' }}">
+                                    </td>#}
                                 <td class="p-1">
                                     {% if cours.date is not null and cours.date != "" %}
                                         {{ cours.date|date('d/m/Y') }}
@@ -201,6 +234,8 @@
                         </li>
                     </ul>
                 </nav>
+
+                {% endif %}
             </div>
             <hr>
             <div>
