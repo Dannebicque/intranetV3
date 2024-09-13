@@ -104,7 +104,7 @@ class UpdateEtudiant
                 $semestres = $this->semestreRepository->findByDiplome($diplome);
                 $allEtudiants = $this->apiEtudiant->getAllEtudiants($keyEduSign);
 
-                if ($allEtudiants['success'] !== false) {
+                if ($allEtudiants !== null && isset($allEtudiants['result']) && is_array($allEtudiants['result'])) {
                     foreach ($allEtudiants as $etudiant) {
                         if (!is_array($etudiant)) {
                             continue; // Skip if $etudiant is not an array
