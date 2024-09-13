@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.19.25](https://github.com/Dannebicque/intranetV3/compare/v3.19.24...v3.19.25) (2024-09-13)
+
+
+### Bug Fixes
+
+* Edt si erreur de semestre. ([0ba8fbd](https://github.com/Dannebicque/intranetV3/commit/0ba8fbd34e5262da6afec1e5a6f77bcd28a1c81e))
+* Filtre de la taille du code matière Apogée + help ([290ff5d](https://github.com/Dannebicque/intranetV3/commit/290ff5d35411b12f863f23f5382bc99690552020))
+* Tri personnel type ([04be96c](https://github.com/Dannebicque/intranetV3/commit/04be96c955b5f4af91c933813b3d86af7014fc75))
+
 ### [3.19.24](https://github.com/Dannebicque/intranetV3/compare/v3.19.23...v3.19.24) (2024-09-12)
 
 
