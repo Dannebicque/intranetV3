@@ -131,8 +131,7 @@ class UpdateEtudiant
         } catch
         (\Exception $e) {
             $result['success'] = false;
-            $result['messages'][] = "Erreur lors de la suppression de l'étudiant {$etudiant['LASTNAME']} {$etudiant['FIRSTNAME']}: " . $e->getMessage();
-
+            $result['messages'][] = 'Erreur lors de la suppression des étudiants : ' . $e->getMessage();
         }
 
         return $result;
