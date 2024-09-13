@@ -104,7 +104,7 @@ class UpdateEtudiant
                 $semestres = $this->semestreRepository->findByDiplome($diplome);
                 $allEtudiants = $this->apiEtudiant->getAllEtudiants($keyEduSign);
 
-                if ($allEtudiants['success'] !== false) {
+                if ($allEtudiants !== null && isset($allEtudiants['result']) && is_array($allEtudiants['result'])) {
                     foreach ($allEtudiants as $etudiant) {
                         if (!is_array($etudiant)) {
                             continue; // Skip if $etudiant is not an array
@@ -131,8 +131,7 @@ class UpdateEtudiant
         } catch
         (\Exception $e) {
             $result['success'] = false;
-            $result['messages'][] = "Erreur lors de la suppression de l'étudiant {$etudiant['LASTNAME']} {$etudiant['FIRSTNAME']}: " . $e->getMessage();
-
+            $result['messages'][] = 'Erreur lors de la suppression des étudiants : ' . $e->getMessage();
         }
 
         return $result;
