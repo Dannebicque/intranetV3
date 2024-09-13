@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Table/PersonnelDepartementTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 18:43
+ * @lastUpdate 13/09/2024 10:04
  */
 
 namespace App\Table;
@@ -68,7 +68,7 @@ class PersonnelDepartementTableType extends TableType
             ['label' => 'table.nom', 'order' => 'ASC']);
         $builder->addColumn('prenom', PropertyColumnType::class,
             ['label' => 'table.prenom']);
-        $builder->addColumn('type', TypePersonnelColumnType::class,
+        $builder->addColumn('typeUser', TypePersonnelColumnType::class,
             ['label' => 'table.typeUser']);
         $builder->addColumn('contact_personnel', ColumnType::class,
             [
