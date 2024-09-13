@@ -30,7 +30,7 @@ class IntranetEtudiantEduSignAdapter
         $this->etudiant->groups = $groupes;
         $this->etudiant->tags = [];
         $this->etudiant->api_id = $etudiant->getId();
-        $this->etudiant->send_email_credentials = false;
+        $this->etudiant->send_email_credentials = true;
         $this->etudiant->new_password_needed = false;
     }
 
