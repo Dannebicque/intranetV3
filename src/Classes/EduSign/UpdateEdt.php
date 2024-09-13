@@ -148,6 +148,7 @@ class UpdateEdt
     {
         $course = (new IntranetEdtEduSignAdapter($this->evenement))->getCourse();
         if ($course !== null) {
+            dd($this->apiCours->addCourse($course, $keyEduSign));
             $this->apiCours->addCourse($course, $keyEduSign);
             $response = 'cours ajouté - id : ' . $this->evenement->id;
         } else {

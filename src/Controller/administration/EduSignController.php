@@ -64,37 +64,47 @@ class EduSignController extends BaseController
         $filteredPersonnelsDepartement = array_filter($personnelsDepartement, fn($p) => empty($p->getPersonnel()->getIdEduSign() ?? []) || !array_key_exists($departement->getId(), $p->getPersonnel()->getIdEduSign()));
 
         $diplomes = $this->diplomeRepository->findAllWithEduSignDepartement($departement);
+        // pour chaque diplome ajouter l'id en key
+        $diplomes = array_combine(array_map(fn($d) => $d->getId(), $diplomes), $diplomes);
         $cours = [];
 
-        foreach ($diplomes as $diplome) {
-            $semestres = $this->semestreRepository->findByDiplome($diplome);
-            $start = Carbon::today();
-            $end = Carbon::today()->next('saturday');
-            $semaineReelle = date('W');
+        if ($request->query->get('diplome')) {
+            if (!array_key_exists($request->query->get('diplome'), $diplomes)) {
+                $diplome = $diplomes[array_key_first($diplomes)] ?? null;
+            } else {
+                $diplome = $this->diplomeRepository->findOneBy(['id' => $request->query->get('diplome')]);
+            }
+        } else {
+            $diplome = $diplomes[array_key_first($diplomes)] ?? null;
+        }
 
-            foreach ($semestres as $semestre) {
-                $eventSemaine = $this->CalendrierRepository->findOneBy(['semaineReelle' => $semaineReelle, 'anneeUniversitaire' => $semestre->getAnneeUniversitaire()]);
-                $semaine = $eventSemaine->getSemaineFormation();
-                $matieresDiplome = $this->getMatieresDiplome($semestre->getDiplome());
-                $groupes = $this->groupeRepository->findBySemestre($semestre);
-                // récupérer uniquement les groupes propres au semestre
-                $groupesSemestres[$semestre->getLibelle()] = array_filter($groupes, function ($groupe) use ($semestre) {
-                    return $groupe->getApcParcours()?->getDiplomes()->contains($semestre->getDiplome());
-                });
+        $semestres = $this->semestreRepository->findByDiplome($diplome);
+        $start = Carbon::today();
+        $end = Carbon::today()->next('saturday');
+        $semaineReelle = date('W');
 
-                $edt = $this->edtManager->getPlanningSemestreSemaine($semestre, $semaine, $semestre->getAnneeUniversitaire(), $matieresDiplome, $groupes);
+        foreach ($semestres as $semestre) {
+            $eventSemaine = $this->CalendrierRepository->findOneBy(['semaineReelle' => $semaineReelle, 'anneeUniversitaire' => $semestre->getAnneeUniversitaire()]);
+            $semaine = $eventSemaine->getSemaineFormation();
+            $matieresDiplome = $this->getMatieresDiplome($semestre->getDiplome());
+            $groupes = $this->groupeRepository->findBySemestre($semestre);
+            // récupérer uniquement les groupes propres au semestre
+            $groupesSemestres[$semestre->getLibelle()] = array_filter($groupes, function ($groupe) use ($semestre) {
+                return $groupe->getApcParcours()?->getDiplomes()->contains($semestre->getDiplome());
+            });
 
-                $salles = $this->salleRepository->findAll();
+            $edt = $this->edtManager->getPlanningSemestreSemaine($semestre, $semaine, $semestre->getAnneeUniversitaire(), $matieresDiplome, $groupes);
 
-                foreach ($edt->evenements as $this->evenement) {
-                    if ($this->evenement->dateObjet->isBetween($start, $end)) {
-                        $this->evenement->matieresDiplome = $matieresDiplome;
-                        $this->evenement->semestresGroupe = $semestre;
-                        $this->evenement->groupesSemestre = $groupes;
-                        $this->evenement->salles = $salles;
-                        $this->evenement->enseignants = $personnelsDepartement;
-                        $cours[] = $this->evenement;
-                    }
+            $salles = $this->salleRepository->findAll();
+
+            foreach ($edt->evenements as $this->evenement) {
+                if ($this->evenement->dateObjet->isBetween($start, $end)) {
+                    $this->evenement->matieresDiplome = $matieresDiplome;
+                    $this->evenement->semestresGroupe = $semestre;
+                    $this->evenement->groupesSemestre = $groupes;
+                    $this->evenement->salles = $salles;
+                    $this->evenement->enseignants = $personnelsDepartement;
+                    $cours[] = $this->evenement;
                 }
             }
         }
@@ -104,13 +114,6 @@ class EduSignController extends BaseController
         $pagination->calculPaginationFromArray($cours, ['path' => 'administration_edusign_index', 'args' => []], 10, $page);
         $semestres = $this->semestreRepository->findByDepartementActifFc($departement);
         $matieres = $this->typeMatiereManager->findByDepartement($departement);
-
-        $diplome = null;
-        if ($request->query->get('diplome')) {
-            $diplome = $this->diplomeRepository->findOneBy(['id' => $request->query->get('diplome')]);
-        } else {
-            $diplome = $diplomes[array_key_first($diplomes)] ?? null;
-        }
 
 
         return $this->render('administration/edusign/index.html.twig', [
@@ -253,23 +256,22 @@ class EduSignController extends BaseController
         return $this->redirectToRoute('administration_edusign_index');
     }
 
-    #[Route('/create-courses/{opt}', name: 'app_admin_edu_sign_create_courses')]
-    public function createCourses(?int $opt, UpdateEdt $updateEdt, FixCourses $fixCourses, MailerInterface $mailer): Response
+    #[Route('/create-courses/{opt}/{id}', name: 'app_admin_edu_sign_create_courses')]
+    public function createCourses(?int $opt, ?int $id, UpdateEdt $updateEdt, FixCourses $fixCourses, MailerInterface $mailer): Response
     {
-        $departement = $this->getDepartement();
+        $diplome = $this->diplomeRepository->findOneBy(['id' => $id]);
+
         $errors = [];
 
-        foreach ($this->diplomeRepository->findAllWithEduSignDepartement($departement) as $diplome) {
-            $keyEduSign = $diplome->getKeyEduSign();
-            $updateResult = $updateEdt->update($keyEduSign, $opt);
-            $fixResult = $fixCourses->fixCourse($keyEduSign);
+        $keyEduSign = $diplome->getKeyEduSign();
+        $updateResult = $updateEdt->update($keyEduSign, $opt);
+        $fixResult = $fixCourses->fixCourse($keyEduSign);
 
-            if (!$updateResult['success']) {
-                $errors[] = $updateResult['error'];
-            }
-            if (!$fixResult['success']) {
-                $errors[] = $fixResult['error'];
-            }
+        if (!$updateResult['success']) {
+            $errors[] = $updateResult['error'];
+        }
+        if (!$fixResult['success']) {
+            $errors[] = $fixResult['error'];
         }
 
         if (!empty($errors)) {
@@ -308,6 +310,12 @@ class EduSignController extends BaseController
 
         $salle = $this->salleRepository->findOneBy(['id' => $request->query->get('salle')]);
 
+        // Récupérer les nouvelles valeurs de date et d'heure
+//        $date = $request->query->get('date');
+//        $heureDebut = $request->query->get('heureDebut');
+//        $heureFin = $request->query->get('heureFin');
+
+        //todo: adapter les données de date et d'heure à la structure de l'objet
         $cours = $this->edtManager->updateCourse($cours, $source, $objmatiere, $semestre, $groupe, $groupeOrdre ?? null, $groupeType ?? null, $enseignant, $salle);
 
         $course = $this->edtManager->getCourseEduSign($source, $cours->getId(), $objmatiere, $groupe);
