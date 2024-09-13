@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/SourceEdt/Adapter/EdtCelcatAdapter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/02/2024 19:31
+ * @lastUpdate 13/09/2024 16:32
  */
 
 namespace App\Components\SourceEdt\Adapter;
@@ -93,7 +93,7 @@ class EdtCelcatAdapter extends AbstractEdtAdapter implements EdtAdapterInterface
     private function getLargeur(mixed $evt): int
     {
         return match (trim($evt->type_cours)) {
-            'cm', 'CM' => $evt->semestre->getNbgroupeTpEdt(),
+            'cm', 'CM' => $evt->semestre?->getNbgroupeTpEdt() ?? 1,
             'TD', 'td' => 2,
             default => 1,
         };
