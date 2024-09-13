@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/ScolariteRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/04/2024 17:54
+ * @lastUpdate 13/09/2024 19:24
  */
 
 namespace App\Repository;
@@ -115,5 +115,15 @@ class ScolariteRepository extends ServiceEntityRepository
         }
 
         return $t;
+    }
+
+    public function findMaxOrdre(Etudiant $etudiant): ?int
+    {
+        return $this->createQueryBuilder('s')
+            ->select('MAX(s.ordre)')
+            ->where('s.etudiant = :etudiant')
+            ->setParameter('etudiant', $etudiant->getId())
+            ->getQuery()
+            ->getSingleScalarResult();
     }
 }

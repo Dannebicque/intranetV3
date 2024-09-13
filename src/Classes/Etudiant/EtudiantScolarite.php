@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Etudiant/EtudiantScolarite.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/09/2023 19:25
+ * @lastUpdate 13/09/2024 19:24
  */
 
 /*
@@ -103,6 +103,9 @@ class EtudiantScolarite
             if (null === $scolarite) {
                 // si non ??? Créer mais comment associer à une sous-comm?
                 $scolarite = new Scolarite($this->etudiant, $this->semestre, $this->anneeUniversitaire);
+                //récupérer toutes les scolarités de l'étudiant et trouver l'ordre maximum
+                $ordre = $this->scolariteRepository->findMaxOrdre($this->etudiant) ?? 0;
+                $scolarite->setOrdre($ordre + 1);
             }
 //todo: possible de manipuler DecisionEnum tout le long ?
             $scolarite->setDecision(DecisionSemestreEnum::tryFrom($this->getDecisionFromEtat($etat)));
