@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Form/ApcSaeType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/04/2024 14:17
+ * @lastUpdate 13/09/2024 10:17
  */
 
 namespace App\Form;
@@ -36,8 +36,8 @@ class ApcSaeType extends AbstractType
 
         $builder
             ->add('mutualisee', YesNoType::class, ['label' => 'label.mutualisee'])
-            ->add('codeElement', TextType::class, ['label' => 'label.code_element'])
-            ->add('codeMatiere', TextType::class, ['label' => 'label.codeSae'])
+            ->add('codeElement', TextType::class, ['label' => 'label.code_element', 'attr' => ['maxlength' => 20]])
+            ->add('codeMatiere', TextType::class, ['label' => 'label.codeSae', 'attr' => ['maxlength' => 20], 'help' => 'Code de la SAÉ. Maximum 20 caractères'])
             ->add('libelle', TextType::class, ['label' => 'label.libelle'])
             ->add('libelleCourt', TextType::class,
                 ['label' => 'label.libelle.court', 'required' => false, 'attr' => ['maxlength' => 25]])

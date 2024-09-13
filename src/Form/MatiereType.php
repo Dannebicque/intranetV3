@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Form/MatiereType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 10:52
+ * @lastUpdate 13/09/2024 10:32
  */
 
 namespace App\Form;
@@ -51,8 +51,8 @@ class MatiereType extends AbstractType
         $this->diplome = $options['diplome'];
         $builder
             ->add('libelle', TextType::class, ['label' => 'label.libelle'])
-            ->add('codeMatiere', TextType::class, ['label' => 'label.code_matiere'])
-            ->add('codeElement', TextType::class, ['label' => 'label.code_element'])
+            ->add('codeMatiere', TextType::class, ['label' => 'label.code_matiere', 'attr' => ['maxlength' => 20], 'help' => 'Code de la matière. Maximum 20 caractères'])
+            ->add('codeElement', TextType::class, ['label' => 'label.code_element', 'attr' => ['maxlength' => 20]])
             ->add('suspendu', YesNoType::class, [
                 'label' => 'label.suspendu',
             ])
