@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Form/ApcRessourceType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/06/2024 19:52
+ * @lastUpdate 13/09/2024 10:17
  */
 
 namespace App\Form;
@@ -36,8 +36,8 @@ class ApcRessourceType extends AbstractType
         $builder
             ->add('ressourceParent', YesNoType::class, ['label' => 'label.ressourceParent', 'help' => 'help.ressourceParent'])
             ->add('mutualisee', YesNoType::class, ['label' => 'label.mutualisee'])
-            ->add('codeMatiere', TextType::class, ['label' => 'label.codeRessource'])
-            ->add('codeElement', TextType::class, ['label' => 'label.code_element'])
+            ->add('codeMatiere', TextType::class, ['label' => 'label.codeRessource', 'attr' => ['maxlength' => 20], 'help' => 'Code de la Ressource. Maximum 20 caractères'])
+            ->add('codeElement', TextType::class, ['label' => 'label.code_element', 'attr' => ['maxlength' => 20]])
             ->add('hasCoefficientDifferent', YesNoType::class, ['label' => 'Coefficient(s) différent(s) selon les parcours ', 'help' => 'Possibilité de différencier les coefficients sur les UE selon les parcours. Implique de saisir les coefficients sur tous les parcours où la ressource est utilisée.'])
             ->add('libelle', TextType::class, ['label' => 'label.libelle'])
             ->add('libelleCourt', TextType::class, ['label' => 'label.libelle.court', 'attr' => ['maxlength' => 25]])
