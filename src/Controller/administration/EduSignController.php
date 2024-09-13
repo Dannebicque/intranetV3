@@ -64,10 +64,16 @@ class EduSignController extends BaseController
         $filteredPersonnelsDepartement = array_filter($personnelsDepartement, fn($p) => empty($p->getPersonnel()->getIdEduSign() ?? []) || !array_key_exists($departement->getId(), $p->getPersonnel()->getIdEduSign()));
 
         $diplomes = $this->diplomeRepository->findAllWithEduSignDepartement($departement);
+        // pour chaque diplome ajouter l'id en key
+        $diplomes = array_combine(array_map(fn($d) => $d->getId(), $diplomes), $diplomes);
         $cours = [];
 
         if ($request->query->get('diplome')) {
-            $diplome = $this->diplomeRepository->findOneBy(['id' => $request->query->get('diplome')]);
+            if (!array_key_exists($request->query->get('diplome'), $diplomes)) {
+                $diplome = $diplomes[array_key_first($diplomes)] ?? null;
+            } else {
+                $diplome = $this->diplomeRepository->findOneBy(['id' => $request->query->get('diplome')]);
+            }
         } else {
             $diplome = $diplomes[array_key_first($diplomes)] ?? null;
         }
