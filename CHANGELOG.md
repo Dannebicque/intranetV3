@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.19.26](https://github.com/Dannebicque/intranetV3/compare/v3.19.24...v3.19.26) (2024-09-14)
+
+
+### Bug Fixes
+
+* Edt sans filtre diplôme ([af2df26](https://github.com/Dannebicque/intranetV3/commit/af2df26eed65c4387b0432a88dee4a6682113a6f))
+* Edt si erreur de semestre. ([0791687](https://github.com/Dannebicque/intranetV3/commit/07916870fd5b37c89cf6d55b3aa3730e1ed832e3))
+* Filtre de la taille du code matière Apogée + help ([e1634d0](https://github.com/Dannebicque/intranetV3/commit/e1634d0f1465654f1b271def954c688e96feb166))
+* Semestre scolarité null sur changement de semestre, récupération de l'ordre max ([5085b56](https://github.com/Dannebicque/intranetV3/commit/5085b5633abb023e98c99a7ae776874decbe25ac))
+* Tri personnel type ([bec4b00](https://github.com/Dannebicque/intranetV3/commit/bec4b00d3f5c32866720f980e4c9a53745442ec6))
+
 ### [3.19.25](https://github.com/Dannebicque/intranetV3/compare/v3.19.24...v3.19.25) (2024-09-13)
 
 
