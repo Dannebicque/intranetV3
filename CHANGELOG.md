@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.19.27](https://github.com/Dannebicque/intranetV3/compare/v3.19.26...v3.19.27) (2024-09-15)
+
+
+### Bug Fixes
+
+* apparence des fieldsets sur les formulaires ([cd647a8](https://github.com/Dannebicque/intranetV3/commit/cd647a841568a064ee790471ae43d8bda9156c30))
+* Export Ical depuis EdtPlanning ([24e967f](https://github.com/Dannebicque/intranetV3/commit/24e967f3a41de365fc093ad230ca82ea5dcec6e6))
+* mise en page paramètres partie permanents ([133e5a4](https://github.com/Dannebicque/intranetV3/commit/133e5a496cfa05383060142539e682c3c62119ca))
+
 ### [3.19.26](https://github.com/Dannebicque/intranetV3/compare/v3.19.24...v3.19.26) (2024-09-14)
 
 
