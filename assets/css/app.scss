@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/css/app.scss
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 20/04/2024 11:30
+// @lastUpdate 14/09/2024 20:10
 
 @import "./theme-troyes.scss";
 @import "./theme-rcc.scss";
@@ -111,13 +111,16 @@ a .btn-round {
 }
 
 fieldset {
-  border: 1px solid #4d5259;
-  padding: 10px;
+  //border: 1px solid #4d5259;
+  //padding: 10px;
+  border: none;
+  padding: 0;
 }
 
 fieldset legend {
-  font-weight: 400;
+  //font-weight: 400;
   padding: 5px;
+
 }
 
 .absent {
