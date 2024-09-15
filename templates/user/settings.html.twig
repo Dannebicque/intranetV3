@@ -25,7 +25,82 @@
             {% form_theme form 'form/my-form.html.twig' %}
             {{ form_start(form) }}
             {% if type == 'personnel' %}
-                {{ form_row(form) }}
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="card">
+                            <h4 class="card-title">Vos informations</h4>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-6">
+                                        {{ form_row(form.civilite) }}
+                                        {{ form_row(form.nom) }}
+                                        {{ form_row(form.prenom) }}
+                                        {{ form_row(form.date_naissance) }}
+                                    </div>
+                                    <div class="col-sm-12 col-md-6">
+
+                                        {{ form_row(form.mail_perso) }}
+                                        {{ form_row(form.site_perso) }}
+                                        {{ form_row(form.statut) }}
+                                        {{ form_row(form.photoFile) }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="card">
+                            <h4 class="card-title">Vos informations professionnelles</h4>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-12  col-md-6">
+                                        {{ form_row(form.numero_harpege) }}
+                                        {{ form_row(form.mail_univ, {'disabled' : true, 'help': 'Contactez'}) }}
+                                        {{ form_row(form.site_univ) }}
+                                        {{ form_row(form.tel_bureau) }}
+                                        {{ form_row(form.tel1) }}
+                                        {{ form_row(form.tel2) }}
+                                    </div>
+                                    <div class="col-sm-12  col-md-6">
+                                        {{ form_row(form.poste_interne) }}
+                                        {{ form_row(form.bureau1) }}
+                                        {{ form_row(form.bureau2) }}
+                                        {{ form_row(form.entreprise, {'help': 'Pour les vacataires'}) }}
+                                        {{ form_row(form.cvFile) }}
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6">
+                        <div class="card">
+                            <h4 class="card-title">Vos coordonnées</h4>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        {{ form_row(form.adresse) }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6">
+                        <div class="card">
+                            <h4 class="card-title">Autres paramètres</h4>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        {{ form_row(form.domaines) }}
+                                        {{ form_row(form.responsabilites) }}
+                                        {{ form_row(form.signature, {'help': 'Pour la messagerie interne'}) }}
+                                        {{ form_row(form.remarque) }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             {% else %}
                 <div class="row">
                     <div class="col-sm-12">
