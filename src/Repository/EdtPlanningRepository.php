@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/EdtPlanningRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/09/2024 16:48
+ * @lastUpdate 15/09/2024 09:47
  */
 
 namespace App\Repository;
@@ -352,6 +352,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
     public function getByPersonnelArray(Personnel $user, Departement $departement, array $tabMatieresDepartement): array
     {
         $query = $this->createQueryBuilder('p')
+            ->leftJoin('p.semestre', 's')
             ->andWhere('p.intervenant = :idprof')
             ->andWhere('p.anneeUniversitaire = :anneeUniversitaire')
             ->setParameter('idprof', $user->getId())
@@ -362,10 +363,9 @@ class EdtPlanningRepository extends ServiceEntityRepository
         $ors = [];
 
         foreach ($departement->getDiplomes() as $diplome) {
-            $dip = $diplome->getParent() ?? $diplome;
             foreach ($diplome->getSemestres() as $semestre) {
                 if (true === $semestre->isActif()) {
-                    $ors[] = '(' . $query->expr()->orx('(p.ordreSemestre = ' . $query->expr()->literal($semestre->getOrdreLmd()) . ' AND p.diplome = ' . $query->expr()->literal($dip->getId()) . ')') . ')';
+                    $ors[] = '(' . $query->expr()->orx('(s.id = ' . $query->expr()->literal($semestre->getId()) . ')') . ')';
                 }
             }
         }
@@ -383,6 +383,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
             $pl['id'] = $event->getId();
             $pl['semaine'] = $event->getSemaine();
             $pl['jour'] = $event->getJour();
+            $pl['semestre'] = $event->getSemestre();
             $pl['debut'] = $event->getDebut();
             $pl['date'] = $event->getDate();
             $pl['fin'] = $event->getFin();
