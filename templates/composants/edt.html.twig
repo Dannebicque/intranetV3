@@ -6,8 +6,12 @@
                 <a href="{{ path('administration_edt_export_index', {source:source}) }}"
                    class="btn btn-primary"> {{ 'adm.edt.export'|trans }}</a></div>
             <div class="col-3 d-block d-grid mb-2">
+                <a href="{{ path('administration_edt_export_liens_ical', {source:source}) }}"
+                   class="btn btn-primary"> Liens ICAL</a></div>
+            <div class="col-3 d-block d-grid mb-2">
                 <a href="{{ path('administration_edt_export_script', {source:source}) }}"
                    class="btn btn-primary"> Script Celcat</a></div>
+
 
             <div class="col-6 d-block d-grid mb-2">
                 <a href="{{ path('administration_edt_compare_personnels', {source:source}) }}"
