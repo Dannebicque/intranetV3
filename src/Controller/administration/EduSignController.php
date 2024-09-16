@@ -111,7 +111,15 @@ class EduSignController extends BaseController
 
         $page = $request->query->getInt('page', 1);
         $pagination = new MyPagination($router);
-        $pagination->calculPaginationFromArray($cours, ['path' => 'administration_edusign_index', 'args' => []], 10, $page);
+        $pagination->calculPaginationFromArray(
+            $cours,
+            [
+                'path' => 'administration_edusign_index',
+                'args' => ['diplome' => $diplome?->getId()]
+            ],
+            10,
+            $page
+        );
         $semestres = $this->semestreRepository->findByDepartementActifFc($departement);
         $matieres = $this->typeMatiereManager->findByDepartement($departement);
 
