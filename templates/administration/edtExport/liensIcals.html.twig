@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    Liens ICAL des intervenants
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        <div class="header-action">
+            <div class="buttons">
+                <a href="{{ path('administration_edt_index') }}" class="btn btn-primary btn-float"
+                   data-bs-toggle="tooltip"
+                   data-bs-placement="bottom" title="{{ 'atitle.retour_edt'|trans }}"><i class="fas fa-arrow-left"></i></a>
+                <a href="{{ path('administration_index') }}" class="btn btn-primary btn-float" data-bs-toggle="tooltip"
+                   data-bs-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i
+                            class="{{ iconAdmin }}"><span class="sr-only">Administration</span></i></a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <form class="form" method="post" action="">
+        <div class="card">
+            <h4 class="card-title">Liste des <strong>intervenants</strong></h4>
+            <div class="card-body">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>Nom Prénom</th>
+                        <th>Liens Ical</th>
+                        <th>Accéder Ical</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for personnel in user_data.personnels %}
+                        <tr>
+                            <td>{{ personnel.display }}</td>
+                            <td>
+                                {{ personnel|genereLienIcal }}
+
+                            </td>
+                            <td>
+                                <a href="{{ personnel|genereLienIcal }}" target="_blank">
+                                    <i class="fas fa-external-link-alt"></i>
+                                    Récupérer
+                                </a>
+                            </td>
+                        </tr>
+
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </form>
+{% endblock %}

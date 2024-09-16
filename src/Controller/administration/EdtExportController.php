@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EdtExportController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/04/2024 06:24
+ * @lastUpdate 16/09/2024 19:53
  */
 
 namespace App\Controller\administration;
@@ -50,6 +50,15 @@ class EdtExportController extends BaseController
     public function index(string $source): Response
     {
         return $this->render('administration/edtExport/index.html.twig', [
+            'source' => $source,
+        ]);
+    }
+
+    #[Route(path: '/{source}/ical', name: 'administration_edt_export_liens_ical', requirements: ['source' => 'intranet|celcat'])]
+    public function liensIcal(
+        string $source): Response
+    {
+        return $this->render('administration/edtExport/liensIcals.html.twig', [
             'source' => $source,
         ]);
     }
@@ -131,8 +140,8 @@ class EdtExportController extends BaseController
                 $code[$tg->getType()->value] = [];
                 $groupes = $groupeRepository->findBy(['typeGroupe' => $tg->getId()], ['ordre' => 'ASC']);
                 foreach ($groupes as $groupe) {
-                    $code[mb_strtoupper($tg->getType()->value)][$groupe->getOrdre()] = 'call sleep 5'."\n";
-                    $codeGroupe[mb_strtoupper($tg->getType()->value).'_'.$groupe->getOrdre()] = $groupe->getLibelle();
+                    $code[mb_strtoupper($tg->getType()->value)][$groupe->getOrdre()] = 'call sleep 5' . "\n";
+                    $codeGroupe[mb_strtoupper($tg->getType()->value) . '_' . $groupe->getOrdre()] = $groupe->getLibelle();
                 }
             }
             foreach ($pl as $p) {
@@ -161,7 +170,7 @@ class EdtExportController extends BaseController
 //                   // $codeMatiere = 'W'.$codeMatiere;
 //                    $codeMatiere
 //                }
-                    $code[mb_strtoupper($p->getType())][$p->getGroupe()] .= 'call  ajouter '.$p->getJour().' '.Constantes::TAB_HEURES[$p->getDebut()].' '.Constantes::TAB_HEURES[$p->getFin()].' '.$codeprof.' '.$tabSalles[$p->getSalle()].' '.$codeMatiere.' '.$tabType[mb_strtoupper($p->getType())].' '.$p->getSalle()."\n";
+                    $code[mb_strtoupper($p->getType())][$p->getGroupe()] .= 'call  ajouter ' . $p->getJour() . ' ' . Constantes::TAB_HEURES[$p->getDebut()] . ' ' . Constantes::TAB_HEURES[$p->getFin()] . ' ' . $codeprof . ' ' . $tabSalles[$p->getSalle()] . ' ' . $codeMatiere . ' ' . $tabType[mb_strtoupper($p->getType())] . ' ' . $p->getSalle() . "\n";
                 }
                 if (0 !== $p->getIdMatiere() && 'H018' === $p->getSalle()) { // array_key_exists($p->getIntervenant()->getNumeroHarpege(), $tabProf))
                     $codeMatiere = $matieres[$p->getTypeIdMatiere()]->codeElement;
@@ -192,13 +201,13 @@ class EdtExportController extends BaseController
                     ++$i;
                 }
             }
-            $zip->addFromString('script'.$calendrier->getSemaineReelle().'.bat', $codeComplet);
+            $zip->addFromString('script' . $calendrier->getSemaineReelle() . '.bat', $codeComplet);
             $zip->close();
             $response = new Response(file_get_contents($zipName));
             $response->headers->set('Content-Type', 'application/zip');
             $response->headers->set('Content-Disposition',
-                'attachment;filename="ajouter_S'.$calendrier->getSemaineReelle().'_'.$semestre->getLibelle().'.zip"');
-            $response->headers->set('Content-length', (string) filesize($zipName));
+                'attachment;filename="ajouter_S' . $calendrier->getSemaineReelle() . '_' . $semestre->getLibelle() . '.zip"');
+            $response->headers->set('Content-length', (string)filesize($zipName));
 
             return $response;
         }
