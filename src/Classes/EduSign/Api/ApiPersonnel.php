@@ -5,6 +5,7 @@ namespace App\Classes\EduSign\Api;
 use App\Classes\EduSign\DTO\EduSignEnseignant;
 use App\Classes\EduSign\GetCleApi;
 use App\Entity\Departement;
+use App\Entity\Diplome;
 use App\Entity\Personnel;
 use App\Repository\PersonnelRepository;
 use Symfony\Component\HttpClient\HttpClient;
