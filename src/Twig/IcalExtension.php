@@ -5,7 +5,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Twig/IcalExtension.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/09/2024 19:53
+ * @lastUpdate 16/09/2024 20:00
  */
 
 namespace App\Twig;
@@ -31,7 +31,7 @@ class IcalExtension extends AbstractExtension
 
     public function genereLienIcal(Personnel $personnel): string
     {
-        return $this->router->generate('edt_etudiant_synchro_ical', [
+        return $this->router->generate('edt_intervenant_synchro_ical', [
             'code' => md5($personnel->getSlug()),
             '_format' => 'ics',
         ],
