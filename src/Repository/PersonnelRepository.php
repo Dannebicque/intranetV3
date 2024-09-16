@@ -239,4 +239,12 @@ class PersonnelRepository extends ServiceEntityRepository
             ->getQuery()
             ->getOneOrNullResult();
     }
+
+    public function findAllWithEdusign(): array
+    {
+        return $this->createQueryBuilder('p')
+            ->where('p.idEduSign IS NOT NULL')
+            ->getQuery()
+            ->getResult();
+    }
 }

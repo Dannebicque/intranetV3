@@ -19,7 +19,7 @@ class ApiPersonnel
     {
     }
 
-    public function addEnseignant(EduSignEnseignant $enseignant, Personnel $personnel, Departement $departement, $cleApi): array
+    public function addEnseignant(EduSignEnseignant $enseignant, Personnel $personnel, Diplome $diplome, $cleApi): array
     {
         try {
             $client = HttpClient::create();
@@ -41,7 +41,7 @@ class ApiPersonnel
             // accéder à la valeur de l'ID
             $id = $data['result']['ID'] ?? "";
 
-            $departementId = $departement->getId();
+            $diplomeId = $diplome->getId();
             $existingIdEduSign = $personnel->getIdEduSign();
 
             // Supprimer les entrées avec des valeurs nulles
@@ -54,8 +54,8 @@ class ApiPersonnel
                 $personnel->setIdEduSign($existingIdEduSign);
                 $this->personnelRepository->save($personnel);
             }
-            if ($existingIdEduSign === null || !array_key_exists($departementId, $existingIdEduSign)) {
-                $jsonId = [$departementId => $id];
+            if ($existingIdEduSign === null || !array_key_exists($diplomeId, $existingIdEduSign)) {
+                $jsonId = [$diplomeId => $id];
 
                 if ($existingIdEduSign === null) {
                     // Si idEduSign est null, le définir comme le nouveau tableau $jsonId
