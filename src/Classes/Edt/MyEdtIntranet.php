@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtIntranet.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/04/2024 17:34
+ * @lastUpdate 16/09/2024 11:53
  */
 
 namespace App\Classes\Edt;
@@ -106,7 +106,7 @@ class MyEdtIntranet extends BaseEdt
                 $this->groupes();
                 $pl = $this->edtPlanningRepository->findEdtEtu($this->user, $this->semaineFormationIUT,
                     $this->anneeUniversitaire);
-                if (null !== $this->user->getSemestre() && $this->user->getSemestre()->getOrdreLmd() === 4) {
+                if (null !== $this->user->getSemestre() && ($this->user->getSemestre()->getOrdreLmd() === 3 || $this->user->getSemestre()->getOrdreLmd() === 5)) {
                     $pl2 = $this->edtPlanningRepository->findEdtEtuCmFi($this->user, $this->semaineFormationIUT,
                         $this->anneeUniversitaire);
                     if ($pl2 !== null) {

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/EdtPlanningRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 15/09/2024 09:47
+ * @lastUpdate 16/09/2024 11:53
  */
 
 namespace App\Repository;
@@ -175,7 +175,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
 
     public function findEdtEtuCmFi(Etudiant $user, int $semaine, AnneeUniversitaire $anneeUniversitaire): ?array
     {
-        if (null !== $user->getSemestre() && $user->getSemestre()->getOrdreLmd() === 4) {
+        if (null !== $user->getSemestre() && ($user->getSemestre()->getOrdreLmd() === 3 || $user->getSemestre()->getOrdreLmd() === 4)) {
             $this->groupes($user);
             if ($this->groupetp <= 4) {
                 return $this->createQueryBuilder('p')
