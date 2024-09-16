@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.19.28](https://github.com/Dannebicque/intranetV3/compare/v3.19.27...v3.19.28) (2024-09-16)
+
+
+### Bug Fixes
+
+* Affichage CM FI S3/S4 ([2ce5b23](https://github.com/Dannebicque/intranetV3/commit/2ce5b2386adc2d73fd963ae38a042bbd2a6d3da1))
+
 ### [3.19.27](https://github.com/Dannebicque/intranetV3/compare/v3.19.26...v3.19.27) (2024-09-15)
 
 
