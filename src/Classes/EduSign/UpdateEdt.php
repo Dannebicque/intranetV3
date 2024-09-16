@@ -135,8 +135,8 @@ class UpdateEdt
                 $enseignant = $this->evenement->personnelObjet;
                 $departement = $diplome->getDepartement();
                 if ($enseignant) {
-                    if ($enseignant->getIdEduSign() == '' || $enseignant->getIdEduSign() == null || !array_key_exists($departement->getId(), $enseignant->getIdEduSign())) {
-                        $this->createEnseignant->update($enseignant, $departement, $keyEduSign);
+                    if ($enseignant->getIdEduSign() == '' || $enseignant->getIdEduSign() == null || !array_key_exists($diplome->getId(), $enseignant->getIdEduSign())) {
+                        $this->createEnseignant->update($enseignant, $diplome, $keyEduSign);
                     }
                     $this->sendUpdate($keyEduSign);
                 }

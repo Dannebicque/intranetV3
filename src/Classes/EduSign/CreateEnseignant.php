@@ -13,6 +13,7 @@ use App\Classes\EduSign\Adapter\IntranetEnseignantEduSignAdapter;
 use App\Classes\EduSign\Api\ApiEduSign;
 use App\Classes\EduSign\Api\ApiPersonnel;
 use App\Entity\Departement;
+use App\Entity\Diplome;
 use App\Entity\Personnel;
 use App\Repository\PersonnelRepository;
 
@@ -24,13 +25,13 @@ class CreateEnseignant
     {
     }
 
-    public function update(Personnel $personnel, Departement $departement, string $cleApi): array
+    public function update(Personnel $personnel, Diplome $diplome, string $cleApi): array
     {
         try {
             // Construit les objets associés selon le modèle EduSign
             $enseignant = (new IntranetEnseignantEduSignAdapter($personnel))->getEnseignant();
             // Envoi une requête pour ajouter les éléments
-            $result = $this->apiPersonnel->addEnseignant($enseignant, $personnel, $departement, $cleApi);
+            $result = $this->apiPersonnel->addEnseignant($enseignant, $personnel, $diplome, $cleApi);
 
             if (!$result['success']) {
                 return ['success' => false, 'error' => $result['error']];
