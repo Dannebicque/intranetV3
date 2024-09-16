@@ -21,7 +21,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 #[AsCommand(
-    name: 'app:update_personnel',
+    name: 'app:update-personnel',
     description: 'Add a short description for your command',
 )]
 class UpdatePersonnelCommand extends Command
