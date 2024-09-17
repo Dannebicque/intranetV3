@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.19.30](https://github.com/Dannebicque/intranetV3/compare/v3.19.27...v3.19.30) (2024-09-17)
+
+
+### Features
+
+* Page avec les liens ical ([399c8ca](https://github.com/Dannebicque/intranetV3/commit/399c8ca5955d7f7cd13014be0dc9dedef3505d40))
+* Page avec les liens ical ([d5b6175](https://github.com/Dannebicque/intranetV3/commit/d5b6175a7a257fea6612f9859bd854ae1dabaeee))
+
+
+### Bug Fixes
+
+* Affichage CM FI S3/S4 ([a4feb91](https://github.com/Dannebicque/intranetV3/commit/a4feb91df318439b0882f67d04daec363634cc96))
+* Utilisation page prévisionnel ([5dd9d48](https://github.com/Dannebicque/intranetV3/commit/5dd9d4864192b8df99a174e7eea177716904b4a4))
+
 ### [3.19.29](https://github.com/Dannebicque/intranetV3/compare/v3.19.27...v3.19.29) (2024-09-16)
 
 
