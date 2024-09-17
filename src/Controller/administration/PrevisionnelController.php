@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/PrevisionnelController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/09/2024 16:37
+ * @lastUpdate 17/09/2024 10:21
  */
 
 namespace App\Controller\administration;
@@ -385,19 +385,20 @@ class PrevisionnelController extends BaseController
     #[Route('/new/ajax/change-matiere/{id}', name: 'administration_previsionnel_change_matiere', methods: ['POST'])]
     public function changeMatiere(
         EntityManagerInterface $entityManager,
-        PersonnelRepository    $personnelRepository,
+        TypeMatiereManager $typeMatiereManager,
         Previsionnel           $previsionnel,
         Request                $request): Response
     {
         if ($request->request->get('valeur') === '') {
-            $previsionnel->setPersonnel(null);
+            $previsionnel->setIdMatiere(null);
+            $previsionnel->setTypeMatiere(null);
         } else {
-            $personnel = $personnelRepository->find($request->request->get('valeur'));
+            $matiere = $typeMatiereManager->getMatiereFromSelect($request->request->get('valeur'));
 
-            if ($personnel === null) {
-                throw new PersonnelNotFoundException();
+            if ($matiere === null) {
+                throw new MatiereNotFoundException();
             }
-            $previsionnel->setPersonnel($personnel);
+            $previsionnel->setTypeIdMatiere($matiere);
         }
         $entityManager->flush();
 

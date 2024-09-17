@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/controllers/adm/previsionnel_controller.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 11/09/2024 20:43
+// @lastUpdate 17/09/2024 10:21
 
 import { Controller } from '@hotwired/stimulus'
 import { addCallout } from '../../js/util'
@@ -51,14 +51,58 @@ export default class extends Controller {
     body.append('valeur', e.currentTarget.value)
 
     const { type } = e.params
-
+    const elt = e.currentTarget
     await fetch(e.params.url, {
       method: 'POST',
       body,
     }).then(() => {
       addCallout('Donnée modifiée', 'success')
-      this._loadContent(type, e.params)
+      this._update(type, elt)
     })
+  }
+
+  _update(type, e) {
+    if (type === 'personnel') {
+      this._updateHeures(e)
+    } else if (type === 'semestre') {
+      // mise à jour des heures
+      // récupèrer l'id de l'élément et mettre à jour les heures
+      this._updateHeures(e)
+    } else if (type === 'matiere') {
+      this._updateHeures(e)
+    } else if (type === 'synthese-personnel') {
+
+    } else if (type === 'synthese-semestre') {
+
+    } else if (type === 'synthese-hrs') {
+
+    } else {
+      addCallout('Type de prévisionnel inconnu', 'danger')
+      return false
+    }
+  }
+
+  _updateHeures(e) {
+    const { id } = e
+    // récupérer le chiffre après le dernier _
+    const index = id.lastIndexOf('_')
+    const idMatiere = id.substring(index + 1)
+
+    const nbHeuresCm = document.getElementById(`cm_${idMatiere}`).value
+    const nbHeuresTd = document.getElementById(`td_${idMatiere}`).value
+    const nbHeuresTp = document.getElementById(`tp_${idMatiere}`).value
+    const nbGrCm = document.getElementById(`gr_cm_${idMatiere}`).value
+    const nbGrTd = document.getElementById(`gr_td_${idMatiere}`).value
+    const nbGrTp = document.getElementById(`gr_tp_${idMatiere}`).value
+
+    // séances / groupe
+    const nbSeancesCm = document.getElementById(`ind_cm_${idMatiere}`)
+    const nbSeancesTd = document.getElementById(`ind_td_${idMatiere}`)
+    const nbSeancesTp = document.getElementById(`ind_tp_${idMatiere}`)
+
+    nbSeancesCm.innerText = parseFloat(nbHeuresCm) * parseFloat(nbGrCm)
+    nbSeancesTd.innerText = parseFloat(nbHeuresTd) * parseFloat(nbGrTd)
+    nbSeancesTp.innerText = parseFloat(nbHeuresTp) * parseFloat(nbGrTp)
   }
 
   actualiser(e) {
@@ -139,19 +183,23 @@ export default class extends Controller {
     const body = new FormData()
     body.append('valeur', e.currentTarget.value)
 
-    const { matiere } = e.params
-    const { annee } = e.params
-    const params = new URLSearchParams({
-      annee,
-      matiere,
-    })
-
     await fetch(e.params.url, {
       method: 'POST',
       body,
     }).then(() => {
       addCallout('Intervenant modifié', 'success')
-      this._updateMatiere(params)
+    })
+  }
+
+  async changeMatiere(e) {
+    const body = new FormData()
+    body.append('valeur', e.currentTarget.value)
+
+    await fetch(e.params.url, {
+      method: 'POST',
+      body,
+    }).then(() => {
+      addCallout('Matière, ressource ou SAE modifiée', 'success')
     })
   }
 
