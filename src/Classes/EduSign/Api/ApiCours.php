@@ -37,7 +37,7 @@ class ApiCours
 
         $data = json_decode($content, true);
         // accéder à la valeur de l'ID
-        $id = $data['result']['ID'] ?? "";
+        $id = $data['result']['ID'] ?? null;
 
         if (str_contains($course->type_edt, 'intranet')) {
             $edt = $this->edtPlanningRepository->findOneBy(['id' => $course->api_id]);
