@@ -310,7 +310,7 @@ class EduSignController extends BaseController
         $groupe = $this->groupeRepository->findOneBy(['id' => $request->query->get('groupe')]);
         if (null != $groupe) {
             $groupeOrdre = $groupe->getOrdre();
-            $groupeType = $groupe->getTypeGroupe()->getLibelle();
+            $groupeType = $groupe->getTypeGroupe()->getType()->value;
         }
 
         $enseignant = $this->personnelRepository->findOneBy(['id' => $request->query->get('personnel')]);
