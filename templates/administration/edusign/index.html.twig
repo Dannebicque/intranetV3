@@ -143,6 +143,7 @@
                                                value="{{ cours.heureFin ? cours.heureFin|date('H:i') : '' }}">
                                     </td> #}
                                 <td class="p-1">
+                                    <small>{{ cours.id }} |</small>
                                     {% if cours.date is not null and cours.date != "" %}
                                         {{ cours.date|date('d/m/Y') }}
                                     {% else %}

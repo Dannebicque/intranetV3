@@ -20,7 +20,6 @@ use App\Entity\Semestre;
 use App\Repository\CalendrierRepository;
 use App\Repository\DiplomeRepository;
 use App\Repository\GroupeRepository;
-use App\Repository\MatiereRepository;
 use App\Repository\PersonnelDepartementRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\SalleRepository;
@@ -272,14 +271,15 @@ class EduSignController extends BaseController
         $errors = [];
 
         $keyEduSign = $diplome->getKeyEduSign();
-        $updateResult = $updateEdt->update($keyEduSign, $opt);
+
         $fixResult = $fixCourses->fixCourse($keyEduSign);
+        $updateResult = $updateEdt->update($keyEduSign, $opt);
 
         if (!$updateResult['success']) {
             $errors[] = $updateResult['error'];
         }
         if (!$fixResult['success']) {
-            $errors[] = $fixResult['error'];
+            $errors[] = $fixResult['messages'];
         }
 
         if (!empty($errors)) {
@@ -288,14 +288,14 @@ class EduSignController extends BaseController
                 ->to('cyndel.herolt@univ-reims.fr')
                 ->subject('EduSign createCourses - error report')
                 ->htmlTemplate('emails/error_report.html.twig')
-                ->context(['errors' => $errors]);
+                ->context(['diplomesErrors' => $errors]);
             $mailer->send($email);
         }
 
         return $this->redirectToRoute('administration_edusign_index');
     }
 
-//    todo: transformer en LiveComponent pour changer les datas des select en fct des autres select
+//    todo: transformer en LiveComponent pour changer les datas des select
     #[Route('/update-course/{source}/{id}/', name: 'app_admin_edu_sign_update_cours')]
     public function updateCourse(int $id, string $source, UpdateEdt $updateEdt, Request $request): Response
     {
