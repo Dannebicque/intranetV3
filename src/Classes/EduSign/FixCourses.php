@@ -63,8 +63,12 @@ class FixCourses
                             // recherche le cours dans l'intranet
                             $coursIntranet = $this->findCoursIntranet($cours);
 
+                            //si le cours n'est pas trouvé dans l'intranet et qu'il n'existe pas dans edusign on ne fait rien
+                            if (empty($coursIntranet) && !$course['API_ID']) {
+                                continue;
+                            }
                             // si le cours n'est pas trouvé dans l'intranet mais qu'il existe dans edusign
-                            if (empty($coursIntranet) && $course['API_ID']) {
+                            elseif (empty($coursIntranet) && $course['API_ID']) {
                                 // si il n'existe pas de cours avec cet API_ID dans l'intranet
                                 if (!$this->edtManager->findCourse($cours->source, $course['API_ID'])) {
                                     // supprimer le cours dans edusign
