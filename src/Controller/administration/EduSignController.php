@@ -237,7 +237,7 @@ class EduSignController extends BaseController
 
             foreach ($request->get('personnel') as $personnelId) {
                 $personnel = $this->personnelRepository->find($personnelId);
-                $result = $this->createEnseignant->update($personnel, $departement, $keyEduSign);
+                $result = $this->createEnseignant->update($personnel, $diplome, $keyEduSign);
 
                 if (!$result['success']) {
                     $errors[] = $result['error'];
@@ -329,7 +329,7 @@ class EduSignController extends BaseController
         $course = $this->edtManager->getCourseEduSign($source, $cours->getId(), $objmatiere, $groupe);
 
         if ($course->personnelObjet->getIdEduSign() === null) {
-            $this->createEnseignant->update($course->personnelObjet, $course->diplome->getDepartement(), $course->diplome->getKeyEduSign());
+            $this->createEnseignant->update($course->personnelObjet, $course->diplome, $course->diplome->getKeyEduSign());
         }
 
         $courseEdusign = (new IntranetEdtEduSignAdapter($course))->getCourse();
