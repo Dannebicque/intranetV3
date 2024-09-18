@@ -99,7 +99,8 @@ class FixCourses
             }
         } catch (\Exception $e) {
             $result['success'] = false;
-            $result['messages'][] = 'Erreur lors de la mise à jour des cours : ' . $e->getMessage();
+            $result['messages'][] = 'Erreur lors de la mise à jour des cours : ' . $e->getMessage() . ' - ' . $e->getTraceAsString() . ' - ' . $e->getLine();
+
         }
 
         return $result;
