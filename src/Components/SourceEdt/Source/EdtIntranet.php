@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/SourceEdt/Source/EdtIntranet.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 19/04/2024 18:06
+ * @lastUpdate 18/09/2024 19:07
  */
 
 namespace App\Components\SourceEdt\Source;
@@ -13,12 +13,12 @@ use App\Classes\Edt\Calendrier;
 use App\Components\SourceEdt\Adapter\EdtIntranetAdapter;
 use App\DTO\EvenementEdt;
 use App\DTO\EvenementEdtCollection;
+use App\DTO\Matiere;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Constantes;
 use App\Entity\EdtPlanning;
 use App\Entity\Etudiant;
 use App\Entity\Groupe;
-use App\DTO\Matiere;
 use App\Entity\Personnel;
 use App\Entity\Semestre;
 use App\Repository\CalendrierRepository;
@@ -49,12 +49,12 @@ class EdtIntranet extends AbstractEdt implements EdtInterface
     {
         $evts = $this->edtPlanningRepository->findEdtProf($personnel->getId(), $anneeUniversitaire, $semaine);
 
-        $tGroupes = [];
-        foreach ($groupes as $groupe) {
-            $tGroupes[$groupe->getCodeApogee()] = $groupe;
-        }
+//        $tGroupes = [];
+//        foreach ($groupes as $groupe) {
+//            $tGroupes[$groupe->getCodeApogee()] = $groupe;
+//        } => Ancien code, mais ne peut pas fonctionner car pas de codeApogée dans les groupes
 
-        return $this->adapter->collection($evts, $matieres, $tGroupes);
+        return $this->adapter->collection($evts, $matieres, $this->transformeGroupe($groupes));
     }
 
     public function getPlanningSemestre(Semestre $semestre, array $matieres, AnneeUniversitaire $anneeUniversitaire, array $groupes): EvenementEdtCollection
@@ -120,9 +120,11 @@ class EdtIntranet extends AbstractEdt implements EdtInterface
 
     private function transformeGroupe(array $groupes): array
     {
+        // Cette méthode devrait être appeler à chaque fois que l'on récupère un groupe pour le transformer en tableau correctement formaté pour alimenté les événements et EdtIntranetAdapter
+
         $tGroupes = [];
         foreach ($groupes as $groupe) {
-            $tGroupes[$groupe->getOrdre()] = $groupe;
+            $tGroupes[$groupe->getTypeGroupe()->getType()->value][$groupe->getOrdre()] = $groupe;
         }
 
         return $tGroupes;
@@ -142,12 +144,12 @@ class EdtIntranet extends AbstractEdt implements EdtInterface
     {
         $evts = $this->edtPlanningRepository->findEdtProf($personnel->getId(), $anneeUniversitaire, $semaineFormation);
 
-        $tGroupes = [];
-        foreach ($groupes as $groupe) {
-            $tGroupes[$groupe->getCodeApogee()] = $groupe;
-        }
+//        $tGroupes = [];
+//        foreach ($groupes as $groupe) {
+//            $tGroupes[$groupe->getCodeApogee()] = $groupe;
+//        } => pourquoi ca fonctionne ?
 
-        return $this->edtIntranetAdapter->collection($evts, $this->matieres, $tGroupes);
+        return $this->edtIntranetAdapter->collection($evts, $this->matieres, $this->transformeGroupe($groupes));
     }
 
     public function initPersonnel(
@@ -266,7 +268,7 @@ class EdtIntranet extends AbstractEdt implements EdtInterface
         /** @var EdtPlanning $edt */
         foreach ($edts as $edt) {
             if ($edt->getDate()->isCurrentDay()) {
-                return $this->edtIntranetAdapter->single($edt, $this->matieres, $this->groupes);
+                return $this->edtIntranetAdapter->single($edt, $this->matieres, $this->transformeGroupe($this->groupes));
             }
         }
 
@@ -280,13 +282,13 @@ class EdtIntranet extends AbstractEdt implements EdtInterface
         if (count($edts) === 1) {
             $groupes = $this->groupeRepository->findByDiplomeAndOrdreSemestre($edts[0]->getDiplome(),
                 $edts[0]->getOrdreSemestre());
-            $tGroupes = [];
-            foreach ($groupes as $groupe) {
-                $tGroupes[$groupe->getOrdre()] = $groupe;
-            }
+//            $tGroupes = [];
+//            foreach ($groupes as $groupe) {
+//                $tGroupes[$groupe->getOrdre()] = $groupe;
+//            }
 
             $matieres[] = $this->typeMatiereManager->getMatiereFromSelect($edts[0]->getTypeIdMatiere());
-            return $this->edtIntranetAdapter->single($edts[0], $matieres, $tGroupes);
+            return $this->edtIntranetAdapter->single($edts[0], $matieres, $this->transformeGroupe($groupes));
         }
 
         return null;

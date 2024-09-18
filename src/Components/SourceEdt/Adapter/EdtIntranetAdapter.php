@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/SourceEdt/Adapter/EdtIntranetAdapter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/02/2024 08:59
+ * @lastUpdate 18/09/2024 19:07
  */
 
 namespace App\Components\SourceEdt\Adapter;
@@ -14,7 +14,6 @@ use App\Classes\Edt\EdtManager;
 use App\DTO\EvenementEdt;
 use App\DTO\EvenementEdtCollection;
 use App\Entity\Constantes;
-use App\Repository\GroupeRepository;
 use Carbon\Carbon;
 
 class EdtIntranetAdapter extends AbstractEdtAdapter implements EdtAdapterInterface
@@ -64,16 +63,32 @@ class EdtIntranetAdapter extends AbstractEdtAdapter implements EdtAdapterInterfa
         $event->gridStart = Constantes::TAB_HEURES_EDT_2[$evt->getDebut() - 1][0];
         $event->gridEnd = Constantes::TAB_HEURES_EDT_2[$evt->getFin() - 1][0];
         $event->ordreGroupe = $evt->getGroupe();
+        $event->type_cours = $evt->getType();
 
-        if (array_key_exists($evt->getGroupe(), $groupes)) {
-            $event->groupeId = $groupes[$evt->getGroupe()]->getId();
-            $event->groupeObjet = $groupes[$evt->getGroupe()];
+        // Le tableau $groupes doit avoir le format suivant:
+        // $groupes = [
+        //     'CM' => [
+        //         1 => $groupe1,
+        //         2 => $groupe2,
+        //         ...
+        //     ],
+        //     'TD' => [
+        //         1 => $groupe1,
+        //         2 => $groupe2,
+        //         ...
+        //     ],
+        //     ...] -> s'en assurer grâce à transformeGroupes dans EdtIntranet qui récupère la liste de tous les groupes du semestre et construit ce tableau
+
+
+        if (array_key_exists($evt->getType(), $groupes) && array_key_exists($evt->getGroupe(), $groupes[$evt->getType()])) {
+            $event->groupeId = $groupes[$evt->getType()][$evt->getGroupe()]->getId();
+            $event->groupeObjet = $groupes[$evt->getType()][$evt->getGroupe()];
         }
 
         $event->personnel = null !== $evt->getIntervenant() ? $evt->getIntervenant()->getDisplayPr() : '-';
         $event->personnelObjet = $evt->getIntervenant();
         $event->groupe = $evt->getDisplayGroupe();
-        $event->type_cours = $evt->getType();
+
         $event->duree = $evt->getFin() - $evt->getDebut();
         $event->idEduSign = $evt->getIdEduSign();
 
