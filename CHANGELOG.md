@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.19.32](https://github.com/Dannebicque/intranetV3/compare/v3.19.31...v3.19.32) (2024-09-18)
+
+
+### Bug Fixes
+
+* transformation EdtPlanning en Objet Groupe selon le type ([35e3abd](https://github.com/Dannebicque/intranetV3/commit/35e3abd6c7e0dca58fd56c18f8bf51702975f258))
+
 ### [3.19.31](https://github.com/Dannebicque/intranetV3/compare/v3.19.30...v3.19.31) (2024-09-17)
 
 
