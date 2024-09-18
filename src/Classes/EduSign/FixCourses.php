@@ -66,13 +66,13 @@ class FixCourses
                             // si le cours n'est pas trouvé dans l'intranet mais qu'il existe dans edusign
                             if (empty($coursIntranet) && $course['API_ID']) {
                                 // si il n'existe pas de cours avec cet API_ID dans l'intranet
-                                if (!$this->edtManager->findCourse($cours->source ,$course['API_ID'])) {
+                                if (!$this->edtManager->findCourse($cours->source, $course['API_ID'])) {
                                     // supprimer le cours dans edusign
                                     $this->deleteCourseEduSign($course, $keyEduSign, $result, $cours);
                                 } // si il en existe un
                                 else {
                                     // envoyer le cours dans edusign
-                                    $this->updateCourseEduSign($this->edtManager->findCourse($cours->source ,$course['API_ID']), $course, $keyEduSign, $result, $cours);
+                                    $this->updateCourseEduSign($this->edtManager->findCourse($cours->source, $course['API_ID']), $course, $keyEduSign, $result, $cours);
                                 }
                             } // si le cours est trouvé dans l'intranet et qu'il est unique
                             else {
@@ -131,6 +131,12 @@ class FixCourses
 
     private function updateCourseEduSign($coursIntranet, $course, $keyEduSign, &$result, $cours)
     {
+        if (empty($course['ID'])) {
+            $result['success'] = false;
+            $result['messages'][] = 'Erreur : ID du cours manquant.';
+            return;
+        }
+
         $coursIntranet->setIdEduSign($course['ID']);
         $this->edtManager->saveCourseEduSign($this->source, $coursIntranet);
 
@@ -143,16 +149,20 @@ class FixCourses
         $this->edusignCourse->professor = $course['PROFESSOR'];
         $this->edusignCourse->school_group = $course['SCHOOL_GROUP'];
 
-        $this->apiCours->updateCourse($this->edusignCourse, $keyEduSign);
-
-        $result[$this->apiCours->updateCourse($this->edusignCourse, $keyEduSign)]['cours_maj']['intranet'][] = [
-            'id' => $course['API_ID'],
-            'date' => $cours->date,
-            'debut' => $cours->heureDebut,
-            'fin' => $cours->heureFin,
-            'salle' => $cours->salle,
-            'intervenant' => $cours->personnelObjet
-        ];
+        try {
+            $this->apiCours->updateCourse($this->edusignCourse, $keyEduSign);
+            $result[$this->apiCours->updateCourse($this->edusignCourse, $keyEduSign)]['cours_maj']['intranet'][] = [
+                'id' => $course['API_ID'],
+                'date' => $cours->date,
+                'debut' => $cours->heureDebut,
+                'fin' => $cours->heureFin,
+                'salle' => $cours->salle,
+                'intervenant' => $cours->personnelObjet
+            ];
+        } catch (\Exception $e) {
+            $result['success'] = false;
+            $result['messages'][] = 'Erreur lors de la mise à jour du cours : ' . $e->getMessage();
+        }
     }
 
     private function deleteCourseEduSign($course, $keyEduSign, $result, $cours)
