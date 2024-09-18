@@ -60,7 +60,6 @@ class EduSignController extends BaseController
         $departement = $this->getDepartement();
         $personnelsDepartement = $this->personnelDepartementRepository->findBy(['departement' => $departement]);
 
-        $filteredPersonnelsDepartement = array_filter($personnelsDepartement, fn($p) => empty($p->getPersonnel()->getIdEduSign() ?? []) || !array_key_exists($departement->getId(), $p->getPersonnel()->getIdEduSign()));
 
         $diplomes = $this->diplomeRepository->findAllWithEduSignDepartement($departement);
         // pour chaque diplome ajouter l'id en key
@@ -76,6 +75,8 @@ class EduSignController extends BaseController
         } else {
             $diplome = $diplomes[array_key_first($diplomes)] ?? null;
         }
+
+        $filteredPersonnelsDepartement = array_filter($personnelsDepartement, fn($p) => empty($p->getPersonnel()->getIdEduSign() ?? []) || !array_key_exists($diplome->getId(), $p->getPersonnel()->getIdEduSign()));
 
         $semestres = $this->semestreRepository->findByDiplome($diplome);
         $start = Carbon::today();
