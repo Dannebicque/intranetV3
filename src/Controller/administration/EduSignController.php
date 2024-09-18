@@ -88,9 +88,8 @@ class EduSignController extends BaseController
             $matieresDiplome = $this->getMatieresDiplome($semestre->getDiplome());
             $groupes = $this->groupeRepository->findBySemestre($semestre);
             // récupérer uniquement les groupes propres au semestre
-            $groupesSemestres[$semestre->getLibelle()] = array_filter($groupes, function ($groupe) use ($semestre) {
-                return $groupe->getApcParcours()?->getDiplomes()->contains($semestre->getDiplome());
-            });
+            $groupesSemestres[$semestre->getLibelle()] = array_filter($groupes, fn($groupe) => $semestre->getDiplome()->getApcParcours()?->getGroupes() ?? $this->groupeRepository->findBySemestre($semestre)
+            );
 
             $edt = $this->edtManager->getPlanningSemestreSemaine($semestre, $semaine, $semestre->getAnneeUniversitaire(), $matieresDiplome, $groupes);
 
