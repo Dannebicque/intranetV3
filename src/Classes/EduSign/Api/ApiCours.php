@@ -34,7 +34,6 @@ class ApiCours
 
         $statusCode = $response->getStatusCode();
         $content = $response->getContent();
-        dd($content);
 
         $data = json_decode($content, true);
         // accéder à la valeur de l'ID
