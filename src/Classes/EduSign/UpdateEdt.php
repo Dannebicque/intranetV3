@@ -52,31 +52,29 @@ class UpdateEdt
     public function update(?string $keyEduSign, ?int $opt, string $date = ''): ?array
     {
         $result = ['success' => true, 'messages' => []];
-
-        if ($keyEduSign === null) {
-            $diplomes = $this->diplomeRepository->findAllWithEduSign();
-        } else {
-            $diplomes = $this->diplomeRepository->findBy(['keyEduSign' => $keyEduSign]);
-        }
+        $diplomes = $keyEduSign === null
+            ? $this->diplomeRepository->findAllWithEduSign()
+            : $this->diplomeRepository->findBy(['keyEduSign' => $keyEduSign]);
 
         try {
             foreach ($diplomes as $diplome) {
-                if ($keyEduSign === null) {
-                    $keyEduSign = $diplome->getKeyEduSign();
-                }
+                $keyEduSign = $keyEduSign ?? $diplome->getKeyEduSign();
                 $semestres = $this->semestreRepository->findByDiplome($diplome);
-
                 list($start, $end) = $this->calculStartEndDates($opt, $date);
-
                 $semaineReelle = date('W');
 
                 foreach ($semestres as $semestre) {
-                    $eventSemaine = $this->CalendrierRepository->findOneBy(['semaineReelle' => $semaineReelle, 'anneeUniversitaire' => $semestre->getAnneeUniversitaire()]);
+                    $eventSemaine = $this->CalendrierRepository->findOneBy([
+                        'semaineReelle' => $semaineReelle,
+                        'anneeUniversitaire' => $semestre->getAnneeUniversitaire()
+                    ]);
                     $semaine = $eventSemaine->getSemaineFormation();
-
                     $matieresSemestre = $this->getMatieresSemestre($semestre);
                     $groupes = $this->groupeRepository->findBySemestre($semestre);
-                    $edt = $this->edtManager->getPlanningSemestreSemaine($semestre, $semaine, $semestre->getAnneeUniversitaire(), $matieresSemestre, $groupes);
+                    $edt = $this->edtManager->getPlanningSemestreSemaine(
+                        $semestre, $semaine, $semestre->getAnneeUniversitaire(), $matieresSemestre, $groupes
+                    );
+
                     foreach ($edt->evenements as $this->evenement) {
                         if ($this->evenement->dateObjet->isBetween($start, $end)) {
                             $this->processEvent($diplome, $keyEduSign);
@@ -128,31 +126,45 @@ class UpdateEdt
 
     public function processEvent(Diplome $diplome, ?string $keyEduSign): void
     {
-        if (!($this->evenement->matiere === null || $this->evenement->matiere === "Inconnue" || $this->evenement->groupeObjet === null || $this->evenement->personnelObjet === null || $this->evenement->semestre === null)) {
-            $course = (new IntranetEdtEduSignAdapter($this->evenement))->getCourse();
-            $eduSignCourse = $this->apiCours->getCourseIdByApiId($this->evenement->id, $keyEduSign);
-            if ($course->id_edu_sign == null && !$eduSignCourse) {
-                $enseignant = $this->evenement->personnelObjet;
-                $departement = $diplome->getDepartement();
-                if ($enseignant) {
-                    if ($enseignant->getIdEduSign() == '' || $enseignant->getIdEduSign() == null || !array_key_exists($diplome->getId(), $enseignant->getIdEduSign())) {
-                        $this->createEnseignant->update($enseignant, $diplome, $keyEduSign);
-                    }
-                    $this->sendUpdate($keyEduSign);
+        $event = $this->evenement;
+        if ($event->matiere !== null && $event->matiere !== "Inconnue" && $event->groupeObjet !== null && $event->personnelObjet !== null && $event->semestre !== null) {
+            $course = (new IntranetEdtEduSignAdapter($event))->getCourse();
+            $eduSignCourse = $this->apiCours->getCourseIdByApiId($event->id, $keyEduSign);
+            // si le cours n'existe pas dans EduSign et n'a pas de clé
+            if ($course->id_edu_sign === null && !$eduSignCourse) {
+                $enseignant = $event->personnelObjet;
+                if ($enseignant && (empty($enseignant->getIdEduSign()) || !array_key_exists($diplome->getId(), $enseignant->getIdEduSign()))) {
+                    $this->createEnseignant->update($enseignant, $diplome, $keyEduSign);
                 }
+                $this->sendUpdateAddCourse($keyEduSign);
+            } // si le cours existe dans EduSign
+            elseif ($course->id_edu_sign !== null && $eduSignCourse) {
+                $this->apiCours->updateCourse($course, $keyEduSign);
+            } // si le cours existe dans EduSign mais n'a pas de clé
+            elseif ($course->id === null && $eduSignCourse) {
+                $this->evenement->idEduSign = $eduSignCourse['ID'];
+                $this->sendUpdateCourse($keyEduSign);
             }
         }
     }
 
-    public function sendUpdate(?string $keyEduSign): string
+    public function sendUpdateAddCourse(?string $keyEduSign): string
     {
         $course = (new IntranetEdtEduSignAdapter($this->evenement))->getCourse();
         if ($course !== null) {
             $this->apiCours->addCourse($course, $keyEduSign);
-            $response = 'cours ajouté - id : ' . $this->evenement->id;
-        } else {
-            $response = 'cours non trouvé - id : ' . $this->evenement->id;
+            return 'cours ajouté - id : ' . $this->evenement->id;
         }
-        return $response;
+        return 'cours non trouvé - id : ' . $this->evenement->id;
+    }
+
+    public function sendUpdateCourse(?string $keyEduSign): string
+    {
+        $course = (new IntranetEdtEduSignAdapter($this->evenement))->getCourse();
+        if ($course !== null) {
+            $this->apiCours->updateCourse($course, $keyEduSign);
+            return 'cours mis à jour - id : ' . $this->evenement->id;
+        }
+        return 'cours non trouvé - id : ' . $this->evenement->id;
     }
 }

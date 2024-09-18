@@ -33,7 +33,7 @@ class EduSignEdtCelcatAdapter
         $date = Carbon::createFromFormat("Y-m-d H:i:s", $date);
 
         $this->cours = new EvenementEdt();
-        $this->cours->source = 'intranet';
+        $this->cours->source = 'celcat';
         $this->cours->matiere = $course['NAME'];
         $this->cours->date = $date;
         $this->cours->heureDebut = $start;

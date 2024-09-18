@@ -76,6 +76,28 @@ class ApiCours
         $statusCode = $response->getStatusCode();
         $content = $response->getContent();
 
+        $id = $course->id;
+
+        if (str_contains($course->type_edt, 'intranet')) {
+            $edt = $this->edtPlanningRepository->findOneBy(['id' => $course->api_id]);
+            $rep = $this->edtPlanningRepository;
+        } elseif (str_contains($course->type_edt, 'celcat')) {
+            $edt = $this->edtCelcatRepository->findOneBy(['id' => $course->api_id]);
+            $rep = $this->edtCelcatRepository;
+        } else {
+            $edt = null;
+            $rep = null;
+        }
+
+        if (null === $edt) {
+            throw new Exception('Course not found for ' . $edt->api_id);
+        }
+
+        if ($edt->getIdEduSign() == null && $rep !== null) {
+            $edt->setIdEduSign($id);
+            $rep->save($edt);
+        }
+
         return $content;
     }
 
@@ -136,11 +158,11 @@ class ApiCours
         return $data['result'] ?? null;
     }
 
-    public function deleteCourse(?EduSignCourse $course, string $cleApi): string
+    public function deleteCourse(?string $id, string $cleApi): string
     {
         $client = HttpClient::create();
 
-        $response = $client->request('DELETE', 'https://ext.edusign.fr/v1/course/' . $course->id, [
+        $response = $client->request('DELETE', 'https://ext.edusign.fr/v1/course/' . $id, [
             'headers' => [
                 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . $this->getCleApi->getCleApi($cleApi),
@@ -150,7 +172,7 @@ class ApiCours
         $statusCode = $response->getStatusCode();
         $content = $response->getContent();
 
-        $edt = $this->edtPlanningRepository->findOneBy(['idEduSign' => $course]);
+        $edt = $this->edtPlanningRepository->findOneBy(['idEduSign' => $id]);
         if ($edt) {
             $edt->setIdEduSign(null);
             $this->edtPlanningRepository->save($edt);

@@ -547,4 +547,24 @@ class EdtPlanningRepository extends ServiceEntityRepository
         return $query->getQuery()
             ->getResult();
     }
+
+    public function findByEduSignDatas($date, $start, $end, $salle, $personnel)
+    {
+        return $this->createQueryBuilder('p')
+            ->where('p.date LIKE :date')
+            ->andWhere('p.debut = :debut')
+            ->andWhere('p.fin = :fin')
+            ->andWhere('p.salle = :salle')
+            ->andWhere('p.intervenant = :personnel')
+            ->andWhere('p.semestre IS NOT null')
+            ->setParameters([
+                'date' => $date . '%',
+                'debut' => $start,
+                'fin' => $end,
+                'salle' => $salle,
+                'personnel' => $personnel,
+            ])
+            ->getQuery()
+            ->getResult();
+    }
 }
