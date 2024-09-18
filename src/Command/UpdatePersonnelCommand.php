@@ -51,12 +51,13 @@ class UpdatePersonnelCommand extends Command
         // GEA : 6
 
         $diplomesKeys = [
-            1 => 51,
-            2 => 59,
-            3 => 62,
-            4 => 53,
-            5 => 54,
-            6 => 57,
+            62 => 52,
+//            1 => 51,
+//            2 => 59,
+//            3 => 52,
+//            4 => 53,
+//            5 => 54,
+//            6 => 57,
         ];
 
         foreach ($personnels as $personnel) {
