@@ -315,7 +315,7 @@ class EduSignController extends BaseController
 
         $enseignant = $this->personnelRepository->findOneBy(['id' => $request->query->get('personnel')]);
 
-        $salle = $this->salleRepository->findOneBy(['id' => $request->query->get('salle')]);
+        $salle = $request->query->get('salle');
 
         // Récupérer les nouvelles valeurs de date et d'heure
 //        $date = $request->query->get('date');

@@ -193,12 +193,8 @@
                                 <td class="p-1">
                                     <label for="salle"
                                            class="text-danger">{{ cours.salle is null or cours.salle == "" ? '** Pas de salle **' }}</label>
-                                    <select name="salle" id="salle" class="form-select">
-                                        <option value="0">{{ cours.salle is not null and cours.salle != "" ? cours.salle : 'Sélectionner une salle' }}</option>
-                                        {% for salle in cours.salles %}
-                                            <option value="{{ salle.id }}" {{ salle.libelle == cours.salle ? 'selected' : '' }}>{{ salle.libelle }}</option>
-                                        {% endfor %}
-                                    </select>
+                                    <input type="text" name="salle" id="salle" class="form-control"
+                                           value="{{ cours.salle }}">
                                 </td>
                                 <td class="p-1">
                                     <label for="personnel"
