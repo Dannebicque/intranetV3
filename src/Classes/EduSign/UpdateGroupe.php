@@ -102,7 +102,7 @@ class UpdateGroupe
                         $groupes = $semestre->getDiplome()->getApcParcours()?->getGroupes() ?? $this->groupeRepository->findBySemestre($semestre);
 
                         // si $groupeObject n'est pas dans $groupes et n'est pas dans $semestres
-                        if (!$groupes->contains($groupeObject) && !in_array($groupeObject, $semestres)) {
+                        if (!in_array($groupeObject, $semestres) ?? !$groupes->contains($groupeObject) && !in_array($groupeObject, $semestres)) {
                             $groupeObject = null;
                         }
                     }
