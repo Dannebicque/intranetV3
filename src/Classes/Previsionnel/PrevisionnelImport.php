@@ -4,19 +4,20 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Previsionnel/PrevisionnelImport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:41
+ * @lastUpdate 19/09/2024 19:31
  */
 
 namespace App\Classes\Previsionnel;
 
+use App\Classes\Excel\MyExcelRead;
 use App\Classes\Matieres\TypeMatiereManager;
 use App\Classes\MyUpload;
+use App\Components\Logger\LogHelper;
 use App\Entity\Diplome;
 use App\Entity\Previsionnel;
 use App\Repository\PersonnelRepository;
 use App\Utils\Tools;
 use Doctrine\ORM\EntityManagerInterface;
-use Exception;
 use function array_key_exists;
 
 /**
@@ -27,6 +28,8 @@ class PrevisionnelImport
     private ?string $file;
 
     public function __construct(
+        private LogHelper   $log,
+        private MyExcelRead $myExcelRead,
         private TypeMatiereManager     $typeMatiereManager,
         private PrevisionnelManager    $previsionnelManager,
         private EntityManagerInterface $entityManager,
@@ -36,7 +39,8 @@ class PrevisionnelImport
     {
     }
 
-    public function import(array $data): bool
+    public
+    function import(array $data): bool|LogHelper
     {
         $this->file = $this->myUpload->upload($data['fichier'], 'temp');
         switch ($data['typeFichier']) {
@@ -49,7 +53,8 @@ class PrevisionnelImport
         }
     }
 
-    public function importGmpXlsx(array $data): bool
+    public
+    function importGmpXlsx(array $data): bool
     {
         if (null !== $data['diplome']) {
             $listeMatieres = $this->typeMatiereManager->tableauApogeeDiplome($data['diplome']);
@@ -130,7 +135,8 @@ class PrevisionnelImport
         return false;
     }
 
-    public function importCsv(array $data): bool
+    public
+    function importCsv(array $data): bool
     {
         if (null !== $data['diplome']) {
             $matieres = $this->typeMatiereManager->tableauApogeeDiplome($data['diplome']);
@@ -141,7 +147,7 @@ class PrevisionnelImport
             /* Si on a réussi à ouvrir le fichier */
             if ($handle) {
                 /* suppression des données de prévi */
-                $this->supprPrevisionnel($data['diplome'], $data['annee'], (bool)$data['supprPrevisionnel']);
+                $this->supprPrevisionnel($data['diplome'], $data['annee'], (bool)$data['supprimerPrevisionnel']);
 
                 /* supprime la première ligne */
                 fgetcsv($handle, 1024, ';');
@@ -180,9 +186,72 @@ class PrevisionnelImport
         return false;
     }
 
-    private function supprPrevisionnel(Diplome $diplome, int $annee, bool $supprPrevisionnel): void
+    public
+    function importXlsx(array $data): bool|LogHelper
+    {
+        if (null !== $data['diplome']) {
+            $matieres = $this->typeMatiereManager->tableauApogeeDiplome($data['diplome']);
+            $personnels = $this->personnelRepository->tableauPersonnelHarpege($data['diplome']);
+
+            //ouverture du fichier XLSX
+            $this->myExcelRead->readFile($this->file);
+            $this->myExcelRead->setNbColumns(12);
+
+            /* Si on a réussi à ouvrir le fichier */
+
+            /* suppression des données de prévi */
+            $this->supprPrevisionnel($data['diplome'], $data['annee'], (bool)$data['supprimerPrevisionnel']);
+
+            /* supprime la première ligne */
+            $ligne = $this->myExcelRead->readNewLine();
+
+            $annee = $data['annee'];
+            /* Tant que l'on est pas à la fin du fichier */
+            while ($ligne = $this->myExcelRead->readNewLine()) {
+
+                /* On lit la ligne courante */
+                if (is_array($ligne) && array_key_exists($ligne[3]->getValue(), $matieres)) {
+                    $personnel = $personnels[$ligne[5]->getValue()] ?? null;
+                    if ($personnel === null) {
+                        $this->log->addItem('Warning sur la ligne ' . $this->myExcelRead->getLigne() . ' : ' . $ligne[5]->getValue() . ' (' . $ligne[6]->getValue() . ') non trouvé', 'warning');
+                    }
+                    $pr = new Previsionnel($annee, $personnel);
+                    $pr->setNbHCm($ligne[7]->getValue());
+                    $pr->setNbGrCm(Tools::convertToInt($ligne[8]->getValue()));
+                    $pr->setNbHTd($ligne[9]->getValue());
+                    $pr->setNbGrTd(Tools::convertToInt($ligne[10]->getValue()));
+                    $pr->setNbHTp($ligne[11]->getValue());
+                    $pr->setNbGrTp(Tools::convertToInt($ligne[12]->getValue()));
+                    $pr->setIdMatiere($matieres[$ligne[3]->getValue()]->id);
+                    $pr->setTypeMatiere($matieres[$ligne[3]->getValue()]->typeMatiere);
+
+                    $this->log->addItem('Import de la ligne ' . $this->myExcelRead->getLigne() . ' avec succés', 'success');
+
+                    $this->entityManager->persist($pr);
+                } else {
+                    $this->log->addItem('Erreur sur la ligne ' . $this->myExcelRead->getLigne() . ' : ' . $ligne[3]->getValue() . ' non trouvé', 'danger');
+                }
+            }
+
+            $this->log->addItem('Import des données de prévisionnel. ' . $this->myExcelRead->getLigne() . ' lignes', 'success');
+            $this->entityManager->flush();
+
+            /* On ferme le fichier */
+            $this->myExcelRead->close();
+            unlink($this->file); // suppression du fichier
+
+            return $this->log;
+        }
+
+        return false;
+
+    }
+
+    private
+    function supprPrevisionnel(Diplome $diplome, int $annee, bool $supprPrevisionnel): void
     {
         if ($supprPrevisionnel) {
+            $this->log->addItem('Suppression des données de prévisionnel pour le diplôme ' . $diplome->getDisplay() . ' pour l\'année ' . $annee, 'warning');
             $pr = $this->previsionnelManager->findByDiplomeToDelete($diplome, $annee);
             foreach ($pr as $p) {
                 $this->entityManager->remove($p);
