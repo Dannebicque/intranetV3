@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/PrevisionnelController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 17/09/2024 22:26
+ * @lastUpdate 19/09/2024 19:14
  */
 
 namespace App\Controller\administration;
@@ -477,11 +477,14 @@ class PrevisionnelController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $myPrevisionnel->import($form->getData());
+            $log = $myPrevisionnel->import($form->getData());
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'previsionnel.import.success.flash');
+            return $this->render('administration/previsionnel/synthese.html.twig', [
+                'log' => $log
+            ]);
         }
 
-        return $this->redirectToRoute('administration_previsionnel_index'); //todo: une synthèse ?
+        return $this->redirectToRoute('administration_previsionnel_index');
     }
 
     #[Route('/dupliquer-annee-complete', name: 'administration_previsionnel_duplicate_annee', methods: ['POST'])]
