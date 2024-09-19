@@ -105,17 +105,12 @@ class EdtIntranet extends AbstractEdt implements EdtInterface
     {
         $evts = $this->edtPlanningRepository->findEdtSemestreSemaineNew($semestre, $semaine, $anneeUniversitaire);
 
-        $tGroupes = [];
-        foreach ($groupes as $groupe) {
-            $tGroupes[$groupe->getOrdre()] = $groupe;
-        }
-
         $tMatieres = [];
         foreach ($matieres as $matiere) {
             $tMatieres[$matiere->getTypeIdMatiere()] = $matiere;
         }
 
-        return $this->adapter->collection($evts, $matieres, $tGroupes);
+        return $this->adapter->collection($evts, $matieres, $this->transformeGroupe($groupes));
     }
 
     private function transformeGroupe(array $groupes): array
