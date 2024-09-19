@@ -19,7 +19,18 @@
                 {% for etudiant in etudiants|filter(etudiant => etudiant.data != null) %}
                     <tr>
                         <td>{{ etudiant.data.display }}</td>
-                        <td>{{ etudiant.etat }}</td>
+                        <td>{{ etudiant.etat }}
+
+                            {% if etudiant.etat == 'add' %}
+                                <span class="badge bg-success">Etudiant importé</span>
+                            {% elseif etudiant.etat == 'deja' %}
+                                <span class="badge bg-warning">Etudiant déjà présent ({{ etudiant.data.departement != null ?  etudiant.data.departement.sigle : 'erreur' }})</span>
+                            {% elseif etudiant.etat == 'update' %}
+                                <span class="badge bg-info">Etudiant mis à jour</span>
+                            {% else %}
+                                <span class="badge bg-danger">Erreur état</span>
+                            {% endif %}
+                        </td>
                     </tr>
                 {% endfor %}
                 </tbody>
@@ -33,9 +44,11 @@
         <div class="buttons">
             <a href="{{ path('administration_semestre_index', {semestre:semestre.id}) }}"
                class="btn btn-primary btn-float" data-bs-toggle="tooltip"
-               data-bs-placement="bottom" title="{{ 'atitle.retour_semestres'|trans }}"><i class="fas fa-arrow-left"></i></a>
+               data-bs-placement="bottom" title="{{ 'atitle.retour_semestres'|trans }}"><i
+                        class="fas fa-arrow-left"></i></a>
             <a href="{{ path('administration_index') }}" class="btn btn-primary btn-float" data-bs-toggle="tooltip"
-               data-bs-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i class="{{ iconAdmin }}"><span class="sr-only">Administration</span></i></a>
+               data-bs-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i class="{{ iconAdmin }}"><span
+                            class="sr-only">Administration</span></i></a>
         </div>
     </div>
 {% endblock %}

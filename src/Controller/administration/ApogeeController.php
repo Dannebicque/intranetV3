@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/ApogeeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:40
+ * @lastUpdate 18/09/2024 19:10
  */
 
 namespace App\Controller\administration;
@@ -57,14 +57,13 @@ class ApogeeController extends BaseController
                 if (null === $etudiant) {
                     // l'étudiant n'existe pas, quelque soit la situation, on va l'ajouter
                     $etudiant = $etudiantImport->createEtudiant($semestre, $dataApogee);
-                    $this->etudiants[$numEtudiant]['etat'] = 'force';
-                    $this->etudiants[$numEtudiant]['data'] = $etudiant;
-                } elseif ('force' === $type) {
+                    $this->etudiants[$numEtudiant]['etat'] = 'add';
+                } elseif ('force' === $type && null !== $etudiant) {
                     // l'étudiant existe, et on force la mise à jour
                     $etudiant = $etudiantImport->updateEtudiant($etudiant, $semestre, $dataApogee);
-                    $this->etudiants[$numEtudiant]['etat'] = 'maj';
-                    $this->etudiants[$numEtudiant]['data'] = $etudiant;
+                    $this->etudiants[$numEtudiant]['etat'] = 'update';
                 }
+                $this->etudiants[$numEtudiant]['data'] = $etudiant;
                 $this->entityManager->flush();
             }
 
