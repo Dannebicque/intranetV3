@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Previsionnel/PrevisionnelImport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 19/09/2024 19:31
+ * @lastUpdate 20/09/2024 08:25
  */
 
 namespace App\Classes\Previsionnel;
@@ -196,6 +196,7 @@ class PrevisionnelImport
             //ouverture du fichier XLSX
             $this->myExcelRead->readFile($this->file);
             $this->myExcelRead->setNbColumns(12);
+            $this->myExcelRead->setCologneToTest(3);
 
             /* Si on a réussi à ouvrir le fichier */
 
@@ -247,8 +248,7 @@ class PrevisionnelImport
 
     }
 
-    private
-    function supprPrevisionnel(Diplome $diplome, int $annee, bool $supprPrevisionnel): void
+    private function supprPrevisionnel(Diplome $diplome, int $annee, bool $supprPrevisionnel): void
     {
         if ($supprPrevisionnel) {
             $this->log->addItem('Suppression des données de prévisionnel pour le diplôme ' . $diplome->getDisplay() . ' pour l\'année ' . $annee, 'warning');
