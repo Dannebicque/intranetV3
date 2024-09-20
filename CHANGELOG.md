@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.19.34](https://github.com/Dannebicque/intranetV3/compare/v3.19.32...v3.19.34) (2024-09-20)
+
+
+### Features
+
+* Import du previsionnel en Xlsx, affichage d'une synthèse après l'import. ([65f3862](https://github.com/Dannebicque/intranetV3/commit/65f386229f625fb03f735e84af3a1e748e6d6ee8))
+
+
+### Bug Fixes
+
+* Amélioration de la mise en page de l'import des étudiants. ([c37fbe8](https://github.com/Dannebicque/intranetV3/commit/c37fbe81f79cc542316aff4d4330e83bdd5ec52e))
+* Amélioration de la mise en page de l'import des étudiants. ([9a68277](https://github.com/Dannebicque/intranetV3/commit/9a682777acdb2e3cdb621de8b931cf4b1c924028))
+
 ### [3.19.33](https://github.com/Dannebicque/intranetV3/compare/v3.19.32...v3.19.33) (2024-09-19)
 
 
