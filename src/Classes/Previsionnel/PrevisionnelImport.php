@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Previsionnel/PrevisionnelImport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 20/09/2024 08:25
+ * @lastUpdate 20/09/2024 21:03
  */
 
 namespace App\Classes\Previsionnel;
@@ -39,8 +39,7 @@ class PrevisionnelImport
     {
     }
 
-    public
-    function import(array $data): bool|LogHelper
+    public function import(array $data): bool|LogHelper
     {
         $this->file = $this->myUpload->upload($data['fichier'], 'temp');
         switch ($data['typeFichier']) {
@@ -53,8 +52,7 @@ class PrevisionnelImport
         }
     }
 
-    public
-    function importGmpXlsx(array $data): bool
+    public function importGmpXlsx(array $data): bool
     {
         if (null !== $data['diplome']) {
             $listeMatieres = $this->typeMatiereManager->tableauApogeeDiplome($data['diplome']);
@@ -135,8 +133,7 @@ class PrevisionnelImport
         return false;
     }
 
-    public
-    function importCsv(array $data): bool
+    public function importCsv(array $data): bool|LogHelper
     {
         if (null !== $data['diplome']) {
             $matieres = $this->typeMatiereManager->tableauApogeeDiplome($data['diplome']);
@@ -152,6 +149,7 @@ class PrevisionnelImport
                 /* supprime la première ligne */
                 fgetcsv($handle, 1024, ';');
                 $annee = $data['annee'];
+                $numLigne = 2;
                 /* Tant que l'on est pas à la fin du fichier */
                 while (!feof($handle)) {
                     /* On lit la ligne courante */
@@ -159,6 +157,9 @@ class PrevisionnelImport
 
                     if (is_array($ligne) && array_key_exists($ligne[2], $matieres)) {
                         $personnel = $personnels[$ligne[4]] ?? null;
+                        if ($personnel === null) {
+                            $this->log->addItem('Warning sur la ligne ' . $numLigne . ' : ' . $ligne[4] . ' (' . $ligne[5] . ') non trouvé', 'warning');
+                        }
                         $pr = new Previsionnel($annee, $personnel);
                         $pr->setNbHCm($ligne[6]);
                         $pr->setNbGrCm(Tools::convertToInt($ligne[7]));
@@ -169,25 +170,32 @@ class PrevisionnelImport
                         $pr->setIdMatiere($matieres[$ligne[2]]->id);
                         $pr->setTypeMatiere($matieres[$ligne[2]]->typeMatiere);
                         $this->entityManager->persist($pr);
+
+                        $this->log->addItem('Import de la ligne ' . $numLigne . ' avec succés', 'success');
+                    } else {
+                        $this->log->addItem('Erreur sur la ligne ' . $numLigne . ' : ' . $ligne[2] . ' (' . $ligne[3] . ') non trouvé', 'danger');
                     }
+                    $numLigne++;
                 }
                 $this->entityManager->flush();
 
+                $this->log->addItem('Import des données de prévisionnel. ' . $numLigne-- . ' lignes', 'success');
+
                 /* On ferme le fichier */
                 fclose($handle);
-                unlink($file); // suppression du fichier
+                unlink($this->file); // suppression du fichier
 
-                return true;
+                return $this->log;
             }
 
-            return false;
+            $this->log->addItem('Erreur lors de l\'ouverture du fichier', 'danger');
+            return $this->log;
         }
 
         return false;
     }
 
-    public
-    function importXlsx(array $data): bool|LogHelper
+    public function importXlsx(array $data): bool|LogHelper
     {
         if (null !== $data['diplome']) {
             $matieres = $this->typeMatiereManager->tableauApogeeDiplome($data['diplome']);
@@ -230,7 +238,7 @@ class PrevisionnelImport
 
                     $this->entityManager->persist($pr);
                 } else {
-                    $this->log->addItem('Erreur sur la ligne ' . $this->myExcelRead->getLigne() . ' : ' . $ligne[3]->getValue() . ' non trouvé', 'danger');
+                    $this->log->addItem('Erreur sur la ligne ' . $this->myExcelRead->getLigne() . ' : ' . $ligne[3]->getValue() . ' (' . $ligne[4]->getValue() . ') non trouvé', 'danger');
                 }
             }
 
