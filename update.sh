@@ -2,7 +2,7 @@
 # @file /Users/davidannebicque/Sites/intranetV3/update.sh
 # @author davidannebicque
 # @project intranetV3
-# @lastUpdate 21/09/2024 18:35
+# @lastUpdate 21/09/2024 18:37
 
 #!/usr/bin/env bash
 
@@ -26,13 +26,15 @@ then
   fi
 
   # Variables
-  directory="/var/www/html/intranetv3/public/build/"
+  current_dir=$(pwd)
+  subdirectory="public/build/"
+  directory="$current_dir/$subdirectory"
   prefix="print"
   extension=".css"
   new_name="print.css"
 
   # Sauvegarder le répertoire actuel
-  current_dir=$(pwd)
+
 
   # Naviguer vers le répertoire cible
   cd "$directory" || { echo "Répertoire $directory introuvable"; exit 1; }
