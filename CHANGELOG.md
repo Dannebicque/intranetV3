@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.19.35](https://github.com/Dannebicque/intranetV3/compare/v3.19.34...v3.19.35) (2024-09-21)
+
+
+### Features
+
+* Affichage ptut coté étudiant ([2c5958c](https://github.com/Dannebicque/intranetV3/commit/2c5958cf352109a14697e4d3865be4d873c4d4b4))
+* Edt envoi d'un mail avec PDF + génération PDF + import et affichage ptut ([fc30e60](https://github.com/Dannebicque/intranetV3/commit/fc30e60f90c30b6adf835e219279a6abc617ed87))
+* Renommer le fichier print.css généré avec les assets pour Gotenberg ([3603935](https://github.com/Dannebicque/intranetV3/commit/36039359920d8420db8a8351332863f0a29fa0d2))
+
+
+### Bug Fixes
+
+* Log sur import previsionnel CSV ([314cbc5](https://github.com/Dannebicque/intranetV3/commit/314cbc5eae92adbf4d39d61e09afae13d1cb363b))
+* pdf EDT ([5d47644](https://github.com/Dannebicque/intranetV3/commit/5d47644894d697995cf3ffcd36fd92cd1b8e5e80))
+* pdf EDT avec lien ical ([3fecf5e](https://github.com/Dannebicque/intranetV3/commit/3fecf5e3f5daadc62c91d35760ce0768b9bf402b))
+* taille fichier absence justificatif forcé en UniqId ([2753e4a](https://github.com/Dannebicque/intranetV3/commit/2753e4a66d2d2327f2f385e20e12da28d333c3af))
+* taille upload fichier à 255 ([366c985](https://github.com/Dannebicque/intranetV3/commit/366c985f8a4e7cedd941c79a2231e0286918bf55))
+
 ### [3.19.34](https://github.com/Dannebicque/intranetV3/compare/v3.19.32...v3.19.34) (2024-09-20)
 
 
