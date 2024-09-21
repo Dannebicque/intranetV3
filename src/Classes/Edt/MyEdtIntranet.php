@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtIntranet.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/09/2024 17:48
+ * @lastUpdate 21/09/2024 17:58
  */
 
 namespace App\Classes\Edt;
@@ -238,7 +238,7 @@ class MyEdtIntranet extends BaseEdt
 
         /** @var EdtPlanning $p */
         foreach ($pl as $p) {
-            if ((TypeGroupeEnum::TYPE_GROUPE_CM->value === $p->getType()) || (TypeGroupeEnum::TYPE_GROUPE_TD->value === $p->getType() && $p->getGroupe() === $this->groupetd) || (TypeGroupeEnum::TYPE_GROUPE_TP->value === $p->getType() && $p->getGroupe() === $this->groupetp)) {
+            if (('PT' === $p->getType()) || (TypeGroupeEnum::TYPE_GROUPE_CM->value === $p->getType()) || (TypeGroupeEnum::TYPE_GROUPE_TD->value === $p->getType() && $p->getGroupe() === $this->groupetd) || (TypeGroupeEnum::TYPE_GROUPE_TP->value === $p->getType() && $p->getGroupe() === $this->groupetp)) {
                 $dbtEdt = $this->convertEdt($p->getDebut());
 
                 if (!array_key_exists($p->getJour(), $this->tab)) {
@@ -256,7 +256,13 @@ class MyEdtIntranet extends BaseEdt
                 $this->tab[$p->getJour()][$dbtEdt]['fin'] = $p->getFin();
 
                 $this->tab[$p->getJour()][$dbtEdt]['texte'] = $this->isEvaluation($p,
-                        'long').'<br />'.$p->getSalle().' | '.$p->getDisplayGroupe().' <br /> '.$p->getIntervenantEdt();
+                        'long') . '<br />' . $p->getSalle() . ' | ' . $p->getDisplayGroupe() . ' <br /> ';
+
+                if ('PT' === $p->getType()) {
+                    $this->tab[$p->getJour()][$dbtEdt]['texte'] = $this->tab[$p->getJour()][$dbtEdt]['texte'] . ' <strong>PTUT</strong> (' . $p->getIntervenantEdt() . ')';
+                } else {
+                    $this->tab[$p->getJour()][$dbtEdt]['texte'] = $this->tab[$p->getJour()][$dbtEdt]['texte'] . $p->getIntervenantEdt();
+                }
 
                 $this->tab[$p->getJour()][$dbtEdt]['couleur'] = $this->getCouleur($p);
                 $this->tab[$p->getJour()][$dbtEdt]['id'] = $p->getId();
