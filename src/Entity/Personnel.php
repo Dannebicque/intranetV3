@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Personnel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/02/2024 08:51
+ * @lastUpdate 21/09/2024 13:02
  */
 
 namespace App\Entity;
@@ -77,13 +77,13 @@ class Personnel extends Utilisateur implements UtilisateurInterface
     #[ORM\Column(type: Types::INTEGER)]
     private mixed $id;
 
-    #[ORM\Column(type: Types::STRING, length: 50, nullable: true)]
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
     private ?string $cvName = '';
 
     #[Vich\UploadableField(mapping: 'cv', fileNameProperty: 'cvName')]
     private ?File $cvFile = null;
 
-    #[ORM\Column(type: Types::STRING, length: 50)]
+    #[ORM\Column(type: Types::STRING, length: 255)]
     private ?string $photoName = 'noimage.png';
 
     #[Vich\UploadableField(mapping: 'personnel', fileNameProperty: 'photoName')]

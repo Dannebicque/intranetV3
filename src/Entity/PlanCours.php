@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/PlanCours.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/02/2024 08:51
+ * @lastUpdate 21/09/2024 13:02
  */
 
 namespace App\Entity;
@@ -105,7 +105,7 @@ abstract class PlanCours
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $saisiePlanCours = null;
 
-    #[ORM\Column(length: 100, nullable: true)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $fichierPlanCours = null;
 
     #[Vich\UploadableField(mapping: 'fichierPlanCours', fileNameProperty: 'fichierPlanCours')]

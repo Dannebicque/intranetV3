@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Etudiant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/09/2024 12:21
+ * @lastUpdate 21/09/2024 13:02
  */
 
 namespace App\Entity;
@@ -38,7 +38,7 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
     #[ORM\Column(type: Types::INTEGER)]
     private mixed $id;
 
-    #[ORM\Column(type: Types::STRING, length: 50)]
+    #[ORM\Column(type: Types::STRING, length: 255)]
     private ?string $photoName = 'noimage.png';
 
     #[Vich\UploadableField(mapping: 'etudiant', fileNameProperty: 'photoName')]

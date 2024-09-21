@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Diplome.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/02/2024 08:48
+ * @lastUpdate 21/09/2024 13:01
  */
 
 namespace App\Entity;
@@ -127,7 +127,7 @@ class Diplome extends BaseEntity
     #[ORM\OneToMany(mappedBy: 'diplome', targetEntity: EdtPlanning::class)]
     private Collection $edtPlannings;
 
-    #[ORM\Column(length: 50, nullable: true)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $logoPartenaire = null;
 
     #[Vich\UploadableField(mapping: 'logo', fileNameProperty: 'logoPartenaire')]

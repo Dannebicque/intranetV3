@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Departement.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/02/2024 22:13
+ * @lastUpdate 21/09/2024 13:01
  */
 
 namespace App\Entity;
@@ -41,7 +41,7 @@ class Departement extends BaseEntity
     #[ORM\ManyToOne(targetEntity: Ufr::class, inversedBy: 'departements')]
     private ?Ufr $ufr = null;
 
-    #[ORM\Column(type: Types::STRING, length: 50)]
+    #[ORM\Column(type: Types::STRING, length: 255)]
     private ?string $logoName = '';
 
     #[Vich\UploadableField(mapping: 'logo', fileNameProperty: 'logoName')]

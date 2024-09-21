@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/StagePeriodeOffre.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 13/12/2022 20:30
+ * @lastUpdate 21/09/2024 13:02
  */
 
 namespace App\Entity;
@@ -42,7 +42,7 @@ class StagePeriodeOffre extends BaseEntity
     #[ORM\Column(type: Types::STRING, length: 255)]
     private ?string $ville = null;
 
-    #[ORM\Column(type: Types::STRING, length: 50, nullable: true)]
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
     private ?string $documentName = '';
 
     #[Vich\UploadableField(mapping: 'offreStage', fileNameProperty: 'documentName')]
