@@ -1,8 +1,8 @@
-// Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/Sites/intranetV3/assets/css/color.scss
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 01/09/2022 16:32
+// @lastUpdate 21/09/2024 14:14
 @use "sass:map";
 
 
@@ -55,6 +55,11 @@ $colorsTypesGroupes: (
   }
 
   .roje_#{$color-key} {
+    background-color: lighten($color-value, 30%);
+    color: text-clr(lighten($color-value, 30%));
+  }
+
+  .pt_#{$color-key} {
     background-color: lighten($color-value, 30%);
     color: text-clr(lighten($color-value, 30%));
   }

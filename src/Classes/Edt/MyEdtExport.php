@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/03/2024 16:30
+ * @lastUpdate 21/09/2024 17:48
  */
 
 /*
@@ -49,7 +49,7 @@ class MyEdtExport
         private readonly MyEdtIntranet  $myEdtIntranet,
         private readonly MyEdtCelcat    $myEdtCelcat,
         protected MyIcal                $myIcal,
-        private readonly PdfManager $myPDF,
+        private readonly PdfManager     $myPDF,
         private readonly TypeMatiereManager $typeMatiereManager,
         KernelInterface                 $kernel
     )
@@ -297,5 +297,28 @@ class MyEdtExport
     public function genereOneDocument(string $source, string $_format, Personnel $personnel, Departement $departement): void
     {
         $this->generePdf($personnel, $source, $departement);
+    }
+
+    public function getOneDoc(Personnel $personnel, Departement $departement): ?array
+    {
+
+        $folder = $this->dir . 'upload/pdfedt/' . $departement->getId() . '/';
+        $dossier = opendir($folder);
+        while ($fichier = readdir($dossier)) {
+            if ('.' !== $fichier && '..' !== $fichier) {
+                $id = explode('-', $fichier);
+
+                if ((int)$id[0] === $personnel->getId()) {
+                    return ['folder' => $folder,
+                        'file' => $fichier,
+                        'path' => $folder . $fichier,
+                    ];
+                }
+            }
+        }
+
+        closedir($dossier);
+
+        return null;
     }
 }

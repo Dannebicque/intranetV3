@@ -4,12 +4,14 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EdtExportController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/09/2024 19:53
+ * @lastUpdate 21/09/2024 17:48
  */
 
 namespace App\Controller\administration;
 
 use App\Classes\Edt\MyEdtExport;
+use App\Classes\JsonReponse;
+use App\Classes\Mail\MailerFromTwig;
 use App\Classes\Matieres\TypeMatiereManager;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
@@ -220,7 +222,39 @@ class EdtExportController extends BaseController
     {
         $myEdtExport->genereOneDocument($source, $_format, $personnel, $this->getDepartement());
 
-        return $this->redirectToRoute('administration_edt_export_voir');
+        return JsonReponse::success('PDF généré');
+    }
+
+    #[Route(path: '/send-one/{personnel}', name: 'administration_edt_send_one', requirements: ['source' => 'intranet|celcat'], options: ['expose' => true])]
+    public function sendOne(
+        MailerFromTwig $myMailer,
+        MyEdtExport    $myEdtExport, Personnel $personnel): Response
+    {
+        $doc = $myEdtExport->getOneDoc($personnel, $this->getDepartement());
+
+        $myMailer->initEmail();
+        $myMailer->setTemplate('mails/edt/envoi_planning_pdf.html.twig', [
+            'personnel' => $personnel,
+            'doc' => $doc,
+            'departement' => $this->getDepartement(),
+            'anneeUniversitaire' => $this->getAnneeUniversitaire(),
+        ]);
+        $myMailer->attachFile($doc['path']);
+
+        $myMailer->sendMessage(
+            $personnel->getMails(), 'Votre planning en BUT ' . $this->getDepartement()?->getLibelle());
+
+        return JsonReponse::success('PDF envoyé avec succès');
+    }
+
+    #[Route(path: '/download-one/{personnel}', name: 'administration_edt_download_one', options: ['expose' => true])]
+    public function downloadOne(
+        MyEdtExport $myEdtExport,
+        Personnel   $personnel): Response
+    {
+        $doc = $myEdtExport->getOneDoc($personnel, $this->getDepartement());
+
+        return $this->file($doc['path']);
     }
 
     #[Route(path: '/tous/{source}.{_format}', name: 'administration_edt_export_all', requirements: ['source' => 'intranet|celcat'])]

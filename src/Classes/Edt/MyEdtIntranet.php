@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtIntranet.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/09/2024 11:53
+ * @lastUpdate 21/09/2024 17:48
  */
 
 namespace App\Classes\Edt;
@@ -292,7 +292,11 @@ class MyEdtIntranet extends BaseEdt
             $tab[$p->getJour()][$debut][$groupe]['couleurTexte'] = $this->getCouleurTexte($p);
             $tab[$p->getJour()][$debut][$groupe]['planning'] = $p;
             $taille = 0;
+
             switch ($p->getType()) {
+                case 'PT':
+                    $tab[$p->getJour()][$debut][$groupe]['largeur'] = 1; //PTUT forcément en TP
+                    break;
                 case 'CM':
                 case 'cm':
                     $tab[$p->getJour()][$debut][$groupe]['largeur'] = $this->semestre->getNbgroupeTPEDT();
@@ -307,6 +311,7 @@ class MyEdtIntranet extends BaseEdt
                     $tab[$p->getJour()][$debut][$groupe]['largeur'] = 2;
                     $taille = 12;
                     break;
+
             }
 
             if ($specialGroupe) {
@@ -344,7 +349,7 @@ class MyEdtIntranet extends BaseEdt
         }
 
         return match (mb_strtolower($p->getType())) {
-            'cm', 'td', 'tp' => mb_strtolower($p->getType()).'_'.$couleur, // todo: passer par DTO...
+            'cm', 'td', 'tp', 'pt' => mb_strtolower($p->getType()) . '_' . $couleur, // todo: passer par DTO...
             default => 'CCCCCC',
         };
     }
@@ -415,6 +420,9 @@ class MyEdtIntranet extends BaseEdt
             $tab[$p->getJour()][$debut][$p->getGroupe()]['planning'] = $p;
             $taille = 0;
             switch ($p->getType()) {
+                case 'PT':
+                    $tab[$p->getJour()][$debut][$p->getGroupe()]['largeur'] = 1; //PTUT forcément en TP
+                    break;
                 case 'CM':
                 case 'cm':
                     $tab[$p->getJour()][$debut][$p->getGroupe()]['largeur'] = $this->semestre->getNbgroupeTpEdt();
@@ -495,6 +503,9 @@ class MyEdtIntranet extends BaseEdt
             $tab[$p->getSemestre()->getId()][$debut][$p->getGroupe()]['planning'] = $p;
             $taille = 0;
             switch ($p->getType()) {
+                case 'PT':
+                    $tab[$p->getSemestre()->getId()][$debut][$p->getGroupe()]['largeur'] = 1; //PTUT forcément en TP
+                    break;
                 case TypeGroupeEnum::TYPE_GROUPE_CM:
                     $tab[$p->getSemestre()->getId()][$debut][$p->getGroupe()]['largeur'] = $p->getSemestre()->getNbgroupeTpEdt();
                     break;

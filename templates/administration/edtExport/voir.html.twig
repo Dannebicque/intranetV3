@@ -18,7 +18,9 @@
 {% endblock %}
 
 {% block content %}
-    <form class="form" method="post" action="">
+    <div {{ stimulus_controller('adm--edt--export', {
+
+    }) }}>
         <div class="card">
             <h4 class="card-title">Liste des <strong>fichiers</strong></h4>
             <div class="card-body">
@@ -34,13 +36,16 @@
                     <tbody>
                     {% for personnel in user_data.personnels %}
                         <tr>
-                            <td><input type="checkbox"></td>
-                            <td>{{ personnel.display }}</td>
                             <td>
+                                <input type="checkbox" {% if docs[personnel.id] is not defined %}disabled{% endif %}>
+                            </td>
+                            <td>{{ personnel.display }}</td>
+                            <td id="pdf_{{ personnel.id }}">
                                 {% if docs[personnel.id] is defined %}
                                     <div class="d-grid">
-                                    <a href="{{ absolute_url(asset('upload/pdfedt/'~user_data.departement
-                                    .id~'/'~docs[personnel.id])) }}"
+                                        <a href="{{ path('administration_edt_download_one', {
+                                            personnel: personnel.id
+                                        }) }}"
                                        class="btn btn-info d-block"
                                        target="_blank"><i class="fas fa-download"></i></a>
                                     </div>
@@ -49,16 +54,26 @@
                                 {% endif %}
                             </td>
                             <td>
-                                <a href="{{ path('administration_edt_export_one', {personnel: personnel.id,
-                                    source:'intranet', _format:'pdf'}) }}"
+                                <button
+                                        {{ stimulus_action('adm--edt--export', 'generatePdf', 'click', {
+                                            url: path('administration_edt_export_one', {personnel: personnel.id, source:'intranet', _format:'pdf'}),
+                                            profId: personnel.id
+                                        }) }}
                                    class="btn btn-warning genereOne"
                                    title="Générer/Mettre à jour le fichier">
                                     <i class="fas fa-sync"></i>
-                                </a>
+                                </button>
                                 {% if docs[personnel.id] is defined %}
-                                    <a href="#" data-fichier="{{ docs[personnel.id] }}" data-pers="{{ personnel.id }}" class="btn btn-success sendone" title="Envoyer par mail">
+                                    <button
+                                            {{ stimulus_action('adm--edt--export', 'sendEdt', 'click', {
+                                                url: path('administration_edt_send_one', {personnel: personnel.id}),
+                                            }) }}
+                                            class="btn btn-success"
+                                            title="Envoyer le PDF">
                                         <i class="fa fa-envelope"></i>
-                                    </a>
+                                    </button>
+                                {% else %}
+                                    <span id="mail_{{ personnel.id }}"></span>
                                 {% endif %}
                             </td>
                         </tr>
@@ -91,5 +106,5 @@
 
             </div>
         </div>
-    </form>
+    </div>
 {% endblock %}
