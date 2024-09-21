@@ -2,7 +2,7 @@
 # @file /Users/davidannebicque/Sites/intranetV3/update.sh
 # @author davidannebicque
 # @project intranetV3
-# @lastUpdate 21/09/2024 18:44
+# @lastUpdate 21/09/2024 18:46
 
 #!/usr/bin/env bash
 
@@ -44,8 +44,8 @@ then
 echo "Fichier source trouvé: $file"
   if [ -n "$file" ]; then
     # Renommer le fichier
-    mv "$file" "$new_name"
-    echo "Fichier renommé en $new_name dans $directory"
+   # mv "$file" "$new_name"
+   # echo "Fichier renommé en $new_name dans $directory"
   else
     echo "Aucun fichier trouvé correspondant à ${prefix}*${extension} dans $directory"
   fi
