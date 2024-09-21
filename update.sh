@@ -2,7 +2,7 @@
 # @file /Users/davidannebicque/Sites/intranetV3/update.sh
 # @author davidannebicque
 # @project intranetV3
-# @lastUpdate 08/04/2024 17:57
+# @lastUpdate 21/09/2024 18:28
 
 #!/usr/bin/env bash
 
@@ -25,9 +25,33 @@ then
       npm run build
   fi
 
-  $old_file = "public/build/print.*.css"
+  $old_file = "public/build/print"
   $new_file = "public/build/print.css"
-  mv $old_file $new_file
+  # Variables
+  directory="public/build/"
+  prefix="print"
+  extension=".css"
+  new_name="print.css"
+
+  # Sauvegarder le répertoire actuel
+  current_dir=$(pwd)
+
+  # Naviguer vers le répertoire cible
+  cd "$directory" || { echo "Répertoire $directory introuvable"; exit 1; }
+
+  # Recherche du fichier correspondant
+  file=$(ls ${prefix}*${extension} 2>/dev/null | head -n 1)
+
+  if [ -n "$file" ]; then
+    # Renommer le fichier
+    mv "$file" "$new_name"
+    echo "Fichier renommé en $new_name dans $directory"
+  else
+    echo "Aucun fichier trouvé correspondant à ${prefix}*${extension} dans $directory"
+  fi
+
+  # Retourner au répertoire d'origine
+  cd "$current_dir"
   echo "fin génératation des assets"
 fi
 
