@@ -2,7 +2,7 @@
 # @file /Users/davidannebicque/Sites/intranetV3/update.sh
 # @author davidannebicque
 # @project intranetV3
-# @lastUpdate 21/09/2024 18:28
+# @lastUpdate 21/09/2024 18:35
 
 #!/usr/bin/env bash
 
@@ -25,10 +25,8 @@ then
       npm run build
   fi
 
-  $old_file = "public/build/print"
-  $new_file = "public/build/print.css"
   # Variables
-  directory="public/build/"
+  directory="/var/www/html/intranetv3/public/build/"
   prefix="print"
   extension=".css"
   new_name="print.css"
