@@ -24,6 +24,7 @@ class EduSignGroupe
    }
      */
 
+    public ?string $id = '';
     public string $name;
     public string $description = '';
     public array $students = [];
@@ -35,6 +36,7 @@ class EduSignGroupe
     public function toArray(): array
     {
         return [
+            'ID' => $this->id,
             'NAME' => $this->name,
             'DESCRIPTION' => $this->description,
             'STUDENTS' => $this->students,

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EdtActionsController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:17
+ * @lastUpdate 31/08/2024 15:36
  */
 
 namespace App\Controller\administration;
@@ -42,13 +42,7 @@ class EdtActionsController extends BaseController
         // récupérer le fichier
         $fichier = $upload->upload($request->files->get('fichieredt'));
         $myEdtImport->init($fichier, $this->getDepartement(), $this->getAnneeUniversitaire())->traite();
-        /* fin necessaire ? */
-        $s = $myEdtImport->getCalendrier();
-        if ($s) {
-            return $this->redirectToRoute('administration_edt_index',
-                ['semaine' => $s->getSemaineReelle(), 'valeur' => $this->dataUserSession->getSemestresActifs()[0]->getId(), 'filtre' => 'promo']);
-        }
-        // pas de semaine trouvée
+
         return $this->redirectToRoute('administration_edt_index');
     }
 

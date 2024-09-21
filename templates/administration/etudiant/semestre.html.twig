@@ -29,119 +29,12 @@
         </h4>
         <div class="card-body">
             {{ table_render(table) }}
-{#            <table class="table table-striped table-bordered">#}
-{#                <thead>#}
-{#                <tr>#}
-{#                    <th>{{ 'table.nom'|trans }}</th>#}
-{#                    <th>{{ 'table.prenom'|trans }}</th>#}
-{#                    <th>{{ 'table.numetudiant'|trans }}</th>#}
-{#                    <th>{{ 'table.bac'|trans }}</th>#}
-{#                    <th>{{ 'table.groupes'|trans }}</th>#}
-{#                    <th>{{ 'table.semestre'|trans }}</th>#}
-{#                    <th>{{ 'table.departement'|trans }}</th>#}
-{#                    <th>{{ 'table.actions'|trans }}</th>#}
-{#                </tr>#}
-{#                </thead>#}
-{#                <tbody>#}
-{#                {% for etudiant in semestre.etudiants %}#}
-{#                    <tr>#}
-
-{#                        <td>{{ etudiant.nom }}</td>#}
-{#                        <td>{{ etudiant.prenom }}</td>#}
-{#                        <td>{{ etudiant.numEtudiant }}</td>#}
-{#                        <td>#}
-{#                            <select class="form-control editEtudiant" data-field="bac" data-etudiant="{{ etudiant.id }}">#}
-{#                                <option value="null" selected>Non défini</option>#}
-{#                                {% for bac in bacs %}#}
-{#                                    <option value="{{ bac.id }}"#}
-{#                                            {% if etudiant.bac!=null and etudiant.bac.id == bac.id %}selected{% endif %}#}
-{#                                    >{{ bac.libelle }}</option>#}
-{#                                {% endfor %}#}
-{#                            </select>#}
-{#                        </td>#}
-{#                        <td>{% for groupe in etudiant.groupes %}{{ groupe.libelle }}, {% else %}-{% endfor %}</td>#}
-{#                        <td>#}
-{#                            <select class="form-control editEtudiant" data-field="semestre" data-etudiant="{{ etudiant#}
-{#                            .id }}">#}
-{#                                <option value="null" selected>Non défini</option>#}
-{#                                {% for semestre in user_data.semestres %}#}
-{#                                    <option value="{{ semestre.id }}"#}
-{#                                            {% if etudiant.semestre!=null and etudiant.semestre.id == semestre.id %}selected{% endif %}#}
-{#                                    >{{ semestre.libelle }}</option>#}
-{#                                {% endfor %}#}
-{#                            </select>#}
-{#                        </td>#}
-{#                        <td>#}
-{#                            <select class="form-control editEtudiant" data-field="departement" data-etudiant="{{ etudiant.id }}">#}
-{#                                <option value="null" selected>Non défini</option>#}
-            {# {% for departement in departements %} #}
-            {# <option value="{{ departement.id }}" #}
-            {# {% if etudiant.departement!=null and etudiant.departement.id == departement.id %}selected{% endif %} #}
-            {# >{{ departement.libelle }}</option> #}
-            {# {% endfor %} #}
-            {# </select> #}
-            {# </td> #}
-            {# <td> #}
-            {# <a href="{{ path('user_profil', {type: 'etudiant', slug:etudiant.slug}) }}" #}
-            {# class="btn btn-info btn-outline btn-square" #}
-            {# data-bs-toggle="tooltip" data-bs-placement="bottom" #}
-            {# #}
-            {# title="{{ 'atitle.profil'|trans }}"> #}
-            {# <i class="{{ iconShow }}"></i> #}
-            {# <span class="sr-only">{{ 'atitle.profil'|trans }}</span> #}
-            {# </a> #}
-            {# <a href="{{ path('administration_etudiant_edit', {id: etudiant.id}) }}" #}
-            {# class="btn btn-warning btn-outline btn-square" #}
-            {# data-bs-toggle="tooltip" data-bs-placement="bottom" #}
-            {# #}
-            {# title="{{ 'atitle.modifier'|trans }}"> #}
-            {# <i class="{{ iconEdit }}"></i> #}
-            {# <span class="sr-only">{{ 'atitle.modifier'|trans }}</span> #}
-            {# </a> #}
-            {# </td> #}
-            {# </tr> #}
-            {# {% endfor %} #}
-            {# </tbody> #}
-            {# </table> #}
         </div>
     </div>
 
 {% endblock %}
 
 {% block fabactions %}
-    {{ include('composants/fab-buttons.html.twig', {boutons:[
-        {type: 'info',
-            href: path('administration_etudiant_semestre_export', {'semestre': semestre.id, '_format':'pdf'}),
-            title: 'exporter.pdf'|trans,
-            icone : "fa fa-file-pdf"
-        },
-        {
-            type:'info',
-            href:path('administration_etudiant_semestre_export', {'semestre': semestre.id, '_format':'csv'}),
-            title: 'exporter.csv'|trans,
-            icone: 'fa fa-file-csv'
-        },
-        {
-            type:'info',
-            href:path('administration_etudiant_semestre_export', {'semestre': semestre.id, '_format':'xlsx'}),
-            title: 'exporter.xls'|trans,
-            icone: 'fa fa-file-excel'
-        },
-        {
-            type:'info',
-            href:path('help_article', {sujet: 'administration_etudiants_semestre'}),
-            title: 'aide'|trans,
-            icone: 'fa fa-question'
-        }
-    ]}) }}
-{% endblock %}
-
-{% block stylesheets %}
-    {{ parent() }}
-    {{ encore_entry_link_tags('adm.etudiants') }}
-{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-    {{ encore_entry_script_tags('adm.etudiants') }}
+    {{ include('composants/fab-button-help.html.twig', {
+        href:path('help_article', {sujet: 'administration_etudiants_semestre'})}) }}
 {% endblock %}

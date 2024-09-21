@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Excel/MyExcelRead.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/02/2024 22:23
+ * @lastUpdate 20/09/2024 08:23
  */
 
 /*
@@ -29,6 +29,7 @@ class MyExcelRead
     protected Worksheet $sheet;
 
     protected int $line = 1;
+    protected int $colonneToTest = 1;
     protected int $nbColumns = -1; // on ne connait pas l nombre de colonne
 
     /**
@@ -57,14 +58,15 @@ class MyExcelRead
      */
     public function readNewLine(): array|bool
     {
+//        dump($this->line);
         if (-1 === $this->nbColumns) {
             // on analyse le nombre de colonne
             $this->countColumns();
         }
-
-        if ('' !== $this->sheet->getCell([0, $this->line])->getValue()) {
+//dump($this->sheet->getCell([1, $this->line])->getValue());
+        if (null !== $this->sheet->getCell([$this->colonneToTest, $this->line])->getValue()) {
             $t = [];
-            for ($col = 0; $col < $this->nbColumns; ++$col) {
+            for ($col = 1; $col <= $this->nbColumns; ++$col) {
                 $t[$col] = $this->sheet->getCell([$col, $this->line]);
             }
             ++$this->line;
@@ -106,5 +108,25 @@ class MyExcelRead
     {
         $objWriter = IOFactory::createWriter($this->phpExcelObject, 'Xls');
         $objWriter->save($filename);
+    }
+
+    public function setNbColumns(int $nbColumns): void
+    {
+        $this->nbColumns = $nbColumns;
+    }
+
+    public function close(): void
+    {
+        $this->phpExcelObject->disconnectWorksheets();
+    }
+
+    public function getLigne(): int
+    {
+        return $this->line - 1; //Car on a déjà incrémenté après avoir lu
+    }
+
+    public function setCologneToTest(int $colonneToTest): void
+    {
+        $this->colonneToTest = $colonneToTest;
     }
 }

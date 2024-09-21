@@ -10,31 +10,40 @@
 namespace App\Classes\EduSign;
 
 use App\Classes\EduSign\Adapter\IntranetEnseignantEduSignAdapter;
-use App\Entity\Departement;
+use App\Classes\EduSign\Api\ApiPersonnel;
+use App\Entity\Diplome;
 use App\Entity\Personnel;
 use App\Repository\PersonnelRepository;
 
 class CreateEnseignant
 {
-
-    private UpdateManager $updateManager;
-
     public function __construct(
-        private readonly ApiEduSign $apiEduSign,
+        private readonly ApiPersonnel $apiPersonnel,
         protected PersonnelRepository $personnelRepository)
     {
     }
 
-    public function setUpdateManager(UpdateManager $updateManager): void
+    public function update(Personnel $personnel, Diplome $diplome, string $cleApi): array
     {
-        $this->updateManager = $updateManager;
-    }
+        try {
+            // Construit les objets associés selon le modèle EduSign
+            $enseignant = (new IntranetEnseignantEduSignAdapter($personnel))->getEnseignant();
 
-    public function update(Personnel $personnel, Departement $departement, string $cleApi): void
-    {
-        //construit les objets associés selon le modèle EduSign
-        $enseignant = (new IntranetEnseignantEduSignAdapter($personnel))->getEnseignant();
-        //envoi une requete pour ajouter les éléments
-        $this->apiEduSign->addEnseignant($enseignant, $personnel, $departement, $cleApi);
+            // Envoi une requête pour ajouter les éléments
+            $enseignantEduSign = $this->apiPersonnel->getEnseignantByEmail($enseignant->email, $cleApi);
+            if ($enseignantEduSign) {
+                $result = $this->apiPersonnel->updateEnseignant($enseignant, $personnel, $diplome, $cleApi);
+            } else {
+                $result = $this->apiPersonnel->addEnseignant($enseignant, $personnel, $diplome, $cleApi);
+            }
+
+            if (!$result['success']) {
+                return ['success' => false, 'error' => $result['error']];
+            }
+
+            return ['success' => true];
+        } catch (\Exception $e) {
+            return ['success' => false, 'error' => $e->getMessage()];
+        }
     }
 }

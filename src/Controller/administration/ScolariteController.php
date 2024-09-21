@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/ScolariteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:17
+ * @lastUpdate 25/04/2024 06:26
  */
 
 namespace App\Controller\administration;
@@ -48,11 +48,11 @@ class ScolariteController extends BaseController
                 $this->dataUserSession->getAnneeUniversitaire());
             $edit = false;
         }
-        $isApc = $scolarite->getSemestre()->getDiplome()->isApc();
+        $isApc = $scolarite->getSemestre()?->getDiplome()?->isApc();
         //todo: gérer avec stimulus la partie édit...
         $form = $this->createForm(ScolariteType::class, $scolarite,
             [
-                'departement' => $this->dataUserSession->getDepartement(),
+                'departement' => $this->getDepartement(),
                 'isApc' => $isApc
             ]);
         $form->handleRequest($request);
@@ -60,7 +60,7 @@ class ScolariteController extends BaseController
             $this->entityManager->persist($scolarite);
             $tUes = [];
             /** @var UE $ue */
-            foreach ($scolarite->getSemestre()->getUes() as $ue) {
+            foreach ($scolarite->getSemestre()?->getUes() as $ue) {
                 $idUe = $ue->getId();
                 $tUes[$idUe]['moyenne'] = Tools::convertToFloat($request->request->get('ue_'.$idUe));
                 if ($isApc) {

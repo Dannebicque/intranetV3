@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/AbsenceEtatAppelRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:35
+ * @lastUpdate 18/04/2024 17:52
  */
 
 namespace App\Repository;
@@ -16,6 +16,7 @@ use App\Entity\Personnel;
 use App\Entity\Semestre;
 use Carbon\CarbonImmutable;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Order;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -98,8 +99,8 @@ class AbsenceEtatAppelRepository extends ServiceEntityRepository
                 'idMatiere' => $mat->id,
                 'typeMatiere' => $mat->typeMatiere,
             ])
-            ->orderBy('a.date', 'ASC')
-            ->addOrderBy('a.heure', 'ASC')
+            ->orderBy('a.date', Order::Ascending->value)
+            ->addOrderBy('a.heure', Order::Ascending->value)
             ->getQuery()
             ->getResult();
     }

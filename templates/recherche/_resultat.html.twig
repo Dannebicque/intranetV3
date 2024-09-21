@@ -2,7 +2,10 @@
     <a href="#" title="{{ 'fermer'|trans }}"
        class="close"
        data-bs-toggle="tooltip" data-bs-placement="bottom"
-       data-action="lookup-search#closeModal"
+       data-action="
+       lookup-search#closeModal
+        keydown.esc->lookup-search#closeModal
+        "
        data-original-title="{{ 'fermer'|trans }}">
         <i class="fas fa-times fa-7x"></i>
     </a>

@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'adm.previsionnel.synthese.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        <div class="button">
+            <a href="{{ path('administration_previsionnel_export_omega') }}" class="btn btn-info btn-sm btn-float"
+               title="{{ 'atitle.export_omega'|trans }}" data-bs-toggle="tooltip" data-bs-placement="bottom"
+            ><i class="fas fa-table"></i></a>
+            <a href="{{ path('administration_previsionnel_index') }}" class="btn btn-primary btn-float"
+               title="{{ 'atitle.retour_liste'|trans }}" data-bs-toggle="tooltip" data-bs-placement="bottom"
+            ><i class="fas fa-arrow-left"></i></a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title">Synthèse de l'import</h4>
+        </div>
+        <div class="card-body">
+            <div class="d-grid">
+                <a href="{{ path('administration_previsionnel_index') }}" class="btn btn-success d-block">Retour au
+                    prévisionnel</a>
+            </div>
+            <div>
+                {{ logger_render(log) }}
+            </div>
+            <div class="d-grid">
+                <a href="{{ path('administration_previsionnel_index') }}" class="btn btn-success d-block">Retour au
+                    prévisionnel</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block fabactions %}
+    {{ include('composants/fab-button-help.html.twig', {
+        href:path('help_article', {sujet: 'administration_previsionnel'}),
+    }) }}
+{% endblock %}

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/SousCommission/SousCommissionExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/03/2024 11:54
+ * @lastUpdate 12/09/2024 11:49
  */
 
 namespace App\Classes\SousCommission;
@@ -20,11 +20,15 @@ use App\Entity\Constantes;
 use App\Entity\ScolaritePromo;
 use App\Entity\Semestre;
 use App\Entity\Ue;
+use App\Enums\DecisionSemestreEnum;
 use App\Enums\SemestreLienEnum;
 use App\Exception\SemestreNotFoundException;
+use App\Repository\ScolaritePromoRepository;
 use Carbon\Carbon;
+use Doctrine\Common\Collections\ArrayCollection;
 use PhpOffice\PhpSpreadsheet\Exception;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\HttpKernel\KernelInterface;
@@ -42,7 +46,7 @@ class SousCommissionExport
         'matiereAAnnuler' => 'ff926dde',
         'pasdenote' => 'ffbbbbbb',
         Constantes::PAS_OPTION => 'ff000000',
-        '' => 'ffffff',
+        '' => 'ffffffff',
     ];
 
     private ?SousCommissionInterface $sousCommission = null;
@@ -58,7 +62,8 @@ class SousCommissionExport
         private readonly MyExcelWriter         $myExcelWriter,
         private readonly MyExcelRead           $myExcelRead,
         private readonly TypeMatiereManager    $typeMatiereManager,
-        private readonly MyUpload              $myUpload
+        private readonly MyUpload        $myUpload,
+        private ScolaritePromoRepository $scolaritePromoRepository,
     )
     {
         $this->dir = $kernel->getProjectDir() . '/public/upload/temp/';
@@ -301,10 +306,17 @@ class SousCommissionExport
                         $sousCommissionEtudiant->getScolarite()[$s->getOrdreLmd()]->moyenne,
                         ['style' => 'numerique3']);
                     ++$colonne;
-                    $this->myExcelWriter->writeCellXY($colonne, $ligne,
-                        $sousCommissionEtudiant->getScolarite()[$s->getOrdreLmd()]->decision);
-                    $this->myExcelWriter->colorCellRange($colonne, $ligne,
-                        Constantes::SS_COMM_DECISION_COULEUR[$sousCommissionEtudiant->getScolarite()[$s->getOrdreLmd()]->decision]);
+                    if ($sousCommissionEtudiant->getScolarite()[$s->getOrdreLmd()]->decision instanceof DecisionSemestreEnum) {
+                        $this->myExcelWriter->writeCellXY($colonne, $ligne,
+                            $sousCommissionEtudiant->getScolarite()[$s->getOrdreLmd()]->decision->value);
+                        $this->myExcelWriter->colorCellRange($colonne, $ligne,
+                            Constantes::SS_COMM_DECISION_COULEUR[$sousCommissionEtudiant->getScolarite()[$s->getOrdreLmd()]->decision->value]);
+                    } else {
+                        $this->myExcelWriter->writeCellXY($colonne, $ligne,
+                            $sousCommissionEtudiant->getScolarite()[$s->getOrdreLmd()]->decision);
+                        $this->myExcelWriter->colorCellRange($colonne, $ligne,
+                            Constantes::SS_COMM_DECISION_COULEUR[$sousCommissionEtudiant->getScolarite()[$s->getOrdreLmd()]->decision]);
+                    }
                 } else {
                     $this->myExcelWriter->writeCellXY($colonne, $ligne, ' - ');
                     ++$colonne;
@@ -608,7 +620,7 @@ class SousCommissionExport
                         $sousCommissionEtudiant->scolarite[$semPrec->getOrdreLmd()]->decision,
                         ['style' => 'HORIZONTAL_CENTER']);
                     $this->myExcelWriter->colorCellRange($colonne, $ligne,
-                        $this->getStyleDecisionUe($sousCommissionEtudiant->scolarite[$semPrec->getOrdreLmd()]->decision));
+                        $this->getStyleDecisionSemestre($sousCommissionEtudiant->scolarite[$semPrec->getOrdreLmd()]->decision));
                 } else {
                     $this->myExcelWriter->writeCellXY($colonne, $ligne,
                         'Sans Info.',
@@ -787,7 +799,7 @@ class SousCommissionExport
      */
     public function exportApogee(
         Semestre           $semestre,
-                           $file,
+        UploadedFile $file,
         AnneeUniversitaire $anneeUniversitaire
     ): StreamedResponse|string|null
     {
@@ -814,7 +826,18 @@ class SousCommissionExport
             $colonne += 2; // 3 si colonne résultat
         }
 
-        $etudiants = $semestre->getEtudiants();
+        // Récupération des étudiants par rapport à la SousComission et pas au semestre (étudiant pouvant avoir changé
+        $scolPromo = $this->scolaritePromoRepository->findOneBy(['semestre' => $semestre, 'anneeUniversitaire' => $anneeUniversitaire]);
+
+        if (null === $scolPromo) {
+            return Constantes::PAS_DE_SOUS_COMM;
+        }
+        $etudiants = new ArrayCollection();
+        foreach ($scolPromo->getScolarites() as $scolarite) {
+            $etudiants->add($scolarite->getEtudiant());
+        }
+
+
         $ues = $semestre->getUes();
         if ($semestre->getDiplome()->isApc()) {
             $matieres = $this->typeMatiereManager->findBySemestreAndReferentiel($semestre,
@@ -1078,5 +1101,18 @@ class SousCommissionExport
         }
 
         return '';
+    }
+
+    private function getStyleDecisionSemestre($decision): string
+    {
+        if (DecisionSemestreEnum::SEMESTRE_NON_VALIDE === $decision) {
+            return self::COULEURS['badge bg-danger'];
+        }
+
+        if (DecisionSemestreEnum::SEMESTRE_VALIDE === $decision) {
+            return self::COULEURS['badge bg-success'];
+        }
+
+        return 'ffffffff';
     }
 }

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/EdtManager.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/02/2024 08:41
+ * @lastUpdate 19/04/2024 18:06
  */
 
 namespace App\Classes\Edt;
@@ -17,11 +17,18 @@ use App\DTO\EvenementEdt;
 use App\DTO\EvenementEdtCollection;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Groupe;
+use App\DTO\Matiere;
 use App\Entity\Personnel;
+use App\Entity\Salle;
 use App\Entity\Semestre;
 use App\Enums\TypeGroupeEnum;
 use App\Repository\EdtCelcatRepository;
 use App\Repository\EdtPlanningRepository;
+use App\Repository\GroupeRepository;
+use App\Repository\MatiereRepository;
+use App\Repository\PersonnelRepository;
+use App\Repository\SalleRepository;
+use App\Repository\SemestreRepository;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class EdtManager
@@ -38,16 +45,21 @@ class EdtManager
         private readonly SourceEdtRegistry     $sourceEdtRegistry,
         private readonly EdtPlanningRepository $edtPlanningRepository,
         private readonly EdtCelcatRepository   $edtCelcatRepository,
+        private readonly SemestreRepository    $semestreRepository,
+        private readonly GroupeRepository      $groupeRepository,
+        private readonly PersonnelRepository   $personnelRepository,
+        private readonly SalleRepository       $salleRepository,
+        private readonly MatiereRepository     $matiereRepository,
     )
     {
         $this->tabSources = $this->sourceEdtRegistry->getSourcesEdt();
     }
 
     public function getPlanningSemestre(
-        Semestre $semestre,
-        array    $matieres,
+        Semestre           $semestre,
+        array              $matieres,
         AnneeUniversitaire $anneeUniversitaire,
-        array    $groupes
+        array              $groupes
     ): ?EvenementEdtCollection
     {
         switch ($this->getSourceEdt($semestre)) {
@@ -64,12 +76,28 @@ class EdtManager
         }
     }
 
-    public function getPlanningSemestreSemaine(
-        Semestre $semestre,
-        int      $semaine,
+    public function getPlanningPersonnelSemaine(
+        Personnel          $personnel,
+        int                $semaine,
         AnneeUniversitaire $anneeUniversitaire,
-        array    $matieres,
-        array    $groupes
+        array              $matieres,
+        array              $groupes
+    ): ?array
+    {
+        foreach ($this->tabSources as $source) {
+            $planning[] = $source->getPlanningPersonnelSemaine($personnel, $semaine, $anneeUniversitaire, $matieres, $groupes);
+        }
+
+        return array_merge(...$planning);
+
+    }
+
+    public function getPlanningSemestreSemaine(
+        Semestre           $semestre,
+        int                $semaine,
+        AnneeUniversitaire $anneeUniversitaire,
+        array              $matieres,
+        array              $groupes
     ): ?EvenementEdtCollection
     {
         switch ($this->getSourceEdt($semestre)) {
@@ -79,17 +107,21 @@ class EdtManager
                 return $this->edtCelcat->getPlanningSemestreSemaine($semestre, $semaine, $anneeUniversitaire, $matieres, $groupes);
             case self::EDT_INTRANET:
                 $this->source = self::EDT_INTRANET;
-
                 return $this->edtIntranet->getPlanningSemestreSemaine($semestre, $semaine, $anneeUniversitaire, $matieres, $groupes);
             default:
                 return null;
         }
     }
 
-    public function getPlanningEduSign(Semestre $semestre,
-                                       array    $matieres,
+    public function getCourseEduSign(string $source, string $idEvent, $matiere, $groupe): ?EvenementEdt
+    {
+        return $this->getManager($source)?->findOne($idEvent, $matiere, $groupe);
+    }
+
+    public function getPlanningEduSign(Semestre           $semestre,
+                                       array              $matieres,
                                        AnneeUniversitaire $anneeUniversitaire,
-                                       array    $groupes): ?EvenementEdtCollection
+                                       array              $groupes): ?EvenementEdtCollection
     {
         switch ($this->getSourceEdt($semestre)) {
             case self::EDT_CELCAT:
@@ -106,11 +138,11 @@ class EdtManager
     }
 
     public function initSemestre(
-        Semestre   $semestre,
-        Calendrier $semaine,
+        Semestre           $semestre,
+        Calendrier         $semaine,
         AnneeUniversitaire $anneeUniversitaire,
-        array      $matieres = [],
-        array      $groupes = [],
+        array              $matieres = [],
+        array              $groupes = [],
     ): EvenementEdtCollection
     {
         switch ($this->getSourceEdt($semestre)) {
@@ -143,10 +175,10 @@ class EdtManager
     }
 
     public function recupereEDTBornes(
-        int      $semaineFormation,
-        Semestre $semestre,
-        string   $jourSemaine,
-        array    $matieres,
+        int                $semaineFormation,
+        Semestre           $semestre,
+        string             $jourSemaine,
+        array              $matieres,
         array              $groupes,
         AnneeUniversitaire $anneeUniversitaire
     ): EvenementEdtCollection
@@ -233,7 +265,7 @@ class EdtManager
                 foreach ($matieres as $matiere) {
                     $tMatieres[$matiere->getTypeIdMatiere()] = $matiere;
                 }
-            break;
+                break;
         }
 
         return $tMatieres;
@@ -281,4 +313,51 @@ class EdtManager
             $this->edtCelcatRepository->save($cours);
         }
     }
+
+    public function findCourse(
+        ?string $source,
+        ?int    $eventId,
+    )
+    {
+        if ($source === 'intranet') {
+            return $this->edtPlanningRepository->find($eventId);
+        } elseif ($source === 'celcat') {
+            return $this->edtCelcatRepository->find($eventId);
+        }
+
+        return null;
+    }
+
+    public function updateCourse(
+        $cours,
+        ?string $source,
+        ?Matiere $matiere,
+        ?Semestre $semestre,
+        ?Groupe $groupe,
+        ?int $groupeOrdre,
+        ?string $groupeType,
+        ?Personnel $enseignant,
+        ?string $salle)
+    {
+        if ($source === 'intranet') {
+
+            foreach (['Intervenant' => $enseignant, 'Salle' => $salle, 'Groupe' => $groupeOrdre, 'Type' => $groupeType, 'IdMatiere' => $matiere->id, 'TypeMatiere' => $matiere->typeMatiere, 'Semestre' => $semestre] as $method => $value) {
+                if (null !== $value) {
+                    $cours->{"set$method"}($value);
+                }
+            }
+            $this->edtPlanningRepository->updateCourse($cours);
+        } elseif ($source === 'celcat') {
+            foreach (['Personnel' => $enseignant, 'LibPersonnel' => $enseignant->getNom().' '.$enseignant->getPrenom(), 'CodePersonnel' => $enseignant->getNumeroHarpege(),
+                         'LibSalle' => $salle, 'CodeGroupe' => $groupe->getCodeApogee(), 'LibGroupe' => $groupe->getLibelle(), 'Type' => $groupeType, 'IdMatiere' => $matiere->id, 'TypeMatiere' => $matiere->typeMatiere, 'Semestre' => $semestre, 'LibModule'=>$matiere->libelle, 'CodeModule'=>$matiere->codeMatiere] as $method => $value) {
+                if (null !== $value) {
+                    $cours->{"set$method"}($value);
+                }
+            }
+            $this->edtCelcatRepository->updateCourse($cours);
+        }
+
+        return $cours;
+    }
+
 }

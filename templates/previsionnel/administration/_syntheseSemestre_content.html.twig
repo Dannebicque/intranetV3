@@ -1,0 +1,85 @@
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th rowspan="2">Code</th>
+        <th rowspan="2">MatièreRessource/SAE</th>
+        <th rowspan="2">Type</th>
+        <th rowspan="2">Nb intervenants</th>
+        <th colspan="3" class="previcm">CM</th>
+        <th colspan="3" class="previtd">TD</th>
+        <th colspan="3" class="previtp">TP</th>
+        <th colspan="3">Total</th>
+    </tr>
+    <tr>
+
+        <th class="previcm">Maq.</th>
+        <th class="previcm">Prévi.</th>
+        <th class="previcm">Diff.</th>
+        <th class="previtd">Maq.</th>
+        <th class="previtd">Prévi.</th>
+        <th class="previtd">Diff.</th>
+        <th class="previtp">Maq.</th>
+        <th class="previtp">Prévi.</th>
+        <th class="previtp">Diff.</th>
+        <th>Maq.</th>
+        <th>Prévi.</th>
+        <th>Diff.</th>
+
+    </tr>
+    </thead>
+    <tbody>
+    {% set totalCM = 0 %}
+    {% set totalTD = 0 %}
+    {% set totalTP = 0 %}
+    {% for previsionnel in syntheseSemestre.matieres %}
+        <tr>
+            <th>{{ previsionnel.display_code }}</th>
+            <th>{{ previsionnel.display }}</th>
+            <td>{{ previsionnel.type }}</td>
+            <td></td>
+            {#            <td>{{ previsionnel.nbIntervenants }}</td> #}
+            <td class="previcm">{{ previsionnel.totalMaquetteCm|nombreHeure }}</td>
+            <td class="previcm">{{ previsionnel.totalCM|nombreHeure }}</td>
+            <td class="previcm">{{ previsionnel.diffCm|badgeDiffenceSemestre }}</td>
+            <td class="previtd">{{ previsionnel.totalMaquetteTd|nombreHeure }}</td>
+            <td class="previtd">{{ previsionnel.totalTD|nombreHeure }}</td>
+            <td class="previtd">{{ previsionnel.diffTd|badgeDiffenceSemestre }}</td>
+            <td class="previtp">{{ previsionnel.totalMaquetteTp|nombreHeure }}</td>
+            <td class="previtp">{{ previsionnel.totalTP|nombreHeure }}</td>
+            <td class="previtp">{{ previsionnel.diffTp|badgeDiffenceSemestre }}</td>
+            <td>{{ previsionnel.totalMaquetteTotal|nombreHeure }}</td>
+            <td>{{ previsionnel.total|nombreHeure }}</td>
+            <td>{{ previsionnel.diffTotal|badgeDiffenceSemestre }}</td>
+            {% set totalCM = totalCM  + previsionnel.totalMaquetteCm %}
+            {% set totalTD = totalTD + previsionnel.totalMaquetteTd %}
+            {% set totalTP = totalTP + previsionnel.totalMaquetteTp %}
+        </tr>
+    {% endfor %}
+
+    <tr>
+        <td colspan="16" class="bg-complementary">
+            <div class="d-grid ">
+                <span class="btn d-block text-white">
+                    Synthèse
+                </span>
+            </div>
+
+        </td>
+    </tr>
+    <tr>
+        <th colspan="4">Total</th>
+        <th class="previcm">{{ totalCM|nombreHeure }}</th>
+        <th class="previcm">{{ syntheseSemestre.totalPreviCM|nombreHeure }}</th>
+        <th class="previcm">{{ (syntheseSemestre.totalPreviCM - totalCM)|badgeDiffenceSemestre }}</th>
+        <th class="previtd">{{ totalTD|nombreHeure }}</th>
+        <th class="previtd">{{ syntheseSemestre.totalPreviTD|nombreHeure }}</th>
+        <th class="previtd">{{ (syntheseSemestre.totalPreviTD - totalTD)|badgeDiffenceSemestre }}</th>
+        <th class="previtp">{{ totalTP|nombreHeure }}</th>
+        <th class="previtp">{{ syntheseSemestre.totalPreviTP|nombreHeure }}</th>
+        <th class="previtp">{{ (syntheseSemestre.totalPreviTP - totalTP)|badgeDiffenceSemestre }}</th>
+        <th>{{ (totalCM + totalTD + totalTP)|nombreHeure }}</th>
+        <th>{{ syntheseSemestre.totalPrevi|nombreHeure }}</th>
+        <th>{{ (syntheseSemestre.totalPrevi-totalCM - totalTD - totalTP)|badgeDiffenceSemestre }}</th>
+    </tr>
+    </tbody>
+</table>

@@ -1,15 +1,14 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Form/Type/SearchType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/07/2022 14:56
+ * @lastUpdate 19/04/2024 17:48
  */
 
 namespace App\Form\Type;
 
-use function is_string;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -17,6 +16,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use function is_string;
 
 class SearchType extends AbstractType implements DataTransformerInterface
 {
@@ -50,7 +50,7 @@ class SearchType extends AbstractType implements DataTransformerInterface
         return $value;
     }
 
-    public function reverseTransform($value): mixed
+    public function reverseTransform($value): ?string
     {
         if (!is_string($value)) {
             return null;

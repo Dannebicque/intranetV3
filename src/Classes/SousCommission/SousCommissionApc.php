@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/SousCommission/SousCommissionApc.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 27/06/2023 14:28
+ * @lastUpdate 22/06/2024 11:16
  */
 
 namespace App\Classes\SousCommission;
@@ -50,7 +50,6 @@ class SousCommissionApc extends AbstractSousCommission implements SousCommission
         $uesSemestrePrecedent = [];
         $ressources = $this->apcRessourceCompetenceRepository->findBySemestreArray($semestre);
         $saes = $this->apcSaeCompetenceRepository->findBySemestreArray($semestre);
-
         $this->anneeUniversitaire = $anneeUniversitaire;
         $this->initDataSousCommission();
 

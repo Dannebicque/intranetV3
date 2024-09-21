@@ -1,7 +1,7 @@
 <div class="logger">
     <ol>
         {% for log in logs %}
-            <li class="log_level {{ log.level }}">{{ log.date|date('d/m/Y H:i:s') }} | {{ log.message|raw }}</li>
+            <li class="log_level text-{{ log.level }}">{{ log.date|date('d/m/Y H:i:s') }} | {{ log.message|raw }}</li>
         {% endfor %}
     </ol>
 </div>

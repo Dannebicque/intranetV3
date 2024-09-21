@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Scolarite.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:40
+ * @lastUpdate 13/09/2024 19:22
  */
 
 namespace App\Entity;
@@ -98,7 +98,7 @@ class Scolarite extends BaseEntity
         return $this->ordre;
     }
 
-    public function setOrdre(int $ordre): self
+    public function setOrdre(?int $ordre = 0): self
     {
         $this->ordre = $ordre;
 

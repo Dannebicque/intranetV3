@@ -21,8 +21,7 @@ class IntranetEnseignantEduSignAdapter
         $this->enseignant = new EduSignEnseignant();
         $this->enseignant->firstname = $enseignant->getPrenom();
         $this->enseignant->lastname = $enseignant->getNom();
-        $this->enseignant->email = $enseignant->getMailUniv();
-//        $this->enseignant->email = $enseignant->getId().'enseignant1@test.fr';
+        $this->enseignant->email = $this->getEmailEnseignant($enseignant);
         $this->enseignant->speciality = null;
         $this->enseignant->api_id = $enseignant->getId();
         $departements = $enseignant->getDepartements();
@@ -35,5 +34,14 @@ class IntranetEnseignantEduSignAdapter
     public function getEnseignant(): ?EduSignEnseignant
     {
         return $this->enseignant;
+    }
+
+    public function getEmailEnseignant(Personnel $enseignant): string
+    {
+        // détection de l'envrionnement, si 'dev' alors prendre le mail de l'enseignant, sinon prendre un mail de test
+        if ($_SERVER['APP_ENV'] === 'dev') {
+            return $enseignant->getId() . '@enseignant_test.fr';
+        }
+        return $enseignant->getMailUniv();
     }
 }

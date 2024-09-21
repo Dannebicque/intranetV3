@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Twig/AppExtension.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/08/2023 15:41
+ * @lastUpdate 17/04/2024 21:46
  */
 
 namespace App\Twig;
@@ -44,8 +44,15 @@ class AppExtension extends AbstractExtension
             new TwigFilter('border', $this->border(...)),
             new TwigFilter('format_note', $this->formatNote(...), ['is_safe' => ['html']]),
             new TwigFilter('formatDifference', $this->formatDifference(...), ['is_safe' => ['html']]),
+            new TwigFilter('classFQN', $this->classFQN(...), ['is_safe' => ['html']]),
         ];
     }
+
+    public function classFQN(object $object): string
+    {
+        return get_class($object);
+    }
+
 
     public function pourcentage(?float $value, int $nbdecimales = 2): string
     {

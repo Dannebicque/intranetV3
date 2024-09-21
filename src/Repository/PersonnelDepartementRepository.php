@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/PersonnelDepartementRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 11:14
+ * @lastUpdate 18/04/2024 17:54
  */
 
 namespace App\Repository;
@@ -13,7 +13,7 @@ use App\Entity\Departement;
 use App\Entity\Personnel;
 use App\Entity\PersonnelDepartement;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Collections\Criteria;
+use Doctrine\Common\Collections\Order;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -41,7 +41,7 @@ class PersonnelDepartementRepository extends ServiceEntityRepository
             ->innerJoin(Departement::class, 'm', 'WITH', 'f.departement = m.id')
             ->where('f.personnel = :personnel')
             ->setParameter('personnel', $user)
-            ->orderBy('m.libelle', Criteria::DESC)
+            ->orderBy('m.libelle', Order::Descending->value)
             ->getQuery()
             ->getResult();
     }
@@ -89,8 +89,8 @@ class PersonnelDepartementRepository extends ServiceEntityRepository
             ->innerJoin(Personnel::class, 'p', 'WITH', 'f.personnel = p.id')
             ->where('f.departement = :departement')
             ->setParameter('departement', $departement)
-            ->orderBy('p.nom', Criteria::ASC)
-            ->addOrderBy('p.prenom', Criteria::ASC)
+            ->orderBy('p.nom', Order::Ascending->value)
+            ->addOrderBy('p.prenom', Order::Ascending->value)
             ->getQuery()
             ->getResult();
     }
@@ -106,8 +106,8 @@ class PersonnelDepartementRepository extends ServiceEntityRepository
             ->andWhere('d.departement = :departement')
             ->setParameter('needle', '%'.$needle.'%')
             ->setParameter('departement', $departement->getId())
-            ->orderBy('p.nom', Criteria::ASC)
-            ->addOrderBy('p.prenom', Criteria::ASC)
+            ->orderBy('p.nom', Order::Ascending->value)
+            ->addOrderBy('p.prenom', Order::Ascending->value)
             ->getQuery()
             ->getResult();
 

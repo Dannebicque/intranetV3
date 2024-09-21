@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/AlternanceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/02/2024 21:31
+ * @lastUpdate 25/04/2024 06:23
  */
 
 namespace App\Controller\administration;
@@ -123,7 +123,7 @@ class AlternanceController extends BaseController
     {
         //$this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $alternance->getAnnee());
         $form = $this->createForm(AlternanceType::class, $alternance,
-            ['departement' => $this->dataUserSession->getDepartement()]);
+            ['departement' => $this->getDepartement()]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();

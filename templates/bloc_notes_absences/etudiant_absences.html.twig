@@ -56,7 +56,8 @@
                     {% if  user_data.isGoodDepartement('ROLE_ABS') or user_data.isGoodDepartement('ROLE_ASS') or user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE') or user_data.isGoodDepartement('ROLE_ADMIN') %}
                         <td>
                             <div class="custom-control custom-control-lg custom-checkbox">
-                                <input type="checkbox" class="custom-control-input checkAbsence" id="check_{{ absence.id }}"
+                                <input type="checkbox" class="custom-control-input" id="check_{{ absence.id }}"
+                                        {{ stimulus_action('adm--justifier-absences', 'checkAbsence') }}
                                        data-absence="{{ absence.id }}" {% if absence.justifie %}checked{% endif %}>
                                 <label class="custom-control-label" for="check_{{ absence.id }}">Justifiée*</label>
                             </div>

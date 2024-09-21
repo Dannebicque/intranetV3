@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MyEvaluation.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/03/2024 16:30
+ * @lastUpdate 19/04/2024 17:48
  */
 
 /*
@@ -54,10 +54,11 @@ class MyEvaluation
     public function __construct(
         private readonly TypeMatiereManager $typeMatiereManager,
         protected EntityManagerInterface $entityManager,
-        private readonly PdfManager $myPdf,
+        private readonly PdfManager      $myPdf,
         private readonly MyExcelMultiExport $myExcelMultiExport,
         private readonly EtudiantRepository $etudiantRepository
-    ) {
+    )
+    {
     }
 
     public function setEvaluation(Evaluation $evaluation): self
@@ -226,7 +227,7 @@ class MyEvaluation
      * @throws SyntaxError
      */
     public function exportReleve(
-        string $_format,
+        string   $_format,
         Collection|array $groupes,
         Semestre $semestre
     ): StreamedResponse|Response|null
@@ -238,7 +239,7 @@ class MyEvaluation
             throw new MatiereNotFoundException();
         }
 
-        $name = 'releve-'.$matiere->codeMatiere;
+        $name = 'releve-' . $matiere->codeMatiere;
         switch ($_format) {
             case Constantes::FORMAT_PDF:
                 return $this->myPdf->pdf()::generePdf('pdf/releveEvaluation.html.twig', [
@@ -278,10 +279,11 @@ class MyEvaluation
      */
     public function importEvaluation(
         Evaluation $evaluation,
-        string $fichier,
+        string   $fichier,
         Semestre $semestre,
-        bool $ecrase = false
-    ): bool {
+        bool     $ecrase = false
+    ): bool
+    {
         $t = explode('.', $fichier);
         $extension = $t[count($t) - 1];
 
@@ -351,7 +353,8 @@ class MyEvaluation
 
     private function importXlsx(
         string $fichier
-    ): array {
+    ): array
+    {
         $t = [];
         $excel = IOFactory::load($fichier);
         $sheetData = $excel->getActiveSheet()->toArray(null, true, true, true);
@@ -360,16 +363,15 @@ class MyEvaluation
         foreach ($sheetData[1] as $key) {
             $ordre[] = mb_strtolower($key);
         }
-        if (is_array($sheetData)) {
-            $nblignes = count($sheetData);
-            for ($i = 2; $i <= $nblignes; ++$i) {
-                if (is_array($sheetData[$i])) {
-                    $nb = count($sheetData[$i]);
-                    for ($j = 1; $j <= $nb; ++$j) {
-                        $t[$ordre[$j - 1]] = trim($sheetData[$i][chr($j + 64)]);
-                    }
-                    $data[] = $t;
+
+        $nblignes = count($sheetData);
+        for ($i = 2; $i <= $nblignes; ++$i) {
+            if (is_array($sheetData[$i])) {
+                $nb = count($sheetData[$i]);
+                for ($j = 1; $j <= $nb; ++$j) {
+                    $t[$ordre[$j - 1]] = trim($sheetData[$i][chr($j + 64)]);
                 }
+                $data[] = $t;
             }
         }
 
@@ -378,7 +380,8 @@ class MyEvaluation
 
     private function importCsv(
         string $fichier
-    ): array {
+    ): array
+    {
         $t = [];
         $handle = fopen($fichier, 'rb');
         $data = [];

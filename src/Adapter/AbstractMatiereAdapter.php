@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Adapter/AbstractMatiereAdapter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/05/2022 13:12
+ * @lastUpdate 19/06/2024 07:02
  */
 
 namespace App\Adapter;
@@ -21,6 +21,9 @@ abstract class AbstractMatiereAdapter
         }
 
         $m = new Matiere();
+        if (property_exists($matiere, 'hasCoefficientDifferent')) {
+            $m->hasCoefficientDifferent = $matiere->hasCoefficientDifferent();
+        }
         $m->typeMatiere = $matiere::SOURCE;
         $m->libelle = $matiere->getLibelle();
         $m->display = $matiere->getDisplay();

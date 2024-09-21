@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/HrsRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/02/2024 08:59
+ * @lastUpdate 11/09/2024 20:42
  */
 
 namespace App\Repository;
@@ -13,7 +13,7 @@ use App\Entity\Departement;
 use App\Entity\Hrs;
 use App\Entity\Personnel;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Collections\Criteria;
+use Doctrine\Common\Collections\Order;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -42,8 +42,8 @@ class HrsRepository extends ServiceEntityRepository
             ->addSelect('p')
             ->where('h.personnel = :user')
             ->setParameter('user', $personnel)
-            ->orderBy('h.typeHrs', Criteria::ASC)
-            ->addOrderBy('h.semestre', Criteria::ASC);
+            ->orderBy('h.typeHrs', Order::Ascending->value)
+            ->addOrderBy('h.semestre', Order::Ascending->value);
 
         if (0 !== $annee) {
             $query->andWhere('h.annee = :annee')
@@ -73,8 +73,8 @@ class HrsRepository extends ServiceEntityRepository
             ->setParameter('user', $personnel)
             ->setParameter('annee', $annee)
             ->setParameter('departement', $departement)
-            ->orderBy('h.typeHrs', Criteria::ASC)
-            ->addOrderBy('h.semestre', Criteria::ASC)
+            ->orderBy('h.typeHrs', Order::Ascending->value)
+            ->addOrderBy('h.semestre', Order::Ascending->value)
             ->getQuery()
             ->getResult();
     }
@@ -82,7 +82,7 @@ class HrsRepository extends ServiceEntityRepository
     public function findByDepartement(Departement $departement, int $annee): array
     {
         return $this->createQueryBuilder('h')
-            ->join('h.typeHrs', 'tp')
+            ->leftJoin('h.typeHrs', 'tp')
             ->addSelect('tp')
             ->leftJoin('h.personnel', 'p')
             ->addSelect('p')
@@ -90,8 +90,10 @@ class HrsRepository extends ServiceEntityRepository
             ->andWhere('h.annee = :annee')
             ->setParameter('departement', $departement->getId())
             ->setParameter('annee', $annee)
-            ->orderBy('h.typeHrs', Criteria::ASC)
-            ->addOrderBy('h.semestre', Criteria::ASC)
+            ->orderBy('p.nom', Order::Ascending->value)
+            ->addOrderBy('p.prenom', Order::Ascending->value)
+            ->addOrderBy('h.typeHrs', Order::Ascending->value)
+            ->addOrderBy('h.semestre', Order::Ascending->value)
             ->getQuery()
             ->getResult();
     }

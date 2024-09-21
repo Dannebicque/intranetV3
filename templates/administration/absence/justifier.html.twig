@@ -28,6 +28,13 @@
     </div>
 {% endblock %}
 
+{% block stimulus %}
+    {{ stimulus_controller('adm--justifier-absences', {
+        urlListeAbsences: path('administration_absences_liste_absence_etudiant'),
+        urlJustifierAbsence: path('administration_absences_justifie'),
+    }) }}
+{% endblock %}
+
 {% block content %}
     <div class="card">
         <h4 class="card-title">{{ 'selectionnez.un.etudiant'|trans }}</h4>
@@ -36,7 +43,9 @@
                 <label for="justifier_etudiant"
                        class="form-label required">{{ 'choisir.letudiant'|trans }}</label>
                 <select id="justifier_etudiant" name="justifier_etudiant" required="required"
-                        class="form-select selectpicker">
+                        {{ stimulus_controller('symfony/ux-autocomplete/autocomplete') }}
+                        {{ stimulus_action('adm--justifier-absences', 'changeEtudiant') }}
+                        class="form-select">
                     <option value="">{{ 'choisir.letudiant'|trans }}</option>
                     {% for etudiant in semestre.etudiants %}
                         <option value="{{ etudiant.id }}">{{ etudiant.display }}</option>
@@ -46,20 +55,10 @@
         </div>
     </div>
 
-    <div class="card" id="listeJustifie">
+    <div class="card" {{ stimulus_target('adm--justifier-absences', 'listeJustifie') }}>
         <h4 class="card-title" id="titre_justifie">{{ 'selectionnez.un.etudiant'|trans }}</h4>
         <div class="card-body">
             <twig:Alert type="info">Choisir un étudiant</twig:Alert>
         </div>
     </div>
-{% endblock %}
-
-{% block stylesheets %}
-    {{ parent() }}
-    {{ encore_entry_link_tags('adm.absences') }}
-{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-    {{ encore_entry_script_tags('adm.absences') }}
 {% endblock %}

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/DTO/PrevisionnelCollection.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:40
+ * @lastUpdate 15/04/2024 22:35
  */
 
 namespace App\DTO;
@@ -48,6 +48,10 @@ class PrevisionnelCollection
 
         $this->totalEqTD += $previsionnel->nbHCm * $previsionnel->nbGrCm + $previsionnel->nbHTd * $previsionnel->nbGrTd + $previsionnel->nbHTp * $previsionnel->nbGrTp;
         $this->totalEqTDMajore += ($previsionnel->nbHCm * $previsionnel->nbGrCm) * 1.5 + $previsionnel->nbHTd * $previsionnel->nbGrTd + $previsionnel->nbHTp * $previsionnel->nbGrTp;
+
+        $this->totalEtudiantCm += $this->nbGrCm > 0 ? $this->totalCm / $this->nbGrCm : 0; //todo: sans doute à diviser par nb groupes ?
+        $this->totalEtudiantTd += $this->nbGrTd > 0 ? $this->totalTd / $this->nbGrTd : 0;
+        $this->totalEtudiantTp += $this->nbGrTp > 0 ? $this->totalTp / $this->nbGrTp : 0;
     }
 
     /**

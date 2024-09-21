@@ -1,0 +1,317 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'adm.edusign.index.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        <div class="buttons">
+            <a href="{{ path('administration_index') }}" class="btn btn-primary btn-float" data-bs-toggle="tooltip"
+               data-bs-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i class="{{ iconAdmin }}"><span
+                            class="sr-only">{{ 'atitle.retour_administration'|trans }}</span></i></a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+
+        <h2 class="card-title">{{ 'adm.edusign.card.heading'|trans }}</h2>
+
+        <div class="card-body">
+            <div>
+
+                <h3>{{ 'adm.edusign.commands.cours'|trans }}</h3>
+                <div class="alert alert-info">
+                    <span>{{ 'adm.edusign.commands.info-create'|trans }}</span>
+                </div>
+
+                <nav class="nav nav-tabs">
+                    {% for diplome in diplomes %}
+                        <a class="nav-link {% if ((diplomeSelect != null and diplomeSelect.id == diplome.id) or (diplomeSelect == null)) %}active{% endif %}"
+                           href="{{ path('administration_edusign_index', {'diplome': diplome.id}) }}">{{ diplome.sigle }}</a>
+                    {% endfor %}
+                </nav>
+                <div class="dropdown mb-5">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                        {{ 'adm.edusign.commands.create'|trans }}
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <li>
+                            <a class="dropdown-item" type="button" data-bs-toggle="modal"
+                               data-bs-target="#newCoursesWeekModal">Pour la semaine en cours</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" type="button" data-bs-toggle="modal"
+                               data-bs-target="#newCoursesDayModal">Pour la journée</a>
+                        </li>
+                    </ul>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="newCoursesWeekModal" tabindex="-1"
+                         aria-labelledby="newCoursesWeekModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="newCoursesWeekModalLabel">
+                                        Mise à jour des cours de la semaine</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    Cette action va créer les nouveaux cours et corriger les cours déjà existants si
+                                    nécessaire pour {{ diplomeSelect.sigle }}
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler
+                                    </button>
+                                    <a href="{{ path('app_admin_edu_sign_create_courses', {'opt': 1, 'id': diplomeSelect.id}) }}"
+                                       class="btn btn-primary">Confirmer</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Modal -->
+                    <div class="modal fade" id="newCoursesDayModal" tabindex="-1"
+                         aria-labelledby="newCoursesDayModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="newCoursesDayModalLabel{{ departement.id }}">
+                                        Mise à jour des cours de la journée</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    Cette action va créer les nouveaux cours et corriger les cours déjà existants si
+                                    nécessaire
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler
+                                    </button>
+                                    <a href="{{ path('app_admin_edu_sign_create_courses', {'opt': 2, 'id': diplomeSelect.id}) }}"
+                                       class="btn btn-primary">Confirmer</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {% if pagination.data is empty or pagination.data is null %}
+                    <div class="alert alert-success">
+                        <span>Aucun cours pour cette semaine :)</span>
+                    </div>
+                {% else %}
+
+
+                    <table class="table-edt">
+                    <thead>
+                    <tr>
+                        <th>Date - Heure</th>
+                        <th>Matière</th>
+                        <th>Groupe</th>
+                        <th>Salle</th>
+                        <th>Enseignant</th>
+                        <th>EduSign</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for cours in pagination.data %}
+                        <form action="{{ path('app_admin_edu_sign_update_cours', {'id': cours.id, 'source': cours.source}) }}">
+                            <tr>
+                                {#                               todo: nouvelle structure pr modifer date et heure à adapter dans la méthode #}
+                                {#                                <td class="p-1">
+                                        <label for="date" class="text-danger">
+                                            {{ cours.date is null or cours.date == "" ? '** Pas de date **' : cours.date|date('d/m/Y') }}
+                                        </label>
+                                        <input type="date" name="date" id="date" class="form-control"
+                                               value="{{ cours.date ? cours.date|date('Y-m-d') : '' }}">
+                                    </td>
+                                    <td class="p-1">
+                                        <label for="heureDebut" class="text-danger">
+                                            {{ cours.heureDebut is null or cours.heureDebut == "" ? '** Pas d\'heure de début **' : cours.heureDebut|date('H:i') }}
+                                        </label>
+                                        <input type="time" name="heureDebut" id="heureDebut" class="form-control"
+                                               value="{{ cours.heureDebut ? cours.heureDebut|date('H:i') : '' }}">
+                                        <label for="heureFin" class="text-danger">
+                                            {{ cours.heureFin is null or cours.heureFin == "" ? '** Pas d\'heure de fin **' : cours.heureFin|date('H:i') }}
+                                        </label>
+                                        <input type="time" name="heureFin" id="heureFin" class="form-control"
+                                               value="{{ cours.heureFin ? cours.heureFin|date('H:i') : '' }}">
+                                    </td> #}
+                                <td class="p-1">
+                                    <small>{{ cours.id }} |</small>
+                                    {% if cours.date is not null and cours.date != "" %}
+                                        {{ cours.date|date('d/m/Y') }}
+                                    {% else %}
+                                        <span class="text-danger">
+                                    ** Pas de date **
+                                    </span>
+                                    {% endif %}
+                                    {% if cours.heureDebut is not null and cours.heureDebut != "" %}
+                                        {{ cours.heureDebut|date('H:i') }} - {{ cours.heureFin|date('H:i') }}
+                                    {% else %}
+                                        <span class="text-danger">
+                                    ** Pas d'heure **
+                                    </span>
+                                    {% endif %}
+                                </td>
+                                <td class="p-1">
+                                    <label for="matiere" class="text-danger">
+                                        {{ cours.matiere is null or cours.matiere == "Inconnue" or cours.matiere == "" ? '** Pas de matière **' : cours.texte }}
+                                    </label>
+                                    <select name="matiere" id="matiere" class="form-select">
+                                        {% if cours.texte is not null and cours.texte != "" %}
+                                            <option value="{{ cours.texte }}" selected>{{ cours.texte }}</option>
+                                        {% endif %}
+                                        {% if (cours.matiere is null or cours.matiere == "Inconnue" or cours.matiere == "") and (cours.texte is null or cours.texte == "") %}
+                                            <option value="0">Sélectionner une matière</option>
+                                        {% endif %}
+                                        {% for matiere in matieres %}
+                                            <option value="{{ matiere.typeIdMatiere }}" {{ matiere.typeIdMatiere == cours.typeIdMatiere ? 'selected' }}>{{ matiere.codeMatiere }}
+                                                - {{ matiere.libelle }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </td>
+                                <td class="p-1">
+                                    <label for="groupe"
+                                           class="text-danger">{{ cours.groupe is null ? '** Pas de groupe **' }}</label>
+                                    <select name="groupe" id="groupe" class="form-select">
+                                        <option value="0">{{ cours.groupe is null ? '** Pas de groupe **' : cours.groupe }}</option>
+                                        {% for key, semestre in groupesSemestres %}
+                                            {% for groupe in semestre %}
+                                                <option value="{{ groupe.id }}" {{ cours.groupeObjet is not null and groupe.id == cours.groupeObjet.id ? 'selected' : '' }}>
+                                                    {{ key }} | {{ groupe.libelle }}
+                                                </option>
+                                            {% endfor %}
+                                        {% endfor %}
+                                    </select>
+                                </td>
+                                <td class="p-1">
+                                    <label for="salle"
+                                           class="text-danger">{{ cours.salle is null or cours.salle == "" ? '** Pas de salle **' }}</label>
+                                    <input type="text" name="salle" id="salle" class="form-control"
+                                           value="{{ cours.salle }}">
+                                </td>
+                                <td class="p-1">
+                                    <label for="personnel"
+                                           class="text-danger">{{ cours.personnel is null or cours.personnel == "" or cours.personnel == "-" ? '** Pas d\'enseignant **' }}</label>
+                                    <select name="personnel" id="personnel" class="form-select">
+                                        <option value="0">{{ cours.personnel is not null and cours.personnel != "" and cours.personnel != "-" ? cours.personnel : 'Sélectionner un.e enseignant.e' }}</option>
+                                        {% for enseignant in cours.enseignants %}
+                                            <option value="{{ enseignant.personnel.id }}" {{ enseignant.personnel.nom ~ ' ' ~ enseignant.personnel.prenom == cours.personnel or enseignant.personnel.prenom ~ ' ' ~ enseignant.personnel.nom == cours.personnel ? 'selected' : '' }}>{{ enseignant.personnel.prenom }} {{ enseignant.personnel.nom }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </td>
+                                <td class="p-1">
+                                    {{ cours.idEdusign is null or cours.idEdusign == "" ? '<i class="fa-solid fa-square-xmark fa-2x text-danger"></i>' : '<i class="fa-solid fa-square-check fa-2x text-success"></i>' }}
+                                </td>
+                                <td class="p-1">
+                                    <button type="submit" class="btn btn-primary">Envoyer dans EduSign</button>
+                                </td>
+                            </tr>
+                        </form>
+                    {% endfor %}
+                    </tbody>
+                    </table>
+
+                    <nav>
+                        <ul class="pagination">
+                            <li class="page-item {{ not pagination.hasPreviousLink ? 'disabled' : '' }}">
+                                <a class="page-link" href="{{ pagination.previousLink }}">Précédent</a>
+                            </li>
+                            {% for i in 1..pagination.nbPages %}
+                                <li class="page-item {{ i == pagination.currentPage ? 'active' : '' }}">
+                                    <a class="page-link" href="{{ pagination.getLinkPage(i) }}">{{ i }}</a>
+                                </li>
+                            {% endfor %}
+                            <li class="page-item {{ not pagination.hasNextLink ? 'disabled' : '' }}">
+                                <a class="page-link" href="{{ pagination.nextLink }}">Suivant</a>
+                            </li>
+                        </ul>
+                    </nav>
+
+                {% endif %}
+            </div>
+            <hr>
+            <div>
+                <h3>{{ 'adm.edusign.form.enseignant.heading'|trans }}</h3>
+
+                <form action="{{ path('app_admin_edu_sign_create_personnel') }}"
+                      method="POST">
+                    <div class="accordion w-50" id="accordionPersonnel">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingOne">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                    Sélectionner les enseignants
+                                </button>
+                            </h2>
+                            <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
+                                 data-bs-parent="#accordionPersonnel" style="max-height: 300px; overflow-y: auto;">
+                                <div class="accordion-body">
+                                    {% for p in personnelsDepartement %}
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="personnel[]"
+                                                   value="{{ p.personnel.id }}" id="personnel{{ p.personnel.id }}">
+                                            <label class="form-check-label" for="personnel{{ p.personnel.id }}">
+                                                {{ p.personnel.nom }} {{ p.personnel.prenom }}
+                                            </label>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-secondary mt-3">Valider</button>
+                </form>
+            </div>
+            <hr>
+            <div>
+                <h3>{{ 'adm.edusign.context.update'|trans }}</h3>
+                <div class="alert alert-info">
+                    <span>{{ 'adm.edusign.commands.info-update'|trans }}</span>
+                </div>
+
+                <nav class="nav nav-tabs">
+                    {% for diplome in diplomes %}
+                        <a class="nav-link {% if ((diplomeSelect != null and diplomeSelect.id == diplome.id) or (diplomeSelect == null)) %}active{% endif %}"
+                           href="{{ path('administration_edusign_index', {'diplome': diplome.id}) }}">{{ diplome.sigle }}</a>
+                    {% endfor %}
+                </nav>
+                <!-- Bouton pour mettre à jour les étudiants et leurs groupes -->
+                <button class="btn btn-secondary" type="button" data-bs-toggle="modal"
+                        data-bs-target="#grpModal{{ diplomeSelect.id }}">Mettre à jour
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="grpModal{{ diplomeSelect.id }}" tabindex="-1"
+                     aria-labelledby="grpModal{{ diplomeSelect.id }}Label" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="grpModal{{ diplomeSelect.id }}Label">Mise à jour des
+                                    groupes pour {{ diplomeSelect.sigle }}</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                Cette action va mettre à jour les étudiants et leurs groupes
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                                <a href="{{ path('app_admin_edu_sign_update_etudiants', {'id': diplomeSelect.id}) }}"
+                                   class="btn btn-secondary">Confirmer</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}

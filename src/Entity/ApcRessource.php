@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/ApcRessource.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/02/2024 21:51
+ * @lastUpdate 18/06/2024 19:47
  */
 
 namespace App\Entity;
 
+use App\Classes\Editable\EditableInterface;
 use App\Entity\Traits\LifeCycleTrait;
 use App\Interfaces\MatiereEntityInterface;
 use App\Repository\ApcRessourceRepository;
@@ -19,7 +20,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ApcRessourceRepository::class)]
 #[ORM\HasLifecycleCallbacks]
-class ApcRessource extends AbstractMatiere implements MatiereEntityInterface
+class ApcRessource extends AbstractMatiere implements MatiereEntityInterface, EditableInterface
 {
     use LifeCycleTrait;
 
@@ -72,6 +73,9 @@ class ApcRessource extends AbstractMatiere implements MatiereEntityInterface
 
     #[ORM\ManyToMany(targetEntity: self::class, mappedBy: 'ressourcesPreRequises')]
     private Collection $ressourcesAvecPreRequis;
+
+    #[ORM\Column]
+    private ?bool $hasCoefficientDifferent = false;
 
     public function __construct()
     {
@@ -439,6 +443,30 @@ class ApcRessource extends AbstractMatiere implements MatiereEntityInterface
         if ($this->ressourcesAvecPreRequis->removeElement($ressourcesAvecPreRequi)) {
             $ressourcesAvecPreRequi->removeRessourcesPreRequise($this);
         }
+
+        return $this;
+    }
+
+    public function updateEditable(string $name, $value): bool
+    {
+        $method = 'set' . $name;
+        if (method_exists($this, $method)) {
+            $this->$method($value);
+
+            return true;
+        }
+
+        return false;
+    }
+
+    public function hasCoefficientDifferent(): bool
+    {
+        return $this->hasCoefficientDifferent ?? false;
+    }
+
+    public function setHasCoefficientDifferent(bool $hasCoefficientDifferent): static
+    {
+        $this->hasCoefficientDifferent = $hasCoefficientDifferent;
 
         return $this;
     }

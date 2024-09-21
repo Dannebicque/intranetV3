@@ -1,81 +1,40 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="Responsive admin dashboard and web application ui kit. ">
-    <meta name="keywords" content="blank, starter">
+{% extends 'base.html.twig' %}
 
-    <title>Intranet - {{  block('header')  }}</title>
-
-    <!-- Favicons -->
-    <link rel="apple-touch-icon" sizes="57x57" href="{{ asset('apple-icon-57x57.png') }}">
-    <link rel="apple-touch-icon" sizes="60x60" href="{{ asset('apple-icon-60x60.png') }}">
-    <link rel="apple-touch-icon" sizes="72x72" href="{{ asset('apple-icon-72x72.png') }}">
-    <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('apple-icon-76x76.png') }}">
-    <link rel="apple-touch-icon" sizes="114x114" href="{{ asset('apple-icon-114x114.png') }}">
-    <link rel="apple-touch-icon" sizes="120x120" href="{{ asset('apple-icon-120x120.png') }}">
-    <link rel="apple-touch-icon" sizes="144x144" href="{{ asset('apple-icon-144x144.png') }}">
-    <link rel="apple-touch-icon" sizes="152x152" href="{{ asset('apple-icon-152x152.png') }}">
-    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('apple-icon-180x180.png') }}">
-    <link rel="icon" type="image/png" sizes="192x192" href="{{ asset('android-icon-192x192.png') }}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon-32x32.png') }}">
-    <link rel="icon" type="image/png" sizes="96x96" href="{{ asset('favicon-96x96.png') }}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicon-16x16.png') }}">
-    <link rel="manifest" href="{{ asset('manifest.json') }}">
-    <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="msapplication-TileImage" content="{{ asset('ms-icon-144x144.png') }}">
-    <meta name="theme-color" content="#ffffff">
-
-    {% block stylesheets %}
-        {{ encore_entry_link_tags('app') }}
+{% block full_body %}
+    {% block content %}
     {% endblock %}
+    <footer class="footer-speciale">
+        <div class="row">
+            <div class="col-md-6">
+                &nbsp;
+            </div>
 
-    <script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}" defer></script>
-    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}" defer></script>
-    {% block javascripts %}
-        <script>
-          let toasts = [];
-        </script>
-        {{ encore_entry_script_tags('app') }}
-    {% endblock %}
-</head>
-
-<body class="{{ settings('CODE_IUT') }} {% block body %}{% endblock %}" {% block body_complement %}{% endblock %}>
-
-{% block content %}
-
+            <div class="col-md-6">
+                <ul class="nav nav-primary nav-dotted nav-dot-separated justify-content-center justify-content-md-end"
+                    style="background-color: #f5f6fa">
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://dannebicque.gitbook.io/intranet/"
+                           target="_blank">{{ 'menu.documentation'|trans }}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" target="_blank" href="{{ path('rgpd_index') }}">{{ 'menu.rgpd'|trans }}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" target="_blank"
+                           href="{{ path('mentions_about') }}">{{ 'menu.about'|trans }}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" target="_blank"
+                           href="{{ path('mentions_index') }}">{{ 'menu.mentions_legales'|trans }}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </footer>
 {% endblock %}
 
 {% block fabactions %}
 
 {% endblock %}
 
-<footer class="footer-speciale">
-    <div class="row">
-        <div class="col-md-6">
-            &nbsp;
-        </div>
 
-        <div class="col-md-6">
-            <ul class="nav nav-primary nav-dotted nav-dot-separated justify-content-center justify-content-md-end"
-                style="background-color: #f5f6fa">
-                <li class="nav-item">
-                    <a class="nav-link" href="https://dannebicque.gitbook.io/intranet/" target="_blank">{{ 'menu.documentation'|trans }}</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" target="_blank" href="{{ path('rgpd_index') }}">{{ 'menu.rgpd'|trans }}</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" target="_blank" href="{{ path('mentions_about') }}">{{ 'menu.about'|trans }}</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" target="_blank" href="{{ path('mentions_index') }}">{{ 'menu.mentions_legales'|trans }}</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</footer>
-
-</body>
-</html>

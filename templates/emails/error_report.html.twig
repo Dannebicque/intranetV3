@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Récapitulatif des erreurs EduSign</title>
+</head>
+<body>
+<h1>EduSign - Récapitulatif des erreurs</h1>
+{% if diplomesErrors %}
+    {% for diplome, errors in diplomesErrors %}
+        <h2>Erreurs pour le diplôme : {{ diplome }}</h2>
+        {% if errors %}
+            <ul>
+                {% for error in errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>Aucune erreur pour ce diplôme.</p>
+        {% endif %}
+    {% endfor %}
+{% else %}
+    <p>Aucune erreur rencontrée lors de la mise à jour.</p>
+{% endif %}
+</body>
+</html>

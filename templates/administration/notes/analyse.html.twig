@@ -2,8 +2,8 @@
     <strong>Analyse des évaluations saisies :</strong><br>
     <p>
         Il y a {{ notesAvecAbsence|length }} notes présentes et marquées absentes, qui ne sont pas comptabilisées
-        dans la moyenne. {% if  notesAvecAbsence|length>0 %}<a href="#" id="voirDetailAbsent">Voir le
-                                                                                              détail</a>{% endif %}
+        dans la moyenne. {% if  notesAvecAbsence|length>0 %}
+            <a href="#" id="voirDetailAbsent">Voir le détail</a>{% endif %}
     </p>
     <p>
         Il y a {{ notesIncoherentes|length }} notes égales à -0.01, négatives ou supérieures à 20, qui sont
@@ -13,7 +13,7 @@
     </p>
 </twig:Alert>
 
-<div id="detailIncoherent d-none">
+<div id="detailIncoherent" class="d-none">
     <twig:Alert type="warning">
         Les notes ci-dessous <strong>sont prises</strong> en compte dans la moyenne.
     </twig:Alert>
@@ -24,6 +24,7 @@
             <th>Etudiant</th>
             <th>Note</th>
             <th>Date</th>
+            <th>Matière</th>
             <th>Evaluation</th>
             <th></th>
             <th></th>
@@ -35,6 +36,7 @@
                 <td>{{ note.etudiant.display }}</td>
                 <td id="note_{{ note.id }}">{{ note.note }}</td>
                 <td>{{ note.evaluation.dateEvaluation|format_date('short') }}</td>
+                <td>{{ matieres[note.evaluation.typeIdMatiere] is defined ? matieres[note.evaluation.typeIdMatiere].display : 'erreur' }}</td>
                 <td><a href="" target="_blank">{{ note.evaluation.libelle }}</a></td>
                 <td>
                     <button data-note="{{ note.id }}" class="btn btn-danger remplacerParZero">Remplacer par
@@ -56,7 +58,7 @@
     </table>
 </div>
 
-<div id="detailAbsent d-none">
+<div id="detailAbsent" class="d-none">
     <twig:Alert class="warning">
         Les notes ci-dessous <strong>ne sont pas prises</strong> en compte dans la moyenne. <a href="">
             Supprimer toutes les absences pour lesquelles une note est présente.
@@ -69,6 +71,7 @@
             <th>Etudiant</th>
             <th>Note</th>
             <th>Date</th>
+            <th>Matière</th>
             <th>Evaluation</th>
             <th></th>
         </tr>
@@ -78,6 +81,7 @@
             <tr id="ligne_{{ note.id }}">
                 <td>{{ note.etudiant.display }}</td>
                 <td id="note_{{ note.id }}">{{ note.note }}</td>
+                <td>{{ matieres[note.evaluation.typeIdMatiere] is defined ? matieres[note.evaluation.typeIdMatiere].display : 'erreur' }}</td>
                 <td>{{ note.evaluation.dateEvaluation|format_date('short') }}</td>
                 <td><a href="" target="_blank">{{ note.evaluation.libelle }}</a></td>
                 <td>

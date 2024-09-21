@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/UserController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:17
+ * @lastUpdate 09/09/2024 20:08
  */
 
 namespace App\Controller;
@@ -97,7 +97,9 @@ class UserController extends BaseController
     public function settings(Request $request): Response
     {
         $user = $this->getUser();
+        $type = null;
         if ($user instanceof Personnel) {
+            $type = 'personnel';
             $form = $this->createForm(
                 PersonnelProfilType::class,
                 $user,
@@ -114,6 +116,7 @@ class UserController extends BaseController
                 $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'donnees.update.success.flash');
             }
         } elseif ($user instanceof Etudiant) {
+            $type = 'etudiant';
             $form = $this->createForm(EtudiantProfilType::class, $user, [
                 'attr' => ['data-provide' => 'validation'],
             ]);
@@ -130,6 +133,7 @@ class UserController extends BaseController
         return $this->render('user/settings.html.twig', [
             'form' => $form,
             'user' => $user,
+            'type' => $type,
         ]);
     }
 }

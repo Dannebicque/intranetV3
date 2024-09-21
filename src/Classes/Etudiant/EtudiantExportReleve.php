@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Etudiant/EtudiantExportReleve.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/03/2024 16:17
+ * @lastUpdate 17/06/2024 18:41
  */
 
 namespace App\Classes\Etudiant;
@@ -40,7 +40,7 @@ class EtudiantExportReleve
         KernelInterface $kernel,
         private readonly MyEvaluations $myEvaluations
     ) {
-        $this->dir = $kernel->getProjectDir().'/public/upload/temp/pdf/';
+        $this->dir = $kernel->getProjectDir() . '/public/upload/';
     }
 
     public function setEtudiant(Etudiant $etudiant): void
@@ -103,7 +103,7 @@ class EtudiantExportReleve
         $zip = new ZipArchive();
         $fileName = $semestre->getLibelle().'-'.date('YmdHis').'.zip';
         // The name of the Zip documents.
-        $zipName = $this->dir.$fileName;
+        $zipName = $this->dir . 'temp/' . $fileName;
 
         $zip->open($zipName, ZipArchive::CREATE);
         $tabFiles = [];
@@ -113,7 +113,8 @@ class EtudiantExportReleve
             if (0 === $etudiant->getAnneeSortie()) {
                 $this->etudiant = $etudiant;
                 $nomFichier = 'releveNoteProvisoire-'.Tools::slug($this->etudiant->getNom()).'-'.$this->etudiant->getNumEtudiant();
-                $this->myPdf->pdf()::genereAndSavePdf('pdf/releveProvisoire.html.twig', [
+                $tabFiles[] = $this->myPdf->pdf()::genereAndSavePdf('pdf/releveProvisoire.html.twig', [
+                    'titre' => 'Relevé de notes provisoire ' . $semestre->getLibelle(),
                     'etudiant' => $this->etudiant,
                     'notes' => $this->getNotesEtudiantSemestre($semestre, $anneeUniversitaire),
                     'syntheses' => $statistiques,
@@ -121,19 +122,23 @@ class EtudiantExportReleve
                     'semestre' => $semestre,
                     'matieres' => $matieres,
                 ], $nomFichier,
-                    $this->dir);
-                $file = $this->dir.$nomFichier.'.pdf';
-                $tabFiles[] = $file;
-                $zip->addFile($file,
-                    $semestre->getLibelle().'/'.$nomFichier.'.pdf');
+                    'upload/temp/pdf');
             }
         }
+
+        foreach ($tabFiles as $file) {
+            $zip->addFile(
+                $this->dir . 'temp/pdf/' . $file,
+                $semestre->getLibelle() . '/' . $file
+            );
+        }
+
 
         $zip->close();
 
         // suppression des PDF
         foreach ($tabFiles as $file) {
-            unlink($file);
+            unlink($this->dir . 'temp/pdf/' . $file);
         }
 
         $response = new Response(file_get_contents($zipName));

@@ -50,7 +50,6 @@ class EduSignEtudiant
     public ?string $api_type = '';
     public ?string $badge_id = '';
     public ?array $student_follower_id = [];
-    public ?string $id_edu_sign = '';
 
     public function toArray(): array
     {
@@ -70,7 +69,6 @@ class EduSignEtudiant
             'API_TYPE' => $this->api_type,
             'BADGE_ID' => $this->badge_id,
             'STUDENT_FOLLOWER_ID' => $this->student_follower_id,
-//            'ID_EDU_SIGN' => $this->id_edu_sign,
             'SEND_EMAIL_CREDENTIALS' => $this->send_email_credentials,
             'NEW_PASSWORD_NEEDED' => $this->new_password_needed,
         ];

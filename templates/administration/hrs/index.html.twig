@@ -1,168 +1,172 @@
 {% extends 'base.html.twig' %}
+ {# @deprecated  #}
 
-{% block header %}
-    {{ 'adm.hrs.index.heading'|trans({'%annee%':annee}) }}
-{% endblock %}
+ {% block header %}
+     {{ 'adm.hrs.index.heading'|trans({'%annee%':annee}) }}
+ {% endblock %}
 
-{% block headeractions %}
-    <div class="header-action">
-        <div class="buttons">
-            <a href="{{ path('administration_previsionnel_export_omega', {annee:annee}) }}" class="btn btn-info btn-sm btn-float"
-               title="{{ 'atitle.export_omega'|trans }}" data-bs-toggle="tooltip"
-               data-bs-placement="bottom"><i class="fa fa-table"></i><span
-                        class="sr-only">Exporter</span></a>
-            <a href="{{ path('administration_index') }}" class="btn btn-primary btn-float" data-bs-toggle="tooltip"
-               data-bs-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i class="{{ iconAdmin }}"><span class="sr-only">Administration</span></i></a>
-        </div>
-    </div>
-{% endblock %}
+ {% block headeractions %}
+     <div class="header-action">
+         <div class="buttons">
+             <a href="{{ path('administration_previsionnel_export_omega', {annee:annee}) }}"
+                class="btn btn-info btn-sm btn-float"
+                title="{{ 'atitle.export_omega'|trans }}" data-bs-toggle="tooltip"
+                data-bs-placement="bottom"><i class="fa fa-table"></i><span
+                         class="sr-only">Exporter</span></a>
+             <a href="{{ path('administration_index') }}" class="btn btn-primary btn-float" data-bs-toggle="tooltip"
+                data-bs-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i
+                         class="{{ iconAdmin }}"><span class="sr-only">Administration</span></i></a>
+         </div>
+     </div>
+ {% endblock %}
 
-{% block content %}
-    <div class="card card-body">
-        <label class="sr-only" for="change_annee_temp_hrs">{{ 'change_annee_temp_hrs'|trans }}</label>
-        <select id="change_annee_temp_hrs" class="form-select">
-            <option value="0">{{ 'change_annee_temp_hrs'|trans }}</option>
-            {% for annee in 2017..'now'|date('Y')+4 %}
-                <option value="{{ annee }}">{{ annee }}</option>
-            {% endfor %}
-        </select>
-        <small class="form-text">Le changement d'année de manière permanent <a
-                    href="{{ path('administration_configuration') }}">se fait dans la configuration</a>. Le prévisionnel
-            de l'année selectionné dans le configuration est celui actif sur l'intranet
-        </small>
-    </div>
+ {% block content %}
+     <div class="card card-body">
+         <label class="sr-only" for="change_annee_temp_hrs">{{ 'change_annee_temp_hrs'|trans }}</label>
+         <select id="change_annee_temp_hrs" class="form-select">
+             <option value="0">{{ 'change_annee_temp_hrs'|trans }}</option>
+             {% for annee in 2017..'now'|date('Y')+4 %}
+                 <option value="{{ annee }}">{{ annee }}</option>
+             {% endfor %}
+         </select>
+         <small class="form-text">Le changement d'année de manière permanent <a
+                     href="{{ path('administration_configuration') }}">se fait dans la configuration</a>. Le
+             prévisionnel
+             de l'année selectionné dans le configuration est celui actif sur l'intranet
+         </small>
+     </div>
 
-    <div class="card">
-        <h2 class="card-title">{{ 'adm.hrs.index.heading'|trans({'%annee%':annee}) }}</h2>
-        <div class="card-body">
-            {{ table_render(table) }}
-        </div>
-    </div>
+     <div class="card">
+         <h2 class="card-title">{{ 'adm.hrs.index.heading'|trans({'%annee%':annee}) }}</h2>
+         <div class="card-body">
+             {{ table_render(table) }}
+         </div>
+     </div>
 
-    <div class="card">
-        <h4 class="card-title">{{ 'adm.hrs.add.heading'|trans }}</h4>
-        <div class="card-body">
-            {% form_theme form 'form/my-form.html.twig' %}
-            {{ form_start(form) }}
-            <div class="row">
-                <div class="col-md-6 col-sm-12">
-                    {{ form_row(form.personnel) }}
-                    {{ form_row(form.libelle) }}
-                    {{ form_row(form.semestre) }}
-                </div>
-                <div class="col-md-6 col-sm-12">
-                    {{ form_row(form.typeHrs) }}
-                    {{ form_row(form.nbHeuresTd) }}
-                    {{ form_row(form.diplome) }}
-                </div>
-                <div class="col-sm-12">
-                    {{ form_row(form.commentaire) }}
-                </div>
-            </div>
-            <div class="col-sm-12">
-                <twig:Alert type="info">
-                    Les HRS/Primes s'appliquent par semestre OU par diplôme.
-                </twig:Alert>
-                {{ form_widget(form) }}
-                <button class="btn btn-success">{{ button_label|default('label.save'|trans) }}</button>
-                {{ form_end(form) }}
-            </div>
+     <div class="card">
+         <h4 class="card-title">{{ 'adm.hrs.add.heading'|trans }}</h4>
+         <div class="card-body">
+             {% form_theme form 'form/my-form.html.twig' %}
+             {{ form_start(form) }}
+             <div class="row">
+                 <div class="col-md-6 col-sm-12">
+                     {{ form_row(form.personnel) }}
+                     {{ form_row(form.libelle) }}
+                     {{ form_row(form.semestre) }}
+                 </div>
+                 <div class="col-md-6 col-sm-12">
+                     {{ form_row(form.typeHrs) }}
+                     {{ form_row(form.nbHeuresTd) }}
+                     {{ form_row(form.diplome) }}
+                 </div>
+                 <div class="col-sm-12">
+                     {{ form_row(form.commentaire) }}
+                 </div>
+             </div>
+             <div class="col-sm-12">
+                 <twig:Alert type="info">
+                     Les HRS/Primes s'appliquent par semestre OU par diplôme.
+                 </twig:Alert>
+                 {{ form_widget(form) }}
+                 <button class="btn btn-success">{{ button_label|default('label.save'|trans) }}</button>
+                 {{ form_end(form) }}
+             </div>
 
 
-        </div>
-    </div>
+         </div>
+     </div>
 
-    <div class="card">
-        <h4 class="card-title">{{ 'adm.hrs.duplicate.annee.heading'|trans }}</h4>
-        <div class="card-body">
-            <form action="{{ path('administration_hrs_duplicate_annee') }}" method="post" class="form">
-                <div class="row">
-                    <div class="col-md-6 col-sm-12">
-                        <div class="form-group">
-                            <label for="annee_depart">Année à copier</label>
-                            <select name="annee_depart" id="annee_depart" class="form-select">
-                                <option value="">Choisir</option>
-                                {% for annee in 2017..'now'|date('Y')+2 %}
-                                    <option value="{{ annee }}">{{ annee }}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-sm-12">
-                        <div class="form-group">
-                            <label for="annee_destination">Année de destination</label>
-                            <select name="annee_destination" id="annee_destination" class="form-select">
-                                <option value="">Choisir</option>
-                                {% for annee in 2017..'now'|date('Y')+4 %}
-                                    <option value="{{ annee }}">{{ annee }}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-sm-12">
-                        <div class="custom-controls-stacked">
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="annee_concerver"
-                                       name="annee_concerver" value="true">
-                                <label class="custom-control-label" for="annee_concerver">Conserver les données dans
-                                    l'année de destination ? (par défaut la copie remplace l'ensemble des
-                                    données)</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-sm-12 d-grid">
-                        <button class="btn d-block btn-success" type="submit">
-                            Dupliquer les HRS et primes de l'année
-                        </button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
+     <div class="card">
+         <h4 class="card-title">{{ 'adm.hrs.duplicate.annee.heading'|trans }}</h4>
+         <div class="card-body">
+             <form action="{{ path('administration_hrs_duplicate_annee') }}" method="post" class="form">
+                 <div class="row">
+                     <div class="col-md-6 col-sm-12">
+                         <div class="form-group">
+                             <label for="annee_depart">Année à copier</label>
+                             <select name="annee_depart" id="annee_depart" class="form-select">
+                                 <option value="">Choisir</option>
+                                 {% for annee in 2017..'now'|date('Y')+2 %}
+                                     <option value="{{ annee }}">{{ annee }}</option>
+                                 {% endfor %}
+                             </select>
+                         </div>
+                     </div>
+                     <div class="col-md-6 col-sm-12">
+                         <div class="form-group">
+                             <label for="annee_destination">Année de destination</label>
+                             <select name="annee_destination" id="annee_destination" class="form-select">
+                                 <option value="">Choisir</option>
+                                 {% for annee in 2017..'now'|date('Y')+4 %}
+                                     <option value="{{ annee }}">{{ annee }}</option>
+                                 {% endfor %}
+                             </select>
+                         </div>
+                     </div>
+                     <div class="col-md-6 col-sm-12">
+                         <div class="custom-controls-stacked">
+                             <div class="custom-control custom-checkbox">
+                                 <input type="checkbox" class="custom-control-input" id="annee_concerver"
+                                        name="annee_concerver" value="true">
+                                 <label class="custom-control-label" for="annee_concerver">Conserver les données dans
+                                     l'année de destination ? (par défaut la copie remplace l'ensemble des
+                                     données)</label>
+                             </div>
+                         </div>
+                     </div>
+                     <div class="col-md-6 col-sm-12 d-grid">
+                         <button class="btn d-block btn-success" type="submit">
+                             Dupliquer les HRS et primes de l'année
+                         </button>
+                     </div>
+                 </div>
+             </form>
+         </div>
+     </div>
 
-    <div class="card card-inverse card-danger">
-        <h4 class="card-title">{{ 'adm.hrs.supprimer.annee.heading'|trans }}</h4>
-        <div class="card-body">
-            <form action="{{ path('administration_hrs_supprimer_annee') }}" method="delete" class="form">
-            <div class="row">
-                <div class="col-md-6 col-sm-12">
-                    <div class="form-group">
-                        <input type="hidden" value="{{ csrf_token('supprimer') }}" name="_token">
-                        <label class="sr-only" for="annee_supprimer">{{ 'choisir'|trans }}</label>
-                        <select name="annee_supprimer" id="annee_supprimer" class="form-select">
-                            <option value="">Choisir</option>
-                            {% for annee in 2017..'now'|date('Y')+2 %}
-                                <option value="{{ annee }}">{{ annee }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                </div>
+     <div class="card card-inverse card-danger">
+         <h4 class="card-title">{{ 'adm.hrs.supprimer.annee.heading'|trans }}</h4>
+         <div class="card-body">
+             <form action="{{ path('administration_hrs_supprimer_annee') }}" method="delete" class="form">
+                 <div class="row">
+                     <div class="col-md-6 col-sm-12">
+                         <div class="form-group">
+                             <input type="hidden" value="{{ csrf_token('supprimer') }}" name="_token">
+                             <label class="sr-only" for="annee_supprimer">{{ 'choisir'|trans }}</label>
+                             <select name="annee_supprimer" id="annee_supprimer" class="form-select">
+                                 <option value="">Choisir</option>
+                                 {% for annee in 2017..'now'|date('Y')+2 %}
+                                     <option value="{{ annee }}">{{ annee }}</option>
+                                 {% endfor %}
+                             </select>
+                         </div>
+                     </div>
 
-                <div class="col-md-6 col-sm-12 d-grid">
-                    <button class="btn d-block btn-warning" type="submit">
-                        Supprimer les données pour l'année selectionnée
-                    </button>
-                </div>
-            </div>
-            </form>
-        </div>
-    </div>
-{% endblock %}
+                     <div class="col-md-6 col-sm-12 d-grid">
+                         <button class="btn d-block btn-warning" type="submit">
+                             Supprimer les données pour l'année selectionnée
+                         </button>
+                     </div>
+                 </div>
+             </form>
+         </div>
+     </div>
+ {% endblock %}
 
-{% block fabactions %}
-    {{ include('composants/fab-button-help.html.twig', {
-        href:path('help_article', {sujet: 'administration_hrs'})
-    }
-    ) }}
-{% endblock %}
+ {% block fabactions %}
+     {{ include('composants/fab-button-help.html.twig', {
+         href:path('help_article', {sujet: 'administration_hrs'})
+     }
+     ) }}
+ {% endblock %}
 
-{% block stylesheets %}
-    {{ parent() }}
-    {{ encore_entry_link_tags('adm.previsionnel') }}
-{% endblock %}
+ {% block stylesheets %}
+     {{ parent() }}
+     {{ encore_entry_link_tags('adm.previsionnel') }}
+ {% endblock %}
 
-{% block javascripts %}
-    {{ parent() }}
-    {{ encore_entry_script_tags('adm.previsionnel') }}
-{% endblock %}
+ {% block javascripts %}
+     {{ parent() }}
+     {{ encore_entry_script_tags('adm.previsionnel') }}
+ {% endblock %}
 

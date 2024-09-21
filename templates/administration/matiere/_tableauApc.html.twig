@@ -20,6 +20,10 @@
                        data-bs-placement="bottom"><i class="fas fa-plus"></i> Ajouter une SAÉ</a>
                 </span>
             {% endif %}
+            <a href="{{ path('administration_apc_export',{diplome:diplome.id}) }}"
+               class="btn btn-sm btn btn-info" title="{{ 'atitle.export'|trans }}"
+               data-bs-toggle="tooltip"
+               data-bs-placement="bottom"><i class="fas fa-download"></i> Exporter</a>
         </div>
     </header>
 

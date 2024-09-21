@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/SemestreRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:41
+ * @lastUpdate 09/09/2024 14:26
  */
 
 namespace App\Repository;
@@ -14,7 +14,7 @@ use App\Entity\Departement;
 use App\Entity\Diplome;
 use App\Entity\Semestre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Collections\Criteria;
+use Doctrine\Common\Collections\Order;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
@@ -44,8 +44,8 @@ class SemestreRepository extends ServiceEntityRepository
             ->where('d.departement = :departement')
             ->andWhere('a.actif = true')
             ->setParameter('departement', $departement)
-            ->orderBy('s.ordreLmd', Criteria::ASC)
-            ->addOrderBy('s.libelle', Criteria::ASC);
+            ->orderBy('s.ordreLmd', Order::Ascending->value)
+            ->addOrderBy('s.libelle', Order::Ascending->value);
     }
 
     public function findByDepartementActif(Departement $departement): array
@@ -56,6 +56,7 @@ class SemestreRepository extends ServiceEntityRepository
             ->where('d.departement = :departement')
             ->andWhere('s.actif = 1')
             ->setParameter('departement', $departement)
+            ->orderBy('s.ordreLmd', Order::Ascending->value)
             ->getQuery()
             ->getResult();
     }
@@ -66,7 +67,7 @@ class SemestreRepository extends ServiceEntityRepository
             ->innerJoin(Annee::class, 'a', 'WITH', 'a.id = s.annee')
             ->where('a.diplome = :diplome')
             ->setParameter('diplome', $diplome)
-            ->orderBy('s.ordreLmd', Criteria::ASC);
+            ->orderBy('s.ordreLmd', Order::Ascending->value);
     }
 
     public function findByDiplome(Diplome $diplome): array
@@ -154,8 +155,8 @@ class SemestreRepository extends ServiceEntityRepository
             ->innerJoin(Annee::class, 'a', 'WITH', 'a.id = s.annee')
             ->innerJoin(Diplome::class, 'd', 'WITH', 'd.id = a.diplome')
             ->where('s.actif = true')
-            ->orderBy('d.sigle', Criteria::ASC)
-            ->addOrderBy('s.ordreLmd', Criteria::ASC);
+            ->orderBy('d.sigle', Order::Ascending->value)
+            ->addOrderBy('s.ordreLmd', Order::Ascending->value);
     }
 
     public function findAllSemestreByDiplomeApc(Diplome $diplome): array
@@ -174,7 +175,7 @@ class SemestreRepository extends ServiceEntityRepository
             ->innerJoin(Diplome::class, 'd', 'WITH', 'd.id = a.diplome')
             ->where('d.id = :diplome')
             ->setParameter('diplome', $diplome->getId())
-            ->orderBy('s.ordreLmd', Criteria::ASC);
+            ->orderBy('s.ordreLmd', Order::Ascending->value);
 
         $i = 1;
         foreach ($diplome->getEnfants() as $diplomeEnfant) {
@@ -221,5 +222,10 @@ class SemestreRepository extends ServiceEntityRepository
     {
         $this->_em->persist($semestre);
         $this->_em->flush();
+    }
+
+    public function findSemestresActif(): array
+    {
+        return $this->findSemestresActifBuilder()->getQuery()->getResult();
     }
 }

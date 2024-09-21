@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/css/theme.scss
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 23/02/2024 21:32
+// @lastUpdate 20/04/2024 11:37
 /* @file /Users/davidannebicque/htdocs/intranetV3/assets/css/theme.css */
 /* @author davidannebicque */
 /* @project intranetV3 */
@@ -15639,7 +15639,7 @@ ul.flexbox {
 }
 
 .header-info {
-    margin: 50px 0;
+  margin: 20px 0 30px 0;
     padding: 0 30px;
     display: -webkit-box;
     display: flex;
@@ -15651,7 +15651,7 @@ ul.flexbox {
 
 @media (max-width: 767px) {
     .header-info {
-        margin-top: 30px;
+      margin-top: 20px;
         margin-bottom: 30px;
     }
 }

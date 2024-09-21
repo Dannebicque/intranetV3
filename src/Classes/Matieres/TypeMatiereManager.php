@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Matieres/TypeMatiereManager.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/02/2024 08:51
+ * @lastUpdate 09/04/2024 20:44
  */
 
 namespace App\Classes\Matieres;
@@ -76,6 +76,20 @@ class TypeMatiereManager
         $t = [];
         foreach ($matieres as $matiere) {
             $t[$matiere->codeElement] = $matiere;
+        }
+
+        return $t;
+    }
+
+    // todo: ?? retourne plusieurs résultats : 1 pour chaque matiere
+    public function findOneById(int $id): array
+    {
+        $t = [];
+        foreach ($this->managers as $manager) {
+            $matiere = $manager->find($id);
+            if (null !== $matiere) {
+                $t[] = $matiere;
+            }
         }
 
         return $t;
@@ -236,5 +250,12 @@ class TypeMatiereManager
         }
 
         return array_merge(...$t);
+    }
+
+    public function getManager(string $typeIdMatiere)
+    {
+        $d = explode('_', $typeIdMatiere);
+
+        return $this->typeDeMatiere($d[0]);
     }
 }

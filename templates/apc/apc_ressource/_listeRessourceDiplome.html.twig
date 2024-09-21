@@ -47,40 +47,40 @@
             <td>{{ ressource.mutualisee|badgeYesNo }}</td>
             <td>{{ ressource.suspendu|badgeYesNo }}</td>
             <td>
-                <a class="editable"
+                <p class="no-wrap">PN : <a class="editable"
                    data-field="CmPpn"
                    data-href="{{ path('administration_apc_ressources_ajax_edit', {id:ressource.id}) }}"
-                   title="Corriger le volume horaire">
-                    {{ ressource.cmPpn }}</a> |
-                <a class="editable"
+                                           title="Corriger le volume horaire PN">
+                        {{ ressource.cmPpn }}</a></p>
+                <p class="no-wrap"> IUT : <a class="editable"
                    data-field="CmFormation"
                    data-href="{{ path('administration_apc_ressources_ajax_edit', {id:ressource.id}) }}"
-                   title="Corriger le volume horaire">
-                    {{ ressource.cmFormation }}</a>
+                                             title="Corriger le volume horaire IUT">
+                        {{ ressource.cmFormation }}</a></p>
             </td>
             <td>
-                <a class="editable"
+                <p class="no-wrap">PN : <a class="editable"
                    data-field="TdPpn"
                    data-href="{{ path('administration_apc_ressources_ajax_edit', {id:ressource.id}) }}"
-                   title="Corriger le volume horaire">
-                    {{ ressource.tdPpn }}</a> |
-                <a class="editable"
+                                           title="Corriger le volume horaire PN">
+                        {{ ressource.tdPpn }}</a></p>
+                <p class="no-wrap">IUT : <a class="editable"
                    data-field="TdFormation"
                    data-href="{{ path('administration_apc_ressources_ajax_edit', {id:ressource.id}) }}"
-                   title="Corriger le volume horaire">
-                    {{ ressource.tdFormation }}</a>
+                                            title="Corriger le volume horaire IUT">
+                        {{ ressource.tdFormation }}</a></p>
             </td>
             <td>
-                <a class="editable"
+                <p class="no-wrap">PN : <a class="editable"
                    data-field="TpPpn"
                    data-href="{{ path('administration_apc_ressources_ajax_edit', {id:ressource.id}) }}"
-                   title="Corriger le volume horaire">
-                    {{ ressource.tpPpn }}</a> |
-                <a class="editable"
+                                           title="Corriger le volume horaire PN">
+                        {{ ressource.tpPpn }}</a></p>
+                <p class="no-wrap">IUT : <a class="editable"
                    data-field="TpFormation"
                    data-href="{{ path('administration_apc_ressources_ajax_edit', {id:ressource.id}) }}"
-                   title="Corriger le volume horaire">
-                    {{ ressource.tpFormation }}</a>
+                                            title="Corriger le volume horaire IUT">
+                        {{ ressource.tpFormation }}</a></p>
             </td>
             <td>
                 <a class="editable"

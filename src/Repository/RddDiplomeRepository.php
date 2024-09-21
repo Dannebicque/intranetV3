@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/RddDiplomeRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/05/2022 14:27
+ * @lastUpdate 18/04/2024 17:54
  */
 
 namespace App\Repository;
@@ -12,7 +12,7 @@ namespace App\Repository;
 use App\Entity\Etudiant;
 use App\Entity\RddDiplome;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Collections\Criteria;
+use Doctrine\Common\Collections\Order;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 use Doctrine\Persistence\ManagerRegistry;
@@ -49,8 +49,8 @@ class RddDiplomeRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('r')
             ->join(Etudiant::class, 'e', 'WITH', 'r.numEtudiant = e.numEtudiant')
             ->where('r.enqueteAFaire = true')
-            ->orderBy('e.nom', Criteria::ASC)
-            ->addOrderBy('e.prenom', Criteria::ASC)
+            ->orderBy('e.nom', Order::Ascending->value)
+            ->addOrderBy('e.prenom', Order::Ascending->value)
             ->getQuery()
             ->getResult();
     }

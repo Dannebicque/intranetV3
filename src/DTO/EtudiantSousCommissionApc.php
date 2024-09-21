@@ -107,7 +107,11 @@ class EtudiantSousCommissionApc
 
         if ($nbUes === $nbUesValidees) {
             $this->decisionAnnee = Constantes::ANNEE_VALIDEE;
-            $this->propositionAnnee = 'Niveau Suivant';
+            if ($this->semestre->getOrdreLmd() === 6) {
+                $this->propositionAnnee = 'B.U.T.';
+            } else {
+                $this->propositionAnnee = 'Niveau Suivant';
+            }
         } elseif (0 === $nbUesValidees) {
             $this->decisionAnnee = Constantes::ANNEE_NON_VALIDEE;
             $this->propositionAnnee = 'REO ou RED';

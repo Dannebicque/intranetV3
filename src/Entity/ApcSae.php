@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/ApcSae.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/02/2024 21:53
+ * @lastUpdate 19/04/2024 17:48
  */
 
 namespace App\Entity;
 
+use App\Classes\Editable\EditableInterface;
 use App\Entity\Traits\LifeCycleTrait;
 use App\Interfaces\MatiereEntityInterface;
 use App\Repository\ApcSaeRepository;
@@ -20,7 +21,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ApcSaeRepository::class)]
 #[ORM\HasLifecycleCallbacks]
-class ApcSae extends AbstractMatiere implements MatiereEntityInterface
+class ApcSae extends AbstractMatiere implements MatiereEntityInterface, EditableInterface
 {
     use LifeCycleTrait;
 
@@ -330,5 +331,17 @@ class ApcSae extends AbstractMatiere implements MatiereEntityInterface
         $this->objectifs = $objectifs;
 
         return $this;
+    }
+
+    public function updateEditable(string $name, $value): bool
+    {
+        $method = 'set' . $name;
+        if (method_exists($this, $method)) {
+            $this->$method($value);
+
+            return true;
+        }
+
+        return false;
     }
 }

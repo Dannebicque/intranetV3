@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/apc/ApcRessourceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/03/2024 16:27
+ * @lastUpdate 14/04/2024 13:29
  */
 
 namespace App\Controller\administration\apc;
@@ -77,18 +77,26 @@ class ApcRessourceController extends BaseController
         ApcApprentissageCritiqueRepository $apcApprentissageCritiqueRepository,
         Request $request
     ): Response {
-        $semestre = $semestreRepository->find(JsonRequest::getValueFromRequest($request, 'semestre'));
+        $semestres = [];
+        $idSemestres = JsonRequest::getValueFromRequest($request, 'semestres');
+        foreach ($idSemestres as $idSemestre) {
+            $sem = $semestreRepository->find($idSemestre);
+            if (null !== $sem) {
+                $semestres[] = $sem;
+            }
+        }
+
         $competences = JsonRequest::getValueFromRequest($request, 'competences');
         $t = [];
-        if (null !== $semestre && (null === $competences ? 0 : count($competences)) > 0) {
-            if (null !== JsonRequest::getValueFromRequest($request, 'ressource')) {
+        if (0 !== count($semestres) && (null === $competences ? 0 : count($competences)) > 0) {
+            if (null !== JsonRequest::getValueFromRequest($request, 'ressource') && '' !== JsonRequest::getValueFromRequest($request, 'ressource')) {
                 $tabAcSae = $apcRessourceApprentissageCritiqueRepository->findArrayIdAc((int) JsonRequest::getValueFromRequest($request,
                     'ressource'));
             } else {
                 $tabAcSae = [];
             }
 
-            $datas = $apcApprentissageCritiqueRepository->findBySemestreAndCompetences($semestre->getAnnee(),
+            $datas = $apcApprentissageCritiqueRepository->findBySemestreAndCompetences($semestres[0]->getAnnee(),
                 $competences);
 
             foreach ($datas as $d) {
@@ -118,9 +126,18 @@ class ApcRessourceController extends BaseController
         ApcSaeRepository $apcSaeRepository,
         Request $request
     ): Response {
+        $semestres = [];
+        $idSemestres = JsonRequest::getValueFromRequest($request, 'semestres');
+        foreach ($idSemestres as $idSemestre) {
+            $sem = $semestreRepository->find($idSemestre);
+            if (null !== $sem) {
+                $semestres[] = $sem;
+            }
+        }
+
         $t = [];
-        $semestre = $semestreRepository->find(JsonRequest::getValueFromRequest($request, 'semestre'));
-        if (null !== $semestre) {
+
+        if (0 !== count($semestres)) {
             if (null !== $request->request->get('ressource')) {
                 $tabAcSae = $apcSaeRessourceRepository->findArrayIdSae(JsonRequest::getValueFromRequest($request,
                     'ressource'));
@@ -128,8 +145,8 @@ class ApcRessourceController extends BaseController
                 $tabAcSae = [];
             }
 
-            $datas = $apcSaeRepository->findBySemestreReferentiel($semestre,
-                $semestre->getDiplome()?->getReferentiel());
+            $datas = $apcSaeRepository->findBySemestreReferentiel($semestres[0],
+                $semestres[0]->getDiplome()?->getReferentiel());
 
             foreach ($datas as $d) {
                 $b = [];
@@ -161,11 +178,8 @@ class ApcRessourceController extends BaseController
         ]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $semestre = $semestreRepository->find($request->request->all()['apc_ressource']['semestre']);
-            if (null !== $semestre) {
-                $apcRessource->addSemestre($semestre);
-                $semestre->addApcSemestresRessource($apcRessource);
-
+            $semestres = $request->request->all()['apc_ressource']['semestres'];
+            if (0 !== count($semestres)) {
                 $this->entityManager->persist($apcRessource);
 
                 $acs = $request->request->has('ac') ? $request->request->all()['ac'] : [];

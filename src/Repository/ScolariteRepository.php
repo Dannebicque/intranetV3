@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/ScolariteRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/05/2022 14:27
+ * @lastUpdate 13/09/2024 19:24
  */
 
 namespace App\Repository;
@@ -17,7 +17,7 @@ use App\Entity\Etudiant;
 use App\Entity\Scolarite;
 use App\Entity\Semestre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Collections\Criteria;
+use Doctrine\Common\Collections\Order;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 use Doctrine\Persistence\ManagerRegistry;
@@ -50,9 +50,9 @@ class ScolariteRepository extends ServiceEntityRepository
             ->andWhere('e.promotion = :annee')
             ->setParameter('departement', $departement->getId())
             ->setParameter('annee', $annee)
-            ->orderBy('e.nom', Criteria::ASC)
-            ->orderBy('e.prenom', Criteria::ASC)
-            ->orderBy('p.ordre', Criteria::ASC)
+            ->orderBy('e.nom', Order::Ascending->value)
+            ->addOrderBy('e.prenom', Order::Ascending->value)
+            ->addOrderBy('p.ordre', Order::Ascending->value)
             ->getQuery()
             ->getResult();
     }
@@ -62,7 +62,7 @@ class ScolariteRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('s')
             ->where('s.etudiant = :etudiant')
             ->setParameter('etudiant', $etudiant->getId())
-            ->orderBy('s.ordre', Criteria::ASC)
+            ->orderBy('s.ordre', Order::Ascending->value)
             ->getQuery()
             ->getResult();
     }
@@ -78,9 +78,9 @@ class ScolariteRepository extends ServiceEntityRepository
             ->andWhere('p.etudiant = :etudiant')
             ->setParameter('departement', $departement->getId())
             ->setParameter('etudiant', $etudiant->getId())
-            ->orderBy('e.nom', Criteria::ASC)
-            ->orderBy('e.prenom', Criteria::ASC)
-            ->orderBy('p.ordre', Criteria::ASC)
+            ->orderBy('e.nom', Order::Ascending->value)
+            ->addOrderBy('e.prenom', Order::Ascending->value)
+            ->addOrderBy('p.ordre', Order::Ascending->value)
             ->getQuery()
             ->getResult();
     }
@@ -115,5 +115,15 @@ class ScolariteRepository extends ServiceEntityRepository
         }
 
         return $t;
+    }
+
+    public function findMaxOrdre(Etudiant $etudiant): ?int
+    {
+        return $this->createQueryBuilder('s')
+            ->select('MAX(s.ordre)')
+            ->where('s.etudiant = :etudiant')
+            ->setParameter('etudiant', $etudiant->getId())
+            ->getQuery()
+            ->getSingleScalarResult();
     }
 }

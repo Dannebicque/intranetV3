@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EdtCompareController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:40
+ * @lastUpdate 25/04/2024 06:23
  */
 
 namespace App\Controller\administration;
@@ -44,7 +44,7 @@ class EdtCompareController extends BaseController
     public function compareMatiere(ComparePrevisonnelMatiere $comparePrevisonnelMatiere, string $source): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_EDT', $this->getDepartement());
-        $comparatif = $comparePrevisonnelMatiere->compareEdtPreviMatiere($this->dataUserSession->getDepartement(),
+        $comparatif = $comparePrevisonnelMatiere->compareEdtPreviMatiere($this->getDepartement(),
             $this->dataUserSession->getAnneePrevisionnel(), $source);
 
         return $this->render('administration/edtCompare/compareMatieres.html.twig', [

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/TrombinoscopeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/03/2024 16:27
+ * @lastUpdate 03/07/2024 08:52
  */
 
 namespace App\Controller;
@@ -23,9 +23,11 @@ use App\Exception\DiplomeNotFoundException;
 use App\Repository\EtudiantRepository;
 use App\Repository\GroupeRepository;
 use App\Repository\PersonnelRepository;
+use App\Repository\SemestreRepository;
 use JsonException;
 use PhpOffice\PhpSpreadsheet\Exception;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
@@ -40,7 +42,6 @@ class TrombinoscopeController extends BaseController
     public function index(): Response
     {
         $this->breadcrumbHelper->addItem('trombinoscope', 'trombinoscope_index');
-
         $semestres = [];
         foreach ($this->dataUserSession->getSemestresActifs() as $semestre) {
             if (!array_key_exists($semestre->getOrdreLmd(), $semestres))
@@ -63,13 +64,25 @@ class TrombinoscopeController extends BaseController
      */
     #[Route(path: '/etudiant/export/{typeGroupe<\d+>}.{_format}', name: 'trombinoscope_etudiant_export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
     #[IsGranted('ROLE_PERMANENT')]
-    public function trombiEtudiantExport(MyExportListing $myExportListing, TypeGroupe $typeGroupe, string $_format): Response
+    public function trombiEtudiantExport(
+        Request            $request,
+        SemestreRepository $semestreRepository,
+        MyExportListing    $myExportListing,
+        TypeGroupe         $typeGroupe,
+        string             $_format): Response
     {
+        $idSemestre = $request->query->get('semestre');
+
+        if (null !== $idSemestre) {
+            $semestre = $semestreRepository->find($idSemestre);
+        }
+
         return $myExportListing->genereFichier(
             Constantes::TYPEDOCUMENT_EMARGEMENT,
             $_format,
             [],
-            $typeGroupe->getId()
+            $typeGroupe->getId(),
+            semestre: $semestre ?? null
         );
     }
 
@@ -100,6 +113,7 @@ class TrombinoscopeController extends BaseController
     #[IsGranted('ROLE_PERMANENT')]
     public function trombiEtudiantExportImage(PdfManager $myPDF, TypeGroupe $typeGroupe): Response
     {
+        //todo: à revoir, getSemestre n'existe plus en V4
         return $myPDF->pdf()::generePdf('pdf/trombinoscope.html.twig',
             [
                 'typeGroupe' => $typeGroupe,

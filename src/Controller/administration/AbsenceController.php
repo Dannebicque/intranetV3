@@ -4,12 +4,13 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/AbsenceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:35
+ * @lastUpdate 19/04/2024 18:59
  */
 
 namespace App\Controller\administration;
 
 use App\Classes\Etudiant\EtudiantAbsences;
+use App\Classes\JsonReponse;
 use App\Classes\Matieres\TypeMatiereManager;
 use App\Classes\MyAbsences;
 use App\Classes\MyExport;
@@ -18,7 +19,6 @@ use App\Classes\StatsAbsences;
 use App\Controller\BaseController;
 use App\Entity\Absence;
 use App\Entity\Constantes;
-use App\Entity\Etudiant;
 use App\Entity\Semestre;
 use App\Event\AbsenceEvent;
 use App\Repository\AbsenceJustificatifRepository;
@@ -39,21 +39,28 @@ class AbsenceController extends BaseController
     /**
      * @throws Exception
      */
-    #[Route('/semestre/etudiant/{etudiant}',
-        name: 'administration_absences_liste_absence_etudiant',
-        options: ['expose' => true])]
+    #[Route('/semestre/etudiant',
+        name: 'administration_absences_liste_absence_etudiant')]
     public function listeAbsenceEtudiant(
+        EtudiantRepository $etudiantRepository,
         TypeMatiereManager $typeMatiereManager,
         EtudiantAbsences $etudiantAbsences,
         StatsAbsences $statsAbsences,
-        Etudiant $etudiant
+        Request            $request
     ): Response {
+        $idEtu = $request->query->get('etudiant');
+        $etudiant = $etudiantRepository->find($idEtu);
+
+        if (null === $etudiant) {
+            return JsonReponse::error('Etudiant non trouvé');
+        }
+
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $etudiant->getSemestre());
 
-        if ($etudiant->getDiplome()->isApc() === false) {
+        if ($etudiant->getDiplome()?->isApc() === false) {
             $matieres = $typeMatiereManager->findBySemestreArray($etudiant->getSemestre());
         } else {
-            $mats = $typeMatiereManager->findByReferentielOrdreSemestre($etudiant->getSemestre(), $etudiant->getDiplome()->getReferentiel());
+            $mats = $typeMatiereManager->findByReferentielOrdreSemestre($etudiant->getSemestre(), $etudiant->getDiplome()?->getReferentiel());
 
             $matieres = [];
             foreach ($mats as $mat) {
@@ -214,12 +221,23 @@ class AbsenceController extends BaseController
         return $myExportListing->exportExcelAbsence($absences, $tMatieres, 'absences_S' . $semestre->getOrdreLmd());
     }
 
-    #[Route('/ajax/justifie/{absence}/{etat}', name: 'administration_absences_justifie', options: ['expose' => true])]
+    #[Route('/ajax/justifie', name: 'administration_absences_justifie', options: ['expose' => true])]
     public function justifie(
+        AbsenceRepository $absenceRepository,
         EventDispatcherInterface $eventDispatcher,
-        Absence $absence,
-        bool $etat
-    ): JsonResponse {
+        Request           $request,
+    ): Response
+    {
+        $idAbsence = $request->query->get('absence');
+        $absence = $absenceRepository->find($idAbsence);
+
+        if (null === $absence) {
+            return JsonReponse::error('Absence non trouvée');
+        }
+
+        $etat = (bool)$request->query->get('etat');
+
+
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $absence->getEtudiant()?->getSemestre());
 
         $absence->setJustifie($etat);
@@ -296,7 +314,7 @@ class AbsenceController extends BaseController
 
         $absences = $myAbsences->getAbsencesTempsReel($this->getDepartement());
 
-        if ($absences === null || count($absences) === 0) {
+        if (count($absences) === 0) {
             $matieres = [];
         } else {
             $matieres = $manager->findByDepartementArray($this->getDepartement());

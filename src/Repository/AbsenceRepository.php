@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/AbsenceRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 13/12/2023 15:35
+ * @lastUpdate 18/04/2024 17:54
  */
 
 namespace App\Repository;
@@ -22,7 +22,7 @@ use App\Entity\Semestre;
 use Carbon\Carbon;
 use Carbon\CarbonImmutable;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Collections\Criteria;
+use Doctrine\Common\Collections\Order;
 use Doctrine\Persistence\ManagerRegistry;
 use function array_key_exists;
 
@@ -74,7 +74,7 @@ class AbsenceRepository extends ServiceEntityRepository
             ->andWhere('m.typeMatiere = :type')
             ->setParameter('matiere', $matiere->id)
             ->setParameter('type', $matiere->typeMatiere)
-            ->orderBy('m.dateHeure', Criteria::DESC);
+            ->orderBy('m.dateHeure', Order::Descending->value);
 
         if (null !== $anneeUniversitaire) {
             $query->innerJoin(AnneeUniversitaire::class, 'a', 'WITH', 'm.anneeUniversitaire = a.id')
@@ -127,7 +127,7 @@ class AbsenceRepository extends ServiceEntityRepository
             ->andWhere('a.anneeUniversitaire = :annee')
             ->setParameter('semestre', $semestre->getId())
             ->setParameter('annee', $anneeCourante->getId())
-            ->orderBy('a.dateHeure', Criteria::DESC)
+            ->orderBy('a.dateHeure', Order::Descending->value)
             ->getQuery()
             ->getResult();
     }
@@ -147,7 +147,7 @@ class AbsenceRepository extends ServiceEntityRepository
             ->andWhere('a.etudiant = :etudiant')
             ->setParameter('annee', $anneeUniversitaire->getId())
             ->setParameter('etudiant', $etudiant->getId())
-            ->orderBy('a.dateHeure', Criteria::DESC);
+            ->orderBy('a.dateHeure', Order::Descending->value);
 
         $ors = [];
         foreach ($matieres as $matiere) {
@@ -184,7 +184,7 @@ class AbsenceRepository extends ServiceEntityRepository
             ->andWhere('e.typeMatiere = :type')
             ->setParameter('matiere', $matiere)
             ->setParameter('type', $type)
-            ->orderBy('e.dateHeure', Criteria::ASC);
+            ->orderBy('e.dateHeure', Order::Ascending->value);
 
         if (null !== $annee) {
             $query->innerJoin(AnneeUniversitaire::class, 'u', 'WITH', 'e.anneeUniversitaire = u.id')
@@ -217,9 +217,9 @@ class AbsenceRepository extends ServiceEntityRepository
             ->setParameter('dateDebut', $dateDebut)
             ->setParameter('dateFin', $dateFin)
             ->setParameter('departement', $departement->getId())
-            ->orderBy('s.libelle', Criteria::ASC)
-            ->addOrderBy('a.dateHeure', Criteria::ASC)
-            ->addOrderBy('e.nom', Criteria::ASC)
+            ->orderBy('s.libelle', Order::Ascending->value)
+            ->addOrderBy('a.dateHeure', Order::Ascending->value)
+            ->addOrderBy('e.nom', Order::Ascending->value)
             ->getQuery()
             ->getResult();
     }
@@ -289,7 +289,7 @@ class AbsenceRepository extends ServiceEntityRepository
             ->setParameter('semestre', $semestre->getOrdreLmd())
             ->andWhere('a.anneeUniversitaire = :annee')
             ->setParameter('annee', $anneeCourante->getId())
-            ->orderBy('a.dateHeure', Criteria::DESC);
+            ->orderBy('a.dateHeure', Order::Descending->value);
 
         return $query->getQuery()
             ->getResult();

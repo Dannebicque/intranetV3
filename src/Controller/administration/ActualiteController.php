@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/ActualiteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:17
+ * @lastUpdate 25/04/2024 06:23
  */
 
 namespace App\Controller\administration;
@@ -78,7 +78,7 @@ class ActualiteController extends BaseController
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
 
-        $actualite = new Actualite($this->dataUserSession->getDepartement());
+        $actualite = new Actualite($this->getDepartement());
         $form = $this->createForm(ActualiteType::class, $actualite, [
             'attr' => [
                 'data-provide' => 'validation',

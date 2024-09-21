@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/stage/StagePeriodeOffreController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:17
+ * @lastUpdate 25/04/2024 06:28
  */
 
 namespace App\Controller\administration\stage;
@@ -68,7 +68,7 @@ class StagePeriodeOffreController extends BaseController
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stagePeriode->getSemestre());
         $stagePeriodeOffre = new StagePeriodeOffre($stagePeriode);
         $form = $this->createForm(StagePeriodeOffreType::class, $stagePeriodeOffre, [
-            'departement' => $this->dataUserSession->getDepartement(),
+            'departement' => $this->getDepartement(),
             'annee' => $stagePeriode->getAnneeUniversitaire(),
             'attr' => [
                 'data-provide' => 'validation',
@@ -96,7 +96,7 @@ class StagePeriodeOffreController extends BaseController
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $this->getDepartement());
         $form = $this->createForm(StagePeriodeOffreType::class, $stagePeriodeOffre, [
-            'departement' => $this->dataUserSession->getDepartement(),
+            'departement' => $this->getDepartement(),
             'attr' => [
                 'data-provide' => 'validation',
             ],

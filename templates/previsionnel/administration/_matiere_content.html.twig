@@ -2,16 +2,37 @@
     {% set col = 'col-md-4' %}
     <div class="row">
         <div class="col-sm-12 {{ col }} text-center">
-            <strong>CM</strong><br>
-            {{ matiere.cmFormation|nombreHeure }}h
+            <strong>CM (heures)</strong><br>
+            <twig:Editable
+                    titre="Modifier les heures CM"
+                    field="cmFormation"
+                    id="{{ matiere.objet.id }}"
+                    className="{{ matiere.objet|classFQN }}"
+                    value="{{ matiere.cmFormation|number_format(2) }}"
+            >
+            </twig:Editable>
         </div>
         <div class="col-sm-12 {{ col }} text-center">
-            <strong>TD</strong><br>
-            {{ matiere.tdFormation|nombreHeure }}h
+            <strong>TD (heures)</strong><br>
+            <twig:Editable
+                    titre="Modifier les heures TD"
+                    field="tdFormation"
+                    id="{{ matiere.objet.id }}"
+                    className="{{ matiere.objet|classFQN }}"
+                    value="{{ matiere.tdFormation|number_format(2) }}"
+            >
+            </twig:Editable>
         </div>
         <div class="col-sm-12 {{ col }} text-center">
-            <strong>TP</strong><br>
-            {{ matiere.tpFormation|nombreHeure }}h
+            <strong>TP (heures)</strong><br>
+            <twig:Editable
+                    titre="Modifier les heures TP"
+                    field="tpFormation"
+                    id="{{ matiere.objet.id }}"
+                    className="{{ matiere.objet|classFQN }}"
+                    value="{{ matiere.tpFormation|number_format(2) }}"
+            >
+            </twig:Editable>
         </div>
     </div>
 </twig:Alert>

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/DateController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:17
+ * @lastUpdate 25/04/2024 06:23
  */
 
 namespace App\Controller\administration;
@@ -135,7 +135,7 @@ class DateController extends BaseController
             DatesType::class,
             $date,
             [
-                'departement' => $this->dataUserSession->getDepartement(),
+                'departement' => $this->getDepartement(),
                 'attr' => [
                     'data-provide' => 'validation',
                 ],

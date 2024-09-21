@@ -59,7 +59,11 @@
                                 <td>{{ matiere.codeMatiere }}</td>
                                 <td>{{ matiere.libelle }}</td>
                                 <td>
-                                    <select class="form-select changeUe" data-matiere="{{ matiere.id }}">
+                                    <label for="changeUe{{ semestre.id }}" class="sr-only">Change d'UE</label>
+                                    <select class="form-select changeUe"
+                                            data-matiere="{{ matiere.id }}"
+                                            id="changeUe{{ semestre.id }}"
+                                    >
                                         {% for ue in semestre.ues %}
                                             <option value="{{ ue.id }}" {% if matiere.ue != null and ue.id == matiere.ue
                                             .id %}selected{% endif %}>{{ ue.display }}</option>
@@ -68,8 +72,12 @@
                                 </td>
                                 {% if semestre.parcours|length > 0 %}
                                     <td>
-
-                                        <select class="form-select changeParcours" data-matiere="{{ matiere.id }}">
+                                        <label for="changeParcours{{ semestre.id }}" class="sr-only">Change de
+                                            parcours</label>
+                                        <select class="form-select changeParcours"
+                                                data-matiere="{{ matiere.id }}"
+                                                id="changeParcours{{ semestre.id }}"
+                                        >
                                             <option value="null" selected>Tous les parcours</option>
                                             {% for parcour in semestre.parcours %}
                                                 <option value="{{ parcour.id }}" {% if matiere.parcours != null
@@ -80,60 +88,144 @@
                                     </td>
                                 {% endif %}
                                 <td>
-                                    <a class="editable"
-                                       data-field="CmPpn"
-                                       data-href="{{ path('administration_matiere_ajax_edit', {id:matiere.id}) }}"
-                                       title="Corriger le volume horaire">
-                                        {{ matiere.cmPpn }}</a> |
-                                    <a class="editable"
-                                       data-field="CmFormation"
-                                       data-href="{{ path('administration_matiere_ajax_edit', {id:matiere.id}) }}"
-                                       title="Corriger le volume horaire">
-                                        {{ matiere.cmFormation }}</a>
+                                    <twig:Editable
+                                            titre="Corriger le volume horaire"
+                                            field="cmPpn"
+                                            id="{{ matiere.id }}"
+                                            className="{{ matiere|classFQN }}"
+                                            value="{{ matiere.cmPpn|number_format(2) }}"
+                                    >
+                                    </twig:Editable>
+                                    |
+                                    <twig:Editable
+                                            titre="Corriger le volume horaire"
+                                            field="cmFormation"
+                                            id="{{ matiere.id }}"
+                                            className="{{ matiere|classFQN }}"
+                                            value="{{ matiere.cmFormation|number_format(2) }}"
+                                    >
+                                    </twig:Editable>
+
+                                    {#                                    <a class="editable" #}
+                                    {#                                       data-field="CmPpn" #}
+                                    {#                                       data-href="{{ path('administration_matiere_ajax_edit', {id:matiere.id}) }}" #}
+                                    {#                                       title="Corriger le volume horaire"> #}
+                                    {#                                        {{ matiere.cmPpn }}</a> | #}
+                                    {#                                    <a class="editable" #}
+                                    {#                                       data-field="CmFormation" #}
+                                    {#                                       data-href="{{ path('administration_matiere_ajax_edit', {id:matiere.id}) }}" #}
+                                    {#                                       title="Corriger le volume horaire"> #}
+                                    {#                                        {{ matiere.cmFormation }}</a> #}
                                 </td>
                                 <td>
-                                    <a class="editable"
-                                       data-field="TdPpn"
-                                       data-href="{{ path('administration_matiere_ajax_edit', {id:matiere.id}) }}"
-                                       title="Corriger le volume horaire">
-                                        {{ matiere.tdPpn }}</a> |
-                                    <a class="editable"
-                                       data-field="TdFormation"
-                                       data-href="{{ path('administration_matiere_ajax_edit', {id:matiere.id}) }}"
-                                       title="Corriger le volume horaire">
-                                        {{ matiere.tdFormation }}</a>
+                                    <twig:Editable
+                                            titre="Corriger le volume horaire"
+                                            field="tdPpn"
+                                            id="{{ matiere.id }}"
+                                            className="{{ matiere|classFQN }}"
+                                            value="{{ matiere.tdPpn|number_format(2) }}"
+                                    >
+                                    </twig:Editable>
+                                    |
+                                    <twig:Editable
+                                            titre="Corriger le volume horaire"
+                                            field="tdFormation"
+                                            id="{{ matiere.id }}"
+                                            className="{{ matiere|classFQN }}"
+                                            value="{{ matiere.tdFormation|number_format(2) }}"
+                                    >
+                                    </twig:Editable>
+
+                                    {#                                    <a class="editable" #}
+                                    {#                                       data-field="TdPpn" #}
+                                    {#                                       data-href="{{ path('administration_matiere_ajax_edit', {id:matiere.id}) }}" #}
+                                    {#                                       title="Corriger le volume horaire"> #}
+                                    {#                                        {{ matiere.tdPpn }}</a> | #}
+                                    {#                                    <a class="editable" #}
+                                    {#                                       data-field="TdFormation" #}
+                                    {#                                       data-href="{{ path('administration_matiere_ajax_edit', {id:matiere.id}) }}" #}
+                                    {#                                       title="Corriger le volume horaire"> #}
+                                    {#                                        {{ matiere.tdFormation }}</a> #}
                                 </td>
                                 <td>
-                                    <a class="editable"
-                                       data-field="TpPpn"
-                                       data-href="{{ path('administration_matiere_ajax_edit', {id:matiere.id}) }}"
-                                       title="Corriger le volume horaire">
-                                        {{ matiere.tpPpn }}
-                                    </a> |
-                                    <a class="editable"
-                                       data-field="TpFormation"
-                                       data-href="{{ path('administration_matiere_ajax_edit', {id:matiere.id}) }}"
-                                       title="Corriger le volume horaire">
-                                        {{ matiere.tpFormation }}
-                                    </a>
+                                    <twig:Editable
+                                            titre="Corriger le volume horaire"
+                                            field="tpPpn"
+                                            id="{{ matiere.id }}"
+                                            className="{{ matiere|classFQN }}"
+                                            value="{{ matiere.tpPpn|number_format(2) }}"
+                                    >
+                                    </twig:Editable>
+                                    |
+                                    <twig:Editable
+                                            titre="Corriger le volume horaire"
+                                            field="tpFormation"
+                                            id="{{ matiere.id }}"
+                                            className="{{ matiere|classFQN }}"
+                                            value="{{ matiere.tpFormation|number_format(2) }}"
+                                    >
+                                    </twig:Editable>
+
+                                    {#                                    <a class="editable" #}
+                                    {#                                       data-field="TpPpn" #}
+                                    {#                                       data-href="{{ path('administration_matiere_ajax_edit', {id:matiere.id}) }}" #}
+                                    {#                                       title="Corriger le volume horaire"> #}
+                                    {#                                        {{ matiere.tpPpn }} #}
+                                    {#                                    </a> | #}
+                                    {#                                    <a class="editable" #}
+                                    {#                                       data-field="TpFormation" #}
+                                    {#                                       data-href="{{ path('administration_matiere_ajax_edit', {id:matiere.id}) }}" #}
+                                    {#                                       title="Corriger le volume horaire"> #}
+                                    {#                                        {{ matiere.tpFormation }} #}
+                                    {#                                    </a> #}
                                 </td>
-                                <td><a class="editable"
-                                       data-field="NbNotes"
-                                       data-href="{{ path('administration_matiere_ajax_edit', {id:matiere.id}) }}"
-                                       title="Corriger le volume horaire">
-                                        {{ matiere.nbNotes }}</a>
+                                <td>
+                                    <twig:Editable
+                                            titre="Corriger le nombre de notes"
+                                            field="nbNotes"
+                                            id="{{ matiere.id }}"
+                                            className="{{ matiere|classFQN }}"
+                                            value="{{ matiere.nbNotes }}"
+                                    >
+                                    </twig:Editable>
+                                    {#                                    #}
+                                    {#                                    <a class="editable" #}
+                                    {#                                       data-field="NbNotes" #}
+                                    {#                                       data-href="{{ path('administration_matiere_ajax_edit', {id:matiere.id}) }}" #}
+                                    {#                                       title="Corriger le volume horaire"> #}
+                                    {#                                        {{ matiere.nbNotes }}</a> #}
                                 </td>
-                                <td><a class="editable"
-                                       data-field="Coefficient"
-                                       data-href="{{ path('administration_matiere_ajax_edit', {id:matiere.id}) }}"
-                                       title="Corriger le volume horaire">
-                                        {{ matiere.coefficient }}</a>
+                                <td>
+                                    <twig:Editable
+                                            titre="Corriger le coefficient"
+                                            field="coefficient"
+                                            id="{{ matiere.id }}"
+                                            className="{{ matiere|classFQN }}"
+                                            value="{{ matiere.coefficient }}"
+                                    >
+                                    </twig:Editable>
+                                    {#                                    #}
+                                    {#                                    <a class="editable" #}
+                                    {#                                       data-field="Coefficient" #}
+                                    {#                                       data-href="{{ path('administration_matiere_ajax_edit', {id:matiere.id}) }}" #}
+                                    {#                                       title="Corriger le volume horaire"> #}
+                                    {#                                        {{ matiere.coefficient }}</a> #}
                                 </td>
-                                <td><a class="editable"
-                                       data-field="NbEcts"
-                                       data-href="{{ path('administration_matiere_ajax_edit', {id:matiere.id}) }}"
-                                       title="Corriger le volume horaire">
-                                        {{ matiere.nbEcts }}</a>
+                                <td>
+                                    <twig:Editable
+                                            titre="Corriger le nombre d'ECTS"
+                                            field="nbEcts"
+                                            id="{{ matiere.id }}"
+                                            className="{{ matiere|classFQN }}"
+                                            value="{{ matiere.nbEcts }}"
+                                    >
+                                    </twig:Editable>
+
+                                    {#                                    <a class="editable" #}
+                                    {#                                       data-field="NbEcts" #}
+                                    {#                                       data-href="{{ path('administration_matiere_ajax_edit', {id:matiere.id}) }}" #}
+                                    {#                                       title="Corriger le volume horaire"> #}
+                                    {#                                        {{ matiere.nbEcts }}</a> #}
                                 </td>
                                 <td>{{ matiere.suspendu|badgeYesNo }}</td>
                                 <td>{{ matiere.pac|badgeYesNo }}</td>

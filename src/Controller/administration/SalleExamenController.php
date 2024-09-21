@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/SalleExamenController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:17
+ * @lastUpdate 25/04/2024 06:26
  */
 
 namespace App\Controller\administration;
@@ -27,7 +27,7 @@ class SalleExamenController extends BaseController
     public function index(SalleExamenRepository $salleExamenRepository): Response
     {
         return $this->render('administration/salle_examen/index.html.twig',
-            ['salle_examens' => $salleExamenRepository->findByDepartement($this->dataUserSession->getDepartement())]);
+            ['salle_examens' => $salleExamenRepository->findByDepartement($this->getDepartement())]);
     }
 
     #[Route(path: '/export.{_format}', name: 'administration_salle_examen_export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
@@ -35,7 +35,7 @@ class SalleExamenController extends BaseController
         MySerializer $mySerializer,
         MyExport $myExport, SalleExamenRepository $salleExamenRepository, string $_format): Response
     {
-        $salles_examen = $salleExamenRepository->findByDepartement($this->dataUserSession->getDepartement());
+        $salles_examen = $salleExamenRepository->findByDepartement($this->getDepartement());
 
         $data = $mySerializer->getDataFromSerialization(
             $salles_examen,
@@ -53,7 +53,7 @@ class SalleExamenController extends BaseController
     #[Route(path: '/new', name: 'administration_salle_examen_new', methods: 'GET|POST')]
     public function create(Request $request): Response
     {
-        $salleExaman = new SalleExamen($this->dataUserSession->getDepartement());
+        $salleExaman = new SalleExamen($this->getDepartement());
         $form = $this->createForm(SalleExamenType::class, $salleExaman);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {

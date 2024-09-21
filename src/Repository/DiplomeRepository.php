@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/DiplomeRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 03/10/2022 14:31
+ * @lastUpdate 18/04/2024 17:54
  */
 
 namespace App\Repository;
@@ -13,7 +13,7 @@ use App\Entity\Departement;
 use App\Entity\Diplome;
 use App\Entity\TypeDiplome;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Collections\Criteria;
+use Doctrine\Common\Collections\Order;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -37,8 +37,8 @@ class DiplomeRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('d')
             ->join(TypeDiplome::class, 't', 'WITH', 'd.typeDiplome = t.id')
-            ->orderBy('t.libelle', Criteria::ASC)
-            ->addOrderBy('d.libelle', Criteria::ASC);
+            ->orderBy('t.libelle', Order::Ascending->value)
+            ->addOrderBy('d.libelle', Order::Ascending->value);
     }
 
     public function findAll(): array
@@ -59,6 +59,7 @@ class DiplomeRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('d')
             ->where('d.departement = :departement')
+            ->andWhere('d.actif = 1')
             ->setParameter('departement', $departement)
             ->orderBy('d.libelle');
     }
@@ -69,8 +70,8 @@ class DiplomeRepository extends ServiceEntityRepository
             ->join(TypeDiplome::class, 't', 'WITH', 'd.typeDiplome = t.id')
             ->where('d.actif = :actif')
             ->setParameter('actif', true)
-            ->orderBy('t.libelle', Criteria::ASC)
-            ->addOrderBy('d.libelle', Criteria::ASC)
+            ->orderBy('t.libelle', Order::Ascending->value)
+            ->addOrderBy('d.libelle', Order::Ascending->value)
             ->getQuery()
             ->getResult();
     }
@@ -97,6 +98,16 @@ class DiplomeRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('d')
             ->where('d.keyEduSign IS NOT NULL')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findAllWithEduSignDepartement(Departement $departement): array
+    {
+        return $this->createQueryBuilder('d')
+            ->where('d.keyEduSign IS NOT NULL')
+            ->andWhere('d.departement = :departement')
+            ->setParameter('departement', $departement)
             ->getQuery()
             ->getResult();
     }

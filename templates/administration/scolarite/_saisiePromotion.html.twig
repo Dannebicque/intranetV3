@@ -30,21 +30,55 @@
                         <td>{{ etudiant.numEtudiant }}</td>
                         <td>{{ etudiant.nom }}</td>
                         <td>{{ etudiant.prenom }}</td>
-                        <td><input type="text" class="form-control" name="ordre_{{ etudiant.numEtudiant }}"
-                                   placeholder="Ordre de la scolarité" value="{{ semestre.ordreLmd }}"></td>
-                        <td><input type="text" class="form-control" name="moyenne_{{ etudiant.numEtudiant }}"
-                                   placeholder="Moyenne du semestre"></td>
-                        <td><input type="text" class="form-control" name="nbabsence_{{ etudiant.numEtudiant }}"
-                                   placeholder="Nb Absences"></td>
-                        <td><select>
+                        <td>
+                            <label for="ordre_{{ etudiant.numEtudiant }}" class="sr-only">
+                                Ordre de la scolarité
+                            </label>
+                            <input type="text"
+                                   class="form-control"
+                                   name="ordre_{{ etudiant.numEtudiant }}"
+                                   id="ordre_{{ etudiant.numEtudiant }}"
+                                   placeholder="Ordre de la scolarité"
+                                   value="{{ semestre.ordreLmd }}">
+                        </td>
+                        <td>
+                            <label for="moyenne_{{ etudiant.numEtudiant }}" class="sr-only">
+                                Moyenne du semestre
+                            </label>
+                            <input type="text" class="form-control" name="moyenne_{{ etudiant.numEtudiant }}"
+                                   id="moyenne_{{ etudiant.numEtudiant }}"
+                                   placeholder="Moyenne du semestre">
+                        </td>
+                        <td>
+                            <label for="nbabsence_{{ etudiant.numEtudiant }}" class="sr-only">
+                                Nb Absences
+                            </label>
+                            <input type="text" class="form-control"
+                                   name="nbabsence_{{ etudiant.numEtudiant }}"
+                                   id="nbabsence_{{ etudiant.numEtudiant }}"
+                                   placeholder="Nb Absences">
+                        </td>
+                        <td>
+                            <label for="s_{{ etudiant.numEtudiant }}" class="sr-only">??</label>
+                            <select id="s_{{ etudiant.numEtudiant }}">
                                 <option></option>
-                            </select></td>
-                        <td><input type="text" class="form-control" name="nbabsence_{{ etudiant.numEtudiant }}"
+                            </select>
+                        </td>
+                        <td>
+                            <label for="nbabsence_{{ etudiant.numEtudiant }}" class="sr-only">Nb Absences</label>
+                            <input type="text" class="form-control"
+                                   name="nbabsence_{{ etudiant.numEtudiant }}"
+                                   id="nbabsence_{{ etudiant.numEtudiant }}"
                                    placeholder="Nb Absences"></td>
                         {% for ue in semestre.ues %}
-                            <td><input type="text" class="form-control" name="ue_{{ etudiant.numEtudiant }}__{{ ue
-                                .id }}"
-                                       placeholder="Moyenne UE {{ ue.numeroUe }}"></td>
+                            <td>
+                                <label for="ue_{{ etudiant.numEtudiant }}__{{ ue.id }}" class="sr-only">
+                                    Moyenne UE {{ ue.numeroUe }}</label>
+                                <input type="text" class="form-control"
+                                       name="ue_{{ etudiant.numEtudiant }}__{{ ue.id }}"
+                                       id="ue_{{ etudiant.numEtudiant }}__{{ ue.id }}"
+                                       placeholder="Moyenne UE {{ ue.numeroUe }}">
+                            </td>
                         {% endfor %}
                     </tr>
                 {% endfor %}

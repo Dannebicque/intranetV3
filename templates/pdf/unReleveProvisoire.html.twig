@@ -1,7 +1,6 @@
 {{include('pdf/_headerPdf.html.twig', {
     departement: semestre.diplome.departement,
-    titre: '<h1>'~semestre.diplome.departement.libelle~'</h1>
-            <stong>Année Universitaire '~anneeUniversitaire.displayAnneeUniversitaire~'</stong>
+    titre: '<stong>Année Universitaire '~anneeUniversitaire.displayAnneeUniversitaire~'</stong>
             <br/>
             '~settings('NOM_UNIVERSITE') ~'<br/>
 '~settings('NOM_IUT')~'<br/>
@@ -10,29 +9,6 @@
     qualite: semestre.diplome.optCertifieQualite
 }) }}
 
-{#<table style="width:100%">#}
-{#    <tr>#}
-{#        <td style="text-align: center; width:20%"><img#}
-{#                    src="{{ settings('BASE_PATH') }}{{ 'logo/'~semestre.diplome.departement.logoName }}" alt="logo"#}
-{#                    width="75"/></td>#}
-{#        <td style="text-align: center; width:60%"><h1>{{ semestre.diplome.departement.libelle }}</h1>#}
-{#            <stong>Année Universitaire {{ anneeUniversitaire.displayAnneeUniversitaire }}</stong>#}
-{#            <br/>#}
-{#            UNIVERSITE de REIMS CHAMPAGNE-ARDENNE<br/>#}
-{#            {{ settings('NOM_IUT') }}<br/>#}
-{#            <strong>{{ semestre.diplome.typediplome.libelle }}</strong><br/>#}
-{#            <strong>{{ semestre.diplome.libelle }}</strong><br/>#}
-{#        </td>#}
-{#        <td style="text-align: center; width:20%">#}
-{#            <img src="{{ settings('BASE_PATH') }}{{ 'logo/' }}{{ settings('LOGO_IUT') }}" alt="logo"#}
-{#                 width="75"/>#}
-{#            {% if semestre.diplome.optCertifieQualite == true %}#}
-{#                <img src="{{ settings('BASE_PATH') }}{{ 'logo/'~settings('LOGO_QUALITE') }}" alt="logo certificat#}
-{#                     qualité" height="75px"/>#}
-{#            {% endif %}#}
-{#        </td>#}
-{#    </tr>#}
-{#</table>#}
 <h1>Liste des notes du Semestre {{ semestre.display }}<br/>Relevé provisoire</h1><br/>
 <h2>{{ etudiant.display }}</h2> Né(e) le {{ etudiant.dateNaissance|date('d/m/Y') }}
 <p>N° étudiant (URCA) : {{ etudiant.numEtudiant }}

@@ -17,6 +17,10 @@ twig:
     iconHelp: '%env(resolve:ICON_HELP)%'
     iconAdmin: '%env(resolve:ICON_ADMINISTRATION)%' #'fas fa-wrench'
     iconRetour: '%env(resolve:ICON_RETOUR)%' #'fas fa-wrench'
+    iconMenuDashboard: '%env(resolve:ICON_MENU_DASHBOARD)%' #fas fa-home'
+    iconMenuTrombi: '%env(resolve:ICON_MENU_TROMBINOSCOPE)%' #fa-user-friends
+    iconMenuAgenda: '%env(resolve:ICON_MENU_AGENDA)%' #ffa-calendar-alt
+    iconMenuApplications: '%env(resolve:ICON_MENU_APPLICATIONS)%' #ffa-toolbox
     iconDashboard: '%env(resolve:ICON_DASHBOARD)%' #fas fa-home'
     iconTrombi: '%env(resolve:ICON_TROMBINOSCOPE)%' #fa-user-friends
     iconAgenda: '%env(resolve:ICON_AGENDA)%' #ffa-calendar-alt

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EdtRealiseController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:40
+ * @lastUpdate 25/04/2024 06:24
  */
 
 namespace App\Controller\administration;
@@ -33,7 +33,7 @@ class EdtRealiseController extends BaseController
     #[Route(path: '', name: 'administration_edt_service_realise', methods: ['GET'])]
     public function index(TypeMatiereManager $typeMatiereManager, PersonnelRepository $personnelRepository): Response
     {
-        $personnels = $personnelRepository->findByDepartement($this->dataUserSession->getDepartement());
+        $personnels = $personnelRepository->findByDepartement($this->getDepartement());
 
         return $this->render('administration/edtRealise/index.html.twig', [
             'personnels' => $personnels,

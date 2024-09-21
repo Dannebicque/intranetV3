@@ -5,6 +5,8 @@
 {% endblock %}
 
 {% block headeractions %}
+    {% set semestre = apc_sae.semestres|length > 0 and apc_sae.semestres.first != null ? apc_sae.semestres.first : null %}
+
     <div class="header-action">
         <div class="buttons">
             <a href="{{ path('administration_apc_sae_export_one', {id: apc_sae.id}) }}"
@@ -24,7 +26,7 @@
                 <i class="{{ iconDelete }}"></i>
                 <span class="sr-only">{{ 'atitle.supprimer'|trans }}</span>
             </a>
-            <a href="{{ path('administration_apc_sae_edit', {id: apc_sae.id}) }}"
+            <a href="{{ path('administration_apc_sae_edit', {id: apc_sae.id, semestre: semestre ? semestre.id : null}) }}"
                class="btn btn-warning btn-sm btn-float"
                title="{{ 'atitle.modifier'|trans }}"
                data-bs-toggle="tooltip" data-bs-placement="bottom"
@@ -35,11 +37,11 @@
 
                 <a href="{{ path('administration_matiere_index', {diplome:apc_sae.diplome.id}) }}"
                    class="btn btn-primary btn-float"
-                   title="{{ 'atitle.retour_programme'|trans }}"
+                   title="Retour aux programmes"
                    data-bs-toggle="tooltip" data-bs-placement="bottom"
                 >
                     <i class="fas fa-arrow-left"></i>
-                    <span class="sr-only">{{ 'atitle.retour_programme'|trans }}</span>
+                    <span class="sr-only">Retour aux programmes</span>
                 </a>
         </div>
     </div>

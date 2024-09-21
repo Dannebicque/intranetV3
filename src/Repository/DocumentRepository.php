@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/DocumentRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/07/2022 16:25
+ * @lastUpdate 18/04/2024 17:54
  */
 
 namespace App\Repository;
@@ -14,7 +14,7 @@ use App\Entity\Departement;
 use App\Entity\Document;
 use App\Entity\TypeDocument;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Collections\Criteria;
+use Doctrine\Common\Collections\Order;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -39,7 +39,7 @@ class DocumentRepository extends ServiceEntityRepository
         $query = $this->createQueryBuilder('d')
             ->where('d.typeDocument = :type')
             ->setParameter('type', $type)
-            ->orderBy('d.libelle', Criteria::DESC);
+            ->orderBy('d.libelle', Order::Descending->value);
 
         if (true === $isEtudiant) {
             $query->andWhere('d.typeDestinataire = :typeDestinataire')
@@ -56,7 +56,7 @@ class DocumentRepository extends ServiceEntityRepository
             ->innerJoin(TypeDocument::class, 't', 'WITH', 'd.typeDocument = t.id')
             ->where('t.departement = :departement')
             ->setParameter('departement', $departement->getId())
-            ->orderBy('d.libelle', Criteria::ASC)
+            ->orderBy('d.libelle', Order::Ascending->value)
             ->getQuery()
             ->getResult();
     }
@@ -66,7 +66,7 @@ class DocumentRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('d')
             ->innerJoin(TypeDocument::class, 't', 'WITH', 'd.typeDocument = t.id')
             ->where('t.originaux = 1')
-            ->orderBy('d.libelle', Criteria::ASC)
+            ->orderBy('d.libelle', Order::Ascending->value)
             ->getQuery()
             ->getResult();
     }
@@ -81,7 +81,7 @@ class DocumentRepository extends ServiceEntityRepository
             ->andWhere('d.libelle LIKE :needle')
             ->setParameter('needle', '%'.$needle.'%')
             ->setParameter('departement', $departement->getId())
-            ->orderBy('d.libelle', Criteria::ASC)
+            ->orderBy('d.libelle', Order::Ascending->value)
             ->getQuery()
             ->getResult();
     }

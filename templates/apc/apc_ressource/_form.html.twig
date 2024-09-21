@@ -27,14 +27,17 @@
         {{ form_row(form.tpFormation) }}
     </div>
 
-    <div class="col-sm-4">
+    <div class="col-sm-3">
         {{ form_row(form.suspendu) }}
     </div>
-    <div class="col-sm-4">
+    <div class="col-sm-3">
         {{ form_row(form.mutualisee) }}
     </div>
-    <div class="col-sm-4">
+    <div class="col-sm-3">
         {{ form_row(form.ressourceParent) }}
+    </div>
+    <div class="col-sm-3">
+        {{ form_row(form.hasCoefficientDifferent) }}
     </div>
 
     <div class="col-sm-12">
@@ -47,7 +50,7 @@
         {{ form_row(form.motsCles) }}
     </div>
     <div class="col-sm-12">
-        {{ form_row(form.semestre) }}
+        {{ form_row(form.semestres) }}
         {{ form_row(form.competences) }}
         <fieldset class="form-group">
             <legend class="col-form-label required">

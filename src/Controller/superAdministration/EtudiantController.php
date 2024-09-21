@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/superAdministration/EtudiantController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 18:39
+ * @lastUpdate 25/04/2024 06:28
  */
 
 namespace App\Controller\superAdministration;
@@ -75,7 +75,7 @@ class EtudiantController extends BaseController
                 'attr' => [
                     'data-provide' => 'validation',
                 ],
-                'departement' => $this->dataUserSession->getDepartement(),
+                'departement' => $this->getDepartement(),
             ]
         );
 

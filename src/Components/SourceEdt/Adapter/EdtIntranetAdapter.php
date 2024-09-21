@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/SourceEdt/Adapter/EdtIntranetAdapter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/02/2024 08:59
+ * @lastUpdate 18/09/2024 19:07
  */
 
 namespace App\Components\SourceEdt\Adapter;
@@ -18,6 +18,10 @@ use Carbon\Carbon;
 
 class EdtIntranetAdapter extends AbstractEdtAdapter implements EdtAdapterInterface
 {
+    public function __construct()
+    {
+    }
+
     public function collection(array $events, array $matieres, array $groupes): EvenementEdtCollection
     {
         $collection = new EvenementEdtCollection();
@@ -32,14 +36,11 @@ class EdtIntranetAdapter extends AbstractEdtAdapter implements EdtAdapterInterfa
     public function single(mixed $evt, array $matieres = [], array $groupes = []): ?EvenementEdt
     {
         $event = new EvenementEdt();
-
         if (array_key_exists($evt->getTypeIdMatiere(), $matieres)) {
-
             $matiere = $matieres[$evt->getTypeIdMatiere()];
-
-            $event->matiere = $matiere->display;
-            $event->code_matiere = $matiere->codeMatiere;
-            $event->semestre = $matiere->getSemestres()->first();
+            $event->matiere = $matiere->display ?? $matiere->getDisplay();
+            $event->code_matiere = $matiere->codeMatiere ?? $matiere->getCodeMatiere();
+            $event->semestre = $evt->getSemestre() ?? $matiere->getSemestres()->first() ?? $matiere->getSemestre();
             $event->couleur = $event->semestre->getAnnee()?->getCouleur();
         } elseif ($evt->getTexte() === null) {
             $event->matiere = 'Inconnue';
@@ -57,22 +58,37 @@ class EdtIntranetAdapter extends AbstractEdtAdapter implements EdtAdapterInterfa
         $event->heureFin = Carbon::createFromTimeString($evt->getFinTexte());
         $event->typeIdMatiere = $evt->getTypeIdMatiere();
         $event->texte = $evt->getTexte();
-
         $event->salle = $evt->getSalle();
         $event->dateObjet = $evt->getDate();
         $event->gridStart = Constantes::TAB_HEURES_EDT_2[$evt->getDebut() - 1][0];
         $event->gridEnd = Constantes::TAB_HEURES_EDT_2[$evt->getFin() - 1][0];
         $event->ordreGroupe = $evt->getGroupe();
+        $event->type_cours = $evt->getType();
 
-        if (array_key_exists($evt->getGroupe(), $groupes)) {
-            $event->groupeId = $groupes[$evt->getGroupe()]->getId();
-            $event->groupeObjet = $groupes[$evt->getGroupe()];
+        // Le tableau $groupes doit avoir le format suivant:
+        // $groupes = [
+        //     'CM' => [
+        //         1 => $groupe1,
+        //         2 => $groupe2,
+        //         ...
+        //     ],
+        //     'TD' => [
+        //         1 => $groupe1,
+        //         2 => $groupe2,
+        //         ...
+        //     ],
+        //     ...] -> s'en assurer grâce à transformeGroupes dans EdtIntranet qui récupère la liste de tous les groupes du semestre et construit ce tableau
+
+
+        if (array_key_exists($evt->getType(), $groupes) && array_key_exists($evt->getGroupe(), $groupes[$evt->getType()])) {
+            $event->groupeId = $groupes[$evt->getType()][$evt->getGroupe()]->getId();
+            $event->groupeObjet = $groupes[$evt->getType()][$evt->getGroupe()];
         }
 
         $event->personnel = null !== $evt->getIntervenant() ? $evt->getIntervenant()->getDisplayPr() : '-';
         $event->personnelObjet = $evt->getIntervenant();
         $event->groupe = $evt->getDisplayGroupe();
-        $event->type_cours = $evt->getType();
+
         $event->duree = $evt->getFin() - $evt->getDebut();
         $event->idEduSign = $evt->getIdEduSign();
 

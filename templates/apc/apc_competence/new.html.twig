@@ -29,16 +29,10 @@
     </div>
 {% endblock %}
 
-{% block stylesheets %}
-    {{ parent() }}
-    {{ encore_entry_link_tags('apc') }}
-{% endblock %}
-
 {% block javascripts %}
     <script>
       let sae = null
       let ressource = null
     </script>
     {{ parent() }}
-    {{ encore_entry_script_tags('apc') }}
 {% endblock %}

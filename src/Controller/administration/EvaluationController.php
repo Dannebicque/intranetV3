@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EvaluationController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/03/2024 16:30
+ * @lastUpdate 25/04/2024 06:24
  */
 
 namespace App\Controller\administration;
@@ -87,7 +87,7 @@ class EvaluationController extends BaseController
             EvaluationType::class,
             $evaluation,
             [
-                'departement' => $this->dataUserSession->getDepartement(),
+                'departement' => $this->getDepartement(),
                 'semestre' => $semestre,
                 'matiereDisabled' => true,
                 'personnelDisabled' => false,

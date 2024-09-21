@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Form/ApcRessourceType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/09/2022 15:08
+ * @lastUpdate 13/09/2024 10:17
  */
 
 namespace App\Form;
@@ -36,8 +36,9 @@ class ApcRessourceType extends AbstractType
         $builder
             ->add('ressourceParent', YesNoType::class, ['label' => 'label.ressourceParent', 'help' => 'help.ressourceParent'])
             ->add('mutualisee', YesNoType::class, ['label' => 'label.mutualisee'])
-            ->add('codeMatiere', TextType::class, ['label' => 'label.codeRessource'])
-            ->add('codeElement', TextType::class, ['label' => 'label.code_element'])
+            ->add('codeMatiere', TextType::class, ['label' => 'label.codeRessource', 'attr' => ['maxlength' => 20], 'help' => 'Code de la Ressource. Maximum 20 caractères'])
+            ->add('codeElement', TextType::class, ['label' => 'label.code_element', 'attr' => ['maxlength' => 20]])
+            ->add('hasCoefficientDifferent', YesNoType::class, ['label' => 'Coefficient(s) différent(s) selon les parcours ', 'help' => 'Possibilité de différencier les coefficients sur les UE selon les parcours. Implique de saisir les coefficients sur tous les parcours où la ressource est utilisée.'])
             ->add('libelle', TextType::class, ['label' => 'label.libelle'])
             ->add('libelleCourt', TextType::class, ['label' => 'label.libelle.court', 'attr' => ['maxlength' => 25]])
             ->add('preRequis', TextareaType::class,
@@ -60,15 +61,17 @@ class ApcRessourceType extends AbstractType
             ->add('cmFormation', TextType::class, ['label' => 'label.cm_formation'])
             ->add('tdFormation', TextType::class, ['label' => 'label.td_formation'])
             ->add('tpFormation', TextType::class, ['label' => 'label.tp_formation'])
-            ->add('semestre', EntityType::class, [
+            ->add('semestres', EntityType::class, [
                 'class' => Semestre::class,
-                'data' => $this->semestre,
                 'required' => true,
                 'choice_label' => 'display',
                 'query_builder' => fn (SemestreRepository $semestreRepository) => $semestreRepository->findAllSemestreByDiplomeApcBuilder($this->diplome),
                 'label' => 'label.semestre',
+                'choice_attr' => function (Semestre $semestre) {
+                    return ['data-ordre' => $semestre->getOrdreLmd()];
+                },
                 'expanded' => true,
-                'mapped' => false,
+                'multiple' => true,
                 'attr' => ['data-action' => 'change->apc-ressource-form#changeSemestre'],
             ])
             ->add('competences', EntityType::class, [

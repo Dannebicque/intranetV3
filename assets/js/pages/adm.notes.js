@@ -1,11 +1,11 @@
-// Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/Sites/intranetV3/assets/js/pages/adm.notes.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 14/01/2023 14:41
+// @lastUpdate 10/04/2024 14:45
 import $ from 'jquery'
-import { addCallout } from '../util'
 import Routing from 'fos-router'
+import { addCallout } from '../util'
 
 $(document).on('click', '.optAfficher', function () {
   const evaluation = $(this).data('id')
@@ -66,14 +66,23 @@ $(document).on('click', '.optVerrouiller', function () {
 
 $(document).on('click', '#voirDetailAbsent', (e) => {
   e.preventDefault()
-  $('#detailIncoherent').hide()
-  $('#detailAbsent').toggle()
+  $('#detailIncoherent').addClass('d-none')
+  $('#detailAbsent').removeClass('d-none')
 })
+
+// document.addEventListener('DOMContentLoaded', () => {
+//   document.getElementById('voirDetailAbsent').addEventListener('click', (e) => {
+//     e.preventDefault();
+//     document.querySelector('#detailIncoherent').style.display = 'none';
+//     const detailAbsent = document.querySelector('#detailAbsent');
+//     detailAbsent.style.display = (detailAbsent.style.display === 'none') ? 'block' : 'none';
+//   })
+// });
 
 $(document).on('click', '#voirDetailIncoherent', (e) => {
   e.preventDefault()
-  $('#detailIncoherent').toggle()
-  $('#detailAbsent').hide()
+  $('#detailIncoherent').removeClass('d-none')
+  $('#detailAbsent').addClass('d-none')
 })
 
 $(document).on('click', '.remplacerParZero', function (e) {
@@ -100,7 +109,7 @@ $(document).on('click', '#supprAbsent', function (e) {
 })
 
 let matiereHide = false
-$(document).on('click', '#masquerRessourcesSaes', function (e) {
+$(document).on('click', '#masquerRessourcesSaes', (e) => {
   if (matiereHide) {
     $('.matiere').show()
     matiereHide = false

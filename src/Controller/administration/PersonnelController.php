@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/PersonnelController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/03/2024 16:31
+ * @lastUpdate 25/04/2024 06:26
  */
 
 namespace App\Controller\administration;
 
+use App\Classes\JsonReponse;
 use App\Classes\MyExport;
 use App\Classes\MySerializer;
 use App\Controller\BaseController;
@@ -63,7 +64,7 @@ class PersonnelController extends BaseController
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
 
-        $personnels = $personnelRepository->findByDepartement($this->dataUserSession->getDepartement());
+        $personnels = $personnelRepository->findByDepartement($this->getDepartement());
 
         $data = $mySerializer->getDataFromSerialization(
             $personnels,
@@ -111,7 +112,7 @@ class PersonnelController extends BaseController
             $personnel->setAnneeUniversitaire($this->getAnneeUniversitaire());
             $this->entityManager->persist($personnel);
 
-            $personnelDepartement = new PersonnelDepartement($personnel, $this->dataUserSession->getDepartement());
+            $personnelDepartement = new PersonnelDepartement($personnel, $this->getDepartement());
             $this->entityManager->persist($personnelDepartement);
             $this->entityManager->flush();
 
@@ -133,14 +134,18 @@ class PersonnelController extends BaseController
         PersonnelRepository $personnelRepository
     ): Response
     {
+        $search = '';
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
         if (!$request->query->has('search') || $request->query->get('search') === '') {
             $personnels = [];
         } else {
             $personnels = $personnelRepository->search($request->query->get('search'));
+            $search = $request->query->get('search');
         }
 
-        return $this->render('administration/personnel/_personnel_add.html.twig', ['personnels' => $personnels]);
+        return $this->render('administration/personnel/_personnel_add.html.twig', [
+            'personnels' => $personnels,
+            'search' => $search]);
     }
 
     #[Route(path: '/personnel/departement/add/', name: 'add_to_departement')]
@@ -153,7 +158,7 @@ class PersonnelController extends BaseController
         $slug = $request->request->get('slug');
         $this->denyAccessUnlessGranted('ROLE_PERMANENT');
         $personnel = $personnelRepository->findOneBySlug($slug);
-        $departement ??= $this->dataUserSession->getDepartement();
+        $departement ??= $this->getDepartement();
         if (null !== $personnel && null !== $departement) {
             $existe = $personnelDepartementRepository->findOneBy([
                 'departement' => $departement->getId(),
@@ -164,13 +169,13 @@ class PersonnelController extends BaseController
                 $this->entityManager->persist($pf);
                 $this->entityManager->flush();
 
-                return new Response(true, Response::HTTP_OK);
+                return JsonReponse::success('Enseignant/intervenant ajouté');
             }
 
-            return new Response('Déjà dans la base', Response::HTTP_OK);
+            return JsonReponse::success('Enseignant/intervenant déjà présent dans le département');
         }
 
-        return new Response('Erreur', Response::HTTP_INTERNAL_SERVER_ERROR);
+        return JsonReponse::error('Erreur lors de l\'ajout de l\'enseignant/intervenant : Département ou enseignant inexistant.');
     }
 
     #[Route('/{id}', name: 'show',
@@ -298,14 +303,14 @@ class PersonnelController extends BaseController
                 $pf[0]->removeRole($droit);
                 $this->entityManager->flush();
 
-                return $this->json($droit, Response::HTTP_OK);
+                return JsonReponse::success('Droits retirés');
             }
 
             // pas présent on ajoute
             $pf[0]->addRole($droit);
             $this->entityManager->flush();
 
-            return $this->json($droit, Response::HTTP_OK);
+            return JsonReponse::success('Droits ajoutés');
         }
 
         if (0 === (is_countable($pf) ? count($pf) : 0) && in_array($droit, Constantes::ROLE_LISTE, true)) {

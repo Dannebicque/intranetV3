@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Table/PersonnelTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:10
+ * @lastUpdate 13/09/2024 10:05
  */
 
 namespace App\Table;
@@ -49,7 +49,7 @@ class PersonnelTableType extends TableType
             'required' => false,
             'placeholder' => 'Filtrer par département',
         ]);
-        $builder->addFilter('type', ChoiceType::class, [
+        $builder->addFilter('statut', ChoiceType::class, [
             'choices' => [
                 'Tous' => '',
                 'Permanents' => Personnel::PERMANENT,
@@ -70,8 +70,10 @@ class PersonnelTableType extends TableType
             ['label' => 'table.nom', 'order' => 'ASC']);
         $builder->addColumn('prenom', PropertyColumnType::class,
             ['label' => 'table.prenom']);
-        $builder->addColumn('type', TypePersonnelColumnType::class,
-            ['label' => 'table.typeUser']);
+        $builder->addColumn('typeUser', TypePersonnelColumnType::class,
+            [
+                'label' => 'table.typeUser',
+            ]);
         $builder->addColumn('departements', DepartementsColumnType::class,
             [
                 'label' => 'table.departements',
@@ -158,6 +160,40 @@ class PersonnelTableType extends TableType
             $builder->addColumn('links', WidgetColumnType::class, [
                 'build' => function (WidgetBuilder $builder, Personnel $s) {
                     $builder->add('show', RowShowLinkType::class, [
+                        'route' => 'sa_rh_personnel_show',
+                        'route_params' => ['id' => $s->getId()],
+                        'target' => '_blank',
+                    ]);
+                    $builder->add('edit', RowEditLinkType::class, [
+                        'route' => 'sa_rh_personnel_edit',
+                        'route_params' => [
+                            'id' => $s->getId(),
+                        ],
+                        'target' => '_blank',
+                    ]);
+                    $builder->add('delete', RowDeleteLinkType::class, [
+                        'route' => 'sa_rh_delete_personnel',
+                        'route_params' => ['id' => $s->getId()],
+                        'attr' => [
+                            'data-csrf' => $this->csrfToken->getToken('delete' . $s->getId()),
+                        ],
+                    ]);
+                },
+            ]);
+        }
+
+        if ('administration' === $typeAccess) {
+            $builder->setLoadUrl('sa_rh_index');
+            $builder->addColumn('nbHeuresService', PropertyColumnType::class,
+                ['label' => 'table.service']);
+            $builder->addColumn('numero_harpege', PropertyColumnType::class,
+                ['label' => 'table.numero_harpege']);
+            $builder->addColumn('username', PropertyColumnType::class,
+                ['label' => 'table.username']);
+
+            $builder->addColumn('links', WidgetColumnType::class, [
+                'build' => function (WidgetBuilder $builder, Personnel $s) {
+                    $builder->add('show', RowShowLinkType::class, [
                         'route' => 'user_profil',
                         'route_params' => [
                             'slug' => $s->getSlug(),
@@ -204,13 +240,13 @@ class PersonnelTableType extends TableType
                     $qb->setParameter('droit', $formData['droit']);
                 }
 
-                if (isset($formData['type']) && '' !== $formData['type']) {
-                    if (Personnel::ADMINISTRATIF === $formData['type']) {
+                if (isset($formData['statut']) && '' !== $formData['statut']) {
+                    if (Personnel::ADMINISTRATIF === $formData['statut']) {
                         $q = 'e.statut = '.$qb->expr()->literal(Personnel::ADMINISTRATIF).' OR e.statut = '.$qb->expr()->literal(Personnel::TECHNICIEN).' OR e.statut = '.$qb->expr()->literal(Personnel::ASSISTANTE);
                         $qb->andWhere($q);
                     } else {
-                        $qb->andWhere('e.typeUser = :type');
-                        $qb->setParameter('type', $formData['type']);
+                        $qb->andWhere('e.typeUser = :statut');
+                        $qb->setParameter('statut', $formData['statut']);
                     }
                 }
             },
@@ -225,7 +261,8 @@ class PersonnelTableType extends TableType
         $resolver->setDefaults([
             'orderable' => true,
             'exportable' => true,
-            'typeAccess' => 'administratif',
+            'typeAccess' => 'administration',
+            'rh' => false,
         ]);
     }
 }

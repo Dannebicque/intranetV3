@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Form/stage/AdresseType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/12/2022 21:21
+ * @lastUpdate 08/06/2024 16:19
  */
 
 namespace App\Form\stage;
@@ -28,36 +28,37 @@ class AdresseType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        //todo: remettre disable a true et gérer pour la partie projet...
         $builder
             ->add('adresse1', TextType::class, [
                 'label' => 'Adresse (numéro, rue) * :',
-                'disabled' => true,
+                'disabled' => false,
                 'attr' => ['autocomplete' => 'off'],
                 'constraints' => [new NotBlank(message: 'Veuillez renseigner ce champ')],
             ])
             ->add('adresse2', TextType::class, [
                 'label' => 'Suite adresse (étage, bâtiment, ...) :',
-                'disabled' => true,
+                'disabled' => false,
                 'required' => false,
                 'attr' => ['autocomplete' => 'off'],
             ])
             ->add('adresse3', TextType::class, [
                 'label' => 'Complément d’adresse :',
-                'disabled' => true,
+                'disabled' => false,
                 'required' => false,
                 'attr' => ['autocomplete' => 'off'],
             ])
             ->add('code_postal', TextType::class, [
                 'label' => 'Code Postal * :',
-                'disabled' => true,
+                'disabled' => false,
                 'constraints' => [new NotBlank(message: 'Veuillez renseigner ce champ')],
                 'attr' => ['autocomplete' => 'off'],
             ])
-            ->add('ville', ChoiceType::class, [
+            ->add('ville', TextType::class, [ //todo: remettre choice
                 'label' => 'Ville * :',
-                'disabled' => true,
-                'attr' => ['autocomplete' => 'off'],
-                'constraints' => [new NotBlank(message: 'Veuillez renseigner ce champ')],
+                'disabled' => false,
+                // 'attr' => ['autocomplete' => 'off'],
+                // 'constraints' => [new NotBlank(message: 'Veuillez renseigner ce champ')],
             ])
             ->addEventListener(
                 FormEvents::PRE_SUBMIT,
@@ -67,7 +68,8 @@ class AdresseType extends AbstractType
                 FormEvents::PRE_SET_DATA,
                 [$this, 'onPreSetData']
             )
-            ->add('modif_adresse', ButtonType::class, ['label' => 'Modifier l\'adresse', 'attr' => ['class' => 'btn']]);
+            ->add('modif_adresse', ButtonType::class, ['label' => 'Modifier l\'adresse', 'attr' => ['class' => 'btn']])
+        ;
     }
 
     public function onPreSubmit(FormEvent $event): void

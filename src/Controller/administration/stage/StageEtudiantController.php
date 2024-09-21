@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/stage/StageEtudiantController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/03/2024 16:27
+ * @lastUpdate 25/04/2024 06:28
  */
 
 namespace App\Controller\administration\stage;
@@ -48,7 +48,7 @@ class StageEtudiantController extends BaseController
             'administration/stage/stage_etudiant/show.html.twig',
             [
                 'stageEtudiant' => $stageEtudiant,
-                'personnels' => $personnelRepository->findByDepartement($this->dataUserSession->getDepartement()),
+                'personnels' => $personnelRepository->findByDepartement($this->getDepartement()),
             ]
         );
     }

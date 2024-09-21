@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/TypeGroupeRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/02/2023 18:51
+ * @lastUpdate 18/04/2024 17:54
  */
 
 namespace App\Repository;
@@ -15,7 +15,7 @@ use App\Entity\Diplome;
 use App\Entity\Semestre;
 use App\Entity\TypeGroupe;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Collections\Criteria;
+use Doctrine\Common\Collections\Order;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 use function array_key_exists;
@@ -122,6 +122,6 @@ class TypeGroupeRepository extends ServiceEntityRepository
             ->andWhere('s.ordreLmd = :ordreSemestre')
             ->setParameter('diplome', $diplome->getId())
             ->setParameter('ordreSemestre', $ordreSemestre)
-            ->orderBy('t.libelle', Criteria::ASC);
+            ->orderBy('t.libelle', Order::Ascending->value);
     }
 }

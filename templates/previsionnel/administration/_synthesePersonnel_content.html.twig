@@ -21,7 +21,21 @@
             <td class="previtd">{{ previsionnel.totalTD|nombreHeure }}</td>
             <td class="previtp">{{ previsionnel.totalTP|nombreHeure }}</td>
             <td>{{ previsionnel.total|nombreHeure }}</td>
-            <td>{{ (previsionnel.total - previsionnel.nbHeuresService)|badgeDiffence }}</td>
+            <td>
+                {% if previsionnel.type == 'vacataire' %}
+                    {% if previsionnel.total > previsionnel.nbHeuresService %}
+                        <span class="badge bg-warning">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            Dépassement de {{ (previsionnel.total - previsionnel.nbHeuresService) }} heures</span>
+                    {% else %}
+                        <span class="badge bg-success">
+                            <i class="fas fa-check"></i>
+                            Peut rester {{ (previsionnel.nbHeuresService-previsionnel.total) }} heures</span>
+                    {% endif %}
+                {% else %}
+                    {{ (previsionnel.total - previsionnel.nbHeuresService)|badgeDiffence }}
+                {% endif %}
+            </td>
         </tr>
     {% endfor %}
 

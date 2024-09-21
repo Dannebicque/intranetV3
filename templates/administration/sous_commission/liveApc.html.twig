@@ -89,9 +89,18 @@ chaque UE, et pour l'année au global.
                         {% for matiere in sousCommission.matieres|filter(matiere => matiere.nbNotes!=0 and matiere
                         .suspendu == false) %}
                             <th class="matiere" rowspan="2" scope="col">
-                                {% for comp in matiere.tab_ues %}
-                                    <span class="carre-{{ comp.ue_couleur }}">&nbsp;</span>
-                                {% endfor %}
+                                {% if matiere.hasCoefficientDifferent == true %}
+                                    {% set parcours = semestre.diplome.apcParcours %}
+                                    {% for comp in matiere.tab_ues %}
+                                        {% if comp.ue_coefficients[parcours.id] is defined %}
+                                            <span class="carre-{{ comp.ue_couleur }}">&nbsp;</span>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% else %}
+                                    {% for comp in matiere.tab_ues %}
+                                        <span class="carre-{{ comp.ue_couleur }}">&nbsp;</span>
+                                    {% endfor %}
+                                {% endif %}
                             </th>
                         {% endfor %}
                         {% for u in sousCommission.ues %}
@@ -130,13 +139,13 @@ chaque UE, et pour l'année au global.
 
                         {% if semestre.isPair %}
                             {% for u in sousCommission.ues %}
-                                <th class="text-center" scope="col" colspan="2">S1</th>
-                                <th class="text-center" scope="col" colspan="2">S2</th>
+                                <th class="text-center" scope="col" colspan="2">S{{ semestre.ordreLmd-1 }}</th>
+                                <th class="text-center" scope="col" colspan="2">S{{ semestre.ordreLmd }}</th>
                                 <th class="text-center" scope="col" colspan="2">Année</th>
                             {% endfor %}
 
-                            <th class="text-center" scope="col">S1</th>
-                            <th class="text-center" scope="col">S2</th>
+                            <th class="text-center" scope="col">S{{ semestre.ordreLmd-1 }}</th>
+                            <th class="text-center" scope="col">S{{ semestre.ordreLmd }}</th>
                             <th class="text-center" scope="col">Année</th>
                             <th class="text-center" scope="col">Prop.</th>
                         {% endif %}

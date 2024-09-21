@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/projet/ProjetPeriodeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:17
+ * @lastUpdate 25/04/2024 06:26
  */
 
 namespace App\Controller\administration\projet;
@@ -67,7 +67,7 @@ class ProjetPeriodeController extends BaseController
         $projetPeriode = new ProjetPeriode();
         $projetPeriode->setAnneeUniversitaire($this->dataUserSession->getAnneeUniversitaire());
         $form = $this->createForm(ProjetPeriodeType::class, $projetPeriode, [
-            'departement' => $this->dataUserSession->getDepartement(),
+            'departement' => $this->getDepartement(),
             'attr' => [
                 'data-provide' => 'validation',
             ],
@@ -104,7 +104,7 @@ class ProjetPeriodeController extends BaseController
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_PROJET', $projetPeriode->getSemestre());
         $form = $this->createForm(ProjetPeriodeType::class, $projetPeriode, [
-            'departement' => $this->dataUserSession->getDepartement(),
+            'departement' => $this->getDepartement(),
             'attr' => [
                 'data-provide' => 'validation',
             ],

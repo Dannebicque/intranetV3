@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/HrsController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:17
+ * @lastUpdate 11/09/2024 20:34
  */
 
 namespace App\Controller\administration;
@@ -94,20 +94,45 @@ class HrsController extends BaseController
 
     #[Route(path: '/new', name: 'administration_hrs_new', methods: 'GET|POST')]
     public function new(
+        TypeHrsRepository  $typeHrsRepository,
+        SemestreRepository $semestreRepository,
+        DiplomeRepository  $diplomeRepository,
         PersonnelRepository $personnelRepository,
         Request             $request): Response
     {
 
         $personnel = $personnelRepository->find($request->request->get('personnel'));
-        $annee = $request->request->get('annee');
-
         if ($personnel === null) {
             throw new PersonnelNotFoundException();
         }
 
-        $hrs = new Hrs($this->getDepartement(), $annee);
+        if ($request->request->has('semestre') && null !== $request->request->get('semestre')) {
+            $semestre = $semestreRepository->find($request->request->get('semestre'));
+        } else {
+            $semestre = null;
+        }
+
+        if ($request->request->has('diplome') && null !== $request->request->get('diplome')) {
+            $diplome = $diplomeRepository->find($request->request->get('diplome'));
+        } else {
+            $diplome = null;
+        }
+
+        if ($request->request->has('typeHrs') && null !== $request->request->get('typeHrs')) {
+            $typeHrs = $typeHrsRepository->find($request->request->get('typeHrs'));
+        } else {
+            $typeHrs = null;
+        }
+
+        $annee = $request->request->get('annee', date('Y'));
+
+        $hrs = new Hrs($this->getDepartement(), (int)$annee);
         $hrs->setPersonnel($personnel);
-        $hrs->setLibelle('A définir');
+        $hrs->setLibelle($request->request->get('libelle', 'A définir'));
+        $hrs->setSemestre($semestre);
+        $hrs->setDiplome($diplome);
+        $hrs->setTypeHrs($typeHrs);
+        $hrs->setNbHeuresTd(Tools::convertToFloat($request->request->get('nbHeuresTd', 0)));
         $this->entityManager->persist($hrs);
         $this->entityManager->flush();
 

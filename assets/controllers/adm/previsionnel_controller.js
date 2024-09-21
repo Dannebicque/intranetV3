@@ -1,8 +1,8 @@
-// Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/Sites/intranetV3/assets/controllers/adm/previsionnel_controller.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 11/09/2023 21:21
+// @lastUpdate 17/09/2024 10:21
 
 import { Controller } from '@hotwired/stimulus'
 import { addCallout } from '../../js/util'
@@ -19,6 +19,8 @@ export default class extends Controller {
     urlAddMatiere: String,
     urlAddPrime: String,
     urlChangeSynthesePersonnel: String,
+    urlChangeSyntheseSemestre: String,
+    urlChangeSyntheseHrs: String,
   }
 
   connect() {
@@ -37,7 +39,7 @@ export default class extends Controller {
     await fetch(`${this.urlValue}?${params.toString()}`, {}).then((response) => response.text()).then((html) => {
       this.contentTarget.innerHTML = html
     }).then(() => {
-      if (type === 'synthese-personnel') {
+      if (type === 'synthese-personnel' || type === 'synthese-hrs') {
         this._loadContent(type, { annee: document.getElementById('previ_annee_previsionnel').value })
       }
     })
@@ -49,14 +51,58 @@ export default class extends Controller {
     body.append('valeur', e.currentTarget.value)
 
     const { type } = e.params
-
+    const elt = e.currentTarget
     await fetch(e.params.url, {
       method: 'POST',
       body,
     }).then(() => {
       addCallout('Donnée modifiée', 'success')
-      this._loadContent(type, e.params)
+      this._update(type, elt)
     })
+  }
+
+  _update(type, e) {
+    if (type === 'personnel') {
+      this._updateHeures(e)
+    } else if (type === 'semestre') {
+      // mise à jour des heures
+      // récupèrer l'id de l'élément et mettre à jour les heures
+      this._updateHeures(e)
+    } else if (type === 'matiere') {
+      this._updateHeures(e)
+    } else if (type === 'synthese-personnel') {
+
+    } else if (type === 'synthese-semestre') {
+
+    } else if (type === 'synthese-hrs') {
+
+    } else {
+      addCallout('Type de prévisionnel inconnu', 'danger')
+      return false
+    }
+  }
+
+  _updateHeures(e) {
+    const { id } = e
+    // récupérer le chiffre après le dernier _
+    const index = id.lastIndexOf('_')
+    const idMatiere = id.substring(index + 1)
+
+    const nbHeuresCm = document.getElementById(`cm_${idMatiere}`).value
+    const nbHeuresTd = document.getElementById(`td_${idMatiere}`).value
+    const nbHeuresTp = document.getElementById(`tp_${idMatiere}`).value
+    const nbGrCm = document.getElementById(`gr_cm_${idMatiere}`).value
+    const nbGrTd = document.getElementById(`gr_td_${idMatiere}`).value
+    const nbGrTp = document.getElementById(`gr_tp_${idMatiere}`).value
+
+    // séances / groupe
+    const nbSeancesCm = document.getElementById(`ind_cm_${idMatiere}`)
+    const nbSeancesTd = document.getElementById(`ind_td_${idMatiere}`)
+    const nbSeancesTp = document.getElementById(`ind_tp_${idMatiere}`)
+
+    nbSeancesCm.innerText = parseFloat(nbHeuresCm) * parseFloat(nbGrCm)
+    nbSeancesTd.innerText = parseFloat(nbHeuresTd) * parseFloat(nbGrTd)
+    nbSeancesTp.innerText = parseFloat(nbHeuresTp) * parseFloat(nbGrTp)
   }
 
   actualiser(e) {
@@ -81,12 +127,23 @@ export default class extends Controller {
       params = {
         annee: document.getElementById('previ_annee_previsionnel').value,
       }
+    } else if (type === 'synthese-semestre') {
+      params = {
+        semestre: document.getElementById('previ_semestre').value,
+        annee: document.getElementById('previ_annee_previsionnel').value,
+      }
+    } else if (type === 'synthese-hrs') {
+      params = {
+        annee: document.getElementById('previ_annee_previsionnel').value,
+      }
     } else {
       addCallout('Type de prévisionnel inconnu', 'danger')
       return false
     }
     addCallout('Donnée actualisée', 'success')
     this._loadContent(type, params)
+
+    return true
   }
 
   async changePrime(e) {
@@ -99,7 +156,26 @@ export default class extends Controller {
       body,
     }).then(() => {
       addCallout('Donnée modifiée', 'success')
-      this._loadContent('personnel', e.params)
+      if (e.params.field === 'nbHeuresTd') {
+        document.getElementById('alertPreviHeure').classList.remove('d-none')
+      }
+    })
+  }
+
+  async changeSyntheseHrs(e) {
+    const body = new FormData()
+    body.append('field', e.params.field)
+    body.append('valeur', e.currentTarget.value)
+
+    await fetch(e.params.url, {
+      method: 'POST',
+      body,
+    }).then(() => {
+      addCallout('Donnée modifiée', 'success')
+      if (e.params.field === 'nbHeuresTd') {
+        document.getElementById('alertPreviHeure').classList.remove('d-none')
+      }
+      // this._loadContent('synthese-hrs', e.params)
     })
   }
 
@@ -107,19 +183,23 @@ export default class extends Controller {
     const body = new FormData()
     body.append('valeur', e.currentTarget.value)
 
-    const { matiere } = e.params
-    const { annee } = e.params
-    const params = new URLSearchParams({
-      annee,
-      matiere,
-    })
-
     await fetch(e.params.url, {
       method: 'POST',
       body,
     }).then(() => {
       addCallout('Intervenant modifié', 'success')
-      this._updateMatiere(params)
+    })
+  }
+
+  async changeMatiere(e) {
+    const body = new FormData()
+    body.append('valeur', e.currentTarget.value)
+
+    await fetch(e.params.url, {
+      method: 'POST',
+      body,
+    }).then(() => {
+      addCallout('Matière, ressource ou SAE modifiée', 'success')
     })
   }
 
@@ -127,7 +207,6 @@ export default class extends Controller {
     e.preventDefault()
     if (confirm('Etes vous sur de vouloir supprimer cet intervenant du prévisionnel')) { // todo: utiliser swal ? Si pas de jquery dedans
       // body avec le CSRF
-      console.log(e.currentTarget.dataset.csrf)
       const { type } = e.params
 
       await fetch(e.currentTarget.href, {
@@ -154,7 +233,11 @@ export default class extends Controller {
         },
       }).then(() => {
         addCallout('Prime supprimée', 'success')
-        this._loadContent('personnel', e.params)
+        if (e.params.source === 'personnel') {
+          this._loadContent('personnel', e.params)
+        } else {
+          this._loadContent('synthese-hrs', e.params)
+        }
       })
     }
   }
@@ -205,6 +288,60 @@ export default class extends Controller {
     }
   }
 
+  async ajoutMatiere(e) {
+    const matiere = document.getElementById('addMatiere').value
+    if (matiere !== '') {
+      // fetch pour l'ajouter et refresh
+      const { personnel } = e.params
+      const { annee } = e.params
+
+      const body = new FormData()
+      body.append('matiere', matiere)
+      body.append('annee', annee)
+      body.append('intervenant', personnel)
+
+      await fetch(this.urlAddMatiereValue, {
+        method: 'POST',
+        body,
+      })
+      const params = new URLSearchParams({
+        annee,
+        personnel,
+      })
+      this._updatePersonnel(params)
+    } else {
+      alert('Veuillez sélectionner une matière')
+    }
+  }
+
+  async ajoutMatierePersonnel(e) {
+    const matiere = document.getElementById('addMatiere').value
+    const intervenant = document.getElementById('addPersonnel').value
+    if (matiere !== '' && intervenant !== '') {
+      // fetch pour l'ajouter et refresh
+      const { annee } = e.params
+      const { semestre } = e.params
+
+      const body = new FormData()
+      body.append('matiere', matiere)
+      body.append('annee', annee)
+      body.append('semestre', semestre)
+      body.append('intervenant', intervenant)
+
+      await fetch(this.urlAddMatiereValue, {
+        method: 'POST',
+        body,
+      })
+      const params = new URLSearchParams({
+        annee,
+        semestre,
+      })
+      this._updateSemestre(params)
+    } else {
+      alert('Veuillez sélectionner une matière et un intervenant')
+    }
+  }
+
   async ajoutPrime(e) {
     // fetch pour l'ajouter et refresh
     const { personnel } = e.params
@@ -225,13 +362,43 @@ export default class extends Controller {
     await this._updatePersonnel(params)
   }
 
+  async ajoutPrimeSynthese(e) {
+    // fetch pour l'ajouter et refresh
+    const personnel = document.getElementById('addPersonnel').value
+    const annee = document.getElementById('previ_annee_previsionnel').value
+
+    if (personnel === '' || annee === '') {
+      addCallout('Veuillez sélectionner un personnel et une année', 'danger')
+      return false
+    }
+
+    const body = new FormData()
+    body.append('personnel', personnel)
+    body.append('annee', annee)
+    body.append('typeHrs', document.getElementById('prime_new').value)
+    body.append('libelle', document.getElementById('libelle_new').value)
+    body.append('semestre', document.getElementById('semestre_new').value)
+    body.append('diplome', document.getElementById('diplome_new').value)
+    body.append('nbHeuresTd', document.getElementById('heures_new').value)
+
+    await fetch(this.urlAddPrimeValue, {
+      method: 'POST',
+      body,
+    })
+    const params = new URLSearchParams({
+      annee,
+      personnel,
+    })
+    await this._updateSyntheseHrs(params)
+  }
+
   async changeShowMatiere(e) {
     const params = new URLSearchParams({
       matiere: e.target.value,
       annee: document.getElementById('previ_annee_previsionnel').value,
     })
 
-    this._updateMatiere(params)
+    await this._updateMatiere(params)
   }
 
   async changeShowSemestre(e) {
@@ -240,7 +407,7 @@ export default class extends Controller {
       annee: document.getElementById('previ_annee_previsionnel').value,
     })
 
-    this._updateSemestre(params)
+    await this._updateSemestre(params)
   }
 
   async changeShowPersonnel(e) {
@@ -249,7 +416,7 @@ export default class extends Controller {
       annee: document.getElementById('previ_annee_previsionnel').value,
     })
 
-    this._updatePersonnel(params)
+    await this._updatePersonnel(params)
   }
 
   async changeAnneePersonnel(e) {
@@ -258,7 +425,7 @@ export default class extends Controller {
       personnel: document.getElementById('previ_personnel').value,
     })
 
-    this._updatePersonnel(params)
+    await this._updatePersonnel(params)
   }
 
   async changeAnneeMatiere(e) {
@@ -267,7 +434,7 @@ export default class extends Controller {
       matiere: document.getElementById('previ_matiere').value,
     })
 
-    this._updateMatiere(params)
+    await this._updateMatiere(params)
   }
 
   async changeAnneeSemestre(e) {
@@ -276,7 +443,7 @@ export default class extends Controller {
       semestre: document.getElementById('previ_semestre').value,
     })
 
-    this._updateSemestre(params)
+    await this._updateSemestre(params)
   }
 
   async changeAnneeSynthesePersonnel(e) {
@@ -285,6 +452,24 @@ export default class extends Controller {
     })
 
     this._updateSynthesePersonnel(params)
+  }
+
+  async changeAnneeSyntheseSemestre(e) {
+    const params = new URLSearchParams({
+      annee: e.target.value,
+      semestre: document.getElementById('previ_semestre').value,
+    })
+
+    this._updateSyntheseSemestre(params)
+  }
+
+  async changeSemestreSyntheseSemestre(e) {
+    const params = new URLSearchParams({
+      semestre: e.target.value,
+      annee: document.getElementById('previ_annee_previsionnel').value,
+    })
+
+    this._updateSyntheseSemestre(params)
   }
 
   async _updateMatiere(params) {
@@ -297,6 +482,20 @@ export default class extends Controller {
   async _updateSynthesePersonnel(params) {
     this.contentAddTarget.innerHTML = window.da.loaderStimulus
     await fetch(`${this.urlChangeSynthesePersonnelValue}?${params.toString()}`, {}).then((response) => response.text()).then((html) => {
+      this.contentAddTarget.innerHTML = html !== 'false' ? html : ''
+    })
+  }
+
+  async _updateSyntheseSemestre(params) {
+    this.contentAddTarget.innerHTML = window.da.loaderStimulus
+    await fetch(`${this.urlChangeSyntheseSemestreValue}?${params.toString()}`, {}).then((response) => response.text()).then((html) => {
+      this.contentAddTarget.innerHTML = html !== 'false' ? html : ''
+    })
+  }
+
+  async _updateSyntheseHrs(params) {
+    this.contentAddTarget.innerHTML = window.da.loaderStimulus
+    await fetch(`${this.urlChangeSyntheseHrsValue}?${params.toString()}`, {}).then((response) => response.text()).then((html) => {
       this.contentAddTarget.innerHTML = html !== 'false' ? html : ''
     })
   }
@@ -344,6 +543,20 @@ export default class extends Controller {
         personnel,
       })
       this._updatePersonnel(params)
+    } else if (type === 'synthese-semestre') {
+      const { semestre } = eparams
+      const { annee } = eparams
+
+      if (semestre === '' || annee === '') {
+        addCallout('Veuillez sélectionner un semestre et une année', 'danger')
+        return false
+      }
+
+      const params = new URLSearchParams({
+        annee,
+        semestre,
+      })
+      this._updateSyntheseSemestre(params)
     } else if (type === 'synthese-personnel') {
       const { annee } = eparams
 
@@ -370,6 +583,18 @@ export default class extends Controller {
         semestre,
       })
       this._updateSemestre(params)
+    } else if (type === 'synthese-hrs') {
+      const { annee } = eparams
+
+      if (annee === '') {
+        addCallout('Veuillez sélectionner une année', 'danger')
+        return false
+      }
+
+      const params = new URLSearchParams({
+        annee,
+      })
+      this._updateSyntheseHrs(params)
     } else {
       addCallout('Type de prévisionnel inconnu', 'danger')
     }

@@ -1,4 +1,11 @@
 <?php
+/*
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/QuestChoixEtudiantRepository.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 18/04/2024 17:52
+ */
 
 namespace App\Repository;
 
@@ -6,6 +13,7 @@ use App\Entity\Etudiant;
 use App\Entity\QuestChoixEtudiant;
 use App\Entity\QuestQuestionnaire;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Order;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -47,8 +55,8 @@ class QuestChoixEtudiantRepository extends ServiceEntityRepository
             ->innerJoin(Etudiant::class, 'e', 'WITH', 'q.etudiant = e.id')
             ->where('q.questionnaire = :questionnaire')
             ->setParameter('questionnaire', $questionnaire)
-            ->orderBy('e.nom', 'ASC')
-            ->addOrderBy('e.prenom', 'ASC')
+            ->orderBy('e.nom', Order::Ascending->value)
+            ->addOrderBy('e.prenom', Order::Ascending->value)
             ->getQuery()
             ->getResult();
     }

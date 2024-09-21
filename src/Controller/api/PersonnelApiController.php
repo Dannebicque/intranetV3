@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/api/PersonnelApiController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:17
+ * @lastUpdate 25/04/2024 06:28
  */
 
 namespace App\Controller\api;
@@ -110,7 +110,7 @@ class PersonnelApiController extends BaseController
     {
         $this->denyAccessUnlessGranted('ROLE_PERMANENT');
         $personnel = $this->personnelRepository->findOneBySlug($slug);
-        $departement ??= $this->dataUserSession->getDepartement();
+        $departement ??= $this->getDepartement();
         if (null !== $personnel && null !== $departement) {
             $existe = $personnelDepartementRepository->findOneBy([
                 'departement' => $departement->getId(),

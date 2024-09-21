@@ -77,6 +77,10 @@
                             Enfant de : {{ matiere.parent.codeMatiere }}
                             </span>
                         {% endif %}
+                            {% if matiere.hasCoefficientDifferent == true %}
+                                <i class="fas fa-exclamation-circle" title="Coefficient différents selon les parcours"
+                                   data-bs-toggle="tooltip" data-bs-placement="bottom"></i>
+                            {% endif %}
                         </td>
                         <td>{{ matiere.coefficient }}</td>
                         <td>{{ matiere.nbNotes }}</td>

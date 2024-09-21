@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/DateRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 10:52
+ * @lastUpdate 18/04/2024 17:55
  */
 
 namespace App\Repository;
@@ -15,14 +15,14 @@ use App\Entity\Date;
 use App\Entity\Departement;
 use App\Entity\Diplome;
 use App\Entity\Etudiant;
-use function array_key_exists;
 use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Collections\Criteria;
+use Doctrine\Common\Collections\Order;
 use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 use Exception;
+use function array_key_exists;
 
 /**
  * @method Date|null find($id, $lockMode = null, $lockVersion = null)
@@ -46,7 +46,7 @@ class DateRepository extends ServiceEntityRepository
         $query = $this->createQueryBuilder('d')
             ->where('d.departement = :departement')
             ->setParameter('departement', $departement->getId())
-            ->orderBy('d.dateDebut', Criteria::DESC);
+            ->orderBy('d.dateDebut', Order::Descending->value);
         if (0 !== $nbResult) {
             $query->setMaxResults($nbResult);
         }
@@ -89,7 +89,7 @@ class DateRepository extends ServiceEntityRepository
             ->setParameter('departement', $departement)
             ->setParameter('datedebut', $datedebut)
             ->setParameter('datefin', $datefin)
-            ->orderBy('d.dateDebut', Criteria::ASC);
+            ->orderBy('d.dateDebut', Order::Ascending->value);
 
         if (true === $isEtudiant) {
             $query->andWhere('d.typeDestinataire = :typeDestinataire')
@@ -124,7 +124,7 @@ class DateRepository extends ServiceEntityRepository
             ->andWhere('d.typeDestinataire = :typeDestinataire')
             ->setParameter('semestre', $etudiant->getSemestre()?->getId())
             ->setParameter('typeDestinataire', Constantes::TYPE_DESTINATAIRE_ETUDIANT)
-            ->orderBy('d.dateDebut', Criteria::DESC);
+            ->orderBy('d.dateDebut', Order::Descending->value);
         if (0 !== $nbResult) {
             $query->setMaxResults($nbResult);
         }
@@ -139,7 +139,7 @@ class DateRepository extends ServiceEntityRepository
             ->andWhere('d.typeDestinataire = :typeDestinataire')
             ->setParameter('departement', $departement->getId())
             ->setParameter('typeDestinataire', Constantes::TYPE_DESTINATAIRE_PERSONNEL)
-            ->orderBy('d.dateDebut', Criteria::DESC);
+            ->orderBy('d.dateDebut', Order::Descending->value);
         if (0 !== $nbResult) {
             $query->setMaxResults($nbResult);
         }

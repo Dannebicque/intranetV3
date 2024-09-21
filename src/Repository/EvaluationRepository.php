@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/EvaluationRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/01/2024 11:54
+ * @lastUpdate 18/04/2024 17:54
  */
 
 namespace App\Repository;
@@ -16,7 +16,7 @@ use App\Entity\Diplome;
 use App\Entity\Evaluation;
 use App\Entity\Semestre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Collections\Criteria;
+use Doctrine\Common\Collections\Order;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -44,7 +44,7 @@ class EvaluationRepository extends ServiceEntityRepository
             ->andWhere('e.semestre = :semestre')
             ->setParameter('annee', $annee->getAnnee())
             ->setParameter('semestre', $semestre->getId())
-            ->orderBy('e.dateEvaluation', Criteria::ASC)
+            ->orderBy('e.dateEvaluation', Order::Ascending->value)
             ->getQuery()
             ->getResult();
     }
@@ -62,7 +62,7 @@ class EvaluationRepository extends ServiceEntityRepository
             ->setParameter('referentiel', $referentiel->getId())
             ->setParameter('semestre', $semestre)
             ->setParameter('annee', $annee->getId())
-            ->orderBy('e.dateEvaluation', Criteria::ASC)
+            ->orderBy('e.dateEvaluation', Order::Ascending->value)
             ->getQuery()
             ->getResult();
     }
@@ -74,7 +74,7 @@ class EvaluationRepository extends ServiceEntityRepository
             ->andWhere('e.typeMatiere = :type')
             ->setParameter('matiere', $matiere)
             ->setParameter('type', $type)
-            ->orderBy('e.dateEvaluation', Criteria::ASC);
+            ->orderBy('e.dateEvaluation', Order::Ascending->value);
 
         if (null !== $annee) {
             $query->innerJoin(AnneeUniversitaire::class, 'u', 'WITH', 'e.anneeUniversitaire = u.id')

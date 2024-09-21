@@ -1,8 +1,8 @@
-// Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/Sites/intranetV3/assets/controllers/apc-enfant_controller.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 30/06/2022 22:19
+// @lastUpdate 19/04/2024 10:36
 
 import { Controller } from '@hotwired/stimulus'
 import { post } from '../js/fetch'
@@ -37,7 +37,7 @@ export default class extends Controller {
       enfant: e.target.dataset.enfant,
     }).then(async () => {
       addCallout('success', 'Enfant supprimé')
-      this._updateContent()
+      await this._updateContent()
     }).catch(() => {
       addCallout('danger', 'Erreur lors de la suppression')
     })
@@ -64,7 +64,7 @@ export default class extends Controller {
       groupes: this._getSelectedOptions(document.getElementById('groupeAdd')),
     }).then(async () => {
       addCallout('success', 'Enfant ajouté')
-      this._updateContent()
+      await this._updateContent()
     }).catch(() => {
       addCallout('danger', 'Erreur lors de l\'ajout')
     })

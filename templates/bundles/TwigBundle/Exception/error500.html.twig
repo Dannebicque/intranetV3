@@ -30,16 +30,6 @@
             </div>
         </div>
 
-      <footer class="col-12 align-self-end text-center fs-13">
-        <p>Copyright © 2018 <a href="http://thetheme.io/theadmin" target="_blank">Template : TheAdmin</a> |
-          <a href="https://www.davidannebicque.fr" target="_blank">@DavidAnnebicque</a>.
-           All rights reserved.
-                <a class="nav-dotted" href="https://dannebicque.gitbook.io/intranet/" target="_blank">{{ 'menu.documentation'|trans }}</a>
-               |
-                <a class="" href="{{ path('mentions_about') }}">{{ 'menu.about'|trans }}</a>
-               |
-                <a class="" href="{{ path('mentions_index') }}">{{ 'menu.mentions_legales'|trans }}</a>
-            </p>
-        </footer>
+        {{ include('_footer.html.twig') }}
     </div>
 {% endblock %}

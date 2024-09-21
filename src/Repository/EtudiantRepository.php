@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/EtudiantRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 19/09/2023 20:56
+ * @lastUpdate 18/04/2024 17:54
  */
 
 namespace App\Repository;
@@ -17,7 +17,7 @@ use App\Entity\Semestre;
 use Carbon\CarbonInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\Common\Collections\Criteria;
+use Doctrine\Common\Collections\Order;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
@@ -57,8 +57,8 @@ class EtudiantRepository extends ServiceEntityRepository
             ->where('e.semestre = :semestre')
             ->andWhere('e.anneeSortie = 0')
             ->setParameter('semestre', $semestre)
-            ->orderBy('e.nom', Criteria::ASC)
-            ->addOrderBy('e.prenom', Criteria::ASC);
+            ->orderBy('e.nom', Order::Ascending->value)
+            ->addOrderBy('e.prenom', Order::Ascending->value);
     }
 
     public function findBySemestre(Semestre $semestre): array
@@ -121,8 +121,8 @@ class EtudiantRepository extends ServiceEntityRepository
             ++$i;
         }
 
-        return $query->orderBy('e.nom', Criteria::ASC)
-            ->addOrderBy('e.prenom', Criteria::ASC)
+        return $query->orderBy('e.nom', Order::Ascending->value)
+            ->addOrderBy('e.prenom', Order::Ascending->value)
             ->getQuery()
             ->getResult();
     }
@@ -139,8 +139,8 @@ class EtudiantRepository extends ServiceEntityRepository
             ->andWhere('p.departement = :departement')
             ->setParameter('needle', '%'.$needle.'%')
             ->setParameter('departement', $departement->getId())
-            ->orderBy('p.nom', Criteria::ASC)
-            ->addOrderBy('p.prenom', Criteria::ASC)
+            ->orderBy('p.nom', Order::Ascending->value)
+            ->addOrderBy('p.prenom', Order::Ascending->value)
             ->getQuery()
             ->getResult();
     }
@@ -155,8 +155,8 @@ class EtudiantRepository extends ServiceEntityRepository
             ->orWhere('p.numEtudiant LIKE :needle')
             ->orWhere('p.numIne LIKE :needle')
             ->setParameter('needle', '%'.$needle.'%')
-            ->orderBy('p.nom', Criteria::ASC)
-            ->addOrderBy('p.prenom', Criteria::ASC)
+            ->orderBy('p.nom', Order::Ascending->value)
+            ->addOrderBy('p.prenom', Order::Ascending->value)
             ->getQuery()
             ->getResult();
     }
@@ -294,8 +294,8 @@ class EtudiantRepository extends ServiceEntityRepository
             ->andWhere('s.ordreLmd = :ordreLmd')
             ->setParameter('ordreLmd', $ordreLmd)
             ->setParameter('diplome', $diplome->getid())
-            ->orderBy('e.nom', Criteria::ASC)
-            ->addOrderBy('e.prenom', Criteria::ASC)
+            ->orderBy('e.nom', Order::Ascending->value)
+            ->addOrderBy('e.prenom', Order::Ascending->value)
             ->getQuery()
             ->getResult();
     }
@@ -306,13 +306,22 @@ class EtudiantRepository extends ServiceEntityRepository
             ->innerJoin(Semestre::class, 's', 'WITH', 'e.semestre=s.id')
             ->where('s IN (:semestres)')
             ->setParameter('semestres', $semestres)
-            ->orderBy('e.nom', Criteria::ASC)
-            ->addOrderBy('e.prenom', Criteria::ASC);
+            ->orderBy('e.nom', Order::Ascending->value)
+            ->addOrderBy('e.prenom', Order::Ascending->value);
     }
 
     public function save(Etudiant $etudiant): void
     {
         $this->_em->persist($etudiant);
         $this->_em->flush();
+    }
+
+    public function findEduSignOutdated(): array
+    {
+        return $this->createQueryBuilder('e')
+            ->where('e.idEduSign IS NOT NULL')
+            ->andWhere('e.anneeSortie != 0')
+            ->getQuery()
+            ->getResult();
     }
 }

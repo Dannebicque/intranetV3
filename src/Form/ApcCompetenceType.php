@@ -1,18 +1,18 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/ApcCompetenceType.php
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Form/ApcCompetenceType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/03/2021 17:26
+ * @lastUpdate 20/04/2024 12:28
  */
 
 namespace App\Form;
 
 use App\Entity\ApcCompetence;
+use App\Form\Type\CollectionStimulusType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -35,7 +35,7 @@ class ApcCompetenceType extends AbstractType
                 ],
                 'expanded' => true,
             ])
-            ->add('apcSituationProfessionnelles', CollectionType::class, [
+            ->add('apcSituationProfessionnelles', CollectionStimulusType::class, [
                 'entry_type' => ApcSituationProfessionnelleType::class,
                 'entry_options' => ['label' => false],
                 'allow_add' => true,
@@ -48,7 +48,7 @@ class ApcCompetenceType extends AbstractType
                 ],
                 'help' => 'Ajoutez les situations professionnelles de la compétence.',
             ])
-            ->add('apcComposanteEssentielles', CollectionType::class, [
+            ->add('apcComposanteEssentielles', CollectionStimulusType::class, [
                 'entry_type' => ApcComposanteEssentielleType::class,
                 'entry_options' => ['label' => false],
                 'allow_add' => true,
@@ -61,7 +61,7 @@ class ApcCompetenceType extends AbstractType
                 ],
                 'help' => 'Ajoutez les composantes essentielles de la compétence.',
             ])
-            ->add('apcNiveaux', CollectionType::class, [
+            ->add('apcNiveaux', CollectionStimulusType::class, [
                 'entry_type' => ApcNiveauType::class,
                 'entry_options' => ['label' => false],
                 'allow_add' => true,

@@ -1,17 +1,17 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/CodeInseeRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/05/2022 14:27
+ * @lastUpdate 18/04/2024 17:54
  */
 
 namespace App\Repository;
 
 use App\Entity\CodeInsee;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Collections\Criteria;
+use Doctrine\Common\Collections\Order;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -32,7 +32,7 @@ class CodeInseeRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('c')
             ->select('c.codeInsee, c.ville')
-            ->orderBy('c.codeInsee', Criteria::ASC)
+            ->orderBy('c.codeInsee', Order::Ascending->value)
             ->getQuery()
             ->getResult();
     }

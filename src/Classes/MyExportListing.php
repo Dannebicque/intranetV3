@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MyExportListing.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/03/2024 16:30
+ * @lastUpdate 25/04/2024 06:18
  */
 
 /*
@@ -21,6 +21,7 @@ use App\Entity\Constantes;
 use App\Entity\Etudiant;
 use App\Entity\Groupe;
 use App\Entity\Personnel;
+use App\Entity\Semestre;
 use App\Entity\TypeGroupe;
 use App\Repository\GroupeRepository;
 use App\Repository\TypeGroupeRepository;
@@ -69,6 +70,7 @@ class MyExportListing
         private readonly MyExcelWriter $myExcelWriter,
         private readonly PdfManager $myPdf
     ) {
+        //todo: a tester... dataUserSession ?
         $this->base = $kernel->getProjectDir().'/';
     }
 
@@ -84,7 +86,8 @@ class MyExportListing
         ?array $exportChamps,
         mixed $exportFiltre,
         ?Matiere $matiere = null,
-        ?Personnel $personnel = null
+        ?Personnel $personnel = null,
+        ?Semestre  $semestre = null
     ): StreamedResponse|Response|null
     {
         $this->exportTypeDocument = $exportTypeDocument;
@@ -98,7 +101,12 @@ class MyExportListing
         } else {
             $this->typeGroupe = $this->typeGroupeRepository->find($exportFiltre);
             if (null !== $this->typeGroupe) {
-                $this->groupes = $this->typeGroupe->getGroupes();
+//todo: filtrer par semestre sir des parcours sont associés
+                if ($semestre !== null) {
+                    $this->groupes = GetGroupeFromSemestre::GetGroupeFromSemestre($semestre, $this->typeGroupe);
+                } else {
+                    $this->groupes = $this->typeGroupe->getGroupes();
+                }
             }
         }
 

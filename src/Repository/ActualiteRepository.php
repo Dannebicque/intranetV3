@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/ActualiteRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/05/2022 14:27
+ * @lastUpdate 18/04/2024 17:54
  */
 
 namespace App\Repository;
@@ -12,7 +12,7 @@ namespace App\Repository;
 use App\Entity\Actualite;
 use App\Entity\Departement;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Collections\Criteria;
+use Doctrine\Common\Collections\Order;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -40,7 +40,7 @@ class ActualiteRepository extends ServiceEntityRepository
         $q = $this->createQueryBuilder('a')
             ->andWhere('a.departement = :departement')
             ->setParameter('departement', $departement->getId())
-            ->orderBy('a.created', Criteria::DESC);
+            ->orderBy('a.created', Order::Descending->value);
 
         if ($nbResult > 0) {
             $q->setMaxResults($nbResult);

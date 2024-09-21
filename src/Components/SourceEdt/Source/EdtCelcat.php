@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/SourceEdt/Source/EdtCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 16:09
+ * @lastUpdate 19/04/2024 18:06
  */
 
 namespace App\Components\SourceEdt\Source;
@@ -16,6 +16,8 @@ use App\DTO\EvenementEdtCollection;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Constantes;
 use App\Entity\Etudiant;
+use App\Entity\Groupe;
+use App\DTO\Matiere;
 use App\Entity\Personnel;
 use App\Entity\Semestre;
 use App\Repository\EdtCelcatRepository;
@@ -26,8 +28,21 @@ class EdtCelcat extends AbstractEdt implements EdtInterface
 
     public function __construct(
         private readonly EdtCelcatRepository $edtCelcatRepository,
-        private readonly EdtCelcatAdapter $edtCelcatAdapter)
+        private readonly EdtCelcatAdapter    $edtCelcatAdapter,)
     {
+    }
+
+    public function getPlanningPersonnelSemaine(
+        Personnel          $personnel,
+        int                $semaine,
+        AnneeUniversitaire $anneeUniversitaire,
+        array              $matieres,
+        array              $groupes
+    ): EvenementEdtCollection
+    {
+        $edts = $this->edtCelcatRepository->findEdtProf($personnel->getId(), $semaine, $anneeUniversitaire);
+
+        return $this->edtCelcatAdapter->collection($edts, $matieres, $groupes);
     }
 
     public function getPlanningSemestre(Semestre $semestre, array $matieres, AnneeUniversitaire $anneeUniversitaire, array $groupes): EvenementEdtCollection
@@ -51,6 +66,37 @@ class EdtCelcat extends AbstractEdt implements EdtInterface
         return $this->edtCelcatAdapter->single($evt, $matieres, $groupes);
     }
 
+    public function findOne(int $eventId, ?Matiere $matiere, ?Groupe $groupe): EvenementEdt
+    {
+        $evt = $this->edtCelcatRepository->find($eventId);
+        $matiere = $matiere ? [$matiere] : [];
+        $groupe = $groupe ? [$groupe] : [];
+        $groupe = $this->transformeGroupe($groupe);
+        $matiere = $this->transformeMatiere($matiere, $evt->getTypeIdMatiere());
+
+        return $this->edtCelcatAdapter->single($evt, $matiere, $groupe);
+    }
+
+    private function transformeGroupe(array $groupes): array
+    {
+        $tGroupes = [];
+        foreach ($groupes as $groupe) {
+            $tGroupes[$groupe->getCodeApogee()] = $groupe;
+        }
+
+        return $tGroupes;
+    }
+
+    private function transformeMatiere(array $matieres, $typeIdMatiere): array
+    {
+        $tMatieres = [];
+        foreach ($matieres as $matiere) {
+            $tMatieres[$typeIdMatiere] = $matiere;
+        }
+
+        return $tMatieres;
+    }
+
     public function recupereEdtJourBorne(
         Semestre $semestre,
         array $matieres,
@@ -71,7 +117,6 @@ class EdtCelcat extends AbstractEdt implements EdtInterface
         array $groupes
     ): EvenementEdtCollection {
         $evts = $this->edtCelcatRepository->findEdtSemestreSemaine($semestre, $semaine, $anneeUniversitaire);
-
         $tGroupes = [];
         foreach ($groupes as $groupe) {
             $tGroupes[$groupe->getCodeApogee()] = $groupe;
@@ -150,6 +195,13 @@ class EdtCelcat extends AbstractEdt implements EdtInterface
         }
 
         return false;
+    }
+
+    public function setMatiere(Matiere $matiere)
+    {
+        $this->matiere = $matiere;
+
+
     }
 
     public function getCurrentEventEtudiant(Etudiant $user, AnneeUniversitaire $anneeUniversitaire): ?EvenementEdt

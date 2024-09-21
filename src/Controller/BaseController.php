@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/BaseController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 18:39
+ * @lastUpdate 25/04/2024 06:41
  */
 
 namespace App\Controller;
@@ -37,6 +37,8 @@ class BaseController extends AbstractController
     protected TranslatorInterface $translator;
     protected BreadcrumbHelper $breadcrumbHelper;
     protected TableFactory $tableFactory;
+
+    private bool $isInit = false;
 
     public static function getSubscribedServices(): array
     {
@@ -101,6 +103,7 @@ class BaseController extends AbstractController
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $user = parent::getUser();
+        $this->dataUserSession->initDataUserSession($user);
 
         if (!$user instanceof Personnel && !$user instanceof Etudiant) {
             throw $this->createAccessDeniedException('Vous n\'êtes pas connecté');
@@ -128,6 +131,10 @@ class BaseController extends AbstractController
 
     public function getDepartement(): ?Departement
     {
+        if ($this->isInit === false) {
+            $this->dataUserSession->initDataUserSession($this->getUser());
+            $this->isInit = true;
+        }
         return $this->dataUserSession->getDepartement();
     }
 

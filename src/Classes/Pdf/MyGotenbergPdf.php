@@ -4,15 +4,15 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Pdf/MyGotenbergPdf.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/04/2024 09:02
+ * @lastUpdate 17/06/2024 18:31
  */
 
 namespace App\Classes\Pdf;
 
-use App\Utils\Tools;
 use Gotenberg\Gotenberg;
 use Gotenberg\Stream;
 use Psr\Http\Client\ClientInterface;
+use Psr\Http\Message\RequestInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -43,7 +43,7 @@ class MyGotenbergPdf implements PdfInterface
         self::$basePath = $kernel->getProjectDir() . '/public';
     }
 
-    public static function generePdf(string $template, array $data, string $name, array $options = [])
+    public static function generePdf(string $template, array $data, string $name, array $options = []): Response
     {
         $request = self::calculPdf($template, $data, $name, $options);
         $reponse = self::$client->sendRequest($request);
@@ -54,7 +54,7 @@ class MyGotenbergPdf implements PdfInterface
         ]);
     }
 
-    private static function calculPdf(string $template, array $data = [], string $name = 'fichier', array $options = [])
+    private static function calculPdf(string $template, array $data = [], string $name = 'fichier', array $options = []): RequestInterface
     {
         $resolver = new OptionsResolver();
         self::configureOptions($resolver);
@@ -91,7 +91,7 @@ class MyGotenbergPdf implements PdfInterface
         return $filename;
     }
 
-    private static function generateHtml(string $template, array $context = [])
+    private static function generateHtml(string $template, array $context = []): string
     {
         $context = array_merge($context, ['baseUrl' => self::$options['baseUrl']]);
 
@@ -108,15 +108,6 @@ class MyGotenbergPdf implements PdfInterface
             'landscape' => false,
             'paperSize' => 'A4',
         ]);
-    }
-
-    private static function valideName(string $name): string
-    {
-        if (false === strpos($name, '.pdf')) {
-            $name .= '.pdf';
-        }
-
-        return Tools::FileName($name);
     }
 
     private static function getHeader(?string $titre = null): string

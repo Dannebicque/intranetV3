@@ -1,17 +1,17 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/TypeHrsRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/05/2022 14:27
+ * @lastUpdate 18/04/2024 17:54
  */
 
 namespace App\Repository;
 
 use App\Entity\TypeHrs;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Collections\Criteria;
+use Doctrine\Common\Collections\Order;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -33,12 +33,12 @@ class TypeHrsRepository extends ServiceEntityRepository
 
     public function findAll(): array
     {
-        return $this->findBy([], ['libelle' => 'ASC']);
+        return $this->findBy([], ['libelle' => Order::Ascending->value]);
     }
 
     public function findAllBuilder(): QueryBuilder
     {
         return $this->createQueryBuilder('t')
-            ->orderBy('t.libelle', Criteria::ASC);
+            ->orderBy('t.libelle', Order::Ascending->value);
     }
 }

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/MatiereRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/02/2024 08:20
+ * @lastUpdate 18/04/2024 17:54
  */
 
 namespace App\Repository;
@@ -16,7 +16,7 @@ use App\Entity\Matiere;
 use App\Entity\Semestre;
 use App\Entity\Ue;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Collections\Criteria;
+use Doctrine\Common\Collections\Order;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -55,8 +55,8 @@ class MatiereRepository extends ServiceEntityRepository
             ->andWhere('s.ppnActif = m.ppn')
             ->andWhere('a.actif = 1')
             ->setParameter('departement', $departement->getId())
-            ->orderBy('m.codeMatiere', Criteria::ASC)
-            ->addOrderBy('m.libelle', Criteria::ASC);
+            ->orderBy('m.codeMatiere', Order::Ascending->value)
+            ->addOrderBy('m.libelle', Order::Ascending->value);
     }
 
     public function findBySemestreBuilder(Semestre $semestre): QueryBuilder
@@ -67,8 +67,8 @@ class MatiereRepository extends ServiceEntityRepository
             ->where('u.semestre = :semestre')
             ->andWhere('s.ppnActif = m.ppn')
             ->setParameter('semestre', $semestre->getId())
-            ->orderBy('u.numeroUe', Criteria::ASC)
-            ->addOrderBy('m.codeMatiere', Criteria::ASC);
+            ->orderBy('u.numeroUe', Order::Ascending->value)
+            ->addOrderBy('m.codeMatiere', Order::Ascending->value);
     }
 
     public function findByDepartement(Departement $departement): array
@@ -106,8 +106,8 @@ class MatiereRepository extends ServiceEntityRepository
             ->where('a.diplome = :diplome')
             ->andWhere('s.ppnActif = m.ppn')
             ->setParameter('diplome', $diplome->getId())
-            ->orderBy('m.codeMatiere', Criteria::ASC)
-            ->addOrderBy('m.libelle', Criteria::ASC)
+            ->orderBy('m.codeMatiere', Order::Ascending->value)
+            ->addOrderBy('m.libelle', Order::Ascending->value)
             ->getQuery()
             ->getResult();
     }

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Form/ApcSaeType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/09/2022 16:28
+ * @lastUpdate 13/09/2024 10:17
  */
 
 namespace App\Form;
@@ -36,8 +36,8 @@ class ApcSaeType extends AbstractType
 
         $builder
             ->add('mutualisee', YesNoType::class, ['label' => 'label.mutualisee'])
-            ->add('codeElement', TextType::class, ['label' => 'label.code_element'])
-            ->add('codeMatiere', TextType::class, ['label' => 'label.codeSae'])
+            ->add('codeElement', TextType::class, ['label' => 'label.code_element', 'attr' => ['maxlength' => 20]])
+            ->add('codeMatiere', TextType::class, ['label' => 'label.codeSae', 'attr' => ['maxlength' => 20], 'help' => 'Code de la SAÉ. Maximum 20 caractères'])
             ->add('libelle', TextType::class, ['label' => 'label.libelle'])
             ->add('libelleCourt', TextType::class,
                 ['label' => 'label.libelle.court', 'required' => false, 'attr' => ['maxlength' => 25]])
@@ -62,16 +62,20 @@ class ApcSaeType extends AbstractType
                     'required' => false,
                     'help' => 'Il est possible d\'utiliser la syntaxe Markdown dans ce bloc de texte',
                 ])
-            ->add('semestre', EntityType::class, [
+            ->add('semestres', EntityType::class, [
                 'class' => Semestre::class,
-                'attr' => ['data-action' => 'change->apc-sae-form#changeSemestre'],
+                'attr' => [
+                    'data-action' => 'change->apc-sae-form#changeSemestre',
+                ],
+                'choice_attr' => function (Semestre $semestre) {
+                    return ['data-ordre' => $semestre->getOrdreLmd()];
+                },
                 'required' => true,
-                'data' => $this->semestre,
                 'choice_label' => 'display',
-                'query_builder' => fn (SemestreRepository $semestreRepository) => $semestreRepository->findAllSemestreByDiplomeApcBuilder($this->diplome),
+                'query_builder' => fn(SemestreRepository $semestreRepository) => $semestreRepository->findAllSemestreByDiplomeApcBuilder($this->diplome),
                 'label' => 'label.semestre',
                 'expanded' => true,
-
+                'multiple' => true,
             ])
             ->add('competences', EntityType::class, [
                 'class' => ApcCompetence::class,
@@ -80,7 +84,7 @@ class ApcSaeType extends AbstractType
                 'attr' => ['data-action' => 'change->apc-sae-form#changeCompetence'],
                 'expanded' => true,
                 'multiple' => true,
-                'query_builder' => fn (ApcComptenceRepository $apcComptenceRepository) => $apcComptenceRepository->findByReferentielBuilder($this->diplome?->getReferentiel()),
+                'query_builder' => fn(ApcComptenceRepository $apcComptenceRepository) => $apcComptenceRepository->findByReferentielBuilder($this->diplome?->getReferentiel()),
                 'help' => 'Ajoutez les compétences couvertes par la SAÉ.',
             ])
             ->add('exemples', TextareaType::class,
@@ -96,9 +100,7 @@ class ApcSaeType extends AbstractType
                     'required' => true,
                     'help' => 'Indique si cette note dot être considérée comme une bonification (PAC, sport, ...).',
                 ])
-            ->add('suspendu', YesNoType::class, ['label' => 'label.suspendu', 'help' => 'Une matière suspendue n\'entre pas dans le calcul des moyennes.'])
-
-        ;
+            ->add('suspendu', YesNoType::class, ['label' => 'label.suspendu', 'help' => 'Une matière suspendue n\'entre pas dans le calcul des moyennes.']);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtIntranet.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/03/2024 14:09
+ * @lastUpdate 16/09/2024 11:53
  */
 
 namespace App\Classes\Edt;
@@ -27,6 +27,7 @@ use App\Repository\PersonnelRepository;
 use App\Repository\SemestreRepository;
 use Carbon\Carbon;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Symfony\Component\HttpFoundation\Request;
 use function array_key_exists;
 use function chr;
@@ -105,7 +106,7 @@ class MyEdtIntranet extends BaseEdt
                 $this->groupes();
                 $pl = $this->edtPlanningRepository->findEdtEtu($this->user, $this->semaineFormationIUT,
                     $this->anneeUniversitaire);
-                if (null !== $this->user->getSemestre() && $this->user->getSemestre()->getOrdreLmd() === 4) {
+                if (null !== $this->user->getSemestre() && ($this->user->getSemestre()->getOrdreLmd() === 3 || $this->user->getSemestre()->getOrdreLmd() === 5)) {
                     $pl2 = $this->edtPlanningRepository->findEdtEtuCmFi($this->user, $this->semaineFormationIUT,
                         $this->anneeUniversitaire);
                     if ($pl2 !== null) {
@@ -594,7 +595,7 @@ class MyEdtIntranet extends BaseEdt
         $pl = new EdtPlanning();
         $semestre = $this->semestreRepository->find($request->request->get('promo'));
         if ($semestre === null) {
-            throw new \Exception('Semestre non trouvé');
+            throw new Exception('Semestre non trouvé');
         }
         $pl->setSemestre($semestre);
         $pl->setAnneeUniversitaire($anneeUniversitaire);
@@ -670,10 +671,10 @@ class MyEdtIntranet extends BaseEdt
                 $plann->setGroupe(trim($tc[1]));
                 break;
             case TypeGroupeEnum::TYPE_GROUPE_VIDE:
-                throw new \Exception('To be implemented');
+                throw new Exception('To be implemented');
                 break;
             case TypeGroupeEnum::TYPE_GROUPE_LV:
-                throw new \Exception('To be implemented');
+                throw new Exception('To be implemented');
         }
 
         $this->entityManager->persist($plann);

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/DataUserSession.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:35
+ * @lastUpdate 04/09/2024 11:04
  */
 
 namespace App\Classes;
@@ -24,13 +24,12 @@ use App\Repository\DepartementRepository;
 use App\Repository\DiplomeRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\SemestreRepository;
-use Doctrine\ORM\NonUniqueResultException;
 use JsonException;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use function count;
 use function in_array;
@@ -64,58 +63,63 @@ class DataUserSession
 
     private ?string $type_user = null;
 
+    private bool $isInit = false;
+
     public function getTypeUser(): string
     {
         return $this->type_user;
     }
 
-    /**
-     * DataUserSession constructor.
-     *
-     * @throws NonUniqueResultException
-     */
     public function __construct(
-        protected SemestreRepository $semestreRepository,
-        protected AnneeRepository $anneeRepository,
-        protected DiplomeRepository $diplomeRepository,
-        protected PersonnelRepository $personnelRepository,
+        protected SemestreRepository    $semestreRepository,
+        protected AnneeRepository       $anneeRepository,
+        protected DiplomeRepository     $diplomeRepository,
+        protected PersonnelRepository   $personnelRepository,
         protected DepartementRepository $departementRepository,
-        protected TokenStorageInterface $user,
-        protected Security $security,
-        EventDispatcherInterface $eventDispatcher,
-        RequestStack $requestStack
-    ) {
-        if ($this->getUser() instanceof Etudiant) {
-            $this->type_user = 'e';
-            $this->departement = $this->departementRepository->findDepartementEtudiant($this->getUser());
-        } elseif ($this->getUser() instanceof Personnel) {
-            $this->type_user = 'p';
-            if (null !== $requestStack->getSession()->get('departement')) {
-                $this->departement = $this->departementRepository->findOneBy(['uuid' => $requestStack->getSession()->get('departement')]);
-            }
-        } else {
-            // ni étudiant, ni personnel... étrange
-            $event = new GenericEvent('erreur-type-user');
-            $eventDispatcher->dispatch($event, Events::REDIRECT_TO_LOGIN);
-        }
+        protected Security              $security,
+        protected EventDispatcherInterface $eventDispatcher,
+        protected RequestStack             $requestStack
+    )
+    {
+    }
 
-        if (null !== $this->departement) {
-            $this->semestres = $semestreRepository->findByDepartement($this->departement);
-            $this->semestresActifs = [];
-            foreach ($this->semestres as $semestre) {
-                if ($semestre->getActif()) {
-                    $this->semestresActifs[] = $semestre;
+    public function initDataUserSession(UserInterface $user): void
+    {
+        if (!$this->isInit) {
+            $this->init = true;
+            //todo: fait car session vide après connexion dans cette classe ?
+            if ($user instanceof Etudiant) {
+                $this->type_user = 'e';
+                $this->departement = $this->departementRepository->findDepartementEtudiant($user);
+            } elseif ($this->getUser() instanceof Personnel) {
+                $this->type_user = 'p';
+                if (null !== $this->requestStack->getSession()->get('departement')) {
+                    $this->departement = $this->departementRepository->findOneBy(['uuid' => $this->requestStack->getSession()->get('departement')]);
                 }
+            } else {
+                // ni étudiant, ni personnel... étrange
+                $event = new GenericEvent('erreur-type-user');
+                $this->eventDispatcher->dispatch($event, Events::REDIRECT_TO_LOGIN);
             }
-            $this->diplomes = $diplomeRepository->findByDepartement($this->departement);
-            $this->annees = $anneeRepository->findByDepartement($this->departement);
+
+            if (null !== $this->departement) {
+                $this->semestres = $this->semestreRepository->findByDepartement($this->departement);
+                $this->semestresActifs = [];
+                foreach ($this->semestres as $semestre) {
+                    if ($semestre->getActif()) {
+                        $this->semestresActifs[] = $semestre;
+                    }
+                }
+                $this->diplomes = $this->diplomeRepository->findByDepartement($this->departement);
+                $this->annees = $this->anneeRepository->findByDepartement($this->departement);
+            }
         }
     }
 
-    public function getUser(): Personnel|Etudiant|null
+    public function getUser(): Personnel|Etudiant|UserInterface|null
     {
-        if (null !== $this->user->getToken()) {
-            return $this->user->getToken()->getUser();
+        if (null !== $this->security->getUser()) {
+            return $this->security->getUser();
         }
 
         return null;
@@ -126,6 +130,8 @@ class DataUserSession
      */
     public function getSemestres(): array
     {
+        $this->initDataUserSession($this->getUser());
+
         return $this->semestres;
     }
 
@@ -134,6 +140,7 @@ class DataUserSession
      */
     public function getDiplomes(): ?array
     {
+        $this->initDataUserSession($this->getUser());
         return $this->diplomes;
     }
 
@@ -142,6 +149,7 @@ class DataUserSession
      */
     public function getAnnees(): array
     {
+        $this->initDataUserSession($this->getUser());
         return $this->annees;
     }
 
@@ -150,6 +158,7 @@ class DataUserSession
      */
     public function getDepartement(): ?Departement
     {
+        $this->initDataUserSession($this->getUser());
         return $this->departement;
     }
 
@@ -171,6 +180,7 @@ class DataUserSession
      */
     public function getPersonnels(): array
     {
+        $this->initDataUserSession($this->getUser());
         return $this->personnelRepository->findByDepartement($this->departement);
     }
 
@@ -201,6 +211,8 @@ class DataUserSession
      */
     public function isGoodDepartement(string $role): bool
     {
+        $this->initDataUserSession($this->getUser());
+
         if (null !== $this->getUser() && !($this->getUser() instanceof Etudiant)) {
             /** @var PersonnelDepartement $rf */
             foreach ($this->getUser()->getPersonnelDepartements() as $rf) {
@@ -252,6 +264,7 @@ class DataUserSession
 
     public function getAnneeUniversitaire(): ?AnneeUniversitaire
     {
+        $this->initDataUserSession($this->getUser());
         return null !== $this->getUser() ? $this->getUser()->getAnneeUniversitaire() : null;
     }
 
@@ -260,7 +273,7 @@ class DataUserSession
         if (null !== $this->getAnneeUniversitaire()) {
             $fin = $this->getAnneeUniversitaire()->getAnnee() + 1;
 
-            return $this->getAnneeUniversitaire()->getAnnee().' | '.$fin;
+            return $this->getAnneeUniversitaire()->getAnnee() . ' | ' . $fin;
         }
 
         return '- err année universitaire -';
@@ -268,6 +281,8 @@ class DataUserSession
 
     public function getSemestresActifs(): array
     {
+        $this->initDataUserSession($this->getUser());
+
         return $this->semestresActifs;
     }
 }

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/QuestChoixExterieurRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/02/2024 08:20
+ * @lastUpdate 10/06/2024 21:13
  */
 
 namespace App\Repository;
@@ -12,6 +12,7 @@ namespace App\Repository;
 use App\Entity\QuestChoixExterieur;
 use App\Entity\QuestQuestionnaire;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Order;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -60,8 +61,14 @@ class QuestChoixExterieurRepository extends ServiceEntityRepository
             ->getSingleScalarResult();
     }
 
-    public function findByQuestionnaire(QuestQuestionnaire $questionnaire)
+    public function findByQuestionnaire(QuestQuestionnaire $questionnaire): array
     {
-        //todo: a faire, pour les questionnaires extérieurs ?
+        return $this->createQueryBuilder('q')
+            ->where('q.questionnaire = :questionnaire')
+            ->setParameter('questionnaire', $questionnaire)
+            ->orderBy('q.nom', Order::Ascending->value)
+            ->addOrderBy('q.prenom', Order::Ascending->value)
+            ->getQuery()
+            ->getResult();
     }
 }

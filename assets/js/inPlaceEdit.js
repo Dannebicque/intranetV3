@@ -2,11 +2,12 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/js/inPlaceEdit.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 16/02/2024 16:09
+// @lastUpdate 18/04/2024 17:24
 
 import { Popover } from 'bootstrap'
 import { addCallout } from './util'
 
+/** @deprecated */
 // in place editor
 export default class InPlaceEdit {
   constructor(element, options = {}) {

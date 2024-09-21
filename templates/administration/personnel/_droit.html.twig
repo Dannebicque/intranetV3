@@ -1,16 +1,30 @@
 {% if not is_granted("ROLE_ETUDIANT") %}
     {% if user_data.isGoodDepartement("ROLE_CDD") or user_data.isGoodDepartement("ROLE_DDE") %}
         <h3 id="droit" class="titre_rub">Droits de {{ personnel.displayPr }}</h3>
-        <form class="form">
+        <div {{ stimulus_controller('adm--personnel--droit', {
+            url:path('administration_personnel_departement_modifier_droit', {personnel: personnel.id}),
+        }) }}>
+            <form class="form"
+
+            >
                 <input type="hidden" id="personnel" value="{{ personnel.id }}">
                 {% for role in constant('App\\Entity\\Constantes::ROLE_LISTE') %}
                     <div class="form-check">
-                        <input class="form-check-input updateRole" {% if role in droits[0].roles %}checked{% endif %} type="checkbox" value="{{ role }}" id="role_{{ loop.index }}">
+                        <input class="form-check-input updateRole"
+                               {% if role in droits[0].roles %}checked{% endif %} type="checkbox" value="{{ role }}"
+                               id="role_{{ loop.index }}"
+                                {{ stimulus_action(
+                                    'adm--personnel--droit',
+                                    'changeDroit', 'change', {
+                                        droit: role
+                                    }) }}
+                        >
                         <label class="form-check-label" for="role_{{ loop.index }}">
                             {{ role|trans }}
                         </label>
                     </div>
                 {% endfor %}
-        </form>
+            </form>
+        </div>
     {% endif %}
 {% endif %}

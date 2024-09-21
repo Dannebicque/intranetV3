@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Twig/HtmlExtension.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/09/2023 21:15
+ * @lastUpdate 06/07/2024 15:08
  */
 
 namespace App\Twig;
@@ -26,6 +26,7 @@ class HtmlExtension extends AbstractExtension
             new TwigFilter('fqn', $this->fqn(...)),
             new TwigFilter('nombreHeure', $this->nombreHeure(...)),
             new TwigFilter('badgeDiffence', $this->badgeDiffence(...), ['is_safe' => ['html']]),
+            new TwigFilter('badgeDiffenceSemestre', $this->badgeDiffenceSemestre(...), ['is_safe' => ['html']]),
             new TwigFilter('deuxDigits', $this->deuxDigits(...)),
             new TwigFilter('badgeYesNo', $this->badgeYesNo(...), ['is_safe' => ['html']]),
         ];
@@ -45,19 +46,28 @@ class HtmlExtension extends AbstractExtension
         return '<span class="badge bg-info"><i class="fas fa-arrow-right me-1"></i> ' . number_format($value, 2, ',', ' ') . ' h' . '</span>';
     }
 
-    public function nombreHeure(float $value): string
+    public function badgeDiffenceSemestre(float $value): string
     {
+        if ($value < 0) {
+            return '<span class="badge bg-warning"><i class="fas fa-arrow-down me-1"></i> ' . number_format($value, 2, ',', ' ') . ' h' . '</span>';
+        }
         if ($value > 0) {
-            return number_format($value, 2, ',', ' ') . ' h';
+            return '<span class="badge bg-danger"><i class="fas fa-arrow-up me-1"></i> ' . number_format($value, 2, ',', ' ') . ' h' . '</span>';
         }
 
-        return '';
+        return '<span class="badge bg-success"><i class="fas fa-equals me-1"></i> ' . number_format($value, 2, ',', ' ') . ' h' . '</span>';
     }
+
+    public function nombreHeure(float $value = 0.0): string
+    {
+        return number_format($value, 2, ',', ' ') . ' h';
+    }
+
     public function fqn(object $value): string
     {
         $object = new ReflectionClass($value);
 
-        return $object->getNamespaceName().'\\'.$object->getShortName();
+        return $object->getNamespaceName() . '\\' . $object->getShortName();
     }
 
     public function deuxDigits(string $value): string
@@ -68,9 +78,9 @@ class HtmlExtension extends AbstractExtension
     public function badgeYesNo(bool $value): string
     {
         if (true === $value) {
-            return '<span class="badge bg-success"><i class="fas fa-check me-1"></i> '.$this->translator->trans('Yes').'</span>';
+            return '<span class="badge bg-success"><i class="fas fa-check me-1"></i> ' . $this->translator->trans('Yes') . '</span>';
         }
 
-        return '<span class="badge bg-danger"><i class="fas fa-ban me-1"></i> '.$this->translator->trans('No').'</span>';
+        return '<span class="badge bg-danger"><i class="fas fa-ban me-1"></i> ' . $this->translator->trans('No') . '</span>';
     }
 }

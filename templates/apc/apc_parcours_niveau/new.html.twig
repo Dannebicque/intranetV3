@@ -74,12 +74,25 @@
     </div>
 {% endblock %}
 
-{% block stylesheets %}
-    {{ parent() }}
-    {{ encore_entry_link_tags('apc') }}
-{% endblock %}
-
 {% block javascripts %}
     {{ parent() }}
-    {{ encore_entry_script_tags('apc') }}
+    <script>
+      $(document).on('change', '.checkNiveau', function (e) {
+        let etat = 0
+        if (($(this).is(':checked'))) {
+          etat = 1
+        }
+        const parcours = $(this).data('parcours')
+        $.ajax({
+          url: Routing.generate('administration_apc_parcours_niveau_ajax', {
+            parcours,
+            etat,
+            niveau: $(this).val(),
+          }),
+          success (data) {
+
+          },
+        })
+      })
+    </script>
 {% endblock %}

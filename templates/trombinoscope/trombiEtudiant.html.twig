@@ -17,12 +17,12 @@
                         <li class="dropdown">
                             <a data-bs-toggle="dropdown" href="#"><i class="fas fa-ellipsis-h rotate-90"></i></a>
                             <div class="dropdown-menu dropdown-menu-right">
-                                <a href="{{ path('trombinoscope_etudiant_export', {_format:'pdf', typeGroupe: selectedTypeGroupe.id}) }}"
+                                <a href="{{ path('trombinoscope_etudiant_export', {_format:'pdf', typeGroupe: selectedTypeGroupe.id, semestre: semestre.id}) }}"
                                    class="dropdown-item"><i class="fa fa-file-pdf"></i> {{ 'exporter.pdf'|trans }}</a>
-                                <a href="{{ path('trombinoscope_etudiant_export', {_format:'xlsx', typeGroupe: selectedTypeGroupe.id}) }}"
+                                <a href="{{ path('trombinoscope_etudiant_export', {_format:'xlsx', typeGroupe: selectedTypeGroupe.id, semestre: semestre.id}) }}"
                                    class="dropdown-item"><i class="fa fa-file-excel"></i> {{ 'exporter.xlsx'|trans }}
                                 </a>
-                                <a href="{{ path('trombinoscope_etudiant_export', {_format:'csv', typeGroupe: selectedTypeGroupe.id}) }}"
+                                <a href="{{ path('trombinoscope_etudiant_export', {_format:'csv', typeGroupe: selectedTypeGroupe.id, semestre: semestre.id}) }}"
                                    class="dropdown-item"><i class="fa fa-file-csv"></i> {{ 'exporter.csv'|trans }}
                                 </a>
                                 <a href="{{ path('trombinoscope_etudiant_image', {typeGroupe: selectedTypeGroupe.id}) }}"

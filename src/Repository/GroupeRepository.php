@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/GroupeRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/02/2024 08:55
+ * @lastUpdate 18/04/2024 17:54
  */
 
 namespace App\Repository;
@@ -17,7 +17,7 @@ use App\Entity\Semestre;
 use App\Entity\TypeGroupe;
 use App\Enums\TypeGroupeEnum;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Collections\Criteria;
+use Doctrine\Common\Collections\Order;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -70,8 +70,8 @@ class GroupeRepository extends ServiceEntityRepository
             ->join('t.semestres', 's')
             ->where('s.id = :semestre')
             ->setParameter('semestre', $semestre->getId())
-            ->orderBy('t.libelle', Criteria::ASC)
-            ->addOrderBy('g.libelle', Criteria::ASC);
+            ->orderBy('t.libelle', Order::Ascending->value)
+            ->addOrderBy('g.libelle', Order::Ascending->value);
     }
 
     public function findAllGroupes(Semestre $semestre): array
@@ -122,7 +122,7 @@ class GroupeRepository extends ServiceEntityRepository
             ->andWhere('t.ordreSemestre = :semestre')
             ->andWhere('t.diplome = :diplome')
             ->setParameters(['type' => TypeGroupeEnum::TYPE_GROUPE_TP, 'semestre' => $semestre->getOrdreLmd(), 'diplome' => $diplome->getId()])
-            ->orderBy('g.libelle', Criteria::ASC)
+            ->orderBy('g.libelle', Order::Ascending->value)
             ->getQuery()
             ->getResult();
     }
@@ -137,7 +137,7 @@ class GroupeRepository extends ServiceEntityRepository
             ->andWhere('t.ordreSemestre = :semestre')
             ->andWhere('t.diplome = :diplome')
             ->setParameters(['type' => TypeGroupeEnum::TYPE_GROUPE_TD, 'semestre' => $semestre->getOrdreLmd(), 'diplome' => $diplome->getId()])
-            ->orderBy('g.libelle', Criteria::ASC)
+            ->orderBy('g.libelle', Order::Ascending->value)
             ->getQuery()
             ->getResult();
     }
@@ -167,16 +167,16 @@ class GroupeRepository extends ServiceEntityRepository
 
         /** @var Groupe $g */
         foreach ($gtp as $g) {
-            $groupes[$i]['id'] = 'TP-'.$g->getOrdre();
-            $groupes[$i]['display'] = 'TP'.$g->getLibelle().' | TP '.$g->getLibelle();
+            $groupes[$i]['id'] = 'TP-' . $g->getOrdre();
+            $groupes[$i]['display'] = 'TP' . $g->getLibelle() . ' | TP ' . $g->getLibelle();
             ++$i;
         }
 
         /** @var Groupe $g */
         foreach ($gtd as $g) {
             $or = $g->getOrdre();
-            $groupes[$i]['id'] = 'TD-'.$or;
-            $groupes[$i]['display'] = 'TD'.$g->getLibelle().' | TD '.$g->getLibelle();
+            $groupes[$i]['id'] = 'TD-' . $or;
+            $groupes[$i]['display'] = 'TD' . $g->getLibelle() . ' | TD ' . $g->getLibelle();
             ++$i;
         }
 
@@ -187,7 +187,7 @@ class GroupeRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('g')
             ->where('g.typeGroupe = :typeGroupe')
-            ->orderBy('g.ordre', Criteria::ASC)
+            ->orderBy('g.ordre', Order::Ascending->value)
             ->setParameter('typeGroupe', $typegroupe)
             ->getQuery()
             ->getResult();
@@ -246,7 +246,7 @@ class GroupeRepository extends ServiceEntityRepository
 //            ->addSelect('g')
 //            ->addSelect('t')
             ->innerJoin('t.semestres', 's')
-          //  ->addSelect('s')
+            //  ->addSelect('s')
             ->innerJoin(Annee::class, 'a', 'WITH', 's.annee = a.id')
             ->innerJoin(Diplome::class, 'd', 'WITH', 'a.diplome = d.id')
             ->where('d.id = :diplome')
@@ -254,8 +254,8 @@ class GroupeRepository extends ServiceEntityRepository
             ->andWhere('s.ordreLmd = :ordreSemestre')
             ->setParameter('diplome', $diplome->getId())
             ->setParameter('ordreSemestre', $ordreSemestre)
-            ->orderBy('t.libelle', Criteria::ASC)
-            ->addOrderBy('g.libelle', Criteria::ASC);
+            ->orderBy('t.libelle', Order::Ascending->value)
+            ->addOrderBy('g.libelle', Order::Ascending->value);
     }
 
     public function findAllEduSign(): array

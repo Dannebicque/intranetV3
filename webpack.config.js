@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/webpack.config.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 30/03/2024 14:06
+// @lastUpdate 21/04/2024 10:07
 
 const Encore = require('@symfony/webpack-encore')
 const path = require('path')
@@ -39,14 +39,11 @@ Encore
   .addEntry('app', './assets/app.js')
   .addEntry('borne', './assets/js/pages/borne.js')
   .addEntry('tinyMce', './assets/js/tinyMce.js')
-  .addEntry('apc', './assets/js/pages/apc.js')
   .addEntry('applications', './assets/js/pages/applications.js')
   .addEntry('profil', './assets/js/pages/profil.js')
   .addEntry('adm.configuration', './assets/js/pages/adm.configuration.js')
   .addEntry('adm.edt', './assets/js/pages/adm.edt.js')
-  .addEntry('adm.etudiants', './assets/js/pages/adm.etudiants.js')
   .addEntry('adm.apcCoefficients', './assets/js/pages/adm.apcCoefficients.js')
-  .addEntry('adm.personnels', './assets/js/pages/adm.personnels.js')
   .addEntry('sadm.personnels', './assets/js/pages/sadm.personnels.js')
   .addEntry('adm.rattrapages', './assets/js/pages/adm.rattrapages.js')
   .addEntry('adm.previsionnel', './assets/js/pages/adm.previsionnel.js')
@@ -56,7 +53,6 @@ Encore
   .addEntry('adm.stage_courrier', './assets/js/pages/adm.stage_courrier.js')
   .addEntry('adm.etudiant_groupe', './assets/js/pages/adm.etudiant_groupe.js')
   .addEntry('adm.justificatifs', './assets/js/pages/adm.justificatifs.js')
-  .addEntry('adm.absences', './assets/js/pages/adm.absences.js')
   .addEntry('adm.matieres', './assets/js/pages/adm.matieres.js')
   .addEntry('adm.scolarite', './assets/js/pages/adm.scolarite.js')
   .addEntry('adm.sous-commission', './assets/js/pages/adm.sous-commission.js')
@@ -70,8 +66,6 @@ Encore
   .addEntry('sadm.originaux', './assets/js/pages/sadm.originaux.js')
   .addEntry('sadm.anneeuniversitaire', './assets/js/pages/sadm.anneeuniversitaire.js')
   .addEntry('adm.reservation.materiel_commun', './assets/js/pages/adm.reservation.materiel_commun.js')
-
-  .enableStimulusBridge('./assets/controllers.json')
 
   // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
   .splitEntryChunks()
