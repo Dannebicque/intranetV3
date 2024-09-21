@@ -2,7 +2,7 @@
 # @file /Users/davidannebicque/Sites/intranetV3/update.sh
 # @author davidannebicque
 # @project intranetV3
-# @lastUpdate 21/09/2024 18:37
+# @lastUpdate 21/09/2024 18:41
 
 #!/usr/bin/env bash
 
@@ -29,7 +29,7 @@ then
   current_dir=$(pwd)
   subdirectory="public/build/"
   directory="$current_dir/$subdirectory"
-  prefix="print"
+  prefix="print."
   extension=".css"
   new_name="print.css"
 
@@ -41,7 +41,7 @@ then
 
   # Recherche du fichier correspondant
   file=$(ls ${prefix}*${extension} 2>/dev/null | head -n 1)
-
+echo "Fichier source trouvé: $file"
   if [ -n "$file" ]; then
     # Renommer le fichier
     mv "$file" "$new_name"
