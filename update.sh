@@ -2,7 +2,7 @@
 # @file /Users/davidannebicque/Sites/intranetV3/update.sh
 # @author davidannebicque
 # @project intranetV3
-# @lastUpdate 21/09/2024 18:46
+# @lastUpdate 21/09/2024 18:47
 
 #!/usr/bin/env bash
 
@@ -24,34 +24,34 @@ then
       echo "Yarn n'est pas disponible. Utiliser npm pour installer les dépendances."
       npm run build
   fi
-  sleep 1
-  # Variables
-  current_dir=$(pwd)
-  subdirectory="public/build/"
-  directory="$current_dir/$subdirectory"
-  prefix="print."
-  extension=".css"
-  new_name="print.css"
-
-  # Sauvegarder le répertoire actuel
-
-
-  # Naviguer vers le répertoire cible
-  cd "$directory" || { echo "Répertoire $directory introuvable"; exit 1; }
-
-  # Recherche du fichier correspondant
-  file=$(ls ${prefix}*${extension} 2>/dev/null | head -n 1)
-echo "Fichier source trouvé: $file"
-  if [ -n "$file" ]; then
-    # Renommer le fichier
-   # mv "$file" "$new_name"
-   # echo "Fichier renommé en $new_name dans $directory"
-  else
-    echo "Aucun fichier trouvé correspondant à ${prefix}*${extension} dans $directory"
-  fi
-
-  # Retourner au répertoire d'origine
-  cd "$current_dir"
+#  sleep 1
+#  # Variables
+#  current_dir=$(pwd)
+#  subdirectory="public/build/"
+#  directory="$current_dir/$subdirectory"
+#  prefix="print."
+#  extension=".css"
+#  new_name="print.css"
+#
+#  # Sauvegarder le répertoire actuel
+#
+#
+#  # Naviguer vers le répertoire cible
+#  cd "$directory" || { echo "Répertoire $directory introuvable"; exit 1; }
+#
+#  # Recherche du fichier correspondant
+#  file=$(ls ${prefix}*${extension} 2>/dev/null | head -n 1)
+#echo "Fichier source trouvé: $file"
+#  #if [ -n "$file" ]; then
+#    # Renommer le fichier
+#   # mv "$file" "$new_name"
+#   # echo "Fichier renommé en $new_name dans $directory"
+#  #else
+#  #  echo "Aucun fichier trouvé correspondant à ${prefix}*${extension} dans $directory"
+#  #fi
+#
+#  # Retourner au répertoire d'origine
+#  cd "$current_dir"
   echo "fin génératation des assets"
 fi
 
