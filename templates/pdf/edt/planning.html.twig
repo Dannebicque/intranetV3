@@ -28,7 +28,7 @@
             <th>Promo</th>
             <th>Module</th>
             <th>Date</th>
-            <th colspan="2">Heures</th>
+            <th>Heure</th>
             <th>Cours</th>
             <th>Durée</th>
             <th>Groupes</th>
@@ -43,7 +43,6 @@
                 <td>{{ matieres[pl.typeIdMatiere] is defined ? matieres[pl.typeIdMatiere].display : 'non.defini'|trans }}</td>
                 <td>{{ pl.date|date('d/m/Y') }}</td>
                 <td>{{ pl.debutTexte }}</td>
-                <td>{{ pl.finTexte }}</td>
                 <td>{{ pl.type|upper }}</td>
                 <td>{{ pl.dureeTexte }}</td>
                 <td>{{ pl.displayGroupe }}</td>
