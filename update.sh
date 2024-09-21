@@ -2,7 +2,7 @@
 # @file /Users/davidannebicque/Sites/intranetV3/update.sh
 # @author davidannebicque
 # @project intranetV3
-# @lastUpdate 21/09/2024 18:41
+# @lastUpdate 21/09/2024 18:44
 
 #!/usr/bin/env bash
 
@@ -24,7 +24,7 @@ then
       echo "Yarn n'est pas disponible. Utiliser npm pour installer les dépendances."
       npm run build
   fi
-
+  sleep 1
   # Variables
   current_dir=$(pwd)
   subdirectory="public/build/"
