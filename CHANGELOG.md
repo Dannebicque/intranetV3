@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.19.36](https://github.com/Dannebicque/intranetV3/compare/v3.19.35...v3.19.36) (2024-09-22)
+
+
+### Features
+
+* Renommer le fichier print.css généré avec les assets pour Gotenberg ([8467700](https://github.com/Dannebicque/intranetV3/commit/8467700108d4fca52eee0e7998849ced8776f066))
+* Renommer le fichier print.css généré avec les assets pour Gotenberg ([2457d02](https://github.com/Dannebicque/intranetV3/commit/2457d023122da2205a150eb438aae29bb337701d))
+* Renommer le fichier print.css généré avec les assets pour Gotenberg ([9544754](https://github.com/Dannebicque/intranetV3/commit/9544754dcc050a3139c3dff676efe89f14089ab4))
+* Renommer le fichier print.css généré avec les assets pour Gotenberg ([57d34e6](https://github.com/Dannebicque/intranetV3/commit/57d34e626b2b708f3a6257b9851efda911cfd94b))
+* Renommer le fichier print.css généré avec les assets pour Gotenberg ([2ab445f](https://github.com/Dannebicque/intranetV3/commit/2ab445f9db5e36b1bbc36a2c4fd4b8ada714b84c))
+* Renommer le fichier print.css généré avec les assets pour Gotenberg ([bb6820d](https://github.com/Dannebicque/intranetV3/commit/bb6820d60c0e2e579bf66e1db337511d0ef35342))
+* Renommer le fichier print.css généré avec les assets pour Gotenberg ([2dc2f2e](https://github.com/Dannebicque/intranetV3/commit/2dc2f2e1848f1056252d1b43df817e18100f7413))
+
+
+### Bug Fixes
+
+* Edt avec ptut en CM, D ou TP ([d6d3d51](https://github.com/Dannebicque/intranetV3/commit/d6d3d51429a630f66159f66cfbff0e006e595de9))
+
 ### [3.19.35](https://github.com/Dannebicque/intranetV3/compare/v3.19.34...v3.19.35) (2024-09-21)
 
 
