@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtIntranet.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/09/2024 17:58
+ * @lastUpdate 22/09/2024 17:03
  */
 
 namespace App\Classes\Edt;
@@ -238,7 +238,7 @@ class MyEdtIntranet extends BaseEdt
 
         /** @var EdtPlanning $p */
         foreach ($pl as $p) {
-            if (('PT' === $p->getType()) || (TypeGroupeEnum::TYPE_GROUPE_CM->value === $p->getType()) || (TypeGroupeEnum::TYPE_GROUPE_TD->value === $p->getType() && $p->getGroupe() === $this->groupetd) || (TypeGroupeEnum::TYPE_GROUPE_TP->value === $p->getType() && $p->getGroupe() === $this->groupetp)) {
+            if ((str_starts_with($p->getType(), 'PT')) || (TypeGroupeEnum::TYPE_GROUPE_CM->value === $p->getType()) || (TypeGroupeEnum::TYPE_GROUPE_TD->value === $p->getType() && $p->getGroupe() === $this->groupetd) || (TypeGroupeEnum::TYPE_GROUPE_TP->value === $p->getType() && $p->getGroupe() === $this->groupetp)) {
                 $dbtEdt = $this->convertEdt($p->getDebut());
 
                 if (!array_key_exists($p->getJour(), $this->tab)) {
@@ -258,7 +258,7 @@ class MyEdtIntranet extends BaseEdt
                 $this->tab[$p->getJour()][$dbtEdt]['texte'] = $this->isEvaluation($p,
                         'long') . '<br />' . $p->getSalle() . ' | ' . $p->getDisplayGroupe() . ' <br /> ';
 
-                if ('PT' === $p->getType()) {
+                if (str_starts_with($p->getType(), 'PT')) {
                     $this->tab[$p->getJour()][$dbtEdt]['texte'] = $this->tab[$p->getJour()][$dbtEdt]['texte'] . ' <strong>PTUT</strong> (' . $p->getIntervenantEdt() . ')';
                 } else {
                     $this->tab[$p->getJour()][$dbtEdt]['texte'] = $this->tab[$p->getJour()][$dbtEdt]['texte'] . $p->getIntervenantEdt();
@@ -300,8 +300,14 @@ class MyEdtIntranet extends BaseEdt
             $taille = 0;
 
             switch ($p->getType()) {
-                case 'PT':
-                    $tab[$p->getJour()][$debut][$groupe]['largeur'] = 1; //PTUT forcément en TP
+                case 'PTTP':
+                    $tab[$p->getJour()][$debut][$groupe]['largeur'] = 1;
+                    break;
+                case 'PTTD':
+                    $tab[$p->getJour()][$debut][$groupe]['largeur'] = 2;
+                    break;
+                case 'PTCM':
+                    $tab[$p->getJour()][$debut][$groupe]['largeur'] = $this->semestre->getNbgroupeTPEDT();
                     break;
                 case 'CM':
                 case 'cm':
@@ -355,7 +361,7 @@ class MyEdtIntranet extends BaseEdt
         }
 
         return match (mb_strtolower($p->getType())) {
-            'cm', 'td', 'tp', 'pt' => mb_strtolower($p->getType()) . '_' . $couleur, // todo: passer par DTO...
+            'cm', 'td', 'tp', 'pt', 'pttd', 'pttp', 'ptcm' => mb_strtolower($p->getType()) . '_' . $couleur, // todo: passer par DTO...
             default => 'CCCCCC',
         };
     }
@@ -426,8 +432,14 @@ class MyEdtIntranet extends BaseEdt
             $tab[$p->getJour()][$debut][$p->getGroupe()]['planning'] = $p;
             $taille = 0;
             switch ($p->getType()) {
-                case 'PT':
-                    $tab[$p->getJour()][$debut][$p->getGroupe()]['largeur'] = 1; //PTUT forcément en TP
+                case 'PTTP':
+                    $tab[$p->getJour()][$debut][$p->getGroupe()]['largeur'] = 1;
+                    break;
+                case 'PTTD':
+                    $tab[$p->getJour()][$debut][$p->getGroupe()]['largeur'] = 2;
+                    break;
+                case 'PTCM':
+                    $tab[$p->getJour()][$debut][$p->getGroupe()]['largeur'] = $this->semestre->getNbgroupeTPEDT();
                     break;
                 case 'CM':
                 case 'cm':
@@ -509,8 +521,14 @@ class MyEdtIntranet extends BaseEdt
             $tab[$p->getSemestre()->getId()][$debut][$p->getGroupe()]['planning'] = $p;
             $taille = 0;
             switch ($p->getType()) {
-                case 'PT':
-                    $tab[$p->getSemestre()->getId()][$debut][$p->getGroupe()]['largeur'] = 1; //PTUT forcément en TP
+                case 'PTTP':
+                    $tab[$p->getSemestre()->getId()][$debut][$p->getGroupe()]['largeur'] = 1;
+                    break;
+                case 'PTTD':
+                    $tab[$p->getSemestre()->getId()][$debut][$p->getGroupe()]['largeur'] = 2;
+                    break;
+                case 'PTCM':
+                    $tab[$p->getSemestre()->getId()][$debut][$p->getGroupe()]['largeur'] = $this->semestre->getNbgroupeTPEDT();
                     break;
                 case TypeGroupeEnum::TYPE_GROUPE_CM:
                     $tab[$p->getSemestre()->getId()][$debut][$p->getGroupe()]['largeur'] = $p->getSemestre()->getNbgroupeTpEdt();

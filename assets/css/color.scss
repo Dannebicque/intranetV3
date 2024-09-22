@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/css/color.scss
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 21/09/2024 14:14
+// @lastUpdate 22/09/2024 17:02
 @use "sass:map";
 
 
@@ -60,6 +60,21 @@ $colorsTypesGroupes: (
   }
 
   .pt_#{$color-key} {
+    background-color: lighten($color-value, 30%);
+    color: text-clr(lighten($color-value, 30%));
+  }
+
+  .pttd_#{$color-key} {
+    background-color: lighten($color-value, 30%);
+    color: text-clr(lighten($color-value, 30%));
+  }
+
+  .pttp_#{$color-key} {
+    background-color: lighten($color-value, 30%);
+    color: text-clr(lighten($color-value, 30%));
+  }
+
+  .ptcm_#{$color-key} {
     background-color: lighten($color-value, 30%);
     color: text-clr(lighten($color-value, 30%));
   }

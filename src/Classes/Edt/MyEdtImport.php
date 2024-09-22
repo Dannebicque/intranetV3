@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtImport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/09/2024 12:24
+ * @lastUpdate 22/09/2024 16:54
  */
 
 /*
@@ -406,7 +406,12 @@ class MyEdtImport
             $pl->setJour($date->dayOfWeek()); // à déduire de la date
             $pl->setSalle(mb_strtoupper($salle));
             $pl->setDate($date);
-            $pl->setType(strtoupper(mb_substr($phrase[2], 0, 2)));
+            if (str_starts_with($phrase[2], 'pttd') || str_starts_with($phrase[2], 'pttp') || str_starts_with($phrase[2], 'ptcm')) {
+                $pl->setType(strtoupper(mb_substr($phrase[2], 0, 4)));
+            } else {
+                $pl->setType(strtoupper(mb_substr($phrase[2], 0, 2)));
+            }
+
             $pl->setDiplome($pl->getSemestre()?->getDiplome());
             $this->addGroupe($pl, $phrase[5]);
             $pl->setHeureDebut($heureDebut);
