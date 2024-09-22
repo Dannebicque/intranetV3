@@ -96,7 +96,7 @@ class FixCourses
                             }
                         }
                     }
-                    $result['success']['messages'] = 'Cours mis à jour pour le diplôme ' . $diplome->getLibelle();
+                    $result['messages'][] = 'Cours mis à jour pour le diplôme ' . $diplome->getLibelle();
                 } else {
                     $result['error']['Aucun cours'] = 'Aucun cours trouvé pour le diplôme ' . $diplome->getLibelle();
                 }
