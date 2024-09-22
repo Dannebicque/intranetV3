@@ -2,7 +2,7 @@
 # @file /Users/davidannebicque/Sites/intranetV3/update.sh
 # @author davidannebicque
 # @project intranetV3
-# @lastUpdate 21/09/2024 18:51
+# @lastUpdate 22/09/2024 17:21
 
 #!/usr/bin/env bash
 
@@ -32,9 +32,6 @@ then
   prefix="print."
   extension=".css"
   new_name="print.css"
-
-  # Sauvegarder le répertoire actuel
-
 
   # Naviguer vers le répertoire cible
   cd "$directory" || { echo "Répertoire $directory introuvable"; exit 1; }
