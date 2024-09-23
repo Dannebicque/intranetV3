@@ -30,6 +30,7 @@
                     <th>{{ 'table.ville'|trans }}</th>
                     <th>{{ 'table.document'|trans }}</th>
                     <th>{{ 'table.updated'|trans }}</th>
+                    <th>Périodes concernées</th>
                     <th>{{ 'table.actions'|trans }}</th>
                 </tr>
                 </thead>
@@ -43,7 +44,12 @@
                           <a href="{{ vich_uploader_asset(stage_periode_offre, 'documentFile') }}" target="_blank">{{ 'voir.le.document'|trans }}</a>
                       </td>
                       <td>{{ stage_periode_offre.updated ? stage_periode_offre.updated|format_datetime('long', 'short') : 'non.defini'|trans }}
-
+                      </td>
+                      <td>
+                          {% for periode in stage_periode_offre.stagePeriodes %}
+                              <span class="badge badge-info">{{ periode.libelle }}</span>
+                          {% endfor %}
+                      </td>
                       <td>
 
                           <a href="{{ path('administration_stage_periode_offre_duplicate', {'id': stage_periode_offre.id}) }}"

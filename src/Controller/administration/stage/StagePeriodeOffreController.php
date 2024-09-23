@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/stage/StagePeriodeOffreController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/04/2024 06:28
+ * @lastUpdate 23/09/2024 10:45
  */
 
 namespace App\Controller\administration\stage;
@@ -16,6 +16,7 @@ use App\Entity\Constantes;
 use App\Entity\StagePeriode;
 use App\Entity\StagePeriodeOffre;
 use App\Form\StagePeriodeOffreType;
+use App\Repository\StagePeriodeOffreRepository;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,15 +26,18 @@ use Symfony\Component\Routing\Attribute\Route;
 class StagePeriodeOffreController extends BaseController
 {
     #[Route(path: '/{uuid}', name: 'administration_stage_periode_offre_index', methods: 'GET')]
-    public function index(#[MapEntity(mapping: ['uuid' => 'uuid'])]
-                          StagePeriode $stagePeriode): Response
+    public function index(
+        #[MapEntity(mapping: ['uuid' => 'uuid'])]
+        StagePeriode                $stagePeriode,
+        StagePeriodeOffreRepository $stagePeriodeOffreRepository): Response
     {
-        $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stagePeriode->getSemestre());
+        //afficher toutes les offres de stage d'un département avec une colonne sur la période
+        // $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stagePeriode->getSemestre());
 
         return $this->render(
             'administration/stage/stage_periode_offre/index.html.twig',
             [
-                'stage_periode_offres' => $stagePeriode->getStagePeriodeOffres(),
+                'stage_periode_offres' => $stagePeriodeOffreRepository->findOffreDepartement($this->dataUserSession->getDepartement()),
                 'stagePeriode' => $stagePeriode,
             ]
         );
@@ -57,7 +61,7 @@ class StagePeriodeOffreController extends BaseController
         return $myExport->genereFichierGeneriqueFromData(
             $_format,
             $data,
-            'offres_stage_'.$stagePeriode->getSemestre()?->getLibelle(),
+            'offres_stage_' . $stagePeriode->getSemestre()?->getLibelle(),
         );
     }
 
@@ -146,7 +150,7 @@ class StagePeriodeOffreController extends BaseController
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $this->getDepartement());
         $id = $date->getId();
-        if ($this->isCsrfTokenValid('delete'.$id, $request->server->get('HTTP_X_CSRF_TOKEN'))) {
+        if ($this->isCsrfTokenValid('delete' . $id, $request->server->get('HTTP_X_CSRF_TOKEN'))) {
             $this->entityManager->remove($date);
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'stage_periode_offre.delete.success.flash');
