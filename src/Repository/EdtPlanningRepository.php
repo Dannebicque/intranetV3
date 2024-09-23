@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/EdtPlanningRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/09/2024 11:53
+ * @lastUpdate 23/09/2024 09:00
  */
 
 namespace App\Repository;
@@ -394,6 +394,11 @@ class EdtPlanningRepository extends ServiceEntityRepository
             } else {
                 $pl['ical'] = '';
             }
+
+            if (str_starts_with($event->getType(), 'PT')) {
+                $pl['ical'] .= '**PTUT** ' . $pl['ical'];
+            }
+
             $pl['salle'] = $event->getSalle();
             $t[$event->getId()] = $pl;
         }
