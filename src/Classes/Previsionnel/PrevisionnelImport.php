@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Previsionnel/PrevisionnelImport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 20/09/2024 21:03
+ * @lastUpdate 23/09/2024 18:51
  */
 
 namespace App\Classes\Previsionnel;
@@ -18,6 +18,7 @@ use App\Entity\Previsionnel;
 use App\Repository\PersonnelRepository;
 use App\Utils\Tools;
 use Doctrine\ORM\EntityManagerInterface;
+use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
 use function array_key_exists;
 
 /**
@@ -28,13 +29,13 @@ class PrevisionnelImport
     private ?string $file;
 
     public function __construct(
-        private LogHelper   $log,
-        private MyExcelRead $myExcelRead,
-        private TypeMatiereManager     $typeMatiereManager,
-        private PrevisionnelManager    $previsionnelManager,
-        private EntityManagerInterface $entityManager,
-        private PersonnelRepository    $personnelRepository,
-        private MyUpload               $myUpload
+        private readonly LogHelper              $log,
+        private readonly MyExcelRead            $myExcelRead,
+        private readonly TypeMatiereManager     $typeMatiereManager,
+        private readonly PrevisionnelManager    $previsionnelManager,
+        private readonly EntityManagerInterface $entityManager,
+        private readonly PersonnelRepository    $personnelRepository,
+        private readonly MyUpload               $myUpload
     )
     {
     }
@@ -58,7 +59,7 @@ class PrevisionnelImport
             $listeMatieres = $this->typeMatiereManager->tableauApogeeDiplome($data['diplome']);
             $listePersonnels = $this->personnelRepository->tableauPersonnelHarpege($data['diplome']);
 
-            $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
+            $reader = new Xlsx();
             $spreadsheet = $reader->load($this->file);
             $sheet = $spreadsheet->getSheet(0);
             $highestRow = $sheet->getHighestRow();
@@ -259,10 +260,13 @@ class PrevisionnelImport
     private function supprPrevisionnel(Diplome $diplome, int $annee, bool $supprPrevisionnel): void
     {
         if ($supprPrevisionnel) {
-            $this->log->addItem('Suppression des données de prévisionnel pour le diplôme ' . $diplome->getDisplay() . ' pour l\'année ' . $annee, 'warning');
-            $pr = $this->previsionnelManager->findByDiplomeToDelete($diplome, $annee);
-            foreach ($pr as $p) {
-                $this->entityManager->remove($p);
+            $this->log->addItem('Suppression des données de prévisionnel pour le diplôme ' . $diplome->getDisplay() . ' pour l\'année ' . $annee);
+            $diplome = $diplome->getParent() ?? $diplome;
+            foreach ($diplome->getEnfants() as $dip) {
+                $pr = $this->previsionnelManager->findByDiplomeToDelete($dip, $annee);
+                foreach ($pr as $p) {
+                    $this->entityManager->remove($p);
+                }
             }
 
             $this->entityManager->flush();
