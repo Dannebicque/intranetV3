@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.19.41](https://github.com/Dannebicque/intranetV3/compare/v3.19.40...v3.19.41) (2024-09-24)
+
+
+### Bug Fixes
+
+* planning pdf typo ([d19b9be](https://github.com/Dannebicque/intranetV3/commit/d19b9bea371aaad574f817cb93ffaf1598d51879))
+* Suppression du previ pour tous les diplômes d'un BUT ([f293d38](https://github.com/Dannebicque/intranetV3/commit/f293d38fd1f6527e97dd5a8f29bf8a34c2b8391c))
+
 ### [3.19.40](https://github.com/Dannebicque/intranetV3/compare/v3.19.39...v3.19.40) (2024-09-23)
 
 
