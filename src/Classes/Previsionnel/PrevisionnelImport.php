@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Previsionnel/PrevisionnelImport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/09/2024 18:51
+ * @lastUpdate 24/09/2024 17:46
  */
 
 namespace App\Classes\Previsionnel;
@@ -267,6 +267,11 @@ class PrevisionnelImport
                 foreach ($pr as $p) {
                     $this->entityManager->remove($p);
                 }
+            }
+
+            $pr = $this->previsionnelManager->findByDiplomeToDelete($diplome, $annee);
+            foreach ($pr as $p) {
+                $this->entityManager->remove($p);
             }
 
             $this->entityManager->flush();
