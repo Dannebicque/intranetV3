@@ -280,7 +280,7 @@ class EduSignController extends BaseController
         $updateResult = $updateEdt->update($keyEduSign, $opt);
 
         if (!$updateResult['success']) {
-            $errors[] = $updateResult['error'];
+            $errors[] = $updateResult['messages'];
         }
         if (!$fixResult['success']) {
             $errors[] = $fixResult['messages'];
