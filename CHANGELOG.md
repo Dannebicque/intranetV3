@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.19.42](https://github.com/Dannebicque/intranetV3/compare/v3.19.41...v3.19.42) (2024-09-25)
+
+
+### Bug Fixes
+
+* EDT Planning étudiant si CM ([0c97807](https://github.com/Dannebicque/intranetV3/commit/0c97807d69102934e5d3e8975e2b3fb0d30e3297))
+
 ### [3.19.41](https://github.com/Dannebicque/intranetV3/compare/v3.19.40...v3.19.41) (2024-09-24)
 
 
