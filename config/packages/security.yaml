@@ -9,6 +9,7 @@ security:
     ROLE_SCOLARITE: ROLE_ADMINISTRATIF
     ROLE_RH: ROLE_ADMINISTRATIF
     ROLE_FINANCE: ROLE_ADMINISTRATIF
+    ROLE_EDUSIGN: ROLE_EDUSIGN
 
   providers:
     chain_provider:
@@ -41,6 +42,7 @@ security:
 
 
   access_control:
+    - { path: '^/[a-z]{2}/administration/edusign', roles: [ ROLE_EDUSIGN ] }
     - { path: '^/[a-z]{2}/api/unifolio', roles: PUBLIC_ACCESS }
     - { path: '^/[a-z]{2}/but', roles: PUBLIC_ACCESS }
     - { path: '^/[a-z]{2}/aide', roles: PUBLIC_ACCESS }

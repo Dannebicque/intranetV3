@@ -34,13 +34,13 @@
                     {% endfor %}
                 </nav>
 
-                <div class="row w-25 m-auto d-flex">
+                <div class="row w-50 m-auto d-flex">
                     <a href="{{ path('administration_edusign_index', {'diplome': diplomeSelect.id, 'semaine': currentWeek - 1}) }}" class="w-25">
                         <button class="btn btn-primary w-100" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Semaine précédente">
                             <i class="fa fa-caret-left"></i><span class="sr-only">Semaine précédente</span>
                         </button>
                     </a>
-                    <a href="{{ path('administration_edusign_index', {'diplome': diplomeSelect.id, 'semaine': currentWeek}) }}" class="w-25">
+                    <a href="{{ path('administration_edusign_index', {'diplome': diplomeSelect.id, 'semaine': currentWeek}) }}" class="w-50">
                         <button class="btn btn-secondary w-100" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Cette semaine">
                             <i class="fa fa-calendar"></i> Semaine
                         </button>

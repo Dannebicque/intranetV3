@@ -191,42 +191,43 @@ class EduSignController extends BaseController
     #[Route('/update/etudiants/{id}', name: 'app_admin_edu_sign_update_etudiants')]
     public function updateEtudiants(?int $id, UpdateEtudiant $updateEtudiant, MailerInterface $mailer): RedirectResponse
     {
-        $diplomesErrors = [];
+        if ($this->isGranted('ROLE_ADMINISTRATIF')) {
+            $diplomesErrors = [];
 
-        $diplome = $this->diplomeRepository->findOneBy(['id' => $id]);
-        $changeSemestreResult = $updateEtudiant->changeSemestre($diplome);
+            $diplome = $this->diplomeRepository->findOneBy(['id' => $id]);
+            $changeSemestreResult = $updateEtudiant->changeSemestre($diplome);
 
-        if (!$changeSemestreResult['success']) {
-            foreach ($changeSemestreResult['messages'] as $message) {
-                $errors[] = $message;
-            }
-        }
-
-        if (!empty($errors)) {
-            $diplomesErrors[$diplome->getLibelle()] = $errors;
-        }
-
-        $email = (new TemplatedEmail())
-            ->from('no-reply@univ-reims.fr')
-            ->to('cyndel.herolt@univ-reims.fr')
-            ->subject('EduSign updateEtudiants - error report')
-            ->htmlTemplate('emails/error_report.html.twig')
-            ->context(['diplomesErrors' => $diplomesErrors]);
-        $mailer->send($email);
-
-        if (!empty($diplomesErrors)) {
-            $allErrors = [];
-            foreach ($diplomesErrors as $diplome => $errors) {
-                foreach ($errors as $error) {
-                    $allErrors[] = "[$diplome] $error";
+            if (!$changeSemestreResult['success']) {
+                foreach ($changeSemestreResult['messages'] as $message) {
+                    $errors[] = $message;
                 }
             }
-            $errorMessage = implode("\n", $allErrors);
-            $this->addFlashBag(Constantes::FLASHBAG_ERROR, $errorMessage);
-        } else {
-            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'Mise à jour des groupes effectuée avec succès');
-        }
 
+            if (!empty($errors)) {
+                $diplomesErrors[$diplome->getLibelle()] = $errors;
+            }
+
+            $email = (new TemplatedEmail())
+                ->from('no-reply@univ-reims.fr')
+                ->to('cyndel.herolt@univ-reims.fr')
+                ->subject('EduSign updateEtudiants - error report')
+                ->htmlTemplate('emails/error_report.html.twig')
+                ->context(['diplomesErrors' => $diplomesErrors]);
+            $mailer->send($email);
+
+            if (!empty($diplomesErrors)) {
+                $allErrors = [];
+                foreach ($diplomesErrors as $diplome => $errors) {
+                    foreach ($errors as $error) {
+                        $allErrors[] = "[$diplome] $error";
+                    }
+                }
+                $errorMessage = implode("\n", $allErrors);
+                $this->addFlashBag(Constantes::FLASHBAG_ERROR, $errorMessage);
+            } else {
+                $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'Mise à jour des groupes effectuée avec succès');
+            }
+        }
         return $this->redirectToRoute('administration_edusign_index');
     }
 
