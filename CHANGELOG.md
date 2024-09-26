@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.19.44](https://github.com/Dannebicque/intranetV3/compare/v3.19.42...v3.19.44) (2024-09-26)
+
+
+### Features
+
+* Log help pour générer des fichiers ([b677d6b](https://github.com/Dannebicque/intranetV3/commit/b677d6b27c953581dee2f21ea390024a2181dd23))
+
+
+### Bug Fixes
+
+* log sur Edt ([9e5f4ba](https://github.com/Dannebicque/intranetV3/commit/9e5f4bae958d5f7fed0f276cfe2c0c4e267b2d6b))
+
 ### [3.19.43](https://github.com/Dannebicque/intranetV3/compare/v3.19.42...v3.19.43) (2024-09-26)
 
 
