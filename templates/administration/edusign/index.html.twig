@@ -33,6 +33,25 @@
                            href="{{ path('administration_edusign_index', {'diplome': diplome.id}) }}">{{ diplome.sigle }}</a>
                     {% endfor %}
                 </nav>
+
+                <div class="row w-25 m-auto d-flex">
+                    <a href="{{ path('administration_edusign_index', {'diplome': diplomeSelect.id, 'semaine': currentWeek - 1}) }}" class="w-25">
+                        <button class="btn btn-primary w-100" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Semaine précédente">
+                            <i class="fa fa-caret-left"></i><span class="sr-only">Semaine précédente</span>
+                        </button>
+                    </a>
+                    <a href="{{ path('administration_edusign_index', {'diplome': diplomeSelect.id, 'semaine': currentWeek}) }}" class="w-25">
+                        <button class="btn btn-secondary w-100" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Cette semaine">
+                            <i class="fa fa-calendar"></i> Semaine
+                        </button>
+                    </a>
+                    <a href="{{ path('administration_edusign_index', {'diplome': diplomeSelect.id, 'semaine': currentWeek + 1}) }}" class="w-25">
+                        <button class="btn btn-primary w-100" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Semaine suivante">
+                            <i class="fa fa-caret-right"></i><span class="sr-only">Semaine suivante</span>
+                        </button>
+                    </a>
+                </div>
+
                 <div class="dropdown mb-5">
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
                             data-bs-toggle="dropdown" aria-expanded="false">
