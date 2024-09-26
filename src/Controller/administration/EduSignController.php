@@ -60,44 +60,32 @@ class EduSignController extends BaseController
         $departement = $this->getDepartement();
         $personnelsDepartement = $this->personnelDepartementRepository->findBy(['departement' => $departement]);
 
-
         $diplomes = $this->diplomeRepository->findAllWithEduSignDepartement($departement);
-        // pour chaque diplome ajouter l'id en key
         $diplomes = array_combine(array_map(fn($d) => $d->getId(), $diplomes), $diplomes);
         $cours = [];
 
-        if ($request->query->get('diplome')) {
-            if (!array_key_exists($request->query->get('diplome'), $diplomes)) {
-                $diplome = $diplomes[array_key_first($diplomes)] ?? null;
-            } else {
-                $diplome = $this->diplomeRepository->findOneBy(['id' => $request->query->get('diplome')]);
-            }
-        } else {
-            $diplome = $diplomes[array_key_first($diplomes)] ?? null;
-        }
+        $diplome = $this->getSelectedDiplome($request, $diplomes);
 
         $filteredPersonnelsDepartement = array_filter($personnelsDepartement, fn($p) => empty($p->getPersonnel()->getIdEduSign() ?? []) || !array_key_exists($diplome->getId(), $p->getPersonnel()->getIdEduSign()));
 
         $semestres = $this->semestreRepository->findByDiplome($diplome);
-        $start = Carbon::today();
-        $end = Carbon::today()->next('saturday');
-        $semaineReelle = date('W');
+
+        // Gestion des semaines
+        $currentWeek = $request->query->getInt('semaine', date('W'));
+        $start = Carbon::now()->setISODate((int)date('Y'), $currentWeek)->startOfWeek();
+        $end = $start->copy()->endOfWeek();
 
         foreach ($semestres as $semestre) {
-            $eventSemaine = $this->CalendrierRepository->findOneBy(['semaineReelle' => $semaineReelle, 'anneeUniversitaire' => $semestre->getAnneeUniversitaire()]);
+            $eventSemaine = $this->CalendrierRepository->findOneBy(['semaineReelle' => $currentWeek, 'anneeUniversitaire' => $semestre->getAnneeUniversitaire()]);
             $semaine = $eventSemaine->getSemaineFormation();
-            // si aujourd'hui est un samedi ou un dimanche, on prend la semaine de formation de la semaine suivante
             if (Carbon::today()->isWeekend()) {
                 $semaine++;
             }
             $matieresDiplome = $this->getMatieresDiplome($semestre->getDiplome());
             $groupes = $this->groupeRepository->findBySemestre($semestre);
-            // récupérer uniquement les groupes propres au semestre
-            $groupesSemestres[$semestre->getLibelle()] = array_filter($groupes, fn($groupe) => $semestre->getDiplome()->getApcParcours()?->getGroupes() ?? $this->groupeRepository->findBySemestre($semestre)
-            );
+            $groupesSemestres[$semestre->getLibelle()] = array_filter($groupes, fn($groupe) => $semestre->getDiplome()->getApcParcours()?->getGroupes() ?? $this->groupeRepository->findBySemestre($semestre));
 
             $edt = $this->edtManager->getPlanningSemestreSemaine($semestre, $semaine, $semestre->getAnneeUniversitaire(), $matieresDiplome, $groupes);
-
             $salles = $this->salleRepository->findAll();
 
             foreach ($edt->evenements as $this->evenement) {
@@ -118,14 +106,13 @@ class EduSignController extends BaseController
             $cours,
             [
                 'path' => 'administration_edusign_index',
-                'args' => ['diplome' => $diplome?->getId()]
+                'args' => ['diplome' => $diplome?->getId(), 'semaine' => $currentWeek]
             ],
             10,
             $page
         );
         $semestres = $this->semestreRepository->findByDepartementActifFc($departement);
         $matieres = $this->typeMatiereManager->findByDepartement($departement);
-
 
         return $this->render('administration/edusign/index.html.twig', [
             'departement' => $departement,
@@ -136,8 +123,22 @@ class EduSignController extends BaseController
             'semestres' => $semestres,
             'matieres' => $matieres,
             'groupesSemestres' => $groupesSemestres ?? null,
-            'cours' => $cours
+            'cours' => $cours,
+            'currentWeek' => $currentWeek
         ]);
+    }
+
+    private function getSelectedDiplome(Request $request, array $diplomes): ?Diplome
+    {
+        if ($request->query->get('diplome')) {
+            if (!array_key_exists($request->query->get('diplome'), $diplomes)) {
+                return $diplomes[array_key_first($diplomes)] ?? null;
+            } else {
+                return $this->diplomeRepository->findOneBy(['id' => $request->query->get('diplome')]);
+            }
+        } else {
+            return $diplomes[array_key_first($diplomes)] ?? null;
+        }
     }
 
     public function getMatieresSemestre(Semestre $semestre): array
@@ -190,42 +191,43 @@ class EduSignController extends BaseController
     #[Route('/update/etudiants/{id}', name: 'app_admin_edu_sign_update_etudiants')]
     public function updateEtudiants(?int $id, UpdateEtudiant $updateEtudiant, MailerInterface $mailer): RedirectResponse
     {
-        $diplomesErrors = [];
+        if ($this->isGranted('ROLE_ADMINISTRATIF')) {
+            $diplomesErrors = [];
 
-        $diplome = $this->diplomeRepository->findOneBy(['id' => $id]);
-        $changeSemestreResult = $updateEtudiant->changeSemestre($diplome);
+            $diplome = $this->diplomeRepository->findOneBy(['id' => $id]);
+            $changeSemestreResult = $updateEtudiant->changeSemestre($diplome);
 
-        if (!$changeSemestreResult['success']) {
-            foreach ($changeSemestreResult['messages'] as $message) {
-                $errors[] = $message;
-            }
-        }
-
-        if (!empty($errors)) {
-            $diplomesErrors[$diplome->getLibelle()] = $errors;
-        }
-
-        $email = (new TemplatedEmail())
-            ->from('no-reply@univ-reims.fr')
-            ->to('cyndel.herolt@univ-reims.fr')
-            ->subject('EduSign updateEtudiants - error report')
-            ->htmlTemplate('emails/error_report.html.twig')
-            ->context(['diplomesErrors' => $diplomesErrors]);
-        $mailer->send($email);
-
-        if (!empty($diplomesErrors)) {
-            $allErrors = [];
-            foreach ($diplomesErrors as $diplome => $errors) {
-                foreach ($errors as $error) {
-                    $allErrors[] = "[$diplome] $error";
+            if (!$changeSemestreResult['success']) {
+                foreach ($changeSemestreResult['messages'] as $message) {
+                    $errors[] = $message;
                 }
             }
-            $errorMessage = implode("\n", $allErrors);
-            $this->addFlashBag(Constantes::FLASHBAG_ERROR, $errorMessage);
-        } else {
-            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'Mise à jour des groupes effectuée avec succès');
-        }
 
+            if (!empty($errors)) {
+                $diplomesErrors[$diplome->getLibelle()] = $errors;
+            }
+
+            $email = (new TemplatedEmail())
+                ->from('no-reply@univ-reims.fr')
+                ->to('cyndel.herolt@univ-reims.fr')
+                ->subject('EduSign updateEtudiants - error report')
+                ->htmlTemplate('emails/error_report.html.twig')
+                ->context(['diplomesErrors' => $diplomesErrors]);
+            $mailer->send($email);
+
+            if (!empty($diplomesErrors)) {
+                $allErrors = [];
+                foreach ($diplomesErrors as $diplome => $errors) {
+                    foreach ($errors as $error) {
+                        $allErrors[] = "[$diplome] $error";
+                    }
+                }
+                $errorMessage = implode("\n", $allErrors);
+                $this->addFlashBag(Constantes::FLASHBAG_ERROR, $errorMessage);
+            } else {
+                $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'Mise à jour des groupes effectuée avec succès');
+            }
+        }
         return $this->redirectToRoute('administration_edusign_index');
     }
 
