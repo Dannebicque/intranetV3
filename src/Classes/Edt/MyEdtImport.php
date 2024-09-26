@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtImport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 22/09/2024 16:54
+ * @lastUpdate 26/09/2024 21:05
  */
 
 /*
@@ -45,7 +45,6 @@ class MyEdtImport
     private ?string $nomfile = null;
     private int $semaine;
     private ?Semestre $semestre = null;
-    private LogHelper $log;
 
     private const CORRESPONDANCE_S3 = [
         'WR301D' => 'WR301D',
@@ -221,6 +220,7 @@ class MyEdtImport
      * MyEdtImport constructor.
      */
     public function __construct(
+        private readonly LogHelper             $log,
         DepartementRepository                  $departementRepository,
         private readonly EdtPlanningRepository $edtPlanningRepository,
         private readonly PersonnelRepository   $personnelRepository,
@@ -252,7 +252,6 @@ class MyEdtImport
         $this->departement = $departement;
         $this->anneeUniversitaire = $anneeUniversitaire;
         $this->nomfile = $file;
-        $this->log = new LogHelper();
 
         return $this;
     }
