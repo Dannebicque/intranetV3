@@ -191,7 +191,6 @@ class EduSignController extends BaseController
     #[Route('/update/etudiants/{id}', name: 'app_admin_edu_sign_update_etudiants')]
     public function updateEtudiants(?int $id, UpdateEtudiant $updateEtudiant, MailerInterface $mailer): RedirectResponse
     {
-        if ($this->isGranted('ROLE_ADMINISTRATIF')) {
             $diplomesErrors = [];
 
             $diplome = $this->diplomeRepository->findOneBy(['id' => $id]);
@@ -227,7 +226,7 @@ class EduSignController extends BaseController
             } else {
                 $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'Mise à jour des groupes effectuée avec succès');
             }
-        }
+
         return $this->redirectToRoute('administration_edusign_index');
     }
 
