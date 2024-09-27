@@ -18,6 +18,7 @@ use App\Entity\Constantes;
 use App\Repository\DiplomeRepository;
 use App\Repository\EdtCelcatRepository;
 use App\Repository\EdtPlanningRepository;
+use App\Repository\GroupeRepository;
 use App\Repository\PersonnelRepository;
 use Carbon\Carbon;
 
@@ -28,6 +29,7 @@ class FixCourses
     public function __construct(
         private readonly ApiCours              $apiCours,
         private readonly PersonnelRepository   $personnelRepository,
+        private readonly GroupeRepository      $groupeRepository,
         private readonly EdtPlanningRepository $edtPlanningRepository,
         private readonly EdtCelcatRepository   $edtCelcatRepository,
         private readonly DiplomeRepository     $diplomeRepository,
@@ -37,7 +39,7 @@ class FixCourses
     {
     }
 
-    public function fixCourse(?string $keyEduSign, ?int $week): ?array
+    public function fixCourses(?string $keyEduSign, ?int $week): ?array
     {
         if (!$keyEduSign) {
             return ['success' => false, 'messages' => ['Clé EduSign manquante.']];
@@ -47,58 +49,43 @@ class FixCourses
 
         try {
             $diplomes = $this->diplomeRepository->findBy(['keyEduSign' => $keyEduSign]);
+            $start = Carbon::now()->setISODate((int)date('Y'), $week)->startOfWeek();
+            $end = $start->copy()->endOfWeek();
 
             foreach ($diplomes as $diplome) {
-                // récupère tous les cours de la semaine depuis edusign
-                $start = Carbon::now()->setISODate((int)date('Y'), $week)->startOfWeek();
-                $end = $start->copy()->endOfWeek();
                 $courses = $this->apiCours->getAllCoursesWeek($keyEduSign, $start, $end);
 
                 if ($courses) {
                     foreach ($courses as $course) {
-                        // si le cours date d'avant aujourd'hui on ne le traite pas
                         if (Carbon::parse($course['START'], 'UTC')->isBefore(Carbon::now())) {
                             continue;
+                        }
+
+                        $enseignant = $this->personnelRepository->findByIdEdusign($course['PROFESSOR']);
+//                        foreach ($course['GROUPS'] as $groupeIds) {
+//                            $groupe = $this->groupeRepository->findByIdEdusign($groupeIds);
+//                        }
+
+                        // si le cours a été ajouté à la main
+                        if (empty($course['API_ID'])) {
+                            // transformer le cours en cours intranet
+                            $cours = $this->getCourse($diplome, $course, $enseignant);
+                            // rechercher le cours dans la db sous réserves de trouver un cours avec les mêmes infos
+                            $coursIntranet = $this->findCoursIntranet($cours);
+
+                            // si on ne trouve pas de cours avec les mêmes infos dans la DB
+                            if (empty($coursIntranet)) {
+                                $this->deleteCourseEduSign($course, $keyEduSign, $result, $cours);
+                            } else {
+                                $this->updateCourseEduSign($coursIntranet, $course, $keyEduSign, $result, $cours);
+                            }
                         } else {
-                            $enseignant = $this->personnelRepository->findByIdEdusign($course['PROFESSOR']);
+                            $cours = $this->edtManager->findCourse($cours->source, $course['API_ID']);
 
-                            if ($enseignant) {
-
-                                // transforme la réponse de l'API en objet EvenementEdt
-                                $cours = $this->getCourse($diplome, $course, $enseignant);
-                                // recherche le cours dans l'intranet
-                                $coursIntranet = $this->findCoursIntranet($cours);
-
-                                //si le cours n'est pas trouvé dans l'intranet et qu'il n'existe pas dans edusign on ne fait rien
-                                if (empty($coursIntranet) && !$course['API_ID']) {
-                                    continue;
-                                } // si le cours n'est pas trouvé dans l'intranet mais qu'il existe dans edusign
-                                elseif (empty($coursIntranet) && $course['API_ID']) {
-                                    // si il n'existe pas de cours avec cet API_ID dans l'intranet
-                                    if (!$this->edtManager->findCourse($cours->source, $course['API_ID'])) {
-                                        // supprimer le cours dans edusign
-                                        $this->deleteCourseEduSign($course, $keyEduSign, $result, $cours);
-                                    } // si il en existe un
-                                    else {
-                                        // envoyer le cours dans edusign
-                                        $this->updateCourseEduSign($this->edtManager->findCourse($cours->source, $course['API_ID']), $course, $keyEduSign, $result, $cours);
-                                    }
-                                } // si le cours est trouvé dans l'intranet et qu'il est unique
-                                else {
-                                    // récupère le cours
-                                    $coursIntranet = $coursIntranet[0];
-
-                                    // si le cours est trouvé dans l'intranet et qu'il n'est pas lié à son equivalent dans edusign
-                                    // ou que l'api_id est différent
-                                    if (($coursIntranet && !$course['API_ID']) || ($coursIntranet->getId() !== (int)$course['API_ID'])) {
-                                        // envoyer le cours dans edusign
-                                        $this->updateCourseEduSign($coursIntranet, $course, $keyEduSign, $result, $cours);
-                                    } // si le cours est trouvé dans l'intranet mais qu'il n'a pas d'ID EduSign mais qu'il existe dans edusign
-                                    elseif ($coursIntranet && !$coursIntranet->getIdEduSign() && $course['API_ID']) {
-                                        // rétablir le lien entre le cours intranet et edusign (si l'api_id est le même)
-                                        $this->linkCourseEduSign($coursIntranet, $course);
-                                    }
-                                }
+                            if (!$cours) {
+                                $this->deleteCourseEduSign($course, $keyEduSign, $result, $cours);
+                            } else {
+                                $this->updateCourseEduSign($cours, $course, $keyEduSign, $result, $cours);
                             }
                         }
                     }
@@ -110,7 +97,6 @@ class FixCourses
         } catch (\Exception $e) {
             $result['success'] = false;
             $result['messages'][] = 'Erreur lors de la mise à jour des cours : ' . $e->getMessage() . ' - ' . $e->getTraceAsString() . ' - ' . $e->getLine();
-
         }
 
         return $result;
@@ -126,7 +112,6 @@ class FixCourses
     private function findCoursIntranet($cours)
     {
         $date = Carbon::createFromFormat("Y-m-d H:i:s", $cours->date);
-        //transformer la date en format Y-m-d au lieu de Y-m-d H:i:s
         $date = $date->format('Y-m-d');
 
         if ($this->source === 'celcat') {
