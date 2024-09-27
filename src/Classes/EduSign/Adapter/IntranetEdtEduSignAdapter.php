@@ -4,19 +4,15 @@ namespace App\Classes\EduSign\Adapter;
 
 use App\Classes\EduSign\DTO\EduSignCourse;
 use App\DTO\EvenementEdt;
+use App\Entity\Diplome;
 use Carbon\Carbon;
 
 class IntranetEdtEduSignAdapter
 {
     private ?EduSignCourse $course = null;
 
-    public function __construct(EvenementEdt $edt)
+    public function __construct(EvenementEdt $edt, Diplome $diplome)
     {
-        $diplome = $edt->semestre?->getDiplome();
-
-        $departement = $diplome?->getDepartement();
-
-        if ($departement) {
             $this->course = new EduSignCourse();
             $this->course->id = $edt->idEduSign;
             $this->course->name = $edt->matiere;
@@ -31,7 +27,7 @@ class IntranetEdtEduSignAdapter
             $this->course->type_edt = $edt->getTypeIdEvent();
             $this->course->id_matiere = $edt->getIdMatiere();
             $this->course->type_matiere = $edt->getTypeMatiere();
-        }
+
     }
 
     public function getCourse(): ?EduSignCourse

@@ -191,13 +191,10 @@ class EduSignController extends BaseController
         return $matieresDepartement;
     }
 
-    // todo: récupérer la currentWeek et faire un update des cours pour la semaine en question
     #[Route('/create-courses/{opt}/{id}', name: 'app_admin_edu_sign_create_courses')]
     public function createCourses(Request $request, ?int $opt, ?int $id, UpdateEdt $updateEdt, FixCourses $fixCourses, MailerInterface $mailer): Response
     {
         $diplome = $this->diplomeRepository->findOneBy(['id' => $id]);
-
-        $errors = [];
 
         $keyEduSign = $diplome->getKeyEduSign();
 
@@ -206,25 +203,22 @@ class EduSignController extends BaseController
         } else {
             $week = date('W');
         }
-        $fixResult = $fixCourses->fixCourse($keyEduSign, $week);
+
+        if ($week >= date('W')) {
+            $fixResult = $fixCourses->fixCourses($keyEduSign, $week);
+        }
+
         $updateResult = $updateEdt->update($keyEduSign, $opt, $week);
+        // retirer les entrées vides
+        $updateResult = array_filter($updateResult);
 
-        if (!$updateResult['success']) {
-            $errors[] = $updateResult['messages'];
-        }
-        if (!$fixResult['success']) {
-            $errors[] = $fixResult['messages'];
-        }
-
-        if (!empty($errors)) {
-            $email = (new TemplatedEmail())
-                ->from('no-reply@univ-reims.fr')
-                ->to('cyndel.herolt@univ-reims.fr')
-                ->subject('EduSign createCourses - error report')
-                ->htmlTemplate('emails/error_report.html.twig')
-                ->context(['diplomesErrors' => $errors]);
-            $mailer->send($email);
-        }
+        $email = (new TemplatedEmail())
+            ->from('no-reply@univ-reims.fr')
+            ->to('cyndel.herolt@univ-reims.fr')
+            ->subject('EduSign createCourses - error report')
+            ->htmlTemplate('emails/error_report.html.twig')
+            ->context(['diplome' => $diplome->getLibelle(), 'errors' => $updateResult]);
+        $mailer->send($email);
 
         return $this->redirectToRoute('administration_edusign_index');
     }

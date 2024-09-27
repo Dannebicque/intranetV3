@@ -20,7 +20,7 @@ class ApiCours
     {
     }
 
-    public function addCourse(EduSignCourse $course, string $cleApi): string
+    public function addCourse(EduSignCourse $course, string $cleApi): mixed
     {
         $client = HttpClient::create();
 
@@ -50,16 +50,15 @@ class ApiCours
             $rep = null;
         }
 
-        if (null === $edt) {
-            throw new Exception('Course not found for ' . $edt->api_id);
-        }
+        $edt->setIdEduSign($id);
+        $rep->save($edt);
 
-        if ($edt->getIdEduSign() == null && $rep !== null) {
-            $edt->setIdEduSign($id);
-            $rep->save($edt);
+        // si $data n'a pas : "status" => "success"
+        if ($data['status'] !== 'success') {
+            return $content;
+        } else {
+            return null;
         }
-
-        return $content;
     }
 
     public function updateCourse(EduSignCourse $course, string $cleApi): string
