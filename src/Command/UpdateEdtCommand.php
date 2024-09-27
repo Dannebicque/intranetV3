@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Command/UpdateEdtCommand.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:35
+ * @lastUpdate 26/09/2024 21:05
  */
 
 namespace App\Command;
@@ -43,7 +43,7 @@ class UpdateEdtCommand extends Command
 
         if (null !== $annee) {
             $this->myCelcat->getData($annee);
-            $this->myCelcat->truncateTableEdtCelcat();
+            //$this->myCelcat->truncateTableEdtCelcat(); //todo: plus nécessaire si on gère avec une mise à jour
             /** @var Diplome $diplome */
             foreach ($diplomes as $diplome) {
                 $date = new DateTime();
