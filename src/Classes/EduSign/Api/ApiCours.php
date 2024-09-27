@@ -158,6 +158,25 @@ class ApiCours
         return $data['result'] ?? null;
     }
 
+    public function getAllCoursesWeek(string $cleApi, $start, $end): mixed
+    {
+        $client = HttpClient::create();
+
+        $response = $client->request('GET', 'https://ext.edusign.fr/v1/course?start='.$start.'&end='.$end, [
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . $this->getCleApi->getCleApi($cleApi),
+            ]
+        ]);
+
+        $statusCode = $response->getStatusCode();
+        $content = $response->getContent();
+        // convertit JSON en tableau associatif PHP
+        $data = json_decode($content, true);
+
+        return $data['result'] ?? null;
+    }
+
     public function deleteCourse(?string $id, string $cleApi): string
     {
         $client = HttpClient::create();

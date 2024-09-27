@@ -37,7 +37,7 @@ class FixCourses
     {
     }
 
-    public function fixCourse(?string $keyEduSign): ?array
+    public function fixCourse(?string $keyEduSign, ?int $week): ?array
     {
         if (!$keyEduSign) {
             return ['success' => false, 'messages' => ['Clé EduSign manquante.']];
@@ -49,8 +49,10 @@ class FixCourses
             $diplomes = $this->diplomeRepository->findBy(['keyEduSign' => $keyEduSign]);
 
             foreach ($diplomes as $diplome) {
-                // récupère tous les cours depuis edusign
-                $courses = $this->apiCours->getAllCourses($keyEduSign);
+                // récupère tous les cours de la semaine depuis edusign
+                $start = Carbon::now()->setISODate((int)date('Y'), $week)->startOfWeek();
+                $end = $start->copy()->endOfWeek();
+                $courses = $this->apiCours->getAllCoursesWeek($keyEduSign, $start, $end);
 
                 if ($courses) {
                     foreach ($courses as $course) {

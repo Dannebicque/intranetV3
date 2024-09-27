@@ -40,7 +40,7 @@
                             <i class="fa fa-caret-left"></i><span class="sr-only">Semaine précédente</span>
                         </button>
                     </a>
-                    <a href="{{ path('administration_edusign_index', {'diplome': diplomeSelect.id, 'semaine': currentWeek}) }}" class="w-50">
+                    <a href="{{ path('administration_edusign_index', {'diplome': diplomeSelect.id, 'semaine': null}) }}" class="w-50">
                         <button class="btn btn-secondary w-100" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Cette semaine">
                             <i class="fa fa-calendar"></i> Semaine
                         </button>
@@ -60,11 +60,11 @@
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                         <li>
                             <a class="dropdown-item" type="button" data-bs-toggle="modal"
-                               data-bs-target="#newCoursesWeekModal">Pour la semaine en cours</a>
+                               data-bs-target="#newCoursesWeekModal">Pour la semaine</a>
                         </li>
                         <li>
                             <a class="dropdown-item" type="button" data-bs-toggle="modal"
-                               data-bs-target="#newCoursesDayModal">Pour la journée</a>
+                               data-bs-target="#newCoursesDayModal">Pour la journée en cours</a>
                         </li>
                     </ul>
 
@@ -86,7 +86,7 @@
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler
                                     </button>
-                                    <a href="{{ path('app_admin_edu_sign_create_courses', {'opt': 1, 'id': diplomeSelect.id}) }}"
+                                    <a href="{{ path('app_admin_edu_sign_create_courses', {'opt': 3, 'id': diplomeSelect.id, 'semaine': currentWeek}) }}"
                                        class="btn btn-primary">Confirmer</a>
                                 </div>
                             </div>

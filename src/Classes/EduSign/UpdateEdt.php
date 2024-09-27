@@ -49,7 +49,7 @@ class UpdateEdt
     {
     }
 
-    public function update(?string $keyEduSign, ?int $opt, string $date = ''): ?array
+    public function update(?string $keyEduSign, ?int $opt, ?int $week): ?array
     {
         $result = ['success' => true, 'messages' => []];
         $diplomes = $keyEduSign === null
@@ -60,8 +60,8 @@ class UpdateEdt
             foreach ($diplomes as $diplome) {
                 $keyEduSign = $keyEduSign ?? $diplome->getKeyEduSign();
                 $semestres = $this->semestreRepository->findByDiplome($diplome);
-                list($start, $end) = $this->calculStartEndDates($opt, $date);
-                $semaineReelle = date('W');
+                list($start, $end) = $this->calculStartEndDates($opt, $week);
+                $semaineReelle = $week;
 
                 foreach ($semestres as $semestre) {
                     $eventSemaine = $this->CalendrierRepository->findOneBy([
@@ -90,7 +90,7 @@ class UpdateEdt
         return $result;
     }
 
-    private function calculStartEndDates(?int $opt, string $date): array
+    private function calculStartEndDates(?int $opt, ?int $week): array
     {
         switch ($opt) {
             case 1:
@@ -102,8 +102,8 @@ class UpdateEdt
                 $end = Carbon::today();
                 break;
             case 3:
-                $start = Carbon::createFromFormat('d-m-Y', $date);
-                $end = Carbon::createFromFormat('d-m-Y', $date)->next('saturday');
+                $start = Carbon::now()->setISODate((int)date('Y'), $week)->startOfWeek();
+$end = $start->copy()->endOfWeek();
                 break;
             default:
                 $start = Carbon::today();
