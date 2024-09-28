@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/EdtPlanning.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/09/2024 17:15
+ * @lastUpdate 28/09/2024 21:37
  */
 
 namespace App\Entity;
@@ -83,6 +83,9 @@ class EdtPlanning extends BaseEntity
 
     #[ORM\Column(type: Types::TIME_MUTABLE, nullable: true)]
     private ?CarbonInterface $heureFin = null;
+
+    #[ORM\ManyToOne]
+    private ?Groupe $groupeObjet = null;
 
     public function getOrdre(): ?string
     {
@@ -427,6 +430,18 @@ class EdtPlanning extends BaseEntity
     public function setHeureFin(?CarbonInterface $heureFin): static
     {
         $this->heureFin = $heureFin;
+
+        return $this;
+    }
+
+    public function getGroupeObjet(): ?Groupe
+    {
+        return $this->groupeObjet;
+    }
+
+    public function setGroupeObjet(?Groupe $groupeObjet): static
+    {
+        $this->groupeObjet = $groupeObjet;
 
         return $this;
     }

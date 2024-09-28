@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtImport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/09/2024 21:05
+ * @lastUpdate 28/09/2024 22:21
  */
 
 /*
@@ -24,6 +24,7 @@ use App\Entity\Semestre;
 use App\Repository\DepartementRepository;
 use App\Repository\DiplomeRepository;
 use App\Repository\EdtPlanningRepository;
+use App\Repository\GroupeRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\SemestreRepository;
 use Carbon\Carbon;
@@ -44,6 +45,9 @@ class MyEdtImport
     protected ?Diplome $diplome = null;
     private ?string $nomfile = null;
     private int $semaine;
+
+    private array $tGroupes = [];
+
     private ?Semestre $semestre = null;
 
     private const CORRESPONDANCE_S3 = [
@@ -69,6 +73,7 @@ class MyEdtImport
         'WS301D' => 'WS301D',
         'WS302D' => 'WS302D',
         'WS303D' => 'WS303D',
+        'WS310D' => 'WS310D',
         'WRA301D' => 'WRA301',
         'WRA302D' => 'WRA302',
         'WRA303D' => 'WRA303D',
@@ -129,6 +134,11 @@ class MyEdtImport
         'WRA318S' => 'WRA318',
         'WRA319S' => 'WRA319S',
         'WRA320S' => 'WRA320S',
+        'WSA310D' => 'WSA310D',
+        'WSA310C' => 'WSA310C',
+        'WSA310S' => 'WSA310S',
+        'WSA301C' => 'WSA301C',
+        'WSA301S' => 'WSA301S',
     ];
 
     private const CORRESPONDANCE_S5 = [
@@ -227,6 +237,7 @@ class MyEdtImport
         private readonly TypeMatiereManager    $typeMatiereManager,
         private readonly EntityManagerInterface $entityManager,
         private readonly SemestreRepository    $semestreRepository,
+        private readonly GroupeRepository $groupeRepository,
         DiplomeRepository                      $diplomeRepository,
     )
     {
@@ -238,10 +249,14 @@ class MyEdtImport
                 $semestres = $this->semestreRepository->findByDiplome($diplome);
                 foreach ($semestres as $semestre) {
                     $this->tabSemestres[$semestre->getId()] = $semestre;
+
+                    $groupes = $this->groupeRepository->findByDiplomeAndOrdreSemestre($diplome, $semestre->getOrdreLmd());
+                    foreach ($groupes as $groupe) {
+                        $this->tGroupes[$semestre->getOrdreLmd()][$groupe->getTypeGroupe()->getType()->value][$groupe->getOrdre()] = $groupe;
+                    }
                 }
             }
         }
-
     }
 
     /**
@@ -261,6 +276,7 @@ class MyEdtImport
         // Récupérer la liste des profs avec initiales
         $this->tabIntervenants = $this->personnelRepository->tableauIntervenants($this->departement);
         $this->tabMatieres = $this->typeMatiereManager->tableauMatieres($this->departement);
+
 
         $handle = fopen($this->nomfile, 'rb');
         $this->tSemaineClear = []; // tableau pour mémoriser les semaines à supprimer
@@ -422,6 +438,13 @@ class MyEdtImport
 
             $pl->setSemaine((int)$this->semaine);//décalage avec Celcat
             $pl->setEvaluation(false);
+
+            // groupe Objet
+            if (array_key_exists($pl->getType(), $this->tGroupes[$semestre]) && array_key_exists($pl->getGroupe(), $this->tGroupes[$semestre][$pl->getType()])) {
+                $pl->setGroupeObjet($this->tGroupes[$semestre][$pl->getType()][$pl->getGroupe()]);
+            }
+
+
             $this->entityManager->persist($pl);
             $this->log->addItem('Ajout du cours ' . implode('.', $phrase), 'success');
         }
