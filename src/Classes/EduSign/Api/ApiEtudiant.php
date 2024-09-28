@@ -51,7 +51,6 @@ class ApiEtudiant
     public function updateEtudiant(EduSignEtudiant $etudiant, string $cleApi): mixed
     {
         $client = HttpClient::create();
-
         $response = $client->request('PATCH', 'https://ext.edusign.fr/v1/student', [
             'json' => ['student' => $etudiant->toArray()],
             'headers' => [
@@ -86,12 +85,7 @@ class ApiEtudiant
         $content = $response->getContent();
         $data = json_decode($content, true);
 
-        // si $data n'a pas : "status" => "success"
-        if ($data['status'] !== 'success') {
-            return $content;
-        } else {
-            return null;
-        }
+        return $data['result'] ?? null;
     }
 
     public function getEtudiant(?string $etudiant, string $cleApi): mixed
@@ -135,5 +129,22 @@ class ApiEtudiant
         } else {
             return null;
         }
+    }
+
+    public function getEtudiantByMail(string $mail, string $cleApi): mixed
+    {
+        $client = HttpClient::create();
+
+        $response = $client->request('GET', 'https://ext.edusign.fr/v1/student/by-email/'.$mail, [
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . $this->getCleApi->getCleApi($cleApi),
+            ]
+        ]);
+
+        $content = $response->getContent();
+        $data = json_decode($content, true);
+
+        return $data['result'] ?? null;
     }
 }

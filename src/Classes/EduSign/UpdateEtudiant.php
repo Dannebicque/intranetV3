@@ -63,6 +63,8 @@ class UpdateEtudiant
             }
         }
 
+        // retirer les entrées vides et réindexer
+        $result = array_values(array_filter($result));
         return $result;
     }
 
@@ -98,10 +100,12 @@ class UpdateEtudiant
             }
         }
 
+        // retirer les entrées vides et réindexer
+        $result = array_values(array_filter($result));
         return $result;
     }
 
-    public function changeSemestre(?Diplome $diplome): array
+    public function changeSemestre(?Diplome $diplome, string $keyEduSign): array
     {
         $semestres = $diplome->getSemestres();
 
@@ -118,14 +122,41 @@ class UpdateEtudiant
                 $etudiantEduSign = (new IntranetEtudiantEduSignAdapter($etudiant, $groupes))->getEtudiant();
 
                 if ($etudiant->getIdEduSign() === null || $etudiant->getIdEduSign() === '') {
-                    $result[$etudiant->getId()] = $this->apiEtudiant->addEtudiant($etudiantEduSign, $diplome->getKeyEduSign());
+                    $result[$etudiant->getId()] = $this->apiEtudiant->addEtudiant($etudiantEduSign, $keyEduSign);
                 } else {
-                    $result[$etudiant->getId()] = $this->apiEtudiant->updateEtudiant($etudiantEduSign, $diplome->getKeyEduSign());
+                    $result[$etudiant->getId()] = $this->apiEtudiant->updateEtudiant($etudiantEduSign, $keyEduSign);
                 }
             }
         }
 
+        // retirer les entrées vides et réindexer
+        $result = array_values(array_filter($result));
         return $result;
+    }
+
+    public function updateDeleteEtudiantNoGroup(string $keyEduSign): array {
+        set_time_limit(1000000);
+
+        $allEtudiantsEdusign = $this->apiEtudiant->getAllEtudiants($keyEduSign);
+        if ($allEtudiantsEdusign === null) {
+            return [];
+        }
+        foreach ($allEtudiantsEdusign as $etudiant) {
+                $etudiantObject = $this->etudiantRepository->findOneBy(['idEduSign' => $etudiant['ID']]);
+                if ($etudiantObject === null) {
+                    $etudiantObject = $this->etudiantRepository->findOneBy(['id' => $etudiant['API_ID']]);
+                    $etudiantEduSign = (new IntranetEtudiantEduSignAdapter($etudiantObject))->getEtudiant();
+                    // changer l'adresse mail de etudiantEduSign
+                    $etudiantEduSign->email = $etudiantObject->getId() . '@delete.univ-troyes.fr';
+                    $etudiantEduSign->id = $etudiant['ID'];
+                    // mettre à jour l'étudiant
+                    $this->apiEtudiant->updateEtudiant($etudiantEduSign, $keyEduSign);
+                    // supprimer l'étudiant
+                    $this->apiEtudiant->deleteEtudiant($etudiant['ID'], $keyEduSign);
+                }
+        }
+
+        return [];
     }
 }
 

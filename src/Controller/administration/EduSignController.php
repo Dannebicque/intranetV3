@@ -224,7 +224,9 @@ class EduSignController extends BaseController
     public function updateEtudiants(?int $id, UpdateEtudiant $updateEtudiant, MailerInterface $mailer): RedirectResponse
     {
         $diplome = $this->diplomeRepository->findOneBy(['id' => $id]);
-        $changeSemestreResult = $updateEtudiant->changeSemestre($diplome);
+        $keyEduSign = $diplome->getKeyEduSign();
+        $deleteNoGroupEtudiants = $updateEtudiant->updateDeleteEtudiantNoGroup($keyEduSign);
+        $changeSemestreResult = $updateEtudiant->changeSemestre($diplome, $keyEduSign);
 
         $email = (new TemplatedEmail())
             ->from('no-reply@univ-reims.fr')
