@@ -31,16 +31,7 @@ class UpdateEtudiant
 
     public function update(?string $keyEduSign): array
     {
-        $result = ['success' => true, 'messages' => []];
-
-        if ($keyEduSign === null) {
-            return ['success' => false, 'messages' => ['Clé EduSign manquante pour la mise à jour des étudiants.']];
-        }
-
         $diplomes = $this->diplomeRepository->findBy(['keyEduSign' => $keyEduSign]);
-        if (empty($diplomes)) {
-            return ['success' => false, 'messages' => ['Aucun diplôme trouvé pour la clé EduSign fournie.']];
-        }
 
         foreach ($diplomes as $diplome) {
             $semestres = $diplome->getSemestres();
@@ -59,27 +50,15 @@ class UpdateEtudiant
 
                     $etudiantEduSign = (new IntranetEtudiantEduSignAdapter($etudiant, $groupes))->getEtudiant();
 
-                    try {
-                        if ($etudiant->getIdEduSign() === null || $etudiant->getIdEduSign() === '') {
-                            $response = $this->apiEtudiant->addEtudiant($etudiantEduSign, $keyEduSign);
-                        } elseif ($etudiant->getAnneeSortie() !== 0) {
-                            $response = $this->apiEtudiant->deleteEtudiant($etudiant->getIdEduSign(), $keyEduSign);
-                        } else {
-                            $response = $this->apiEtudiant->updateEtudiant($etudiantEduSign, $keyEduSign);
-                        }
-
-                        if ($response['success']) {
-                            $result['messages'][] = $etudiant->getIdEduSign() === null
-                                ? "Étudiant ajouté : {$etudiant->getNom()} {$etudiant->getPrenom()}."
-                                : "Étudiant mis à jour : {$etudiant->getNom()} {$etudiant->getPrenom()}.";
-                        } else {
-                            $result['success'] = false;
-                            $result['messages'][] = "Erreur lors de la mise à jour de l'étudiant {$etudiant->getNom()} {$etudiant->getPrenom()}: " . $response['error'];
-                        }
-                    } catch (\Exception $e) {
-                        $result['success'] = false;
-                        $result['messages'][] = "Erreur lors de la mise à jour de l'étudiant {$etudiant->getNom()} {$etudiant->getPrenom()}: " . $e->getMessage();
+                    if ($etudiant->getIdEduSign() === null || $etudiant->getIdEduSign() === '') {
+                        $response = $this->apiEtudiant->addEtudiant($etudiantEduSign, $keyEduSign);
+                    } elseif ($etudiant->getAnneeSortie() !== 0) {
+                        $response = $this->apiEtudiant->deleteEtudiant($etudiant->getIdEduSign(), $keyEduSign);
+                    } else {
+                        $response = $this->apiEtudiant->updateEtudiant($etudiantEduSign, $keyEduSign);
                     }
+
+                    $result[$etudiant->getId()] = $response;
                 }
             }
         }
@@ -89,49 +68,34 @@ class UpdateEtudiant
 
     public function deleteMissingEtudiants(?string $keyEduSign): array
     {
-        $result = ['success' => true, 'messages' => []];
-
-        if ($keyEduSign === null) {
-            return ['success' => false, 'messages' => ['Clé EduSign manquante pour la mise à jour des étudiants.']];
-        }
-
         $diplomes = $this->diplomeRepository->findBy(['keyEduSign' => $keyEduSign]);
+        $etudiantOut = $this->etudiantRepository->findEduSignOutdated();
+        $result = [];
 
-        $etudiantOut[] = $this->etudiantRepository->findEduSignOutdated();
+        foreach ($diplomes as $diplome) {
+            $semestres = $this->semestreRepository->findByDiplome($diplome);
+            $allEtudiants = $this->apiEtudiant->getAllEtudiants($keyEduSign);
 
-        try {
-            foreach ($diplomes as $diplome) {
-                $semestres = $this->semestreRepository->findByDiplome($diplome);
-                $allEtudiants = $this->apiEtudiant->getAllEtudiants($keyEduSign);
+            if ($allEtudiants !== null && isset($allEtudiants['result']) && is_array($allEtudiants['result'])) {
+                foreach ($allEtudiants['result'] as $etudiant) {
+                    if (!is_array($etudiant)) continue;
 
-                if ($allEtudiants !== null && isset($allEtudiants['result']) && is_array($allEtudiants['result'])) {
-                    foreach ($allEtudiants as $etudiant) {
-                        if (!is_array($etudiant)) {
-                            continue; // Skip if $etudiant is not an array
-                        }
-                        foreach ($semestres as $semestre) {
-                            $etudiantSemestres = $this->etudiantRepository->findBySemestre($semestre);
-                            if (!in_array($etudiant, $etudiantSemestres) || in_array($etudiant, $etudiantOut)) {
-                                $response = $this->apiEtudiant->deleteEtudiant($etudiant['ID'], $keyEduSign);
-                                if ($response['success']) {
-                                    $result['messages'][] = "Étudiant supprimé : {$etudiant['LASTNAME']} {$etudiant['FIRSTNAME']}.";
-                                    $etudiantObject = $this->etudiantRepository->findOneBy(['idEduSign' => $etudiant['ID']]);
-                                    $etudiantObject->setIdEduSign(null);
-                                    $this->etudiantRepository->save($etudiantObject);
-                                } else {
-                                    $result['success'] = false;
-                                    $result['messages'][] = "Erreur lors de la suppression de l'étudiant {$etudiant['LASTNAME']} {$etudiant['FIRSTNAME']}: " . $response['error'];
+                    foreach ($semestres as $semestre) {
+                        $etudiantSemestres = $this->etudiantRepository->findBySemestre($semestre);
 
-                                }
+                        if (!in_array($etudiant, $etudiantSemestres) || in_array($etudiant, $etudiantOut)) {
+                            $response = $this->apiEtudiant->deleteEtudiant($etudiant['ID'], $keyEduSign);
+                            $result[$etudiant['API_ID']] = $response;
+
+                            if ($response['success']) {
+                                $etudiantObject = $this->etudiantRepository->findOneBy(['idEduSign' => $etudiant['ID']]);
+                                $etudiantObject->setIdEduSign(null);
+                                $this->etudiantRepository->save($etudiantObject);
                             }
                         }
                     }
                 }
             }
-        } catch
-        (\Exception $e) {
-            $result['success'] = false;
-            $result['messages'][] = 'Erreur lors de la suppression des étudiants : ' . $e->getMessage();
         }
 
         return $result;

@@ -9,8 +9,17 @@
 <h2>{{ diplome }}</h2>
 {% if errors %}
     <ul>
-        {% for id, error in errors %}
-            <li>{{ type }} id : {{ id }} => {{ error }}</li>
+        {% for key, value in errors %}
+            {% if value is iterable %}
+                <li>{{ key }}:</li>
+                <ul>
+                    {% for subKey, subValue in value %}
+                        <li>{{ subKey }}: {{ subValue }}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <li>{{ type }} id : {{ key }} => {{ value }}</li>
+            {% endif %}
             <hr>
         {% endfor %}
     </ul>
