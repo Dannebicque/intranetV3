@@ -214,7 +214,7 @@ class EduSignController extends BaseController
             ->to('cyndel.herolt@univ-reims.fr')
             ->subject('EduSign createCourses - error report')
             ->htmlTemplate('emails/error_report.html.twig')
-            ->context(['diplome' => $diplome->getLibelle(), 'errors' => $updateResult]);
+            ->context(['diplome' => $diplome->getLibelle(), 'errors' => $updateResult, 'type' => 'cours']);
         $mailer->send($email);
 
         return $this->redirectToRoute('administration_edusign_index');
@@ -223,38 +223,19 @@ class EduSignController extends BaseController
     #[Route('/update/etudiants/{id}', name: 'app_admin_edu_sign_update_etudiants')]
     public function updateEtudiants(?int $id, UpdateEtudiant $updateEtudiant, MailerInterface $mailer): RedirectResponse
     {
-        $diplomesErrors = [];
-
         $diplome = $this->diplomeRepository->findOneBy(['id' => $id]);
         $changeSemestreResult = $updateEtudiant->changeSemestre($diplome);
-
-        if (!$changeSemestreResult['success']) {
-            foreach ($changeSemestreResult['messages'] as $message) {
-                $errors[] = $message;
-            }
-        }
-
-        if (!empty($errors)) {
-            $diplomesErrors[$diplome->getLibelle()] = $errors;
-        }
 
         $email = (new TemplatedEmail())
             ->from('no-reply@univ-reims.fr')
             ->to('cyndel.herolt@univ-reims.fr')
             ->subject('EduSign updateEtudiants - error report')
             ->htmlTemplate('emails/error_report.html.twig')
-            ->context(['diplomesErrors' => $diplomesErrors]);
+            ->context(['errors' => $changeSemestreResult, 'diplome' => $diplome->getLibelle(), 'type' => 'étudiant']);
         $mailer->send($email);
 
-        if (!empty($diplomesErrors)) {
-            $allErrors = [];
-            foreach ($diplomesErrors as $diplome => $errors) {
-                foreach ($errors as $error) {
-                    $allErrors[] = "[$diplome] $error";
-                }
-            }
-            $errorMessage = implode("\n", $allErrors);
-            $this->addFlashBag(Constantes::FLASHBAG_ERROR, $errorMessage);
+        if (!empty($changeSemestreResult)) {
+            $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'Erreur lors de la mise à jour des étudiants, un rapport a été envoyé par mail à l\'administrateur');
         } else {
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'Mise à jour des groupes effectuée avec succès');
         }

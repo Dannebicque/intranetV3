@@ -139,8 +139,6 @@ class UpdateEtudiant
 
     public function changeSemestre(?Diplome $diplome): array
     {
-        $result = ['success' => true, 'messages' => []];
-
         $semestres = $diplome->getSemestres();
 
         foreach ($semestres as $semestre) {
@@ -155,17 +153,10 @@ class UpdateEtudiant
 
                 $etudiantEduSign = (new IntranetEtudiantEduSignAdapter($etudiant, $groupes))->getEtudiant();
 
-                try {
-                    if ($etudiant->getIdEduSign() === null || $etudiant->getIdEduSign() === '') {
-                        $this->apiEtudiant->addEtudiant($etudiantEduSign, $diplome->getKeyEduSign());
-                        $result['messages'][] = "Étudiant ajouté : {$etudiant->getNom()} {$etudiant->getPrenom()}.";
-                    } else {
-                        $this->apiEtudiant->updateEtudiant($etudiantEduSign, $diplome->getKeyEduSign());
-                        $result['messages'][] = "Étudiant mis à jour : {$etudiant->getNom()} {$etudiant->getPrenom()}.";
-                    }
-                } catch (\Exception $e) {
-                    $result['success'] = false;
-                    $result['messages'][] = "Erreur lors de la mise à jour de l'étudiant {$etudiant->getNom()} {$etudiant->getPrenom()}: " . $e->getMessage();
+                if ($etudiant->getIdEduSign() === null || $etudiant->getIdEduSign() === '') {
+                    $result[$etudiant->getId()] = $this->apiEtudiant->addEtudiant($etudiantEduSign, $diplome->getKeyEduSign());
+                } else {
+                    $result[$etudiant->getId()] = $this->apiEtudiant->updateEtudiant($etudiantEduSign, $diplome->getKeyEduSign());
                 }
             }
         }

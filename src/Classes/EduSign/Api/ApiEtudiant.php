@@ -16,69 +16,59 @@ class ApiEtudiant
     {
     }
 
-    public function addEtudiant(EduSignEtudiant $etudiant, string $cleApi): array
+    public function addEtudiant(EduSignEtudiant $etudiant, string $cleApi): mixed
     {
-        try {
-            $client = HttpClient::create();
+        $client = HttpClient::create();
 
-            $response = $client->request('POST', 'https://ext.edusign.fr/v1/student', [
-                'json' => ['student' => $etudiant->toArray()],
-                'headers' => [
-                    'Authorization' => 'Bearer ' . $this->getCleApi->getCleApi($cleApi),
-                    'accept' => 'application/json',
-                    'content-type' => 'application/json',
-                ],
-            ]);
+        $response = $client->request('POST', 'https://ext.edusign.fr/v1/student', [
+            'json' => ['student' => $etudiant->toArray()],
+            'headers' => [
+                'Authorization' => 'Bearer ' . $this->getCleApi->getCleApi($cleApi),
+                'accept' => 'application/json',
+                'content-type' => 'application/json',
+            ],
+        ]);
 
-            $content = $response->getContent();
-            $data = json_decode($content, true);
+        $content = $response->getContent();
+        $data = json_decode($content, true);
 
-            if (isset($data['status']) && $data['status'] === 'error') {
-                return ['success' => false, 'error' => $data['message']];
-            }
+        $id = $data['result']['ID'] ?? "";
 
-            $id = $data['result']['ID'] ?? "";
+        $etudiant = $this->etudiantRepository->findOneBy(['id' => $etudiant->api_id]);
+        if ($etudiant && $etudiant->getIdEduSign() === null) {
+            $etudiant->setIdEduSign($id);
+            $this->etudiantRepository->save($etudiant);
+        }
 
-            $etudiant = $this->etudiantRepository->findOneBy(['id' => $etudiant->api_id]);
-            if ($etudiant && null === $etudiant) {
-                return ['success' => false, 'error' => 'Etudiant non trouvé'];
-            }
-
-            if ($etudiant && $etudiant->getIdEduSign() === null) {
-                $etudiant->setIdEduSign($id);
-                $this->etudiantRepository->save($etudiant);
-            }
-
-            return ['success' => true, 'data' => $data];
-        } catch (\Exception $e) {
-            return ['success' => false, 'error' => $e->getMessage()];
+        // si $data n'a pas : "status" => "success"
+        if ($data['status'] !== 'success') {
+            return $content;
+        } else {
+            return null;
         }
     }
 
-    public function updateEtudiant(EduSignEtudiant $etudiant, string $cleApi): array
+    public function updateEtudiant(EduSignEtudiant $etudiant, string $cleApi): mixed
     {
-        try {
-            $client = HttpClient::create();
+        $client = HttpClient::create();
 
-            $response = $client->request('PATCH', 'https://ext.edusign.fr/v1/student', [
-                'json' => ['student' => $etudiant->toArray()],
-                'headers' => [
-                    'Authorization' => 'Bearer ' . $this->getCleApi->getCleApi($cleApi),
-                    'accept' => 'application/json',
-                    'content-type' => 'application/json',
-                ],
-            ]);
+        $response = $client->request('PATCH', 'https://ext.edusign.fr/v1/student', [
+            'json' => ['student' => $etudiant->toArray()],
+            'headers' => [
+                'Authorization' => 'Bearer ' . $this->getCleApi->getCleApi($cleApi),
+                'accept' => 'application/json',
+                'content-type' => 'application/json',
+            ],
+        ]);
 
-            $content = $response->getContent();
-            $data = json_decode($content, true);
+        $content = $response->getContent();
+        $data = json_decode($content, true);
 
-            if (isset($data['status']) && $data['status'] === 'error') {
-                return ['success' => false, 'error' => $data['message']];
-            }
-
-            return ['success' => true, 'data' => $data];
-        } catch (\Exception $e) {
-            return ['success' => false, 'error' => $e->getMessage()];
+        // si $data n'a pas : "status" => "success"
+        if ($data['status'] !== 'success') {
+            return $content;
+        } else {
+            return null;
         }
     }
 

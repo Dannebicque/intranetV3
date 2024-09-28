@@ -10,7 +10,7 @@
 {% if errors %}
     <ul>
         {% for id, error in errors %}
-            <li>cours id : {{ id }} => {{ error }}</li>
+            <li>{{ type }} id : {{ id }} => {{ error }}</li>
             <hr>
         {% endfor %}
     </ul>
