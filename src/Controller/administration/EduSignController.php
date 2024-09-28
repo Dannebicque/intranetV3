@@ -81,9 +81,6 @@ class EduSignController extends BaseController
         foreach ($semestres as $semestre) {
             $eventSemaine = $this->CalendrierRepository->findOneBy(['semaineReelle' => $week, 'anneeUniversitaire' => $semestre->getAnneeUniversitaire()]);
             $semaine = $eventSemaine->getSemaineFormation();
-            if (Carbon::today()->isWeekend()) {
-                $semaine++;
-            }
             $matieresDiplome = $this->getMatieresDiplome($semestre->getDiplome());
             $groupes = $this->groupeRepository->findBySemestre($semestre);
             $groupesSemestres[$semestre->getLibelle()] = array_filter($groupes, fn($groupe) => $semestre->getDiplome()->getApcParcours()?->getGroupes() ?? $this->groupeRepository->findBySemestre($semestre));
