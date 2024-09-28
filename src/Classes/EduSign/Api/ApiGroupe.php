@@ -35,7 +35,12 @@ class ApiGroupe
         // convertit JSON en tableau associatif PHP
         $data = json_decode($content, true);
 
-        return $data['result'] ?? "";
+        // si $data n'a pas : "status" => "success"
+        if ($data['status'] !== 'success') {
+            return $content;
+        } else {
+            return $data['result'];
+        }
     }
 
     public function addGroupe(EduSignGroupe $groupe, string $cleApi, ?string $type): mixed
@@ -75,12 +80,16 @@ class ApiGroupe
             }
         }
 
-        return $content;
+        // si $data n'a pas : "status" => "success"
+        if ($data['status'] !== 'success') {
+            return $content;
+        } else {
+            return null;
+        }
     }
 
     public function updateGroupe(EduSignGroupe $groupe, string $cleApi, ?string $type): mixed
     {
-        try {
             $client = HttpClient::create();
 
             $response = $client->request('PATCH', 'https://ext.edusign.fr/v1/group', [
@@ -115,20 +124,17 @@ class ApiGroupe
                 }
             }
 
-            if (isset($data['status']) && $data['status'] === 'error') {
-                return ['success' => false, 'error' => $data['message']];
-            }
-
-            return ['success' => true, 'data' => $data];
-        } catch (\Exception $e) {
-            return ['success' => false, 'error' => $e->getMessage()];
+        // si $data n'a pas : "status" => "success"
+        if ($data['status'] !== 'success') {
+            return $content;
+        } else {
+            return null;
         }
 
     }
 
-    public function deleteGroupe(string $groupeId, string $cleApi): array
+    public function deleteGroupe(string $groupeId, string $cleApi): mixed
     {
-        try {
             $client = HttpClient::create();
 
             $response = $client->request('DELETE', 'https://ext.edusign.fr/v1/group/' . $groupeId, [
@@ -141,19 +147,16 @@ class ApiGroupe
             $content = $response->getContent();
             $data = json_decode($content, true);
 
-            if (isset($data['status']) && $data['status'] === 'error') {
-                return ['success' => false, 'error' => $data['message']];
-            }
-
-            return ['success' => true, 'data' => $data];
-        } catch (\Exception $e) {
-            return ['success' => false, 'error' => $e->getMessage()];
+        // si $data n'a pas : "status" => "success"
+        if ($data['status'] !== 'success') {
+            return $content;
+        } else {
+            return null;
         }
     }
 
     public function getAllGroupes(string $cleApi): mixed
     {
-        try {
             $client = HttpClient::create();
 
             $response = $client->request('GET', 'https://ext.edusign.fr/v1/group', [
@@ -166,13 +169,11 @@ class ApiGroupe
             $content = $response->getContent();
             $data = json_decode($content, true);
 
-            if (isset($data['status']) && $data['status'] === 'error') {
-                return ['success' => false, 'error' => $data['message']];
-            }
-
-            return $data['result'] ?? null;
-        } catch (\Exception $e) {
-            return ['success' => false, 'error' => $e->getMessage()];
+        // si $data n'a pas : "status" => "success"
+        if ($data['status'] !== 'success') {
+            return $content;
+        } else {
+            return null;
         }
     }
 }

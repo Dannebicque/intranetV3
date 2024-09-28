@@ -129,28 +129,6 @@ class UpdateEdt
         $result = $this->sendUpdateAddCourse($keyEduSign);
 
         return $result;
-
-
-
-//        if ($event->matiere !== null && $event->matiere !== "Inconnue" && $event->groupeObjet !== null && $event->personnelObjet !== null && $event->semestre !== null) {
-//            $course = (new IntranetEdtEduSignAdapter($event))->getCourse();
-//            $eduSignCourse = $this->apiCours->getCourseIdByApiId($event->id, $keyEduSign);
-//            // si le cours n'existe pas dans EduSign et n'a pas de clé
-//            if ($course->id_edu_sign === null && !$eduSignCourse) {
-//                $enseignant = $event->personnelObjet;
-//                if ($enseignant && (empty($enseignant->getIdEduSign()) || !array_key_exists($diplome->getId(), $enseignant->getIdEduSign()))) {
-//                    $this->createEnseignant->update($enseignant, $diplome, $keyEduSign);
-//                }
-//                $this->sendUpdateAddCourse($keyEduSign);
-//            } // si le cours existe dans EduSign
-//            elseif ($course->id_edu_sign !== null && $eduSignCourse) {
-//                $this->apiCours->updateCourse($course, $keyEduSign);
-//            } // si le cours existe dans EduSign mais n'a pas de clé
-//            elseif ($course->id === null && $eduSignCourse) {
-//                $this->evenement->idEduSign = $eduSignCourse['ID'];
-//                $this->sendUpdateCourse($keyEduSign);
-//            }
-//        }
     }
 
     public function sendUpdateAddCourse(?string $keyEduSign): mixed

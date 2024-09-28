@@ -74,75 +74,66 @@ class ApiEtudiant
 
     public function getAllEtudiants(string $cleApi): mixed
     {
-        try {
-            $client = HttpClient::create();
+        $client = HttpClient::create();
 
-            $response = $client->request('GET', 'https://ext.edusign.fr/v1/student', [
-                'headers' => [
-                    'Content-Type' => 'application/json',
-                    'Authorization' => 'Bearer ' . $this->getCleApi->getCleApi($cleApi),
-                ]
-            ]);
+        $response = $client->request('GET', 'https://ext.edusign.fr/v1/student', [
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . $this->getCleApi->getCleApi($cleApi),
+            ]
+        ]);
 
-            $content = $response->getContent();
-            $data = json_decode($content, true);
+        $content = $response->getContent();
+        $data = json_decode($content, true);
 
-            if (isset($data['status']) && $data['status'] === 'error') {
-                return ['success' => false, 'error' => $data['message']];
-            }
-
-            return $data['result'] ?? null;
-        } catch (\Exception $e) {
-            return ['success' => false, 'error' => $e->getMessage()];
+        // si $data n'a pas : "status" => "success"
+        if ($data['status'] !== 'success') {
+            return $content;
+        } else {
+            return null;
         }
     }
 
     public function getEtudiant(?string $etudiant, string $cleApi): mixed
     {
-        try {
-            $client = HttpClient::create();
+        $client = HttpClient::create();
 
-            $response = $client->request('GET', 'https://ext.edusign.fr/v1/student/' . $etudiant, [
-                'headers' => [
-                    'Content-Type' => 'application/json',
-                    'Authorization' => 'Bearer ' . $this->getCleApi->getCleApi($cleApi),
-                ]
-            ]);
+        $response = $client->request('GET', 'https://ext.edusign.fr/v1/student/' . $etudiant, [
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . $this->getCleApi->getCleApi($cleApi),
+            ]
+        ]);
 
-            $content = $response->getContent();
-            $data = json_decode($content, true);
+        $content = $response->getContent();
+        $data = json_decode($content, true);
 
-            if (isset($data['status']) && $data['status'] === 'error') {
-                return ['success' => false, 'error' => $data['message']];
-            }
-
-            return $data['result'] ?? null;
-        } catch (\Exception $e) {
-            return ['success' => false, 'error' => $e->getMessage()];
+        // si $data n'a pas : "status" => "success"
+        if ($data['status'] !== 'success') {
+            return $content;
+        } else {
+            return null;
         }
     }
 
     public function deleteEtudiant(string $etudiantId, string $cleApi): mixed
     {
-        try {
-            $client = HttpClient::create();
+        $client = HttpClient::create();
 
-            $response = $client->request('DELETE', 'https://ext.edusign.fr/v1/student/' . $etudiantId, [
-                'headers' => [
-                    'Content-Type' => 'application/json',
-                    'Authorization' => 'Bearer ' . $this->getCleApi->getCleApi($cleApi),
-                ]
-            ]);
-            $content = $response->getContent();
-            $data = json_decode($content, true);
+        $response = $client->request('DELETE', 'https://ext.edusign.fr/v1/student/' . $etudiantId, [
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . $this->getCleApi->getCleApi($cleApi),
+            ]
+        ]);
+        $content = $response->getContent();
+        $data = json_decode($content, true);
 
-            if (isset($data['status']) && $data['status'] === 'error') {
-                return ['success' => false, 'error' => $data['message']];
-            }
-
-            return $data['result'] ?? null;
-        } catch (\Exception $e) {
-            return ['success' => false, 'error' => $e->getMessage()];
+        // si $data n'a pas : "status" => "success"
+        if ($data['status'] !== 'success') {
+            return $content;
+        } else {
+            return null;
         }
     }
 }

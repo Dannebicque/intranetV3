@@ -25,74 +25,55 @@ class UpdateGroupe
 
     public function update(?string $keyEduSign): array
     {
-        $result = ['success' => true, 'messages' => []];
+        $anneeUniv = $this->anneeUniversitaireRepository->findOneBy(['active' => true]);
+        $diplomes = $this->diplomeRepository->findBy(['keyEduSign' => $keyEduSign]);
 
-        if ($keyEduSign === null) {
-            return ['success' => false, 'messages' => ['Clé EduSign manquante.']];
-        }
+        foreach ($diplomes as $diplome) {
+            $semestres = $this->semestreRepository->findByDiplome($diplome);
 
-        try {
-            $anneeUniv = $this->anneeUniversitaireRepository->findOneBy(['active' => true]);
-            $diplomes = $this->diplomeRepository->findBy(['keyEduSign' => $keyEduSign]);
-
-            foreach ($diplomes as $diplome) {
-                $semestres = $this->semestreRepository->findByDiplome($diplome);
-
-                foreach ($semestres as $semestre) {
-                    $groupe = (new IntranetGroupeEduSignAdapter($anneeUniv, $semestre, 'semestre'))->getGroupe();
-                    if ($semestre->getIdEduSign() === null) {
-                        $this->apiGroupe->addGroupe($groupe, $keyEduSign, 'semestre');
-                        $result['messages'][] = "Groupe ajouté pour le semestre {$semestre->getLibelle()}.";
-                    } else {
-                        $this->apiGroupe->updateGroupe($groupe, $keyEduSign, 'semestre');
-                        $result['messages'][] = "Groupe mis à jour pour le semestre {$semestre->getLibelle()}.";
-                    }
+            foreach ($semestres as $semestre) {
+                $groupe = (new IntranetGroupeEduSignAdapter($anneeUniv, $semestre, 'semestre'))->getGroupe();
+                if ($semestre->getIdEduSign() === null) {
+                    $result['semestre'.$semestre->getId()] = $this->apiGroupe->addGroupe($groupe, $keyEduSign, 'semestre');
+                } else {
+                    $result['semestre'.$semestre->getId()] = $this->apiGroupe->updateGroupe($groupe, $keyEduSign, 'semestre');
                 }
+            }
 
-                $departement = $diplome->getDepartement();
-                $semestres = $diplome->getSemestres();
+            $departement = $diplome->getDepartement();
+            $semestres = $diplome->getSemestres();
 
-                foreach ($semestres as $parent) {
-                    $groupes = $parent->getDiplome()->getApcParcours()?->getGroupes() ?? $this->groupeRepository->findBySemestre($parent);
+            foreach ($semestres as $parent) {
+                $groupes = $parent->getDiplome()->getApcParcours()?->getGroupes() ?? $this->groupeRepository->findBySemestre($parent);
 
-                    foreach ($groupes as $groupe) {
-                        foreach ($groupe->getTypeGroupe()?->getSemestres() as $semestre) {
-                            if ($semestre === $parent) {
-                                $groupea = (new IntranetGroupeEduSignAdapter($anneeUniv, $groupe, 'groupe', $parent->getIdEduSign()))->getGroupe();
-                                if ($groupe->getIdEduSign() === null || $groupe->getIdEduSign() === '') {
-                                    $this->apiGroupe->addGroupe($groupea, $keyEduSign, 'groupe');
-                                } else {
-                                    $this->apiGroupe->updateGroupe($groupea, $keyEduSign, 'groupe');
-                                }
-                                $result['messages'][] = "Groupe ajouté pour le groupe {$groupe->getLibelle()}.";
+                foreach ($groupes as $groupe) {
+                    foreach ($groupe->getTypeGroupe()?->getSemestres() as $semestre) {
+                        if ($semestre === $parent) {
+                            $groupea = (new IntranetGroupeEduSignAdapter($anneeUniv, $groupe, 'groupe', $parent->getIdEduSign()))->getGroupe();
+                            if ($groupe->getIdEduSign() === null || $groupe->getIdEduSign() === '') {
+                                $result['groupe'.$groupe->getId()] = $this->apiGroupe->addGroupe($groupea, $keyEduSign, 'groupe');
+                            } else {
+                                $result['groupe'.$groupe->getId()] = $this->apiGroupe->updateGroupe($groupea, $keyEduSign, 'groupe');
                             }
                         }
                     }
                 }
             }
-        } catch (\Exception $e) {
-            $result['success'] = false;
-            $result['messages'][] = 'Erreur lors de la mise à jour des groupes : ' . $e->getMessage();
         }
 
         return $result;
     }
 
-    public function deleteMissingGroupes(?string $keyEduSign): array
+    public function deleteMissingGroupes(?string $keyEduSign): mixed
     {
-        $result = ['success' => true, 'messages' => []];
-
-        if ($keyEduSign === null) {
-            return ['success' => false, 'messages' => ['Clé EduSign manquante.']];
-        }
-
         $diplomes = $this->diplomeRepository->findBy(['keyEduSign' => $keyEduSign]);
+        $result = [];
 
-        try {
-            foreach ($diplomes as $diplome) {
-                $semestres = $this->semestreRepository->findByDiplome($diplome);
-                $allGroupes = $this->apiGroupe->getAllGroupes($keyEduSign);
+        foreach ($diplomes as $diplome) {
+            $semestres = $this->semestreRepository->findByDiplome($diplome);
+            $allGroupes = $this->apiGroupe->getAllGroupes($keyEduSign);
 
+            if ($allGroupes !== null && isset($allGroupes['result']) && is_array($allGroupes['result'])) {
                 foreach ($allGroupes as $groupe) {
                     $groupeObject = $groupe['PARENT'] === ''
                         ? $this->semestreRepository->findOneBy(['idEduSign' => $groupe['ID']])
@@ -108,7 +89,7 @@ class UpdateGroupe
                     }
 
                     if ($groupeObject === null) {
-                        $this->apiGroupe->deleteGroupe($groupe['ID'], $keyEduSign);
+                        $result = $this->apiGroupe->deleteGroupe($groupe['ID'], $keyEduSign);
                         // retirer la clé eduSign du groupe ou du semestre
                         $groupeFinal = $groupe['PARENT'] === ''
                             ? $this->semestreRepository->findOneBy(['idEduSign' => $groupe['ID']])?->setIdEduSign(null)
@@ -119,14 +100,9 @@ class UpdateGroupe
                         } elseif ($groupeFinal instanceof Semestre) {
                             $this->semestreRepository->save($groupeFinal);
                         }
-
-                        $result['messages'][] = "Groupe supprimé : {$groupe['NAME']}.";
                     }
                 }
             }
-        } catch (\Exception $e) {
-            $result['success'] = false;
-            $result['messages'][] = 'Erreur lors de la suppression des groupes manquants : ' . $e->getMessage();
         }
 
         return $result;

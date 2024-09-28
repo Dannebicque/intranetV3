@@ -98,17 +98,9 @@ class EduSignController extends BaseController
     {
         // Augmenter la limite de temps d'exécution
         set_time_limit(1000000);
-//        $departement = $this->departementRepository->find($id);
-//        if (!$departement) {
-//            $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'Département introuvable.');
-//            return $this->redirectToRoute('app_edu_sign');
-//        }
-//
-//        $diplomes = $this->diplomeRepository->findAllWithEduSignDepartement($departement);
+
         $diplome = $this->diplomeRepository->find($id);
-        $diplomesErrors = [];
-//
-//        foreach ($diplomes as $diplome) {
+
         $keyEduSign = $diplome->getKeyEduSign();
         $errors = [];
 
@@ -124,26 +116,17 @@ class EduSignController extends BaseController
             $errors = array_merge($errors, $updateEtudiantResult['messages']);
         }
 
-        if (!empty($errors)) {
-            $diplomesErrors[$diplome->getLibelle()] = $errors;
-        }
-//        }
-
         $email = (new TemplatedEmail())
             ->from('no-reply@univ-reims.fr')
             ->to('cyndel.herolt@univ-reims.fr')
             ->subject('EduSign init - rapport')
             ->htmlTemplate('emails/error_report.html.twig')
             ->context([
-                'diplomesErrors' => $diplomesErrors,
+                'errors' => $errors,
+                'diplome' => $diplome->getLibelle(),
+                'type' => 'Initialisation',
             ]);
         $mailer->send($email);
-
-        if (!empty($diplomesErrors)) {
-            $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'Une erreur est survenue lors de l\'initialisation des données sur EduSign, le détail des erreurs a été envoyé par mail.');
-        } else {
-            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'Les données ont été initialisées sur EduSign.');
-        }
 
         return $this->redirectToRoute('app_edu_sign');
     }
@@ -154,48 +137,23 @@ class EduSignController extends BaseController
         // Augmenter la limite de temps d'exécution
         set_time_limit(1000000);
 
-//        $departement = $this->departementRepository->find($id);
-//        if (!$departement) {
-//            $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'Département introuvable.');
-//            return $this->redirectToRoute('app_edu_sign');
-//        }
-//
-//        $diplomes = $this->diplomeRepository->findAllWithEduSignDepartement($departement);
         $diplome = $this->diplomeRepository->find($id);
-        $diplomesErrors = [];
-
-//        foreach ($diplomes as $diplome) {
         $keyEduSign = $diplome->getKeyEduSign();
-        $errors = [];
 
         $updateResults = [
-            $updateGroupe->deleteMissingGroupes($keyEduSign, $diplome->getSemestres()),
-            $updateEtudiant->deleteMissingEtudiants($keyEduSign, $diplome->getSemestres()),
-            $updateGroupe->update($keyEduSign),
-            $updateEtudiant->update($keyEduSign),
+            'deleteMissingGroupes' => $updateGroupe->deleteMissingGroupes($keyEduSign),
+            'deleteMissingEtudiants' => $updateEtudiant->deleteMissingEtudiants($keyEduSign),
+            'updateGroupes' => $updateGroupe->update($keyEduSign),
+            'updateEtudiants' => $updateEtudiant->update($keyEduSign),
         ];
-
-        foreach ($updateResults as $result) {
-            if (!$result['success']) {
-                $errors = array_merge($errors, $result['messages']);
-            }
-        }
-
-        if (!empty($errors)) {
-            $diplomesErrors[$diplome->getLibelle()] = $errors;
-        }
-//        }
 
         $email = (new TemplatedEmail())
             ->from('no-reply@univ-reims.fr')
             ->to('cyndel.herolt@univ-reims.fr')
             ->subject('EduSign changement année - rapport')
             ->htmlTemplate('emails/error_report.html.twig')
-            ->context(['diplomesErrors' => $diplomesErrors]);
+            ->context(['errors' => $updateResults, 'diplome' => $diplome->getLibelle(), 'type' => 'Changement d\'année']);
         $mailer->send($email);
-
-        $flashMessage = empty($diplomesErrors) ? 'Les données ont été mises à jour sur EduSign.' : 'Une erreur est survenue lors de la mise à jour des données sur EduSign.';
-        $this->addFlashBag(empty($diplomesErrors) ? Constantes::FLASHBAG_SUCCESS : Constantes::FLASHBAG_ERROR, $flashMessage);
 
         return $this->redirectToRoute('app_edu_sign');
     }
