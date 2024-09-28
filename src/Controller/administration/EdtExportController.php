@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EdtExportController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/09/2024 17:48
+ * @lastUpdate 28/09/2024 12:15
  */
 
 namespace App\Controller\administration;
@@ -239,10 +239,20 @@ class EdtExportController extends BaseController
             'departement' => $this->getDepartement(),
             'anneeUniversitaire' => $this->getAnneeUniversitaire(),
         ]);
+
         $myMailer->attachFile($doc['path']);
 
         $myMailer->sendMessage(
-            $personnel->getMails(), 'Votre planning en BUT ' . $this->getDepartement()?->getLibelle());
+            $personnel->getMails(), 'Votre planning en BUT ' . $this->getDepartement()?->getLibelle(),
+            [
+                'replyTo' => [
+                    'romain.delon@univ-reims.fr',
+                    'marina.matosin@univ-reims.fr',
+                    'david.annebicque@univ-reims.fr'
+                ],
+            ]
+
+        );
 
         return JsonReponse::success('PDF envoyé avec succès');
     }
