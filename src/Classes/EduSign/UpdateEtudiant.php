@@ -78,9 +78,23 @@ class UpdateEtudiant
             $semestres = $this->semestreRepository->findByDiplome($diplome);
             $allEtudiants = $this->apiEtudiant->getAllEtudiants($keyEduSign);
 
-            if ($allEtudiants !== null && isset($allEtudiants['result']) && is_array($allEtudiants['result'])) {
-                foreach ($allEtudiants['result'] as $etudiant) {
+            if ($allEtudiants !== null) {
+
+                foreach ($allEtudiants as $etudiant) {
                     if (!is_array($etudiant)) continue;
+
+                    // Si il n'y a pas d'etudiant dans la base de données avec le même ID
+                    $etudiantObject = $this->etudiantRepository->findOneBy(['idEduSign' => $etudiant['ID']]);
+                    // on change son mail dans edusign
+                    if ($etudiantObject === null) {
+                        $etudiantObject = $this->etudiantRepository->findOneBy(['id' => $etudiant['API_ID']]);
+                        $etudiantEduSign = (new IntranetEtudiantEduSignAdapter($etudiantObject, []))->getEtudiant();
+                        $etudiantEduSign->email = $etudiantObject->getId() . '@delete.fr';
+                        $etudiantEduSign->id = $etudiant['ID'];
+                        $result[$etudiantObject->getId()] = $this->apiEtudiant->updateEtudiant($etudiantEduSign, $keyEduSign);
+                        // supprimer d'edusign l'étudiant
+                        $result = $this->apiEtudiant->deleteEtudiant($etudiant['ID'], $keyEduSign);
+                    }
 
                     foreach ($semestres as $semestre) {
                         $etudiantSemestres = $this->etudiantRepository->findBySemestre($semestre);
@@ -89,8 +103,8 @@ class UpdateEtudiant
                             $response = $this->apiEtudiant->deleteEtudiant($etudiant['ID'], $keyEduSign);
                             $result[$etudiant['API_ID']] = $response;
 
-                            if ($response['success']) {
-                                $etudiantObject = $this->etudiantRepository->findOneBy(['idEduSign' => $etudiant['ID']]);
+                            if ($response === null) {
+                                $etudiantObject = $this->etudiantRepository->findOneBy(['id' => $etudiant['API_ID']]);
                                 $etudiantObject->setIdEduSign(null);
                                 $this->etudiantRepository->save($etudiantObject);
                             }

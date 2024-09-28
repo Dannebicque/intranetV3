@@ -225,7 +225,6 @@ class EduSignController extends BaseController
     {
         $diplome = $this->diplomeRepository->findOneBy(['id' => $id]);
         $keyEduSign = $diplome->getKeyEduSign();
-        $fixEtudiantsResult = $updateEtudiant->fixEtudiants($diplome, $keyEduSign);
         $changeSemestreResult = $updateEtudiant->changeSemestre($diplome, $keyEduSign);
 
         $email = (new TemplatedEmail())
@@ -295,6 +294,7 @@ class EduSignController extends BaseController
 
 
         $semestre = $this->semestreRepository->findOneBy(['id' => $request->query->get('semestre')]);
+        $diplome = $semestre->getDiplome();
 
         $groupe = $this->groupeRepository->findOneBy(['id' => $request->query->get('groupe')]);
         if (null != $groupe) {
@@ -320,7 +320,7 @@ class EduSignController extends BaseController
             $this->createEnseignant->update($course->personnelObjet, $course->diplome, $course->diplome->getKeyEduSign());
         }
 
-        $courseEdusign = (new IntranetEdtEduSignAdapter($course))->getCourse();
+        $courseEdusign = (new IntranetEdtEduSignAdapter($course, $diplome))->getCourse();
         $keyEduSign = $cours->getSemestre()->getDiplome()->getKeyEduSign();
 
         if ($courseEdusign->id_edu_sign == null) {
