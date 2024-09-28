@@ -88,12 +88,14 @@ class UpdateEtudiant
                     // on change son mail dans edusign
                     if ($etudiantObject === null) {
                         $etudiantObject = $this->etudiantRepository->findOneBy(['id' => $etudiant['API_ID']]);
-                        $etudiantEduSign = (new IntranetEtudiantEduSignAdapter($etudiantObject, []))->getEtudiant();
-                        $etudiantEduSign->email = $etudiantObject->getId() . '@delete.fr';
-                        $etudiantEduSign->id = $etudiant['ID'];
-                        $result[$etudiantObject->getId()] = $this->apiEtudiant->updateEtudiant($etudiantEduSign, $keyEduSign);
-                        // supprimer d'edusign l'étudiant
-                        $result = $this->apiEtudiant->deleteEtudiant($etudiant['ID'], $keyEduSign);
+                        if ($etudiantObject !== null) {
+                            $etudiantEduSign = (new IntranetEtudiantEduSignAdapter($etudiantObject, []))->getEtudiant();
+                            $etudiantEduSign->email = $etudiantObject->getId() . '@delete.fr';
+                            $etudiantEduSign->id = $etudiant['ID'];
+                            $result[$etudiantObject->getId()] = $this->apiEtudiant->updateEtudiant($etudiantEduSign, $keyEduSign);
+                            // supprimer d'edusign l'étudiant
+                            $result = $this->apiEtudiant->deleteEtudiant($etudiant['ID'], $keyEduSign);
+                        }
                     }
 
                     foreach ($semestres as $semestre) {
