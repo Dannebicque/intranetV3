@@ -134,32 +134,35 @@ class UpdateEtudiant
         return $result;
     }
 
-    public function updateDeleteEtudiantNoGroup(string $keyEduSign): array {
-        set_time_limit(1000000);
+    public function fixEtudiants(?Diplome $diplome, string $keyEduSign): array
+    {
+        $result = [];
 
-        $allEtudiantsEdusign = $this->apiEtudiant->getAllEtudiants($keyEduSign);
-        if ($allEtudiantsEdusign === null) {
-            return [];
-        }
-        foreach ($allEtudiantsEdusign as $etudiant) {
+        // récupérer tous les etudiants depuis edusign
+        $allEtudiants = $this->apiEtudiant->getAllEtudiants($keyEduSign);
+        // vérifier qu'il n'y a pas de doublons d'adresse mail
+        $doublons = [];
+        foreach ($allEtudiants as $etudiant) {
+            if (in_array($etudiant['EMAIL'], $doublons)) {
+                // trouver le bon étudiant grâce à l'idEduSign sur l'objet dans la base de données
                 $etudiantObject = $this->etudiantRepository->findOneBy(['idEduSign' => $etudiant['ID']]);
+                // si je ne le trouve pas je le cherche via API_ID
                 if ($etudiantObject === null) {
                     $etudiantObject = $this->etudiantRepository->findOneBy(['id' => $etudiant['API_ID']]);
-                    if ($etudiantObject === null) {
-                        continue;
-                    }
-                    $etudiantEduSign = (new IntranetEtudiantEduSignAdapter($etudiantObject))->getEtudiant();
-                    // changer l'adresse mail de etudiantEduSign
-                    $etudiantEduSign->email = $etudiantObject->getId() . '@delete.univ-troyes.fr';
-                    $etudiantEduSign->id = $etudiant['ID'];
-                    // mettre à jour l'étudiant
-                    $this->apiEtudiant->updateEtudiant($etudiantEduSign, $keyEduSign);
-                    // supprimer l'étudiant
-                    $this->apiEtudiant->deleteEtudiant($etudiant['ID'], $keyEduSign);
                 }
+                // update l'etudiant dans edusign pour changer son mail
+                $etudiantEduSign = (new IntranetEtudiantEduSignAdapter($etudiantObject, []))->getEtudiant();
+                $etudiantEduSign->email = $etudiantObject->getId() . '@delete.fr';
+                $etudiantEduSign->id = $etudiant['ID'];
+                $result[$etudiantObject->getId()] = $this->apiEtudiant->updateEtudiant($etudiantEduSign, $keyEduSign);
+                // supprimer d'edusign l'étudiant
+                $result = $this->apiEtudiant->deleteEtudiant($etudiant['ID'], $keyEduSign);
+            } else {
+                $doublons[] = $etudiant['EMAIL'];
+            }
         }
 
-        return [];
+        return $result ?? [];
     }
 }
 
