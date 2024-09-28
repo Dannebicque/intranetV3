@@ -225,7 +225,7 @@ class EduSignController extends BaseController
     {
         $diplome = $this->diplomeRepository->findOneBy(['id' => $id]);
         $keyEduSign = $diplome->getKeyEduSign();
-        $deleteNoGroupEtudiants = $updateEtudiant->updateDeleteEtudiantNoGroup($keyEduSign);
+        $fixEtudiantsResult = $updateEtudiant->fixEtudiants($diplome, $keyEduSign);
         $changeSemestreResult = $updateEtudiant->changeSemestre($diplome, $keyEduSign);
 
         $email = (new TemplatedEmail())
