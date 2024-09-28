@@ -145,6 +145,9 @@ class UpdateEtudiant
                 $etudiantObject = $this->etudiantRepository->findOneBy(['idEduSign' => $etudiant['ID']]);
                 if ($etudiantObject === null) {
                     $etudiantObject = $this->etudiantRepository->findOneBy(['id' => $etudiant['API_ID']]);
+                    if ($etudiantObject === null) {
+                        continue;
+                    }
                     $etudiantEduSign = (new IntranetEtudiantEduSignAdapter($etudiantObject))->getEtudiant();
                     // changer l'adresse mail de etudiantEduSign
                     $etudiantEduSign->email = $etudiantObject->getId() . '@delete.univ-troyes.fr';
