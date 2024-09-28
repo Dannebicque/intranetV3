@@ -108,12 +108,10 @@ class EduSignController extends BaseController
         $updateGroupeResult = $updateGroupe->update($keyEduSign);
         $updateEtudiantResult = $updateEtudiant->update($keyEduSign);
 
-        if (!$updateGroupeResult['success']) {
-            $errors = array_merge($errors, $updateGroupeResult['messages']);
-        }
-
-        if (!$updateEtudiantResult['success']) {
-            $errors = array_merge($errors, $updateEtudiantResult['messages']);
+        if ($updateGroupeResult) {
+            $errors['updateGroupe'] = $updateGroupeResult;
+        } elseif ($updateEtudiantResult) {
+            $errors['updateEtudiant'] = $updateEtudiantResult;
         }
 
         $email = (new TemplatedEmail())
