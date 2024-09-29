@@ -216,12 +216,11 @@
                                            value="{{ cours.salle }}">
                                 </td>
                                 <td class="p-1">
-                                    <label for="personnel"
-                                           class="text-danger">{{ cours.personnel is null or cours.personnel == "" or cours.personnel == "-" ? '** Pas d\'enseignant **' }}</label>
+                                    <label for="personnel" class="text-danger">{{ cours.personnelObjet is null ? '** Pas d\'enseignant **' }}</label>
                                     <select name="personnel" id="personnel" class="form-select">
-                                        <option value="0">{{ cours.personnel is not null and cours.personnel != "" and cours.personnel != "-" ? cours.personnel : 'Sélectionner un.e enseignant.e' }}</option>
+                                        <option value="0">{{ cours.personnelObjet is not null ? cours.personnelObjet.nom ~ ' ' ~ cours.personnelObjet.prenom : 'Sélectionner un.e enseignant.e' }}</option>
                                         {% for enseignant in cours.enseignants %}
-                                            <option value="{{ enseignant.personnel.id }}" {{ enseignant.personnel.nom ~ ' ' ~ enseignant.personnel.prenom == cours.personnel or enseignant.personnel.prenom ~ ' ' ~ enseignant.personnel.nom == cours.personnel ? 'selected' : '' }}>{{ enseignant.personnel.prenom }} {{ enseignant.personnel.nom }}</option>
+                                            <option value="{{ enseignant.personnel.id }}" {{ enseignant.personnel.id == cours.personnelObjet.id ? 'selected' : '' }}>{{ enseignant.personnel.prenom }} {{ enseignant.personnel.nom }}</option>
                                         {% endfor %}
                                     </select>
                                 </td>
