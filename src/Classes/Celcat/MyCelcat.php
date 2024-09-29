@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Celcat/MyCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/09/2024 17:56
+ * @lastUpdate 29/09/2024 19:39
  */
 
 namespace App\Classes\Celcat;
@@ -120,7 +120,7 @@ class MyCelcat
         $this->log->addItem('Récupération des données pour le département ' . $codeCelcatDepartement, 'info');
         if (null !== $anneeUniversitaire && null !== $diplome) {
             $this->getData($anneeUniversitaire);
-            $this->addEvents($diplome, $anneeUniversitaire);
+            $this->addEvents($codeCelcatDepartement, $diplome, $anneeUniversitaire);
         }
         $this->log->addItem('Fin de la récupération des données pour le département ' . $codeCelcatDepartement, 'info');
         $this->log->writeLogsToFile('synchro-celcat-' . $codeCelcatDepartement . '.log', true, 'celcat');
