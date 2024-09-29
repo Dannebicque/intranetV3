@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Celcat/MyCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/09/2024 19:39
+ * @lastUpdate 29/09/2024 20:06
  */
 
 namespace App\Classes\Celcat;
@@ -155,7 +155,7 @@ class MyCelcat
             while (odbc_fetch_row($resultCelcat)) {
                 $eventId = odbc_result($resultCelcat, 1);
                 //todo: trouver comment construire une clé unique de comparaison dans transformeCelcatToDtob
-                $celcatIndex[$eventId] = $this->transformeCelcatToDto($resultCelcat, $anneeUniversitaire, $diplome->getCodeCelcatDepartement());
+                $celcatIndex[$eventId] = $this->transformeCelcatToDto($resultCelcat, $anneeUniversitaire, $diplome);
             }
 
             $intranetIndex = [];
@@ -324,8 +324,9 @@ class MyCelcat
         $this->log->addItem('Mise à jour de l\'événement ' . $intranet->getId() . ' avec l\évenement Celcat ' . $celcat->getUniqueId(), 'info');
     }
 
-    private function transformeCelcatToDto($resultCelcat, AnneeUniversitaire $anneeUniversitaire, int $eventId): array
+    private function transformeCelcatToDto($resultCelcat, AnneeUniversitaire $anneeUniversitaire, Diplome $diplome): array
     {
+        $eventId = odbc_result($resultCelcat, 1);
         $debut = explode(' ', (string)odbc_result($resultCelcat, 3));
         $fin = explode(' ', (string)odbc_result($resultCelcat, 4));
         $type = mb_substr(odbc_result($resultCelcat, 6), 1, -1);
@@ -366,7 +367,7 @@ class MyCelcat
                     $event->setPersonnel(null);
                 }
 
-                $event->setDepartementId($resultCelcat);
+                $event->setDepartementId($diplome->getCodeCelcatDepartement());
                 $event->setCodeGroupe($codeGroupe);
                 $event->setLibGroupe(utf8_encode(odbc_result($resultCelcat, 14)));
 
