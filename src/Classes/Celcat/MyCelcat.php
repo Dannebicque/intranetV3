@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Celcat/MyCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/09/2024 20:06
+ * @lastUpdate 29/09/2024 20:08
  */
 
 namespace App\Classes\Celcat;
@@ -185,7 +185,7 @@ class MyCelcat
                     } else {
                         // Insertion des nouvelles données
                         foreach ($row as $r) {
-                            $this->createEvent($row, $anneeUniversitaire, $diplome->getCodeCelcatDepartement());
+                            $this->createEvent($r, $anneeUniversitaire, $diplome->getCodeCelcatDepartement());
                         }
                     }
                 }
