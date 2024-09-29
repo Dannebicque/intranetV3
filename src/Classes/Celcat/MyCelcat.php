@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Celcat/MyCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 27/09/2024 21:14
+ * @lastUpdate 29/09/2024 16:23
  */
 
 namespace App\Classes\Celcat;
 
+use App\Classes\EduSign\Events\EduSignEvent;
 use App\Classes\GetSemestreFromGroupe;
 use App\Classes\Matieres\TypeMatiereManager;
 use App\Components\Logger\LogHelper;
@@ -27,26 +28,30 @@ use Carbon\CarbonInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use function array_key_exists;
 
 class MyCelcat
 {
+    protected array $tSemestres;
     protected array $tGroupes;
     protected array $tPersonnels;
     protected array $tCalendrier;
     protected array $tMatieres;
     private mixed $conn;
+    private ?string $cleApi;
 
     public function __construct(
-        private readonly LogHelper             $log,
-        private readonly EdtCelcatRepository   $edtCelcatRepository,
-        private readonly TypeMatiereManager    $typeMatiereManager,
-        private readonly DiplomeRepository     $diplomeRepository,
-        private readonly PersonnelRepository   $personnelRepository,
-        private readonly EntityManagerInterface $entityManger,
-        private readonly ParameterBagInterface $parameterBag,
-        private readonly GroupeRepository      $groupeRepository,
-        private readonly CalendrierRepository  $calendrierRepository
+        private readonly EventDispatcherInterface $eventDispatcher,
+        private readonly LogHelper                $log,
+        private readonly EdtCelcatRepository      $edtCelcatRepository,
+        private readonly TypeMatiereManager       $typeMatiereManager,
+        private readonly DiplomeRepository        $diplomeRepository,
+        private readonly PersonnelRepository      $personnelRepository,
+        private readonly EntityManagerInterface   $entityManger,
+        private readonly ParameterBagInterface    $parameterBag,
+        private readonly GroupeRepository         $groupeRepository,
+        private readonly CalendrierRepository     $calendrierRepository
     )
     {
 
@@ -117,58 +122,80 @@ class MyCelcat
             $this->getData($anneeUniversitaire);
             $this->addEvents($diplome, $anneeUniversitaire);
         }
-
+        $this->log->addItem('Fin de la récupération des données pour le département ' . $codeCelcatDepartement, 'info');
         $this->log->writeLogsToFile('synchro-celcat-' . $codeCelcatDepartement . '.log', true, 'celcat');
+
+
     }
 
     /**
      * @throws Exception
      */
-    public function addEvents(Diplome $diplome, AnneeUniversitaire $anneeUniversitaire): void
+    public function addEvents(int $codeCelcat, Diplome $diplome, AnneeUniversitaire $anneeUniversitaire): void
     {
         $this->connect();
 
         $departement = $diplome->getDepartement();
+        $this->cleApi = $diplome->getKeyEduSign();
 
         if (null !== $departement) {
             $this->log->addItem('Récupération des données pour le département ' . $departement->getLibelle(), 'info');
 
-            $this->tMatieres = $this->typeMatiereManager->tableauMatieresCodeApogee($departement);
 
-            $query = 'SELECT CT_EVENT.event_id, CT_EVENT.day_of_week, CT_EVENT.start_time, CT_EVENT.end_time, CT_EVENT.weeks, CT_EVENT_CAT.name, CT_VIEW_EVENT_MODULE001.resourcecode, CT_VIEW_EVENT_MODULE001.resourcename, CT_VIEW_EVENT_STAFF001.resourcecode, CT_VIEW_EVENT_STAFF001.resourcename, CT_VIEW_EVENT_ROOM001.resourcecode, CT_VIEW_EVENT_ROOM001.resourcename, CT_VIEW_EVENT_GROUP001.resourcecode, CT_VIEW_EVENT_GROUP001.resourcename, CT_EVENT.date_change, CT_VIEW_EVENT_ROOM001.resourceweeks FROM CT_EVENT INNER JOIN CT_EVENT_CAT ON CT_EVENT_CAT.event_cat_id = CT_EVENT.event_cat_id INNER JOIN CT_VIEW_EVENT_STAFF001 ON CT_VIEW_EVENT_STAFF001.eid=CT_EVENT.event_id INNER JOIN CT_VIEW_EVENT_GROUP001 ON CT_VIEW_EVENT_GROUP001.eid=CT_EVENT.event_id INNER JOIN CT_VIEW_EVENT_MODULE001 ON CT_VIEW_EVENT_MODULE001.eid=CT_EVENT.event_id INNER JOIN CT_VIEW_EVENT_ROOM001 ON CT_VIEW_EVENT_ROOM001.eid=CT_EVENT.event_id WHERE dept_id=' . $diplome->getCodeCelcatDepartement() . ' ORDER BY CT_EVENT.date_change DESC, CT_EVENT.event_id DESC';
+            $this->tMatieres = $this->typeMatiereManager->tableauMatieresCodeApogee($departement);
+            $this->tGroupes = $this->groupeRepository->tableauGroupesCodeApogee($departement);
+
+            $query = 'SELECT CT_EVENT.event_id, CT_EVENT.day_of_week, CT_EVENT.start_time, CT_EVENT.end_time, CT_EVENT.weeks, CT_EVENT_CAT.name, CT_VIEW_EVENT_MODULE001.resourcecode, CT_VIEW_EVENT_MODULE001.resourcename, CT_VIEW_EVENT_STAFF001.resourcecode, CT_VIEW_EVENT_STAFF001.resourcename, CT_VIEW_EVENT_ROOM001.resourcecode, CT_VIEW_EVENT_ROOM001.resourcename, CT_VIEW_EVENT_GROUP001.resourcecode, CT_VIEW_EVENT_GROUP001.resourcename, CT_EVENT.date_change, CT_VIEW_EVENT_ROOM001.resourceweeks FROM CT_EVENT INNER JOIN CT_EVENT_CAT ON CT_EVENT_CAT.event_cat_id = CT_EVENT.event_cat_id INNER JOIN CT_VIEW_EVENT_STAFF001 ON CT_VIEW_EVENT_STAFF001.eid=CT_EVENT.event_id INNER JOIN CT_VIEW_EVENT_GROUP001 ON CT_VIEW_EVENT_GROUP001.eid=CT_EVENT.event_id INNER JOIN CT_VIEW_EVENT_MODULE001 ON CT_VIEW_EVENT_MODULE001.eid=CT_EVENT.event_id INNER JOIN CT_VIEW_EVENT_ROOM001 ON CT_VIEW_EVENT_ROOM001.eid=CT_EVENT.event_id WHERE dept_id=' . $codeCelcat . ' ORDER BY CT_EVENT.date_change DESC, CT_EVENT.event_id DESC';
 
             $resultCelcat = odbc_exec($this->conn, $query);
 
-            $resultIntranet = $this->edtCelcatRepository->findBy(['anneeUniversitaire' => $anneeUniversitaire->getId()]);
+            $resultIntranet = $this->edtCelcatRepository->findBy(['anneeUniversitaire' => $anneeUniversitaire->getId(), 'departementId' => $codeCelcat]);
 
             $celcatIndex = [];
             while (odbc_fetch_row($resultCelcat)) {
                 $eventId = odbc_result($resultCelcat, 1);
+                //todo: trouver comment construire une clé unique de comparaison dans transformeCelcatToDtob
                 $celcatIndex[$eventId] = $this->transformeCelcatToDto($resultCelcat, $anneeUniversitaire, $diplome->getCodeCelcatDepartement());
             }
 
             $intranetIndex = [];
             foreach ($resultIntranet as $row) {
-                $intranetIndex[$row->getEventId()] = $row; //même id que Celcat
+                if (!array_key_exists($row->getEventId(), $intranetIndex)) {
+                    $intranetIndex[$row->getEventId()] = [];
+                }
+
+                $intranetIndex[$row->getEventId()][$row->getUniqueId()] = $row;
             }
 
             try {
-                foreach ($celcatIndex as $id => $row) {
+                foreach ($celcatIndex as $id => $row) {//todo: ATTENTION c'est un tableau de tableau... celcatIndex et intranetIndex
                     if (isset($intranetIndex[$id])) {
                         // Mise à jour des données existantes
-                        //todo: si diff => Envoyer dans EduSign avec son id
-                        $this->updateEvent($intranetIndex[$id], $row, $eventId);
+                        //compare les dates de mise à jour
+                        foreach ($row as $r) {
+                            if (array_key_exists($r->getUniqueId(), $intranetIndex[$id])) {
+                                if ($r->getUpdateEvent()->greaterThan($intranetIndex[$id][$r->getUniqueId()]->getUpdateEvent())) {
+                                    $this->updateEvent($intranetIndex[$id][$r->getUniqueId()], $r);
+                                }
+                            } else {
+                                // Insertion des nouvelles données
+                                $this->createEvent($r, $anneeUniversitaire, $diplome->getCodeCelcatDepartement());
+                            }
+                        }
                     } else {
                         // Insertion des nouvelles données
-                        //todo: si ajouter => Envoyer dans EduSign et ajouter l'id ? ou laisser le script quotidien toujours sur les event sans id
-                        $this->createEvent($row);
+                        foreach ($row as $r) {
+                            $this->createEvent($row, $anneeUniversitaire, $diplome->getCodeCelcatDepartement());
+                        }
                     }
                 }
 
                 // Suppression des données inexistantes
                 foreach ($intranetIndex as $id => $row) {
-                    if (!isset($celcatIndex[$id])) {
-                        $this->deleteEvent($row);
+                    foreach ($row as $r) {
+                        if (!array_key_exists($r->getUniqueId(), $celcatIndex[$id])) {
+                            $this->deleteEvent($r);
+                        }
                     }
                 }
             } catch (Exception $e) {
@@ -177,6 +204,9 @@ class MyCelcat
             }
 
             $this->entityManger->flush();
+            $this->log->addItem('Fin de la récupération des données pour le département ' . $departement->getLibelle(), 'info');
+        } else {
+            $this->log->addItem('Département non trouvé', 'error');
         }
     }
 
@@ -188,8 +218,8 @@ class MyCelcat
     {
         $this->connect();
         $query = 'SELECT CT_GROUP.unique_name, CT_STUDENT.unique_name FROM CT_GROUP_STUDENT
-INNER JOIN CT_GROUP ON CT_GROUP.group_id=CT_GROUP_STUDENT.group_id
-INNER JOIN CT_STUDENT ON CT_STUDENT.student_id=CT_GROUP_STUDENT.student_id WHERE CT_GROUP.dept_id=' . $semestre->getDiplome()->getCodeCelcatDepartement();
+                    INNER JOIN CT_GROUP ON CT_GROUP.group_id=CT_GROUP_STUDENT.group_id
+                    INNER JOIN CT_STUDENT ON CT_STUDENT.student_id=CT_GROUP_STUDENT.student_id WHERE CT_GROUP.dept_id=' . $semestre->getDiplome()->getCodeCelcatDepartement();
 
         $result = odbc_exec($this->conn, $query);
 
@@ -213,6 +243,7 @@ INNER JOIN CT_STUDENT ON CT_STUDENT.student_id=CT_GROUP_STUDENT.student_id WHERE
     ): void
     {
         try {
+            $this->log->addItem('Création de l\'événement ' . $event->getId(), 'info');
             $this->entityManger->persist($event);
             $this->entityManger->flush();
             //éventuellement envoyer dans EduSign ? ou laisser le script quotidien
@@ -237,42 +268,31 @@ INNER JOIN CT_STUDENT ON CT_STUDENT.student_id=CT_GROUP_STUDENT.student_id WHERE
         }
 
         $groupes = $this->groupeRepository->findAll();
-        $this->tGroupes = [];
+        $this->tSemestres = [];
         foreach ($groupes as $groupe) {
-            $this->tGroupes[$groupe->getCodeApogee()] = GetSemestreFromGroupe::getSemestreFromGroupe($groupe);
+            $this->tSemestres[$groupe->getCodeApogee()] = GetSemestreFromGroupe::getSemestreFromGroupe($groupe);
         }
     }
 
-    /**
-     * @throws \Doctrine\DBAL\Exception
-     */
-    public function truncateTableEdtCelcat(): void
-    {
-        $cmd = $this->entityManger->getClassMetadata(EdtCelcat::class);
-        $connection = $this->entityManger->getConnection();
-        $connection->beginTransaction();
-
-        try {
-            $connection->executeQuery('DELETE FROM ' . $cmd->getTableName());
-            $connection->commit();
-            $connection->executeQuery('ALTER TABLE ' . $cmd->getTableName() . ' AUTO_INCREMENT = 1');
-        } catch (Exception $e) {
-            $connection->rollback();
-        }
-    }
-
-    private function deleteEvent(EdtCelcat $row)
+    private function deleteEvent(EdtCelcat $intranet)
     {
         //suppression de l'event dans la BDD Intranet
-        $idEduSign = $row->getIdEduSign();
-        $this->entityManger->remove($row);
+        $this->log->addItem('Suppression de l\'événement ' . $intranet->getId(), 'info');
+        $idEduSign = $intranet->getIdEduSign();
 
+
+        $eduEvent = new EduSignEvent($idEduSign, null, $this->cleApi);
+        $this->eventDispatcher->dispatch($eduEvent, EduSignEvent::EDUSIGN_UPDATE_COURSE);
+        $this->log->addItem('Suppression de l\'événement ' . $intranet->getId(), 'info');
+
+        $this->entityManger->remove($intranet);
         //todo: Envoyer dans EduSign uniquement si date du cours postérieure
 
     }
 
     private function updateEvent(EdtCelcat $intranet, EdtCelcat $celcat): void
     {
+        $this->log->addItem('Mise à jour de l\'événement ' . $intranet->getId(), 'info');
         // Mise à jour des données existantes de $intranet avec celles de $celcat
 
         $intranet->setJour($celcat->getJour());
@@ -299,10 +319,12 @@ INNER JOIN CT_STUDENT ON CT_STUDENT.student_id=CT_GROUP_STUDENT.student_id WHERE
         $this->entityManger->detach($celcat);
         $this->entityManger->flush(); //todo: éventuellement envoyer dans EduSign uniquement si date > datejour
         // éventuellement optionnel le flush pour faire un lot
-
+//        $eduEvent = new EduSignEvent($intranet->getIdEduSign(), $evt, $this->cleApi);
+//        $this->eventDispatcher->dispatch($eduEvent, EduSignEvent::EDUSIGN_UPDATE_COURSE);
+        $this->log->addItem('Mise à jour de l\'événement ' . $eventId, 'info');
     }
 
-    private function transformeCelcatToDto($resultCelcat, AnneeUniversitaire $anneeUniversitaire, int $eventId): EdtCelcat
+    private function transformeCelcatToDto($resultCelcat, AnneeUniversitaire $anneeUniversitaire, int $eventId): array
     {
         $debut = explode(' ', (string)odbc_result($resultCelcat, 3));
         $fin = explode(' ', (string)odbc_result($resultCelcat, 4));
@@ -311,6 +333,7 @@ INNER JOIN CT_STUDENT ON CT_STUDENT.student_id=CT_GROUP_STUDENT.student_id WHERE
         $semaines = odbc_result($resultCelcat, 16) ?? odbc_result($resultCelcat, 5);
 
         $lg = mb_strlen($semaines);
+        $tEvents = [];
 
         for ($i = 0; $i < $lg; ++$i) {
             if ('Y' === $semaines[$i] || 'y' === $semaines[$i]) {
@@ -329,10 +352,12 @@ INNER JOIN CT_STUDENT ON CT_STUDENT.student_id=CT_GROUP_STUDENT.student_id WHERE
 
                 $event->setCodeModule(odbc_result($resultCelcat, 7));
                 $event->setLibModule((odbc_result($resultCelcat, 8)));
+
                 if (array_key_exists($event->getCodeModule(), $this->tMatieres)) {
                     $event->setTypeMatiere($this->tMatieres[$event->getCodeModule()]->typeMatiere);
                     $event->setIdMatiere($this->tMatieres[$event->getCodeModule()]->id);
                 }
+
                 $event->setCodePersonnel(odbc_result($resultCelcat, 9));
                 $event->setLibPersonnel(utf8_encode(odbc_result($resultCelcat, 10)));
                 if (array_key_exists($event->getCodePersonnel(), $this->tPersonnels)) {
@@ -344,15 +369,22 @@ INNER JOIN CT_STUDENT ON CT_STUDENT.student_id=CT_GROUP_STUDENT.student_id WHERE
                 $event->setDepartementId($resultCelcat);
                 $event->setCodeGroupe($codeGroupe);
                 $event->setLibGroupe(utf8_encode(odbc_result($resultCelcat, 14)));
+
+                if (array_key_exists($codeGroupe, $this->tGroupes)) {
+                    $event->setGroupe($this->tGroupes[$codeGroupe]);
+                }
+
                 $event->setCodeSalle(odbc_result($resultCelcat, 11));
                 $event->setLibSalle(utf8_encode(odbc_result($resultCelcat, 12)));
                 $event->setDateCours($this->tCalendrier[$semaine]->addDays((int)$jour));
-                $event->setSemestre($this->tGroupes[$codeGroupe] ?? null);
+                $event->setSemestre($this->tSemestres[$codeGroupe] ?? null);
                 $dt = explode(' ', (string)odbc_result($resultCelcat, 15));
                 $event->setUpdateEvent(Tools::convertDateHeureToObject($dt[0], $dt[1]));
+
+                $tEvents[$event->getUniqueId()] = $event;
             }
         }
 
-        return $event;
+        return $tEvents;
     }
 }

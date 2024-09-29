@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/EdtCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/09/2024 11:39
+ * @lastUpdate 29/09/2024 16:23
  */
 
 namespace App\Entity;
@@ -86,6 +86,9 @@ class EdtCelcat extends BaseEntity
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $idEduSign = null;
+
+    #[ORM\ManyToOne]
+    private ?Groupe $groupe = null;
 
     public function getEventId(): ?int
     {
@@ -342,5 +345,23 @@ class EdtCelcat extends BaseEntity
         $this->idEduSign = $idEduSign;
 
         return $this;
+    }
+
+    public function getGroupe(): ?Groupe
+    {
+        return $this->groupe;
+    }
+
+    public function setGroupe(?Groupe $groupe): static
+    {
+        $this->groupe = $groupe;
+
+        return $this;
+    }
+
+    public function getUniqueId(): string
+    {
+        // construire un identifiant unique pour l'événement puisque le eventId n'est pas unique si l'événement est sur plusieurs semaines
+        return $this->getEventId() . '_' . $this->getSemaineFormation() . '_' . $this->getJour();
     }
 }

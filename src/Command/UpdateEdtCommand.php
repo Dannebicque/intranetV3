@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Command/UpdateEdtCommand.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/09/2024 21:05
+ * @lastUpdate 29/09/2024 16:23
  */
 
 namespace App\Command;
@@ -41,14 +41,18 @@ class UpdateEdtCommand extends Command
         $diplomes = $this->diplomeRepository->findAllWithCelcat();
         $annee = $this->anneeUniversitaireRepository->findActive();
 
+        /** @var Diplome $diplome */
+        foreach ($diplomes as $diplome) {
+            $tDiplomes[$diplome->getCodeCelcatDepartement()] = $diplome->getParent() ?? $diplome;
+        }
+
         if (null !== $annee) {
             $this->myCelcat->getData($annee);
-            //$this->myCelcat->truncateTableEdtCelcat(); //todo: plus nécessaire si on gère avec une mise à jour
             /** @var Diplome $diplome */
-            foreach ($diplomes as $diplome) {
+            foreach ($tDiplomes as $codeCelcat => $diplome) {
                 $date = new DateTime();
                 $io->text($date->format('d/m/Y H:i:s').' | Mise à jour du diplome '.$diplome->getLibelle());
-                $this->myCelcat->addEvents($diplome, $annee);
+                $this->myCelcat->addEvents($codeCelcat, $diplome, $annee);
             }
 
             $io->success('Emplois du temps synchronisés avec Celcat');

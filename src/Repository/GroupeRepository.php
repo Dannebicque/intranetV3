@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/GroupeRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/04/2024 17:54
+ * @lastUpdate 28/09/2024 22:24
  */
 
 namespace App\Repository;
@@ -271,4 +271,18 @@ class GroupeRepository extends ServiceEntityRepository
         $this->_em->persist($groupe);
         $this->_em->flush();
     }
+
+    public function tableauGroupesCodeApogee(Departement $departement): array
+    {
+        $groupes = $this->findByDepartement($departement);
+        $t = [];
+        /** @var Groupe $groupe */
+        foreach ($groupes as $groupe) {
+            $t[$groupe->getCodeApogee()] = $groupe;
+        }
+
+        return $t;
+    }
+
+
 }
