@@ -139,7 +139,7 @@
                     </thead>
                     <tbody>
                     {% for cours in pagination.data %}
-                        <form action="{{ path('app_admin_edu_sign_update_cours', {'id': cours.id, 'source': cours.source}) }}">
+                        <form action="{{ path('app_admin_edu_sign_update_cours', {'id': cours.id, 'source': cours.source, 'diplome': diplomeSelect.id}) }}">
                             <tr>
                                 {#                               todo: nouvelle structure pr modifer date et heure à adapter dans la méthode #}
                                 {#                                <td class="p-1">
