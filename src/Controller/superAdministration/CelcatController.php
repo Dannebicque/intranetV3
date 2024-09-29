@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/superAdministration/CelcatController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:35
+ * @lastUpdate 29/09/2024 20:12
  */
 
 namespace App\Controller\superAdministration;
@@ -56,8 +56,8 @@ class CelcatController extends BaseController
     public function update(EdtCelcatRepository $celcatEventsRepository, Diplome $diplome): RedirectResponse
     {
         // suppression des events existants pour le département
-        $celcatEventsRepository->deleteDepartement($diplome->getCodeCelcatDepartement(),
-            $this->getAnneeUniversitaire());
+//        $celcatEventsRepository->deleteDepartement($diplome->getCodeCelcatDepartement(),
+//            $this->getAnneeUniversitaire());
         // récupération et ajouts des events.
         $this->myCelcat->getEvents($diplome->getCodeCelcatDepartement(), $this->getAnneeUniversitaire());
 
