@@ -283,8 +283,8 @@ class EduSignController extends BaseController
     }
 
 //    todo: transformer en LiveComponent pour changer les datas des select
-    #[Route('/update-course/{source}/{id}/', name: 'app_admin_edu_sign_update_cours')]
-    public function updateCourse(int $id, string $source, UpdateEdt $updateEdt, Request $request): Response
+    #[Route('/update-course/{source}/{diplome}/{id}/', name: 'app_admin_edu_sign_update_cours')]
+    public function updateCourse(int $id, string $source, int $diplome, UpdateEdt $updateEdt, Request $request): Response
     {
         $cours = $this->edtManager->findCourse($source, $id);
 
@@ -292,9 +292,7 @@ class EduSignController extends BaseController
 
         $objmatiere = $this->typeMatiereManager->getMatiereFromSelect($matiere);
 
-
-        $semestre = $this->semestreRepository->findOneBy(['id' => $request->query->get('semestre')]);
-        $diplome = $semestre->getDiplome();
+        $diplome = $this->diplomeRepository->findOneBy(['id' => $diplome]);
 
         $groupe = $this->groupeRepository->findOneBy(['id' => $request->query->get('groupe')]);
         if (null != $groupe) {
@@ -312,7 +310,7 @@ class EduSignController extends BaseController
 //        $heureFin = $request->query->get('heureFin');
 
         //todo: adapter les données de date et d'heure à la structure de l'objet
-        $cours = $this->edtManager->updateCourse($cours, $source, $objmatiere, $semestre, $groupe, $groupeOrdre ?? null, $groupeType ?? null, $enseignant, $salle);
+        $cours = $this->edtManager->updateCourse($cours, $source, $objmatiere, $cours->getSemestre(), $groupe, $groupeOrdre ?? null, $groupeType ?? null, $enseignant, $salle);
 
         $course = $this->edtManager->getCourseEduSign($source, $cours->getId(), $objmatiere, $groupe);
 
