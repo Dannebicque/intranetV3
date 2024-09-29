@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Celcat/MyCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/09/2024 16:23
+ * @lastUpdate 29/09/2024 17:56
  */
 
 namespace App\Classes\Celcat;
@@ -321,7 +321,7 @@ class MyCelcat
         // éventuellement optionnel le flush pour faire un lot
 //        $eduEvent = new EduSignEvent($intranet->getIdEduSign(), $evt, $this->cleApi);
 //        $this->eventDispatcher->dispatch($eduEvent, EduSignEvent::EDUSIGN_UPDATE_COURSE);
-        $this->log->addItem('Mise à jour de l\'événement ' . $eventId, 'info');
+        $this->log->addItem('Mise à jour de l\'événement ' . $intranet->getId() . ' avec l\évenement Celcat ' . $celcat->getUniqueId(), 'info');
     }
 
     private function transformeCelcatToDto($resultCelcat, AnneeUniversitaire $anneeUniversitaire, int $eventId): array
