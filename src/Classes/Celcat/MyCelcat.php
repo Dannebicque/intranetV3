@@ -4,12 +4,11 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Celcat/MyCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/09/2024 20:08
+ * @lastUpdate 29/09/2024 20:33
  */
 
 namespace App\Classes\Celcat;
 
-use App\Classes\EduSign\Events\EduSignEvent;
 use App\Classes\GetSemestreFromGroupe;
 use App\Classes\Matieres\TypeMatiereManager;
 use App\Components\Logger\LogHelper;
@@ -179,13 +178,13 @@ class MyCelcat
                                 }
                             } else {
                                 // Insertion des nouvelles données
-                                $this->createEvent($r, $anneeUniversitaire, $diplome->getCodeCelcatDepartement());
+                                $this->createEvent($r);
                             }
                         }
                     } else {
                         // Insertion des nouvelles données
                         foreach ($row as $r) {
-                            $this->createEvent($r, $anneeUniversitaire, $diplome->getCodeCelcatDepartement());
+                            $this->createEvent($r);
                         }
                     }
                 }
@@ -281,9 +280,10 @@ class MyCelcat
         $idEduSign = $intranet->getIdEduSign();
 
 
-        $eduEvent = new EduSignEvent($idEduSign, null, $this->cleApi);
-        $this->eventDispatcher->dispatch($eduEvent, EduSignEvent::EDUSIGN_UPDATE_COURSE);
-        $this->log->addItem('Suppression de l\'événement ' . $intranet->getId(), 'info');
+        //  $eduEvent = new EduSignEvent($idEduSign, null, $this->cleApi);
+        //todo: tester si date > date jour
+//        $this->eventDispatcher->dispatch($eduEvent, EduSignEvent::EDUSIGN_UPDATE_COURSE);
+//        $this->log->addItem('Suppression de l\'événement ' . $intranet->getId(), 'info');
 
         $this->entityManger->remove($intranet);
         //todo: Envoyer dans EduSign uniquement si date du cours postérieure

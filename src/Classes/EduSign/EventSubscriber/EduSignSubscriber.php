@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/EduSign/EventSubscriber/EduSignSubscriber.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 27/09/2024 21:14
+ * @lastUpdate 29/09/2024 20:33
  */
 
 namespace App\Classes\EduSign\EventSubscriber;
@@ -64,13 +64,13 @@ class EduSignSubscriber implements EventSubscriberInterface
             // Update EdtCelcat with $eduSignCourse data
             $course = (new IntranetEdtEduSignAdapter($evenementEdt))->getCourse();
             if (null !== $course) {
-                $cleEvent = $this->apiCours->deleteCourse($course, $cleApi);
+                //  $cleEvent = $this->apiCours->deleteCourse($course, $cleApi);
             }
         } else {
             // Update EdtCelcat with $eduSignCourse data
             $course = (new IntranetEdtEduSignAdapter($evenementEdt))->getCourse();
             if (null !== $course) {
-                $cleEvent = $this->apiCours->deleteCourse($course, $cleApi);
+                //  $cleEvent = $this->apiCours->deleteCourse($course, $cleApi);
             }
         }
     }
