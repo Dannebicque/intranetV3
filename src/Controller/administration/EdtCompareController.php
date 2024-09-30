@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EdtCompareController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/04/2024 06:23
+ * @lastUpdate 30/09/2024 20:09
  */
 
 namespace App\Controller\administration;
@@ -31,7 +31,7 @@ class EdtCompareController extends BaseController
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_EDT', $this->getDepartement());
         $comparatif = $comparePrevisionnelPersonnel->compareEdtPreviPersonnels($this->getDepartement(),
-            $this->dataUserSession->getAnneePrevisionnel(), $source);
+            $this->getAnneeUniversitaire(), $source);
 
         return $this->render('administration/edtCompare/comparePersonnel.html.twig', [
             'comparatifs' => $comparatif,
@@ -45,7 +45,7 @@ class EdtCompareController extends BaseController
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_EDT', $this->getDepartement());
         $comparatif = $comparePrevisonnelMatiere->compareEdtPreviMatiere($this->getDepartement(),
-            $this->dataUserSession->getAnneePrevisionnel(), $source);
+            $this->getAnneeUniversitaire(), $source);
 
         return $this->render('administration/edtCompare/compareMatieres.html.twig', [
             'comparatifs' => $comparatif,

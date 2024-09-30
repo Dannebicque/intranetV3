@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/ComparePrevisionnel/ComparePrevisionnelPersonnel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:35
+ * @lastUpdate 30/09/2024 20:10
  */
 
 namespace App\Classes\ComparePrevisionnel;
@@ -13,6 +13,7 @@ use App\Classes\Matieres\TypeMatiereManager;
 use App\Classes\Previsionnel\PrevisionnelManager;
 use App\Components\SourceEdt\Source\AbstractEdt;
 use App\DTO\Previsionnel;
+use App\Entity\AnneeUniversitaire;
 use App\Entity\Departement;
 use App\Entity\Personnel;
 use App\Repository\EdtPlanningRepository;
@@ -27,12 +28,12 @@ class ComparePrevisionnelPersonnel extends ComparePrevisionnel
     {
     }
 
-    public function compareEdtPreviPersonnels(Departement $departement, int $annee, string $source): array
+    public function compareEdtPreviPersonnels(Departement $departement, AnneeUniversitaire $anneeUniversitaire, string $source): array
     {
         $this->personnels = $this->personnelRepository->findByDepartement($departement);
-        $previsionnels = $this->previsionnelManager->findByDepartement($departement, $annee);
+        $previsionnels = $this->previsionnelManager->findByDepartement($departement, $anneeUniversitaire->getAnnee());
         if (AbstractEdt::SOURCE_EDT_INTRANET === $source) {
-            $planning = $this->edtPlanningRepository->findByDepartement($departement);
+            $planning = $this->edtPlanningRepository->findByDepartementAndAnneeUniversitaire($departement, $anneeUniversitaire);
         } else {
             $planning = []; // todo: récupérer d'une autre source... et récupérer aussi du manager pour fusionner les deux ? Peut être pas indispensable ici
         }
