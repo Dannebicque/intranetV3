@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.19.46](https://github.com/Dannebicque/intranetV3/compare/v3.19.42...v3.19.46) (2024-09-30)
+
+
+### Features
+
+* Ajout du groupe sur EdtPlanning lors de l'import d'un Edt ([025674f](https://github.com/Dannebicque/intranetV3/commit/025674f4690536fa5f307ac6acac2373894bb7d1))
+* Gestion de l'update Celcat sans effacer les données + update/delete EduSign ([a157f1c](https://github.com/Dannebicque/intranetV3/commit/a157f1cb4a481d7096667a72007bcd2818134411))
+* Log help pour générer des fichiers ([b677d6b](https://github.com/Dannebicque/intranetV3/commit/b677d6b27c953581dee2f21ea390024a2181dd23))
+
+
+### Bug Fixes
+
+* code matière (plus nécessaire ?) ([6560d08](https://github.com/Dannebicque/intranetV3/commit/6560d08c28fc106a675dcd7d9ca4c88e693f579f))
+* Comparaison Edt/Prévi avec année universitaire ([a2c924a](https://github.com/Dannebicque/intranetV3/commit/a2c924a98d9f63926bdc7936eb2838af377507e2))
+* log sur Edt ([d666081](https://github.com/Dannebicque/intranetV3/commit/d6660812346fd794a62f96450b37ed22b94177c0))
+* reply to sur Edt ([5405bdd](https://github.com/Dannebicque/intranetV3/commit/5405bdd5d0bdf577c0376de7e0760d7969d3d242))
+* système de mise à jour de Celcat sans suppression de la BDD ([3d9caf6](https://github.com/Dannebicque/intranetV3/commit/3d9caf698749f3ab9162d1ebf5cc03a9d5cf5b07))
+* système de mise à jour de Celcat sans suppression de la BDD ([a375aed](https://github.com/Dannebicque/intranetV3/commit/a375aed8ae988815daf7886b605504a7ca1eddf0))
+* système de mise à jour de Celcat sans suppression de la BDD ([dc9ba56](https://github.com/Dannebicque/intranetV3/commit/dc9ba56666a75e99269ddc54490c0f3b2c837577))
+* système de mise à jour de Celcat sans suppression de la BDD ([4db8ff5](https://github.com/Dannebicque/intranetV3/commit/4db8ff548a3e2d8d75ae926339325aa926b4a8dd))
+* système de mise à jour de Celcat sans suppression de la BDD ([fd6614e](https://github.com/Dannebicque/intranetV3/commit/fd6614e26d8f8de1da2dce10b15789957d29b66b))
+* système de mise à jour de Celcat sans suppression de la BDD ([ea1490f](https://github.com/Dannebicque/intranetV3/commit/ea1490f3597d077799b70f659a37d2653e78e85d))
+* système de mise à jour de Celcat sans suppression de la BDD ([e8c7010](https://github.com/Dannebicque/intranetV3/commit/e8c70109bb60cedfaad46c917f028b4f36253107))
+
 ### [3.19.45](https://github.com/Dannebicque/intranetV3/compare/v3.19.42...v3.19.45) (2024-09-29)
 
 
