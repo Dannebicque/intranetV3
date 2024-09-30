@@ -23,28 +23,51 @@ class CreateEnseignant
     {
     }
 
-    public function update(Personnel $personnel, Diplome $diplome, string $cleApi): array
+    public function update(Personnel $personnel, Diplome $diplome, string $cleApi): mixed
     {
-        try {
             // Construit les objets associés selon le modèle EduSign
             $enseignant = (new IntranetEnseignantEduSignAdapter($personnel))->getEnseignant();
 
             // Envoi une requête pour ajouter les éléments
             $enseignantEduSign = $this->apiPersonnel->getEnseignantByEmail($enseignant->email, $cleApi);
             if ($enseignantEduSign) {
-                $enseignant->id = $enseignantEduSign->id;
                 $result = $this->apiPersonnel->updateEnseignant($enseignant, $personnel, $diplome, $cleApi);
+                // ajouter l'id de l'enseignant dans la table personnel
+
+                $id = $enseignantEduSign['ID'];
+                $diplomeId = $diplome->getId();
+                $existingIdEduSign = $personnel->getIdEduSign();
+
+                // Supprimer les entrées avec des valeurs nulles
+                if ($existingIdEduSign !== null) {
+                    foreach ($existingIdEduSign as $key => $value) {
+                        if ($value === null || $value === '') {
+                            unset($existingIdEduSign[$key]);
+                        }
+                    }
+                    $personnel->setIdEduSign($existingIdEduSign);
+                    $this->personnelRepository->save($personnel);
+                }
+                if ($existingIdEduSign === null || !array_key_exists($diplomeId, $existingIdEduSign)) {
+                    $jsonId = [$diplomeId => $id];
+
+                    if ($existingIdEduSign === null) {
+                        // Si idEduSign est null, le définir comme le nouveau tableau $jsonId
+                        $personnel->setIdEduSign($jsonId);
+                    } else {
+                        // Autrement, ajoute le nouveau tableau $jsonId à l'ancien tableau $existingIdEduSign
+                        $personnel->setIdEduSign($existingIdEduSign + $jsonId);
+                    }
+                }
+
+                $this->personnelRepository->save($personnel);
+
+
             } else {
                 $result = $this->apiPersonnel->addEnseignant($enseignant, $personnel, $diplome, $cleApi);
             }
 
-            if (!$result['success']) {
-                return ['success' => false, 'error' => $result['error']];
-            }
+            return $result;
 
-            return ['success' => true];
-        } catch (\Exception $e) {
-            return ['success' => false, 'error' => $e->getMessage()];
-        }
     }
 }
