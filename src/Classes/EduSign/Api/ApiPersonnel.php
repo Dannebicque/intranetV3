@@ -111,7 +111,7 @@ class ApiPersonnel
         return $data['result'] ?? null;
     }
 
-    public function updateEnseignant(EduSignEnseignant $enseignant, Personnel $personnel, Diplome $diplome, $cleApi): array
+    public function updateEnseignant(EduSignEnseignant $enseignant, Personnel $personnel, Diplome $diplome, $cleApi): mixed
     {
         try {
             $client = HttpClient::create();
@@ -130,37 +130,12 @@ class ApiPersonnel
             // convertit JSON en tableau associatif PHP
             $data = json_decode($content, true);
 
-            // accéder à la valeur de l'ID
-            $id = $data['result']['ID'] ?? "";
-
-            $diplomeId = $diplome->getId();
-            $existingIdEduSign = $personnel->getIdEduSign();
-
-            // Supprimer les entrées avec des valeurs nulles
-            if ($existingIdEduSign !== null) {
-                foreach ($existingIdEduSign as $key => $value) {
-                    if ($value === null || $value === '') {
-                        unset($existingIdEduSign[$key]);
-                    }
-                }
-                $personnel->setIdEduSign($existingIdEduSign);
-                $this->personnelRepository->save($personnel);
+            // si $data n'a pas : "status" => "success"
+            if ($data['status'] !== 'success') {
+                return $content;
+            } else {
+                return null;
             }
-            if ($existingIdEduSign === null || !array_key_exists($diplomeId, $existingIdEduSign)) {
-                $jsonId = [$diplomeId => $id];
-
-                if ($existingIdEduSign === null) {
-                    // Si idEduSign est null, le définir comme le nouveau tableau $jsonId
-                    $personnel->setIdEduSign($jsonId);
-                } else {
-                    // Autrement, ajoute le nouveau tableau $jsonId à l'ancien tableau $existingIdEduSign
-                    $personnel->setIdEduSign($existingIdEduSign + $jsonId);
-                }
-            }
-
-            $this->personnelRepository->save($personnel);
-
-            return ['success' => true, 'data' => $data]; // En cas de succès
         } catch (\Exception $e) {
             return ['success' => false, 'error' => $e->getMessage()]; // En cas d'erreur
         }
