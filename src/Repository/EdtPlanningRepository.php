@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/EdtPlanningRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/09/2024 20:09
+ * @lastUpdate 30/09/2024 20:13
  */
 
 namespace App\Repository;
@@ -461,8 +461,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
     public function findByDepartementAndAnneeUniversitaire(Departement $departement, AnneeUniversitaire $anneeUniversitaire): array
     {
         $quer = $this->createQueryBuilder('p');
-        $quer->where('p.anneeUniversitaire = :anneeUniversitaire')
-            ->setParameter('anneeUniversitaire', $anneeUniversitaire->getId());
+
         $i = 0;
         foreach ($departement->getDiplomes() as $diplome) {
             foreach ($diplome->getSemestres() as $semestre) {
@@ -471,6 +470,9 @@ class EdtPlanningRepository extends ServiceEntityRepository
                 ++$i;
             }
         }
+
+        $quer->andWhere('p.anneeUniversitaire = :anneeUniversitaire')
+            ->setParameter('anneeUniversitaire', $anneeUniversitaire->getId());
 
         return $quer->getQuery()->getResult();
     }
