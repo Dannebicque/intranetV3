@@ -1339,6 +1339,7 @@ help:
   semestre_actif: 'messages'
   opt_rattrapage: 'Les étudiants peuvent déposer leurs demandes de rattrapage sur l''intranet'
   opt_mail_rattrapage: 'Un email est envoyé à l''assistant(e) et à l''enseignant(e) en cas de demande de rattrapage'
+  is_saisie_cm_autorise: 'Autoriser la saisie des en CM des évaluations.'
 
 
 heure: Heure
@@ -2289,6 +2290,7 @@ table:
   ppn_semestre: 'messages'
   opt_rattrapage: Module rattrapage activé
   opt_mail_rattrapage: Envoi d'un mail à chaque nouvelle demande de rattrapage
+  is_saisie_cm_autorise: 'Saisie des évaluations en CM autorisée (pour les années en parcours)'
 
 type_bac:
   g: 'Série générale'

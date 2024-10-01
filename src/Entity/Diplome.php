@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Diplome.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/09/2024 13:01
+ * @lastUpdate 01/10/2024 19:04
  */
 
 namespace App\Entity;
@@ -135,6 +135,9 @@ class Diplome extends BaseEntity
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $keyEduSign = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?bool $saisieCmAutorise = true;
 
     public function __construct(#[ORM\ManyToOne(targetEntity: Departement::class, inversedBy: 'diplomes')] private ?Departement $departement, ?Diplome $diplome = null)
     {
@@ -736,6 +739,18 @@ class Diplome extends BaseEntity
     public function setKeyEduSign(?string $keyEduSign): static
     {
         $this->keyEduSign = $keyEduSign;
+
+        return $this;
+    }
+
+    public function getSaisieCmAutorise(): ?bool
+    {
+        return $this->saisieCmAutorise ?? true;
+    }
+
+    public function setSaisieCmAutorise(?bool $saisieCmAutorise): static
+    {
+        $this->saisieCmAutorise = $saisieCmAutorise;
 
         return $this;
     }

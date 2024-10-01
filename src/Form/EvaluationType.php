@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Form/EvaluationType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/11/2022 11:51
+ * @lastUpdate 01/10/2024 20:59
  */
 
 namespace App\Form;
@@ -107,7 +107,7 @@ class EvaluationType extends AbstractType
                         ? $typeGroupeRepository->findByDiplomeAndOrdreSemestreBuilder($this->semestre->getDiplome(), $this->semestre->getOrdreLmd())
                         : $typeGroupeRepository->findBySemestreBuilder($this->semestre);
 
-                    if (null !== $this->semestre->getDiplome()->getApcParcours()) {
+                    if ($this->semestre->getDiplome()?->getSaisieCmAutorise() === false) {
                         $queryBuilder->andWhere('t.libelle NOT LIKE :cm')
                             ->setParameter('cm', '%CM%');
                     }
