@@ -67,6 +67,8 @@ class EduSignController extends BaseController
         $diplome = $this->getSelectedDiplome($request, $diplomes);
 
         $filteredPersonnelsDepartement = array_filter($personnelsDepartement, fn($p) => empty($p->getPersonnel()->getIdEduSign() ?? []) || !array_key_exists($diplome->getId(), $p->getPersonnel()->getIdEduSign()));
+        // trier les personnels par nom
+        usort($filteredPersonnelsDepartement, fn($a, $b) => $a->getPersonnel()->getNom() <=> $b->getPersonnel()->getNom());
 
         $semestres = $this->semestreRepository->findByDiplome($diplome);
 
