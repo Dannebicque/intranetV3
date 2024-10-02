@@ -167,14 +167,13 @@ class MyCelcat
             }
 
             try {
-                dd($celcatIndex, $intranetIndex, '-----');
                 foreach ($celcatIndex as $id => $row) {//todo: ATTENTION c'est un tableau de tableau... celcatIndex et intranetIndex
                     if (isset($intranetIndex[$id])) {
                         // Mise à jour des données existantes
                         //compare les dates de mise à jour
                         foreach ($row as $r) {
                             if (array_key_exists($r->getUniqueId(), $intranetIndex[$id])) {
-                                if ($r->getUpdateEvent()->greaterThan($intranetIndex[$id][$r->getUniqueId()]->getUpdateEvent())) {
+                                if ($r->getUpdateEvent()->greaterThan($intranetIndex[$id][$r->getUniqueId()]->getUpdateEvent()) || $intranetIndex[$id][$r->getUniqueId()]->getGroupe() === null || $intranetIndex[$id][$r->getUniqueId()]->getIdMatiere() === null) {
                                     $this->updateEvent($intranetIndex[$id][$r->getUniqueId()], $r);
                                 }
                             } else {
