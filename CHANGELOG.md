@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.19.48](https://github.com/Dannebicque/intranetV3/compare/v3.19.47...v3.19.48) (2024-10-02)
+
+
+### Bug Fixes
+
+* tableau vide sur Celcat ([2391d4a](https://github.com/Dannebicque/intranetV3/commit/2391d4aeb724b10316277dbbc5f2d49b70fc46e3))
+
 ### [3.19.47](https://github.com/Dannebicque/intranetV3/compare/v3.19.42...v3.19.47) (2024-10-01)
 
 
