@@ -31,7 +31,7 @@ class CreateEnseignant
             // Envoi une requête pour ajouter les éléments
             $enseignantEduSign = $this->apiPersonnel->getEnseignantByEmail($enseignant->email, $cleApi);
             if ($enseignantEduSign) {
-                $result = $this->apiPersonnel->updateEnseignant($enseignant, $personnel, $diplome, $cleApi);
+                $result = $this->apiPersonnel->updateEnseignant($enseignant, $cleApi);
                 // ajouter l'id de l'enseignant dans la table personnel
 
                 $id = $enseignantEduSign['ID'];

@@ -286,7 +286,7 @@ class EduSignController extends BaseController
 
 //    todo: transformer en LiveComponent pour changer les datas des select
     #[Route('/update-course/{source}/{diplome}/{id}/', name: 'app_admin_edu_sign_update_cours')]
-    public function updateCourse(int $id, string $source, int $diplome, UpdateEdt $updateEdt, Request $request): Response
+    public function updateCourse(int $id, string $source, int $diplome, UpdateEdt $updateEdt, Request $request, MailerInterface $mailer): Response
     {
         $cours = $this->edtManager->findCourse($source, $id);
 
@@ -316,18 +316,34 @@ class EduSignController extends BaseController
 
         $course = $this->edtManager->getCourseEduSign($source, $cours->getId(), $objmatiere, $groupe);
 
-        if ($course->personnelObjet->getIdEduSign() === null) {
-            $this->createEnseignant->update($course->personnelObjet, $course->diplome, $course->diplome->getKeyEduSign());
-        }
-
         $courseEdusign = (new IntranetEdtEduSignAdapter($course, $diplome))->getCourse();
         $keyEduSign = $cours->getSemestre()->getDiplome()->getKeyEduSign();
 
-        if ($courseEdusign->id_edu_sign == null) {
-            $this->apiCours->addCourse($courseEdusign, $keyEduSign);
-        } else {
-            $this->apiCours->updateCourse($courseEdusign, $keyEduSign);
+        $updateEnseignantResult = [];
+        if ($course->personnelObjet && (empty($course->personnelObjet->getIdEduSign()) || !array_key_exists($diplome->getId(), $course->personnelObjet->getIdEduSign()))) {
+            $updateEnseignantResult = $this->createEnseignant->update($course->personnelObjet, $diplome, $keyEduSign);
         }
+
+
+        if ($courseEdusign->id_edu_sign == null) {
+            $updateCourseResult[$courseEdusign->api_id] = $this->apiCours->addCourse($courseEdusign, $keyEduSign);
+        } else {
+            $updateCourseResult[$courseEdusign->api_id] = $this->apiCours->updateCourse($courseEdusign, $keyEduSign);
+        }
+
+        // retirer les entrées vides
+        $updateCourseResult = array_filter($updateCourseResult);
+        $updateEnseignantResult = array_filter($updateEnseignantResult??[]);
+        $result = array_merge($updateEnseignantResult, $updateCourseResult);
+
+        $email = (new TemplatedEmail())
+            ->from('no-reply@univ-reims.fr')
+            ->to('cyndel.herolt@univ-reims.fr')
+            ->addCc('cyndel.herolt@univ-reims.fr')
+            ->subject('EduSign update a single course - error report')
+            ->htmlTemplate('emails/error_report.html.twig')
+            ->context(['errors' => $result, 'diplome' => $diplome->getLibelle(), 'type' => 'étudiant', 'course' => $cours->getId()]);
+        $mailer->send($email);
 
         return $this->redirectToRoute('administration_edusign_index');
     }

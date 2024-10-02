@@ -61,7 +61,7 @@ class ApiCours
         }
     }
 
-    public function updateCourse(EduSignCourse $course, string $cleApi): string
+    public function updateCourse(EduSignCourse $course, string $cleApi): mixed
     {
         $client = HttpClient::create();
 
@@ -74,6 +74,7 @@ class ApiCours
         ]);
         $statusCode = $response->getStatusCode();
         $content = $response->getContent();
+        $data = json_decode($content, true);
 
         $id = $course->id;
 
@@ -97,7 +98,12 @@ class ApiCours
             $rep->save($edt);
         }
 
-        return $content;
+        // si $data n'a pas : "status" => "success"
+        if ($data['status'] !== 'success') {
+            return $content;
+        } else {
+            return null;
+        }
     }
 
     public function getCourseIdByApiId(string $apiId, string $cleApi): mixed
