@@ -167,6 +167,7 @@ class MyCelcat
             }
 
             try {
+                dd($celcatIndex, $intranetIndex, '-----');
                 foreach ($celcatIndex as $id => $row) {//todo: ATTENTION c'est un tableau de tableau... celcatIndex et intranetIndex
                     if (isset($intranetIndex[$id])) {
                         // Mise à jour des données existantes
