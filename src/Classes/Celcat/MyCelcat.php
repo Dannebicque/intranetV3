@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Celcat/MyCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/09/2024 20:33
+ * @lastUpdate 02/10/2024 09:38
  */
 
 namespace App\Classes\Celcat;
@@ -192,7 +192,7 @@ class MyCelcat
                 // Suppression des données inexistantes
                 foreach ($intranetIndex as $id => $row) {
                     foreach ($row as $r) {
-                        if (!array_key_exists($r->getUniqueId(), $celcatIndex[$id])) {
+                        if (is_array($celcatIndex) && !array_key_exists($r->getUniqueId(), $celcatIndex[$id])) {
                             $this->deleteEvent($r);
                         }
                     }
