@@ -192,7 +192,7 @@ class MyCelcat
                 // Suppression des données inexistantes
                 foreach ($intranetIndex as $id => $row) {
                     foreach ($row as $r) {
-                        if ($celcatIndex[$id] && !array_key_exists($r->getUniqueId(), $celcatIndex[$id])) {
+                        if (is_array($celcatIndex[$id]) && !array_key_exists($r->getUniqueId(), $celcatIndex[$id])) {
                             $this->deleteEvent($r);
                         }
                     }
