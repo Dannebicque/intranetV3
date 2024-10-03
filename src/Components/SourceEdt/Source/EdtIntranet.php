@@ -78,6 +78,13 @@ class EdtIntranet extends AbstractEdt implements EdtInterface
         return $this->edtIntranetAdapter->single($evt, $matieres, $this->transformeGroupe($groupes));
     }
 
+    public function findNew(int $event): EvenementEdt
+    {
+        $evt = $this->edtPlanningRepository->find($event);
+
+        return $this->edtIntranetAdapter->singleNew($evt);
+    }
+
     public function findOne(int $eventId, ?Matiere $matiere, ?Groupe $groupe): EvenementEdt
     {
         $evt = $this->edtPlanningRepository->find($eventId);

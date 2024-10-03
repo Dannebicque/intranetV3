@@ -66,6 +66,13 @@ class EdtCelcat extends AbstractEdt implements EdtInterface
         return $this->edtCelcatAdapter->single($evt, $matieres, $groupes);
     }
 
+    public function findNew(int $event): EvenementEdt
+    {
+        $evt = $this->edtCelcatRepository->find($event);
+
+        return $this->edtCelcatAdapter->singleNew($evt);
+    }
+
     public function findOne(int $eventId, ?Matiere $matiere, ?Groupe $groupe): EvenementEdt
     {
         $evt = $this->edtCelcatRepository->find($eventId);

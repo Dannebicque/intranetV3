@@ -9,9 +9,13 @@
 
 namespace App\Classes\Celcat;
 
+use App\Classes\Edt\EdtManager;
+use App\Classes\EduSign\Adapter\IntranetEdtEduSignAdapter;
+use App\Classes\EduSign\Events\EduSignEvent;
 use App\Classes\GetSemestreFromGroupe;
 use App\Classes\Matieres\TypeMatiereManager;
 use App\Components\Logger\LogHelper;
+use App\DTO\EvenementEdt;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Calendrier;
 use App\Entity\Diplome;
@@ -22,7 +26,9 @@ use App\Repository\DiplomeRepository;
 use App\Repository\EdtCelcatRepository;
 use App\Repository\GroupeRepository;
 use App\Repository\PersonnelRepository;
+use App\Repository\SemestreRepository;
 use App\Utils\Tools;
+use Carbon\Carbon;
 use Carbon\CarbonInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
@@ -50,7 +56,7 @@ class MyCelcat
         private readonly EntityManagerInterface   $entityManger,
         private readonly ParameterBagInterface    $parameterBag,
         private readonly GroupeRepository         $groupeRepository,
-        private readonly CalendrierRepository     $calendrierRepository
+        private readonly CalendrierRepository     $calendrierRepository, private readonly SemestreRepository $semestreRepository
     )
     {
 
@@ -132,6 +138,8 @@ class MyCelcat
      */
     public function addEvents(int $codeCelcat, Diplome $diplome, AnneeUniversitaire $anneeUniversitaire): void
     {
+        set_time_limit(0);
+
         $this->connect();
 
         $departement = $diplome->getDepartement();
@@ -290,7 +298,7 @@ class MyCelcat
 
     }
 
-    private function updateEvent(EdtCelcat $intranet, EdtCelcat $celcat): void
+    private function updateEvent(EdtCelcat $intranet, EdtCelcat $celcat, EdtManager $edtManager): void
     {
         $this->log->addItem('Mise à jour de l\'événement ' . $intranet->getId(), 'info');
         // Mise à jour des données existantes de $intranet avec celles de $celcat
@@ -319,8 +327,18 @@ class MyCelcat
         $this->entityManger->detach($celcat);
         $this->entityManger->flush(); //todo: éventuellement envoyer dans EduSign uniquement si date > datejour
         // éventuellement optionnel le flush pour faire un lot
-//        $eduEvent = new EduSignEvent($intranet->getIdEduSign(), $evt, $this->cleApi);
-//        $this->eventDispatcher->dispatch($eduEvent, EduSignEvent::EDUSIGN_UPDATE_COURSE);
+
+        // si date > datejour
+        if ($intranet->getDateCours()->greaterThan(Carbon::now())) {
+            // todo: transformer $intranet en EvenementEdt
+            $diplome = $this->diplomeRepository->findOneBy(['codeCelcatDepartement' => $intranet->getDepartementId()]);
+            $intranetEvt = $edtManager->getEventNew('celcat_'.$intranet->getId());
+            $edusignCourse = (new IntranetEdtEduSignAdapter($intranetEvt, $diplome))->getCourse();
+
+            $eduEvent = new EduSignEvent($edusignCourse, $intranetEvt, $this->cleApi);
+            $this->eventDispatcher->dispatch($eduEvent, EduSignEvent::EDUSIGN_UPDATE_COURSE);
+        }
+
         $this->log->addItem('Mise à jour de l\'événement ' . $intranet->getId() . ' avec l\évenement Celcat ' . $celcat->getUniqueId(), 'info');
     }
 

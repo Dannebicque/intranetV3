@@ -193,6 +193,11 @@ class EdtManager
             $matieres, $groupes);
     }
 
+    public function getEventNew(string $idEvent): ?EvenementEdt
+    {
+        return $this->getManager($this->getSourceFromString($idEvent))?->findNew($this->getIdFromString($idEvent));
+    }
+
     private function getSourceFromString(string $idEvent): string
     {
         return explode('_', $idEvent)[0];

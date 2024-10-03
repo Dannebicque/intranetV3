@@ -23,7 +23,7 @@ class EduSignEvent extends Event
 
     private string $cleApi;
 
-    public function __construct(EduSignCourse $eduSignCourse, EvenementEdt $evenementEdt, string $cleApi)
+    public function __construct(?EduSignCourse $eduSignCourse, EvenementEdt $evenementEdt, ?string $cleApi)
     {
         $this->eduSignCourse = $eduSignCourse;
         $this->evenementEdt = $evenementEdt;

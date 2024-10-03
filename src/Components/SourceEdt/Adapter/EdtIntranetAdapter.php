@@ -33,6 +33,36 @@ class EdtIntranetAdapter extends AbstractEdtAdapter implements EdtAdapterInterfa
         return $collection;
     }
 
+    public function singleNew(mixed $event): ?EvenementEdt
+    {
+        $evt = new EvenementEdt();
+        $evt->source = EdtManager::EDT_INTRANET;
+        $evt->id = $event->getId();
+        $evt->jour = (string)($event->getJour());
+        $evt->heureDebut = $event->getDebut();
+        $evt->indexDebut = Constantes::TAB_HEURES_EDT_2[$event->getDebut() - 1][0];
+        $evt->heureFin = $event->getFin();
+        $evt->matiere = $event->getTexte();
+        $evt->typeIdMatiere = $event->getTypeIdMatiere();
+        $evt->salle = $event->getSalle();
+        $evt->personnel = $event->getIntervenant()->getDisplayPr();
+        $evt->groupe = $event->getDisplayGroupe();
+        $evt->type_cours = $event->getType();
+        $evt->date = $event->getDate();
+        $evt->dateObjet = $event->getGroupe();
+        $evt->gridStart = Constantes::TAB_HEURES_EDT_2[$event->getDebut() - 1][0];
+        $evt->gridEnd = Constantes::TAB_HEURES_EDT_2[$event->getFin() - 1][0];
+        $evt->largeur = $this->getLargeur($event);
+        $evt->duree = $event->getFin() - $event->getDebut();
+        $evt->groupeObjet = $event->getGroupe();
+        $evt->groupeId = $event->getGroupe()->getId();
+        $evt->personnelObjet = $event->getIntervenant();
+        $evt->personnel = null !== $event->getIntervenant() ? $event->getIntervenant()->getDisplayPr() : '-';
+        $evt->idEduSign = $event->getIdEduSign();
+
+        return $evt;
+    }
+
     public function single(mixed $evt, array $matieres = [], array $groupes = []): ?EvenementEdt
     {
         $event = new EvenementEdt();
