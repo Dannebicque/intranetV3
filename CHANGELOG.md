@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.19.49](https://github.com/Dannebicque/intranetV3/compare/v3.19.47...v3.19.49) (2024-10-04)
+
+
+### Bug Fixes
+
+* Semestre non disponible sur APcRessource ou ApcSae ([fcf5bff](https://github.com/Dannebicque/intranetV3/commit/fcf5bff0c8c7945ff08452a74d6a60e0ac1885a1))
+
 ### [3.19.48](https://github.com/Dannebicque/intranetV3/compare/v3.19.47...v3.19.48) (2024-10-02)
 
 
