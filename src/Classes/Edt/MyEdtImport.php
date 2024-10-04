@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtImport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/09/2024 11:27
+ * @lastUpdate 04/10/2024 10:01
  */
 
 /*
@@ -113,7 +113,7 @@ class MyEdtImport
         'WRA316C' => 'WRA316',
         'WRA317C' => 'WRA317',
         'WRA318C' => 'WRA318',
-        'WRA319C' => 'WRA319',
+        'WRA319C' => 'WRA319C',
         'WRA301S' => 'WRA301',
         'WRA302S' => 'WRA302',
         'WRA303S' => 'WRA303S',
