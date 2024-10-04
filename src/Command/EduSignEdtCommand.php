@@ -44,14 +44,15 @@ class EduSignEdtCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
         $debut = $input->getArgument('debut');
+        $week = (int)date('W');
 
         if ($debut === null) {
-            $this->updateEdt->update(null, 1); // créer les cours
+            $this->updateEdt->update(null, 1, $week); // créer les cours
         } else {
             $this->updateEdt->update(null, 3, $debut); // créer les cours
         }
 
-        $this->fixCourses->fixCourse(null); // fix les cours
+        $this->fixCourses->fixCourses(null, $week); // fix les cours
 
         $io->success('Emploi du temps mis à jour sur EduSign.');
 
