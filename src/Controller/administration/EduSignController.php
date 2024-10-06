@@ -227,7 +227,13 @@ class EduSignController extends BaseController
     {
         $diplome = $this->diplomeRepository->findOneBy(['id' => $id]);
         $keyEduSign = $diplome->getKeyEduSign();
-        $changeSemestreResult = $updateEtudiant->changeSemestre($diplome, $keyEduSign);
+        $fixEtudiantsResult = $updateEtudiant->fixEtudiants($keyEduSign);
+        $updateSemestreResult = $updateEtudiant->changeSemestre($diplome, $keyEduSign);
+
+        // fusionner les deux tableaux d'erreurs
+        $changeSemestreResult = array_merge($fixEtudiantsResult, $updateSemestreResult);
+        // retirer les entrées vides
+        $changeSemestreResult = array_filter($changeSemestreResult);
 
         $email = (new TemplatedEmail())
             ->from('no-reply@univ-reims.fr')
