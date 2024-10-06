@@ -154,27 +154,29 @@ class UpdateEtudiant
     {
         $result = [];
 
-        // récupérer tous les etudiants depuis edusign
+        // Récupérer tous les étudiants depuis EduSign
         $allEtudiants = $this->apiEtudiant->getAllEtudiants($keyEduSign);
-        // vérifier qu'il n'y a pas de doublons d'adresse mail
-        $doublons = [];
+        // Vérifier qu'il n'y a pas de doublons d'adresse mail
+        $emails = [];
         foreach ($allEtudiants as $etudiant) {
-            if (in_array($etudiant['EMAIL'], $doublons)) {
-                // trouver le bon étudiant grâce à l'idEduSign sur l'objet dans la base de données
+            $email = $etudiant['EMAIL'];
+            if (isset($emails[$email])) {
+                // Trouver le bon étudiant grâce à l'idEduSign sur l'objet dans la base de données
                 $etudiantObject = $this->etudiantRepository->findOneBy(['idEduSign' => $etudiant['ID']]);
-                // si je ne le trouve pas je le cherche via API_ID
+                // Si je ne le trouve pas je le cherche via API_ID
                 if ($etudiantObject === null) {
                     $etudiantObject = $this->etudiantRepository->findOneBy(['id' => $etudiant['API_ID']]);
                 }
-                // update l'etudiant dans edusign pour changer son mail
+                // Mettre à jour l'étudiant dans EduSign pour changer son mail
                 $etudiantEduSign = (new IntranetEtudiantEduSignAdapter($etudiantObject, []))->getEtudiant();
                 $etudiantEduSign->email = $etudiantObject->getId() . '@delete.fr';
+                $etudiantEduSign->groups = [];
                 $etudiantEduSign->id = $etudiant['ID'];
                 $result[$etudiantObject->getId()] = $this->apiEtudiant->updateEtudiant($etudiantEduSign, $keyEduSign);
-                // supprimer d'edusign l'étudiant
-                $result = $this->apiEtudiant->deleteEtudiant($etudiant['ID'], $keyEduSign);
+                // Supprimer d'EduSign l'étudiant
+                $result[$etudiantObject->getId()] = $this->apiEtudiant->deleteEtudiant($etudiant['ID'], $keyEduSign);
             } else {
-                $doublons[] = $etudiant['EMAIL'];
+                $emails[$email] = true;
             }
         }
 
