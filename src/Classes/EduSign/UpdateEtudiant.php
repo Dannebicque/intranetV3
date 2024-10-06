@@ -150,7 +150,7 @@ class UpdateEtudiant
         return $result;
     }
 
-    public function fixEtudiants(?Diplome $diplome, string $keyEduSign): array
+    public function fixEtudiants(string $keyEduSign): array
     {
         $result = [];
 
