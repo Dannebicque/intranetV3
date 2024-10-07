@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/config/bundles.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 23:01
+ * @lastUpdate 05/10/2024 18:59
  */
 
 return [
@@ -31,4 +31,7 @@ return [
     Symfony\UX\Autocomplete\AutocompleteBundle::class => ['all' => true],
     Dannebicque\TableBundle\DannebicqueTableBundle::class => ['all' => true],
     Symfony\UX\StimulusBundle\StimulusBundle::class => ['all' => true],
+    Nelmio\CorsBundle\NelmioCorsBundle::class => ['all' => true],
+    ApiPlatform\Symfony\Bundle\ApiPlatformBundle::class => ['all' => true],
+    Lexik\Bundle\JWTAuthenticationBundle\LexikJWTAuthenticationBundle::class => ['all' => true],
 ];

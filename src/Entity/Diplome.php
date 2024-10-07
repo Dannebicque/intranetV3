@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Diplome.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/10/2024 19:04
+ * @lastUpdate 04/10/2024 21:31
  */
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
 use App\Entity\Traits\ApogeeTrait;
 use App\Entity\Traits\LifeCycleTrait;
 use App\Repository\DiplomeRepository;
@@ -17,6 +18,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Serializer\Attribute\Groups;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use function chr;
 use function ord;
@@ -24,12 +26,17 @@ use function ord;
 #[Vich\Uploadable]
 #[ORM\Entity(repositoryClass: DiplomeRepository::class)]
 #[ORM\HasLifecycleCallbacks]
+#[ApiResource(
+    normalizationContext: ['groups' => ['diplome:read']],
+    denormalizationContext: ['groups' => ['diplome:write']]
+)]
 class Diplome extends BaseEntity
 {
     use ApogeeTrait;
     use LifeCycleTrait;
 
     #[ORM\Column(type: Types::STRING, length: 255)]
+    #[Groups(['diplome:read', 'diplome:write'])]
     private ?string $libelle = null;
 
     #[ORM\ManyToOne(targetEntity: Personnel::class)]
@@ -39,6 +46,7 @@ class Diplome extends BaseEntity
     private ?Personnel $assistantDiplome = null;
 
     #[ORM\ManyToOne(targetEntity: TypeDiplome::class, inversedBy: 'diplomes')]
+    #[Groups(['diplome:read', 'diplome:write'])]
     private ?TypeDiplome $typeDiplome = null;
 
     #[ORM\Column(type: Types::INTEGER)]
@@ -88,6 +96,7 @@ class Diplome extends BaseEntity
     private Collection $annees;
 
     #[ORM\Column(type: Types::STRING, length: 40)]
+    #[Groups(['diplome:read', 'diplome:write'])]
     private ?string $sigle = null;
 
     #[ORM\Column(type: Types::BOOLEAN)]
