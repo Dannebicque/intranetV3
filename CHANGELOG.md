@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.19.50](https://github.com/Dannebicque/intranetV3/compare/v3.19.47...v3.19.50) (2024-10-07)
+
+
+### Bug Fixes
+
+* [AdminEdusign] - refactor create/update enseignant methode ([a4fe5d4](https://github.com/Dannebicque/intranetV3/commit/a4fe5d49cfd0abd8a3998ad9ac0998e4d7a52171))
+* action sur les étudiants ([9751afb](https://github.com/Dannebicque/intranetV3/commit/9751afb47d2bc7779451609330362695a36aa9a4))
+* EdtCelcat si plusieurs salles dans un créneaux ([4b45909](https://github.com/Dannebicque/intranetV3/commit/4b45909943dc1316b53c1af584bc964ac391f1ef))
+* edusign command ([6c5a867](https://github.com/Dannebicque/intranetV3/commit/6c5a867ae06565982a2392d1d04165e03124932a))
+* Semestre non disponible sur APcRessource ou ApcSae ([13f00c3](https://github.com/Dannebicque/intranetV3/commit/13f00c3fef5f2a8cc3f5e1f6cccf98db9b53b482))
+* Semestre non disponible sur APcRessource ou ApcSae ([2cb4006](https://github.com/Dannebicque/intranetV3/commit/2cb4006ec9090f281e8ee810e61bfa9c6a6b01e8))
+
 ### [3.19.49](https://github.com/Dannebicque/intranetV3/compare/v3.19.47...v3.19.49) (2024-10-04)
 
 
