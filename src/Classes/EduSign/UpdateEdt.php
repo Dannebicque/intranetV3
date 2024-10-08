@@ -74,6 +74,8 @@ class UpdateEdt
                     $semestre, $semaine, $semestre->getAnneeUniversitaire(), $matieresSemestre, $groupes
                 );
 
+                dump($edt);
+
                 if ($edt->evenements) {
                     foreach ($edt->evenements as $this->evenement) {
                         if ($this->evenement->dateObjet->isBetween($start, $end)) {
@@ -123,7 +125,6 @@ class UpdateEdt
 
     public function processEvent(Diplome $diplome, ?string $keyEduSign): mixed
     {
-        dump('processEvent', $this->evenement->id);
         $event = $this->evenement;
         $enseignant = $event->personnelObjet;
         // si l'enseignant n'est pas dans EduSign
@@ -138,7 +139,6 @@ class UpdateEdt
     public function sendUpdateAddCourse(?string $keyEduSign, ?Diplome $diplome): mixed
     {
         $course = (new IntranetEdtEduSignAdapter($this->evenement, $diplome))->getCourse();
-        dump('sendUpdateAddCourse', $course->id);
         $result = $this->apiCours->addCourse($course, $keyEduSign, $diplome);
         return $result;
     }
