@@ -41,65 +41,50 @@ class FixCourses
 
     public function fixCourses(?string $keyEduSign, ?int $week): ?array
     {
-        if (!$keyEduSign) {
-            return ['success' => false, 'messages' => ['Clé EduSign manquante.']];
-        }
+        $diplomes = $keyEduSign
+            ? $this->diplomeRepository->findBy(['keyEduSign' => $keyEduSign])
+            : $this->diplomeRepository->findAllWithEduSign();
 
-        $result = ['success' => true, 'messages' => []];
+        $start = Carbon::now()->setISODate((int)date('Y'), $week)->startOfWeek();
+        $end = $start->copy()->endOfWeek();
 
-        try {
-            $diplomes = $this->diplomeRepository->findBy(['keyEduSign' => $keyEduSign]);
-            $start = Carbon::now()->setISODate((int)date('Y'), $week)->startOfWeek();
-            $end = $start->copy()->endOfWeek();
+        foreach ($diplomes as $diplome) {
+            $this->source = $diplome->isOptUpdateCelcat() === true ? 'celcat' : 'intranet';
+            $keyEduSign = $keyEduSign ?? $diplome->getKeyEduSign();
+            $courses = $this->apiCours->getAllCoursesWeek($keyEduSign, $start, $end);
 
-            foreach ($diplomes as $diplome) {
-                $courses = $this->apiCours->getAllCoursesWeek($keyEduSign, $start, $end);
+            if ($courses) {
+                foreach ($courses as $course) {
+                    if (Carbon::parse($course['START'], 'UTC')->isBefore(Carbon::now())) {
+                        continue;
+                    }
 
-                if ($courses) {
-                    foreach ($courses as $course) {
-                        if (Carbon::parse($course['START'], 'UTC')->isBefore(Carbon::now())) {
-                            continue;
-                        }
+                    $enseignant = $this->personnelRepository->findByIdEdusign($course['PROFESSOR']);
+                    $cours = empty($course['API_ID'])
+                        ? $this->getCourse($diplome, $course, $enseignant)
+                        : $this->edtManager->findCourse($this->source, $course['API_ID']);
 
-                        $enseignant = $this->personnelRepository->findByIdEdusign($course['PROFESSOR']);
-//                        foreach ($course['GROUPS'] as $groupeIds) {
-//                            $groupe = $this->groupeRepository->findByIdEdusign($groupeIds);
-//                        }
-
-                        // si le cours a été ajouté à la main
-                        if (empty($course['API_ID'])) {
-                            // transformer le cours en cours intranet
-                            $cours = $this->getCourse($diplome, $course, $enseignant);
-                            // rechercher le cours dans la db sous réserves de trouver un cours avec les mêmes infos
-                            $coursIntranet = $this->findCoursIntranet($cours);
-
-                            // si on ne trouve pas de cours avec les mêmes infos dans la DB
-                            if (empty($coursIntranet)) {
-                                $this->deleteCourseEduSign($course, $keyEduSign, $result, $cours);
-                            } else {
-                                $this->updateCourseEduSign($coursIntranet, $course, $keyEduSign, $result, $cours);
-                            }
+                    if (empty($course['API_ID'])) {
+                        $coursIntranet = $this->findCoursIntranet($cours);
+                        if (empty($coursIntranet)) {
+                           $result['suppression cours créé à la main'][$course['START'].' - '.$course['END'].'|'.$course['PROFESSOR']] = $this->deleteCourseEduSign($course, $keyEduSign);
                         } else {
-                            $cours = $this->edtManager->findCourse($cours->source, $course['API_ID']);
-
-                            if (!$cours) {
-                                $this->deleteCourseEduSign($course, $keyEduSign, $result, $cours);
-                            } else {
-                                $this->updateCourseEduSign($cours, $course, $keyEduSign, $result, $cours);
-                            }
+                            $result['update cours créé à la main'][$course['START'].' - '.$course['END'].'|'.$course['PROFESSOR']] = $this->updateCourseEduSign($coursIntranet, $course, $keyEduSign);
+                        }
+                    } else {
+                        if (!$cours) {
+                            $result['suppression cours'][$course['API_ID']] = $this->deleteCourseEduSign($course, $keyEduSign);
+                        } else {
+                            $result['update cours'][$course['API_ID']] = $this->updateCourseEduSign($cours, $course, $keyEduSign);
                         }
                     }
-                    $result['messages'][] = 'Cours mis à jour pour le diplôme ' . $diplome->getLibelle();
-                } else {
-                    $result['error']['Aucun cours'] = 'Aucun cours trouvé pour le diplôme ' . $diplome->getLibelle();
                 }
+            } else {
+                $result['aucun cours'] = 'Aucun cours trouvé pour le diplome '.$diplome->getLibelle().' de la semaine ' . $week;
             }
-        } catch (\Exception $e) {
-            $result['success'] = false;
-            $result['messages'][] = 'Erreur lors de la mise à jour des cours : ' . $e->getMessage() . ' - ' . $e->getTraceAsString() . ' - ' . $e->getLine();
         }
 
-        return $result;
+        return $result ?? null;
     }
 
     private function getCourse($diplome, $course, $enseignant)
@@ -124,14 +109,8 @@ class FixCourses
         }
     }
 
-    private function updateCourseEduSign($coursIntranet, $course, $keyEduSign, &$result, $cours)
+    private function updateCourseEduSign($coursIntranet, $course, $keyEduSign): mixed
     {
-        if (empty($course['ID'])) {
-            $result['success'] = false;
-            $result['messages'][] = 'Erreur : ID du cours manquant.';
-            return;
-        }
-
         $coursIntranet->setIdEduSign($course['ID']);
         $this->edtManager->saveCourseEduSign($this->source, $coursIntranet);
 
@@ -144,33 +123,12 @@ class FixCourses
         $this->edusignCourse->professor = $course['PROFESSOR'];
         $this->edusignCourse->school_group = $course['SCHOOL_GROUP'];
 
-        try {
-            $this->apiCours->updateCourse($this->edusignCourse, $keyEduSign);
-            $result[$this->apiCours->updateCourse($this->edusignCourse, $keyEduSign)]['cours_maj']['intranet'][] = [
-                'id' => $course['API_ID'],
-                'date' => $cours->date,
-                'debut' => $cours->heureDebut,
-                'fin' => $cours->heureFin,
-                'salle' => $cours->salle,
-                'intervenant' => $cours->personnelObjet
-            ];
-        } catch (\Exception $e) {
-            $result['success'] = false;
-            $result['messages'][] = 'Erreur lors de la mise à jour du cours : ' . $e->getMessage();
-        }
+        return $this->apiCours->updateCourse($this->edusignCourse, $keyEduSign);
     }
 
-    private function deleteCourseEduSign($course, $keyEduSign, $result, $cours)
+    private function deleteCourseEduSign($course, $keyEduSign): mixed
     {
-        $this->apiCours->deleteCourse($course['ID'], $keyEduSign);
-        $result[$this->apiCours->deleteCourse($course['ID'], $keyEduSign)]['cours_supprimés']['edusign'][] = [
-            'id' => $course['API_ID'],
-            'date' => $cours->date,
-            'debut' => $cours->heureDebut,
-            'fin' => $cours->heureFin,
-            'salle' => $cours->salle,
-            'intervenant' => $cours->personnelObjet
-        ];
+        return $this->apiCours->deleteCourse($course['ID'], $keyEduSign);
     }
 
     private function linkCourseEduSign($coursIntranet, $course)
