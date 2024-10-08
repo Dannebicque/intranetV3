@@ -46,10 +46,14 @@ class EduSignEdtCommand extends Command
         $debut = $input->getArgument('debut');
         $week = (int)date('W')+1;
 
+        dump($week, $debut);
+
         $this->fixCourses->fixCourses(null, $week);
         if ($debut === null) {
+            dump(1);
             $this->updateEdt->update(null, 1, $week);
         } else {
+            dump(3);
             $this->updateEdt->update(null, 3, $debut);
         }
 
