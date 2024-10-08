@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/GroupeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:17
+ * @lastUpdate 07/10/2024 16:13
  */
 
 namespace App\Controller\administration;
@@ -196,6 +196,11 @@ class GroupeController extends BaseController
     {
         $id = $groupe->getId();
         if ($this->isCsrfTokenValid('delete'.$id, $request->server->get('HTTP_X_CSRF_TOKEN'))) {
+            foreach ($groupe->getAbsenceEtatAppels() as $absenceEtatAppel) {
+                $this->entityManager->remove($absenceEtatAppel);
+            }
+
+
             $this->entityManager->remove($groupe);
             $this->entityManager->flush();
             $this->addFlashBag(
