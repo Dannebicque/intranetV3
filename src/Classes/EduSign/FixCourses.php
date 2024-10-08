@@ -54,7 +54,7 @@ class FixCourses
             $keyEduSign = $keyEduSign ?? $diplome->getKeyEduSign();
             $courses = $this->apiCours->getAllCoursesWeek($keyEduSign, $start, $end);
             dump(
-                'cours' . count($courses),
+                'cours' . $courses,
             );
 
             if ($courses) {
