@@ -162,7 +162,7 @@ class EdtManager
 
     private function getSourceEdt(mixed $objet): string
     {
-        if (true === $objet->getDiplome()?->getDepartement()?->getOptUpdateCelcat()) {
+        if (true === $objet->getDiplome()?->getDepartement()?->isOptUpdateCelcat()) {
             return self::EDT_CELCAT;
         }
 
