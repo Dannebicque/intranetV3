@@ -4,6 +4,7 @@ namespace App\Classes\EduSign\Api;
 
 use App\Classes\EduSign\DTO\EduSignCourse;
 use App\Classes\EduSign\GetCleApi;
+use App\Entity\Diplome;
 use App\Repository\EdtCelcatRepository;
 use App\Repository\EdtPlanningRepository;
 use Exception;
@@ -20,7 +21,7 @@ class ApiCours
     {
     }
 
-    public function addCourse(EduSignCourse $course, string $cleApi): mixed
+    public function addCourse(EduSignCourse $course, string $cleApi, ?Diplome $diplome): mixed
     {
         $client = HttpClient::create();
 
@@ -53,6 +54,8 @@ class ApiCours
         $edt->setIdEduSign($id);
         $rep->save($edt);
 
+        dump('ADD COURSE | '.$diplome->getLibelle(), $course->api_id, $this->getCleApi->getCleApi($cleApi));
+
         // si $data n'a pas : "status" => "success"
         if ($data['status'] !== 'success') {
             return $content;
@@ -61,7 +64,7 @@ class ApiCours
         }
     }
 
-    public function updateCourse(EduSignCourse $course, string $cleApi): mixed
+    public function updateCourse(EduSignCourse $course, string $cleApi, Diplome $diplome): mixed
     {
         $client = HttpClient::create();
 
@@ -97,6 +100,9 @@ class ApiCours
             $edt->setIdEduSign($id);
             $rep->save($edt);
         }
+
+        dump('UPDATE COURSE | '.$diplome->getLibelle(), $course->api_id, $this->getCleApi->getCleApi($cleApi));
+
 
         // si $data n'a pas : "status" => "success"
         if ($data['status'] !== 'success') {
