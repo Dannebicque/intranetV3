@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Celcat/MyCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/09/2024 20:33
+ * @lastUpdate 07/10/2024 16:11
  */
 
 namespace App\Classes\Celcat;
@@ -132,6 +132,8 @@ class MyCelcat
      */
     public function addEvents(int $codeCelcat, Diplome $diplome, AnneeUniversitaire $anneeUniversitaire): void
     {
+
+        // SELECT CT_EVENT.event_id, CT_EVENT.weeks, CT_EVENT_CAT.name, CT_VIEW_EVENT_MODULE001.resourcecode,  CT_VIEW_EVENT_STAFF001.resourcecode, CT_VIEW_EVENT_ROOM001.resourcecode, CT_VIEW_EVENT_ROOM001.resourcename, CT_VIEW_EVENT_GROUP001.resourcecode, CT_VIEW_EVENT_GROUP001.resourcename, CT_EVENT.date_change, CT_VIEW_EVENT_ROOM001.resourceweeks FROM CT_EVENT INNER JOIN CT_EVENT_CAT ON CT_EVENT_CAT.event_cat_id = CT_EVENT.event_cat_id INNER JOIN CT_VIEW_EVENT_STAFF001 ON CT_VIEW_EVENT_STAFF001.eid=CT_EVENT.event_id INNER JOIN CT_VIEW_EVENT_GROUP001 ON CT_VIEW_EVENT_GROUP001.eid=CT_EVENT.event_id INNER JOIN CT_VIEW_EVENT_MODULE001 ON CT_VIEW_EVENT_MODULE001.eid=CT_EVENT.event_id INNER JOIN CT_VIEW_EVENT_ROOM001 ON CT_VIEW_EVENT_ROOM001.eid=CT_EVENT.event_id WHERE CT_EVENT.event_id=260531;
         $this->connect();
 
         $departement = $diplome->getDepartement();
@@ -153,8 +155,13 @@ class MyCelcat
             $celcatIndex = [];
             while (odbc_fetch_row($resultCelcat)) {
                 $eventId = odbc_result($resultCelcat, 1);
-                //todo: trouver comment construire une clé unique de comparaison dans transformeCelcatToDtob
-                $celcatIndex[$eventId] = $this->transformeCelcatToDto($resultCelcat, $anneeUniversitaire, $diplome);
+                $events = $this->transformeCelcatToDto($resultCelcat, $anneeUniversitaire, $diplome);
+
+                if (!array_key_exists($eventId, $celcatIndex)) {
+                    $celcatIndex[$eventId] = $events;
+                } else {
+                    $celcatIndex[$eventId] = array_merge($celcatIndex[$eventId], $events);
+                }
             }
 
             $intranetIndex = [];
@@ -167,7 +174,7 @@ class MyCelcat
             }
 
             try {
-                foreach ($celcatIndex as $id => $row) {//todo: ATTENTION c'est un tableau de tableau... celcatIndex et intranetIndex
+                foreach ($celcatIndex as $id => $row) {
                     if (isset($intranetIndex[$id])) {
                         // Mise à jour des données existantes
                         //compare les dates de mise à jour

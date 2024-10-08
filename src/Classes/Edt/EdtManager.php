@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/EdtManager.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 19/04/2024 18:06
+ * @lastUpdate 07/10/2024 16:19
  */
 
 namespace App\Classes\Edt;
@@ -15,11 +15,10 @@ use App\Components\SourceEdt\Source\EdtIntranet;
 use App\Components\SourceEdt\SourceEdtRegistry;
 use App\DTO\EvenementEdt;
 use App\DTO\EvenementEdtCollection;
+use App\DTO\Matiere;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Groupe;
-use App\DTO\Matiere;
 use App\Entity\Personnel;
-use App\Entity\Salle;
 use App\Entity\Semestre;
 use App\Enums\TypeGroupeEnum;
 use App\Repository\EdtCelcatRepository;
@@ -163,6 +162,7 @@ class EdtManager
     private function getSourceEdt(mixed $objet): string
     {
         if (true === $objet->getDiplome()?->getDepartement()?->isOptUpdateCelcat()) {
+
             return self::EDT_CELCAT;
         }
 
