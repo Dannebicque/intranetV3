@@ -5,6 +5,7 @@ namespace App\Controller\administration;
 use App\Classes\Edt\EdtManager;
 use App\Classes\EduSign\Adapter\IntranetEdtEduSignAdapter;
 use App\Classes\EduSign\Api\ApiCours;
+use App\Classes\EduSign\Api\ApiPersonnel;
 use App\Classes\EduSign\CreateEnseignant;
 use App\Classes\EduSign\FixCourses;
 use App\Classes\EduSign\UpdateEdt;
@@ -30,7 +31,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Routing\RouterInterface;
 
 #[Route('/administration/edusign')]
@@ -57,28 +58,20 @@ class EduSignController extends BaseController
     #[Route('/', name: 'administration_edusign_index')]
     public function index(Request $request, RouterInterface $router): Response
     {
+        // récupérer
         $departement = $this->getDepartement();
         $personnelsDepartement = $this->personnelDepartementRepository->findBy(['departement' => $departement]);
-
         $diplomes = $this->diplomeRepository->findAllWithEduSignDepartement($departement);
         $diplomes = array_combine(array_map(fn($d) => $d->getId(), $diplomes), $diplomes);
-        $cours = [];
-
         $diplome = $this->getSelectedDiplome($request, $diplomes);
-
         $filteredPersonnelsDepartement = array_filter($personnelsDepartement, fn($p) => empty($p->getPersonnel()->getIdEduSign() ?? []) || !array_key_exists($diplome->getId(), $p->getPersonnel()->getIdEduSign()));
-        // trier les personnels par nom
         usort($filteredPersonnelsDepartement, fn($a, $b) => $a->getPersonnel()->getNom() <=> $b->getPersonnel()->getNom());
 
         $semestres = $this->semestreRepository->findByDiplome($diplome);
-
-        // Gestion des semaines
         $week = $request->query->getInt('semaine', date('W'));
-        if ($request->query->get('semaine') === null) {
-            $week = date('W');
-        }
         $start = Carbon::now()->setISODate((int)date('Y'), $week)->startOfWeek();
         $end = $start->copy()->endOfWeek();
+        $cours = [];
 
         foreach ($semestres as $semestre) {
             $eventSemaine = $this->CalendrierRepository->findOneBy(['semaineReelle' => $week, 'anneeUniversitaire' => $semestre->getAnneeUniversitaire()]);
@@ -86,7 +79,6 @@ class EduSignController extends BaseController
             $matieresDiplome = $this->getMatieresDiplome($semestre->getDiplome());
             $groupes = $this->groupeRepository->findBySemestre($semestre);
             $groupesSemestres[$semestre->getLibelle()] = array_filter($groupes, fn($groupe) => $semestre->getDiplome()->getApcParcours()?->getGroupes() ?? $this->groupeRepository->findBySemestre($semestre));
-
             $edt = $this->edtManager->getPlanningSemestreSemaine($semestre, $semaine, $semestre->getAnneeUniversitaire(), $matieresDiplome, $groupes);
             $salles = $this->salleRepository->findAll();
 
@@ -104,15 +96,7 @@ class EduSignController extends BaseController
 
         $page = $request->query->getInt('page', 1);
         $pagination = new MyPagination($router);
-        $pagination->calculPaginationFromArray(
-            $cours,
-            [
-                'path' => 'administration_edusign_index',
-                'args' => ['diplome' => $diplome?->getId(), 'semaine' => $week]
-            ],
-            10,
-            $page
-        );
+        $pagination->calculPaginationFromArray($cours, ['path' => 'administration_edusign_index', 'args' => ['diplome' => $diplome?->getId(), 'semaine' => $week]], 10, $page);
         $semestres = $this->semestreRepository->findByDepartementActifFc($departement);
         $matieres = $this->typeMatiereManager->findByDepartement($departement);
 
@@ -126,7 +110,9 @@ class EduSignController extends BaseController
             'matieres' => $matieres,
             'groupesSemestres' => $groupesSemestres ?? null,
             'cours' => $cours,
-            'currentWeek' => $week
+            'currentWeek' => $week,
+            'start' => $start,
+            'end' => $end,
         ]);
     }
 
@@ -295,52 +281,33 @@ class EduSignController extends BaseController
     public function updateCourse(int $id, string $source, int $diplome, UpdateEdt $updateEdt, Request $request, MailerInterface $mailer): Response
     {
         $cours = $this->edtManager->findCourse($source, $id);
-
-        $matiere = $request->query->get('matiere');
-
-        $objmatiere = $this->typeMatiereManager->getMatiereFromSelect($matiere);
-
+        $matiere = $this->typeMatiereManager->getMatiereFromSelect($request->query->get('matiere'));
         $diplome = $this->diplomeRepository->findOneBy(['id' => $diplome]);
-
         $groupe = $this->groupeRepository->findOneBy(['id' => $request->query->get('groupe')]);
-        if (null != $groupe) {
-            $groupeOrdre = $groupe->getOrdre();
-            $groupeType = $groupe->getTypeGroupe()->getType()->value;
-        }
-
         $enseignant = $this->personnelRepository->findOneBy(['id' => $request->query->get('personnel')]);
-
         $salle = $request->query->get('salle');
 
-        // Récupérer les nouvelles valeurs de date et d'heure
-//        $date = $request->query->get('date');
-//        $heureDebut = $request->query->get('heureDebut');
-//        $heureFin = $request->query->get('heureFin');
+        $groupeOrdre = $groupe?->getOrdre();
+        $groupeType = $groupe?->getTypeGroupe()->getType()->value;
 
-        //todo: adapter les données de date et d'heure à la structure de l'objet
-        $cours = $this->edtManager->updateCourse($cours, $source, $objmatiere, $cours->getSemestre(), $groupe, $groupeOrdre ?? null, $groupeType ?? null, $enseignant, $salle);
-
-        $course = $this->edtManager->getCourseEduSign($source, $cours->getId(), $objmatiere, $groupe);
-
+        $cours = $this->edtManager->updateCourse($cours, $source, $matiere, $cours->getSemestre(), $groupe, $groupeOrdre, $groupeType, $enseignant, $salle);
+        $course = $this->edtManager->getCourseEduSign($source, $cours->getId(), $matiere, $groupe);
         $courseEdusign = (new IntranetEdtEduSignAdapter($course, $diplome))->getCourse();
         $keyEduSign = $cours->getSemestre()->getDiplome()->getKeyEduSign();
 
         $updateEnseignantResult = [];
         if ($course->personnelObjet && (empty($course->personnelObjet->getIdEduSign()) || !array_key_exists($diplome->getId(), $course->personnelObjet->getIdEduSign()))) {
-            $updateEnseignantResult = $this->createEnseignant->update($course->personnelObjet, $diplome, $keyEduSign);
+            $updateEnseignantResult[$course->personnelObjet->getId()] = $this->createEnseignant->update($course->personnelObjet, $diplome, $keyEduSign);
         }
 
-
-        if ($courseEdusign->id_edu_sign == null) {
+        $updateCourseResult = [];
+        if ($courseEdusign->id_edu_sign === null) {
             $updateCourseResult[$courseEdusign->api_id] = $this->apiCours->addCourse($courseEdusign, $keyEduSign);
         } else {
             $updateCourseResult[$courseEdusign->api_id] = $this->apiCours->updateCourse($courseEdusign, $keyEduSign);
         }
 
-        // retirer les entrées vides
-        $updateCourseResult = array_filter($updateCourseResult);
-        $updateEnseignantResult = array_filter($updateEnseignantResult??[]);
-        $result = array_merge($updateEnseignantResult, $updateCourseResult);
+        $result = array_merge(array_filter($updateEnseignantResult), array_filter($updateCourseResult));
 
         $email = (new TemplatedEmail())
             ->from('no-reply@univ-reims.fr')

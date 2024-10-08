@@ -28,23 +28,26 @@ class CreateEnseignant
         // Construit l'objet associé selon le modèle EduSign
         $enseignant = (new IntranetEnseignantEduSignAdapter($personnel))->getEnseignant();
 
-        // Envoi une requête pour ajouter les éléments
+        // récupère l'enseignant par son email
         $enseignantEduSign = $this->apiPersonnel->getEnseignantByEmail($enseignant->email, $cleApi);
         if ($enseignantEduSign) {
+            // met à jour l'enseignant dans edusign
             $result = $this->apiPersonnel->updateEnseignant($enseignant, $cleApi);
 
-            $id = $enseignantEduSign['ID'];
+            $idEdusign = $enseignantEduSign['ID'];
             $diplomeId = $diplome->getId();
             $existingIdEduSign = $personnel->getIdEduSign();
 
+            // on filtre les valeurs nulles ou vides
             if ($existingIdEduSign !== null) {
                 $existingIdEduSign = array_filter($existingIdEduSign, fn($value) => $value !== null && $value !== '');
                 $personnel->setIdEduSign($existingIdEduSign);
                 $this->personnelRepository->save($personnel);
             }
 
-            if ($existingIdEduSign === null || !array_key_exists($diplomeId, $existingIdEduSign)) {
-                $jsonId = [$diplomeId => $id];
+            // on vérifie si l'id edusign est déjà enregistré et si la valeur est différente
+            if ($existingIdEduSign === null || !array_key_exists($diplomeId, $existingIdEduSign) || $existingIdEduSign[$diplomeId] !== $idEdusign) {
+                $jsonId = [$diplomeId => $idEdusign];
                 $personnel->setIdEduSign($existingIdEduSign === null ? $jsonId : $existingIdEduSign + $jsonId);
             }
 

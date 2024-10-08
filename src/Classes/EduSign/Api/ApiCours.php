@@ -182,7 +182,7 @@ class ApiCours
         return $data['result'] ?? null;
     }
 
-    public function deleteCourse(?string $id, string $cleApi): string
+    public function deleteCourse(?string $id, string $cleApi): mixed
     {
         $client = HttpClient::create();
 
@@ -195,6 +195,7 @@ class ApiCours
 
         $statusCode = $response->getStatusCode();
         $content = $response->getContent();
+        $data = json_decode($content, true);
 
         $edt = $this->edtPlanningRepository->findOneBy(['idEduSign' => $id]);
         if ($edt) {
@@ -202,7 +203,7 @@ class ApiCours
             $this->edtPlanningRepository->save($edt);
         }
 
-        return $content;
+        return $data['status'] ?? null;
 
     }
 }
