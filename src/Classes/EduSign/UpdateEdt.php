@@ -74,11 +74,11 @@ class UpdateEdt
                     $semestre, $semaine, $semestre->getAnneeUniversitaire(), $matieresSemestre, $groupes
                 );
 
-                dump($edt);
-
                 if ($edt->evenements) {
                     foreach ($edt->evenements as $this->evenement) {
+                        dump('update courses - ' . $diplome->getLibelle() . ' - ' . $this->evenement->id);
                         if ($this->evenement->dateObjet->isBetween($start, $end)) {
+                            dump('processEvent');
                             $result[$this->evenement->id] = $this->processEvent($diplome, $keyEduSign);
                         }
                     }
