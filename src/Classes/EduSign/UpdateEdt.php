@@ -136,7 +136,7 @@ class UpdateEdt
     public function sendUpdateAddCourse(?string $keyEduSign, ?Diplome $diplome): mixed
     {
         $course = (new IntranetEdtEduSignAdapter($this->evenement, $diplome))->getCourse();
-        $result = $this->apiCours->addCourse($course, $keyEduSign);
+        $result = $this->apiCours->addCourse($course, $keyEduSign, $diplome);
         return $result;
     }
 
@@ -144,7 +144,7 @@ class UpdateEdt
     {
         $diplome = $this->diplomeRepository->findOneBy(['keyEduSign' => $keyEduSign]);
         $course = (new IntranetEdtEduSignAdapter($this->evenement, $diplome))->getCourse();
-        $result = $this->apiCours->updateCourse($course, $keyEduSign);
+        $result = $this->apiCours->updateCourse($course, $keyEduSign, $diplome);
         return $result;
     }
 }

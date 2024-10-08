@@ -68,6 +68,8 @@ class ApiPersonnel
 
         $this->personnelRepository->save($personnel);
 
+        dump('ADD ENSEIGNANT | '.$diplome->getLibelle(), $enseignant->api_id, $this->getCleApi->getCleApi($cleApi));
+
         // si $data n'a pas : "status" => "success"
         if ($data['status'] !== 'success') {
             return $content;
@@ -112,7 +114,7 @@ class ApiPersonnel
         return $data['result'] ?? null;
     }
 
-    public function updateEnseignant(EduSignEnseignant $enseignant, $cleApi): mixed
+    public function updateEnseignant(EduSignEnseignant $enseignant, $cleApi, $diplome): mixed
     {
         $client = HttpClient::create();
 
@@ -129,6 +131,8 @@ class ApiPersonnel
         $content = $response->getContent();
         // convertit JSON en tableau associatif PHP
         $data = json_decode($content, true);
+
+        dump('ADD ENSEIGNANT | '.$diplome->getLibelle(), $enseignant->api_id, $this->getCleApi->getCleApi($cleApi));
 
         // si $data n'a pas : "status" => "success"
         if ($data['status'] !== 'success') {

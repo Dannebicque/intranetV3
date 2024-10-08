@@ -69,13 +69,13 @@ class FixCourses
                         if (empty($coursIntranet)) {
                            $result['suppression cours créé à la main'][$course['START'].' - '.$course['END'].'|'.$course['PROFESSOR']] = $this->deleteCourseEduSign($course, $keyEduSign);
                         } else {
-                            $result['update cours créé à la main'][$course['START'].' - '.$course['END'].'|'.$course['PROFESSOR']] = $this->updateCourseEduSign($coursIntranet, $course, $keyEduSign);
+                            $result['update cours créé à la main'][$course['START'].' - '.$course['END'].'|'.$course['PROFESSOR']] = $this->updateCourseEduSign($coursIntranet, $course, $keyEduSign, $diplome);
                         }
                     } else {
                         if (!$cours) {
                             $result['suppression cours'][$course['API_ID']] = $this->deleteCourseEduSign($course, $keyEduSign);
                         } else {
-                            $result['update cours'][$course['API_ID']] = $this->updateCourseEduSign($cours, $course, $keyEduSign);
+                            $result['update cours'][$course['API_ID']] = $this->updateCourseEduSign($cours, $course, $keyEduSign, $diplome);
                         }
                     }
                 }
@@ -109,7 +109,7 @@ class FixCourses
         }
     }
 
-    private function updateCourseEduSign($coursIntranet, $course, $keyEduSign): mixed
+    private function updateCourseEduSign($coursIntranet, $course, $keyEduSign, $diplome): mixed
     {
         $coursIntranet->setIdEduSign($course['ID']);
         $this->edtManager->saveCourseEduSign($this->source, $coursIntranet);
@@ -123,7 +123,7 @@ class FixCourses
         $this->edusignCourse->professor = $course['PROFESSOR'];
         $this->edusignCourse->school_group = $course['SCHOOL_GROUP'];
 
-        return $this->apiCours->updateCourse($this->edusignCourse, $keyEduSign);
+        return $this->apiCours->updateCourse($this->edusignCourse, $keyEduSign, $diplome);
     }
 
     private function deleteCourseEduSign($course, $keyEduSign): mixed

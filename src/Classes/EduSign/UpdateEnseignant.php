@@ -71,7 +71,7 @@ class UpdateEnseignant
                         $this->edusignEnseignant->api_id = $enseignant->getId();
                         $this->edusignEnseignant->tags[] = null;
 
-                        $this->apiPersonnel->updateEnseignant($this->edusignEnseignant, $this->cleApi);
+                        $this->apiPersonnel->updateEnseignant($this->edusignEnseignant, $this->cleApi, $diplome);
 
                         dump('enseignant mis à jour' . $enseignant->getNom() . ' ' . $enseignant->getPrenom());
 

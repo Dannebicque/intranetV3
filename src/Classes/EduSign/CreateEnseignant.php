@@ -32,7 +32,7 @@ class CreateEnseignant
         $enseignantEduSign = $this->apiPersonnel->getEnseignantByEmail($enseignant->email, $cleApi);
         if ($enseignantEduSign) {
             // met à jour l'enseignant dans edusign
-            $result = $this->apiPersonnel->updateEnseignant($enseignant, $cleApi);
+            $result = $this->apiPersonnel->updateEnseignant($enseignant, $cleApi, $diplome);
 
             $idEdusign = $enseignantEduSign['ID'];
             $diplomeId = $diplome->getId();
