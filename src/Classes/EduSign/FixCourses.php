@@ -49,7 +49,6 @@ class FixCourses
         $end = $start->copy()->endOfWeek();
 
         foreach ($diplomes as $diplome) {
-            dump('fix courses - '.$diplome->getLibelle());
             $this->source = $diplome->isOptUpdateCelcat() === true ? 'celcat' : 'intranet';
             $keyEduSign = $keyEduSign ?? $diplome->getKeyEduSign();
             $courses = $this->apiCours->getAllCoursesWeek($keyEduSign, $start, $end);
