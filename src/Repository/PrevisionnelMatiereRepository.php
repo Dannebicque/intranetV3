@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/PrevisionnelMatiereRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/04/2024 17:54
+ * @lastUpdate 09/10/2024 09:23
  */
 
 namespace App\Repository;
@@ -70,7 +70,7 @@ class PrevisionnelMatiereRepository extends PrevisionnelRepository
         $query = $this->createQueryBuilder('p')
             ->leftJoin(Personnel::class, 'pers', 'WITH', 'p.personnel = pers.id')
             ->innerJoin(Matiere::class, 'm', 'WITH', 'p.idMatiere = m.id')
-            ->select('p.id as id_previsionnel, p.annee, p.referent, p.nbHCm, p.nbHTd, p.nbHTp, p.nbGrCm, p.nbGrTd, p.nbGrTp, m.id as id_matiere, m.libelle, m.codeMatiere, m.codeElement as matiere_code_element, pers.id as id_personnel, pers.statut, pers.nom, pers.prenom, pers.numeroHarpege, pers.mailUniv, pers.nbHeuresService, s.id as id_semestre, s.libelle as libelle_semestre, a.id as id_annee, a.libelle as libelle_annee, a.codeEtape as annee_code_etape, a.libelleLong as annee_libelle_long, d.id as id_diplome, d.libelle as libelle_diplome')
+            ->select('p.id as id_previsionnel, p.annee, p.referent, p.nbHCm, p.nbHTd, p.nbHTp, p.nbGrCm, p.nbGrTd, p.nbGrTp, m.id as id_matiere, m.libelle, m.codeMatiere, m.codeElement as matiere_code_element, pers.id as id_personnel, pers.statut, pers.nom, pers.prenom, pers.numeroHarpege, pers.mailUniv, pers.nbHeuresService, s.id as id_semestre, s.libelle as libelle_semestre, a.id as id_annee, a.libelle as libelle_annee, a.codeEtape as annee_code_etape, a.codeVersion as annee_code_version, a.libelleLong as annee_libelle_long, d.id as id_diplome, d.libelle as libelle_diplome')
             ->innerJoin(Ue::class, 'u', 'WITH', 'm.ue = u.id')
             ->innerJoin(Semestre::class, 's', 'WITH', 'u.semestre = s.id')
             ->innerJoin(Annee::class, 'a', 'WITH', 's.annee = a.id')
@@ -174,7 +174,7 @@ class PrevisionnelMatiereRepository extends PrevisionnelRepository
         $query = $this->createQueryBuilder('p')
             ->innerJoin(Personnel::class, 'pers', 'WITH', 'p.personnel = pers.id')
             ->innerJoin(Matiere::class, 'm', 'WITH', 'p.idMatiere = m.id')
-            ->select('p.id as id_previsionnel, p.annee, p.referent, p.nbHCm, p.nbHTd, p.nbHTp, p.nbGrCm, p.nbGrTd, p.nbGrTp, m.id as id_matiere, m.libelle, m.codeMatiere, m.codeElement as matiere_code_element, pers.id as id_personnel, pers.statut, pers.nom, pers.prenom, pers.numeroHarpege, pers.mailUniv, pers.nbHeuresService, s.id as id_semestre, s.libelle as libelle_semestre, a.id as id_annee, a.libelle as libelle_annee, a.codeEtape as annee_code_etape, a.libelleLong as annee_libelle_long')
+            ->select('p.id as id_previsionnel, p.annee, p.referent, p.nbHCm, p.nbHTd, p.nbHTp, p.nbGrCm, p.nbGrTd, p.nbGrTp, m.id as id_matiere, m.libelle, m.codeMatiere, m.codeElement as matiere_code_element, pers.id as id_personnel, pers.statut, pers.nom, pers.prenom, pers.numeroHarpege, pers.mailUniv, pers.nbHeuresService, s.id as id_semestre, s.libelle as libelle_semestre, a.id as id_annee, a.libelle as libelle_annee, a.codeEtape as annee_code_etape, a.codeVersion as annee_code_version, a.libelleLong as annee_libelle_long')
             ->innerJoin(Ue::class, 'u', 'WITH', 'm.ue = u.id')
             ->innerJoin(Semestre::class, 's', 'WITH', 'u.semestre = s.id')
             ->innerJoin(Annee::class, 'a', 'WITH', 's.annee = a.id')
@@ -212,7 +212,7 @@ class PrevisionnelMatiereRepository extends PrevisionnelRepository
         $query = $this->createQueryBuilder('p')
             ->leftJoin(Personnel::class, 'pers', 'WITH', 'p.personnel = pers.id')
             ->innerJoin(Matiere::class, 'm', 'WITH', 'p.idMatiere = m.id')
-            ->select('p.id as id_previsionnel, p.annee, p.referent, p.nbHCm, p.nbHTd, p.nbHTp, p.nbGrCm, p.nbGrTd, p.nbGrTp, m.id as id_matiere, m.libelle, m.codeMatiere, m.codeElement as matiere_code_element, pers.id as id_personnel, pers.statut, pers.nom, pers.prenom, pers.numeroHarpege, pers.mailUniv, pers.nbHeuresService, s.id as id_semestre, s.libelle as libelle_semestre, a.id as id_annee, a.libelle as libelle_annee, a.codeEtape as annee_code_etape, a.libelleLong as annee_libelle_long, d.id as id_diplome, d.libelle as libelle_diplome')
+            ->select('p.id as id_previsionnel, p.annee, p.referent, p.nbHCm, p.nbHTd, p.nbHTp, p.nbGrCm, p.nbGrTd, p.nbGrTp, m.id as id_matiere, m.libelle, m.codeMatiere, m.codeElement as matiere_code_element, pers.id as id_personnel, pers.statut, pers.nom, pers.prenom, pers.numeroHarpege, pers.mailUniv, pers.nbHeuresService, s.id as id_semestre, s.libelle as libelle_semestre, a.id as id_annee, a.libelle as libelle_annee, a.codeEtape as annee_code_etape, a.codeVersion as annee_code_version, a.libelleLong as annee_libelle_long, d.id as id_diplome, d.libelle as libelle_diplome')
             ->innerJoin(Ue::class, 'u', 'WITH', 'm.ue = u.id')
             ->innerJoin(Semestre::class, 's', 'WITH', 'u.semestre = s.id')
             ->innerJoin(Annee::class, 'a', 'WITH', 's.annee = a.id')
