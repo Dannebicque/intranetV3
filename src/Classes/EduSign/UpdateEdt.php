@@ -56,7 +56,7 @@ class UpdateEdt
             : $this->diplomeRepository->findBy(['keyEduSign' => $keyEduSign]);
 
         foreach ($diplomes as $diplome) {
-            $keyEduSign = $keyEduSign ?? $diplome->getKeyEduSign();
+            $keyEduSign = $diplome->getKeyEduSign();
             $semestres = $this->semestreRepository->findByDiplome($diplome);
             list($start, $end) = $this->calculStartEndDates($opt, $week);
             $semaineReelle = $week;
