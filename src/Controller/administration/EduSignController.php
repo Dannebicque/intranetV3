@@ -302,9 +302,9 @@ class EduSignController extends BaseController
 
         $updateCourseResult = [];
         if ($courseEdusign->id_edu_sign === null) {
-            $updateCourseResult[$courseEdusign->api_id] = $this->apiCours->addCourse($courseEdusign, $keyEduSign);
+            $updateCourseResult[$courseEdusign->api_id] = $this->apiCours->addCourse($courseEdusign, $keyEduSign, $diplome);
         } else {
-            $updateCourseResult[$courseEdusign->api_id] = $this->apiCours->updateCourse($courseEdusign, $keyEduSign);
+            $updateCourseResult[$courseEdusign->api_id] = $this->apiCours->updateCourse($courseEdusign, $keyEduSign, $diplome);
         }
 
         $result = array_merge(array_filter($updateEnseignantResult), array_filter($updateCourseResult));
