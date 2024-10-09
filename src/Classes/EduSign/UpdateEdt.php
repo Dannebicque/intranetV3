@@ -72,6 +72,7 @@ class UpdateEdt
                 $edt = $this->edtManager->getPlanningSemestreSemaine(
                     $semestre, $semaine, $semestre->getAnneeUniversitaire(), $matieresSemestre, $groupes
                 );
+                dump($diplome->getSigle(), $edt->evenements);
 
                 if ($edt->evenements) {
                     foreach ($edt->evenements as $this->evenement) {
