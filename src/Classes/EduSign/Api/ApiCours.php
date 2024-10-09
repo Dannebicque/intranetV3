@@ -54,7 +54,7 @@ class ApiCours
         $edt->setIdEduSign($id);
         $rep->save($edt);
 
-        dump($data);
+        dump($data, 'clé API : '.$cleApi);
 
         // si $data n'a pas : "status" => "success"
         if ($data['status'] !== 'success') {

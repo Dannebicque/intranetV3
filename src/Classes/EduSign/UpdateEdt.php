@@ -56,7 +56,6 @@ class UpdateEdt
             : $this->diplomeRepository->findBy(['keyEduSign' => $keyEduSign]);
 
         foreach ($diplomes as $diplome) {
-            dump('update courses - ' . $diplome->getLibelle());
             $keyEduSign = $keyEduSign ?? $diplome->getKeyEduSign();
             $semestres = $this->semestreRepository->findByDiplome($diplome);
             list($start, $end) = $this->calculStartEndDates($opt, $week);
@@ -76,9 +75,7 @@ class UpdateEdt
 
                 if ($edt->evenements) {
                     foreach ($edt->evenements as $this->evenement) {
-                        dump('update courses - ' . $diplome->getLibelle() . ' - ' . $this->evenement->id);
                         if ($this->evenement->dateObjet->isBetween($start, $end)) {
-                            dump('processEvent');
                             $result[$this->evenement->id] = $this->processEvent($diplome, $keyEduSign);
                         }
                     }
