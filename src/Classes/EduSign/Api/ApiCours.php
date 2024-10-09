@@ -93,7 +93,7 @@ class ApiCours
         }
 
         if (null === $edt) {
-            throw new Exception('Course not found for ' . $edt->api_id);
+            dump('Course not found for ' .$course->type_edt.'-'.$course->api_id);
         }
 
         if ($edt->getIdEduSign() == null && $rep !== null) {
@@ -101,7 +101,7 @@ class ApiCours
             $rep->save($edt);
         }
 
-//        dump('UPDATE COURSE | '.$diplome->getLibelle(), $course->api_id, $this->getCleApi->getCleApi($cleApi));
+        dump('UPDATE COURSE | '.$diplome->getLibelle(), $course->api_id, $this->getCleApi->getCleApi($cleApi));
 
 
         // si $data n'a pas : "status" => "success"
