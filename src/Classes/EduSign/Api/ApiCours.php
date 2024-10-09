@@ -101,7 +101,7 @@ class ApiCours
             $rep->save($edt);
         }
 
-        dump('UPDATE COURSE | '.$diplome->getLibelle(), $course->api_id, $this->getCleApi->getCleApi($cleApi));
+//        dump('UPDATE COURSE | '.$diplome->getLibelle(), $course->api_id, $this->getCleApi->getCleApi($cleApi));
 
 
         // si $data n'a pas : "status" => "success"
