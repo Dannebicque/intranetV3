@@ -54,7 +54,7 @@ class ApiCours
         $edt->setIdEduSign($id);
         $rep->save($edt);
 
-        dump('ADD COURSE | '.$diplome->getLibelle(), $course->api_id, $this->getCleApi->getCleApi($cleApi));
+        dump($data);
 
         // si $data n'a pas : "status" => "success"
         if ($data['status'] !== 'success') {
