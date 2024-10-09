@@ -94,11 +94,11 @@ class ApiCours
 
         if (null === $edt) {
             dump('Course not found for ' .$course->type_edt.'-'.$course->api_id);
-        }
-
-        if ($edt->getIdEduSign() == null && $rep !== null) {
-            $edt->setIdEduSign($id);
-            $rep->save($edt);
+        } else {
+            if ($edt->getIdEduSign() == null && $rep !== null) {
+                $edt->setIdEduSign($id);
+                $rep->save($edt);
+            }
         }
 
         dump('UPDATE COURSE | '.$diplome->getLibelle(), $course->api_id, $this->getCleApi->getCleApi($cleApi));
