@@ -61,6 +61,7 @@ class EduSignController extends BaseController
         // récupérer
         $departement = $this->getDepartement();
         $personnelsDepartement = $this->personnelDepartementRepository->findBy(['departement' => $departement]);
+        usort($personnelsDepartement, fn($a, $b) => $a->getPersonnel()->getNom() <=> $b->getPersonnel()->getNom());
         $diplomes = $this->diplomeRepository->findAllWithEduSignDepartement($departement);
         $diplomes = array_combine(array_map(fn($d) => $d->getId(), $diplomes), $diplomes);
         $diplome = $this->getSelectedDiplome($request, $diplomes);
