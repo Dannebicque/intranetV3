@@ -67,12 +67,12 @@ class GetCourses
         foreach ($diplomes as $diplome) {
             $keyEduSign = $diplome->getKeyEduSign();
             $semestres = $this->semestreRepository->findByDiplome($diplome);
-//            $today = Carbon::create('today');
-            $today = Carbon::create('2024-10-05');
-//            $yesterday = Carbon::create('yesterday');
-            $yesterday = Carbon::create('2024-10-04');
-//            $semaineReelle = date('W');
-            $semaineReelle = 40;
+            $today = Carbon::create('today');
+//            $today = Carbon::create('2024-10-05');
+            $yesterday = Carbon::create('yesterday');
+//            $yesterday = Carbon::create('2024-10-04');
+            $semaineReelle = date('W');
+//            $semaineReelle = 40;
 
             foreach ($semestres as $semestre) {
                 $eventSemaine = $this->CalendrierRepository->findOneBy([
