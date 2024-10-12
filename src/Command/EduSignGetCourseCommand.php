@@ -17,7 +17,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 #[AsCommand(
-    name: 'edusign:get-course',
+    name: 'edusign:get-absences',
     description: 'Création des absences',
 )]
 class EduSignGetCourseCommand extends Command
