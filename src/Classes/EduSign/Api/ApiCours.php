@@ -126,7 +126,7 @@ class ApiCours
         return $data['result'] ?? "";
     }
 
-    public function getCourses(?string $id, string $cleApi): mixed
+    public function getCourse(?string $id, string $cleApi): mixed
     {
         $client = HttpClient::create();
 
@@ -142,7 +142,7 @@ class ApiCours
         // convertit JSON en tableau associatif PHP
         $data = json_decode($content, true);
 
-        return $data['result'] ?? "";
+        return $data['result'] ?? null;
     }
 
     public function getAllCourses(string $cleApi): mixed
