@@ -128,9 +128,7 @@ class GetCourses
 
     public function newAbsence(array $course, array $student, Matiere $matiere): void
     {
-
         $enseignant = $this->personnelRepository->findByIdEdusign($course['PROFESSOR']);
-
         $etudiant = $this->etudiantRepository->findOneBy(['idEduSign' => $student['studentId']]);
 
         $startRaw = Carbon::parse($student['start'], 'UTC');
@@ -143,15 +141,23 @@ class GetCourses
         $start = Carbon::createFromFormat("Y-m-d H:i:s", $startFormat);
         $end = Carbon::createFromFormat("Y-m-d H:i:s", $endFormat);
 
+        // Vérification si l'absence existe déjà
+        $existingAbsence = $this->absenceRepository->findOneBy([
+            'etudiant' => $etudiant,
+            'dateHeure' => $start,
+            'idMatiere' => $matiere->id,
+        ]);
+
+        if ($existingAbsence) {
+            // Absence déjà existante, on ne fait rien
+            return;
+        }
+
         $dureeSecs = $endRaw->diffInSeconds($startRaw);
-
         $refDate = new DateTime('2023-01-01 00:00:00');
-
         $dureeSecs = abs($dureeSecs);
         $refDate->add(new DateInterval('PT' . $dureeSecs . 'S'));
-
         $dureeFormat = $refDate->format('Y-m-d H:i:s.u');
-
         $duree = Carbon::createFromFormat("Y-m-d H:i:s.u", $dureeFormat);
 
         $newAbsence = new Absence();
@@ -163,12 +169,9 @@ class GetCourses
         $newAbsence->setDateHeure($start);
         $newAbsence->setTypeMatiere($matiere->typeMatiere);
         $newAbsence->setIdMatiere($matiere->id);
-        $newAbsence->setTypeMatiere($matiere->typeMatiere);
-        $newAbsence->setIdMatiere($matiere->id);
         $newAbsence->setSemestre($etudiant->getSemestre());
         $newAbsence->setIdEduSign($student['_id']);
 
-//dd($newAbsence);
         $this->absenceRepository->save($newAbsence);
         dump('absence enregistrée');
 
