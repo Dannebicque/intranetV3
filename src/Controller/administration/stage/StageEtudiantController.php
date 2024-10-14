@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/stage/StageEtudiantController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/04/2024 06:28
+ * @lastUpdate 14/10/2024 19:31
  */
 
 namespace App\Controller\administration\stage;
@@ -169,7 +169,7 @@ class StageEtudiantController extends BaseController
                 'proposition' => $stageEtudiant,
             ],
             'Convention-'.$stageEtudiant->getEtudiant()->getNom(),
-            $kernel->getProjectDir().'/public/upload/conventions/'
+            '/upload/conventions/'
         );
 
         $event = new StageEvent($stageEtudiant);
