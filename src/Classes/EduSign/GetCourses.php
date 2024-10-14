@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/EduSign/GetCourses.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:38
+ * @lastUpdate 14/10/2024 12:06
  */
 
 namespace App\Classes\EduSign;
@@ -90,7 +90,6 @@ class GetCourses
                     if (!($evenement->matiere === null || $evenement->matiere === "Inconnue" || $evenement->groupeObjet === null || $evenement->personnelObjet === null)) {
 
                         if ($evenement->dateObjet->isBetween($today, $yesterday)) {
-                            $matiere = $this->typeMatiereManager->getMatiere($evenement->getIdMatiere(), $evenement->getTypeMatiere());
                             $id = $evenement->getIdEduSign();
 
                             if ($id !== null) {
@@ -99,7 +98,10 @@ class GetCourses
                                     if (!empty($course['STUDENTS'])) {
                                         foreach ($course['STUDENTS'] as $student) {
                                             if ($student['state'] === false) {
-                                                $this->newAbsence($course, $student, $matiere);
+                                                $matiere = $this->typeMatiereManager->getMatiere($evenement->getIdMatiere(), $evenement->getTypeMatiere());
+                                                if ($matiere !== null) {
+                                                    $this->newAbsence($course, $student, $matiere);
+                                                }
                                             }
                                         }
                                     }
@@ -131,6 +133,10 @@ class GetCourses
         $enseignant = $this->personnelRepository->findByIdEdusign($course['PROFESSOR']);
         $etudiant = $this->etudiantRepository->findOneBy(['idEduSign' => $student['studentId']]);
 
+        if ($etudiant === null) {
+            return;
+        }
+
         $startRaw = Carbon::parse($student['start'], 'UTC');
         $startRaw->setTimezone(new DateTimeZone('Europe/Paris'));
         $endRaw = Carbon::parse($student['end']);
@@ -139,13 +145,17 @@ class GetCourses
         $endFormat = $endRaw->format('Y-m-d H:i:s');
 
         $start = Carbon::createFromFormat("Y-m-d H:i:s", $startFormat);
-        $end = Carbon::createFromFormat("Y-m-d H:i:s", $endFormat);
+
+        if ($start === null) {
+            return;
+        }
 
         // Vérification si l'absence existe déjà
         $existingAbsence = $this->absenceRepository->findOneBy([
             'etudiant' => $etudiant,
             'dateHeure' => $start,
             'idMatiere' => $matiere->id,
+            'typeMatiere' => $matiere->typeMatiere,
         ]);
 
         if ($existingAbsence) {
@@ -161,10 +171,10 @@ class GetCourses
         $duree = Carbon::createFromFormat("Y-m-d H:i:s.u", $dureeFormat);
 
         $newAbsence = new Absence();
-        $newAbsence->setPersonnel($enseignant);
+        $newAbsence->setPersonnel($enseignant ?? null);
         $newAbsence->setEtudiant($etudiant);
         $newAbsence->setAnneeUniversitaire($this->anneeUniversitaireRepository->findOneBy(['active' => true]));
-        $newAbsence->setDuree($duree);
+        $newAbsence->setDuree($duree ?? null);
         $newAbsence->setJustifie(false);
         $newAbsence->setDateHeure($start);
         $newAbsence->setTypeMatiere($matiere->typeMatiere);
