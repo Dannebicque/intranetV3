@@ -11,12 +11,17 @@ namespace App\Components\SourceEdt\Adapter;
 
 use App\Adapter\AbstractEdtAdapter;
 use App\Classes\Edt\EdtManager;
+use App\Classes\Matieres\TypeMatiereManager;
 use App\DTO\EvenementEdt;
 use App\DTO\EvenementEdtCollection;
 use App\Entity\Constantes;
 
 class EdtCelcatAdapter extends AbstractEdtAdapter implements EdtAdapterInterface
 {
+    public function __construct(private readonly TypeMatiereManager $typeMatiereManager)
+    {
+    }
+
     /** @param array<int, mixed> $events */
     public function collection(array $events, array $matieres, array $groupes): EvenementEdtCollection
     {
@@ -27,6 +32,38 @@ class EdtCelcatAdapter extends AbstractEdtAdapter implements EdtAdapterInterface
         }
 
         return $collection;
+    }
+
+    public function singleNew(mixed $event): ?EvenementEdt
+    {
+        $evt = new EvenementEdt();
+        $evt->source = EdtManager::EDT_CELCAT;
+        $evt->id = $event->getId();
+        $evt->jour = (string)($event->getJour() + 1);
+        $evt->heureDebut = $event->getDebut();
+        $evt->indexDebut = Constantes::TAB_HEURES_EDT_LIGNE_2[$event->getDebut()->roundMinute(10)->format('Hi')];
+        $evt->heureFin = $event->getFin();
+        $evt->matiere = $event->getLibModule();
+        $evt->typeIdMatiere = $event->getTypeIdMatiere();
+        $evt->salle = $event->getLibSalle();
+        $evt->personnel = $event->getLibPersonnel();
+        $evt->groupe = $event->getLibGroupe();
+        $evt->codeelement = $event->getCodeModule();
+        $evt->type_cours = $event->getType();
+        $evt->date = $event->getDateCours();
+        $evt->dateObjet = $event->getDateCours();
+        $evt->gridStart = $event->getDebut()->format('Hi');
+        $evt->gridEnd = $event->getFin()->format('Hi');
+        $evt->largeur = $this->getLargeur($evt);
+        $evt->duree = Constantes::TAB_HEURES_INDEX[$event->getFin()->format('H:i:s')] - Constantes::TAB_HEURES_INDEX[$event->getDebut()->format('H:i:s')];
+        $evt->idEduSign = $event->getIdEduSign();
+        $evt->semestre = $event->getSemestre();
+        $evt->personnelObjet = $event->getPersonnel();
+        $evt->groupeObjet = $event->getGroupe();
+        $evt->groupeId = $event->getGroupe()?->getId();
+        $evt->code_matiere = $this->typeMatiereManager->getMatiere($evt->getIdMatiere(), $evt->getTypeMatiere())->codeMatiere;
+
+        return $evt;
     }
 
     public function single(mixed $event, array $matieres, array $groupes): ?EvenementEdt
