@@ -13,6 +13,7 @@ use App\Classes\Edt\EdtManager;
 use App\Classes\EduSign\Adapter\IntranetEdtEduSignAdapter;
 use App\Classes\EduSign\Api\ApiCours;
 use App\Classes\EduSign\Events\EduSignEvent;
+use App\Repository\DiplomeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -20,7 +21,8 @@ class EduSignSubscriber implements EventSubscriberInterface
 {
     public function __construct(
         protected EntityManagerInterface $entityManager,
-        protected ApiCours               $apiCours
+        protected ApiCours               $apiCours,
+        protected DiplomeRepository      $diplomeRepository
     )
     {
     }
@@ -37,19 +39,22 @@ class EduSignSubscriber implements EventSubscriberInterface
     {
         $evenementEdt = $eduSignEvent->getEvenementEdt();
         $cleApi = $eduSignEvent->getCleApi();
+        $diplomes = $this->diplomeRepository->findBy(['keyEduSign' => $cleApi]);
 
 
-        if ($evenementEdt->source !== EdtManager::EDT_INTRANET) {
-            // Update EdtCelcat with $eduSignCourse data
-            $course = (new IntranetEdtEduSignAdapter($evenementEdt))->getCourse();
-            if (null !== $course) {
-                $cleEvent = $this->apiCours->updateCourse($course, $cleApi);
-            }
-        } else {
-            // Update EdtCelcat with $eduSignCourse data
-            $course = (new IntranetEdtEduSignAdapter($evenementEdt))->getCourse();
-            if (null !== $course) {
-                $cleEvent = $this->apiCours->updateCourse($course, $cleApi);
+        foreach ($diplomes as $diplome) {
+            if ($evenementEdt->source !== EdtManager::EDT_INTRANET) {
+                // Update EdtCelcat with $eduSignCourse data
+                $course = (new IntranetEdtEduSignAdapter($evenementEdt, $diplome))->getCourse();
+                if (null !== $course) {
+                    $cleEvent = $this->apiCours->updateCourse($course, $cleApi);
+                }
+            } else {
+                // Update EdtCelcat with $eduSignCourse data
+                $course = (new IntranetEdtEduSignAdapter($evenementEdt, $diplome))->getCourse();
+                if (null !== $course) {
+                    $cleEvent = $this->apiCours->updateCourse($course, $cleApi);
+                }
             }
         }
 
