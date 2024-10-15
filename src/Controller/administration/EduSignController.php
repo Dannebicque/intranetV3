@@ -257,15 +257,14 @@ class EduSignController extends BaseController
                     $errors[] = $result['error'];
                 }
             }
+            $email = (new TemplatedEmail())
+                ->from('no-reply@univ-reims.fr')
+                ->to('cyndel.herolt@univ-reims.fr')
+                ->subject('EduSign createPersonnel - error report')
+                ->htmlTemplate('emails/error_report.html.twig')
+                ->context(['diplomesErrors' => $errors, 'diplomes' => $diplome->getLibelle(), 'type' => 'personnel']);
+            $mailer->send($email);
         }
-
-        $email = (new TemplatedEmail())
-            ->from('no-reply@univ-reims.fr')
-            ->to('cyndel.herolt@univ-reims.fr')
-            ->subject('EduSign createPersonnel - error report')
-            ->htmlTemplate('emails/error_report.html.twig')
-            ->context(['diplomesErrors' => $errors]);
-        $mailer->send($email);
 
         if (!empty($errors)) {
             $errorMessage = implode("\n", $errors);
