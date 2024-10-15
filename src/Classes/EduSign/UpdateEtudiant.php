@@ -163,14 +163,18 @@ class UpdateEtudiant
             if ($etudiantObject === null) {
                 $etudiantObject = $this->etudiantRepository->findOneBy(['id' => $etudiant['API_ID']]);
 
-                // Mettre à jour l'étudiant dans EduSign pour changer son mail
-                $etudiantEduSign = (new IntranetEtudiantEduSignAdapter($etudiantObject, []))->getEtudiant();
-                $etudiantEduSign->email = $etudiantObject->getId() . '@delete.fr';
-                $etudiantEduSign->groups = [];
-                $etudiantEduSign->id = $etudiant['ID'];
-                $result[$etudiantObject->getId()] = $this->apiEtudiant->updateEtudiant($etudiantEduSign, $keyEduSign);
-                // Supprimer d'EduSign l'étudiant
-                $result[$etudiantObject->getId()] = $this->apiEtudiant->deleteEtudiant($etudiant['ID'], $keyEduSign);
+                if ($etudiantObject !== null) {
+                    // Mettre à jour l'étudiant dans EduSign pour changer son mail
+                    $etudiantEduSign = (new IntranetEtudiantEduSignAdapter($etudiantObject, []))->getEtudiant();
+                    $etudiantEduSign->email = $etudiantObject->getId() . '@delete.fr';
+                    $etudiantEduSign->groups = [];
+                    $etudiantEduSign->id = $etudiant['ID'];
+                    $result[$etudiantObject->getId()] = $this->apiEtudiant->updateEtudiant($etudiantEduSign, $keyEduSign);
+                    // Supprimer d'EduSign l'étudiant
+                    $result[$etudiantObject->getId()] = $this->apiEtudiant->deleteEtudiant($etudiant['ID'], $keyEduSign);
+                } else {
+                    $result[$etudiant['NAME']] = 'l\'étudiant n\'existe pas dans la base de données';
+                }
             }
         }
 
