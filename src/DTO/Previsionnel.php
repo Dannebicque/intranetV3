@@ -4,16 +4,15 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/DTO/Previsionnel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/02/2024 11:37
+ * @lastUpdate 09/10/2024 09:52
  */
 
 namespace App\DTO;
 
-use AllowDynamicProperties;
 use App\Entity\Constantes;
 use App\Enums\PlanCoursEnum;
 
-#[AllowDynamicProperties] class Previsionnel
+class Previsionnel
 {
     public int $id;
     public ?int $personnel_id = null;
@@ -43,6 +42,7 @@ use App\Enums\PlanCoursEnum;
     public int $diplome_id;
     public ?string $diplome_libelle = '';
     public ?string $annee_code_etape = '';
+    public ?string $annee_code_version = '';
     public ?string $annee_libelle_long = '';
     public mixed $objPrevisionnel;
 

@@ -7,6 +7,10 @@
 <body>
 <h1>EduSign - Récapitulatif des erreurs</h1>
 <h2>{{ diplome }}</h2>
+<h3>{{ app.user.prenom }} {{ app.user.nom }}</h3>
+{% if course is defined %}
+    <h3>{{ course }}</h3>
+{% endif %}
 {% if errors %}
     <ul>
         {% for key, value in errors %}

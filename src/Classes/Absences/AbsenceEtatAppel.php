@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Absences/AbsenceEtatAppel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/02/2024 08:59
+ * @lastUpdate 07/10/2024 16:13
  */
 
 namespace App\Classes\Absences;
@@ -31,7 +31,7 @@ class AbsenceEtatAppel
      */
     public function enregistreAppelFait(array $data): bool
     {
-        if (null === $this->verifieIfExist($data)) {
+        if ($data['groupe'] !== null && null === $this->verifieIfExist($data)) { //todo: ajouter d'autres tests ?
             $appel = new \App\Entity\AbsenceEtatAppel();
             $appel->setPersonnel($data['personnel']);
             $appel->setTypeMatiere(ToolsMatiere::getType($data['matiere']));
