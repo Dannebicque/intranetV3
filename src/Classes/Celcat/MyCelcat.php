@@ -386,6 +386,8 @@ class MyCelcat
                     $event->setPersonnel($this->tPersonnels[$event->getCodePersonnel()]);
                 } else {
                     $event->setPersonnel(null);
+                    $event->setCodePersonnel('-');
+                    $event->setLibPersonnel('-');
                 }
 
                 $event->setDepartementId($diplome->getCodeCelcatDepartement());

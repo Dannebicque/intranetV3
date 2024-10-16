@@ -211,18 +211,20 @@ export default class extends Controller {
           method: 'POST',
           body: data,
         })
-          .then((response) => {
+          .then(async (response) => {
             if (!response.ok) {
-              throw new Error('Network response was not ok')
+              const text = await response.text()
+              throw new Error(text)
             }
             return response.json()
           })
           .then(() => {
-            addCallout('Absence enregistrée avec succés !', 'success')
+            addCallout('Absence enregistrée avec succès !', 'success')
           })
           .catch((error) => {
-            if (error.message === 'out') {
-              addCallout('Le délai pour l\'enregistrement est dépassé. Contactez le responsable de la department', 'danger')
+            const text = error.message
+            if (text === 'out') {
+              addCallout('Le délai pour l\'enregistrement est dépassé. Contactez le responsable du department', 'danger')
             } else {
               addCallout('Erreur lors de l\'enregistrement.', 'danger')
             }
