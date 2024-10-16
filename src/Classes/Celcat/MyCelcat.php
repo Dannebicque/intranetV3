@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Celcat/MyCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/09/2024 20:33
+ * @lastUpdate 07/10/2024 16:11
  */
 
 namespace App\Classes\Celcat;
@@ -161,8 +161,13 @@ class MyCelcat
             $celcatIndex = [];
             while (odbc_fetch_row($resultCelcat)) {
                 $eventId = odbc_result($resultCelcat, 1);
-                //todo: trouver comment construire une clé unique de comparaison dans transformeCelcatToDtob
-                $celcatIndex[$eventId] = $this->transformeCelcatToDto($resultCelcat, $anneeUniversitaire, $diplome);
+                $events = $this->transformeCelcatToDto($resultCelcat, $anneeUniversitaire, $diplome);
+
+                if (!array_key_exists($eventId, $celcatIndex)) {
+                    $celcatIndex[$eventId] = $events;
+                } else {
+                    $celcatIndex[$eventId] = array_merge($celcatIndex[$eventId], $events);
+                }
             }
 
             $intranetIndex = [];
@@ -175,7 +180,7 @@ class MyCelcat
             }
 
             try {
-                foreach ($celcatIndex as $id => $row) {//todo: ATTENTION c'est un tableau de tableau... celcatIndex et intranetIndex
+                foreach ($celcatIndex as $id => $row) {
                     if (isset($intranetIndex[$id])) {
                         // Mise à jour des données existantes
                         //compare les dates de mise à jour

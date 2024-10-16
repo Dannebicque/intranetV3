@@ -36,22 +36,16 @@ class EduSignEdtCommand extends Command
 
     public function configure(): void
     {
-        $this
-            ->addArgument('debut', InputArgument::OPTIONAL, 'Date de début (format: d-m-Y)', null);
     }
 
     public function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
-        $debut = $input->getArgument('debut');
+        $week = (int)date('W')+1;
 
-        if ($debut === null) {
-            $this->updateEdt->update(null, 1); // créer les cours
-        } else {
-            $this->updateEdt->update(null, 3, $debut); // créer les cours
-        }
+        $this->fixCourses->fixCourses(null, $week);
+        $this->updateEdt->update(null, 3, $week);
 
-        $this->fixCourses->fixCourse(null); // fix les cours
 
         $io->success('Emploi du temps mis à jour sur EduSign.');
 

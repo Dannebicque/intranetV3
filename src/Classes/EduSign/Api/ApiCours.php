@@ -4,6 +4,7 @@ namespace App\Classes\EduSign\Api;
 
 use App\Classes\EduSign\DTO\EduSignCourse;
 use App\Classes\EduSign\GetCleApi;
+use App\Entity\Diplome;
 use App\Repository\EdtCelcatRepository;
 use App\Repository\EdtPlanningRepository;
 use Exception;
@@ -20,7 +21,7 @@ class ApiCours
     {
     }
 
-    public function addCourse(EduSignCourse $course, string $cleApi): mixed
+    public function addCourse(EduSignCourse $course, string $cleApi, ?Diplome $diplome): mixed
     {
         $client = HttpClient::create();
 
@@ -61,7 +62,7 @@ class ApiCours
         }
     }
 
-    public function updateCourse(EduSignCourse $course, string $cleApi): string
+    public function updateCourse(EduSignCourse $course, string $cleApi, Diplome $diplome): mixed
     {
         $client = HttpClient::create();
 
@@ -74,6 +75,7 @@ class ApiCours
         ]);
         $statusCode = $response->getStatusCode();
         $content = $response->getContent();
+        $data = json_decode($content, true);
 
         $id = $course->id;
 
@@ -89,15 +91,20 @@ class ApiCours
         }
 
         if (null === $edt) {
-            throw new Exception('Course not found for ' . $edt->api_id);
+            dump('Course not found for ' .$course->type_edt.'-'.$course->api_id);
+        } else {
+            if ($edt->getIdEduSign() == null && $rep !== null) {
+                $edt->setIdEduSign($id);
+                $rep->save($edt);
+            }
         }
 
-        if ($edt->getIdEduSign() == null && $rep !== null) {
-            $edt->setIdEduSign($id);
-            $rep->save($edt);
+        // si $data n'a pas : "status" => "success"
+        if ($data['status'] !== 'success') {
+            return $content;
+        } else {
+            return null;
         }
-
-        return $content;
     }
 
     public function getCourseIdByApiId(string $apiId, string $cleApi): mixed
@@ -119,7 +126,7 @@ class ApiCours
         return $data['result'] ?? "";
     }
 
-    public function getCourses(?string $id, string $cleApi): mixed
+    public function getCourse(?string $id, string $cleApi): mixed
     {
         $client = HttpClient::create();
 
@@ -135,7 +142,7 @@ class ApiCours
         // convertit JSON en tableau associatif PHP
         $data = json_decode($content, true);
 
-        return $data['result'] ?? "";
+        return $data['result'] ?? null;
     }
 
     public function getAllCourses(string $cleApi): mixed
@@ -176,7 +183,7 @@ class ApiCours
         return $data['result'] ?? null;
     }
 
-    public function deleteCourse(?string $id, string $cleApi): string
+    public function deleteCourse(?string $id, string $cleApi): mixed
     {
         $client = HttpClient::create();
 
@@ -189,6 +196,7 @@ class ApiCours
 
         $statusCode = $response->getStatusCode();
         $content = $response->getContent();
+        $data = json_decode($content, true);
 
         $edt = $this->edtPlanningRepository->findOneBy(['idEduSign' => $id]);
         if ($edt) {
@@ -196,7 +204,7 @@ class ApiCours
             $this->edtPlanningRepository->save($edt);
         }
 
-        return $content;
+        return $data['status'] ?? null;
 
     }
 }

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/PersonnelRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/04/2024 17:54
+ * @lastUpdate 08/10/2024 16:10
  */
 
 namespace App\Repository;
@@ -165,7 +165,8 @@ class PersonnelRepository extends ServiceEntityRepository
             ->innerJoin(PersonnelDepartement::class, 'p', 'WITH', 's.id = p.personnel')
             ->where('p.departement = :departement')
             ->setParameter('departement', $departement->getId())
-            ->orderBy('s.nom,s.prenom', Order::Ascending->value)
+            ->orderBy('s.nom', Order::Ascending->value)
+            ->addOrderBy('s.prenom', Order::Ascending->value)
             ->getQuery()
             ->getResult();
 
@@ -194,7 +195,8 @@ class PersonnelRepository extends ServiceEntityRepository
     public function findAllOrder(): QueryBuilder
     {
         return $this->createQueryBuilder('s')
-            ->orderBy('s.nom,s.prenom', Order::Ascending->value);
+            ->orderBy('s.nom', Order::Ascending->value)
+            ->addOrderBy('s.prenom', Order::Ascending->value);
     }
 
     public function findActifs(): array

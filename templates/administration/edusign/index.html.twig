@@ -23,7 +23,7 @@
             <div>
 
                 <h3>{{ 'adm.edusign.commands.cours'|trans }}</h3>
-                <div class="alert alert-info">
+                <div class="alert alert-warning">
                     <span>{{ 'adm.edusign.commands.info-create'|trans }}</span>
                 </div>
 
@@ -50,6 +50,10 @@
                             <i class="fa fa-caret-right"></i><span class="sr-only">Semaine suivante</span>
                         </button>
                     </a>
+                </div>
+                <div class="alert alert-info text-center w-50 m-auto mt-2">
+                    <span>Du {{ start|date('d/m/Y') }} au {{ end|date('d/m/Y') }}
+                    </span>
                 </div>
 
                 <div class="dropdown mb-5">

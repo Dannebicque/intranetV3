@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/PrevisionnelRessourceRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/04/2024 17:54
+ * @lastUpdate 09/10/2024 09:22
  */
 
 namespace App\Repository;
@@ -68,7 +68,7 @@ class PrevisionnelRessourceRepository extends PrevisionnelRepository
         $query = $this->createQueryBuilder('p')
             ->innerJoin(ApcRessource::class, 'm', 'WITH', 'p.idMatiere = m.id')
             ->leftJoin(Personnel::class, 'pers', 'WITH', 'p.personnel = pers.id')
-            ->select('p.id as id_previsionnel, p.annee, p.referent, p.nbHCm, p.nbHTd, p.nbHTp, p.nbGrCm, p.nbGrTd, p.nbGrTp, m.id as id_ressource, m.libelle, m.codeMatiere, m.codeElement as matiere_code_element, pers.id as id_personnel, pers.statut, pers.nom, pers.prenom, pers.numeroHarpege, pers.mailUniv, pers.nbHeuresService, s.id as id_semestre, s.libelle as libelle_semestre, a.codeEtape as annee_code_etape, a.libelleLong as annee_libelle_long, a.id as id_annee, a.libelle as libelle_annee, d.id as id_diplome, d.libelle as libelle_diplome')
+            ->select('p.id as id_previsionnel, p.annee, p.referent, p.nbHCm, p.nbHTd, p.nbHTp, p.nbGrCm, p.nbGrTd, p.nbGrTp, m.id as id_ressource, m.libelle, m.codeMatiere, m.codeElement as matiere_code_element, pers.id as id_personnel, pers.statut, pers.nom, pers.prenom, pers.numeroHarpege, pers.mailUniv, pers.nbHeuresService, s.id as id_semestre, s.libelle as libelle_semestre, a.codeEtape as annee_code_etape, a.codeVersion as annee_code_version, a.libelleLong as annee_libelle_long, a.id as id_annee, a.libelle as libelle_annee, d.id as id_diplome, d.libelle as libelle_diplome')
             ->innerJoin('m.semestres', 's')
             ->innerJoin(Annee::class, 'a', 'WITH', 's.annee = a.id')
             ->innerJoin(Diplome::class, 'd', 'WITH', 'a.diplome = d.id')
@@ -90,7 +90,7 @@ class PrevisionnelRessourceRepository extends PrevisionnelRepository
         $query = $this->createQueryBuilder('p')
             ->innerJoin(ApcRessource::class, 'm', 'WITH', 'p.idMatiere = m.id')
             ->leftJoin(Personnel::class, 'pers', 'WITH', 'p.personnel = pers.id')
-            ->select('p.id as id_previsionnel, p.annee, p.referent, p.nbHCm, p.nbHTd, p.nbHTp, p.nbGrCm, p.nbGrTd, p.nbGrTp, m.id as id_ressource, m.libelle, m.codeMatiere, m.codeElement as matiere_code_element, pers.id as id_personnel, pers.statut, pers.nom, pers.prenom, pers.numeroHarpege, pers.mailUniv, pers.nbHeuresService, s.id as id_semestre, s.libelle as libelle_semestre, a.codeEtape as annee_code_etape, a.libelleLong as annee_libelle_long, a.id as id_annee, a.libelle as libelle_annee, d.id as id_diplome, d.libelle as libelle_diplome')
+            ->select('p.id as id_previsionnel, p.annee, p.referent, p.nbHCm, p.nbHTd, p.nbHTp, p.nbGrCm, p.nbGrTd, p.nbGrTp, m.id as id_ressource, m.libelle, m.codeMatiere, m.codeElement as matiere_code_element, pers.id as id_personnel, pers.statut, pers.nom, pers.prenom, pers.numeroHarpege, pers.mailUniv, pers.nbHeuresService, s.id as id_semestre, s.libelle as libelle_semestre, a.codeEtape as annee_code_etape, a.codeVersion as annee_code_version, a.libelleLong as annee_libelle_long, a.id as id_annee, a.libelle as libelle_annee, d.id as id_diplome, d.libelle as libelle_diplome')
             ->innerJoin('m.semestres', 's')
             ->innerJoin(Annee::class, 'a', 'WITH', 's.annee = a.id')
             ->innerJoin(Diplome::class, 'd', 'WITH', 'a.diplome = d.id')
@@ -189,7 +189,7 @@ class PrevisionnelRessourceRepository extends PrevisionnelRepository
         $query = $this->createQueryBuilder('p')
             ->innerJoin(ApcRessource::class, 'm', 'WITH', 'p.idMatiere = m.id')
             ->innerJoin(Personnel::class, 'pers', 'WITH', 'p.personnel = pers.id')
-            ->select('p.id as id_previsionnel, p.annee, p.referent, p.nbHCm, p.nbHTd, p.nbHTp, p.nbGrCm, p.nbGrTd, p.nbGrTp, m.id as id_ressource, m.libelle, m.codeMatiere, m.codeElement as matiere_code_element, pers.id as id_personnel, pers.statut, pers.nom, pers.prenom, pers.numeroHarpege, pers.mailUniv, pers.nbHeuresService, s.id as id_semestre, s.libelle as libelle_semestre, a.codeEtape as annee_code_etape, a.libelleLong as annee_libelle_long, a.id as id_annee, a.libelle as libelle_annee')
+            ->select('p.id as id_previsionnel, p.annee, p.referent, p.nbHCm, p.nbHTd, p.nbHTp, p.nbGrCm, p.nbGrTd, p.nbGrTp, m.id as id_ressource, m.libelle, m.codeMatiere, m.codeElement as matiere_code_element, pers.id as id_personnel, pers.statut, pers.nom, pers.prenom, pers.numeroHarpege, pers.mailUniv, pers.nbHeuresService, s.id as id_semestre, s.libelle as libelle_semestre, a.codeEtape as annee_code_etape, a.codeVersion as annee_code_version, a.libelleLong as annee_libelle_long, a.id as id_annee, a.libelle as libelle_annee')
             ->innerJoin('m.semestres', 's')
             ->innerJoin(Annee::class, 'a', 'WITH', 's.annee = a.id')
             ->andWhere('p.typeMatiere = :type')

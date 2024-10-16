@@ -56,7 +56,7 @@ class UpdateEdt
             : $this->diplomeRepository->findBy(['keyEduSign' => $keyEduSign]);
 
         foreach ($diplomes as $diplome) {
-            $keyEduSign = $keyEduSign ?? $diplome->getKeyEduSign();
+            $keyEduSign = $diplome->getKeyEduSign();
             $semestres = $this->semestreRepository->findByDiplome($diplome);
             list($start, $end) = $this->calculStartEndDates($opt, $week);
             $semaineReelle = $week;
@@ -73,9 +73,11 @@ class UpdateEdt
                     $semestre, $semaine, $semestre->getAnneeUniversitaire(), $matieresSemestre, $groupes
                 );
 
-                foreach ($edt->evenements as $this->evenement) {
-                    if ($this->evenement->dateObjet->isBetween($start, $end)) {
-                        $result[$this->evenement->id] = $this->processEvent($diplome, $keyEduSign);
+                if ($edt->evenements) {
+                    foreach ($edt->evenements as $this->evenement) {
+                        if ($this->evenement->dateObjet->isBetween($start, $end)) {
+                            $result[$this->evenement->id] = $this->processEvent($diplome, $keyEduSign);
+                        }
                     }
                 }
             }
@@ -126,16 +128,15 @@ class UpdateEdt
         if ($enseignant && (empty($enseignant->getIdEduSign()) || !array_key_exists($diplome->getId(), $enseignant->getIdEduSign()))) {
             $this->createEnseignant->update($enseignant, $diplome, $keyEduSign);
         }
-        $result = $this->sendUpdateAddCourse($keyEduSign);
+        $result = $this->sendUpdateAddCourse($keyEduSign, $diplome);
 
         return $result;
     }
 
-    public function sendUpdateAddCourse(?string $keyEduSign): mixed
+    public function sendUpdateAddCourse(?string $keyEduSign, ?Diplome $diplome): mixed
     {
-        $diplome = $this->diplomeRepository->findOneBy(['keyEduSign' => $keyEduSign]);
         $course = (new IntranetEdtEduSignAdapter($this->evenement, $diplome))->getCourse();
-        $result = $this->apiCours->addCourse($course, $keyEduSign);
+        $result = $this->apiCours->addCourse($course, $keyEduSign, $diplome);
         return $result;
     }
 
@@ -143,7 +144,7 @@ class UpdateEdt
     {
         $diplome = $this->diplomeRepository->findOneBy(['keyEduSign' => $keyEduSign]);
         $course = (new IntranetEdtEduSignAdapter($this->evenement, $diplome))->getCourse();
-        $result = $this->apiCours->updateCourse($course, $keyEduSign);
+        $result = $this->apiCours->updateCourse($course, $keyEduSign, $diplome);
         return $result;
     }
 }

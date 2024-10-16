@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtImport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/09/2024 11:27
+ * @lastUpdate 08/10/2024 16:10
  */
 
 /*
@@ -113,7 +113,7 @@ class MyEdtImport
         'WRA316C' => 'WRA316',
         'WRA317C' => 'WRA317',
         'WRA318C' => 'WRA318',
-        'WRA319C' => 'WRA319',
+        'WRA319C' => 'WRA319C',
         'WRA301S' => 'WRA301',
         'WRA302S' => 'WRA302',
         'WRA303S' => 'WRA303S',
@@ -191,38 +191,55 @@ class MyEdtImport
 
     private const CORRESPONDANCE_SEMESTRE = [
         'S1' => [
+            'A1...H1' => 79,
             'A1' => 79,
             'B1' => 79,
+            'A1-B1' => 79,
             'C1' => 79,
             'D1' => 79,
+            'C1-D1' => 79,
             'E1' => 79,
             'F1' => 79,
+            'E1-F1' => 79,
             'G1' => 79,
-            'H1' => 79
+            'H1' => 79,
+            'G1-H1' => 79
         ],
         'S3' => [
             'A3' => 101,
             'B3' => 101,
+            'A3-B3' => 101,
+            'A3-D3' => 101,
+            'A3...H3' => 101,
             'C3' => 101,
             'D3' => 101,
+            'C3-D3' => 165,
             'E3' => 165,
             'F3' => 165,
+            'E3-F3' => 165,
             'G3' => 183,
             'H3' => 183,
+            'G3-H3' => 183,
             'I3' => 161,
             'J3' => 161,
+            'I3-J3' => 161,
         ],
         'S5' => [
             'A5' => 103,
             'B5' => 103,
+            'A5-B5' => 103,
             'C5' => 103,
             'D5' => 103,
+            'C5-D5' => 103,
             'E5' => 167,
             'F5' => 167,
+            'E5-F5' => 167,
             'G5' => 185,
             'H5' => 185,
+            'G5-H5' => 185,
             'I5' => 163,
             'J5' => 163,
+            'I5-J5' => 163,
         ],
     ];
 
@@ -404,13 +421,13 @@ class MyEdtImport
             $pl->setTypeMatiere($this->tabMatieres[$matiere]->typeMatiere);
             $pl->setTexte(null);
             $pl->setOrdreSemestre($semestre);
+
             if (array_key_exists($phrase[8], self::CORRESPONDANCE_SEMESTRE) && array_key_exists($phrase[5], self::CORRESPONDANCE_SEMESTRE[$phrase[8]])) {
                 $pl->setSemestre($this->tabSemestres[self::CORRESPONDANCE_SEMESTRE[$phrase[8]][$phrase[5]]] ?? null
                 );
             } else {
                 $pl->setSemestre(null);
             }
-
 
             if ('' !== $prof && 'DOE' !== $prof && 'PRJ' !== $prof && array_key_exists($prof, $this->tabIntervenants)) {
                 $pl->setIntervenant($this->tabIntervenants[$prof]);

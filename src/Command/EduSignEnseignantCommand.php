@@ -10,7 +10,6 @@
 
 namespace App\Command;
 
-use App\Classes\EduSign\UpdateEnseignant;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -24,7 +23,6 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class EduSignEnseignantCommand extends Command
 {
     public function __construct(
-        private readonly UpdateEnseignant $updateEnseignant,
     )
     {
         parent::__construct();
@@ -39,8 +37,6 @@ class EduSignEnseignantCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
-
-        $this->updateEnseignant->update();//boucler sur département pour chaque update (ou diplome)
 
         $io->success('Enseignants récupérés sur EduSign.');
 
