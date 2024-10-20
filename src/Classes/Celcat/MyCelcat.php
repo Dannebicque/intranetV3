@@ -4,18 +4,14 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Celcat/MyCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/10/2024 16:11
+ * @lastUpdate 20/10/2024 18:10
  */
 
 namespace App\Classes\Celcat;
 
-use App\Classes\Edt\EdtManager;
-use App\Classes\EduSign\Adapter\IntranetEdtEduSignAdapter;
-use App\Classes\EduSign\Events\EduSignEvent;
 use App\Classes\GetSemestreFromGroupe;
 use App\Classes\Matieres\TypeMatiereManager;
 use App\Components\Logger\LogHelper;
-use App\DTO\EvenementEdt;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Calendrier;
 use App\Entity\Diplome;
@@ -28,7 +24,6 @@ use App\Repository\GroupeRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\SemestreRepository;
 use App\Utils\Tools;
-use Carbon\Carbon;
 use Carbon\CarbonInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
@@ -303,7 +298,7 @@ class MyCelcat
 
     }
 
-    private function updateEvent(EdtCelcat $intranet, EdtCelcat $celcat, EdtManager $edtManager): void
+    private function updateEvent(EdtCelcat $intranet, EdtCelcat $celcat): void
     {
         $this->log->addItem('Mise à jour de l\'événement ' . $intranet->getId(), 'info');
         // Mise à jour des données existantes de $intranet avec celles de $celcat
