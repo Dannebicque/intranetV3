@@ -2,6 +2,52 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.19.52](https://github.com/Dannebicque/intranetV3/compare/v3.19.51...v3.19.52) (2024-10-20)
+
+
+### Features
+
+* [Edusign] Génération auto des absences ([082514f](https://github.com/Dannebicque/intranetV3/commit/082514f1b3121eeb1b246d2913dffe56772ed94b))
+* [Edusign] Génération auto des absences ([c936964](https://github.com/Dannebicque/intranetV3/commit/c936964384d684cbc87a53a340c9d2921c33bfad))
+
+
+### Bug Fixes
+
+* [Absence] message d'erreur si saisie d'une absence en dehors du délai défini dans la config ([2fa6ee1](https://github.com/Dannebicque/intranetV3/commit/2fa6ee10c095a06bc3a55fe76cac8aeb3f195fca))
+* [Absences] créer les absences seulement si la feuille est signée par l'enseignant ([086ba19](https://github.com/Dannebicque/intranetV3/commit/086ba19af23dfb00affa670e2f3e17fac9ce599c))
+* [AdminEdusign] tri enseignants par nom ([2c4999f](https://github.com/Dannebicque/intranetV3/commit/2c4999f6087f9c0e13467dd88299e14f1a9d7dda))
+* [AdminEduSign] update edt ([ce456de](https://github.com/Dannebicque/intranetV3/commit/ce456de8ea39a021c91cea785311e6e49bd27863))
+* [AdminEduSign] update edt ([c5388f2](https://github.com/Dannebicque/intranetV3/commit/c5388f2ce67b88570cb256f04babc852c4b03670))
+* [Edt] récupère les cours même si pas d'enseignant ([cee7adf](https://github.com/Dannebicque/intranetV3/commit/cee7adfc71c971ab3dc3549b0bd3063eb17bc437))
+* [Edusign] add dump log ([9046c19](https://github.com/Dannebicque/intranetV3/commit/9046c19cb864c480a81cd4ada7846d94c914553e))
+* [Edusign] add dump log ([89063fa](https://github.com/Dannebicque/intranetV3/commit/89063fac8d997874bd85494794cf45f9c9a2b971))
+* [Edusign] add dump log ([a3d5622](https://github.com/Dannebicque/intranetV3/commit/a3d562293c44be31df3beb2f5c2be3b425f3342a))
+* [Edusign] add dump log ([9871859](https://github.com/Dannebicque/intranetV3/commit/98718592633b19e20104713f0b986dae3a342e7a))
+* [Edusign] add dump log ([48121bf](https://github.com/Dannebicque/intranetV3/commit/48121bfadd4040a5f87adcd584d6593d30f33b55))
+* [Edusign] add dump log ([2388de9](https://github.com/Dannebicque/intranetV3/commit/2388de9c415235e7f83a6b7f44057ccd96634048))
+* [Edusign] add dump log ([23e16c1](https://github.com/Dannebicque/intranetV3/commit/23e16c11452302c20360548a8cf08225d2d04458))
+* [Edusign] add dump log ([85b8881](https://github.com/Dannebicque/intranetV3/commit/85b8881ecf103774d5e3eb610660effc8f554704))
+* [Edusign] add dump log ([0d1a018](https://github.com/Dannebicque/intranetV3/commit/0d1a0182c5763acff7f775e446ad4c88f9b44f73))
+* [Edusign] add dump log ([6309e7a](https://github.com/Dannebicque/intranetV3/commit/6309e7ad663081ba194380579e31127c2d2bab1c))
+* [Edusign] add dump log ([bb49a19](https://github.com/Dannebicque/intranetV3/commit/bb49a19f3803f4498469b65f6d6eca9daa82a3bc))
+* [Edusign] add dump log ([2855c14](https://github.com/Dannebicque/intranetV3/commit/2855c144f3daa7e37ba2177bd063cfdb40eeb98b))
+* [Edusign] add dump log ([a65b3dd](https://github.com/Dannebicque/intranetV3/commit/a65b3dd00db6409a9c56f23e05abe766d464156a))
+* [Edusign] add dump log ([a161bf7](https://github.com/Dannebicque/intranetV3/commit/a161bf730bd8d6649609ae1ad046c382eb212bbb))
+* [Edusign] add dump log ([56d14fa](https://github.com/Dannebicque/intranetV3/commit/56d14fa623cc206b2e2d3a69d233cedcb74a1c45))
+* [Edusign] add dump log ([4bb9ccc](https://github.com/Dannebicque/intranetV3/commit/4bb9ccceb0a89626910d23a3bbba47a73449e203))
+* [Edusign] add dump log ([3f18f96](https://github.com/Dannebicque/intranetV3/commit/3f18f969029e3871561f7b310f9c0615e5bc5c9a))
+* [Edusign] ajoute le nom de l'utilisateur qui a lancé ([df8b033](https://github.com/Dannebicque/intranetV3/commit/df8b03331f056f54f121fa88106945af1b59898e))
+* [Edusign] Génération auto des absences -> test si l'absence existe déjà ([65efafe](https://github.com/Dannebicque/intranetV3/commit/65efafedb10999cf9e8819fd9ebc946ac664c3d4))
+* [Edusign] remove dump log ([b913308](https://github.com/Dannebicque/intranetV3/commit/b913308f80ca06f94889428cfbdd37e77a674a7e))
+* [Edusign] update groupes -> si l'étudiant n'existe pas dans la base ([0e1b14a](https://github.com/Dannebicque/intranetV3/commit/0e1b14ac2df4b2e84288435eae9f444d99f20d44))
+* Absence depuis EduSign ([aed838d](https://github.com/Dannebicque/intranetV3/commit/aed838d9fcd57daaf1697853327a08c50a63414d))
+* Ajout du code version sur export du prévisionnel ([9c280d8](https://github.com/Dannebicque/intranetV3/commit/9c280d82044d4ad6d247ab9a20351ac7f886c7f9))
+* Bug argument en trop sur UpdateEvent ([4d62f11](https://github.com/Dannebicque/intranetV3/commit/4d62f115cc803e61c43ab95b65875db9e2a9f28b))
+* methode isOptUpdateCelcat ([18c102c](https://github.com/Dannebicque/intranetV3/commit/18c102c7da773cb4cfd06bd68347809a34c41522))
+* Path pour la sauvegarde du PDF [[#300](https://github.com/Dannebicque/intranetV3/issues/300)] ([3f04d5e](https://github.com/Dannebicque/intranetV3/commit/3f04d5e0738cf21ae67f0d13cbe52474f6ed52d2))
+* synchro EDT intranet ([6647bb8](https://github.com/Dannebicque/intranetV3/commit/6647bb812276fab77cc8e002d6aef806308f3549))
+* taille des blocs ptut sur bornes ([e48fd97](https://github.com/Dannebicque/intranetV3/commit/e48fd9785edccf08f9bb78ce51a390fca794d5a3))
+
 ### [3.19.51](https://github.com/Dannebicque/intranetV3/compare/v3.19.47...v3.19.51) (2024-10-07)
 
 
