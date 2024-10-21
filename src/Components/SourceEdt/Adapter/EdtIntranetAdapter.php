@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/SourceEdt/Adapter/EdtIntranetAdapter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/09/2024 19:07
+ * @lastUpdate 21/10/2024 16:07
  */
 
 namespace App\Components\SourceEdt\Adapter;
@@ -130,6 +130,7 @@ class EdtIntranetAdapter extends AbstractEdtAdapter implements EdtAdapterInterfa
         switch ($evt->getType()) {
             case 'cm':
             case 'CM':
+            case 'PTCM':
                 if ($evt->getGroupe() > 40) {
                     return 4;
                 }
@@ -137,6 +138,7 @@ class EdtIntranetAdapter extends AbstractEdtAdapter implements EdtAdapterInterfa
                 return 0;
             case 'TD':
             case 'td':
+            case 'PTTD':
                 if ($evt->getGroupe() > 40) {
                     return 4;
                 }
