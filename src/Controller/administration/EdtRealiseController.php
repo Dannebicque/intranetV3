@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EdtRealiseController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/04/2024 06:24
+ * @lastUpdate 21/10/2024 10:09
  */
 
 namespace App\Controller\administration;
@@ -51,7 +51,7 @@ class EdtRealiseController extends BaseController
         if (null === $mat) {
             throw new MatiereNotFoundException();
         }
-        $t = $myEdtCompare->realise($mat, $personnel, $this->dataUserSession->getAnneePrevisionnel());
+        $t = $myEdtCompare->realise($mat, $personnel, $this->getAnneeUniversitaire());
 
         return $this->render('administration/edtRealise/_detailPersonnelMatiere.html.twig', [
             'planning' => $myEdtCompare->getPlanning(),

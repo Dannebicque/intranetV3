@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MyEdtCompare.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:35
+ * @lastUpdate 21/10/2024 10:09
  */
 
 /*
@@ -15,6 +15,7 @@ namespace App\Classes;
 
 use App\Classes\Previsionnel\PrevisionnelManager;
 use App\DTO\Matiere;
+use App\Entity\AnneeUniversitaire;
 use App\Entity\EdtPlanning;
 use App\Entity\Personnel;
 use App\Repository\EdtPlanningRepository;
@@ -33,12 +34,13 @@ class MyEdtCompare
     {
     }
 
-    public function realise(Matiere $matiere, Personnel $personnel, int $anneePrevi): array
+    public function realise(Matiere $matiere, Personnel $personnel, AnneeUniversitaire $anneePrevi): array
     {
         $this->planning = $this->edtPlanningRepository->findBy([
             'typeMatiere' => $matiere->typeMatiere,
             'idMatiere' => $matiere->id,
             'intervenant' => $personnel->getId(),
+            'anneeUniversitaire' => $anneePrevi->getId(),
         ],
             [
                 'semaine' => 'ASC',
@@ -49,7 +51,7 @@ class MyEdtCompare
         $previsionnel = $this->previsionnelManager->getPrevisionnelMatierePersonnel(
             $personnel,
             $matiere->id,
-            $matiere->typeMatiere, $anneePrevi
+            $matiere->typeMatiere, $anneePrevi->getAnnee()
         );
 
         $t = [];
