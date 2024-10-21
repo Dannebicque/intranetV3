@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.19.54](https://github.com/Dannebicque/intranetV3/compare/v3.19.53...v3.19.54) (2024-10-21)
+
+
+### Bug Fixes
+
+* Phrase sur dépot de justificatif ([71048a1](https://github.com/Dannebicque/intranetV3/commit/71048a117e32aadc9d80aaaa1aadc08c296eabba))
+
 ### [3.19.53](https://github.com/Dannebicque/intranetV3/compare/v3.19.52...v3.19.53) (2024-10-21)
 
 
