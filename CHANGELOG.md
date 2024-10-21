@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.19.55](https://github.com/Dannebicque/intranetV3/compare/v3.19.54...v3.19.55) (2024-10-21)
+
+
+### Bug Fixes
+
+* Taille groupe edt sur pttd et pttp, ptcm ([eaeb4bb](https://github.com/Dannebicque/intranetV3/commit/eaeb4bb5242179c4efc13b78de279bc89b4c80cd))
+
 ### [3.19.54](https://github.com/Dannebicque/intranetV3/compare/v3.19.53...v3.19.54) (2024-10-21)
 
 
