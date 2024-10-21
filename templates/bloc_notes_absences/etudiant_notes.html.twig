@@ -23,6 +23,7 @@
                 <th>{{ 'note'|trans }}</th>
                 <th class="hide">{{ 'coefficient'|trans }}</th>
                 <th>{{ 'infos'|trans }}</th>
+                <th>{{ 'pointer'|trans }}</th>
             </tr>
             </thead>
             <tbody>
@@ -67,6 +68,9 @@
                                 <i class="fas fa-info"></i>
                             </button>
                         </td>
+                        <td>
+                            {% include 'bloc_notes_absences/_note-vue-checkbox.html.twig' with {note: note} %}
+                        </td>
                     </tr>
                     {# notes enfants #}
                     {% for nnote in note.evaluation.enfants|filter(nnote => (nnote.evaluation.visible == true)) %}
@@ -105,6 +109,9 @@
                                 >
                                     <i class="fas fa-info"></i>
                                 </button>
+                            </td>
+                            <td>
+                                {% include 'bloc_notes_absences/_note-vue-checkbox.html.twig' with {note: nnote} %}
                             </td>
                         </tr>
                     {% endfor %}
