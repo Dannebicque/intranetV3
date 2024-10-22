@@ -42,7 +42,7 @@ class EduSignEvent extends Event
 
     public function getCleApi()
     {
-
+        return $this->cleApi;
     }
 
 }
