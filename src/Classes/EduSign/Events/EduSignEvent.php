@@ -19,7 +19,7 @@ class EduSignEvent extends Event
     public const EDUSIGN_DELETE_COURSE = 'edusign.delete.course';
 
     private EvenementEdt $evenementEdt;
-    private EduSignCourse $eduSignCourse;
+    private ?EduSignCourse $eduSignCourse;
 
     private string $cleApi;
 
