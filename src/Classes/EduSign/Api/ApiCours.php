@@ -91,7 +91,7 @@ class ApiCours
         }
 
         if (null === $edt) {
-            dump('Course not found for ' .$course->type_edt.'-'.$course->api_id);
+            return null;
         } else {
             if ($edt->getIdEduSign() == null && $rep !== null) {
                 $edt->setIdEduSign($id);
