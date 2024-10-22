@@ -9,6 +9,9 @@
 
 namespace App\Classes\Celcat;
 
+use App\Classes\Edt\EdtManager;
+use App\Classes\EduSign\Adapter\IntranetEdtEduSignAdapter;
+use App\Classes\EduSign\Events\EduSignEvent;
 use App\Classes\GetSemestreFromGroupe;
 use App\Classes\Matieres\TypeMatiereManager;
 use App\Components\Logger\LogHelper;
@@ -24,6 +27,7 @@ use App\Repository\GroupeRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\SemestreRepository;
 use App\Utils\Tools;
+use Carbon\Carbon;
 use Carbon\CarbonInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
@@ -51,7 +55,9 @@ class MyCelcat
         private readonly EntityManagerInterface   $entityManger,
         private readonly ParameterBagInterface    $parameterBag,
         private readonly GroupeRepository         $groupeRepository,
-        private readonly CalendrierRepository     $calendrierRepository, private readonly SemestreRepository $semestreRepository
+        private readonly CalendrierRepository     $calendrierRepository,
+        private readonly SemestreRepository $semestreRepository,
+        private readonly EdtManager $edtManager
     )
     {
 
@@ -200,7 +206,10 @@ class MyCelcat
                 // Suppression des données inexistantes
                 foreach ($intranetIndex as $id => $row) {
                     foreach ($row as $r) {
-                        if ($celcatIndex[$id] && !array_key_exists($r->getUniqueId(), $celcatIndex[$id])) {
+                        if (!array_key_exists($id, $celcatIndex)) {
+                            $this->deleteEvent($r);
+                        }
+                        elseif ($celcatIndex[$id] && !array_key_exists($r->getUniqueId(), $celcatIndex[$id])) {
                             $this->deleteEvent($r);
                         }
                     }
@@ -300,6 +309,7 @@ class MyCelcat
 
     private function updateEvent(EdtCelcat $intranet, EdtCelcat $celcat): void
     {
+        dump('Mise à jour de l\'événement ' . $intranet->getId());
         $this->log->addItem('Mise à jour de l\'événement ' . $intranet->getId(), 'info');
         // Mise à jour des données existantes de $intranet avec celles de $celcat
 
@@ -328,14 +338,13 @@ class MyCelcat
         $this->entityManger->flush(); //todo: éventuellement envoyer dans EduSign uniquement si date > datejour
         // éventuellement optionnel le flush pour faire un lot
 
-//        if ($intranet->getDateCours()->greaterThan(Carbon::now())) {
-//            $diplome = $this->diplomeRepository->findOneBy(['codeCelcatDepartement' => $intranet->getDepartementId()]);
-//            $intranetEvt = $edtManager->getEventNew('celcat_' . $intranet->getId());
-//            $edusignCourse = (new IntranetEdtEduSignAdapter($intranetEvt, $diplome))->getCourse();
-//
-//            $eduEvent = new EduSignEvent($edusignCourse, $intranetEvt, $this->cleApi);
-//            $this->eventDispatcher->dispatch($eduEvent, EduSignEvent::EDUSIGN_UPDATE_COURSE);
-//        }
+        if ($intranet->getDateCours()->greaterThan(Carbon::now())) {
+            dump('Mise à jour de l\'événement edusign');
+            $intranetEvt = $this->edtManager->getEventNew('celcat_' . $intranet->getId());
+
+            $eduEvent = new EduSignEvent(null, $intranetEvt, $this->cleApi);
+            $this->eventDispatcher->dispatch($eduEvent, EduSignEvent::EDUSIGN_UPDATE_COURSE);
+        }
 
         $this->log->addItem('Mise à jour de l\'événement ' . $intranet->getId() . ' avec l\évenement Celcat ' . $celcat->getUniqueId(), 'info');
     }

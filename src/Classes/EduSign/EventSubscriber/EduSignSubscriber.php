@@ -47,13 +47,13 @@ class EduSignSubscriber implements EventSubscriberInterface
                 // Update EdtCelcat with $eduSignCourse data
                 $course = (new IntranetEdtEduSignAdapter($evenementEdt, $diplome))->getCourse();
                 if (null !== $course) {
-                    $cleEvent = $this->apiCours->updateCourse($course, $cleApi);
+                    dump($this->apiCours->updateCourse($course, $cleApi));
                 }
             } else {
                 // Update EdtCelcat with $eduSignCourse data
                 $course = (new IntranetEdtEduSignAdapter($evenementEdt, $diplome))->getCourse();
                 if (null !== $course) {
-                    $cleEvent = $this->apiCours->updateCourse($course, $cleApi);
+                    $this->apiCours->updateCourse($course, $cleApi);
                 }
             }
         }

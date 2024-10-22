@@ -123,7 +123,7 @@ class FixCourses
         $this->edusignCourse->professor = $course['PROFESSOR'];
         $this->edusignCourse->school_group = $course['SCHOOL_GROUP'];
 
-        return $this->apiCours->updateCourse($this->edusignCourse, $keyEduSign, $diplome);
+        return $this->apiCours->updateCourse($this->edusignCourse, $keyEduSign);
     }
 
     private function deleteCourseEduSign($course, $keyEduSign): mixed
