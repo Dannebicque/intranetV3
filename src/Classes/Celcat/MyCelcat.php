@@ -338,7 +338,7 @@ class MyCelcat
         $this->entityManger->flush(); //todo: éventuellement envoyer dans EduSign uniquement si date > datejour
         // éventuellement optionnel le flush pour faire un lot
 
-        if ($intranet->getDateCours()->greaterThan(Carbon::now())) {
+        if ($intranet->getIdEduSign() !== null && $intranet->getDateCours()->greaterThan(Carbon::now())) {
             dump('Mise à jour de l\'événement edusign');
             $intranetEvt = $this->edtManager->getEventNew('celcat_' . $intranet->getId());
 
