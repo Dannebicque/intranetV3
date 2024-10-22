@@ -29,7 +29,6 @@ class FixCourses
     public function __construct(
         private readonly ApiCours              $apiCours,
         private readonly PersonnelRepository   $personnelRepository,
-        private readonly GroupeRepository      $groupeRepository,
         private readonly EdtPlanningRepository $edtPlanningRepository,
         private readonly EdtCelcatRepository   $edtCelcatRepository,
         private readonly DiplomeRepository     $diplomeRepository,
@@ -67,7 +66,7 @@ class FixCourses
                     if (empty($course['API_ID'])) {
                         $coursIntranet = $this->findCoursIntranet($cours);
                         if (empty($coursIntranet)) {
-                           $result['suppression cours créé à la main'][$course['START'].' - '.$course['END'].'|'.$course['PROFESSOR']] = $this->deleteCourseEduSign($course, $keyEduSign);
+                            $result['suppression cours créé à la main'][$course['START'].' - '.$course['END'].'|'.$course['PROFESSOR']] = $this->deleteCourseEduSign($course, $keyEduSign);
                         } else {
                             $result['update cours créé à la main'][$course['START'].' - '.$course['END'].'|'.$course['PROFESSOR']] = $this->updateCourseEduSign($coursIntranet, $course, $keyEduSign, $diplome);
                         }
