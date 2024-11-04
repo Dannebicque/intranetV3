@@ -179,7 +179,7 @@ class EdtCelcat extends BaseEntity
         return $this->codePersonnel;
     }
 
-    public function setCodePersonnel(string $codePersonnel): self
+    public function setCodePersonnel(?string $codePersonnel): self
     {
         $this->codePersonnel = $codePersonnel;
 
