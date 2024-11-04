@@ -43,7 +43,7 @@ class EdtCelcatAdapter extends AbstractEdtAdapter implements EdtAdapterInterface
         $evt->heureDebut = $event->getDebut();
         $evt->indexDebut = Constantes::TAB_HEURES_EDT_LIGNE_2[$event->getDebut()->roundMinute(10)->format('Hi')];
         $evt->heureFin = $event->getFin();
-        $evt->matiere = $event->getLibModule();
+        $evt->matiere = $event->getLibModule() ?? 'Inconnue';
         $evt->typeIdMatiere = $event->getTypeIdMatiere();
         $evt->salle = $event->getLibSalle();
         $evt->personnel = $event->getLibPersonnel();
