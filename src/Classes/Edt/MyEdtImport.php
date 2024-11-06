@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtImport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/10/2024 16:10
+ * @lastUpdate 06/11/2024 17:25
  */
 
 /*
@@ -213,7 +213,7 @@ class MyEdtImport
             'A3...H3' => 101,
             'C3' => 101,
             'D3' => 101,
-            'C3-D3' => 165,
+            'C3-D3' => 101,
             'E3' => 165,
             'F3' => 165,
             'E3-F3' => 165,
