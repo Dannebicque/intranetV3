@@ -393,10 +393,11 @@ class MyCelcat
                     $event->setIdMatiere($this->tMatieres[$event->getCodeModule()]->id);
                 }
 
-                $event->setCodePersonnel(odbc_result($resultCelcat, 9));
-                $event->setLibPersonnel(utf8_encode(odbc_result($resultCelcat, 10)));
-                if (array_key_exists($event->getCodePersonnel(), $this->tPersonnels)) {
+                $codePersonnel = odbc_result($resultCelcat, 9);
+                if ($codePersonnel !== null && $codePersonnel !== '' && array_key_exists($event->getCodePersonnel(), $this->tPersonnels)) {
                     $event->setPersonnel($this->tPersonnels[$event->getCodePersonnel()]);
+                    $event->setCodePersonnel($codePersonnel);
+                    $event->setLibPersonnel(utf8_encode(odbc_result($resultCelcat, 10)));
                 } else {
                     $event->setPersonnel(null);
                     $event->setCodePersonnel('-');
