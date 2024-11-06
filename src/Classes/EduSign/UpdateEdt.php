@@ -143,7 +143,7 @@ class UpdateEdt
     public function sendUpdateAddCourse(?string $keyEduSign, ?Diplome $diplome): mixed
     {
         $course = (new IntranetEdtEduSignAdapter($this->evenement, $diplome))->getCourse();
-        $result = $this->apiCours->addCourse($course, $keyEduSign, $diplome);
+        $result = $this->apiCours->addCourse($course, $keyEduSign);
         return $result;
     }
 
