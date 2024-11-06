@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EdtExportController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/09/2024 12:15
+ * @lastUpdate 06/11/2024 21:17
  */
 
 namespace App\Controller\administration;
@@ -143,7 +143,7 @@ class EdtExportController extends BaseController
                 $groupes = $groupeRepository->findBy(['typeGroupe' => $tg->getId()], ['ordre' => 'ASC']);
                 foreach ($groupes as $groupe) {
                     $code[mb_strtoupper($tg->getType()->value)][$groupe->getOrdre()] = 'call sleep 5' . "\n";
-                    $codeGroupe[mb_strtoupper($tg->getType()->value) . '_' . $groupe->getOrdre()] = $groupe->getLibelle();
+                    $codeGroupe[mb_strtoupper($tg->getType()->value) . '_' . $groupe->getOrdre()] = $groupe->getCodeApogee();
                 }
             }
             foreach ($pl as $p) {
