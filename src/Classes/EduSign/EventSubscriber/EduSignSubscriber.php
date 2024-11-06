@@ -32,7 +32,31 @@ class EduSignSubscriber implements EventSubscriberInterface
         return [
             EduSignEvent::EDUSIGN_UPDATE_COURSE => 'onUpdateCourse',
             EduSignEvent::EDUSIGN_DELETE_COURSE => 'onDeleteCourse',
+            EduSignEvent::EDUSIGN_CREATE_COURSE => 'onCreateCourse',
         ];
+    }
+
+    public function onCreateCourse(EduSignEvent $eduSignEvent): void
+    {
+        $evenementEdt = $eduSignEvent->getEvenementEdt();
+        $cleApi = $eduSignEvent->getCleApi();
+        $diplomes = $this->diplomeRepository->findBy(['keyEduSign' => $cleApi]);
+
+        foreach ($diplomes as $diplome) {
+            if ($evenementEdt->source !== EdtManager::EDT_INTRANET) {
+                // Update EdtCelcat with $eduSignCourse data
+                $course = (new IntranetEdtEduSignAdapter($evenementEdt, $diplome))->getCourse();
+                if (null !== $course) {
+                    dump($this->apiCours->addCourse($course, $cleApi));
+                }
+            } else {
+                // Update EdtCelcat with $eduSignCourse data
+                $course = (new IntranetEdtEduSignAdapter($evenementEdt, $diplome))->getCourse();
+                if (null !== $course) {
+                    $this->apiCours->addCourse($course, $cleApi);
+                }
+            }
+        }
     }
 
     public function onUpdateCourse(EduSignEvent $eduSignEvent): void
@@ -65,18 +89,7 @@ class EduSignSubscriber implements EventSubscriberInterface
         $evenementEdt = $eduSignEvent->getEvenementEdt();
         $cleApi = $eduSignEvent->getCleApi();
 
-        if ($evenementEdt->source !== EdtManager::EDT_INTRANET) {
-            // Update EdtCelcat with $eduSignCourse data
-            $course = (new IntranetEdtEduSignAdapter($evenementEdt))->getCourse();
-            if (null !== $course) {
-                //  $cleEvent = $this->apiCours->deleteCourse($course, $cleApi);
-            }
-        } else {
-            // Update EdtCelcat with $eduSignCourse data
-            $course = (new IntranetEdtEduSignAdapter($evenementEdt))->getCourse();
-            if (null !== $course) {
-                //  $cleEvent = $this->apiCours->deleteCourse($course, $cleApi);
-            }
-        }
+        dump($this->apiCours->deleteCourse($evenementEdt->idEduSign, $cleApi));
+
     }
 }

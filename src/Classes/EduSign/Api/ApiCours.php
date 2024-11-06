@@ -21,7 +21,7 @@ class ApiCours
     {
     }
 
-    public function addCourse(EduSignCourse $course, string $cleApi, ?Diplome $diplome): mixed
+    public function addCourse(EduSignCourse $course, string $cleApi): mixed
     {
         $client = HttpClient::create();
 

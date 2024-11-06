@@ -262,6 +262,15 @@ class MyCelcat
             $this->entityManger->persist($event);
             $this->entityManger->flush();
             //éventuellement envoyer dans EduSign ? ou laisser le script quotidien
+
+            if ($event->getIdEduSign() !== null && $event->getDateCours()->greaterThan(Carbon::now()) && $event->getSemestre() !== null && $event->getSemestre()->getDiplome()->getKeyEduSign() !== null ) {
+                dump('Mise à jour de l\'événement edusign');
+                $intranetEvt = $this->edtManager->getEventNew('celcat_' . $event->getId());
+
+                $eduEvent = new EduSignEvent(null, $intranetEvt, $event->getSemestre()->getDiplome()->getKeyEduSign());
+                $this->eventDispatcher->dispatch($eduEvent, EduSignEvent::EDUSIGN_CREATE_COURSE);
+            }
+
             // éventuellement optionnel le flush pour faire un lot
         } catch (Exception $e) {
             throw $e;
@@ -293,17 +302,17 @@ class MyCelcat
     {
         //suppression de l'event dans la BDD Intranet
         $this->log->addItem('Suppression de l\'événement ' . $intranet->getId(), 'info');
-        $idEduSign = $intranet->getIdEduSign();
-
-
-        //  $eduEvent = new EduSignEvent($idEduSign, null, $this->cleApi);
-        //todo: tester si date > date jour
-//        $this->eventDispatcher->dispatch($eduEvent, EduSignEvent::EDUSIGN_UPDATE_COURSE);
-//        $this->log->addItem('Suppression de l\'événement ' . $intranet->getId(), 'info');
 
         $this->entityManger->remove($intranet);
-        //todo: Envoyer dans EduSign uniquement si date du cours postérieure
 
+        // suppression du cours dans EduSign
+        if ($intranet->getIdEduSign() !== null && $intranet->getDateCours()->greaterThan(Carbon::now()) && $intranet->getSemestre() !== null && $intranet->getSemestre()->getDiplome()->getKeyEduSign() !== null ) {
+            dump('Mise à jour de l\'événement edusign');
+            $intranetEvt = $this->edtManager->getEventNew('celcat_' . $intranet->getId());
+
+            $eduEvent = new EduSignEvent(null, $intranetEvt, $intranet->getSemestre()->getDiplome()->getKeyEduSign());
+            $this->eventDispatcher->dispatch($eduEvent, EduSignEvent::EDUSIGN_DELETE_COURSE);
+        }
     }
 
     private function updateEvent(EdtCelcat $intranet, EdtCelcat $celcat): void

@@ -17,6 +17,7 @@ class EduSignEvent extends Event
 {
     public const EDUSIGN_UPDATE_COURSE = 'edusign.update.course';
     public const EDUSIGN_DELETE_COURSE = 'edusign.delete.course';
+    public const EDUSIGN_CREATE_COURSE = 'edusign.create.course';
 
     private EvenementEdt $evenementEdt;
     private ?EduSignCourse $eduSignCourse;
