@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EdtExportController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/11/2024 21:17
+ * @lastUpdate 07/11/2024 12:12
  */
 
 namespace App\Controller\administration;
@@ -143,7 +143,7 @@ class EdtExportController extends BaseController
                 $groupes = $groupeRepository->findBy(['typeGroupe' => $tg->getId()], ['ordre' => 'ASC']);
                 foreach ($groupes as $groupe) {
                     $code[mb_strtoupper($tg->getType()->value)][$groupe->getOrdre()] = 'call sleep 5' . "\n";
-                    $codeGroupe[mb_strtoupper($tg->getType()->value) . '_' . $groupe->getOrdre()] = $groupe->getCodeApogee();
+                    $codeGroupe[mb_strtoupper($tg->getType()->value) . '_' . $groupe->getCodeApogee()] = $groupe->getLibelle();
                 }
             }
             foreach ($pl as $p) {
@@ -192,7 +192,7 @@ class EdtExportController extends BaseController
 
             foreach ($code as $type => $value) {
                 foreach ($value as $groupe => $c) {
-                    $codeComplet .= 'call groupe ' . $i . "\n";
+                    $codeComplet .= 'call groupe S' . $semestre->getOrdreLmd() . ' ' . $type . ' ' . $groupe . "\n";
 
                     $n = Tools::slug($semestre->getLibelle()) . '_S' . $calendrier->getSemaineReelle() . '_' . $type . '_' . str_replace(' ',
                             '_', $codeGroupe[$type . '_' . $groupe]) . '.bat';
