@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EdtExportController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/11/2024 12:21
+ * @lastUpdate 07/11/2024 12:23
  */
 
 namespace App\Controller\administration;
@@ -192,7 +192,7 @@ class EdtExportController extends BaseController
 
             foreach ($code as $type => $value) {
                 foreach ($value as $groupe => $c) {
-                    $codeComplet .= 'call groupe S' . $semestre->getOrdreLmd() . ' ' . $codeGroupe[$type . '_' . $groupe] . "\n";
+                    $codeComplet .= 'call groupe S' . $semestre->getOrdreLmd() . ' ' . $type . ' ' . $codeGroupe[$type . '_' . $groupe] . "\n";
 
                     $n = Tools::slug($semestre->getLibelle()) . '_S' . $calendrier->getSemaineReelle() . '_' . $type . '_' . str_replace(' ',
                             '_', $codeGroupe[$type . '_' . $groupe]) . '.bat';
