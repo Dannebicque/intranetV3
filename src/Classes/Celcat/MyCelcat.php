@@ -394,9 +394,9 @@ class MyCelcat
                 }
 
                 $codePersonnel = odbc_result($resultCelcat, 9);
+                $event->setCodePersonnel($codePersonnel);
                 if ($codePersonnel !== null && $codePersonnel !== '' && array_key_exists($event->getCodePersonnel(), $this->tPersonnels)) {
                     $event->setPersonnel($this->tPersonnels[$event->getCodePersonnel()]);
-                    $event->setCodePersonnel($codePersonnel);
                     $event->setLibPersonnel(utf8_encode(odbc_result($resultCelcat, 10)));
                 } else {
                     $event->setPersonnel(null);
