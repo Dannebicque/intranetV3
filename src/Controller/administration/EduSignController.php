@@ -277,50 +277,51 @@ class EduSignController extends BaseController
     }
 
 //    todo: transformer en LiveComponent pour changer les datas des select
-#[Route('/update-course/{source}/{diplome}/{id}/{week}', name: 'app_admin_edu_sign_update_cours')]
-public function updateCourse(int $id, string $source, int $diplome, UpdateEdt $updateEdt, Request $request, MailerInterface $mailer, int $week): Response
-{
-    $cours = $this->edtManager->findCourse($source, $id);
-    $matiere = $this->typeMatiereManager->getMatiereFromSelect($request->query->get('matiere'));
-    $diplome = $this->diplomeRepository->findOneBy(['id' => $diplome]);
-    $groupe = $this->groupeRepository->findOneBy(['id' => $request->query->get('groupe')]);
-    $enseignant = $this->personnelRepository->findOneBy(['id' => $request->query->get('personnel')]);
-    $salle = $request->query->get('salle');
+    #[Route('/update-course/{source}/{diplome}/{id}/{week}', name: 'app_admin_edu_sign_update_cours')]
+    public function updateCourse(int $id, string $source, int $diplome, UpdateEdt $updateEdt, Request $request, MailerInterface $mailer, int $week): Response
+    {
+        $cours = $this->edtManager->findCourse($source, $id);
+        $matiere = $this->typeMatiereManager->getMatiereFromSelect($request->query->get('matiere'));
+        $diplome = $this->diplomeRepository->findOneBy(['id' => $diplome]);
+        $groupe = $this->groupeRepository->findOneBy(['id' => $request->query->get('groupe')]);
+        $enseignant = $this->personnelRepository->findOneBy(['id' => $request->query->get('personnel')]);
+        $salle = $request->query->get('salle');
 
-    $groupeOrdre = $groupe?->getOrdre();
-    $groupeType = $groupe?->getTypeGroupe()->getType()->value;
+        $groupeOrdre = $groupe?->getOrdre();
+        $groupeType = $groupe?->getTypeGroupe()->getType()->value;
 
-    $cours = $this->edtManager->updateCourse($cours, $source, $matiere, $cours->getSemestre(), $groupe, $groupeOrdre, $groupeType, $enseignant, $salle);
-    $course = $this->edtManager->getCourseEduSign($source, $cours->getId(), $matiere, $groupe);
-    $courseEdusign = (new IntranetEdtEduSignAdapter($course, $diplome))->getCourse();
-    $keyEduSign = $cours->getSemestre()->getDiplome()->getKeyEduSign();
+        $cours = $this->edtManager->updateCourse($cours, $source, $matiere, $cours->getSemestre(), $groupe, $groupeOrdre, $groupeType, $enseignant, $salle);
+        $course = $this->edtManager->getCourseEduSign($source, $cours->getId(), $matiere, $groupe);
+        $keyEduSign = $cours->getSemestre()->getDiplome()->getKeyEduSign();
 
-    $updateEnseignantResult = [];
-    if ($course->personnelObjet && (empty($course->personnelObjet->getIdEduSign()) || !array_key_exists($diplome->getId(), $course->personnelObjet->getIdEduSign()))) {
-        $updateEnseignantResult[$course->personnelObjet->getId()] = $this->createEnseignant->update($course->personnelObjet, $diplome, $keyEduSign);
+        $updateEnseignantResult = [];
+        if ($course->personnelObjet && (empty($course->personnelObjet->getIdEduSign()) || !array_key_exists($diplome->getId(), $course->personnelObjet->getIdEduSign()))) {
+            $updateEnseignantResult[$course->personnelObjet->getId()] = $this->createEnseignant->update($course->personnelObjet, $diplome, $keyEduSign);
+        }
+
+        $courseEdusign = (new IntranetEdtEduSignAdapter($course, $diplome))->getCourse();
+
+        $updateCourseResult = [];
+        if ($courseEdusign->id_edu_sign === null) {
+            $updateCourseResult[$courseEdusign->api_id] = $this->apiCours->addCourse($courseEdusign, $keyEduSign);
+        } else {
+            $updateCourseResult[$courseEdusign->api_id] = $this->apiCours->updateCourse($courseEdusign, $keyEduSign);
+        }
+
+        $result = array_merge(array_filter($updateEnseignantResult), array_filter($updateCourseResult));
+
+        $email = (new TemplatedEmail())
+            ->from('no-reply@univ-reims.fr')
+            ->to('cyndel.herolt@univ-reims.fr')
+            ->addCc('cyndel.herolt@univ-reims.fr')
+            ->subject('EduSign update a single course - error report')
+            ->htmlTemplate('emails/error_report.html.twig')
+            ->context(['errors' => $result, 'diplome' => $diplome->getLibelle(), 'type' => 'étudiant', 'course' => $cours->getId()]);
+        $mailer->send($email);
+
+        return $this->redirectToRoute('administration_edusign_index', [
+            'diplome' => $diplome->getId(),
+            'semaine' => $week,
+        ]);
     }
-
-    $updateCourseResult = [];
-    if ($courseEdusign->id_edu_sign === null) {
-        $updateCourseResult[$courseEdusign->api_id] = $this->apiCours->addCourse($courseEdusign, $keyEduSign);
-    } else {
-        $updateCourseResult[$courseEdusign->api_id] = $this->apiCours->updateCourse($courseEdusign, $keyEduSign);
-    }
-
-    $result = array_merge(array_filter($updateEnseignantResult), array_filter($updateCourseResult));
-
-    $email = (new TemplatedEmail())
-        ->from('no-reply@univ-reims.fr')
-        ->to('cyndel.herolt@univ-reims.fr')
-        ->addCc('cyndel.herolt@univ-reims.fr')
-        ->subject('EduSign update a single course - error report')
-        ->htmlTemplate('emails/error_report.html.twig')
-        ->context(['errors' => $result, 'diplome' => $diplome->getLibelle(), 'type' => 'étudiant', 'course' => $cours->getId()]);
-    $mailer->send($email);
-
-    return $this->redirectToRoute('administration_edusign_index', [
-        'diplome' => $diplome->getId(),
-        'semaine' => $week,
-    ]);
-}
 }
