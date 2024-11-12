@@ -2,6 +2,42 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.19.56](https://github.com/Dannebicque/intranetV3/compare/v3.19.55...v3.19.56) (2024-11-12)
+
+
+### Features
+
+* [celcat] edusign update auto ([8e34414](https://github.com/Dannebicque/intranetV3/commit/8e34414490578ad4d2195ae5b83626c09a261fe0))
+* [celcat] edusign update auto ([0678970](https://github.com/Dannebicque/intranetV3/commit/0678970044ab908022f2eed43a6df6110827fcc2))
+* [celcat] edusign update auto ([7bd548d](https://github.com/Dannebicque/intranetV3/commit/7bd548d92c2536727f0ae87aef1165720337de31))
+* [celcat] edusign update auto ([a2b4baa](https://github.com/Dannebicque/intranetV3/commit/a2b4baa0009e78a6a8406ffed8832059089d051c))
+* [celcat] edusign update auto ([a35ffd3](https://github.com/Dannebicque/intranetV3/commit/a35ffd328eae582b3f3059f94370f96281a7a2c4))
+* [celcat] update auto edusign à l'ajout ou la suppression d'un cours sur celcat ([b2a99d9](https://github.com/Dannebicque/intranetV3/commit/b2a99d9a606eeea5aa4e4e76476916613cfbc0d9))
+
+
+### Bug Fixes
+
+* [celcat] get cours qui n'ont pas d'enseignant dans celcat ([2ed3a1d](https://github.com/Dannebicque/intranetV3/commit/2ed3a1d8e56c22eb2c47b985f37e88c68d98bafe))
+* [celcat] get cours qui n'ont pas d'enseignant dans celcat ([0680e10](https://github.com/Dannebicque/intranetV3/commit/0680e1009ac680722039d487ba2a7602f4078c71))
+* [celcat] get cours qui n'ont pas d'enseignant dans celcat ([701ffe5](https://github.com/Dannebicque/intranetV3/commit/701ffe57e94aefb6a51e6a3ffce7650835b59073))
+* [celcat] set empty personnel ([ed390d5](https://github.com/Dannebicque/intranetV3/commit/ed390d538b9a4ce596a1f59a2363a655d8102554))
+* [celcat] set empty personnel ([a351548](https://github.com/Dannebicque/intranetV3/commit/a351548f0883afaba2b63a268a0efb649e654d2d))
+* [celcat] set empty personnel ([c8c5bf1](https://github.com/Dannebicque/intranetV3/commit/c8c5bf1eb09de9ca06ab5a0e31f9506ba469739b))
+* [celcat] set empty personnel ([2c8f1eb](https://github.com/Dannebicque/intranetV3/commit/2c8f1eb510e86b3b74ba5a0af6ca63ffd49a91b9))
+* [celcat] set empty personnel ([1063054](https://github.com/Dannebicque/intranetV3/commit/1063054c54bb20ed68f1ac834f0aeae20e9c5bb0))
+* [edusign] garde la semaine et le diplome après l'update d'un cours ([557da51](https://github.com/Dannebicque/intranetV3/commit/557da51477b3dce80b901298b727e2c9859c0af7))
+* [edusign] garde la semaine et le diplome après l'update d'un cours ([9ce331a](https://github.com/Dannebicque/intranetV3/commit/9ce331ad28b31fcd554f645f93b146e4a682c655))
+* [Edusign] test si cours déjà dans edusign pour l'update de la semaine ([88ca757](https://github.com/Dannebicque/intranetV3/commit/88ca7574daf00099f979e19efad33ad9f7e6e75b))
+* auto-complete heures réalisées ([b118dfa](https://github.com/Dannebicque/intranetV3/commit/b118dfa8a0fcb78d117884b66cac10835662c630))
+* import EDT ([950754c](https://github.com/Dannebicque/intranetV3/commit/950754c8f7ff96fc9e4bf83ae6984af01c36abd9))
+* import EDT ([7ed169f](https://github.com/Dannebicque/intranetV3/commit/7ed169febf259b79d80732af26980f0ce2d9b1f8))
+* PTTD et PTTP ([0f78e73](https://github.com/Dannebicque/intranetV3/commit/0f78e73ecbf66195b519280b913a35a31ccae772))
+* script celcat ([836640f](https://github.com/Dannebicque/intranetV3/commit/836640f322fd4dcc94c2f389d74e9bef489830c9))
+* script celcat ([5477027](https://github.com/Dannebicque/intranetV3/commit/5477027f61a78b5002d9fa9ce4b91e39d95960ea))
+* script celcat ([cd4f4ed](https://github.com/Dannebicque/intranetV3/commit/cd4f4eda4c2a20dd967d31e1ff524b70a13c665f))
+* script celcat ([9d4f367](https://github.com/Dannebicque/intranetV3/commit/9d4f3673ed4a9f8440dfcd4c33dffc8739541755))
+* script celcat ([29f19aa](https://github.com/Dannebicque/intranetV3/commit/29f19aaca3a8b8ba2384472864273e82ca9671a7))
+
 ### [3.19.55](https://github.com/Dannebicque/intranetV3/compare/v3.19.54...v3.19.55) (2024-10-21)
 
 
