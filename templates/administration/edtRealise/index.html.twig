@@ -31,6 +31,7 @@
                 <div class="form-group">
                     <label for="selectpersonnel">Personnel</label>
                     <select name="intervenant" id="selectpersonnel"
+                            {{ stimulus_controller('symfony/ux-autocomplete/autocomplete') }}
                             class="form-select selectpicker">
                         <option value="">Choisir</option>
                         {% for personnel in personnels %}
@@ -42,6 +43,7 @@
                 <div class="form-group">
                     <label for="selectmatiere">Module</label>
                     <select id="selectmatiere" name="selectmatiere"
+                            {{ stimulus_controller('symfony/ux-autocomplete/autocomplete') }}
                             class="form-select selectpicker">
                         <option value="0">Choisissez une matière</option>
                         {% for matiere in matieres %}
