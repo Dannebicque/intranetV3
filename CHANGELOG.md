@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.19.57](https://github.com/Dannebicque/intranetV3/compare/v3.19.56...v3.19.57) (2024-11-14)
+
+
+### Bug Fixes
+
+* suspension messagerie vers mails persos ([fbfbaff](https://github.com/Dannebicque/intranetV3/commit/fbfbaff6336e6587f38adf3afd74d06a0306d6bc))
+
 ### [3.19.56](https://github.com/Dannebicque/intranetV3/compare/v3.19.55...v3.19.56) (2024-11-12)
 
 
