@@ -95,7 +95,7 @@ class GetCourses
                             if ($id !== null) {
                                 $course = $this->apiCours->getCourse($id, $keyEduSign);
                                 if ($course !== null) {
-                                    if (!empty($course['STUDENTS']) && $course['PROFESSOR_SIGNATURE'] !== "") {
+                                    if (!empty($course['STUDENTS']) && $course['PROFESSOR_SIGNATURE'] !== null && $course['PROFESSOR_SIGNATURE'] !== "") {
                                         foreach ($course['STUDENTS'] as $student) {
                                             if ($student['state'] === false) {
                                                 $matiere = $this->typeMatiereManager->getMatiere($evenement->getIdMatiere(), $evenement->getTypeMatiere());
