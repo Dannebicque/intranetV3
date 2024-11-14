@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Utilisateur.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 18:43
+ * @lastUpdate 14/11/2024 11:22
  */
 
 namespace App\Entity;
@@ -321,9 +321,9 @@ abstract class Utilisateur implements UserInterface, PasswordAuthenticatedUserIn
             $mails[] = trim($this->getMailUniv());
         }
 
-        if (null !== $this->getMailPerso() && '' !== trim($this->getMailPerso())) {
-            $mails[] = trim($this->getMailPerso());
-        }
+//        if (null !== $this->getMailPerso() && '' !== trim($this->getMailPerso())) {
+//            $mails[] = trim($this->getMailPerso());
+//        }
 
         return $mails;
     }
