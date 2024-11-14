@@ -186,7 +186,7 @@ class MyCelcat
                         //compare les dates de mise à jour
                         foreach ($row as $r) {
                             if (array_key_exists($r->getUniqueId(), $intranetIndex[$id])) {
-                                if ($r->getUpdateEvent()->greaterThan($intranetIndex[$id][$r->getUniqueId()]->getUpdateEvent()) || $intranetIndex[$id][$r->getUniqueId()]->getGroupe() === null || $intranetIndex[$id][$r->getUniqueId()]->getIdMatiere() === null || ($r->getPersonnel() === null && $intranetIndex[$id][$r->getUniqueId()]->getPersonnel() === null)) {
+                                if ($r->getUpdateEvent()->greaterThan($intranetIndex[$id][$r->getUniqueId()]->getUpdateEvent()) || $intranetIndex[$id][$r->getUniqueId()]->getGroupe() === null || $intranetIndex[$id][$r->getUniqueId()]->getIdMatiere() === null || $intranetIndex[$id][$r->getUniqueId()]->getPersonnel() === null) {
                                     $this->updateEvent($intranetIndex[$id][$r->getUniqueId()], $r);
                                 }
                             } else {
