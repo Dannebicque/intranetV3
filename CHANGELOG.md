@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.19.59](https://github.com/Dannebicque/intranetV3/compare/v3.19.57...v3.19.59) (2024-11-16)
+
+
+### Bug Fixes
+
+* [edusign] garde la semaine et le diplome après l'update d'un cours ([c2a5154](https://github.com/Dannebicque/intranetV3/commit/c2a51544f03ed41f895f5cdfe65e1a2377a4a89c))
+* ajout de règles de sécurités ([#315](https://github.com/Dannebicque/intranetV3/issues/315)) ([cedc512](https://github.com/Dannebicque/intranetV3/commit/cedc512c151027dc4d426c208a134d1d2674b67e))
+* celcat personnel null ([33663de](https://github.com/Dannebicque/intranetV3/commit/33663de8fbaec35e4a8937bc384462e8f5a03505))
+* messagerie sécurité ([81c7670](https://github.com/Dannebicque/intranetV3/commit/81c767087ab28170d378dcacbc40373d9b6489fd))
+* récupération des absences depuis edusign seulement si l'enseignant n'a pas signé la feuille ([6cbb7dc](https://github.com/Dannebicque/intranetV3/commit/6cbb7dcbfbde7793906e472d5bc0e2430c3ffdad))
+* type de matière null ([eb804a6](https://github.com/Dannebicque/intranetV3/commit/eb804a6b9051b96187369692c80fd91de43830cb))
+
 ### [3.19.58](https://github.com/Dannebicque/intranetV3/compare/v3.19.57...v3.19.58) (2024-11-16)
 
 
