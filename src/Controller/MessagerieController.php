@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/MessagerieController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/04/2024 20:19
+ * @lastUpdate 16/11/2024 12:46
  */
 
 namespace App\Controller;
@@ -94,6 +94,10 @@ class MessagerieController extends BaseController
     #[Route(path: '/ecrire/{message}', name: 'messagerie_nouveau', options: ['expose' => true])]
     public function nouveauMessage(?Message $message = null): Response
     {
+        if ($message !== null && $message->getExpediteur() !== $this->getUser()) {
+            return $this->redirectToRoute('erreur_666');
+        }
+
         return $this->render('messagerie/_nouveauMessage.html.twig', [
             'message' => $message,
         ]);
@@ -165,6 +169,7 @@ class MessagerieController extends BaseController
     #[Route(path: '/envoyer', name: 'messagerie_sent', options: ['expose' => true], methods: ['POST'])]
     public function sendMessage(MyUpload $myUpload, Request $request, MyMessagerie $messagerie): JsonResponse
     {
+        $this->denyAccessUnlessGranted('ROLE_PERMANENT');
         $typeDestinataire = $request->request->get('messageDestinataireType');
         $destinataires = $this->getDestinataires($request, $typeDestinataire);
         $sujet = $request->request->get('messageSubject');
@@ -227,6 +232,10 @@ class MessagerieController extends BaseController
     #[Route(path: '/message-envoye/{message}', name: 'messagerie_message_envoye')]
     public function messageSent(Message $message): Response
     {
+        if ($message->getExpediteur() !== $this->getUser()) {
+            return $this->redirectToRoute('erreur_666');
+        }
+
         return $this->render('messagerie/_message_envoye.html.twig', [
             'message' => $message,
         ]);
@@ -245,7 +254,7 @@ class MessagerieController extends BaseController
 
         foreach ($messages as $idMessage) {
             $message = $messageRepository->find($idMessage);
-            if ($message !== null) {
+            if ($message !== null && $message->getExpediteur() === $this->getUser()) {
                 foreach ($message->getMessageDestinataires() as $destinataire) {
                     $this->entityManager->remove($destinataire);
                 }
