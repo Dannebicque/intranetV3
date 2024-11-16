@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/MessagerieController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/11/2024 12:46
+ * @lastUpdate 16/11/2024 13:12
  */
 
 namespace App\Controller;
@@ -94,6 +94,8 @@ class MessagerieController extends BaseController
     #[Route(path: '/ecrire/{message}', name: 'messagerie_nouveau', options: ['expose' => true])]
     public function nouveauMessage(?Message $message = null): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_PERMANENT');
+
         if ($message !== null && $message->getExpediteur() !== $this->getUser()) {
             return $this->redirectToRoute('erreur_666');
         }
@@ -202,6 +204,8 @@ class MessagerieController extends BaseController
     #[Route(path: '/sauvegarder', name: 'messagerie_draft', options: ['expose' => true], methods: ['POST'])]
     public function messageSave(Request $request, MyMessagerie $messagerie): JsonResponse
     {
+        $this->denyAccessUnlessGranted('ROLE_PERMANENT');
+
         $typeDestinataire = $request->request->has('messageDestinataireType') ? $request->request->get('messageDestinataireType') : null;
         $destinataires = $this->getDestinataires($request, $typeDestinataire);
         $sujet = $request->request->has('messageSubject') ? $request->request->get('messageSubject') : '';
@@ -232,6 +236,8 @@ class MessagerieController extends BaseController
     #[Route(path: '/message-envoye/{message}', name: 'messagerie_message_envoye')]
     public function messageSent(Message $message): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_PERMANENT');
+
         if ($message->getExpediteur() !== $this->getUser()) {
             return $this->redirectToRoute('erreur_666');
         }
