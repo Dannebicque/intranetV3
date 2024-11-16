@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.19.58](https://github.com/Dannebicque/intranetV3/compare/v3.19.57...v3.19.58) (2024-11-16)
+
+
+### Bug Fixes
+
+* [edusign] garde la semaine et le diplome après l'update d'un cours ([c2a5154](https://github.com/Dannebicque/intranetV3/commit/c2a51544f03ed41f895f5cdfe65e1a2377a4a89c))
+* ajout de règles de sécurités ([#315](https://github.com/Dannebicque/intranetV3/issues/315)) ([031c08b](https://github.com/Dannebicque/intranetV3/commit/031c08bb7c20e1961fa55b93dd8d2efe4bfd6f79))
+* celcat personnel null ([33663de](https://github.com/Dannebicque/intranetV3/commit/33663de8fbaec35e4a8937bc384462e8f5a03505))
+
 ### [3.19.57](https://github.com/Dannebicque/intranetV3/compare/v3.19.56...v3.19.57) (2024-11-14)
 
 
