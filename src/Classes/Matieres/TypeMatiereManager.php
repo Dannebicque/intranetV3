@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Matieres/TypeMatiereManager.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/04/2024 20:44
+ * @lastUpdate 16/11/2024 12:54
  */
 
 namespace App\Classes\Matieres;
@@ -43,20 +43,20 @@ class TypeMatiereManager
         $d = explode('_', $data);
 
         if (2 === count($d) && '' !== $d[0]) {
-            return $this->typeDeMatiere($d[0])->find($d[1]);
+            return $this->typeDeMatiere($d[0])?->find($d[1]);
         }
 
         return null;
     }
 
-    public function typeDeMatiere(string $type): SaeManager|RessourceManager|MatiereManager
+    public function typeDeMatiere(string $type): SaeManager|RessourceManager|MatiereManager|null
     {
         return $this->managers[$type];
     }
 
     public function getMatiere(int|string $id, string $type): ?\App\DTO\Matiere
     {
-        return $this->typeDeMatiere($type)->find($id);
+        return $this->typeDeMatiere($type)?->find($id);
     }
 
     public function tableauMatieres(Departement $departement): array
@@ -252,7 +252,7 @@ class TypeMatiereManager
         return array_merge(...$t);
     }
 
-    public function getManager(string $typeIdMatiere)
+    public function getManager(string $typeIdMatiere): MatiereManager|RessourceManager|SaeManager|null
     {
         $d = explode('_', $typeIdMatiere);
 
