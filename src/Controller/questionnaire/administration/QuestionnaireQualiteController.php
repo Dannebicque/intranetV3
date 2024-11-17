@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/questionnaire/administration/QuestionnaireQualiteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/02/2024 14:40
+ * @lastUpdate 17/11/2024 16:38
  */
 
 namespace App\Controller\questionnaire\administration;
@@ -67,6 +67,8 @@ class QuestionnaireQualiteController extends BaseController
     ): Response {
         $newQuestionnaireQualite = clone $questionnaire;
         $newQuestionnaireQualite->setLibelle($questionnaire->getLibelle() . ' - copie');
+        $tQuestions = [];
+        $tEquivalence = [];
         $this->entityManager->persist($newQuestionnaireQualite);
         foreach ($questionnaire->getQuestSections() as $section) {
             $nSection = clone $section;
@@ -76,10 +78,12 @@ class QuestionnaireQualiteController extends BaseController
 
             //duplique les questions
             foreach ($section->getQuestQuestions() as $question) {
+                $tQuestions[$question->getId()] = $question;
                 $nQuestion = clone $question;
                 $nQuestion->setSection($nSection);
                 $nSection->addQuestQuestion($nQuestion);
                 $this->entityManager->persist($nQuestion);
+                $tEquivalence[$question->getId()] = $nQuestion;
 
                 //duplique les choix
                 foreach ($question->getQuestReponses() as $reponse) {
@@ -90,11 +94,28 @@ class QuestionnaireQualiteController extends BaseController
                 }
             }
         }
+
+        $this->entityManager->flush();
+
+        // parcourir les questions et mettre à jour les id dans la config avec les nouveaux id des questions
+        foreach ($tQuestions as $question) {
+            $nQuestion = $tEquivalence[$question->getId()];
+            $config = $nQuestion->getParametre();
+            if (null !== $config && is_array($config) && array_key_exists('conditions', $config)) {
+                foreach ($config['conditions'] as $key => $condition) {
+
+                    if (array_key_exists('declenchement', $condition) && array_key_exists($condition['declenchement'], $tEquivalence)) {
+                        $config['conditions'][$key]['declenchement'] = $tEquivalence[$condition['declenchement']]->getId();
+                    }
+                }
+                $nQuestion->setConfig($config);
+            }
+        }
         $this->entityManager->flush();
         $this->addFlash(Constantes::FLASHBAG_SUCCESS, 'questionnaire.duplicate.success.flashbag');
 
         return $this->redirectToRoute('adm_questionnaire_creation_index',
-            ['questionnaire' => $questionnaire->getId(), 'type' => $request->get('type')]
+            ['questionnaire' => $newQuestionnaireQualite->getId(), 'type' => $request->get('type')]
         );
     }
 
