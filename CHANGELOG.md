@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [](https://github.com/Dannebicque/intranetV3/compare/v3.19.59...v) (2024-11-17)
+
+
+### Bug Fixes
+
+* questionnaires dupliqués avec conditions ([d1a5084](https://github.com/Dannebicque/intranetV3/commit/d1a50843a0c630d9c19d39815114d49f88c33e03))
+
 ### [3.19.59](https://github.com/Dannebicque/intranetV3/compare/v3.19.57...v3.19.59) (2024-11-16)
 
 
