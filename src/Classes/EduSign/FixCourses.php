@@ -64,8 +64,6 @@ class FixCourses
                         ? $this->getCourse($diplome, $course, $enseignant)
                         : $this->edtManager->findCourse($this->source, $course['API_ID']);
 
-                    dd($this->source);
-
                     if (empty($course['API_ID'])) {
                         $coursIntranet = $this->findCoursIntranet($cours);
                         if (empty($coursIntranet)) {
