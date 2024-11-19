@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/questionnaire/administration/QuestionnaireQualiteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 17/11/2024 16:38
+ * @lastUpdate 19/11/2024 15:17
  */
 
 namespace App\Controller\questionnaire\administration;
@@ -108,7 +108,7 @@ class QuestionnaireQualiteController extends BaseController
                         $config['conditions'][$key]['declenchement'] = $tEquivalence[$condition['declenchement']]->getId();
                     }
                 }
-                $nQuestion->setConfig($config);
+                $nQuestion->setParametre($config);
             }
         }
         $this->entityManager->flush();
