@@ -195,6 +195,10 @@ class EduSignController extends BaseController
         }
 
         $updateResult = $updateEdt->update($keyEduSign, $opt, $week);
+
+        // ajouter fixResult à updateResult
+        $updateResult = array_merge($fixResult, $updateResult);
+
         // retirer les entrées vides
         $updateResult = array_filter($updateResult);
 
