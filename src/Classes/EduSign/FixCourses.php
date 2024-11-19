@@ -71,7 +71,7 @@ class FixCourses
                             $result['update cours créé à la main'][$course['START'].' - '.$course['END'].'|'.$course['PROFESSOR']] = $this->updateCourseEduSign($coursIntranet, $course, $keyEduSign, $diplome);
                         }
                     } else {
-                        if (!$cours) {
+                        if ($cours === null) {
                             $result['suppression cours'][$course['API_ID']] = $this->deleteCourseEduSign($course, $keyEduSign);
                         } else {
                             $result['update cours'][$course['API_ID']] = $this->updateCourseEduSign($cours, $course, $keyEduSign, $diplome);
