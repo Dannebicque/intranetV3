@@ -59,6 +59,9 @@ class FixCourses
                     }
 
                     $enseignant = $this->personnelRepository->findByIdEdusign($course['PROFESSOR']);
+
+                    dd($course['API_ID']);
+
                     $cours = empty($course['API_ID'])
                         ? $this->getCourse($diplome, $course, $enseignant)
                         : $this->edtManager->findCourse($this->source, $course['API_ID']);
