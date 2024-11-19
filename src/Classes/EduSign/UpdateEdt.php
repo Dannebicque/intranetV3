@@ -76,9 +76,6 @@ class UpdateEdt
                 if ($edt->evenements) {
                     foreach ($edt->evenements as $this->evenement) {
                         if ($this->evenement->dateObjet->isBetween($start, $end)) {
-//                            $courseEdusign = $this->apiCours->getCourseIdByApiId($this->evenement->id, $keyEduSign);
-                            // si le cours n'est pas dans edusign
-//                            if (is_array($courseEdusign) && array_key_exists('status', $courseEdusign) && $courseEdusign['status'] === 'error') {
                             if ($this->evenement->idEduSign === null) {
                                 $result[$this->evenement->id] = $this->processEvent($diplome, $keyEduSign);
                             } else {
