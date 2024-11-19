@@ -12,7 +12,8 @@
             </div>
         {% endif %}
     </header>
-
+    {{ app.request.locale }}
+    {{ app.request.defaultLocale }}
     <div class="card-body">
         <table class="table table-border" id="tableAbsence">
             <thead>
