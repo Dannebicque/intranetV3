@@ -263,7 +263,7 @@ class MyCelcat
             $this->entityManger->flush();
             //éventuellement envoyer dans EduSign ? ou laisser le script quotidien
 
-            if ($event->getIdEduSign() === null && $event->getDateCours()->greaterThan(Carbon::now()) && $event->getSemestre() !== null && $event->getSemestre()->getDiplome()->getKeyEduSign() !== null ) {
+            if ($event->getIdEduSign() === null && ($event->getDateCours()->greaterThan(Carbon::now()) && $event->getDateCours()->lessThan(Carbon::now()->nextWeekendDay())) && $event->getSemestre() !== null && $event->getSemestre()->getDiplome()->getKeyEduSign() !== null ) {
                 dump('Mise à jour de l\'événement edusign');
                 $intranetEvt = $this->edtManager->getEventNew('celcat_' . $event->getId());
 
