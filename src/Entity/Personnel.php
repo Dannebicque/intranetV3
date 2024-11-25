@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Personnel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/09/2024 13:02
+ * @lastUpdate 25/11/2024 08:49
  */
 
 namespace App\Entity;
@@ -1406,5 +1406,10 @@ class Personnel extends Utilisateur implements UtilisateurInterface
     {
         $this->idEduSign = $idEduSign;
         return $this;
+    }
+
+    public function isVacataire(): bool
+    {
+        return 'vacataire' === $this->typeUser || 'IE' === $this->statut;
     }
 }

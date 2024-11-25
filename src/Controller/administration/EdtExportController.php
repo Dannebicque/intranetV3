@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EdtExportController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/11/2024 12:23
+ * @lastUpdate 25/11/2024 08:50
  */
 
 namespace App\Controller\administration;
@@ -149,6 +149,7 @@ class EdtExportController extends BaseController
             foreach ($pl as $p) {
                 if (null !== $p->getIntervenant()) {
                     $codeprof = $p->getIntervenant()->getNumeroHarpege();
+                    $vaca = $p->getIntervenant()->isVacataire() ? '1' : '0';
                 } else {
                     $codeprof = 0;
                 }
@@ -172,11 +173,11 @@ class EdtExportController extends BaseController
 //                   // $codeMatiere = 'W'.$codeMatiere;
 //                    $codeMatiere
 //                }
-                    $code[mb_strtoupper($p->getType())][$p->getGroupe()] .= 'call  ajouter ' . $p->getJour() . ' ' . Constantes::TAB_HEURES[$p->getDebut()] . ' ' . Constantes::TAB_HEURES[$p->getFin()] . ' ' . $codeprof . ' ' . $tabSalles[$p->getSalle()] . ' ' . $codeMatiere . ' ' . $tabType[mb_strtoupper($p->getType())] . ' ' . $p->getSalle() . "\n";
+                    $code[mb_strtoupper($p->getType())][$p->getGroupe()] .= 'call  ajouter ' . $p->getJour() . ' ' . Constantes::TAB_HEURES[$p->getDebut()] . ' ' . Constantes::TAB_HEURES[$p->getFin()] . ' ' . $codeprof . ' ' . $tabSalles[$p->getSalle()] . ' ' . $codeMatiere . ' ' . $tabType[mb_strtoupper($p->getType())] . ' ' . $p->getSalle() . ' ' . $vaca . "\n";
                 }
                 if (0 !== $p->getIdMatiere() && 'H018' === $p->getSalle()) { // array_key_exists($p->getIntervenant()->getNumeroHarpege(), $tabProf))
                     $codeMatiere = $matieres[$p->getTypeIdMatiere()]->codeElement;
-                    $code[mb_strtoupper($p->getType())][$p->getGroupe()] .= 'call  ajouterh018 ' . $p->getJour() . ' ' . Constantes::TAB_HEURES[$p->getDebut()] . ' ' . Constantes::TAB_HEURES[$p->getFin()] . ' ' . $codeprof . ' 0 ' . $codeMatiere . ' ' . $tabType[mb_strtoupper($p->getType())] . "\n";
+                    $code[mb_strtoupper($p->getType())][$p->getGroupe()] .= 'call  ajouterh018 ' . $p->getJour() . ' ' . Constantes::TAB_HEURES[$p->getDebut()] . ' ' . Constantes::TAB_HEURES[$p->getFin()] . ' ' . $codeprof . ' 0 ' . $codeMatiere . ' ' . $tabType[mb_strtoupper($p->getType())] . ' ' . $vaca . "\n";
                 }
             }
             $codeComplet = '';
