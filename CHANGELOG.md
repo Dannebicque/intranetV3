@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.19.62](https://github.com/Dannebicque/intranetV3/compare/v3.19.61...v3.19.62) (2024-11-25)
+
+
+### Bug Fixes
+
+* info vacataire script celcat ([7e900c1](https://github.com/Dannebicque/intranetV3/commit/7e900c1da27bf2eca87178a06ee127c601343a8d))
+* locale par défaut ? ([4aee5b9](https://github.com/Dannebicque/intranetV3/commit/4aee5b91ee341b5f77bec81aa67b3f0d9660703f))
+* locale par défaut ? ([65d945f](https://github.com/Dannebicque/intranetV3/commit/65d945f9c800f1ff8f23550f9a9cb46d30f5a320))
+* locale par défaut ? ([9ff5043](https://github.com/Dannebicque/intranetV3/commit/9ff5043038d5343b061125e9ed8a2e5102644f7f))
+
 ### [3.19.61](https://github.com/Dannebicque/intranetV3/compare/v3.19.60...v3.19.61) (2024-11-19)
 
 
