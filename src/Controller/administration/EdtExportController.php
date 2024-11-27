@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EdtExportController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 27/11/2024 09:34
+ * @lastUpdate 27/11/2024 09:59
  */
 
 namespace App\Controller\administration;
@@ -99,38 +99,28 @@ class EdtExportController extends BaseController
                 'TP' => 6,
             ];
             $tabSalles = [
-                'H001',
-                'H002',
-                'H005',
-                'H006',
-                'H007',
-                'H008',
-                'H009',
-                'H016',
-                'H017',
-                'H022',
-                'STUD01',
-                'STUD02',
-                'H023',
-                'H101',
-                'H103',
-                'H104',
-                'H105',
-                'H111',
-                'H201',
-                'H203',
-                'H205',
-                'DIS1',
-                'DIS2',
-                'DIS3',
-                'DIS4',
-                'DIS5',
-                'DIS6',
-                'DIS7',
-                'DIS8',
-                'DISLP',
+                'H001' => 'H.001',
+                'H002' => 'H.002',
+                'H005' => 'H.005',
+                'H006' => 'H.006',
+                'H007' => 'H.007',
+                'H008' => 'H.008',
+                'H009' => 'H.009',
+                'H016' => 'H.016',
+                'H017' => 'H.017',
+                'H022' => 'H.022',
+                'STUD01' => 'H.017',
+                'STUD02' => 'H.023',
+                'H023' => 'H.023',
+                'H101' => 'H.101',
+                'H103' => 'H.103',
+                'H104' => 'H.104',
+                'H105' => 'H.105',
+                'H111' => 'H.111',
+                'H201' => 'H.201',
+                'H203' => 'H.001',
+                'H205' => 'H.205'
             ];
-            $tabSalles = array_flip($tabSalles);
             $pl = $edtPlanningRepository->findEdtSemestre($semestre, $semaine, $this->getAnneeUniversitaire());
             $tempMatieres = $typeMatiereManager->findByReferentielOrdreSemestre($semestre, $semestre->getDiplome()->getReferentiel());
 
