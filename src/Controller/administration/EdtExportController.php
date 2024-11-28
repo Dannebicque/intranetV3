@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EdtExportController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 27/11/2024 09:59
+ * @lastUpdate 28/11/2024 10:03
  */
 
 namespace App\Controller\administration;
@@ -168,10 +168,10 @@ class EdtExportController extends BaseController
 //                }
                     $code[mb_strtoupper($p->getType())][$p->getGroupe()] .= 'call  ajouter ' . $p->getJour() . ' ' . Constantes::TAB_HEURES[$p->getDebut()] . ' ' . Constantes::TAB_HEURES[$p->getFin()] . ' ' . $codeprof . ' ' . $tabSalles[$p->getSalle()] . ' ' . $codeMatiere . ' ' . $tabType[mb_strtoupper($p->getType())] . ' ' . $p->getSalle() . ' ' . $vaca . "\n";
                 }
-                if (0 !== $p->getIdMatiere() && 'H018' === $p->getSalle()) { // array_key_exists($p->getIntervenant()->getNumeroHarpege(), $tabProf))
-                    $codeMatiere = $matieres[$p->getTypeIdMatiere()]->codeElement;
-                    $code[mb_strtoupper($p->getType())][$p->getGroupe()] .= 'call  ajouterh018 ' . $p->getJour() . ' ' . Constantes::TAB_HEURES[$p->getDebut()] . ' ' . Constantes::TAB_HEURES[$p->getFin()] . ' ' . $codeprof . ' 0 ' . $codeMatiere . ' ' . $tabType[mb_strtoupper($p->getType())] . ' ' . $vaca . "\n";
-                }
+//                if (0 !== $p->getIdMatiere() && 'H018' === $p->getSalle()) { // array_key_exists($p->getIntervenant()->getNumeroHarpege(), $tabProf))
+//                    $codeMatiere = $matieres[$p->getTypeIdMatiere()]->codeElement;
+//                    $code[mb_strtoupper($p->getType())][$p->getGroupe()] .= 'call  ajouterh018 ' . $p->getJour() . ' ' . Constantes::TAB_HEURES[$p->getDebut()] . ' ' . Constantes::TAB_HEURES[$p->getFin()] . ' ' . $codeprof . ' 0 ' . $codeMatiere . ' ' . $tabType[mb_strtoupper($p->getType())] . ' ' . $vaca . "\n";
+//                }
             }
             $codeComplet = '';
             $zip = new ZipArchive();
