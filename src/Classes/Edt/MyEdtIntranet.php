@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtIntranet.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 22/09/2024 17:03
+ * @lastUpdate 29/11/2024 10:20
  */
 
 namespace App\Classes\Edt;
@@ -238,7 +238,10 @@ class MyEdtIntranet extends BaseEdt
 
         /** @var EdtPlanning $p */
         foreach ($pl as $p) {
-            if ((str_starts_with($p->getType(), 'PT')) || (TypeGroupeEnum::TYPE_GROUPE_CM->value === $p->getType()) || (TypeGroupeEnum::TYPE_GROUPE_TD->value === $p->getType() && $p->getGroupe() === $this->groupetd) || (TypeGroupeEnum::TYPE_GROUPE_TP->value === $p->getType() && $p->getGroupe() === $this->groupetp)) {
+            if ((str_starts_with($p->getType(), 'PTTP') && $p->getGroupe() === $this->groupetp) ||
+                (str_starts_with($p->getType(), 'PTTD') && $p->getGroupe() === $this->groupetd) ||
+                (str_starts_with($p->getType(), 'PTCM')) ||
+                (TypeGroupeEnum::TYPE_GROUPE_CM->value === $p->getType()) || (TypeGroupeEnum::TYPE_GROUPE_TD->value === $p->getType() && $p->getGroupe() === $this->groupetd) || (TypeGroupeEnum::TYPE_GROUPE_TP->value === $p->getType() && $p->getGroupe() === $this->groupetp)) {
                 $dbtEdt = $this->convertEdt($p->getDebut());
 
                 if (!array_key_exists($p->getJour(), $this->tab)) {
