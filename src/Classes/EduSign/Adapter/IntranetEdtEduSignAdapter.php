@@ -13,11 +13,13 @@ class IntranetEdtEduSignAdapter
 
     public function __construct(EvenementEdt $edt, Diplome $diplome)
     {
+        $timezone = 'Europe/Paris';
+
             $this->course = new EduSignCourse();
             $this->course->id = $edt->idEduSign;
             $this->course->name = $edt->matiere;
-            $this->course->start = Carbon::createFromFormat("Y-m-d H:i:s", $edt->dateObjet->format('Y-m-d') . " " . $edt->heureDebut->format('H:i:s'));
-            $this->course->end = Carbon::createFromFormat("Y-m-d H:i:s", $edt->dateObjet->format('Y-m-d') . " " . $edt->heureFin->format('H:i:s'));
+            $this->course->start = Carbon::createFromFormat("Y-m-d H:i:s", $edt->dateObjet->format('Y-m-d') . " " . $edt->heureDebut->format('H:i:s'), $timezone);
+            $this->course->end = Carbon::createFromFormat("Y-m-d H:i:s", $edt->dateObjet->format('Y-m-d') . " " . $edt->heureFin->format('H:i:s'), $timezone);
             $this->course->professor = $edt->personnelObjet?->getIdEduSign()[$diplome->getId()] ?? null;
             $this->course->classroom = $edt->salle;
             $this->course->school_group = [$edt->groupeObjet?->getIdEduSign()];
