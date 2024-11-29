@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.19.61](https://github.com/Dannebicque/intranetV3/compare/v3.19.60...v3.19.61) (2024-11-19)
+
+
+### Bug Fixes
+
+* ajout auto des nouveaux cours celcat dans edusign ([2af6792](https://github.com/Dannebicque/intranetV3/commit/2af6792f499195ddcffb085b29728edcf9bc214b))
+* questionnaires dupliqués avec conditions ([bbc36ab](https://github.com/Dannebicque/intranetV3/commit/bbc36ab340cf31461fb10f494ee2cac8f4ea5717))
+
 ### [3.19.60](https://github.com/Dannebicque/intranetV3/compare/v3.19.59...v3.19.60) (2024-11-17)
 
 
