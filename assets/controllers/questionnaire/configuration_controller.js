@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/controllers/questionnaire/configuration_controller.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 24/03/2024 17:36
+// @lastUpdate 01/12/2024 10:51
 
 import { Controller } from '@hotwired/stimulus'
 import { addCallout } from '../../js/util'
@@ -49,8 +49,7 @@ export default class extends Controller {
 
     let body = {}
     let erreur = true
-
-    if (event.params.typeaction === 'masquage') {
+    if (event.params.typeAction === 'masquage') {
       const valeurs = []
       const questions = []
       // Sélectionne tous les éléments de type input avec un name de valeurs[]

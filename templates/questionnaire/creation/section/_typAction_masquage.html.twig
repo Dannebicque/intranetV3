@@ -4,7 +4,6 @@
                                           masquer les
                                           questions définies ci-dessous :</label><br>
     {% for rep in question.questReponses %}
-
         <div class="form-check form-check-inline">
             <input type="checkbox" name="valeurs[]" value="{{ rep.valeur }}" id="rep_{{ rep.id }}"
                    class="form-check-input">
@@ -17,8 +16,8 @@
     {% endfor %}
 </div>
 <div>
-    <label class="required" for="question">Question(s) à masquer</label> :
-    <select class="form-select" id="question" name="questions[]" multiple>
+    <label class="required" for="questions">Question(s) à masquer</label> :
+    <select class="form-select" id="questions" name="questions[]" multiple>
         {% for question in allQuestions %}
             <option value="{{ question.id }}">{{ question.libelle }}</option>
         {% endfor %}

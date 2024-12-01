@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/questionnaire/CreationSectionController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/02/2024 07:57
+ * @lastUpdate 01/12/2024 10:38
  */
 
 namespace App\Controller\questionnaire;
@@ -239,7 +239,7 @@ class CreationSectionController extends BaseController
                 ];
                 break;
             case 'masquage':
-                if (count($data['valeurs']) === 1 && str_contains($data['valeurs'][0], ',')) {
+                if (is_array($data['valeurs']) && count($data['valeurs']) === 1 && str_contains($data['valeurs'][0], ',')) {
                     $valeurs = array_values(explode(',', $data['valeurs'][0]));
                 } else {
                     $valeurs = $data['valeurs'];
