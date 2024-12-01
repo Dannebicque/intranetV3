@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.19.63](https://github.com/Dannebicque/intranetV3/compare/v3.19.61...v3.19.63) (2024-12-01)
+
+
+### Bug Fixes
+
+* [Edusign] timezone sur les horaires de cours ([714ddb0](https://github.com/Dannebicque/intranetV3/commit/714ddb0d7cea27da9c2263c597f57e6988985574))
+* Affichage EDT PT ([d95da9c](https://github.com/Dannebicque/intranetV3/commit/d95da9cc1a4e06c211a404cb9b08845db75c2c0c))
+* Bug masquage des questions ([67066b1](https://github.com/Dannebicque/intranetV3/commit/67066b1b83b2ef604c1fa6c9e8b432758626320f))
+* debug fixCourses ([c28638e](https://github.com/Dannebicque/intranetV3/commit/c28638ec8871adc0fb11d4d65b3ce42bce91bff0))
+* debug fixCourses ([fdc4220](https://github.com/Dannebicque/intranetV3/commit/fdc4220f6486edd79317d137c6ab38dd90d9e293))
+* debug fixCourses ([0067f03](https://github.com/Dannebicque/intranetV3/commit/0067f03b81a7e0413d03bc07329609fbc2fbfd0f))
+* fin du debug fixCourses ([f063054](https://github.com/Dannebicque/intranetV3/commit/f0630543a4e036cbc7dcedcc283fae901a9cc611))
+* info vacataire script celcat ([29532fb](https://github.com/Dannebicque/intranetV3/commit/29532fb1b28aec32dd71e2e312586d818b820104))
+* limiter la création des cours dans edusign à la semaine ([7336f75](https://github.com/Dannebicque/intranetV3/commit/7336f75b64ec0c669f3aba965fd07df9d16b16b0))
+* locale par défaut ? ([4aee5b9](https://github.com/Dannebicque/intranetV3/commit/4aee5b91ee341b5f77bec81aa67b3f0d9660703f))
+* locale par défaut ? ([65d945f](https://github.com/Dannebicque/intranetV3/commit/65d945f9c800f1ff8f23550f9a9cb46d30f5a320))
+* locale par défaut ? ([9ff5043](https://github.com/Dannebicque/intranetV3/commit/9ff5043038d5343b061125e9ed8a2e5102644f7f))
+* resultat du fixCourses envoyés par mail ([6765934](https://github.com/Dannebicque/intranetV3/commit/6765934e3bfff8146561c3cc5554afd4f1ed981d))
+* Salles EDT ([255a3fa](https://github.com/Dannebicque/intranetV3/commit/255a3faf331acff34ffa994f7b53e67df54ec565))
+* Salles EDT ([3caf2cb](https://github.com/Dannebicque/intranetV3/commit/3caf2cb15cf9ee1c3afefdb33b710fdf59a5e7b0))
+* Salles EDT ([1673435](https://github.com/Dannebicque/intranetV3/commit/16734350cdb943d92c67b1aa250fd7190ab90d26))
+
 ### [3.19.62](https://github.com/Dannebicque/intranetV3/compare/v3.19.61...v3.19.62) (2024-11-25)
 
 
