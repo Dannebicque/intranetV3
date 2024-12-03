@@ -54,7 +54,7 @@ class FixCourses
 
             if ($courses) {
                 foreach ($courses as $course) {
-                    if (Carbon::parse($course['START'], 'UTC')->isBefore(Carbon::now())) {
+                    if (Carbon::parse($course['START'], 'Europe/Paris')->isBefore(Carbon::now())) {
                         continue;
                     }
 
@@ -117,8 +117,8 @@ class FixCourses
         $this->edusignCourse->id = $course['ID'];
         $this->edusignCourse->apiId = $this->edusignCourse->api_id = $coursIntranet->getId();
         $this->edusignCourse->name = $course['NAME'];
-        $this->edusignCourse->start = Carbon::parse($course['START'], 'UTC');
-        $this->edusignCourse->end = Carbon::parse($course['END'], 'UTC');
+        $this->edusignCourse->start = Carbon::parse($course['START'], 'Europe/Paris');
+        $this->edusignCourse->end = Carbon::parse($course['END'], 'Europe/Paris');
         $this->edusignCourse->classroom = $course['CLASSROOM'];
         $this->edusignCourse->professor = $course['PROFESSOR'];
         $this->edusignCourse->school_group = $course['SCHOOL_GROUP'];
