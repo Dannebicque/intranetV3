@@ -192,6 +192,8 @@ class EduSignController extends BaseController
 
         if ($week >= date('W')) {
             $fixResult = $fixCourses->fixCourses($keyEduSign, $week);
+        } else {
+            $fixResult = [];
         }
 
         $updateResult = $updateEdt->update($keyEduSign, $opt, $week);

@@ -32,6 +32,7 @@ class FixCourses
         private readonly EdtPlanningRepository $edtPlanningRepository,
         private readonly EdtCelcatRepository   $edtCelcatRepository,
         private readonly DiplomeRepository     $diplomeRepository,
+        private readonly GroupeRepository      $groupeRepository,
         private readonly EduSignCourse         $edusignCourse,
         private readonly EdtManager            $edtManager,
     )
@@ -111,17 +112,19 @@ class FixCourses
 
     private function updateCourseEduSign($coursIntranet, $course, $keyEduSign, $diplome): mixed
     {
+        $timezone = 'Europe/Paris';
+
         $coursIntranet->setIdEduSign($course['ID']);
         $this->edtManager->saveCourseEduSign($this->source, $coursIntranet);
 
         $this->edusignCourse->id = $course['ID'];
         $this->edusignCourse->apiId = $this->edusignCourse->api_id = $coursIntranet->getId();
-        $this->edusignCourse->name = $course['NAME'];
-        $this->edusignCourse->start = Carbon::parse($course['START'], 'Europe/Paris');
-        $this->edusignCourse->end = Carbon::parse($course['END'], 'Europe/Paris');
-        $this->edusignCourse->classroom = $course['CLASSROOM'];
-        $this->edusignCourse->professor = $course['PROFESSOR'];
-        $this->edusignCourse->school_group = $course['SCHOOL_GROUP'];
+        $this->edusignCourse->name = $coursIntranet->getLibModule();
+        $this->edusignCourse->start = Carbon::createFromFormat("Y-m-d H:i:s", $coursIntranet->getDateCours()->format('Y-m-d') . " " . $coursIntranet->getDebut()->format('H:i:s'), $timezone);
+        $this->edusignCourse->end = Carbon::createFromFormat("Y-m-d H:i:s", $coursIntranet->getDateCours()->format('Y-m-d') . " " . $coursIntranet->getFin()->format('H:i:s'), $timezone);
+        $this->edusignCourse->classroom = $coursIntranet->getLibSalle();
+        $this->edusignCourse->professor = $coursIntranet->getPersonnel()->getIdEduSign()[$diplome->getId()] ?? null;
+        $this->edusignCourse->school_group = $coursIntranet->getGroupe() ? [$coursIntranet->getGroupe()->getIdEduSign()] : [$this->groupeRepository->findOneBy(['codeApogee' => $coursIntranet->getCodeGroupe()])->getIdEduSign()];
 
         return $this->apiCours->updateCourse($this->edusignCourse, $keyEduSign);
     }
