@@ -124,6 +124,7 @@ class UpdateEtudiant
     public function changeSemestre(?Diplome $diplome, string $keyEduSign): array
     {
         $semestres = $diplome->getSemestres();
+        $allEtudiants = $this->apiEtudiant->getAllEtudiants($keyEduSign);
 
         foreach ($semestres as $semestre) {
             $etudiants = $this->etudiantRepository->findBySemestre($semestre);
@@ -142,8 +143,21 @@ class UpdateEtudiant
                 } else {
                     $result[$etudiant->getId()] = $this->apiEtudiant->updateEtudiant($etudiantEduSign, $keyEduSign);
                 }
+
+                //si l'étudiant n'est pas dans la liste des étudiants d'edusign
+                if (!in_array($etudiant->getId(), array_column($allEtudiants, 'API_ID'))) {
+                    // on construit un étudiant avec le même ID mais avec un mail différent
+                    $etudiantEduSign = (new IntranetEtudiantEduSignAdapter($etudiant, []))->getEtudiant();
+                    $etudiantEduSign->email = $etudiant->getId() . '@delete.fr';
+                    $etudiantEduSign->id = $etudiant['ID'];
+                    // on met à jour le mail de l'étudiant dans edusign
+                    $result[$etudiant->getId()] = $this->apiEtudiant->updateEtudiant($etudiantEduSign, $keyEduSign);
+                    // on supprime l'étudiant d'edusign
+                    $result[$etudiant->getId()] = $this->apiEtudiant->deleteEtudiant($etudiant->getIdEduSign(), $keyEduSign);
+                }
             }
         }
+
 
         // retirer les entrées vides et réindexer
         $result = array_values(array_filter($result));
