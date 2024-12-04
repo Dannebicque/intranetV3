@@ -144,17 +144,27 @@ class UpdateEtudiant
                     $result[$etudiant->getId()] = $this->apiEtudiant->updateEtudiant($etudiantEduSign, $keyEduSign);
                 }
 
-                //si l'étudiant n'est pas dans la liste des étudiants d'edusign
-                if (!in_array($etudiant->getId(), array_column($allEtudiants, 'API_ID'))) {
-                    // on construit un étudiant avec le même ID mais avec un mail différent
-                    $etudiantEduSign = (new IntranetEtudiantEduSignAdapter($etudiant, []))->getEtudiant();
-                    $etudiantEduSign->email = $etudiant->getId() . '@delete.fr';
-                    $etudiantEduSign->id = $etudiant['ID'];
-                    // on met à jour le mail de l'étudiant dans edusign
-                    $result[$etudiant->getId()] = $this->apiEtudiant->updateEtudiant($etudiantEduSign, $keyEduSign);
-                    // on supprime l'étudiant d'edusign
-                    $result[$etudiant->getId()] = $this->apiEtudiant->deleteEtudiant($etudiant->getIdEduSign(), $keyEduSign);
+                // si l'etudiant existe dans EduSign on le retire du tableau allEtudiants
+                foreach ($allEtudiants as $key => $etudiantEduSign) {
+                    if ($etudiantEduSign['ID'] === $etudiant->getIdEduSign()) {
+                        unset($allEtudiants[$key]);
+                    }
                 }
+            }
+        }
+
+        // pour chaque etudiant de allEtudiants on change le mail et on le supprime
+        foreach ($allEtudiants as $etudiant) {
+            $etudiantObject = $this->etudiantRepository->findOneBy(['idEduSign' => $etudiant['ID']]);
+            if ($etudiantObject !== null) {
+                $etudiantEduSign = (new IntranetEtudiantEduSignAdapter($etudiantObject, []))->getEtudiant();
+                $etudiantEduSign->email = $etudiantObject->getId() . '@delete.fr';
+                $etudiantEduSign->groups = [];
+                $etudiantEduSign->id = $etudiant['ID'];
+                $result[$etudiantObject->getId()] = $this->apiEtudiant->updateEtudiant($etudiantEduSign, $keyEduSign);
+                $result[$etudiantObject->getId()] = $this->apiEtudiant->deleteEtudiant($etudiant['ID'], $keyEduSign);
+            } else {
+                $result[$etudiant['NAME']] = 'l\'étudiant n\'existe pas dans la base de données';
             }
         }
 
