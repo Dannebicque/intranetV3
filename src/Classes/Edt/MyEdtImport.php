@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtImport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 10/12/2024 10:14
+ * @lastUpdate 10/12/2024 17:30
  */
 
 /*
@@ -254,7 +254,7 @@ class MyEdtImport
         private readonly TypeMatiereManager    $typeMatiereManager,
         private readonly EntityManagerInterface $entityManager,
         private readonly SemestreRepository    $semestreRepository,
-        private readonly GroupeRepository $groupeRepository,
+        private readonly GroupeRepository      $groupeRepository,
         DiplomeRepository                      $diplomeRepository,
     )
     {
@@ -332,11 +332,9 @@ class MyEdtImport
 
     private function traiteLigne(array $phrase): void
     {
-        if ((int)$phrase[7] <= 19) {
-            $this->semaine = (int)$phrase[7] + 1; //par rapport à celcat
-        } else {
-            $this->semaine = (int)$phrase[7]; //par rapport à celcat
-        }
+
+        $this->semaine = (int)$phrase[7]; //par rapport à celcat
+
 
         $semestre = mb_substr($phrase[8], 1, 2);
         $this->verifieSiSemaineDoitEtreEffacee($semestre);
