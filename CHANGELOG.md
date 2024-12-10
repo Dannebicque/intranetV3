@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.19.64](https://github.com/Dannebicque/intranetV3/compare/v3.19.63...v3.19.64) (2024-12-10)
+
+
+### Features
+
+* Transfert vers V4 ([9cefd89](https://github.com/Dannebicque/intranetV3/commit/9cefd89b049fefeca0c8635c770df53c538a65e6))
+
+
+### Bug Fixes
+
+* [Edusign] suppression d'un etudiant qui a changé de groupe lors de la mise à jour des groupes ([488f820](https://github.com/Dannebicque/intranetV3/commit/488f820fa9b38f069b8e4ad565e2da11934d071f))
+* [Edusign] suppression d'un etudiant qui a changé de groupe lors de la mise à jour des groupes ([6e17998](https://github.com/Dannebicque/intranetV3/commit/6e179980872d2614bc4ae0d6ca122ba19752c339))
+* [Edusign] timezone sur les horaires de cours ([05702e1](https://github.com/Dannebicque/intranetV3/commit/05702e100c55768f96e8f43a411413c3b6b06d3a))
+* [Edusign] timezone sur les horaires de cours ([e47ecea](https://github.com/Dannebicque/intranetV3/commit/e47ecea2a716ecb67e604d7d7fc8459a5a9015bf))
+* Import EDT en Janvier ([aa8bd68](https://github.com/Dannebicque/intranetV3/commit/aa8bd6882f67ad520b9760c0e354891ab24a11b5))
+
 ### [3.19.63](https://github.com/Dannebicque/intranetV3/compare/v3.19.61...v3.19.63) (2024-12-01)
 
 
