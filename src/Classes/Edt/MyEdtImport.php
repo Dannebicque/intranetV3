@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtImport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 10/12/2024 17:34
+ * @lastUpdate 11/12/2024 08:45
  */
 
 /*
@@ -332,11 +332,7 @@ class MyEdtImport
 
     private function traiteLigne(array $phrase): void
     {
-        if ((int)$phrase[7] <= 13) {
-            $this->semaine = (int)$phrase[7] + 1; //par rapport à celcat
-        } else {
-            $this->semaine = (int)$phrase[7]; //par rapport à celcat
-        }
+        $this->semaine = (int)$phrase[7] + 1; //par rapport à celcat
 
         $semestre = mb_substr($phrase[8], 1, 2);
         $this->verifieSiSemaineDoitEtreEffacee($semestre);
