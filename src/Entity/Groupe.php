@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Groupe.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/02/2024 08:51
+ * @lastUpdate 15/12/2024 09:20
  */
 
 namespace App\Entity;
@@ -384,5 +384,18 @@ class Groupe extends BaseEntity implements GroupeInterface
         $this->idEduSign = $idEduSign;
 
         return $this;
+    }
+
+    public function toArray()
+    {
+        return [
+            'id' => $this->getId(),
+            'libelle' => $this->getLibelle(),
+            'codeApogee' => $this->getCodeApogee(),
+            'ordre' => $this->getOrdre(),
+            'typeGroupe' => $this->getTypeGroupe()?->toArray(),
+            'edusign' => $this->getIdEduSign(),
+            'parcours' => $this->getParcours()?->getId(),
+        ];
     }
 }

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/TypeGroupe.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:40
+ * @lastUpdate 15/12/2024 09:27
  */
 
 namespace App\Entity;
@@ -253,5 +253,22 @@ class TypeGroupe extends BaseEntity
         $this->semestres->removeElement($semestre);
 
         return $this;
+    }
+
+    public function toArray()
+    {
+        $semestres = [];
+        foreach ($this->getSemestres() as $semestre) {
+            $semestres[] = $semestre->getId();
+        }
+
+        return [
+            'id' => $this->getId(),
+            'libelle' => $this->getLibelle(),
+            'defaut' => $this->getDefaut(),
+            'type' => $this->getType(),
+            'mutualise' => $this->isMutualise(),
+            'semestres' => $semestres,
+        ];
     }
 }
