@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2025. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/EdtPlanningRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/09/2024 20:13
+ * @lastUpdate 05/01/2025 08:27
  */
 
 namespace App\Repository;
@@ -420,7 +420,13 @@ class EdtPlanningRepository extends ServiceEntityRepository
         $t = [];
         /** @var EdtPlanning $event */
         foreach ($data as $event) {
-            if ((TypeGroupeEnum::TYPE_GROUPE_CM->value === $event->getType()) || (TypeGroupeEnum::TYPE_GROUPE_TD->value === $event->getType() && $event->getGroupe() === $this->groupetd) || (TypeGroupeEnum::TYPE_GROUPE_TP->value === $event->getType() && $event->getGroupe() === $this->groupetp)) {
+            if (
+                (str_starts_with($event->getType(), 'PTTP') && $event->getGroupe() === $this->groupetp) ||
+                (str_starts_with($event->getType(), 'PTTD') && $event->getGroupe() === $this->groupetd) ||
+                (str_starts_with($event->getType(), 'PTCM')) ||
+                (TypeGroupeEnum::TYPE_GROUPE_CM->value === $event->getType()) ||
+                (TypeGroupeEnum::TYPE_GROUPE_TD->value === $event->getType() && $event->getGroupe() === $this->groupetd) ||
+                (TypeGroupeEnum::TYPE_GROUPE_TP->value === $event->getType() && $event->getGroupe() === $this->groupetp)) {
                 $matiere = $tabMatieresSemestre[$event->getTypeIdMatiere()] ?? null;
                 $pl = [];
                 $pl['id'] = $event->getId();
@@ -434,6 +440,12 @@ class EdtPlanningRepository extends ServiceEntityRepository
                 } else {
                     $pl['ical'] = $event->getTexte();
                 }
+
+                if (str_starts_with($event->getType(), 'PT')) {
+                    $pl['ical'] .= '**PTUT** ' . $pl['ical'];
+                }
+
+
                 $pl['date'] = $event->getDate();
                 $pl['salle'] = $event->getSalle();
                 $t[$event->getId()] = $pl;
