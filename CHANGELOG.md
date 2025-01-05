@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.19.65](https://github.com/Dannebicque/intranetV3/compare/v3.19.64...v3.19.65) (2025-01-05)
+
+
+### Features
+
+* Transfert => ressources ([c44ad55](https://github.com/Dannebicque/intranetV3/commit/c44ad55a682506ea75fe95f7c99d3b48b9da8f16))
+
+
+### Bug Fixes
+
+* Edt Import ([9a54f2b](https://github.com/Dannebicque/intranetV3/commit/9a54f2bbe2a741960c5fafb6a132ff8d9d05cf8d))
+* EDT->Ical, export des PTUT ([69932c2](https://github.com/Dannebicque/intranetV3/commit/69932c282634a58a5998de6de37de8de801240ab))
+* Import EDT ([9fe7825](https://github.com/Dannebicque/intranetV3/commit/9fe7825bbaad24b13e9a1a5638f723ebe40516cf))
+* Import EDT ([1854e6a](https://github.com/Dannebicque/intranetV3/commit/1854e6a8d51d4896373a849acbd12489b7c958d7))
+* transfert V4 ([2337b3b](https://github.com/Dannebicque/intranetV3/commit/2337b3ba9b4d23cd82f183cb445d795cc2507613))
+* transfert V4 (groupes) ([4c7ffca](https://github.com/Dannebicque/intranetV3/commit/4c7ffca062c8ba55077a59511020c389e2e905b3))
+
 ### [3.19.64](https://github.com/Dannebicque/intranetV3/compare/v3.19.63...v3.19.64) (2024-12-10)
 
 
