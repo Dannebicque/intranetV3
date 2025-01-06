@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2025. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/Questionnaire.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/02/2024 08:59
+ * @lastUpdate 06/01/2025 19:27
  */
 
 namespace App\Components\Questionnaire;
@@ -19,6 +19,7 @@ use App\Components\Questionnaire\Section\ConfigurableSection;
 use App\Components\Questionnaire\Section\EndSection;
 use App\Components\Questionnaire\Section\StartSection;
 use App\Entity\QuestChoix;
+use App\Utils\Tools;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -101,7 +102,15 @@ class Questionnaire
                 'choixUserUuid' => $this->choixUserUuid,
             ]);
             $sections = $configSection->genereSections();
+            $configSection->getDataPourConfiguration($this->questionnaire->semestre);
             foreach ($sections as $cSection) {
+                // récupération de la valeur associée à la section
+                foreach ($configSection->data as $data) {
+                    if ($data['id'] == $cSection->params['valeurs'][0]) {
+                        $cSection->titre = Tools::personnaliseTexte($cSection->titre, $data);
+                    }
+                }
+
                 // pour chaque "section configurable", on ajoute une section "classique"
                 $this->sections->addSection($cSection);
             }
@@ -217,6 +226,7 @@ class Questionnaire
     {
         $params = array_merge([
             'section' => $this->getSection($this->ordreSection),
+            'titre_section' => $this->getSection($this->ordreSection)->titre,
             'questionnaireUuid' => $this->questionnaire->uuidString,
         ], $options);
 

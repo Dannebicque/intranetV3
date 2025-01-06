@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2025. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/QuestionnaireRenderer.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:35
+ * @lastUpdate 06/01/2025 19:29
  */
 
 namespace App\Components\Questionnaire;
@@ -54,16 +54,17 @@ class QuestionnaireRenderer
      * @throws SyntaxError
      * @throws LoaderError
      */
-    public function sectionRender(AbstractSection $section): string
+    public function sectionRender(AbstractSection $section, string $titre = ''): string
     {
-        return $this->twig->render($section->getTemplate(), $this->viewSection($section));
+        return $this->twig->render($section->getTemplate(), $this->viewSection($section, $titre));
     }
 
-    private function viewSection(AbstractSection $section): array
+    private function viewSection(AbstractSection $section, string $titre = ''): array
     {
         $options = $section->getOptions();
 
         $vars = $section->getVars();
+        $vars['titre'] = $titre;
         $vars['options'] = $options;
         $vars['questionnaireUuid'] = $section->questionnaireUuid;
         $vars['choixUserUuid'] = $section->choixUserUuid;

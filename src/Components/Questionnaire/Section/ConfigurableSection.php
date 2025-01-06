@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2025. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/Section/ConfigurableSection.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:35
+ * @lastUpdate 06/01/2025 19:15
  */
 
 namespace App\Components\Questionnaire\Section;
@@ -20,6 +20,8 @@ class ConfigurableSection extends AbstractSection
     public ?array $config = [];
     public string $type_calcul = 'GROUPE'; //todo: devrait être paramétrable??
     public array $sections = []; // en mode configurable, on peut avoir la création de sections
+
+    public mixed $data = null;
 
     /**
      * @throws TypeQuestionNotFoundException
@@ -94,6 +96,7 @@ class ConfigurableSection extends AbstractSection
             $this->config['valeurs'] = [];
         }
 
-        return $this->sectionAdapter->getAllDataSemestre($semestre, $this->config['valeurs']);
+        $this->data = $this->sectionAdapter->getAllDataSemestre($semestre, $this->config['valeurs']);
+        return $this->data;
     }
 }
