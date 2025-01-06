@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.19.66](https://github.com/Dannebicque/intranetV3/compare/v3.19.65...v3.19.66) (2025-01-06)
+
+
+### Features
+
+* Libelle sur le tite de la section ([cd39b9f](https://github.com/Dannebicque/intranetV3/commit/cd39b9f96887fc8046778f667527486cb3643090))
+
 ### [3.19.65](https://github.com/Dannebicque/intranetV3/compare/v3.19.64...v3.19.65) (2025-01-05)
 
 
