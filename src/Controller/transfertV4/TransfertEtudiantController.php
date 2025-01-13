@@ -56,7 +56,9 @@ class TransfertEtudiantController extends AbstractController
                     'commentaire' => $scolarite->getCommentaire(),
                     'diffuse' => $scolarite->getDiffuse(),
                     'moyennesMatieres' => $scolarite->getMoyennesMatieres(),
-                    'moyennesUes' => $scolarite->getMoyennesUes()
+                    'moyennesUes' => $scolarite->getMoyennesUes(),
+                    'departement' => $etudiant->getDepartement(),
+                    'groupes' => $etudiant->getGroupes()
                 ];
                 $ordre = max($ordre, $scolarite->getOrdre());
             }
