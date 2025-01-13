@@ -10,6 +10,7 @@ use App\Classes\EduSign\CreateEnseignant;
 use App\Classes\EduSign\FixCourses;
 use App\Classes\EduSign\UpdateEdt;
 use App\Classes\EduSign\UpdateEtudiant;
+use App\Classes\EduSign\UpdateGroupe;
 use App\Classes\Matieres\TypeMatiereManager;
 use App\Classes\MyPagination;
 use App\Controller\BaseController;
@@ -216,15 +217,16 @@ class EduSignController extends BaseController
     }
 
     #[Route('/update/etudiants/{id}', name: 'app_admin_edu_sign_update_etudiants')]
-    public function updateEtudiants(?int $id, UpdateEtudiant $updateEtudiant, MailerInterface $mailer): RedirectResponse
+    public function updateEtudiants(?int $id, UpdateEtudiant $updateEtudiant, UpdateGroupe $updateGroupe, MailerInterface $mailer): RedirectResponse
     {
         $diplome = $this->diplomeRepository->findOneBy(['id' => $id]);
         $keyEduSign = $diplome->getKeyEduSign();
+        $updateGroupeResult = $updateGroupe->update($keyEduSign);
         $fixEtudiantsResult = $updateEtudiant->fixEtudiants($keyEduSign);
         $updateSemestreResult = $updateEtudiant->changeSemestre($diplome, $keyEduSign);
 
         // fusionner les deux tableaux d'erreurs
-        $changeSemestreResult = array_merge($fixEtudiantsResult, $updateSemestreResult);
+        $changeSemestreResult = array_merge($updateGroupeResult, $fixEtudiantsResult, $updateSemestreResult);
         // retirer les entrées vides
         $changeSemestreResult = array_filter($changeSemestreResult);
 
