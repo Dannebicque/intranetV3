@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2025. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtImport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/12/2024 08:45
+ * @lastUpdate 15/01/2025 18:19
  */
 
 /*
@@ -138,7 +138,9 @@ class MyEdtImport
         'WSA310C' => 'WSA310C',
         'WSA310S' => 'WSA310S',
         'WSA301C' => 'WSA301C',
+        'WSA302C' => 'WSA302C',
         'WSA301S' => 'WSA301S',
+        'WSA302S' => 'WSA302S',
     ];
 
     private const CORRESPONDANCE_S5 = [
