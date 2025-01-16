@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2025. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/AbstractMatiere.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/05/2022 18:15
+ * @lastUpdate 16/01/2025 17:01
  */
 
 namespace App\Entity;
@@ -112,7 +112,7 @@ abstract class AbstractMatiere extends BaseEntity
 
     public function getDisplay(): string
     {
-        return $this->getCodeMatiere().' | '.$this->getLibelle();
+        return $this->getCodeMatiere() . ' - ' . $this->getLibelle();
     }
 
     public function getCodeMatiere(): ?string
