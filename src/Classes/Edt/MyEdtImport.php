@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtImport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 15/01/2025 18:19
+ * @lastUpdate 16/01/2025 10:59
  */
 
 /*
@@ -141,6 +141,47 @@ class MyEdtImport
         'WSA302C' => 'WSA302C',
         'WSA301S' => 'WSA301S',
         'WSA302S' => 'WSA302S',
+        'WRA401' => 'WRA401',
+        'WRA402' => 'WRA402',
+        'WRA403' => 'WRA403',
+        'WRA404' => 'WRA404',
+        'WRA405C' => 'WRA405C',
+        'WRA406C' => 'WRA406C',
+        'WRA407C' => 'WRA407C',
+        'WRA408C' => 'WRA408C',
+        'WRA409C' => 'WRA409C',
+        'WRA410C' => 'WRA410C',
+        'WSA401C' => 'WSA401C',
+        'WSA402C' => 'WSA402C',
+        'WSA410' => 'WSA410',
+        'WRA405D' => 'WRA405D',
+        'WRA406D' => 'WRA406D',
+        'WRA407D' => 'WRA407D',
+        'WRA408D' => 'WRA408D',
+        'WRA409D' => 'WRA409D',
+        'WRA410D' => 'WRA410D',
+        'WSA401D' => 'WSA401D',
+        'WSA402D' => 'WSA402D',
+        'WRA405S' => 'WRA405S',
+        'WRA406S' => 'WRA406S',
+        'WRA407S' => 'WRA407S',
+        'WRA408S' => 'WRA408S',
+        'WRA409S' => 'WRA409S',
+        'WRA410S' => 'WRA410S',
+        'WSA401S' => 'WSA401S',
+        'WSA402S' => 'WSA402S',
+        'WR401D' => 'WR401D',
+        'WR402' => 'WR402',
+        'WR403' => 'WR403',
+        'WR404' => 'WR404',
+        'WR405D' => 'WR405D',
+        'WR406D' => 'WR406D',
+        'WR407D' => 'WR407D',
+        'WR408D' => 'WR408D',
+        'WR409D' => 'WR409D',
+        'WR410' => 'WR410',
+        'WS401D' => 'WS401D',
+        'WS402D' => 'WS402D',
     ];
 
     private const CORRESPONDANCE_S5 = [
@@ -189,6 +230,19 @@ class MyEdtImport
         'WRA509S' => 'WRA509S',
         'WSA501S' => 'WSA501S',
         'WSA502S' => 'WSA502',
+        'WR601' => 'WR601',
+        'WR602D' => 'WR602D',
+        'WS611D' => 'WS611D',
+        'WRA601' => 'WRA601',
+        'WRA602S' => 'WRA602S',
+        'WRA602C' => 'WRA602C',
+        'WRA602D' => 'WRA602D',
+        'WRA603S' => 'WRA603S',
+        'WSA610S' => 'WSA610S',
+        'WSA610D' => 'WSA610D',
+        'WSA610C' => 'WSA610C',
+        'WSA611S' => 'WSA611S',
+        'WSA611C' => 'WSA611C',
     ];
 
     private const CORRESPONDANCE_SEMESTRE = [
