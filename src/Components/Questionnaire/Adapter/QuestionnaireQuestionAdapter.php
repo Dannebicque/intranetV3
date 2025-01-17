@@ -10,6 +10,7 @@
 namespace App\Components\Questionnaire\Adapter;
 
 use App\Components\Graphs\GraphRegistry;
+use App\Components\Questionnaire\DTO\Choix;
 use App\Components\Questionnaire\DTO\ListeChoix;
 use App\Components\Questionnaire\DTO\ReponsesUser;
 use App\Components\Questionnaire\Exceptions\TypeQuestionNotFoundException;
@@ -103,14 +104,20 @@ class QuestionnaireQuestionAdapter
     }
 
     public function setReponsesEtudiants(ListeChoix $listeChoix): self
-    {
-        if ('' !== $this->question->valeur_config) {
-            $ls = $listeChoix->getChoix($this->question->cle);
-            $this->question->choix = null !== $ls ? $ls['c' . $this->question->valeur_config] : null;
+{
+    if ('' !== $this->question->valeur_config) {
+        $ls = $listeChoix->getChoix($this->question->cle);
+        if (is_array($ls)) {
+            $this->question->choix = $ls['c' . $this->question->valeur_config] ?? null;
+        } elseif ($ls instanceof Choix) {
+            $this->question->choix = $ls;
         } else {
-            $this->question->choix = $listeChoix->getChoix($this->question->cle);
+            $this->question->choix = null;
         }
-
-        return $this;
+    } else {
+        $this->question->choix = $listeChoix->getChoix($this->question->cle);
     }
+
+    return $this;
+}
 }
