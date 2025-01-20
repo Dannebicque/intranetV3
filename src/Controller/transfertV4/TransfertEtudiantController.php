@@ -40,9 +40,13 @@ class TransfertEtudiantController extends AbstractController
             $anneeUniversitaire = $etudiant->getAnneeUniversitaire();
             $scolEnCours = false;
             $ordre = 0;
+            $groupesArray = [];
             foreach ($scolarites as $scolarite) {
                 if ($scolarite->getAnneeUniversitaire() === $anneeUniversitaire) {
                     $scolEnCours = true;
+                    foreach ($etudiant->getGroupes() as $groupe) {
+                        $groupesArray[] = $groupe->getId();
+                    }
                 }
                 $tabScolarites[] = [
                     'id' => $scolarite->getId(),
@@ -57,8 +61,8 @@ class TransfertEtudiantController extends AbstractController
                     'diffuse' => $scolarite->getDiffuse(),
                     'moyennesMatieres' => $scolarite->getMoyennesMatieres(),
                     'moyennesUes' => $scolarite->getMoyennesUes(),
-                    'departement' => $etudiant->getDepartement(),
-                    'groupes' => $etudiant->getGroupes()
+                    'departement_id' => $etudiant->getDepartement()->getId(),
+                    'groupes' => $groupesArray
                 ];
                 $ordre = max($ordre, $scolarite->getOrdre());
             }
@@ -77,13 +81,13 @@ class TransfertEtudiantController extends AbstractController
                     'commentaire' => null,
                     'diffuse' => false,
                     'moyennesMatieres' => [],
-                    'moyennesUes' => []
+                    'moyennesUes' => [],
+                    'departement' => null,
+                    'groupes' => null
                 ];
             }
-
             return $this->json($tabScolarites);
         }
-
 
         return $this->json([]);
     }
