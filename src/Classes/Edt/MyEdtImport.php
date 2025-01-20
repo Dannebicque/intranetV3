@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtImport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/01/2025 10:59
+ * @lastUpdate 20/01/2025 09:03
  */
 
 /*
@@ -261,6 +261,21 @@ class MyEdtImport
             'H1' => 79,
             'G1-H1' => 79
         ],
+        'S2' => [
+            'A2...H2' => 80,
+            'A2' => 80,
+            'B2' => 80,
+            'A2-B2' => 80,
+            'C2' => 80,
+            'D2' => 80,
+            'C2-D2' => 80,
+            'E2' => 80,
+            'F2' => 80,
+            'E2-F2' => 80,
+            'G2' => 80,
+            'H2' => 80,
+            'G2-H2' => 80
+        ],
         'S3' => [
             'A3' => 101,
             'B3' => 101,
@@ -280,6 +295,25 @@ class MyEdtImport
             'J3' => 161,
             'I3-J3' => 161,
         ],
+        'S4' => [
+            'A4' => 102,
+            'B4' => 102,
+            'A4-B4' => 102,
+            'A4-D4' => 102,
+            'A4...H4' => 102,
+            'C4' => 102,
+            'D4' => 102,
+            'C4-D4' => 102,
+            'E4' => 166,
+            'F4' => 166,
+            'E4-F4' => 166,
+            'G4' => 184,
+            'H4' => 184,
+            'G4-H4' => 184,
+            'I4' => 162,
+            'J4' => 162,
+            'I4-J4' => 162,
+        ],
         'S5' => [
             'A5' => 103,
             'B5' => 103,
@@ -296,6 +330,23 @@ class MyEdtImport
             'I5' => 163,
             'J5' => 163,
             'I5-J5' => 163,
+        ],
+        'S6' => [
+            'A6' => 104,
+            'B6' => 104,
+            'A6-B6' => 104,
+            'C6' => 104,
+            'D6' => 104,
+            'C6-D6' => 104,
+            'E6' => 168,
+            'F6' => 168,
+            'E6-F6' => 168,
+            'G6' => 186,
+            'H6' => 186,
+            'G6-H6' => 186,
+            'I6' => 164,
+            'J6' => 164,
+            'I6-J6' => 164,
         ],
     ];
 
@@ -461,9 +512,9 @@ class MyEdtImport
 
         $prof = $phrase[0];
 
-        if ((int)$semestre === 3) {
+        if ((int)$semestre === 3 || (int)$semestre === 4) {
             $matiere = self::CORRESPONDANCE_S3[$phrase[1]];
-        } elseif ((int)$semestre === 5) {
+        } elseif ((int)$semestre === 5 || (int)$semestre === 6) {
             $matiere = self::CORRESPONDANCE_S5[$phrase[1]];
         } else {
             $matiere = $phrase[1];
