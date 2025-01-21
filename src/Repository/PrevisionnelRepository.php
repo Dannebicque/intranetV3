@@ -29,4 +29,16 @@ class PrevisionnelRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Previsionnel::class);
     }
+
+    public function findByTypeMatiereWithPagination(string $typeMatiere, int $page, int $limit)
+    {
+        $query = $this->createQueryBuilder('p')
+            ->where('p.typeMatiere = :typeMatiere')
+            ->setParameter('typeMatiere', $typeMatiere)
+            ->setFirstResult(($page - 1) * $limit)
+            ->setMaxResults($limit)
+            ->getQuery();
+
+        return $query->getResult();
+    }
 }

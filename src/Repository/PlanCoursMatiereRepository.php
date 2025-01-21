@@ -69,11 +69,12 @@ class PlanCoursMatiereRepository extends ServiceEntityRepository
     public function findByIntervenantsAndSemestre(Personnel $personnel, Semestre $semestre, AnneeUniversitaire $anneeUniversitaire): array
     {
         return $this->createQueryBuilder('p')
-            ->join('p.intervenants', 'i')
+            ->leftJoin('p.intervenants', 'i')
             ->join('p.anneeUniversitaire', 'a')
             ->innerJoin(Matiere::class, 'mat', 'WITH', 'mat.id = p.idMatiere')
             ->innerJoin(Ue::class, 'ue', 'WITH', 'mat.ue = ue.id')
-            ->where('i.id = :personnel')
+//            ->where('i.id = :personnel')
+            ->where('p.responsable = :personnel')
             ->andWhere('ue.semestre = :semestre')
             ->andWhere('a.id = :annee')
             ->setParameter('personnel', $personnel->getId())
