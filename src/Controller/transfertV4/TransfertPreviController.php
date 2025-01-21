@@ -2,13 +2,13 @@
 
 namespace App\Controller\transfertV4;
 
-use App\Classes\Matieres\MatiereManager;
 use App\Classes\Matieres\TypeMatiereManager;
 use App\Repository\AnneeUniversitaireRepository;
 use App\Repository\PrevisionnelRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/api/transfert/previsionnels')]
 class TransfertPreviController extends AbstractController
@@ -17,16 +17,18 @@ class TransfertPreviController extends AbstractController
     public function getPrevisMatiere(
         PrevisionnelRepository $previsionnelRepository,
         AnneeUniversitaireRepository $anneeUniversitaireRepository,
-        TypeMatiereManager $matiereManager
+        TypeMatiereManager $matiereManager,
+        Request $request
     ): Response
     {
-        $tabPrevisionnels = [];
-        $previsionnels = $previsionnelRepository->findBy(['typeMatiere' => 'matiere']);
+        $page = $request->query->getInt('page', 1);
+        $limit = $request->query->getInt('limit', 50);
 
+        $previsionnels = $previsionnelRepository->findByTypeMatiereWithPagination('matiere', $page, $limit);
+
+        $tabPrevisionnels = [];
         foreach ($previsionnels as $previsionnel) {
             $annee = $anneeUniversitaireRepository->findOneBy(['annee' => $previsionnel->getAnnee()]);
-
-
             $matiere = $matiereManager->getMatiere($previsionnel->getIdMatiere(), $previsionnel->getTypeMatiere());
             if (null === $matiere) {
                 continue;
@@ -57,11 +59,14 @@ class TransfertPreviController extends AbstractController
     public function getPrevisRessource(
         PrevisionnelRepository $previsionnelRepository,
         AnneeUniversitaireRepository $anneeUniversitaireRepository,
-        TypeMatiereManager $matiereManager
+        TypeMatiereManager $matiereManager,
+        Request $request
     ): Response
     {
-        $tabPrevisionnels = [];
-        $previsionnels = $previsionnelRepository->findBy(['typeMatiere' => 'ressource']);
+        $page = $request->query->getInt('page', 1);
+        $limit = $request->query->getInt('limit', 50);
+
+        $previsionnels = $previsionnelRepository->findByTypeMatiereWithPagination('ressource', $page, $limit);
 
         foreach ($previsionnels as $previsionnel) {
             $annee = $anneeUniversitaireRepository->findOneBy(['annee' => $previsionnel->getAnnee()]);
@@ -96,11 +101,14 @@ class TransfertPreviController extends AbstractController
     public function getPrevisSae(
         PrevisionnelRepository $previsionnelRepository,
         AnneeUniversitaireRepository $anneeUniversitaireRepository,
-        TypeMatiereManager $matiereManager
+        TypeMatiereManager $matiereManager,
+        Request $request
     ): Response
     {
-        $tabPrevisionnels = [];
-        $previsionnels = $previsionnelRepository->findBy(['typeMatiere' => 'sae']);
+        $page = $request->query->getInt('page', 1);
+        $limit = $request->query->getInt('limit', 50);
+
+        $previsionnels = $previsionnelRepository->findByTypeMatiereWithPagination('matiere', $page, $limit);
 
         foreach ($previsionnels as $previsionnel) {
             $annee = $anneeUniversitaireRepository->findOneBy(['annee' => $previsionnel->getAnnee()]);

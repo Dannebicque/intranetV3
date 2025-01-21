@@ -24,7 +24,7 @@ class TransfertRessourceController extends AbstractController
     ): Response
     {
         $tabRessources = [];
-        $ressources = $apcRessourceRepository->findBy(['ressourceParent' => null]);
+        $ressources = $apcRessourceRepository->findBy(['ressourceParent' => 0]);
 
         foreach ($ressources as $ressource) {
             $res = [

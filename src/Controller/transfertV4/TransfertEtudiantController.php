@@ -44,9 +44,9 @@ class TransfertEtudiantController extends AbstractController
             foreach ($scolarites as $scolarite) {
                 if ($scolarite->getAnneeUniversitaire() === $anneeUniversitaire) {
                     $scolEnCours = true;
-                    foreach ($etudiant->getGroupes() as $groupe) {
-                        $groupesArray[] = $groupe->getId();
-                    }
+                }
+                foreach ($etudiant->getGroupes() as $groupe) {
+                    $groupesArray[] = $groupe->getId();
                 }
                 $tabScolarites[] = [
                     'id' => $scolarite->getId(),
