@@ -14,6 +14,7 @@ use App\Components\PlanCours\Form\PlanCoursMatiereStep1Type;
 use App\Components\PlanCours\Form\PlanCoursMatiereStep2Type;
 use App\Components\PlanCours\Form\PlanCoursMatiereStep3Type;
 use App\DTO\Matiere;
+use App\Entity\Previsionnel;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Departement;
 use App\Entity\Personnel;
@@ -64,12 +65,34 @@ class PlanCoursMatiere extends AbstractPlanCours implements PlanCoursInterface
 
     public function add($planCours): void
     {
-        $this->planCoursMatiereRepository->add($planCours);
+        $this->planCoursMatiereRepository->add($planCours, true);
     }
 
     public function getRepository(): PlanCoursMatiereRepository
     {
         return $this->planCoursMatiereRepository;
+    }
+
+    public function recopiePlanCours(\App\Entity\PlanCoursMatiere $planCoursOrigin, Previsionnel $previsionnel) {
+        // todo: gérer les doublons
+        $obj = $this->planCoursMatiereRepository->findOneBy([
+            'typeMatiere' => $previsionnel->getTypeMatiere(),
+            'idMatiere' => $previsionnel->getIdMatiere(),
+            'anneeUniversitaire' => $planCoursOrigin->getAnneeUniversitaire(),
+        ]);
+
+        if (null === $obj) {
+            $obj = new \App\Entity\PlanCoursMatiere();
+        }
+
+        $obj = clone $planCoursOrigin;
+
+        $obj->setIdMatiere($previsionnel->getIdMatiere());
+        $obj->setTypeMatiere($previsionnel->getTypeMatiere());
+        $obj->setAnneeUniversitaire($planCoursOrigin->getAnneeUniversitaire());
+
+
+        return $obj;
     }
 
     public function export(Matiere $matiere, AnneeUniversitaire $anneeUniversitaire, Departement $departement): void

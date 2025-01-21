@@ -11,6 +11,10 @@
                             <option value="{{ plan.id }}">
                                 {{ matieresArray[plan.typeIdMatiere].display }}
                             </option>
+                            {% else %}
+                            <option value="{{ plan.id }}">
+                                {{ plan.typeIdMatiere }}
+                            </option>
                         {% endif %}
                     {% endfor %}
                 </select>

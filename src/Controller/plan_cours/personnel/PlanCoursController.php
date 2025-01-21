@@ -104,8 +104,6 @@ class PlanCoursController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
-
-
             if ($step === "3" && $request->request->has('btn_valide') && $request->request->get('btn_valide') === 'transmettre') {
                 $planCours->setEtatPlanCours(PlanCoursEnum::COMPLET);
                 $planCoursManager->add($planCours, true);
@@ -128,6 +126,7 @@ class PlanCoursController extends BaseController
         } else {
             $matieresArray = $typeMatiereManager->findBySemestreArray($matiere->getSemestres()->first());
         }
+//        dd($matieresArray);
 
         return $this->render('components/plan_cours/_step' . $step . '.html.twig', parameters: [
             'plan_cours' => $planCours,

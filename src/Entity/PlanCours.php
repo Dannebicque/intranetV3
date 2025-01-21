@@ -28,6 +28,8 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 #[ORM\DiscriminatorMap([PlanCoursMatiere::class, PlanCoursRessource::class, PlanCoursSae::class])]
 abstract class PlanCours
 {
+    //todo: méthode __clone à ajouter
+
     use LifeCycleTrait;
     use MatiereTrait;
 
