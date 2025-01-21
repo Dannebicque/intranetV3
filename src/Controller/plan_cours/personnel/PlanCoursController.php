@@ -123,7 +123,11 @@ class PlanCoursController extends BaseController
             ], Response::HTTP_SEE_OTHER);
         }
 
+        if ($matiere->getSemestres()->first()->getDiplome()->getReferentiel() !== null) {
         $matieresArray = $typeMatiereManager->findByReferentielOrdreSemestreArray($matiere->getSemestres()->first(), $matiere->getSemestres()->first()->getDiplome()->getReferentiel());
+        } else {
+            $matieresArray = $typeMatiereManager->findBySemestreArray($matiere->getSemestres()->first());
+        }
 
         return $this->render('components/plan_cours/_step' . $step . '.html.twig', parameters: [
             'plan_cours' => $planCours,

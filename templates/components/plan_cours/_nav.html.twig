@@ -7,7 +7,11 @@
                 <select class="form-select" id="recopiePlan" name="recopiePlan">
                     <option value="">Choisir un plan de cours</option>
                     {% for plan in listePlansCours %}
-                        <option value="{{ plan.id }}">{{ matieresArray[plan.typeIdMatiere].display }}</option>
+                        {% if matieresArray[plan.typeIdMatiere] is defined %}
+                            <option value="{{ plan.id }}">
+                                {{ matieresArray[plan.typeIdMatiere].display }}
+                            </option>
+                        {% endif %}
                     {% endfor %}
                 </select>
             </div>
