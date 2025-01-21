@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtImport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 20/01/2025 09:03
+ * @lastUpdate 21/01/2025 18:41
  */
 
 /*
@@ -181,6 +181,7 @@ class MyEdtImport
         'WR409D' => 'WR409D',
         'WR410' => 'WR410',
         'WS401D' => 'WS401D',
+        'WS410D' => 'WS410',
         'WS402D' => 'WS402D',
     ];
 
