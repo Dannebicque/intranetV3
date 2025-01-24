@@ -232,7 +232,7 @@ class MyEdtImport
         'WSA501S' => 'WSA501S',
         'WSA502S' => 'WSA502',
         'WR601' => 'WR601',
-        'WR60D1' => 'WR601D',
+        'WR601D' => 'WR601D',
         'WR602D' => 'WR602D',
         'WS611D' => 'WS611D',
         'WRA601' => 'WRA601',
