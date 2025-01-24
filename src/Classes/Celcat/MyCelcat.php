@@ -317,7 +317,7 @@ class MyCelcat
 
     private function updateEvent(EdtCelcat $intranet, EdtCelcat $celcat): void
     {
-        dump('Mise à jour de l\'événement ' . $intranet->getId());
+//        dump('Mise à jour de l\'événement ' . $intranet->getId());
         $this->log->addItem('Mise à jour de l\'événement ' . $intranet->getId(), 'info');
         // Mise à jour des données existantes de $intranet avec celles de $celcat
 
