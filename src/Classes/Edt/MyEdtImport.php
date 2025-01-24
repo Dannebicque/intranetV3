@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtImport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/01/2025 18:41
+ * @lastUpdate 24/01/2025 11:28
  */
 
 /*
@@ -333,12 +333,12 @@ class MyEdtImport
             'I5-J5' => 163,
         ],
         'S6' => [
-            'A6' => 104,
-            'B6' => 104,
-            'A6-B6' => 104,
-            'C6' => 104,
-            'D6' => 104,
-            'C6-D6' => 104,
+            'A6' => 103, //todo: en réel 104...
+            'B6' => 103,
+            'A6-B6' => 103,
+            'C6' => 103,
+            'D6' => 103,
+            'C6-D6' => 103,
             'E6' => 168,
             'F6' => 168,
             'E6-F6' => 168,
