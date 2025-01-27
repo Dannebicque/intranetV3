@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtImport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 27/01/2025 15:08
+ * @lastUpdate 27/01/2025 19:32
  */
 
 /*
@@ -546,6 +546,11 @@ class MyEdtImport
             }
 
             $pl->setJour($date->dayOfWeek()); // à déduire de la date
+            $tsal = explode('-', $salle);
+            if (count($tsal) >= 2 && str_starts_with($tsal[1], '@')) {
+                $salle = $tsal[0];
+                $heureDebut = Carbon::createFromFormat('H\hi', mb_substr($tsal[1], 1));
+            }
             $pl->setSalle(mb_strtoupper($salle));
             $pl->setDate($date);
             if (str_starts_with($phrase[2], 'pttd') || str_starts_with($phrase[2], 'pttp') || str_starts_with($phrase[2], 'ptcm')) {
