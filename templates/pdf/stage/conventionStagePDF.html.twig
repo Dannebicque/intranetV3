@@ -147,7 +147,7 @@
                         proposition.stagePeriode.stagePeriodeInterruptions %}
                         du {{ inter.dateDebut|date('d/m/Y') }} au {{ inter.dateFin|date('d/m/Y') }}{% if not loop.last %},{% endif %}
                     {% endfor %}
-                    {% endif %}
+                    {% endif %}. {{ proposition.periodesInterruptions }}</p>
                 </p><br>
             </td>
         </tr>
