@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.19.67](https://github.com/Dannebicque/intranetV3/compare/v3.19.66...v3.19.67) (2025-01-27)
+
+
+### Bug Fixes
+
+* [Edusign] création de nouveaux groupes si nécessaire à la m.a.j des groupes ([62ad16b](https://github.com/Dannebicque/intranetV3/commit/62ad16b4e61034f8c2d7f6472d2ef6814bf8f124))
+* [transfertV4] etudiant département, groupes et semestres dans scolarité ([9475acf](https://github.com/Dannebicque/intranetV3/commit/9475acf1ab25363291bcfdf3b4286370c04981e4))
+* commande change semestre ([e98758d](https://github.com/Dannebicque/intranetV3/commit/e98758d16f82d374853aabcdfb656d5cff8330c8))
+* convention de stage ([0008bc0](https://github.com/Dannebicque/intranetV3/commit/0008bc065f811447a5c691f8e945e7c4cdfa8628))
+* display atière avec un "-" pour lisibilité ([56f3c69](https://github.com/Dannebicque/intranetV3/commit/56f3c691e13a25d7f89d0fcd817ac04423a4b78e))
+* Edt S5/S6 ([32a26b9](https://github.com/Dannebicque/intranetV3/commit/32a26b9ec8615026e7d5a6eb60586bd268b78b55))
+* Edt SAE ([5f47cab](https://github.com/Dannebicque/intranetV3/commit/5f47cabf67270c6a71cfc77abe02fd9c358e4b05))
+* Edt SAE ([93c2138](https://github.com/Dannebicque/intranetV3/commit/93c2138f1fee93d5af2d3e42defb6e56181b8b0a))
+* erreur questionnaire qualité ([3806880](https://github.com/Dannebicque/intranetV3/commit/38068806fd444ffbd0ed1356b820b4f745882fe3))
+* semestres pairs pour import EDT ([0d783d5](https://github.com/Dannebicque/intranetV3/commit/0d783d5bddc98571d8410cfbca2fa61c7e607dee))
+* semestres pairs pour import EDT ([ab5c04e](https://github.com/Dannebicque/intranetV3/commit/ab5c04e53c1e8ced979a4f7dcdfc875579d850e0))
+* semestres pairs pour import EDT ([78f16ea](https://github.com/Dannebicque/intranetV3/commit/78f16ea49d31a8669fac5bbdb355a070560adf0a))
+* semestres pairs pour import EDT ([00739a0](https://github.com/Dannebicque/intranetV3/commit/00739a00b323c252df514745320eca483dee4cff))
+* semestres pairs pour import EDT ([5fc741e](https://github.com/Dannebicque/intranetV3/commit/5fc741ea1cc2b1a71449178c571bb2faae943d49))
+
 ### [3.19.66](https://github.com/Dannebicque/intranetV3/compare/v3.19.65...v3.19.66) (2025-01-06)
 
 
