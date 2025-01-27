@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtImport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 27/01/2025 19:32
+ * @lastUpdate 27/01/2025 19:38
  */
 
 /*
@@ -550,6 +550,8 @@ class MyEdtImport
             if (count($tsal) >= 2 && str_starts_with($tsal[1], '@')) {
                 $salle = $tsal[0];
                 $heureDebut = Carbon::createFromFormat('H\hi', mb_substr($tsal[1], 1));
+                // $heureFin = $heureDebut + 1h30
+                $heureFin = $heureDebut?->copy()->addHour()->addMinutes(30);
             }
             $pl->setSalle(mb_strtoupper($salle));
             $pl->setDate($date);
