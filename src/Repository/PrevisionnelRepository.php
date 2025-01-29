@@ -9,6 +9,7 @@
 
 namespace App\Repository;
 
+use App\Entity\AnneeUniversitaire;
 use App\Entity\Previsionnel;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -30,10 +31,12 @@ class PrevisionnelRepository extends ServiceEntityRepository
         parent::__construct($registry, Previsionnel::class);
     }
 
-    public function findByTypeMatiereWithPagination(string $typeMatiere, int $page, int $limit)
+    public function findByTypeMatiereWithPagination(string $typeMatiere, int $page, int $limit, int $annee): array
     {
         $query = $this->createQueryBuilder('p')
             ->where('p.typeMatiere = :typeMatiere')
+            ->andWhere('p.annee = :annee')
+            ->setParameter('annee', $annee)
             ->setParameter('typeMatiere', $typeMatiere)
             ->setFirstResult(($page - 1) * $limit)
             ->setMaxResults($limit)

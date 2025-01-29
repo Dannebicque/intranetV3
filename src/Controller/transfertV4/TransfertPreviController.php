@@ -24,7 +24,7 @@ class TransfertPreviController extends AbstractController
         $page = $request->query->getInt('page', 1);
         $limit = $request->query->getInt('limit', 50);
 
-        $previsionnels = $previsionnelRepository->findByTypeMatiereWithPagination('matiere', $page, $limit);
+        $previsionnels = $previsionnelRepository->findByTypeMatiereWithPagination('matiere', $page, $limit, 2024);
 
         $tabPrevisionnels = [];
         foreach ($previsionnels as $previsionnel) {
@@ -66,7 +66,7 @@ class TransfertPreviController extends AbstractController
         $page = $request->query->getInt('page', 1);
         $limit = $request->query->getInt('limit', 50);
 
-        $previsionnels = $previsionnelRepository->findByTypeMatiereWithPagination('ressource', $page, $limit);
+        $previsionnels = $previsionnelRepository->findByTypeMatiereWithPagination('ressource', $page, $limit, 2024);
 
         foreach ($previsionnels as $previsionnel) {
             $annee = $anneeUniversitaireRepository->findOneBy(['annee' => $previsionnel->getAnnee()]);
@@ -108,7 +108,7 @@ class TransfertPreviController extends AbstractController
         $page = $request->query->getInt('page', 1);
         $limit = $request->query->getInt('limit', 50);
 
-        $previsionnels = $previsionnelRepository->findByTypeMatiereWithPagination('matiere', $page, $limit);
+        $previsionnels = $previsionnelRepository->findByTypeMatiereWithPagination('sae', $page, $limit, 2024);
 
         foreach ($previsionnels as $previsionnel) {
             $annee = $anneeUniversitaireRepository->findOneBy(['annee' => $previsionnel->getAnnee()]);
