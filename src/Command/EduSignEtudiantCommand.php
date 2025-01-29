@@ -47,7 +47,7 @@ class EduSignEtudiantCommand extends Command
         $keyEdusign = $input->getArgument('keyEduSign');
         $diplome = $this->diplomeRepository->findOneBy(['keyEduSign' => $keyEdusign]);
 
-        $this->updateEtudiant->changeSemestre($diplome, $keyEdusign);//boucler sur département pour chaque update (ou diplome)
+        $this->updateEtudiant->changeSemestre($diplome, $keyEdusign);
 
         $io->success('Etudiants mis à jour sur EduSign.');
 
