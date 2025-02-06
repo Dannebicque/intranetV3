@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2025. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/EdtController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 31/08/2024 09:29
+ * @lastUpdate 06/02/2025 17:22
  */
 
 namespace App\Controller;
@@ -194,11 +194,14 @@ class EdtController extends BaseController
         $valeur = $request->query->get('valeur');
         $semestre = $semestreRepository->find($valeur);
 
+        if ($semestre === null) {
+            return $this->render('edt/_error.html.twig');
+        }
+
         $diplome = $semestre->getDiplome()->getParent() ?? $semestre->getDiplome();
 
         if ($semestre->getDiplome()->isApc()) {
-            $matieres = $this->typeMatiereManager->findByReferentielOrdreSemestre($semestre,
-                $diplome->getReferentiel());
+            $matieres = $this->typeMatiereManager->findByDiplomeArray($semestre->getDiplome());
         } else {
             $matieres = $this->typeMatiereManager->findBySemestre($semestre);
         }
@@ -230,7 +233,7 @@ class EdtController extends BaseController
         $calendrier = $this->calendrier->calculSemaine($semaine, $this->getAnneeUniversitaire());
 
         if (null !== $this->getAnneeUniversitaire()) {
-            $matieres = $this->typeMatiereManager->tableauMatieresSemestreCodeApogee($this->getUser()->getSemestre());
+            $matieres = $this->typeMatiereManager->tableauApogeeDiplome($this->getUser()->getSemestre()?->getDiplome());
             // todo: passer pour l'edt manager
             if (null !== $this->getUser()->getDiplome() && $this->getUser()->getDiplome()?->isOptUpdateCelcat()) {
                 $this->myEdtCelcat->initEtudiant($this->getUser(),
