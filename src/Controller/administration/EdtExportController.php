@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2025. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EdtExportController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/11/2024 10:03
+ * @lastUpdate 07/02/2025 09:12
  */
 
 namespace App\Controller\administration;
@@ -122,7 +122,7 @@ class EdtExportController extends BaseController
                 'H205' => 'H.205'
             ];
             $pl = $edtPlanningRepository->findEdtSemestre($semestre, $semaine, $this->getAnneeUniversitaire());
-            $tempMatieres = $typeMatiereManager->findByReferentielOrdreSemestre($semestre, $semestre->getDiplome()->getReferentiel());
+            $tempMatieres = $typeMatiereManager->findByDiplome($semestre->getDiplome());
 
             foreach ($tempMatieres as $matiere) {
                 $matieres[$matiere->getTypeIdMatiere()] = $matiere;
