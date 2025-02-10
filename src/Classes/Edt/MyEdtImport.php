@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtImport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 27/01/2025 19:38
+ * @lastUpdate 10/02/2025 10:01
  */
 
 /*
@@ -142,9 +142,15 @@ class MyEdtImport
         'WSA301S' => 'WSA301S',
         'WSA302S' => 'WSA302S',
         'WRA401' => 'WRA401',
-        'WRA402' => 'WRA402',
-        'WRA403' => 'WRA403',
-        'WRA404' => 'WRA404',
+        'WRA402D' => 'WRA402D',
+        'WRA402C' => 'WRA402C',
+        'WRA402S' => 'WRA402S',
+        'WRA403D' => 'WRA403',
+        'WRA403C' => 'WRA403',
+        'WRA403S' => 'WRA403',
+        'WRA404D' => 'WRA404',
+        'WRA404C' => 'WRA404',
+        'WRA404S' => 'WRA404',
         'WRA405C' => 'WRA405C',
         'WRA406C' => 'WRA406C',
         'WRA407C' => 'WRA407C',
