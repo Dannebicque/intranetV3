@@ -2,6 +2,38 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.19.68](https://github.com/Dannebicque/intranetV3/compare/v3.19.66...v3.19.68) (2025-02-20)
+
+
+### Bug Fixes
+
+* [Edusign] création de nouveaux groupes si nécessaire à la m.a.j des groupes ([62ad16b](https://github.com/Dannebicque/intranetV3/commit/62ad16b4e61034f8c2d7f6472d2ef6814bf8f124))
+* [transfertV4] etudiant département, groupes et semestres dans scolarité ([9475acf](https://github.com/Dannebicque/intranetV3/commit/9475acf1ab25363291bcfdf3b4286370c04981e4))
+* Affichage borne avec tous les semestres ([077466e](https://github.com/Dannebicque/intranetV3/commit/077466e41d6cd9015066aa3e1dcdc1668a89b65c))
+* Affichage borne avec tous les semestres ([59f2079](https://github.com/Dannebicque/intranetV3/commit/59f2079d3a6e38b848d73c961205ed4d001c7588))
+* Affichage borne avec tous les semestres ([2d182e4](https://github.com/Dannebicque/intranetV3/commit/2d182e4b107273bd5cf01e35884eaf60f206ac93))
+* commande change semestre ([e98758d](https://github.com/Dannebicque/intranetV3/commit/e98758d16f82d374853aabcdfb656d5cff8330c8))
+* conditionne l'affichage du support en cas de problème ([fd82a35](https://github.com/Dannebicque/intranetV3/commit/fd82a35113d8e3a74f52561760d84d1ecaef104a))
+* convention de stage ([abc1a62](https://github.com/Dannebicque/intranetV3/commit/abc1a62b4c2fe8e832557ad9b1ee1529d173b486))
+* convention de stage ([4585350](https://github.com/Dannebicque/intranetV3/commit/4585350f336177fbcbd825281e6893f910a9e5a2))
+* display atière avec un "-" pour lisibilité ([56f3c69](https://github.com/Dannebicque/intranetV3/commit/56f3c691e13a25d7f89d0fcd817ac04423a4b78e))
+* Edt ([db60bcf](https://github.com/Dannebicque/intranetV3/commit/db60bcf1dead12b9265baab9a5239f79fdd6a84a))
+* Edt ([0707c3f](https://github.com/Dannebicque/intranetV3/commit/0707c3f822453d6056875962ae1046cc28f88f82))
+* Edt ([db957c5](https://github.com/Dannebicque/intranetV3/commit/db957c5ccc9d50cd568a59f52e9f63fb624c78c8))
+* Edt ([064a98c](https://github.com/Dannebicque/intranetV3/commit/064a98c58fa049ad8afa0b53654e5e91fcb27a68))
+* Edt S5/S6 ([32a26b9](https://github.com/Dannebicque/intranetV3/commit/32a26b9ec8615026e7d5a6eb60586bd268b78b55))
+* Edt SAE ([5f47cab](https://github.com/Dannebicque/intranetV3/commit/5f47cabf67270c6a71cfc77abe02fd9c358e4b05))
+* Edt SAE ([93c2138](https://github.com/Dannebicque/intranetV3/commit/93c2138f1fee93d5af2d3e42defb6e56181b8b0a))
+* Edt, ajout du prof dans l'ICS ([cb70ada](https://github.com/Dannebicque/intranetV3/commit/cb70ada46832f0ab57bc6dd778d623c11f0de1b2))
+* erreur questionnaire qualité ([3806880](https://github.com/Dannebicque/intranetV3/commit/38068806fd444ffbd0ed1356b820b4f745882fe3))
+* import avec heure spécifique ([3d45fd7](https://github.com/Dannebicque/intranetV3/commit/3d45fd76ad1fc8cebad8867afc2f918f66443b81))
+* import avec heure spécifique ([f25e3a8](https://github.com/Dannebicque/intranetV3/commit/f25e3a81fc40f2cf8b1c5dcc1491d184cfd06476))
+* semestres pairs pour import EDT ([0d783d5](https://github.com/Dannebicque/intranetV3/commit/0d783d5bddc98571d8410cfbca2fa61c7e607dee))
+* semestres pairs pour import EDT ([ab5c04e](https://github.com/Dannebicque/intranetV3/commit/ab5c04e53c1e8ced979a4f7dcdfc875579d850e0))
+* semestres pairs pour import EDT ([78f16ea](https://github.com/Dannebicque/intranetV3/commit/78f16ea49d31a8669fac5bbdb355a070560adf0a))
+* semestres pairs pour import EDT ([00739a0](https://github.com/Dannebicque/intranetV3/commit/00739a00b323c252df514745320eca483dee4cff))
+* semestres pairs pour import EDT ([5fc741e](https://github.com/Dannebicque/intranetV3/commit/5fc741ea1cc2b1a71449178c571bb2faae943d49))
+
 ### [3.19.67](https://github.com/Dannebicque/intranetV3/compare/v3.19.66...v3.19.67) (2025-01-27)
 
 
