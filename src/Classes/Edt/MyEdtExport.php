@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2025. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/09/2024 17:48
+ * @lastUpdate 20/02/2025 09:32
  */
 
 /*
@@ -144,7 +144,14 @@ class MyEdtExport
             if (null !== $pl['date']) {
                 $this->myIcal->setDtstart($pl['date'], $pl['debut']);
                 $this->myIcal->setDtend($pl['date'], $pl['fin']);
-                $this->myIcal->setDescription($pl['commentaire']);
+                if (array_key_exists('enseignant', $pl)) {
+                    $this->myIcal->setDescription(
+                        'Ens. : ' . $pl['enseignant'] . ' - Commentaire : ' .
+                        $pl['commentaire'] ?? '-');
+                } else {
+                    $this->myIcal->setDescription($pl['commentaire']);
+                }
+
                 $this->myIcal->setSummary($pl['ical']); // soit typeIdMatiere si Intranet, sinon OK pour Celcat...
                 $this->myIcal->setLocation($pl['salle']);
                 $this->myIcal->setColor($pl['couleur']);

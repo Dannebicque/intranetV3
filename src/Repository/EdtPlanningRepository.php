@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/EdtPlanningRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/01/2025 08:27
+ * @lastUpdate 20/02/2025 09:28
  */
 
 namespace App\Repository;
@@ -431,6 +431,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
                 $pl = [];
                 $pl['id'] = $event->getId();
                 $pl['semaine'] = $event->getSemaine();
+                $pl['enseignant'] = $event->getIntervenant()?->getDisplayPr() ?? ' -non précisé- ';
                 $pl['jour'] = $event->getJour();
                 $pl['debut'] = $event->getDebut();
                 $pl['fin'] = $event->getFin();
