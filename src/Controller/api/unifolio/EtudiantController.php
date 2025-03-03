@@ -23,7 +23,7 @@ class EtudiantController extends BaseController
         EtudiantRepository $etudiantRepository,
     ): JsonResponse
     {
-//        $this->checkAccessApi($request);
+        $this->checkAccessApi($request);
 
         $username = $request->query->get('username');
         $semestreId = $request->query->get('semestre');
