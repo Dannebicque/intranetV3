@@ -1,22 +1,17 @@
 <table style="width: 100%; border:0;">
     <tr>
-        <td style="text-align: center; width:{% if qualite is defined and qualite == true %}{% else %}20%{% endif %}"></td>
-        <td style="text-align: center; width:{% if qualite is defined and qualite == true %}{% else %}60%{% endif %}">
-            <h1>{{ departement.libelle }}</h1>
-
-            <h2>{{ titre|raw }}</h2>
-        </td>
-        <td style="text-align: center; width:{% if qualite is defined and qualite == true %}{% else %}20%{% endif %}">
-
+        <td style="text-align: center; width:100%;">
             {% if qualite is defined and qualite == true %}
-                <img src="{{ settings('BASE_PATH') }}{{ 'logo/'~settings('LOGO_QUALITE') }}" alt="logo certificat
-                     qualité" height="{{ size|default('70px') }}" style="float:right"/>
+                <img src="{{ settings('BASE_PATH') }}{{ 'logo/'~settings('LOGO_QUALITE') }}" alt="logo certificat qualité" height="{{ size|default('50px') }}" style="margin-bottom: 10px;"/>
             {% else %}
-                <img
-                        src="{{ settings('BASE_PATH') }}{{ 'logo/'~departement.logoName }}"
-                        alt="logo du département"
-                        height="{{ size|default('70px') }}"/>
+                <img src="{{ settings('BASE_PATH') }}{{ 'logo/'~departement.logoName }}" alt="logo du département" height="{{ size|default('50px') }}" style="margin-bottom: 10px;"/>
             {% endif %}
+        </td>
+    </tr>
+    <tr>
+        <td style="text-align: center; width:100%;">
+            <h1 style="font-size: 16px;">{{ departement.libelle }}</h1>
+            <h2 style="font-size: 14px;">{{ titre|raw }}</h2>
         </td>
     </tr>
 </table>
