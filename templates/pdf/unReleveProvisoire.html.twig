@@ -10,7 +10,7 @@
 }) }}
 
 <h1 style="font-size: 18px;">Liste des notes du Semestre {{ semestre.display }}<br/>Relevé provisoire</h1><br/>
-<h2>{{ etudiant.display }}</h2> Né(e) le {{ etudiant.dateNaissance|date('d/m/Y') }}
+<h2 style="font-size: 16px;">{{ etudiant.display }}</h2> Né(e) le {{ etudiant.dateNaissance|date('d/m/Y') }}
 <p>N° étudiant (URCA) : {{ etudiant.numEtudiant }}
     <br/>N° étudiant INE : {{ etudiant.numIne }}</p>
 <table class="table table-bordered" style="width:100%">
