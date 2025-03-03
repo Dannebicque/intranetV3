@@ -1,97 +1,97 @@
 {{include('pdf/_headerPdf.html.twig', {
-            departement: semestre.diplome.departement,
-            titre: '<stong>Année Universitaire '~anneeUniversitaire.displayAnneeUniversitaire~'</stong>
-                    <br/>
-                    '~settings('NOM_UNIVERSITE') ~'<br/>
-        '~settings('NOM_IUT')~'<br/>
-                    <strong>'~semestre.diplome.typediplome.libelle~'</strong><br/>
-                    <strong>'~semestre.diplome.libelle~'</strong><br/>',
-            qualite: semestre.diplome.optCertifieQualite
-        }) }}
+    departement: semestre.diplome.departement,
+    titre: '<stong>Année Universitaire '~anneeUniversitaire.displayAnneeUniversitaire~'</stong>
+            <br/>
+            '~settings('NOM_UNIVERSITE') ~'<br/>
+'~settings('NOM_IUT')~'<br/>
+            <strong>'~semestre.diplome.typediplome.libelle~'</strong><br/>
+            <strong>'~semestre.diplome.libelle~'</strong><br/>',
+    qualite: semestre.diplome.optCertifieQualite
+}) }}
 
-        <h1 style="font-size: 18px;">Liste des notes du Semestre {{ semestre.display }}<br/>Relevé provisoire</h1><br/>
-        <h2>{{ etudiant.display }}</h2> Né(e) le {{ etudiant.dateNaissance|date('d/m/Y') }}
-        <p>N° étudiant (URCA) : {{ etudiant.numEtudiant }}
-            <br/>N° étudiant INE : {{ etudiant.numIne }}</p>
-        <table class="table table-bordered" style="width:100%">
-            <thead>
+<h1 style="font-size: 18px;">Liste des notes du Semestre {{ semestre.display }}<br/>Relevé provisoire</h1><br/>
+<h2>{{ etudiant.display }}</h2> Né(e) le {{ etudiant.dateNaissance|date('d/m/Y') }}
+<p>N° étudiant (URCA) : {{ etudiant.numEtudiant }}
+    <br/>N° étudiant INE : {{ etudiant.numIne }}</p>
+<table class="table table-bordered" style="width:100%">
+    <thead>
+    <tr>
+        <th>N° Eval.</th>
+        <th>Date</th>
+        <th>Module</th>
+        <th>Coeff.</th>
+        <th>Note</th>
+        <th>Moy.</th>
+        <th>Min.</th>
+        <th>Max.</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for n in notes %}
+        {% if semestre.diplome.optCommentairesReleve == true %}
+            {% if matprec is defined and matprec != n.evaluation.typeIdMatiere %}
+                <tr style="height: 50px">
+                    <td colspan="2">Commentaires :</td>
+                    <td colspan="6">&nbsp;</td>
+                </tr>
+            {% endif %}
             <tr>
-                <th>N° Eval.</th>
-                <th>Date</th>
-                <th>Module</th>
-                <th>Coeff.</th>
-                <th>Note</th>
-                <th>Moy.</th>
-                <th>Min.</th>
-                <th>Max.</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for n in notes %}
-                {% if semestre.diplome.optCommentairesReleve == true %}
-                    {% if matprec is defined and matprec != n.evaluation.typeIdMatiere %}
-                        <tr style="height: 50px">
-                            <td colspan="2">Commentaires :</td>
-                            <td colspan="6">&nbsp;</td>
-                        </tr>
+                <td rowspan="2">&nbsp;{{ n.evaluation.id }}&nbsp;</td>
+                <td style="text-align: center" rowspan="2">{{ n.evaluation.dateEvaluation|date('d/m/Y') }}</td>
+                <td>
+                    &nbsp;&nbsp;{{ matieres[n.evaluation.typeIdMatiere] is defined ? matieres[n.evaluation.typeIdMatiere].display : '-' }}</td>
+                <td style="text-align: center">{{ n.evaluation.coefficient|number_format(2,'.') }}</td>
+                <td style="text-align: center">
+                    {% if n.absenceJustifie %}
+                        Absent
+                    {% else %}
+                        {{ n.note|number_format(2,'.') }}
                     {% endif %}
-                    <tr>
-                        <td rowspan="2">&nbsp;{{ n.evaluation.id }}&nbsp;</td>
-                        <td style="text-align: center" rowspan="2">{{ n.evaluation.dateEvaluation|date('d/m/Y') }}</td>
-                        <td>
-                            &nbsp;&nbsp;{{ matieres[n.evaluation.typeIdMatiere] is defined ? matieres[n.evaluation.typeIdMatiere].display : '-' }}</td>
-                        <td style="text-align: center">{{ n.evaluation.coefficient|number_format(2,'.') }}</td>
-                        <td style="text-align: center">
-                            {% if n.absenceJustifie %}
-                                Absent
-                            {% else %}
-                            {% endif %}
-                                {{ n.note|number_format(2,'.') }}
-                        </td>
-                        <td style="text-align: center">{{ syntheses[n.evaluation.id]['promo'].moyenne|number_format(2,'.') }}</td>
-                        <td style="text-align: center">{{ syntheses[n.evaluation.id]['promo'].min|number_format(2,'.') }}</td>
-                        <td style="text-align: center">{{ syntheses[n.evaluation.id]['promo'].max|number_format(2,'.') }}</td>
-                    </tr>
-                    <tr>
-                        <td colspan="6">{{ n.commentaire != null ? n.commentaire : '&nbsp;' }}</td>
-                    </tr>
-                {% else %}
-                {% endif %}
-                {% set matprec = n.evaluation.typeIdMatiere %}
-            {% endfor %}
-                    <tr>
-                        <td>&nbsp;{{ n.evaluation.id }}&nbsp;</td>
-                        <td style="text-align: center">{{ n.evaluation.dateEvaluation|date('d/m/Y') }}</td>
-                        <td>
-                            &nbsp;&nbsp;{{ matieres[n.evaluation.typeIdMatiere] is defined ? matieres[n.evaluation.typeIdMatiere].display : '-' }}</td>
-                        <td style="text-align: center">{{ n.evaluation.coefficient|number_format(2,'.') }}</td>
-                        <td style="text-align: center">
-                            {% if n.absenceJustifie %}
-                                Absent
-                            {% else %}
-                            {% endif %}
-                                {{ n.note|number_format(2,'.') }}
-                        </td>
-                        <td style="text-align: center">{{ syntheses[n.evaluation.id]['promo'].moyenne|number_format(2,'.') }}</td>
-                        <td style="text-align: center">{{ syntheses[n.evaluation.id]['promo'].min|number_format(2,'.') }}</td>
-                        <td style="text-align: center">{{ syntheses[n.evaluation.id]['promo'].max|number_format(2,'.') }}</td>
-                    </tr>
+                </td>
+                <td style="text-align: center">{{ syntheses[n.evaluation.id]['promo'].moyenne|number_format(2,'.') }}</td>
+                <td style="text-align: center">{{ syntheses[n.evaluation.id]['promo'].min|number_format(2,'.') }}</td>
+                <td style="text-align: center">{{ syntheses[n.evaluation.id]['promo'].max|number_format(2,'.') }}</td>
+            </tr>
+            <tr>
+                <td colspan="6">{{ n.commentaire != null ? n.commentaire : '&nbsp;' }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td>&nbsp;{{ n.evaluation.id }}&nbsp;</td>
+                <td style="text-align: center">{{ n.evaluation.dateEvaluation|date('d/m/Y') }}</td>
+                <td>
+                    &nbsp;&nbsp;{{ matieres[n.evaluation.typeIdMatiere] is defined ? matieres[n.evaluation.typeIdMatiere].display : '-' }}</td>
+                <td style="text-align: center">{{ n.evaluation.coefficient|number_format(2,'.') }}</td>
+                <td style="text-align: center">
+                    {% if n.absenceJustifie %}
+                        Absent
+                    {% else %}
+                        {{ n.note|number_format(2,'.') }}
+                    {% endif %}
+                </td>
+                <td style="text-align: center">{{ syntheses[n.evaluation.id]['promo'].moyenne|number_format(2,'.') }}</td>
+                <td style="text-align: center">{{ syntheses[n.evaluation.id]['promo'].min|number_format(2,'.') }}</td>
+                <td style="text-align: center">{{ syntheses[n.evaluation.id]['promo'].max|number_format(2,'.') }}</td>
+            </tr>
+        {% endif %}
+        {% set matprec = n.evaluation.typeIdMatiere %}
+    {% endfor %}
 
-            </tbody>
-        </table>
-        <br/><br/><br/>
-        <table style="width:100%">
-            <tr>
-                <td style="width:50%">{{ semestre.diplome.departement.ufr.sitePrincipal.adresse.ville }}, le {{ 'now'|date
-                        ('d/m/Y') }}</td>
-                <td style="width:50%">Le responsable du diplôme<br/>
-                    {{ semestre.diplome.responsableDiplome.displayPr }}</td>
-            </tr>
-            <tr>
-                <td colspan="2">&nbsp;</td>
-            </tr>
-            <tr>
-                <td>Observations</td>
-                <td>Signature</td>
-            </tr>
-        </table>
+    </tbody>
+</table>
+<br/><br/><br/>
+<table style="width:100%">
+    <tr>
+        <td style="width:50%">{{ semestre.diplome.departement.ufr.sitePrincipal.adresse.ville }}, le {{ 'now'|date
+                ('d/m/Y') }}</td>
+        <td style="width:50%">Le responsable du diplôme<br/>
+            {{ semestre.diplome.responsableDiplome.displayPr }}</td>
+    </tr>
+    <tr>
+        <td colspan="2">&nbsp;</td>
+    </tr>
+    <tr>
+        <td>Observations</td>
+        <td>Signature</td>
+    </tr>
+</table>

@@ -2,9 +2,9 @@
     <tr>
         <td style="text-align: center; width:100%;">
             {% if qualite is defined and qualite == true %}
-                <img src="{{ settings('BASE_PATH') }}{{ 'logo/'~settings('LOGO_QUALITE') }}" alt="logo certificat qualité" height="{{ size|default('50px') }}" style="margin-bottom: 10px;"/>
+                <img src="{{ settings('BASE_PATH') }}{{ 'logo/'~settings('LOGO_QUALITE') }}" alt="logo certificat qualité" height="{{ size|default('70px') }}" style="margin-bottom: 10px;"/>
             {% else %}
-                <img src="{{ settings('BASE_PATH') }}{{ 'logo/'~departement.logoName }}" alt="logo du département" height="{{ size|default('50px') }}" style="margin-bottom: 10px;"/>
+                <img src="{{ settings('BASE_PATH') }}{{ 'logo/'~departement.logoName }}" alt="logo du département" height="{{ size|default('70px') }}" style="margin-bottom: 10px;"/>
             {% endif %}
         </td>
     </tr>
