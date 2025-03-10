@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/api/EdtApiController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 10/03/2025 10:30
+ * @lastUpdate 10/03/2025 12:41
  */
 
 namespace App\Controller\api;
@@ -50,6 +50,8 @@ class EdtApiController extends AbstractController
                 'matiere' => $listeMatieres[$edt->getTypeIdMatiere()] ? $listeMatieres[$edt->getTypeIdMatiere()]->display : '',
                 'personnel' => $edt->getIntervenant()?->getDisplay() ?? '',
                 'groupe' => $edt->getDisplayGroupe(),
+                'idRh' => $edt->getIntervenant()?->getNumeroHarpege(),
+                'codeMatiere' => $listeMatieres[$edt->getTypeIdMatiere()] ? $listeMatieres[$edt->getTypeIdMatiere()]->codeElement : '',
             ];
         }
 
