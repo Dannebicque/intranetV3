@@ -57,6 +57,7 @@ security:
     - { path: '^/[a-z]{2}/ldap', roles: [ ROLE_PERMANENT, ROLE_SUPER_ADMIN, ROLE_RH ] }
     - { path: '^/[a-z]{2}/administratif', roles: [ ROLE_ADMINISTRATIF ] }
     - { path: '^/[a-z]{2}/api/synchronisation', roles: PUBLIC_ACCESS }
+    - { path: '^/[a-z]{2}/api/export-chronologique', roles: PUBLIC_ACCESS }
     - { path: '^/[a-z]{2}/', roles: IS_AUTHENTICATED_FULLY }
     - { path: '^/[a-z]{2}/api', roles: IS_AUTHENTICATED_FULLY }
 
