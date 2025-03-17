@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtImport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/02/2025 08:35
+ * @lastUpdate 17/03/2025 09:52
  */
 
 /*
@@ -188,6 +188,9 @@ class MyEdtImport
         'WR410' => 'WR410',
         'WS401D' => 'WS401D',
         'WS410D' => 'WS410',
+        'WSA410D' => 'WSA410D',
+        'WSA410C' => 'WSA410C',
+        'WSA410S' => 'WSA410S',
         'WS402D' => 'WS402D',
     ];
 
@@ -242,6 +245,7 @@ class MyEdtImport
         'WRA601D' => 'WRA601D',
         'WR601D' => 'WR601D',
         'WR602D' => 'WR602D',
+        'WS610D' => 'WS610D',
         'WS611D' => 'WS611D',
         'WRA601' => 'WRA601',
         'WRA602S' => 'WRA602S',
