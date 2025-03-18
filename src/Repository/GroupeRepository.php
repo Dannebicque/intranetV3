@@ -155,33 +155,35 @@ class GroupeRepository extends ServiceEntityRepository
         return $t;
     }
 
-    public function findGroupeSemestreEdt(Semestre $semestre): array
-    {
-        $groupes = [];
-        $gtp = $this->getGroupesTP($semestre);
-        $gtd = $this->getGroupesTD($semestre);
+public function findGroupeSemestreEdt(Semestre $semestre): array
+{
+    $groupes = $this->findBySemestre($semestre);
+    $result = [];
 
-        $i = 1;
-        $groupes[0]['id'] = 'CM-1';
-        $groupes[0]['display'] = 'CM | CM';
+    $i = 1;
+    $result[0]['id'] = 'CM-1';
+    $result[0]['display'] = 'CM | CM';
 
-        /** @var Groupe $g */
-        foreach ($gtp as $g) {
-            $groupes[$i]['id'] = 'TP-' . $g->getOrdre();
-            $groupes[$i]['display'] = 'TP' . $g->getLibelle() . ' | TP ' . $g->getLibelle();
+    /** @var Groupe $g */
+    foreach ($groupes as $g) {
+        if ($g->getTypeGroupe()->getType() === TypeGroupeEnum::TYPE_GROUPE_TP) {
+            $result[$i]['id'] = 'TP-' . $g->getOrdre();
+            $result[$i]['display'] = 'TP' . $g->getLibelle() . ' | TP ' . $g->getLibelle();
             ++$i;
         }
-
-        /** @var Groupe $g */
-        foreach ($gtd as $g) {
-            $or = $g->getOrdre();
-            $groupes[$i]['id'] = 'TD-' . $or;
-            $groupes[$i]['display'] = 'TD' . $g->getLibelle() . ' | TD ' . $g->getLibelle();
-            ++$i;
-        }
-
-        return $groupes;
     }
+
+    foreach ($groupes as $g) {
+        if ($g->getTypeGroupe()->getType() === TypeGroupeEnum::TYPE_GROUPE_TD) {
+            $or = $g->getOrdre();
+            $result[$i]['id'] = 'TD-' . $or;
+            $result[$i]['display'] = 'TD' . $g->getLibelle() . ' | TD ' . $g->getLibelle();
+            ++$i;
+        }
+    }
+
+    return $result;
+}
 
     public function findByTypeGroupe(?TypeGroupe $typegroupe): array
     {
