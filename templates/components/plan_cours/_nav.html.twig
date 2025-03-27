@@ -9,11 +9,11 @@
                     {% for plan in listePlansCours %}
                         {% if matieresArray[plan.typeIdMatiere] is defined %}
                             <option value="{{ plan.id }}">
-                                {{ matieresArray[plan.typeIdMatiere].display }}
+                                {{ matieresArray[plan.typeIdMatiere].display }} - {{ plan.anneeUniversitaire.libelle }}
                             </option>
                             {% else %}
                             <option value="{{ plan.id }}">
-                                {{ plan.typeIdMatiere }}
+                                {{ plan.typeIdMatiere }} - {{ plan.anneeUniversitaire.libelle }}
                             </option>
                         {% endif %}
                     {% endfor %}

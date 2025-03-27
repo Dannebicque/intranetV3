@@ -66,12 +66,12 @@ class PlanCoursRessource extends AbstractPlanCours implements PlanCoursInterface
         return $obj;
     }
 
-    public function recopiePlanCours($plancours, Previsionnel $previsionnel): \App\Entity\PlanCoursRessource
+    public function recopiePlanCours($plancours, Previsionnel $previsionnel, AnneeUniversitaire $anneeUniversitaire): \App\Entity\PlanCoursRessource
     {
         $obj = $this->planCoursRessourceRepository->findOneBy([
             'typeMatiere' => $previsionnel->getTypeMatiere(),
             'idMatiere' => $previsionnel->getIdMatiere(),
-            'anneeUniversitaire' => $plancours->getAnneeUniversitaire(),
+            'anneeUniversitaire' => $anneeUniversitaire,
         ]);
 
         if (null === $obj) {
@@ -81,7 +81,7 @@ class PlanCoursRessource extends AbstractPlanCours implements PlanCoursInterface
         $obj->setIdMatiere($previsionnel->getIdMatiere());
         $obj->setTypeMatiere($previsionnel->getTypeMatiere());
         $obj->setResponsable($plancours->getResponsable());
-        $obj->setAnneeUniversitaire($plancours->getAnneeUniversitaire());
+        $obj->setAnneeUniversitaire($anneeUniversitaire);
         $obj->setDescription($plancours->getDescription());
         $obj->setNbNotes($plancours->getNbNotes() ?? 0);
         $obj->setCmPrevu($plancours->getCmPrevu() ?? 0.0);
@@ -111,7 +111,6 @@ class PlanCoursRessource extends AbstractPlanCours implements PlanCoursInterface
         foreach ($plancours->getInterVenants() as $intervenant) {
             $obj->addIntervenant($intervenant);
         }
-
 
         return $obj;
     }
