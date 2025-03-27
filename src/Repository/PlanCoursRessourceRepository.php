@@ -69,15 +69,15 @@ class PlanCoursRessourceRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('p')
             ->join('p.intervenants', 'i')
-            ->join('p.anneeUniversitaire', 'a')
+//            ->join('p.anneeUniversitaire', 'a')
             ->innerJoin(ApcRessource::class, 'ress', 'WITH', 'ress.id = p.idMatiere')
             ->leftJoin('ress.semestres', 's')
             ->where('i.id = :personnel')
             ->andWhere('s.ordreLmd = :semestre')
-            ->andWhere('a.id = :annee')
+//            ->andWhere('a.id = :annee')
             ->setParameter('personnel', $personnel->getId())
             ->setParameter('semestre', $semestre->getOrdreLmd())
-            ->setParameter('annee', $anneeUniversitaire->getId())
+//            ->setParameter('annee', $anneeUniversitaire->getId())
             ->getQuery()
             ->getResult();
     }

@@ -159,7 +159,7 @@ class PlanCoursController extends BaseController
 
         if ($planCoursOrigin) {
             //recopie des données de planCoursOrigin dans planCours
-            $planCours = $planCoursManager->recopiePlanCours($planCoursOrigin, $previsionnel);
+            $planCours = $planCoursManager->recopiePlanCours($planCoursOrigin, $previsionnel, $this->getUser()->getAnneeUniversitaire());
             $entityManager->persist($planCours);
             $entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'plan_cours.recopie.success.flash');
