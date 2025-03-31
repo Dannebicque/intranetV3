@@ -31,8 +31,7 @@
                     <tr>
                         <td>
                             {% if matieres[note.evaluation.typeIdMatiere] is defined %}
-                                <abbr title="{{ matieres[note.evaluation.typeIdMatiere].libelle }}">
-                                    {{ matieres[note.evaluation.typeIdMatiere].codeMatiere }}</abbr>
+                                {{ matieres[note.evaluation.typeIdMatiere].codeMatiere }} | {{ matieres[note.evaluation.typeIdMatiere].libelle }}
                             {% else %}
                                 -
                             {% endif %}
