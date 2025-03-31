@@ -105,10 +105,12 @@ class NoteController extends BaseController
      */
     #[Route(path: '/sauvegarde/{uuid}', name: 'application_personnel_note_ajax_saisie', options: ['expose' => true], methods: ['POST|GET'])]
     public function enregistreNote(EtudiantNotes $etudiantNotes, EtudiantRepository $etudiantRepository, Request $request, #[MapEntity(mapping: ['uuid' => 'uuid'])]
-    Evaluation                                   $evaluation): Response
+    Evaluation $evaluation): Response
     {
         $tnote = $request->request->all();
         $tnote = $tnote['notes']['notes'];
+        $commentaireEvaluation = $request->request->get('commentaireEvaluation'); // Récupérer le commentaire général
+
         foreach ($tnote as $iValue) {
             $etudiant = $etudiantRepository->find($iValue['id']);
             if (null !== $etudiant) {
@@ -116,6 +118,11 @@ class NoteController extends BaseController
                 $etudiantNotes->addNote($evaluation, $iValue, $this->getUser());
             }
         }
+
+        // Mettre à jour le commentaire général de l'évaluation
+        $evaluation->setCommentaire($commentaireEvaluation);
+        dump($evaluation);
+        $this->entityManager->flush();
 
         return new Response();
     }

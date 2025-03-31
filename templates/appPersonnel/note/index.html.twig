@@ -60,6 +60,7 @@
                                                #{{ eval.id }}
                                                ) {% if eval.libelle != '' %} - {{ eval.libelle }}{% endif %}</h4>
                         <div class="card-body">
+                            <h5>Commentaire de l'évaluation : {{ eval.commentaire ?? 'pas de commentaire' }}</h5>
                             {% if eval.visible == false %}
                                 <twig:Alert type="warning">
                                     Cette évaluation n'est pas visible des étudiants.
