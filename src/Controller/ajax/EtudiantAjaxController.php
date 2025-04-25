@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2025. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/ajax/EtudiantAjaxController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:17
+ * @lastUpdate 25/04/2025 06:29
  */
 
 namespace App\Controller\ajax;
@@ -45,6 +45,11 @@ class EtudiantAjaxController extends BaseController
     #[Route(path: '/edit/{id}', name: 'etudiant_ajax_edit', options: ['expose' => true])]
     public function edit(EtudiantUpdate $etudiantUpdate, Request $request, Etudiant $etudiant): JsonResponse
     {
-        return $this->update($request, $etudiantUpdate, $etudiant);
+        if ($this->isGranted('ROLE_SCOLARITE') || $this->isGranted('ROLE_CDD') || ($this->isGranted('ROLE_ETUDIANT') && $etudiant->getId() === $this->getUser()->getId())) {
+            return $this->update($request, $etudiantUpdate, $etudiant);
+        }
+
+        return new JsonResponse('erreur',
+            Response::HTTP_FORBIDDEN);
     }
 }
