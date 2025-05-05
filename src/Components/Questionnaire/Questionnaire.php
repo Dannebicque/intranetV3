@@ -255,7 +255,7 @@ class Questionnaire
 //            return $this->router->generate($this->options['routeEnd'], $this->options['paramsEnd']);
 //        }
 
-        return 'https://www.iut-troyes.univ-reims.fr';
+        return 'https://www.univ-reims.fr/iut-troyes/';
     }
 
     public function calculResultats(ListeChoix $listeChoix): void
