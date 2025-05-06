@@ -36,7 +36,7 @@ class PersonnelProfilType extends AbstractType
             ])
             ->add('nom', TextType::class, ['label' => 'nom'])
             ->add('prenom', TextType::class, ['label' => 'prenom'])
-            ->add('mail_univ', TextType::class, ['label' => 'mail_univ'])
+            ->add('mail_univ', TextType::class, ['label' => 'mail_univ', 'disabled' => true])
             ->add('site_univ', TextType::class, ['label' => 'site_univ', 'required' => false])
             ->add('mail_perso', TextType::class, ['label' => 'mail_perso', 'required' => false])
             ->add('site_perso', TextType::class, ['label' => 'site_perso', 'required' => false])
