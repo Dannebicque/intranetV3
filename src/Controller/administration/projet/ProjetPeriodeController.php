@@ -102,7 +102,7 @@ class ProjetPeriodeController extends BaseController
     public function edit(Request $request, #[MapEntity(mapping: ['id' => 'uuid'])]
     ProjetPeriode                $projetPeriode): Response
     {
-        $this->denyAccessUnlessGranted('MINIMAL_ROLE_PROJET', $projetPeriode->getSemestre());
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_PROJET', $projetPeriode->getSemestres()->first());
         $form = $this->createForm(ProjetPeriodeType::class, $projetPeriode, [
             'departement' => $this->getDepartement(),
             'attr' => [
