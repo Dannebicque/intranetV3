@@ -10,10 +10,13 @@
 namespace App\EventSubscriber;
 
 use App\Classes\Stage\MailerStage;
+use App\Controller\BaseController;
+use App\Entity\Constantes;
 use App\Entity\Notification;
 use App\Event\ProjetEvent;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Routing\RouterInterface;
 
@@ -22,7 +25,12 @@ class ProjetSubscriber implements EventSubscriberInterface
     /**
      * StageSubscriber constructor.
      */
-    public function __construct(private readonly EntityManagerInterface $entityManager, private readonly RouterInterface $router, protected MailerStage $myMailer)
+    public function __construct(
+        private readonly EntityManagerInterface $entityManager,
+        private readonly RouterInterface $router,
+        protected MailerStage $myMailer,
+        private readonly RequestStack $requestStack
+    )
     {
     }
 
@@ -60,17 +68,55 @@ class ProjetSubscriber implements EventSubscriberInterface
             $mailsEtudiants[] = $etudiant->getMailPerso();
         }
 
-        $this->myMailer->setTemplate('mails/projets/projet_'.$codeEvent.'.txt.twig',
-            ['projetEtudiant' => $projetEtudiant],
-            $mailsEtudiants,
-            $codeEvent,
-            ['replayTo' => $destinataires]);
+        // Filter out null or empty email addresses
+        $mailsEtudiants = array_filter($mailsEtudiants, function($email) {
+            return $email !== null && trim($email) !== '';
+        });
 
-        $this->myMailer->setTemplate('mails/projets/projet_assistant_'.$codeEvent.'.txt.twig',
-            ['projetEtudiant' => $projetEtudiant],
-            $destinataires,
-            'copie '.$codeEvent,
-            ['replayTo' => $destinataires]);
+        $destinataires = array_filter($destinataires, function($email) {
+            return $email !== null && trim($email) !== '';
+        });
+
+        // Only send emails if there are valid recipients
+        if (!empty($mailsEtudiants)) {
+            $this->myMailer->setTemplate('mails/projets/projet_'.$codeEvent.'.txt.twig',
+                ['projetEtudiant' => $projetEtudiant],
+                $mailsEtudiants,
+                $codeEvent,
+                ['replyTo' => $destinataires]);
+        } else {
+            // if no students, a flash message is added
+            $this->addToast(
+                Constantes::FLASHBAG_INFO,
+                'Aucune adresse mail d\'étudiant disponible pour l\'envoi du mail.'
+            );
+        }
+
+        if (!empty($destinataires)) {
+            $this->myMailer->setTemplate('mails/projets/projet_assistant_'.$codeEvent.'.txt.twig',
+                ['projetEtudiant' => $projetEtudiant],
+                $destinataires,
+                'copie '.$codeEvent,
+                ['replyTo' => $destinataires]);
+        } else {
+            // if no assistants, a flash message is added
+            $this->addToast(
+                Constantes::FLASHBAG_INFO,
+                'Aucune adresse mail de responsable disponible pour l\'envoi du mail.'
+            );
+        }
+    }
+
+    private function addToast(string $type, string $text, ?string $title = null): void
+    {
+        $this->requestStack->getSession()->getFlashBag()->add(
+            BaseController::BAG_TOAST,
+            [
+                'type' => $type,
+                'text' => $text,
+                'title' => $title ?? $type,
+            ]
+        );
     }
 
     private function addNotification(ProjetEvent $event, string $codeEvent): void
