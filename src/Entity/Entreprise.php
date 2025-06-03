@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2025. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Entreprise.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:40
+ * @lastUpdate 03/06/2025 14:11
  */
 
 namespace App\Entity;
@@ -166,5 +166,15 @@ class Entreprise extends BaseEntity
         }
 
         return $this;
+    }
+
+    public function getArray(): array
+    {
+        return [
+            'siret' => $this->getSiret(),
+            'raisonSociale' => $this->getRaisonSociale(),
+            'adresse' => $this->getAdresse()?->getArray() ?? [],
+            'responsable' => $this->getResponsable()?->getDisplay() ?? '',
+        ];
     }
 }

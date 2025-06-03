@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2025. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Adresse.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/05/2022 18:15
+ * @lastUpdate 03/06/2025 14:14
  */
 
 namespace App\Entity;
@@ -169,5 +169,17 @@ class Adresse extends BaseEntity
         }
 
         return $this;
+    }
+
+    public function getArray(): array
+    {
+        return [
+            'adresse1' => $this->getAdresse1(),
+            'adresse2' => $this->getAdresse2(),
+            'adresse3' => $this->getAdresse3(),
+            'codePostal' => $this->getCodePostal(),
+            'ville' => $this->getVille(),
+            'pays' => $this->getPays(),
+        ];
     }
 }

@@ -44,6 +44,8 @@ security:
   access_control:
     - { path: '^/[a-z]{2}/api/transfert', roles: PUBLIC_ACCESS }
     - { path: '^/[a-z]{2}/api/unifolio', roles: PUBLIC_ACCESS }
+    - { path: '^/[a-z]{2}/api/generate-token', roles: PUBLIC_ACCESS }
+    - { path: '^/[a-z]{2}/api/stage-periode', roles: PUBLIC_ACCESS }
     - { path: '^/[a-z]{2}/but', roles: PUBLIC_ACCESS }
     - { path: '^/[a-z]{2}/aide', roles: PUBLIC_ACCESS }
     - { path: '^/[a-z]{2}/borne', roles: PUBLIC_ACCESS }
