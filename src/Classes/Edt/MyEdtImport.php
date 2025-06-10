@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtImport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 17/03/2025 09:55
+ * @lastUpdate 10/06/2025 11:47
  */
 
 /*
@@ -257,6 +257,9 @@ class MyEdtImport
         'WSA610C' => 'WSA610C',
         'WSA611S' => 'WSA611S',
         'WSA611C' => 'WSA611C',
+        'WSA666C' => 'WSA666C',
+        'WSA666S' => 'WSA666S',
+        'WSA666D' => 'WSA666D',
     ];
 
     private const CORRESPONDANCE_SEMESTRE = [
