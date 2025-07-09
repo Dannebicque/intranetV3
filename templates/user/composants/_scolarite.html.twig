@@ -24,7 +24,7 @@
                         <td>{{ parcour.semestre ? parcour.semestre.display : 'non.defini'|trans }}</td>
 
                         <td>
-                            {% if parcour.decision != 'EC' %}
+                            {% if parcour.decision.value != 'EC' and parcour.decision.value != 'DEF' %}
                                 {% for ue in parcour.semestre.ues %}
                                     <strong>UE {{ ue.numeroUe }}:</strong>
                                     {{ parcour.moyennesUes[ue.id].moyenne|styleMoyenne }}
@@ -32,7 +32,13 @@
                                     <br>
                                 {% endfor %}
                             {% else %}
+                                {% if parcour.decision.value == 'EC' %}
                                 EC
+                                {% else %}
+                                    <span class="badge bg-danger">
+                                    Défaillant
+                                </span>
+                            {% endif %}
                             {% endif %}
                         </td>
                         {% if etudiant.semestre.diplome.typeDiplome.apc == false %}
@@ -50,7 +56,6 @@
                                 <a href="{{ path('administration_scolarite_etudiant_edit', {slug: etudiant.slug,scolarite:parcour.id }) }}"
                                    title="Editer la scolarité de {{ etudiant.displayPr }}"
                                    data-bs-toggle="tooltip" data-bs-placement="bottom"
-
                                    class="btn btn-warning btn-outline btn-xs"><i class="{{ iconEdit }}"></i></a>
                             {% endif %}
 
@@ -69,13 +74,14 @@
                         </td>
                     </tr>
                     {% if etudiant.semestre.diplome.typeDiplome.apc == true %}
-                        {% if parcour.semestre.ordreLmd is even %}
+                        {% if parcour.semestre.ordreLmd is even and bilanAnnees[parcour.semestre.annee.ordre] is defined %}
                             <tr>
                                 <td colspan="2">Bilan BUT {{ parcour.semestre.annee.ordre }}</td>
                                 <td>
                                     {% set ordreAnnee = parcour.semestre.annee.ordre %}
                                     {% for ue in parcour.semestre.ues %}
                                         <strong>UE {{ ue.numeroUe }}:</strong>
+
                                         {{ bilanAnnees[ordreAnnee]['ues'][ue.numeroUe].decision|styleDecisionUe }}
                                         <br>
                                     {% endfor %}

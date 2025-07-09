@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2025. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/ScolariteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/04/2024 06:26
+ * @lastUpdate 09/07/2025 08:45
  */
 
 namespace App\Controller\administration;
@@ -81,7 +81,8 @@ class ScolariteController extends BaseController
             'form' => $form,
             'scolarite' => $scolarite,
             'edit' => $edit,
-            'ueDecisions' => DecisionUeEnum::cases()
+            'ueDecisions' => DecisionUeEnum::cases(),
+            'bilanAnnees' => []
         ]);
     }
 

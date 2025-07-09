@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2025. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/ProfilEtudiantController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/09/2024 10:49
+ * @lastUpdate 09/07/2025 08:58
  */
 
 namespace App\Controller;
@@ -79,14 +79,15 @@ class ProfilEtudiantController extends BaseController
 
         $bilanAnnees = [];
         $scolarite = $scolariteRepository->findByEtudiant($etudiant);
+        $hasDef = false;
 
         $tabUes = [];
         //uniquement si APC
         if ($etudiant->getDiplome() !== null && $etudiant->getDiplome()?->isApc()) {
             foreach ($scolarite as $scol) {
-                $bilanAnnees[$scol->getSemestre()->getAnnee()->getOrdre()][$scol->getSemestre()->getOrdreLmd()] = $scol->getMoyennesUes();
+                $bilanAnnees[$scol->getSemestre()?->getAnnee()?->getOrdre()][$scol->getSemestre()?->getOrdreLmd()] = $scol->getMoyennesUes();
 
-                foreach ($scol->getSemestre()->getUes() as $ue) {
+                foreach ($scol->getSemestre()?->getUes() as $ue) {
                     $tabUes[$ue->getId()] = $ue->getNumeroUe();
                 }
             }
@@ -104,6 +105,10 @@ class ProfilEtudiantController extends BaseController
                             ];
                         }
 
+                        if ($bilanUe['decision'] === Constantes::UE_DEFAILLANT) {
+                            $hasDef = true;
+                        }
+
                         $bilanAnnees[$key]['ues'][$keyUe]['moyenne'] += $bilanUe['moyenne'];
                     }
                 }
@@ -112,18 +117,23 @@ class ProfilEtudiantController extends BaseController
                 $nbValides = 0;
                 $nbUesHuit = 0;
                 foreach ($bilanAnnees[$key]['ues'] as $idUe => $moyenneUe) {
+
                     $nbUes++;
                     $moyeUe = $moyenneUe['moyenne'] / 2;
                     $bilanAnnees[$key]['ues'][$idUe]['moyenne'] = $moyeUe;
 
-                    if ($moyeUe < 8) {
-                        $bilanAnnees[$key]['ues'][$idUe]['decision'] = Constantes::UE_NON_VALIDE;
-                        $nbUesHuit++;
-                    } elseif ($moyeUe < 10) {
-                        $bilanAnnees[$key]['ues'][$idUe]['decision'] = Constantes::UE_NON_VALIDE;
+                    if ($hasDef === true) {
+                        $bilanAnnees[$key]['ues'][$idUe]['decision'] = Constantes::UE_DEFAILLANT;
                     } else {
-                        $bilanAnnees[$key]['ues'][$idUe]['decision'] = Constantes::UE_VALIDE;
-                        $nbValides++;
+                        if ($moyeUe < 8) {
+                            $bilanAnnees[$key]['ues'][$idUe]['decision'] = Constantes::UE_NON_VALIDE;
+                            $nbUesHuit++;
+                        } elseif ($moyeUe < 10) {
+                            $bilanAnnees[$key]['ues'][$idUe]['decision'] = Constantes::UE_NON_VALIDE;
+                        } else {
+                            $bilanAnnees[$key]['ues'][$idUe]['decision'] = Constantes::UE_VALIDE;
+                            $nbValides++;
+                        }
                     }
                 }
 
