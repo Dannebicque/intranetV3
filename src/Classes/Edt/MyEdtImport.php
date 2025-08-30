@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtImport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 10/06/2025 11:47
+ * @lastUpdate 30/08/2025 18:10
  */
 
 /*
@@ -21,6 +21,7 @@ use App\Entity\Departement;
 use App\Entity\Diplome;
 use App\Entity\EdtPlanning;
 use App\Entity\Semestre;
+use App\Repository\CalendrierRepository;
 use App\Repository\DepartementRepository;
 use App\Repository\DiplomeRepository;
 use App\Repository\EdtPlanningRepository;
@@ -37,6 +38,7 @@ class MyEdtImport
 {
     protected array $tabIntervenants;
     protected array $tabMatieres;
+    protected array $calendrier;
     protected array $tabSemestres;
     protected array $tSemaineClear;
     protected ?Departement $departement;
@@ -44,12 +46,29 @@ class MyEdtImport
     protected AnneeUniversitaire $anneeUniversitaire;
     protected ?Diplome $diplome = null;
     private ?string $nomfile = null;
+    private ?string $originalFile = null;
     private int $semaine;
 
     private array $tGroupes = [];
 
     private ?Semestre $semestre = null;
 
+    private array $tabCreneaux = [
+        1 => '8:00',
+        2 => '9:30',
+        3 => '11:00',
+        4 => '14:00',
+        5 => '15:30',
+        6 => '17:00',
+    ];
+
+    private array $tabJour = [
+        'Lundi' => 1,
+        'Mardi' => 2,
+        'Mercredi' => 3,
+        'Jeudi' => 4,
+        'Vendredi' => 5,
+    ];
     private const CORRESPONDANCE_S3 = [
         'WR301D' => 'WR301D',
         'WR302D' => 'WR302D',
@@ -263,108 +282,22 @@ class MyEdtImport
     ];
 
     private const CORRESPONDANCE_SEMESTRE = [
-        'S1' => [
-            'A1...H1' => 79,
-            'A1' => 79,
-            'B1' => 79,
-            'A1-B1' => 79,
-            'C1' => 79,
-            'D1' => 79,
-            'C1-D1' => 79,
-            'E1' => 79,
-            'F1' => 79,
-            'E1-F1' => 79,
-            'G1' => 79,
-            'H1' => 79,
-            'G1-H1' => 79
-        ],
-        'S2' => [
-            'A2...H2' => 80,
-            'A2' => 80,
-            'B2' => 80,
-            'A2-B2' => 80,
-            'C2' => 80,
-            'D2' => 80,
-            'C2-D2' => 80,
-            'E2' => 80,
-            'F2' => 80,
-            'E2-F2' => 80,
-            'G2' => 80,
-            'H2' => 80,
-            'G2-H2' => 80
-        ],
-        'S3' => [
-            'A3' => 101,
-            'B3' => 101,
-            'A3-B3' => 101,
-            'A3-D3' => 101,
-            'A3...H3' => 101,
-            'C3' => 101,
-            'D3' => 101,
-            'C3-D3' => 101,
-            'E3' => 165,
-            'F3' => 165,
-            'E3-F3' => 165,
-            'G3' => 183,
-            'H3' => 183,
-            'G3-H3' => 183,
-            'I3' => 161,
-            'J3' => 161,
-            'I3-J3' => 161,
-        ],
-        'S4' => [
-            'A4' => 102,
-            'B4' => 102,
-            'A4-B4' => 102,
-            'A4-D4' => 102,
-            'A4...H4' => 102,
-            'C4' => 102,
-            'D4' => 102,
-            'C4-D4' => 102,
-            'E4' => 166,
-            'F4' => 166,
-            'E4-F4' => 166,
-            'G4' => 184,
-            'H4' => 184,
-            'G4-H4' => 184,
-            'I4' => 162,
-            'J4' => 162,
-            'I4-J4' => 162,
-        ],
-        'S5' => [
-            'A5' => 103,
-            'B5' => 103,
-            'A5-B5' => 103,
-            'C5' => 103,
-            'D5' => 103,
-            'C5-D5' => 103,
-            'E5' => 167,
-            'F5' => 167,
-            'E5-F5' => 167,
-            'G5' => 185,
-            'H5' => 185,
-            'G5-H5' => 185,
-            'I5' => 163,
-            'J5' => 163,
-            'I5-J5' => 163,
-        ],
-        'S6' => [
-            'A6' => 104, //todo: en réel 104...
-            'B6' => 104,
-            'A6-B6' => 104,
-            'C6' => 104,
-            'D6' => 104,
-            'C6-D6' => 104,
-            'E6' => 168,
-            'F6' => 168,
-            'E6-F6' => 168,
-            'G6' => 186,
-            'H6' => 186,
-            'G6-H6' => 186,
-            'I6' => 164,
-            'J6' => 164,
-            'I6-J6' => 164,
-        ],
+        'S1' => 79,
+        'S2' => 80,
+        'S3-DEV-FI' => 101,
+        'S3-DEV-FC' => 165,
+        'S3-COMM' => 183,
+        'S4-DEV-FI' => 102,
+        'S4-DEV-FC' => 166,
+        'S4-COMM' => 184,
+
+        'S5-DEV-FI' => 103,
+        'S5-DEV-FC' => 167,
+        'S5-COMM' => 185,
+
+        'S6-DEV-FI' => 104,
+        'S6-DEV-FC' => 168,
+        'S6-COMM' => 186
     ];
 
     /**
@@ -378,8 +311,8 @@ class MyEdtImport
         private readonly TypeMatiereManager    $typeMatiereManager,
         private readonly EntityManagerInterface $entityManager,
         private readonly SemestreRepository    $semestreRepository,
-        private readonly GroupeRepository $groupeRepository,
-        DiplomeRepository                      $diplomeRepository,
+        private readonly GroupeRepository      $groupeRepository,
+        DiplomeRepository                      $diplomeRepository, private readonly CalendrierRepository $calendrierRepository,
     )
     {
         $departement = $departementRepository->find(1);
@@ -403,12 +336,12 @@ class MyEdtImport
     /**
      * @throws Exception
      */
-    public function init(string $file, Departement $departement, AnneeUniversitaire $anneeUniversitaire): self
+    public function init(string $file, Departement $departement, AnneeUniversitaire $anneeUniversitaire, string $originalFile = ''): self
     {
         $this->departement = $departement;
         $this->anneeUniversitaire = $anneeUniversitaire;
         $this->nomfile = $file;
-
+        $this->originalFile = $originalFile;
         return $this;
     }
 
@@ -454,6 +387,29 @@ class MyEdtImport
         }
     }
 
+    public function traitev2(): void
+    {
+        // Récupérer la liste des profs avec initiales
+        $this->tabIntervenants = $this->personnelRepository->tableauIntervenants($this->departement);
+        $this->tabMatieres = $this->typeMatiereManager->tableauMatieres($this->departement);
+        $this->calendrier = $this->calendrierRepository->findCalendrierArray($this->anneeUniversitaire);
+
+        $jsonContent = file_get_contents($this->nomfile);
+        $data = json_decode($jsonContent, true);
+        $this->tSemaineClear = []; // tableau pour mémoriser les semaines à supprimer
+
+        /* Si on a réussi à ouvrir le fichier */
+
+        /* Tant que l'on est pas à la fin du fichier */
+        foreach ($data as $phrase) {
+            $this->traiteLignev2($phrase);
+        }
+
+        unlink($this->nomfile); // suppression du fichier
+        $this->entityManager->flush();
+
+    }
+
     private function traiteLigne(array $phrase): void
     {
         $this->semaine = (int)$phrase[7] + 1; //par rapport à celcat
@@ -461,6 +417,16 @@ class MyEdtImport
         $semestre = mb_substr($phrase[8], 1, 2);
         $this->verifieSiSemaineDoitEtreEffacee($semestre);
         $this->addCours($phrase, $semestre);
+    }
+
+    private function traiteLignev2(array $phrase): void
+    {
+        //le fichier se nommer cours_3.json, 3 est la semaine
+        $this->semaine = explode('_', explode('.', $this->originalFile)[0])[1] + 1; //par rapport à celcat
+
+        $semestre = self::CORRESPONDANCE_SEMESTRE[$phrase['semester']];
+        $this->verifieSiSemaineDoitEtreEffacee($semestre);
+        $this->addCoursv2($phrase, $semestre);
     }
 
     public function getSemestre(): ?Semestre
@@ -489,7 +455,7 @@ class MyEdtImport
         return Carbon::createFromFormat('d-m-Y', $jour);
     }
 
-    private function verifieSiSemaineDoitEtreEffacee(string $semestre): void
+    private function verifieSiSemaineDoitEtreEffacee(string|int $semestre): void
     {
         if (!array_key_exists($this->semaine, $this->tSemaineClear)) {
             // si la clé n'est pas dans le tableau, la semaine n'a pas encore été effacée, on supprime
@@ -596,6 +562,86 @@ class MyEdtImport
 
             $this->entityManager->persist($pl);
             $this->log->addItem('Ajout du cours ' . implode('.', $phrase), 'success');
+        }
+
+    }
+
+    private function addCoursv2(array $phrase, string $semestre): void
+    {
+        if ($phrase['date'] !== null) {
+
+            //calcul heure début et heure de fin L'heure de début dépend du créneau (1 = 8h00,2=9h30,3=11h00,4=14h00,5=15h30,6=17h00) ou l'heure si heureDebut ! null. La durée est 1h30 sauf si duree défini (durée en float, exemple 1.5 => 1h30)
+
+
+            if (array_key_exists('heureDebut', $phrase) && $phrase['heureDebut'] !== null) {
+                $heureDebutTxt = str_replace('h', ':', $phrase['heureDebut']);
+                $heureDebut = Carbon::createFromFormat('H:i', $heureDebutTxt);
+            } else {
+                $heureDebut = Carbon::createFromFormat('H:i', $this->tabCreneaux[$phrase['creneau']]);
+            }
+
+            if (array_key_exists('duree', $phrase) && $phrase['duree'] !== null) {
+                //convertire la durée (en float) en heure et minute
+                $duree = (int)$phrase['duree'];
+                $minutes = ($phrase['duree'] - $duree) * 60;
+                $heureFin = $heureDebut->copy()->addHours($duree)->addMinutes($minutes);
+            } else {
+                //on ajoute 1h30
+                $heureFin = $heureDebut->copy()->addHour()->addMinutes(30);
+            }
+
+            $prof = $phrase['professor'];
+            $matiere = $phrase['matiere'];
+            $salle = $phrase['room'];
+
+            if ('' !== $matiere && array_key_exists($matiere, $this->tabMatieres)) {
+                $pl = new EdtPlanning();
+                $pl->setAnneeUniversitaire($this->anneeUniversitaire);
+                $ordreSemestre = (int)$phrase['semester'][1];
+                $pl->setIdMatiere($this->tabMatieres[$matiere]->id);
+                $pl->setTypeMatiere($this->tabMatieres[$matiere]->typeMatiere);
+                $pl->setTexte(null);
+                $pl->setOrdreSemestre($ordreSemestre);
+                $pl->setSemestre($this->tabSemestres[$semestre] ?? null);
+
+                if ('' !== $prof && 'DOE' !== $prof && 'PRJ' !== $prof && array_key_exists($prof, $this->tabIntervenants)) {
+                    $pl->setIntervenant($this->tabIntervenants[$prof]);
+                } else {
+                    $pl->setIntervenant(null);
+                }
+
+                $pl->setJour($this->tabJour[$phrase['date']]); // à déduire de la date
+                $pl->setSalle(mb_strtoupper($salle));
+
+                //todo: a calculer $pl->setDate($date);
+
+                // je veux calculer la date. Je connais la date du lundi grace à $this->>calendirer, je connais le jour (ou son numéro 1 = lundi, ... je veux la date du jour en objet
+                $semaine = $this->calendrier[$this->semaine];
+                $lundi = $semaine['lundi'];
+                $date = $lundi->addDays($this->tabJour[$phrase['date']] - 1);
+                $pl->setDate($date);
+
+                $pl->setType(strtoupper($phrase['type']));
+                $pl->setDiplome($pl->getSemestre()?->getDiplome());
+                $pl->setGroupe($phrase['groupIndex']);
+                $pl->setHeureDebut($heureDebut);
+                //extraire le nombre après les deux premiers caractères de $phrase[2]
+                $pl->setOrdre($phrase['rang']);
+                $pl->setHeureFin($heureFin);
+                $pl->setDebut(Constantes::TAB_HEURES_INDEX[$heureDebut?->format('H:i:s')]);
+                $pl->setFin(Constantes::TAB_HEURES_INDEX[$heureFin?->format('H:i:s')]);
+
+                $pl->setSemaine((int)$this->semaine);//décalage avec Celcat
+                $pl->setEvaluation(false);
+
+                // groupe Objet
+                if (array_key_exists($pl->getType(), $this->tGroupes[$ordreSemestre]) && array_key_exists($pl->getGroupe(), $this->tGroupes[$ordreSemestre][$pl->getType()])) {
+                    $pl->setGroupeObjet($this->tGroupes[$ordreSemestre][$pl->getType()][$pl->getGroupe()]);
+                }
+
+                $this->entityManager->persist($pl);
+                $this->log->addItem('Ajout du cours ' . implode('.', $phrase), 'success');
+            }
         }
 
     }

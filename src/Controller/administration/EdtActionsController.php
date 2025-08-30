@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2025. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EdtActionsController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 31/08/2024 15:36
+ * @lastUpdate 30/08/2025 16:36
  */
 
 namespace App\Controller\administration;
@@ -40,8 +40,8 @@ class EdtActionsController extends BaseController
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_EDT', $this->getDepartement());
         // récupérer le fichier
-        $fichier = $upload->upload($request->files->get('fichieredt'));
-        $myEdtImport->init($fichier, $this->getDepartement(), $this->getAnneeUniversitaire())->traite();
+        $fichier = $upload->upload($request->files->get('fichieredt'), 'temp/', ['json']);
+        $myEdtImport->init($fichier, $this->getDepartement(), $this->getAnneeUniversitaire(), $request->files->get('fichieredt')->getClientOriginalName())->traitev2();
 
         return $this->redirectToRoute('administration_edt_index');
     }
