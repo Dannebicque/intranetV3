@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtImport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/08/2025 18:10
+ * @lastUpdate 31/08/2025 08:00
  */
 
 /*
@@ -623,7 +623,7 @@ class MyEdtImport
 
                 $pl->setType(strtoupper($phrase['type']));
                 $pl->setDiplome($pl->getSemestre()?->getDiplome());
-                $pl->setGroupe($phrase['groupIndex']);
+                $this->addGroupev2($pl, (int)$phrase['groupIndex']);
                 $pl->setHeureDebut($heureDebut);
                 //extraire le nombre après les deux premiers caractères de $phrase[2]
                 $pl->setOrdre($phrase['rang']);
@@ -657,5 +657,17 @@ class MyEdtImport
 
 
         $pl->setGroupe(ord($groupe) - 64 + $offset);
+    }
+
+    private function addGroupev2(EdtPlanning $pl, int $groupe): void
+    {
+        //si semestre 3 et type CM et groupe = A alors ajouter 40
+        $offset = 0;
+        if ($pl->getOrdreSemestre() === 3 && $pl->getType() === 'CM' && $groupe === 1) {
+            $offset = 40;
+        }
+
+
+        $pl->setGroupe($groupe + $offset);
     }
 }
