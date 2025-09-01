@@ -59,7 +59,8 @@ class EduSignController extends BaseController
     #[Route('/', name: 'administration_edusign_index')]
     public function index(Request $request, RouterInterface $router): Response
     {
-        // récupérer
+        $user = $this->getUser();
+        $anneeUniversitaire = $user->getAnneeUniversitaire();
         $departement = $this->getDepartement();
         $personnelsDepartement = $this->personnelDepartementRepository->findBy(['departement' => $departement]);
         usort($personnelsDepartement, fn($a, $b) => $a->getPersonnel()->getNom() <=> $b->getPersonnel()->getNom());
@@ -76,12 +77,12 @@ class EduSignController extends BaseController
         $cours = [];
 
         foreach ($semestres as $semestre) {
-            $eventSemaine = $this->CalendrierRepository->findOneBy(['semaineReelle' => $week, 'anneeUniversitaire' => $semestre->getAnneeUniversitaire()]);
+            $eventSemaine = $this->CalendrierRepository->findOneBy(['semaineReelle' => $week, 'anneeUniversitaire' => $anneeUniversitaire]);
             $semaine = $eventSemaine->getSemaineFormation();
             $matieresDiplome = $this->getMatieresDiplome($semestre->getDiplome());
             $groupes = $this->groupeRepository->findBySemestre($semestre);
             $groupesSemestres[$semestre->getLibelle()] = array_filter($groupes, fn($groupe) => $semestre->getDiplome()->getApcParcours()?->getGroupes() ?? $this->groupeRepository->findBySemestre($semestre));
-            $edt = $this->edtManager->getPlanningSemestreSemaine($semestre, $semaine, $semestre->getAnneeUniversitaire(), $matieresDiplome, $groupes);
+            $edt = $this->edtManager->getPlanningSemestreSemaine($semestre, $semaine, $anneeUniversitaire, $matieresDiplome, $groupes);
             $salles = $this->salleRepository->findAll();
 
             foreach ($edt->evenements as $this->evenement) {
@@ -181,6 +182,11 @@ class EduSignController extends BaseController
     #[Route('/create-courses/{opt}/{id}', name: 'app_admin_edu_sign_create_courses')]
     public function createCourses(Request $request, ?int $opt, ?int $id, UpdateEdt $updateEdt, FixCourses $fixCourses, MailerInterface $mailer): Response
     {
+        // récupérer le user connecté
+        $user = $this->getUser();
+        // récupérer l'année universitaire du user
+        $anneeUniversitaire = $user->getAnneeUniversitaire();
+
         $diplome = $this->diplomeRepository->findOneBy(['id' => $id]);
 
         $keyEduSign = $diplome->getKeyEduSign();
@@ -192,12 +198,12 @@ class EduSignController extends BaseController
         }
 
         if ($week >= date('W')) {
-            $fixResult = $fixCourses->fixCourses($keyEduSign, $week);
+            $fixResult = $fixCourses->fixCourses($keyEduSign, $week, $anneeUniversitaire);
         } else {
             $fixResult = [];
         }
 
-        $updateResult = $updateEdt->update($keyEduSign, $opt, $week);
+        $updateResult = $updateEdt->update($keyEduSign, $opt, $week, $anneeUniversitaire);
 
         // Vérifier que $updateResult est un tableau
         if ($updateResult === null) {
