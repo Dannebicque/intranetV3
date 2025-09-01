@@ -57,12 +57,6 @@ class EduSignController extends BaseController
             $departementName = $diplome->getDepartement()->getLibelle();
             $groupedDiplomes[$departementName][] = $diplome;
         }
-        $groupedDiplomes = [];
-
-        foreach ($diplomes as $diplome) {
-            $departementName = $diplome->getDepartement()->getLibelle();
-            $groupedDiplomes[$departementName][] = $diplome;
-        }
 
         $departements = [];
         foreach ($diplomes as $diplome) {
@@ -159,6 +153,8 @@ class EduSignController extends BaseController
     #[Route('/create-courses/{opt}/{id}', name: 'app_edu_sign_create_courses')]
     public function createCourses(?int $opt, ?int $id, UpdateEdt $updateEdt, FixCourses $fixCourses, MailerInterface $mailer): Response
     {
+        $week = (int)date('W')+1;
+
         if ($id !== null) {
             $diplome = $this->diplomeRepository->find($id);
             $keyEduSign = null;
@@ -167,8 +163,8 @@ class EduSignController extends BaseController
             }
 
             //créer les cours pour la semaine
-            $updateEdt->update($keyEduSign, $opt);
-            $fixCourses->fixCourse($keyEduSign);
+            $updateEdt->update($keyEduSign, $opt, $week);
+            $fixCourses->fixCourses($keyEduSign, $week);
 
         }
 
