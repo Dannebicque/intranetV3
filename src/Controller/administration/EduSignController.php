@@ -199,6 +199,11 @@ class EduSignController extends BaseController
 
         $updateResult = $updateEdt->update($keyEduSign, $opt, $week);
 
+        // Vérifier que $updateResult est un tableau
+        if ($updateResult === null) {
+            $updateResult = [];
+        }
+
         // ajouter fixResult à updateResult
         $updateResult = array_merge($fixResult, $updateResult);
 
@@ -224,6 +229,17 @@ class EduSignController extends BaseController
         $updateGroupeResult = $updateGroupe->update($keyEduSign);
         $fixEtudiantsResult = $updateEtudiant->fixEtudiants($keyEduSign);
         $updateSemestreResult = $updateEtudiant->changeSemestre($diplome, $keyEduSign);
+
+        // Vérifier que les résultats sont des tableaux
+        if ($updateGroupeResult === null) {
+            $updateGroupeResult = [];
+        }
+        if ($fixEtudiantsResult === null) {
+            $fixEtudiantsResult = [];
+        }
+        if ($updateSemestreResult === null) {
+            $updateSemestreResult = [];
+        }
 
         // fusionner les deux tableaux d'erreurs
         $changeSemestreResult = array_merge($updateGroupeResult, $fixEtudiantsResult, $updateSemestreResult);
@@ -316,7 +332,11 @@ class EduSignController extends BaseController
             $updateCourseResult[$courseEdusign->api_id] = $this->apiCours->updateCourse($courseEdusign, $keyEduSign);
         }
 
-        $result = array_merge(array_filter($updateEnseignantResult), array_filter($updateCourseResult));
+        // Vérifier que les résultats sont des tableaux après array_filter
+        $filteredEnseignantResult = array_filter($updateEnseignantResult);
+        $filteredCourseResult = array_filter($updateCourseResult);
+
+        $result = array_merge($filteredEnseignantResult, $filteredCourseResult);
 
         $email = (new TemplatedEmail())
             ->from('no-reply@univ-reims.fr')
