@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2025. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/EtudiantRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/04/2024 17:54
+ * @lastUpdate 01/09/2025 11:26
  */
 
 namespace App\Repository;
@@ -292,6 +292,7 @@ class EtudiantRepository extends ServiceEntityRepository
             ->where('d.id = :diplome')
             ->orWhere('d.parent = :diplome')
             ->andWhere('s.ordreLmd = :ordreLmd')
+            ->andWhere('e.anneeSortie = 0')
             ->setParameter('ordreLmd', $ordreLmd)
             ->setParameter('diplome', $diplome->getid())
             ->orderBy('e.nom', Order::Ascending->value)
