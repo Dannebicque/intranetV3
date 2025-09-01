@@ -87,7 +87,7 @@ class UpdateEdt
             }
         }
 
-        return $result;
+        return $result ?? null;
     }
 
     private function calculStartEndDates(?int $opt, ?int $week): array

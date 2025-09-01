@@ -85,7 +85,7 @@ class FixCourses
             }
         }
 
-        return $result ?? ['aucun cours' => 'Aucun cours à traiter'];
+        return $result ?? null;
     }
 
     private function getCourse($diplome, $course, $enseignant)
