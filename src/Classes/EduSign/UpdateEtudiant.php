@@ -107,8 +107,10 @@ class UpdateEtudiant
 
                             if ($response === null) {
                                 $etudiantObject = $this->etudiantRepository->findOneBy(['id' => $etudiant['API_ID']]);
-                                $etudiantObject->setIdEduSign(null);
-                                $this->etudiantRepository->save($etudiantObject);
+                                if ($etudiantObject !== null) {
+                                    $etudiantObject->setIdEduSign(null);
+                                    $this->etudiantRepository->save($etudiantObject);
+                                }
                             }
                         }
                     }

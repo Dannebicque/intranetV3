@@ -89,18 +89,23 @@ class UpdateGroupe
                     }
 
                     if ($groupeObject === null) {
-                        $result = $this->apiGroupe->deleteGroupe($groupe['ID'], $keyEduSign);
-                        // retirer la clé eduSign du groupe ou du semestre
-                        $groupeFinal = $groupe['PARENT'] === ''
-                            ? $this->semestreRepository->findOneBy(['idEduSign' => $groupe['ID']])?->setIdEduSign(null)
-                            : $this->groupeRepository->findOneBy(['idEduSign' => $groupe['ID']])?->setIdEduSign(null);
-                        // sauvegarder le groupe ou le semestre dans le bon repository en fonction de $groupeFinal
-                        if ($groupeFinal instanceof Groupe) {
-                            $this->groupeRepository->save($groupeFinal);
-                        } elseif ($groupeFinal instanceof Semestre) {
-                            $this->semestreRepository->save($groupeFinal);
+                            $result = $this->apiGroupe->deleteGroupe($groupe['ID'], $keyEduSign);
+                            // retirer la clé eduSign du groupe ou du semestre
+                            if ($groupe['PARENT'] === '') {
+                                $groupeEntity = $this->semestreRepository->findOneBy(['idEduSign' => $groupe['ID']]);
+                            } else {
+                                $groupeEntity = $this->groupeRepository->findOneBy(['idEduSign' => $groupe['ID']]);
+                            }
+                            if ($groupeEntity !== null) {
+                                $groupeEntity->setIdEduSign(null);
+                                // sauvegarder le groupe ou le semestre dans le bon repository en fonction de $groupeEntity
+                                if ($groupeEntity instanceof Groupe) {
+                                    $this->groupeRepository->save($groupeEntity);
+                                } elseif ($groupeEntity instanceof Semestre) {
+                                    $this->semestreRepository->save($groupeEntity);
+                                }
+                            }
                         }
-                    }
                 }
             }
         }

@@ -14,6 +14,7 @@ use App\Classes\EduSign\Adapter\IntranetEdtEduSignAdapter;
 use App\Classes\EduSign\Api\ApiCours;
 use App\Classes\Matieres\TypeMatiereManager;
 use App\DTO\EvenementEdt;
+use App\Entity\AnneeUniversitaire;
 use App\Entity\Diplome;
 use App\Entity\Semestre;
 use App\Repository\ApcReferentielRepository;
@@ -49,7 +50,7 @@ class UpdateEdt
     {
     }
 
-    public function update(?string $keyEduSign, ?int $opt, ?int $week): ?array
+    public function update(?string $keyEduSign, ?int $opt, ?int $week, ?AnneeUniversitaire $anneeUniversitaire): ?array
     {
         $diplomes = $keyEduSign === null
             ? $this->diplomeRepository->findAllWithEduSign()
@@ -64,13 +65,13 @@ class UpdateEdt
             foreach ($semestres as $semestre) {
                 $eventSemaine = $this->CalendrierRepository->findOneBy([
                     'semaineReelle' => $semaineReelle,
-                    'anneeUniversitaire' => $semestre->getAnneeUniversitaire()
+                    'anneeUniversitaire' => $anneeUniversitaire
                 ]);
                 $semaine = $eventSemaine->getSemaineFormation();
                 $matieresSemestre = $this->getMatieresSemestre($semestre);
                 $groupes = $this->groupeRepository->findBySemestre($semestre);
                 $edt = $this->edtManager->getPlanningSemestreSemaine(
-                    $semestre, $semaine, $semestre->getAnneeUniversitaire(), $matieresSemestre, $groupes
+                    $semestre, $semaine, $anneeUniversitaire, $matieresSemestre, $groupes
                 );
 
                 if ($edt->evenements) {
