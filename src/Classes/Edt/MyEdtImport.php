@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtImport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 31/08/2025 08:00
+ * @lastUpdate 04/09/2025 10:25
  */
 
 /*
@@ -569,10 +569,6 @@ class MyEdtImport
     private function addCoursv2(array $phrase, string $semestre): void
     {
         if ($phrase['date'] !== null) {
-
-            //calcul heure début et heure de fin L'heure de début dépend du créneau (1 = 8h00,2=9h30,3=11h00,4=14h00,5=15h30,6=17h00) ou l'heure si heureDebut ! null. La durée est 1h30 sauf si duree défini (durée en float, exemple 1.5 => 1h30)
-
-
             if (array_key_exists('heureDebut', $phrase) && $phrase['heureDebut'] !== null) {
                 $heureDebutTxt = str_replace('h', ':', $phrase['heureDebut']);
                 $heureDebut = Carbon::createFromFormat('H:i', $heureDebutTxt);
@@ -602,7 +598,7 @@ class MyEdtImport
                 $pl->setTypeMatiere($this->tabMatieres[$matiere]->typeMatiere);
                 $pl->setTexte(null);
                 $pl->setOrdreSemestre($ordreSemestre);
-                $pl->setSemestre($this->tabSemestres[$semestre] ?? null);
+                $pl->setSemestre($this->tabSemestres[self::CORRESPONDANCE_SEMESTRE[$phrase['semester']]] ?? null);
 
                 if ('' !== $prof && 'DOE' !== $prof && 'PRJ' !== $prof && array_key_exists($prof, $this->tabIntervenants)) {
                     $pl->setIntervenant($this->tabIntervenants[$prof]);
@@ -612,8 +608,6 @@ class MyEdtImport
 
                 $pl->setJour($this->tabJour[$phrase['date']]); // à déduire de la date
                 $pl->setSalle(mb_strtoupper($salle));
-
-                //todo: a calculer $pl->setDate($date);
 
                 // je veux calculer la date. Je connais la date du lundi grace à $this->>calendirer, je connais le jour (ou son numéro 1 = lundi, ... je veux la date du jour en objet
                 $semaine = $this->calendrier[$this->semaine];
@@ -638,7 +632,6 @@ class MyEdtImport
                 if (array_key_exists($pl->getType(), $this->tGroupes[$ordreSemestre]) && array_key_exists($pl->getGroupe(), $this->tGroupes[$ordreSemestre][$pl->getType()])) {
                     $pl->setGroupeObjet($this->tGroupes[$ordreSemestre][$pl->getType()][$pl->getGroupe()]);
                 }
-
                 $this->entityManager->persist($pl);
                 $this->log->addItem('Ajout du cours ' . implode('.', $phrase), 'success');
             }
