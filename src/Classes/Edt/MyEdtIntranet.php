@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2025. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtIntranet.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/11/2024 10:20
+ * @lastUpdate 10/09/2025 16:26
  */
 
 namespace App\Classes\Edt;
@@ -167,7 +167,6 @@ class MyEdtIntranet extends BaseEdt
             $this->tabCouleur[$semestre->getOrdreLmd()] = $semestre->getAnnee()->getCouleur();
         }
         $this->matieres = $matieres;
-
         $this->init($anneeUniversitaire, $filtre, $valeur, $semaine);
 
         $this->semaines = $this->calculSemaines();
@@ -300,6 +299,7 @@ class MyEdtIntranet extends BaseEdt
             $tab[$p->getJour()][$debut][$groupe]['couleur'] = $this->getCouleur($p);
             $tab[$p->getJour()][$debut][$groupe]['couleurTexte'] = $this->getCouleurTexte($p);
             $tab[$p->getJour()][$debut][$groupe]['planning'] = $p;
+            $tab[$p->getJour()][$debut][$groupe]['largeur'] = 1;
             $taille = 0;
 
             switch ($p->getType()) {
@@ -328,7 +328,6 @@ class MyEdtIntranet extends BaseEdt
                     break;
 
             }
-
             if ($specialGroupe) {
                 $tab[$p->getJour()][$debut][$groupe]['largeur'] = 4;
             }
@@ -351,7 +350,6 @@ class MyEdtIntranet extends BaseEdt
             $tab[$p->getJour()][$debut][$groupe]['texte'] = $this->isEvaluation($p).'<br />'.$p->getSalle().'<br />'.$inter.'<br />'.$p->getDisplayGroupe();
             $tab[$p->getJour()][$debut][$groupe]['commentaire'] = $this->hasCommentaire($p);
         }
-
         return $tab;
     }
 

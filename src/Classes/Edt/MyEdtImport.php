@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtImport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/09/2025 10:25
+ * @lastUpdate 10/09/2025 16:27
  */
 
 /*
@@ -587,10 +587,53 @@ class MyEdtImport
             }
 
             $prof = $phrase['professor'];
-            $matiere = $phrase['matiere'];
+            $matiere = trim($phrase['matiere']);
             $salle = $phrase['room'];
+            if ('' !== $matiere && str_starts_with($matiere, 'WRP')) {
+                $pl = new EdtPlanning();
+                $pl->setAnneeUniversitaire($this->anneeUniversitaire);
+                $ordreSemestre = (int)$phrase['semester'][1];
+                $pl->setIdMatiere(0);
+                $pl->setTypeMatiere(null);
+                $pl->setTexte($phrase['texte'] ?? '-Evenement-');
+                $pl->setOrdreSemestre($ordreSemestre);
+                $pl->setSemestre($this->tabSemestres[self::CORRESPONDANCE_SEMESTRE[$phrase['semester']]] ?? null);
 
-            if ('' !== $matiere && array_key_exists($matiere, $this->tabMatieres)) {
+                if ('' !== $prof && 'DOE' !== $prof && 'PRJ' !== $prof && array_key_exists($prof, $this->tabIntervenants)) {
+                    $pl->setIntervenant($this->tabIntervenants[$prof]);
+                } else {
+                    $pl->setIntervenant(null);
+                }
+
+                $pl->setJour($this->tabJour[$phrase['date']]); // à déduire de la date
+                $pl->setSalle(mb_strtoupper($salle));
+
+                // je veux calculer la date. Je connais la date du lundi grace à $this->>calendirer, je connais le jour (ou son numéro 1 = lundi, ... je veux la date du jour en objet
+                $semaine = $this->calendrier[$this->semaine];
+                $lundi = $semaine['lundi'];
+                $date = $lundi->addDays($this->tabJour[$phrase['date']] - 1);
+                $pl->setDate($date);
+
+                $pl->setType(strtoupper($phrase['type']));
+                $pl->setDiplome($pl->getSemestre()?->getDiplome());
+                $this->addGroupev2($pl, (int)$phrase['groupIndex']);
+                $pl->setHeureDebut($heureDebut);
+                //extraire le nombre après les deux premiers caractères de $phrase[2]
+                $pl->setOrdre($phrase['rang']);
+                $pl->setHeureFin($heureFin);
+                $pl->setDebut(Constantes::TAB_HEURES_INDEX[$heureDebut?->format('H:i:s')]);
+                $pl->setFin(Constantes::TAB_HEURES_INDEX[$heureFin?->format('H:i:s')]);
+
+                $pl->setSemaine((int)$this->semaine);//décalage avec Celcat
+                $pl->setEvaluation(false);
+
+                // groupe Objet
+                if (array_key_exists($pl->getType(), $this->tGroupes[$ordreSemestre]) && array_key_exists($pl->getGroupe(), $this->tGroupes[$ordreSemestre][$pl->getType()])) {
+                    $pl->setGroupeObjet($this->tGroupes[$ordreSemestre][$pl->getType()][$pl->getGroupe()]);
+                }
+                $this->entityManager->persist($pl);
+                $this->log->addItem('Ajout du cours ' . implode('.', $phrase), 'success');
+            } else if ('' !== $matiere && array_key_exists($matiere, $this->tabMatieres)) {
                 $pl = new EdtPlanning();
                 $pl->setAnneeUniversitaire($this->anneeUniversitaire);
                 $ordreSemestre = (int)$phrase['semester'][1];

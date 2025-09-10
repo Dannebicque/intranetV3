@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2025. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EdtController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/04/2024 06:24
+ * @lastUpdate 10/09/2025 16:10
  */
 
 namespace App\Controller\administration;
@@ -84,7 +84,7 @@ class EdtController extends BaseController
                 'filtre' => $filtre,
                 'personnels' => $personnelRepository->findByDepartement($this->getDepartement()),
                 'salles' => $salleRepository->findAll(),
-                'matieres' => $edt->getSemestre()->getDiplome()->isApc() ? $typeMatiereManager->findByReferentielOrdreSemestre($edt->getSemestre(), $edt->getSemestre()->getDiplome()->getReferentiel()) : $typeMatiereManager->findBySemestre($edt->getSemestre()),
+                'matieres' => $edt->getSemestre()?->getDiplome()?->isApc() ? $typeMatiereManager->findByReferentielOrdreSemestre($edt->getSemestre(), $edt->getSemestre()?->getDiplome()?->getReferentiel()) : $typeMatiereManager->findBySemestre($edt->getSemestre()),
                 'edt' => $edt,
                 'groupes' => $groupeRepository->findGroupeSemestreEdt($edt->getSemestre()),
             ]),
