@@ -12,6 +12,7 @@ namespace App\Command;
 
 use App\Classes\EduSign\FixCourses;
 use App\Classes\EduSign\UpdateEdt;
+use App\Repository\AnneeUniversitaireRepository;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -28,6 +29,7 @@ class EduSignEdtCommand extends Command
     public function __construct(
         private readonly UpdateEdt $updateEdt,
         private readonly FixCourses $fixCourses,
+        private readonly AnneeUniversitaireRepository $anneeUniversitaireRepository,
     )
     {
         parent::__construct();
@@ -42,9 +44,10 @@ class EduSignEdtCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
         $week = (int)date('W')+1;
+        $anneeUniversitaire = $this->anneeUniversitaireRepository->findOneBy(['active' => true]);
 
         $this->fixCourses->fixCourses(null, $week);
-        $this->updateEdt->update(null, 3, $week);
+        $this->updateEdt->update(null, 3, $week, $anneeUniversitaire);
 
 
         $io->success('Emploi du temps mis à jour sur EduSign.');
