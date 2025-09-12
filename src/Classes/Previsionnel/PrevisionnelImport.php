@@ -162,19 +162,23 @@ class PrevisionnelImport
                             $this->log->addItem('Warning sur la ligne ' . $numLigne . ' : ' . $ligne[4] . ' (' . $ligne[5] . ') non trouvé', 'warning');
                         }
                         $pr = new Previsionnel($annee, $personnel);
-                        $pr->setNbHCm($ligne[6]);
-                        $pr->setNbGrCm(Tools::convertToInt($ligne[7]));
-                        $pr->setNbHTd($ligne[8]);
-                        $pr->setNbGrTd(Tools::convertToInt($ligne[9]));
-                        $pr->setNbHTp($ligne[10]);
-                        $pr->setNbGrTp(Tools::convertToInt($ligne[11]));
+                        $pr->setNbHCm($ligne[7]);
+                        $pr->setNbGrCm(Tools::convertToInt($ligne[8]));
+                        $pr->setNbHTd($ligne[9]);
+                        $pr->setNbGrTd(Tools::convertToInt($ligne[10]));
+                        $pr->setNbHTp($ligne[11]);
+                        $pr->setNbGrTp(Tools::convertToInt($ligne[12]));
                         $pr->setIdMatiere($matieres[$ligne[2]]->id);
                         $pr->setTypeMatiere($matieres[$ligne[2]]->typeMatiere);
                         $this->entityManager->persist($pr);
 
                         $this->log->addItem('Import de la ligne ' . $numLigne . ' avec succés', 'success');
                     } else {
-                        $this->log->addItem('Erreur sur la ligne ' . $numLigne . ' : ' . $ligne[2] . ' (' . $ligne[3] . ') non trouvé', 'danger');
+                        if (is_array($ligne) && array_key_exists(2, $ligne) && array_key_exists(3, $ligne)) {
+                            $this->log->addItem('Erreur sur la ligne ' . $numLigne . ' : ' . $ligne[2] . ' (' . $ligne[3] . ') non trouvé', 'danger');
+                        } else {
+                            $this->log->addItem('Erreur sur la ligne ' . $numLigne . ' : Ligne invalide ou mal formée', 'danger');
+                        }
                     }
                     $numLigne++;
                 }
