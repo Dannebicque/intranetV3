@@ -208,7 +208,7 @@ class PrevisionnelImport
 
             //ouverture du fichier XLSX
             $this->myExcelRead->readFile($this->file);
-            $this->myExcelRead->setNbColumns(12);
+            $this->myExcelRead->setNbColumns(13);
             $this->myExcelRead->setCologneToTest(3);
 
             /* Si on a réussi à ouvrir le fichier */
@@ -230,12 +230,12 @@ class PrevisionnelImport
                         $this->log->addItem('Warning sur la ligne ' . $this->myExcelRead->getLigne() . ' : ' . $ligne[5]->getValue() . ' (' . $ligne[6]->getValue() . ') non trouvé', 'warning');
                     }
                     $pr = new Previsionnel($annee, $personnel);
-                    $pr->setNbHCm($ligne[7]->getValue());
-                    $pr->setNbGrCm(Tools::convertToInt($ligne[8]->getValue()));
-                    $pr->setNbHTd($ligne[9]->getValue());
-                    $pr->setNbGrTd(Tools::convertToInt($ligne[10]->getValue()));
-                    $pr->setNbHTp($ligne[11]->getValue());
-                    $pr->setNbGrTp(Tools::convertToInt($ligne[12]->getValue()));
+                    $pr->setNbHCm($ligne[8]->getValue());
+                    $pr->setNbGrCm(Tools::convertToInt($ligne[9]->getValue()));
+                    $pr->setNbHTd($ligne[10]->getValue());
+                    $pr->setNbGrTd(Tools::convertToInt($ligne[11]->getValue()));
+                    $pr->setNbHTp($ligne[12]->getValue());
+                    $pr->setNbGrTp(Tools::convertToInt($ligne[13]->getValue()));
                     $pr->setIdMatiere($matieres[$ligne[3]->getValue()]->id);
                     $pr->setTypeMatiere($matieres[$ligne[3]->getValue()]->typeMatiere);
 
