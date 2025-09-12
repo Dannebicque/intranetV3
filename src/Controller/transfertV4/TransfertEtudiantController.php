@@ -38,6 +38,7 @@ public function getScolaritesEtudiant(
         $scolarites = $scolariteRepository->findBy(['etudiant' => $etudiant]);
         $anneeUniversitaire = $etudiant->getAnneeUniversitaire();
         $scolaritesParAnnee = [];
+        $groupes = $etudiant->getGroupes();
 
         // Trier les scolarités par année universitaire
         usort($scolarites, function ($a, $b) {
@@ -62,16 +63,36 @@ public function getScolaritesEtudiant(
                 ];
             }
 
+            // Filtrer les groupes pour ce semestre
+            $semestreId = $scolarite->getSemestre()?->getId();
+            $groupesSemestre = [];
+            foreach ($groupes as $groupe) {
+                if ($groupe->getTypeGroupe()) {
+                    $semestres = $groupe->getTypeGroupe()->getSemestres();
+                    foreach ($semestres as $s) {
+                        if ($s->getId() === $semestreId) {
+                            $groupesSemestre[] = [
+                                'id' => $groupe->getId(),
+                                'libelle' => $groupe->getLibelle(),
+                                'typeGroupe' => $groupe->getTypeGroupe()->getLibelle()
+                            ];
+                            break; // On sort de la boucle dès qu'on a trouvé un semestre correspondant
+                        }
+                    }
+                }
+            }
+
             // Ajouter les informations du semestre
             $scolaritesParAnnee[$anneeId]['semestres'][] = [
-                'id' => $scolarite->getSemestre()?->getId(),
+                'id' => $semestreId,
                 'decision' => $scolarite->getDecision(),
                 'proposition' => $scolarite->getProposition(),
                 'moyenne' => $scolarite->getMoyenne(),
                 'nbAbsences' => $scolarite->getNbAbsences(),
                 'commentaire' => $scolarite->getCommentaire(),
                 'moyennesMatieres' => $scolarite->getMoyennesMatieres(),
-                'moyennesUes' => $scolarite->getMoyennesUes()
+                'moyennesUes' => $scolarite->getMoyennesUes(),
+                'groupes' => $groupesSemestre,
             ];
 
             // Mettre à jour le bilan
@@ -110,15 +131,37 @@ public function getScolaritesEtudiant(
             ];
 
             // Ajouter les semestres
+                $semestreId = $etudiant->getSemestre()?->getId();
+
+
+                // Filtrer les groupes pour ce semestre
+                $groupesSemestre = [];
+                foreach ($groupes as $groupe) {
+                    if ($groupe->getTypeGroupe()) {
+                        $semestres = $groupe->getTypeGroupe()->getSemestres();
+                        foreach ($semestres as $s) {
+                            if ($s->getId() === $semestreId) {
+                                $groupesSemestre[] = [
+                                    'id' => $groupe->getId(),
+                                    'libelle' => $groupe->getLibelle(),
+                                    'typeGroupe' => $groupe->getTypeGroupe()->getLibelle()
+                                ];
+                                break; // On sort de la boucle dès qu'on a trouvé un semestre correspondant
+                            }
+                        }
+                    }
+                }
+
                 $tabScolarites[count($tabScolarites) - 1]['semestres'][] = [
-                    'id' => $etudiant->getSemestre()?->getId(),
+                    'id' => $semestreId,
                     'decision' => null,
                     'proposition' => null,
                     'moyenne' => 0,
                     'nbAbsences' => 0,
                     'commentaire' => '',
                     'moyennesMatieres' => [],
-                    'moyennesUes' => []
+                    'moyennesUes' => [],
+                    'groupes' => $groupesSemestre
                 ];
         }
 
