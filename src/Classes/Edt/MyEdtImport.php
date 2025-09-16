@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtImport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 10/09/2025 16:27
+ * @lastUpdate 16/09/2025 09:48
  */
 
 /*
@@ -286,18 +286,18 @@ class MyEdtImport
         'S2' => 80,
         'S3-DEV-FI' => 101,
         'S3-DEV-FC' => 165,
-        'S3-COMM' => 183,
+        'S3-COMM' => 204,
         'S4-DEV-FI' => 102,
         'S4-DEV-FC' => 166,
-        'S4-COMM' => 184,
+        'S4-COMM' => 205,
 
         'S5-DEV-FI' => 103,
         'S5-DEV-FC' => 167,
-        'S5-COMM' => 185,
+        'S5-COMM' => 206,
 
         'S6-DEV-FI' => 104,
         'S6-DEV-FC' => 168,
-        'S6-COMM' => 186
+        'S6-COMM' => 207
     ];
 
     /**
