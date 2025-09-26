@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2025. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/GetSemestreFromGroupe.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 15/05/2024 19:42
+ * @lastUpdate 26/09/2025 11:15
  */
 
 namespace App\Classes;
@@ -16,7 +16,7 @@ abstract class GetSemestreFromGroupe
 {
     public static function getSemestreFromGroupe(Groupe $groupe): ?Semestre
     {
-        if ($groupe->getApcParcours() === null && $groupe->getParcours() === null && $groupe->getTypeGroupe()?->getSemestres()->count() === 1) {
+        if ($groupe->getApcParcours() === null && $groupe->getTypeGroupe()?->getSemestres()->count() === 1) {
             return $groupe->getTypeGroupe()?->getSemestres()->first();
         }
 
