@@ -77,10 +77,10 @@
                             </div>
                     </twig:Alert>
                         {% if stageEtudiants[stagePeriode.id] is  not defined %}
-                            <twig:Alert type="warning">Imprimez <a
-                                        href="{{ asset('upload/fiche-renseignement/'~stagePeriode.documentName) }}"
-                                        target="_blank">la fiche de stage</a> à faire compléter et signer par
-                                                             l'entreprise.
+                            <twig:Alert type="warning">Imprimez
+                                <a href="{{ asset('upload/fiche-renseignement/'~stagePeriode.documentName) }}"
+                                   target="_blank" class="btn btn-primary">la fiche de stage</a> à faire compléter et
+                                signer par l'entreprise.
                                 <strong>Ce document n'est pas la convention de stage !</strong></twig:Alert>
 <div class="d-grid">
                             <a href="{{ path('stage_offre_stage_index') }}" class="btn d-block btn-large
