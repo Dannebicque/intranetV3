@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/ajax/EtudiantAjaxController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/04/2025 06:29
+ * @lastUpdate 08/10/2025 09:38
  */
 
 namespace App\Controller\ajax;
@@ -25,7 +25,8 @@ use Symfony\Component\Routing\Attribute\Route;
 class EtudiantAjaxController extends BaseController
 {
     #[Route(path: '/edit/uuid/{uuid}', name: 'etudiant_ajax_edit_uuid', options: ['expose' => true])]
-    public function editUuid(EtudiantUpdate $etudiantUpdate, Request $request, #[MapEntity(mapping: ['uuid' => 'uuid'])]
+    public function editUuid(EtudiantUpdate $etudiantUpdate, Request $request,
+                             #[MapEntity(mapping: ['uuid' => 'uuid'])]
     Etudiant                                $etudiant): JsonResponse
     {
         return $this->update($request, $etudiantUpdate, $etudiant);
@@ -45,7 +46,9 @@ class EtudiantAjaxController extends BaseController
     #[Route(path: '/edit/{id}', name: 'etudiant_ajax_edit', options: ['expose' => true])]
     public function edit(EtudiantUpdate $etudiantUpdate, Request $request, Etudiant $etudiant): JsonResponse
     {
-        if ($this->isGranted('ROLE_SCOLARITE') || $this->isGranted('ROLE_CDD') || ($this->isGranted('ROLE_ETUDIANT') && $etudiant->getId() === $this->getUser()->getId())) {
+        if ($this->isGranted('ROLE_PERMANENT') ||
+            $this->isGranted('ROLE_SCOLARITE') ||
+            $this->isGranted('ROLE_CDD') || ($this->isGranted('ROLE_ETUDIANT') && $etudiant->getId() === $this->getUser()->getId())) {
             return $this->update($request, $etudiantUpdate, $etudiant);
         }
 
