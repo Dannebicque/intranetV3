@@ -30,7 +30,7 @@ class TransfertEdtController extends AbstractController
         EdtPlanningRepository $edtIntranetRepository,
     ): Response
     {
-        $edtIntranet = $edtIntranetRepository->findBy(['anneeUniversitaire' => 7]);
+        $edtIntranet = $edtIntranetRepository->findBy(['anneeUniversitaire' => 8]);
         $tabEdtIntranet = [];
         if ($edtIntranet) {
             foreach ($edtIntranet as $edt) {
@@ -55,6 +55,8 @@ class TransfertEdtController extends AbstractController
                     'jour' => $edt->getJour(),
                     'libGroupe' => $edt->getGroupeObjet()?->getLibelle(),
                     'semestre' => $edt->getSemestre()?->getId(),
+                    'semaine' => $edt->getSemaine() ?? 0,
+                    'anneeUniversitaire' => $edt->getAnneeUniversitaire()?->getId(),
                 ];
             }
         }
