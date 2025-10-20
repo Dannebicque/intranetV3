@@ -76,7 +76,8 @@ class EdtCelcatAdapter extends AbstractEdtAdapter implements EdtAdapterInterface
 
         $evt->jour = (string)($event->getJour() + 1);
         $evt->heureDebut = $event->getDebut();
-        $evt->indexDebut = Constantes::TAB_HEURES_EDT_LIGNE_2[$event->getDebut()->roundMinute(10)->format('Hi')];
+        $key = $event->getDebut()->roundMinute(10)->format('Hi');
+        $evt->indexDebut = array_key_exists($key, Constantes::TAB_HEURES_EDT_LIGNE_2) ? Constantes::TAB_HEURES_EDT_LIGNE_2[$key] : 0;
         $evt->heureFin = $event->getFin();
         $evt->matiere = utf8_decode($event->getLibModule());
         $evt->typeIdMatiere = $event->getTypeIdMatiere();
@@ -121,7 +122,11 @@ class EdtCelcatAdapter extends AbstractEdtAdapter implements EdtAdapterInterface
         $evt->gridStart = $event->getDebut()?->format('Hi');
         $evt->gridEnd = $event->getFin()?->format('Hi');
         $evt->largeur = $this->getLargeur($evt);
-        $evt->duree = Constantes::TAB_HEURES_INDEX[$event->getFin()->format('H:i:s')] - Constantes::TAB_HEURES_INDEX[$event->getDebut()->format('H:i:s')];
+        $startKey = $event->getDebut()->format('H:i:s');
+        $endKey = $event->getFin()->format('H:i:s');
+        $startIndex = array_key_exists($startKey, Constantes::TAB_HEURES_INDEX) ? Constantes::TAB_HEURES_INDEX[$startKey] : 0;
+        $endIndex = array_key_exists($endKey, Constantes::TAB_HEURES_INDEX) ? Constantes::TAB_HEURES_INDEX[$endKey] : 0;
+        $evt->duree = $endIndex - $startIndex;
         $evt->idEduSign = $event->getIdEduSign();
 
         return $evt;
