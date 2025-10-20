@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2025. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/EdtCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/09/2024 16:23
+ * @lastUpdate 20/10/2025 16:12
  */
 
 namespace App\Entity;
@@ -362,6 +362,6 @@ class EdtCelcat extends BaseEntity
     public function getUniqueId(): string
     {
         // construire un identifiant unique pour l'événement puisque le eventId n'est pas unique si l'événement est sur plusieurs semaines
-        return $this->getEventId() . '_' . $this->getSemaineFormation() . '_' . $this->getJour();
+        return $this->getEventId() . '_' . $this->getSemaineFormation() . '_' . $this->getJour() . '_' . $this->getCodeGroupe();
     }
 }
