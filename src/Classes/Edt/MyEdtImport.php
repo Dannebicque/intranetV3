@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtImport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/09/2025 09:48
+ * @lastUpdate 22/10/2025 08:28
  */
 
 /*
@@ -663,7 +663,7 @@ class MyEdtImport
                 $this->addGroupev2($pl, (int)$phrase['groupIndex']);
                 $pl->setHeureDebut($heureDebut);
                 //extraire le nombre après les deux premiers caractères de $phrase[2]
-                $pl->setOrdre($phrase['rang']);
+                $pl->setOrdre(array_key_exists('rang', $phrase) ? $phrase['rang'] : 0);
                 $pl->setHeureFin($heureFin);
                 $pl->setDebut(Constantes::TAB_HEURES_INDEX[$heureDebut?->format('H:i:s')]);
                 $pl->setFin(Constantes::TAB_HEURES_INDEX[$heureFin?->format('H:i:s')]);
