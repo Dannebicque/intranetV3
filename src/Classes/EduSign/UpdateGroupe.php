@@ -25,6 +25,8 @@ class UpdateGroupe
 
     public function update(?string $keyEduSign): array
     {
+        set_time_limit(0);
+
         $anneeUniv = $this->anneeUniversitaireRepository->findOneBy(['active' => true]);
         $diplomes = $this->diplomeRepository->findBy(['keyEduSign' => $keyEduSign]);
 
