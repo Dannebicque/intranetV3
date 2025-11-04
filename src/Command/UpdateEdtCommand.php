@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2025. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Command/UpdateEdtCommand.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/09/2024 16:23
+ * @lastUpdate 04/11/2025 10:13
  */
 
 namespace App\Command;
@@ -53,9 +53,10 @@ class UpdateEdtCommand extends Command
                 $date = new DateTime();
                 $io->text($date->format('d/m/Y H:i:s').' | Mise à jour du diplome '.$diplome->getLibelle());
                 $this->myCelcat->addEvents($codeCelcat, $diplome, $annee);
+                $io->success('Emplois du temps synchronisés avec Celcat pour le diplome ' . $diplome->getLibelle());
             }
 
-            $io->success('Emplois du temps synchronisés avec Celcat');
+            $io->success('Tous les emplois du temps synchronisés avec Celcat');
 
             return Command::SUCCESS;
         }
