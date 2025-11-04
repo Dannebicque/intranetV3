@@ -125,51 +125,67 @@ class UpdateEtudiant
 
     public function changeSemestre(?Diplome $diplome, string $keyEduSign): array
     {
-        $semestres = $diplome->getSemestres();
-        $allEtudiants = $this->apiEtudiant->getAllEtudiants($keyEduSign);
+        // set l'execution time to infinite
+        set_time_limit(0);
 
-        foreach ($semestres as $semestre) {
-            $etudiants = $this->etudiantRepository->findBySemestre($semestre);
+        $result = [];
 
-            foreach ($etudiants as $etudiant) {
-                $groupes = array_merge(
-                    [$etudiant->getSemestre()->getIdEduSign()],
-                    array_map(fn($g) => $g->getIdEduSign(), $etudiant->getGroupes()->toArray())
-                );
-                $groupes = array_values(array_filter($groupes));
+        if ($diplome === null) {
+            return $result;
+        }
 
-                $etudiantEduSign = (new IntranetEtudiantEduSignAdapter($etudiant, $groupes))->getEtudiant();
+        $keyEduSign = $diplome->getKeyEduSign();
+        $diplomeCompteCommun = $this->diplomeRepository->findBy(['keyEduSign' => $keyEduSign]);
+        $allEtudiants = $this->apiEtudiant->getAllEtudiants($keyEduSign) ?? [];
+        foreach ($diplomeCompteCommun as $diplomeItem) {
+            $semestres = $diplomeItem->getSemestres();
 
-                if ($etudiant->getIdEduSign() === null || $etudiant->getIdEduSign() === '') {
-                    $result[$etudiant->getId()] = $this->apiEtudiant->addEtudiant($etudiantEduSign, $keyEduSign);
-                } else {
-                    $result[$etudiant->getId()] = $this->apiEtudiant->updateEtudiant($etudiantEduSign, $keyEduSign);
-                }
+            foreach ($semestres as $semestre) {
+                $etudiants = $this->etudiantRepository->findBySemestre($semestre);
 
-                // si l'etudiant existe dans EduSign on le retire du tableau allEtudiants
-                foreach ($allEtudiants as $key => $etudiantEduSign) {
-                    if ($etudiantEduSign['ID'] === $etudiant->getIdEduSign()) {
-                        unset($allEtudiants[$key]);
+                if ($etudiants !== null) {
+                    foreach ($etudiants as $etudiant) {
+                        $groupes = array_merge(
+                            [$etudiant->getSemestre()->getIdEduSign()],
+                            array_map(fn($g) => $g->getIdEduSign(), $etudiant->getGroupes()->toArray())
+                        );
+                        $groupes = array_values(array_filter($groupes));
+
+                        $etudiantEduSign = (new IntranetEtudiantEduSignAdapter($etudiant, $groupes))->getEtudiant();
+
+                        if ($etudiant->getIdEduSign() === null || $etudiant->getIdEduSign() === '') {
+                            $result[$etudiant->getId()] = $this->apiEtudiant->addEtudiant($etudiantEduSign, $keyEduSign);
+                        } else {
+                            $result[$etudiant->getId()] = $this->apiEtudiant->updateEtudiant($etudiantEduSign, $keyEduSign);
+                        }
+
+                        // si l'etudiant existe dans EduSign on le retire du tableau allEtudiants
+                        foreach ($allEtudiants as $key => $etudiantEduSign) {
+                            if (is_array($etudiantEduSign) && ($etudiantEduSign['ID'] ?? null) === $etudiant->getIdEduSign()) {
+                                unset($allEtudiants[$key]);
+                            }
+                        }
                     }
                 }
             }
-        }
 
-        // pour chaque etudiant de allEtudiants on change le mail et on le supprime
-        foreach ($allEtudiants as $etudiant) {
-            $etudiantObject = $this->etudiantRepository->findOneBy(['idEduSign' => $etudiant['ID']]);
-            if ($etudiantObject !== null) {
-                $etudiantEduSign = (new IntranetEtudiantEduSignAdapter($etudiantObject, []))->getEtudiant();
-                $etudiantEduSign->email = $etudiantObject->getId() . '@delete.fr';
-                $etudiantEduSign->groups = [];
-                $etudiantEduSign->id = $etudiant['ID'];
-                $result[$etudiantObject->getId()] = $this->apiEtudiant->updateEtudiant($etudiantEduSign, $keyEduSign);
-                $result[$etudiantObject->getId()] = $this->apiEtudiant->deleteEtudiant($etudiant['ID'], $keyEduSign);
-            } else {
-                $result[$etudiant['NAME']] = 'l\'étudiant n\'existe pas dans la base de données';
+            // pour chaque etudiant restant de allEtudiants on change le mail et on le supprime
+            foreach ($allEtudiants as $etudiant) {
+                if (!is_array($etudiant)) continue;
+
+                $etudiantObject = $this->etudiantRepository->findOneBy(['idEduSign' => $etudiant['ID']]);
+                if ($etudiantObject !== null) {
+                    $etudiantEduSign = (new IntranetEtudiantEduSignAdapter($etudiantObject, []))->getEtudiant();
+                    $etudiantEduSign->email = $etudiantObject->getId() . '@delete.fr';
+                    $etudiantEduSign->groups = [];
+                    $etudiantEduSign->id = $etudiant['ID'];
+                    $result[$etudiantObject->getId()] = $this->apiEtudiant->updateEtudiant($etudiantEduSign, $keyEduSign);
+                    $result[$etudiantObject->getId()] = $this->apiEtudiant->deleteEtudiant($etudiant['ID'], $keyEduSign);
+                } else {
+                    $result[$etudiant['NAME'] ?? $etudiant['ID']] = 'l\'étudiant n\'existe pas dans la base de données';
+                }
             }
         }
-
 
         // retirer les entrées vides et réindexer
         $result = array_values(array_filter($result));
@@ -182,24 +198,26 @@ class UpdateEtudiant
 
         // Récupérer tous les étudiants depuis EduSign
         $allEtudiants = $this->apiEtudiant->getAllEtudiants($keyEduSign);
-        foreach ($allEtudiants as $etudiant) {
-            // Trouver le bon étudiant grâce à l'idEduSign sur l'objet dans la base de données
-            $etudiantObject = $this->etudiantRepository->findOneBy(['idEduSign' => $etudiant['ID']]);
-            // Si je ne le trouve pas je le cherche via API_ID
-            if ($etudiantObject === null) {
-                $etudiantObject = $this->etudiantRepository->findOneBy(['id' => $etudiant['API_ID']]);
+        if ($allEtudiants !== null) {
+            foreach ($allEtudiants as $etudiant) {
+                // Trouver le bon étudiant grâce à l'idEduSign sur l'objet dans la base de données
+                $etudiantObject = $this->etudiantRepository->findOneBy(['idEduSign' => $etudiant['ID']]);
+                // Si je ne le trouve pas je le cherche via API_ID
+                if ($etudiantObject === null) {
+                    $etudiantObject = $this->etudiantRepository->findOneBy(['id' => $etudiant['API_ID']]);
 
-                if ($etudiantObject !== null) {
-                    // Mettre à jour l'étudiant dans EduSign pour changer son mail
-                    $etudiantEduSign = (new IntranetEtudiantEduSignAdapter($etudiantObject, []))->getEtudiant();
-                    $etudiantEduSign->email = $etudiantObject->getId() . '@delete.fr';
-                    $etudiantEduSign->groups = [];
-                    $etudiantEduSign->id = $etudiant['ID'];
-                    $result[$etudiantObject->getId()] = $this->apiEtudiant->updateEtudiant($etudiantEduSign, $keyEduSign);
-                    // Supprimer d'EduSign l'étudiant
-                    $result[$etudiantObject->getId()] = $this->apiEtudiant->deleteEtudiant($etudiant['ID'], $keyEduSign);
-                } else {
-                    $result[$etudiant['NAME']] = 'l\'étudiant n\'existe pas dans la base de données';
+                    if ($etudiantObject !== null) {
+                        // Mettre à jour l'étudiant dans EduSign pour changer son mail
+                        $etudiantEduSign = (new IntranetEtudiantEduSignAdapter($etudiantObject, []))->getEtudiant();
+                        $etudiantEduSign->email = $etudiantObject->getId() . '@delete.fr';
+                        $etudiantEduSign->groups = [];
+                        $etudiantEduSign->id = $etudiant['ID'];
+                        $result[$etudiantObject->getId()] = $this->apiEtudiant->updateEtudiant($etudiantEduSign, $keyEduSign);
+                        // Supprimer d'EduSign l'étudiant
+                        $result[$etudiantObject->getId()] = $this->apiEtudiant->deleteEtudiant($etudiant['ID'], $keyEduSign);
+                    } else {
+                        $result[$etudiant['NAME']] = 'l\'étudiant n\'existe pas dans la base de données';
+                    }
                 }
             }
         }
