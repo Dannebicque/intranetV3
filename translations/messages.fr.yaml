@@ -149,7 +149,7 @@ adm:
     commands:
       heading: 'Gestion par département'
       cours: 'Gestion des cours'
-      info-create: 'La création des cours se fait automatiquement tous les samedi pour la semaine suivante - mais vous pouvez forcer la création ici (par exemple si il y a un changement de dernière minute)'
+      info-create: 'L\'envoi des cours se fait automatiquement tous les mercredi pour la semaine suivante - mais vous pouvez forcer la mise à jour ici (par exemple si il y a un changement de dernière minute)'
       info-update: 'Permet de faire la bascule entre les semestres - **Attention il faut que les semestres soient à jour dans l''Intranet**'
       info-annee: 'A lancer en début d''année universitaire'
       create: 'Mettre à jour'
