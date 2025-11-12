@@ -48,6 +48,9 @@ class Note extends BaseEntity
     #[ORM\Column(type: Types::BOOLEAN)]
     private bool $absenceJustifie = false;
 
+    #[ORM\Column(type: Types::BOOLEAN, nullable: true)]
+    private ?bool $vue = false;
+
     /**
      * @throws Exception
      */
@@ -156,6 +159,18 @@ class Note extends BaseEntity
     public function setAbsenceJustifie(bool $absenceJustifie): self
     {
         $this->absenceJustifie = $absenceJustifie;
+
+        return $this;
+    }
+
+    public function isVue(): ?bool
+    {
+        return $this->vue;
+    }
+
+    public function setVue(?bool $vue): static
+    {
+        $this->vue = $vue;
 
         return $this;
     }
