@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/transfertV4/TransfertEtudiantController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/12/2024 08:24
+ * @lastUpdate 06/01/2026 10:26
  */
 
 namespace App\Controller\transfertV4;
@@ -131,7 +131,7 @@ public function getScolaritesEtudiant(
             ];
 
             // Ajouter les semestres
-                $semestreId = $etudiant->getSemestre()?->getId();
+            $semestreId = $etudiant->getSemestreActif()?->getId();
 
 
                 // Filtrer les groupes pour ce semestre

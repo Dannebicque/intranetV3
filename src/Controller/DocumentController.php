@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/DocumentController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/09/2024 16:25
+ * @lastUpdate 06/01/2026 10:04
  */
 
 namespace App\Controller;
@@ -109,7 +109,7 @@ class DocumentController extends BaseController
         if ($this->isEtudiant()) {
             //vérifier si le semestre de l'utilisateur est l'un des semestres du document
             $documents = array_filter($documents, function ($document) {
-                return $document->getSemestres()->contains($this->getUser()->getSemestre());
+                return $document->getSemestres()->contains($this->getUser()->getSemestreActif());
             });
         }
         $idDocuments = $myDocument->idMesDocumentsFavoris($this->getUser());

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appEtudiant/StageController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:17
+ * @lastUpdate 06/01/2026 10:14
  */
 
 namespace App\Controller\appEtudiant;
@@ -36,7 +36,7 @@ class StageController extends BaseController
     #[Route(path: '/', name: 'application_etudiant_stage_index')]
     public function index(StagePeriodeRepository $stagePeriodeRepository): Response
     {
-        $stagePeriodes = $stagePeriodeRepository->findStageEtudiant($this->getUser()->getSemestre(),
+        $stagePeriodes = $stagePeriodeRepository->findStageEtudiant($this->getUser()->getSemestreActif(),
             $this->getAnneeUniversitaire());
 
         $stageEtudiants = [];

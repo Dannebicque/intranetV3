@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MyExportListing.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/04/2024 06:18
+ * @lastUpdate 06/01/2026 09:56
  */
 
 /*
@@ -281,7 +281,7 @@ class MyExportListing
 
             $this->myExcelWriter->writeCellXY(9, $ligne, $absence->getPersonnel()?->getNom());
             $this->myExcelWriter->writeCellXY(10, $ligne, $absence->getPersonnel()?->getPrenom());
-            $this->myExcelWriter->writeCellXY(11, $ligne, $absence->getEtudiant()?->getSemestre()?->display());
+            $this->myExcelWriter->writeCellXY(11, $ligne, $absence->getSemestre()?->display());
 
             ++$ligne;
         }

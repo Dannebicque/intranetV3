@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appEtudiant/RattrapageController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:35
+ * @lastUpdate 06/01/2026 10:11
  */
 
 namespace App\Controller\appEtudiant;
@@ -32,8 +32,8 @@ class RattrapageController extends BaseController
     {
         $rattrapage = new Rattrapage($this->getUser());
 
-        if ($this->getUser()->getSemestre()?->getDiplome()?->isApc()) {
-            $matieres = $typeMatiereManager->findByReferentielOrdreSemestreArray($this->getEtudiantSemestre(), $this->getUser()->getSemestre()?->getDiplome()?->getReferentiel());
+        if ($this->getUser()->getDiplome()?->isApc()) {
+            $matieres = $typeMatiereManager->findByReferentielOrdreSemestreArray($this->getEtudiantSemestre(), $this->getUser()->getDiplome()?->getReferentiel());
         } else {
             $matieres = $typeMatiereManager->findBySemestreArray($this->getEtudiantSemestre());
         }
@@ -48,7 +48,7 @@ class RattrapageController extends BaseController
             RattrapageType::class,
             $rattrapage,
             [
-                'semestre' => $this->getUser()->getSemestre(),
+                'semestre' => $this->getUser()->getSemestreActif(),
                 'matieres' => $t,
                 'locale' => $request->getLocale(),
                 'attr' => [

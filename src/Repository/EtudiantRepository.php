@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2025. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/EtudiantRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/09/2025 11:26
+ * @lastUpdate 06/01/2026 10:21
  */
 
 namespace App\Repository;
@@ -94,9 +94,9 @@ class EtudiantRepository extends ServiceEntityRepository
             $tt['photo'] = $etudiant->getPhotoName();
             $tt['mailUniv'] = $etudiant->getMailUniv();
             $tt['mailPerso'] = $etudiant->getMailPerso();
-            $tt['semestre'] = null !== $etudiant->getSemestre() ? $etudiant->getSemestre()->getLibelle() : 'non défini';
-            $tt['semestreId'] = $etudiant->getSemestre()?->getId();
-            $tt['diplomeId'] = null !== $etudiant->getSemestre() ? $etudiant->getDiplome()?->getId() : null;
+            $tt['semestre'] = null !== $etudiant->getSemestreActif() ? $etudiant->getSemestreActif()->getLibelle() : 'non défini';
+            $tt['semestreId'] = $etudiant->getSemestreActif()?->getId();
+            $tt['diplomeId'] = null !== $etudiant->getSemestreActif() ? $etudiant->getDiplome()?->getId() : null;
             $tt['promo'] = $etudiant->getPromotion();
             $tt['anneeSortie'] = $etudiant->getAnneeSortie();
             $tt['avatarInitiales'] = $etudiant->getAvatarInitiales();

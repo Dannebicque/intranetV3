@@ -1,4 +1,11 @@
 <?php
+/*
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Command/UpdateSemestreCommand.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 06/01/2026 09:58
+ */
 
 namespace App\Command;
 
@@ -31,7 +38,7 @@ class UpdateSemestreCommand extends Command
     {
         $absences = $this->absenceRepository->findBy(['anneeUniversitaire' => 2]);
         foreach ($absences as $absence) {
-            $absence->setSemestre($absence->getEtudiant()?->getSemestre());
+            $absence->setSemestre($absence->getEtudiant()?->getSemestreActif());
         }
 
         $rattrapages = $this->rattrapageRepository->findBy(['anneeUniversitaire' => 2]);

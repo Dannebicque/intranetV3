@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/UserController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/09/2024 20:08
+ * @lastUpdate 06/01/2026 10:04
  */
 
 namespace App\Controller;
@@ -35,7 +35,7 @@ class UserController extends BaseController
             'user' => $this->getUser(),
             'onglet' => $onglet,
             'monprofil' => true,
-            'siteperso' => $this->getUser() instanceof Etudiant ? $this->getUser()->getSemestre()?->getDiplome()?->getOptEspacePersoVisible() : false,
+            'siteperso' => $this->getUser() instanceof Etudiant ? $this->getUser()->getSemestreActif()?->getDiplome()?->getOptEspacePersoVisible() : false,
         ]);
     }
 
@@ -85,7 +85,7 @@ class UserController extends BaseController
                     'user' => $user,
                     'onglet' => $onglet,
                     'monprofil' => false,
-                    'siteperso' => $user->getSemestre()?->getDiplome()?->getOptEspacePersoVisible(),
+                    'siteperso' => $user->getDiplome()?->getOptEspacePersoVisible(),
                 ]);
             }
         }

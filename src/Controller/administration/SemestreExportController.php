@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/SemestreExportController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 17/06/2024 17:57
+ * @lastUpdate 06/01/2026 10:10
  */
 
 namespace App\Controller\administration;
@@ -54,10 +54,10 @@ class SemestreExportController extends BaseController
     public function exportReleveProvisoire(EtudiantExportReleve $etudiantExportReleve, #[MapEntity(mapping: ['slug' => 'slug'])]
     Etudiant $etudiant, Semestre $semestre = null): Response
     {
-        $this->denyAccessUnlessGranted('MINIMAL_ROLE_NOTE', $semestre ?: $etudiant->getSemestre());
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_NOTE', $semestre ?: $etudiant->getSemestreActif());
         $etudiantExportReleve->setEtudiant($etudiant);
 
-        return $etudiantExportReleve->exportReleveProvisoire($semestre ?: $etudiant->getSemestre(),
+        return $etudiantExportReleve->exportReleveProvisoire($semestre ?: $etudiant->getSemestreActif(),
             $etudiant->getAnneeUniversitaire());
     }
 

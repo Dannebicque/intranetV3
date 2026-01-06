@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Etudiant/EtudiantScolarite.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 13/09/2024 19:24
+ * @lastUpdate 06/01/2026 09:58
  */
 
 /*
@@ -48,7 +48,7 @@ class EtudiantScolarite
     public function setEtudiant(Etudiant $etudiant): void
     {
         $this->etudiant = $etudiant;
-        $this->semestre = $etudiant->getSemestre();
+        $this->semestre = $etudiant->getSemestreActif();
     }
 
     public function changeEtat(string $etat): void

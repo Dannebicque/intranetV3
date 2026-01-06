@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Etudiant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/09/2024 13:02
+ * @lastUpdate 06/01/2026 10:04
  */
 
 namespace App\Entity;
@@ -176,6 +176,12 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
     private ?string $idEduSign = null;
 
     /**
+     * @var Collection<int, Semestre>
+     */
+    #[ORM\ManyToMany(targetEntity: Semestre::class, inversedBy: 'etudiantsSemestres')]
+    private Collection $semestres;
+
+    /**
      * @throws Exception
      */
     public function __construct()
@@ -199,6 +205,7 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
         $this->typeUser = 'ETU';
         $this->projetEtudiants = new ArrayCollection();
         $this->commentaires = new ArrayCollection();
+        $this->semestres = new ArrayCollection();
     }
 
     public function setUuid(UuidInterface $uuid): self
@@ -617,8 +624,8 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
 
     public function getDiplome(): ?Diplome
     {
-        if (null !== $this->getSemestre() && null !== $this->getSemestre()->getAnnee() && null !== $this->getSemestre()->getAnnee()->getDiplome()) {
-            return $this->getSemestre()->getAnnee()->getDiplome();
+        if (null !== $this->getSemestreActif() && null !== $this->getSemestreActif()->getAnnee() && null !== $this->getSemestreActif()->getAnnee()->getDiplome()) {
+            return $this->getSemestreActif()->getAnnee()->getDiplome();
         }
 
         return null;
@@ -626,6 +633,18 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
 
     public function getSemestre(): ?Semestre
     {
+        return $this->semestre;
+    }
+
+    public function getSemestreActif(): ?Semestre
+    {
+        foreach ($this->getSemestres() as $es) {
+            if ($es->getSemestre()->isActif()) {
+                return $es->getSemestre();
+            }
+        }
+
+        // Fallback sur l'ancien champ
         return $this->semestre;
     }
 
@@ -918,6 +937,30 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
     public function setIdEduSign(?string $idEduSign): static
     {
         $this->idEduSign = $idEduSign;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Semestre>
+     */
+    public function getSemestres(): Collection
+    {
+        return $this->semestres;
+    }
+
+    public function addSemestre(Semestre $semestre): static
+    {
+        if (!$this->semestres->contains($semestre)) {
+            $this->semestres->add($semestre);
+        }
+
+        return $this;
+    }
+
+    public function removeSemestre(Semestre $semestre): static
+    {
+        $this->semestres->removeElement($semestre);
 
         return $this;
     }

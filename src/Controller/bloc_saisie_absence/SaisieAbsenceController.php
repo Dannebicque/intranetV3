@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/bloc_saisie_absence/SaisieAbsenceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 20/02/2024 18:55
+ * @lastUpdate 06/01/2026 10:14
  */
 
 namespace App\Controller\bloc_saisie_absence;
@@ -92,7 +92,7 @@ class SaisieAbsenceController extends BaseController
                 'typeMatiere' => $mat->typeMatiere,
                 'etudiant' => $etudiant->getId(),
                 'dateHeure' => $dateHeure,
-                'anneeUniversitaire' => $etudiant->getSemestre() ? $etudiant->getSemestre()->getAnneeUniversitaire()->getId() : 0,
+                'anneeUniversitaire' => $etudiant->getSemestreActif() ? $etudiant->getSemestreActif()?->getAnneeUniversitaire()?->getId() : 0,
             ]);
 
             if ('saisie' === $request->get('action') && 0 === count($absence)) {

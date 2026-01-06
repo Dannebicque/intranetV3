@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2025. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/EdtController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/02/2025 17:22
+ * @lastUpdate 06/01/2026 10:04
  */
 
 namespace App\Controller;
@@ -233,7 +233,7 @@ class EdtController extends BaseController
         $calendrier = $this->calendrier->calculSemaine($semaine, $this->getAnneeUniversitaire());
 
         if (null !== $this->getAnneeUniversitaire()) {
-            $matieres = $this->typeMatiereManager->tableauApogeeDiplome($this->getUser()->getSemestre()?->getDiplome());
+            $matieres = $this->typeMatiereManager->tableauApogeeDiplome($this->getUser()->getDiplome());
             // todo: passer pour l'edt manager
             if (null !== $this->getUser()->getDiplome() && $this->getUser()->getDiplome()?->isOptUpdateCelcat()) {
                 $this->myEdtCelcat->initEtudiant($this->getUser(),

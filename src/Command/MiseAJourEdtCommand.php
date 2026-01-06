@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Command/MiseAJourEdtCommand.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 10/08/2022 17:46
+ * @lastUpdate 04/11/2025 10:13
  */
 
 namespace App\Command;
@@ -21,7 +21,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 #[AsCommand(
     name: 'app:mise-a-jour-edt',
-    description: 'Commande epour la mise à jour de la structure de l\'edt',
+    description: 'Commande pour la mise à jour de la structure de l\'edt',
 )]
 class MiseAJourEdtCommand extends Command
 {

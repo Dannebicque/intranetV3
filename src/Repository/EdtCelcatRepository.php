@@ -1,24 +1,19 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/EdtCelcatRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/04/2024 17:54
+ * @lastUpdate 06/01/2026 10:26
  */
 
 namespace App\Repository;
 
-use App\Classes\Matieres\MatiereManager;
-use App\Classes\Matieres\TypeMatiereManager;
 use App\Entity\Annee;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\EdtCelcat;
 use App\Entity\Etudiant;
-use App\Entity\Groupe;
-use App\Entity\Matiere;
 use App\Entity\Personnel;
-use App\Entity\Salle;
 use App\Entity\Semestre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Collections\Order;
@@ -60,7 +55,7 @@ class EdtCelcatRepository extends ServiceEntityRepository
 
     public function findEdtEtu(Etudiant $user, int $semaine, AnneeUniversitaire $anneeUniversitaire): null|array|int
     {
-        if (null !== $user->getSemestre()) {
+        if (null !== $user->getSemestreActif()) {
             $this->chaine = '';
             $this->params = [];
 

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/AbsenceJustificatifController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:40
+ * @lastUpdate 06/01/2026 10:08
  */
 
 namespace App\Controller\administration;
@@ -140,7 +140,7 @@ class AbsenceJustificatifController extends BaseController
         Request $request,
         AbsenceJustificatif $absenceJustificatif
     ): Response {
-        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $absenceJustificatif->getEtudiant()?->getSemestre());
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $absenceJustificatif->getEtudiant()?->getSemestreActif());
 
         $id = $absenceJustificatif->getUuidString();
         if ($this->isCsrfTokenValid('delete'.$id, $request->server->get('HTTP_X_CSRF_TOKEN'))) {
@@ -160,7 +160,7 @@ class AbsenceJustificatifController extends BaseController
     public function details(#[MapEntity(mapping: ['uuid' => 'uuid'])]
                             AbsenceJustificatif $absenceJustificatif): Response
     {
-        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $absenceJustificatif->getEtudiant()?->getSemestre());
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $absenceJustificatif->getEtudiant()?->getSemestreActif());
 
         return $this->render('administration/absencejustificatif/_details.html.twig', [
             'justificatif' => $absenceJustificatif,
@@ -171,7 +171,7 @@ class AbsenceJustificatifController extends BaseController
     public function accepte(EventDispatcherInterface $eventDispatcher, #[MapEntity(mapping: ['uuid' => 'uuid'])]
     AbsenceJustificatif                              $absenceJustificatif, string $etat): Response
     {
-        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $absenceJustificatif->getEtudiant()?->getSemestre());
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $absenceJustificatif->getEtudiant()?->getSemestreActif());
         $absenceJustificatif->setEtat($etat);
         $this->entityManager->flush();
         $this->gereEtat($etat, $absenceJustificatif, $eventDispatcher);
