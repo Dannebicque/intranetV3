@@ -87,7 +87,7 @@ class FormTypeStage extends AbstractType
                 'label' => 'Montant de la gratification :',
                 'input_suffix' => '<span class="input-group-text"> €</span>',
                 'help' => 'En fonction de la période sélectionnée',
-                'attr' => ['placeholder' => '3.9'],
+                'attr' => ['placeholder' => '4.5'],
                 //todo: mettre en place la récupération depuis le contrôler et la config
             ])
             ->add('avantages', TextareaType::class, [
