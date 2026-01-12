@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2025. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtImport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 22/10/2025 08:28
+ * @lastUpdate 12/01/2026 12:10
  */
 
 /*
@@ -699,7 +699,7 @@ class MyEdtImport
     {
         //si semestre 3 et type CM et groupe = A alors ajouter 40
         $offset = 0;
-        if ($pl->getOrdreSemestre() === 3 && $pl->getType() === 'CM' && $groupe === 1) {
+        if (($pl->getOrdreSemestre() === 3 || $pl->getOrdreSemestre() === 4) && $pl->getType() === 'CM' && $groupe === 1) {
             $offset = 40;
         }
 
