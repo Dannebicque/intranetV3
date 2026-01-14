@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtImport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/01/2026 12:10
+ * @lastUpdate 14/01/2026 08:52
  */
 
 /*
@@ -619,7 +619,7 @@ class MyEdtImport
                 $this->addGroupev2($pl, (int)$phrase['groupIndex']);
                 $pl->setHeureDebut($heureDebut);
                 //extraire le nombre après les deux premiers caractères de $phrase[2]
-                $pl->setOrdre($phrase['rang']);
+                $pl->setOrdre($phrase['rang'] ?? '0');
                 $pl->setHeureFin($heureFin);
                 $pl->setDebut(Constantes::TAB_HEURES_INDEX[$heureDebut?->format('H:i:s')]);
                 $pl->setFin(Constantes::TAB_HEURES_INDEX[$heureFin?->format('H:i:s')]);
@@ -687,7 +687,7 @@ class MyEdtImport
         //si semestre 3 et type CM et groupe = A alors ajouter 40
         $groupe = mb_substr($groupe, 0, 1);
         $offset = 0;
-        if ($pl->getOrdreSemestre() === 3 && $pl->getType() === 'CM' && $groupe === 'A') {
+        if (($pl->getOrdreSemestre() === 3 || $pl->getOrdreSemestre() === 4) && $pl->getType() === 'CM' && $groupe === 'A') {
             $offset = 40;
         }
 
