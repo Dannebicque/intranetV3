@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/EtudiantRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/01/2026 10:21
+ * @lastUpdate 14/01/2026 18:34
  */
 
 namespace App\Repository;
@@ -41,7 +41,8 @@ class EtudiantRepository extends ServiceEntityRepository
 
     public function getByDepartement(
         Departement $departement
-    ): mixed {
+    ): mixed
+    {
         $qb = $this->createQueryBuilder('u');
         $qb
             ->leftJoin(Semestre::class, 's', 'WITH', 's.id=u.semestre')
@@ -51,11 +52,23 @@ class EtudiantRepository extends ServiceEntityRepository
         return $qb->getQuery()->getResult();
     }
 
+//    public function findBySemestreBuilder(Semestre $semestre): QueryBuilder
+//    {
+//        return $this->createQueryBuilder('e')
+//            ->where('e.semestre = :semestre')
+//            ->andWhere('e.anneeSortie = 0')
+//            ->setParameter('semestre', $semestre)
+//            ->orderBy('e.nom', Order::Ascending->value)
+//            ->addOrderBy('e.prenom', Order::Ascending->value);
+//    }
+
+
     public function findBySemestreBuilder(Semestre $semestre): QueryBuilder
     {
         return $this->createQueryBuilder('e')
-            ->where('e.semestre = :semestre')
-            ->andWhere('e.anneeSortie = 0')
+            ->leftJoin(Semestre::class, 's', 'WITH', 'e.semestre = s.id')
+            ->leftJoin('e.semestres', 'ss')
+            ->where('s = :semestre OR ss = :semestre')
             ->setParameter('semestre', $semestre)
             ->orderBy('e.nom', Order::Ascending->value)
             ->addOrderBy('e.prenom', Order::Ascending->value);
@@ -102,7 +115,7 @@ class EtudiantRepository extends ServiceEntityRepository
             $tt['avatarInitiales'] = $etudiant->getAvatarInitiales();
             $gr = '';
             foreach ($etudiant->getGroupes() as $groupe) {
-                $gr .= $groupe->getLibelle().', ';
+                $gr .= $groupe->getLibelle() . ', ';
             }
             $tt['groupes'] = mb_substr($gr, 0, -2);
             $t[] = $tt;
@@ -116,7 +129,7 @@ class EtudiantRepository extends ServiceEntityRepository
         $query = $this->createQueryBuilder('e');
         $i = 1;
         foreach ($annee->getSemestres() as $semestre) {
-            $query->orWhere('e.semestre = ?'.$i)
+            $query->orWhere('e.semestre = ?' . $i)
                 ->setParameter($i, $semestre->getId());
             ++$i;
         }
@@ -137,7 +150,7 @@ class EtudiantRepository extends ServiceEntityRepository
             ->orWhere('p.numEtudiant LIKE :needle')
             ->orWhere('p.numIne LIKE :needle')
             ->andWhere('p.departement = :departement')
-            ->setParameter('needle', '%'.$needle.'%')
+            ->setParameter('needle', '%' . $needle . '%')
             ->setParameter('departement', $departement->getId())
             ->orderBy('p.nom', Order::Ascending->value)
             ->addOrderBy('p.prenom', Order::Ascending->value)
@@ -154,7 +167,7 @@ class EtudiantRepository extends ServiceEntityRepository
             ->orWhere('p.mailUniv LIKE :needle')
             ->orWhere('p.numEtudiant LIKE :needle')
             ->orWhere('p.numIne LIKE :needle')
-            ->setParameter('needle', '%'.$needle.'%')
+            ->setParameter('needle', '%' . $needle . '%')
             ->orderBy('p.nom', Order::Ascending->value)
             ->addOrderBy('p.prenom', Order::Ascending->value)
             ->getQuery()
@@ -284,28 +297,50 @@ class EtudiantRepository extends ServiceEntityRepository
             $diplome = $diplome->getParent();
         }
 
-        return $this->createQueryBuilder('e')
-            ->innerJoin(Semestre::class, 's', 'WITH', 'e.semestre=s.id')
-            ->innerJoin(Annee::class, 'a', 'WITH', 'a.id=s.annee')
-            ->innerJoin(Diplome::class, 'd', 'WITH', 'd.id=a.diplome')
+        $qb = $this->createQueryBuilder('e');
+        $qb->leftJoin(Semestre::class, 's', 'WITH', 'e.semestre = s.id')
+            ->leftJoin('e.semestres', 'ss')
+            ->leftJoin('s.annee', 'a')
+            ->leftJoin('a.diplome', 'd')
+            ->leftJoin('ss.annee', 'a2')
+            ->leftJoin('a2.diplome', 'd2');
 
-            ->where('d.id = :diplome')
-            ->orWhere('d.parent = :diplome')
-            ->andWhere('s.ordreLmd = :ordreLmd')
+        $cond1 = $qb->expr()->andX(
+            $qb->expr()->orX('d.id = :diplome', 'd.parent = :diplome'),
+            $qb->expr()->eq('s.ordreLmd', ':ordreLmd')
+        );
+
+        $cond2 = $qb->expr()->andX(
+            $qb->expr()->orX('d2.id = :diplome', 'd2.parent = :diplome'),
+            $qb->expr()->eq('ss.ordreLmd', ':ordreLmd')
+        );
+
+        return $qb->andWhere($qb->expr()->orX($cond1, $cond2))
             ->andWhere('e.anneeSortie = 0')
             ->setParameter('ordreLmd', $ordreLmd)
-            ->setParameter('diplome', $diplome->getid())
+            ->setParameter('diplome', $diplome->getId())
             ->orderBy('e.nom', Order::Ascending->value)
             ->addOrderBy('e.prenom', Order::Ascending->value)
             ->getQuery()
             ->getResult();
     }
 
+//    public function findBySemestresBuilder(Collection $semestres): QueryBuilder
+//    {
+//        return $this->createQueryBuilder('e')
+//            ->innerJoin(Semestre::class, 's', 'WITH', 'e.semestre=s.id')
+//            ->where('s IN (:semestres)')
+//            ->setParameter('semestres', $semestres)
+//            ->orderBy('e.nom', Order::Ascending->value)
+//            ->addOrderBy('e.prenom', Order::Ascending->value);
+//    }
+
     public function findBySemestresBuilder(Collection $semestres): QueryBuilder
     {
         return $this->createQueryBuilder('e')
-            ->innerJoin(Semestre::class, 's', 'WITH', 'e.semestre=s.id')
-            ->where('s IN (:semestres)')
+            ->leftJoin(Semestre::class, 's', 'WITH', 'e.semestre = s.id')
+            ->leftJoin('e.semestres', 'ss')
+            ->where('s IN (:semestres) OR ss IN (:semestres)')
             ->setParameter('semestres', $semestres)
             ->orderBy('e.nom', Order::Ascending->value)
             ->addOrderBy('e.prenom', Order::Ascending->value);

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Etudiant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/01/2026 10:04
+ * @lastUpdate 14/01/2026 18:14
  */
 
 namespace App\Entity;
@@ -639,8 +639,8 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
     public function getSemestreActif(): ?Semestre
     {
         foreach ($this->getSemestres() as $es) {
-            if ($es->getSemestre()->isActif()) {
-                return $es->getSemestre();
+            if ($es->isActif()) {
+                return $es;
             }
         }
 
