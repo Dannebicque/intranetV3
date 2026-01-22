@@ -8,8 +8,8 @@
             <div class="card-header-actions">
                 <a href="{{ path('administration_stage_periode_index') }}" class="btn btn-sm btn-primary"
                    title="Créer une période" data-bs-toggle="tooltip" data-bs-placement="bottom">
-                <i class="fas fa-plus" style="color: white"></i><span
-                        class="sr-only">Créer une période de stage</span></a>
+                    <i class="fas fa-plus" style="color: white"></i><span
+                            class="sr-only">Créer une période de stage</span></a>
             </div>
         </header>
         <div class="card-body">
@@ -26,7 +26,9 @@
                         <twig:Alert type="info">Aucune période de stage.</twig:Alert>
                     </div>
                 {% endfor %}
-
+                <div class="col-12 d-grid d-block mb-2">
+                    <a href="{{ path('administration_export_yousign') }}">Export csv Yousign</a>
+                </div>
             </div>
         </div>
     </div>

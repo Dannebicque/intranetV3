@@ -29,16 +29,23 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Twig\Environment;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
+use App\Repository\SemestreRepository;
+use App\Repository\EtudiantRepository;
 
 #[Route(path: '/administration/stage/etudiant')]
 class StageEtudiantController extends BaseController
 {
+    public function __construct(
+    ) {
+    }
+
     #[Route(path: '/{id}', name: 'administration_stage_etudiant_show', methods: 'GET')]
     public function show(PersonnelRepository $personnelRepository, StageEtudiant $stageEtudiant): Response
     {
@@ -241,5 +248,55 @@ class StageEtudiantController extends BaseController
             ],
             'Fiche-Enseignant-stage-'.$stageEtudiant->getEtudiant()->getNom()
         );
+    }
+
+    #[Route(path: '/export/yousign', name: 'administration_export_yousign', methods: 'GET')]
+    public function exportYousign(SemestreRepository $semestreRepository, EtudiantRepository $etudiantRepository, PersonnelRepository $personnelRepository): Response
+    {
+        $departement = $this->getDepartement();
+        $semestres = $semestreRepository->findByDepartement($departement);
+        // trier pour ne garder que les semestres dont annee.optAlternance = true
+        $semestresAlternance = [];
+        foreach ($semestres as $semestre) {
+            if (null !== $semestre->getAnnee() && $semestre->getAnnee()->isOptAlternance()) {
+                $semestresAlternance[] = $semestre;
+            }
+        }
+        $etudiants = [];
+        foreach ($semestresAlternance as $semestre) {
+            $etudiants = array_merge($etudiants,
+                $etudiantRepository->findBySemestre($semestre));
+        }
+
+        $personnels = $personnelRepository->findByDepartement($departement);
+
+        //construire un fichier CSV avec les données demandées
+        //"First name	Last name	Email address	Phone number	Language	Job title	Company name	Address Line 1	Address Line 2	Zip Code	City	Country"  seuls les 4 premiers doivent être remplis
+        $csvData = "First name\tLast name\tEmail address\tPhone number\tLanguage\tJob title\tCompany name\tAddress Line 1\tAddress Line 2\tZip Code\tCity\tCountry\n";
+        // remplir les lignes
+        /** @var Etudiant $etudiant */
+        foreach ($etudiants as $etudiant) {
+            $csvData .= $etudiant->getPrenom()
+                    ."\t".$etudiant->getNom()
+                    ."\t".$etudiant->getMailUniv()
+                    ."\t".$etudiant->getTel1()
+                    ."\t\t\t\t\t\t\t\t\n";
+        }
+        /** @var Personnel $personnel */
+        foreach ($personnels as $personnel) {
+            $csvData .= $personnel->getPrenom()
+                    ."\t".$personnel->getNom()
+                    ."\t".$personnel->getMailUniv()
+                    ."\t".$personnel->getTel1()
+                    ."\t\t\t\t\t\t\t\t\n";
+        }
+        $response = new Response($csvData);
+        $disposition = $response->headers->makeDisposition(
+            ResponseHeaderBag::DISPOSITION_ATTACHMENT,
+            'export_yousign_'.date('Ymd_His').'.csv'
+        );
+        $response->headers->set('Content-Disposition', $disposition);
+        $response->headers->set('Content-Type', 'text/tab-separated-values; charset=utf-8');
+        return $response;
     }
 }
