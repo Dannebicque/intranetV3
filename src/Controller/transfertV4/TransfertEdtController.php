@@ -37,8 +37,10 @@ class TransfertEdtController extends AbstractController
                 // fusionner la date avec l'heure de début
                 $debut = $edt->getDate()->format('Y-m-d') . ' ' . $edt->getHeureDebut()?->format('H:i:s');
                 $fin = $edt->getDate()->format('Y-m-d') . ' ' . $edt->getHeureFin()?->format('H:i:s');
+                $date = $edt->getDate()?->format('Y-m-d') ?? '';
                 $tabEdtIntranet[] = [
                     'id' => $edt->getId(),
+                    'date' => $date,
                     'debut' => $debut,
                     'fin' => $fin,
                     'matiere' => $edt->getTypeIdMatiere(),
