@@ -25,6 +25,11 @@ vich_uploader:
         upload_destination: '%kernel.project_dir%/public/upload/offre-stage'
         namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
         inject_on_load: true
+      rapportStage:
+        uri_prefix: /upload/rapport-stage
+        upload_destination: '%kernel.project_dir%/public/upload/rapport-stage'
+        namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
+        inject_on_load: true
       logo:
         uri_prefix: /upload/logo
         upload_destination: '%kernel.project_dir%/public/upload/logo'

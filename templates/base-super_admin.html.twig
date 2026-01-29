@@ -45,6 +45,14 @@
             </a>
         </li>
     {% endif %}
+    {% if is_granted('ROLE_BU') or is_granted('ROLE_SUPER_ADMIN') %}
+        <li class="menu-item active" id="menu-ressources-humaines">
+            <a class="menu-link" href="{{ path('sa_bu_index') }}">
+                <i class="{{ iconPersonnel }} fa-2x"></i>
+                <span class="title">BU / Rapports</span>
+            </a>
+        </li>
+    {% endif %}
     {% if is_granted('ROLE_SUPER_ADMIN') %}
         <li class="menu-item active" id="menu-celcat">
             <a class="menu-link" href="{{ path('sa_celcat_index') }}">

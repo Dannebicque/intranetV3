@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/StageEtudiant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:40
+ * @lastUpdate 16/01/2026 11:44
  */
 
 namespace App\Entity;
@@ -165,12 +165,19 @@ class StageEtudiant extends BaseEntity
     #[ORM\OneToMany(mappedBy: 'stage', targetEntity: StageFicheSuivi::class)]
     private Collection $stageFicheSuivis;
 
+    /**
+     * @var Collection<int, StageRapport>
+     */
+    #[ORM\OneToMany(mappedBy: 'stageEtudiant', targetEntity: StageRapport::class)]
+    private Collection $stageRapports;
+
     public function __construct(?float $gratificationMontant)
     {
         $this->setUuid(Uuid::uuid4());
         $this->setGratificationMontant($gratificationMontant);
         $this->stageAvenants = new ArrayCollection();
         $this->stageFicheSuivis = new ArrayCollection();
+        $this->stageRapports = new ArrayCollection();
     }
 
     public function setUuid(UuidInterface $uuid): self
@@ -573,6 +580,36 @@ class StageEtudiant extends BaseEntity
         // set the owning side to null (unless already changed)
         if ($this->stageFicheSuivis->removeElement($stageFicheSuivi) && $stageFicheSuivi->getStage() === $this) {
             $stageFicheSuivi->setStage(null);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, StageRapport>
+     */
+    public function getStageRapports(): Collection
+    {
+        return $this->stageRapports;
+    }
+
+    public function addStageRapport(StageRapport $stageRapport): static
+    {
+        if (!$this->stageRapports->contains($stageRapport)) {
+            $this->stageRapports->add($stageRapport);
+            $stageRapport->setStageEtudiant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeStageRapport(StageRapport $stageRapport): static
+    {
+        if ($this->stageRapports->removeElement($stageRapport)) {
+            // set the owning side to null (unless already changed)
+            if ($stageRapport->getStageEtudiant() === $this) {
+                $stageRapport->setStageEtudiant(null);
+            }
         }
 
         return $this;
