@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2025. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/ProfilEtudiantController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/07/2025 08:58
+ * @lastUpdate 09/02/2026 14:57
  */
 
 namespace App\Controller;
@@ -346,15 +346,15 @@ class ProfilEtudiantController extends BaseController
         }
 
         //todo: mutualiser avec BlocNotesAbsencesController... (TwigComponent ?)
-        if (null !== $etudiant->getSemestre()) {
-            Calendrier::calculPlanning($this->dataUserSession->getAnneeUniversitaire()->getAnnee(), 2,
+        if (null !== $etudiant->getSemestreActif()) {
+            Calendrier::calculPlanning($this->dataUserSession->getAnneeUniversitaire()?->getAnnee(), 2,
                 Constantes::DUREE_SEMESTRE);
 
-            if ($etudiant->getDiplome()->isApc() === false) {
-                $matieres = $typeMatiereManager->findBySemestreArray($etudiant->getSemestre());
+            if ($etudiant->getDiplome()?->isApc() === false) {
+                $matieres = $typeMatiereManager->findBySemestreArray($etudiant->getSemestreActif());
             } else {
-                $matieres = $typeMatiereManager->findByReferentielOrdreSemestreArray($etudiant->getSemestre(),
-                    $etudiant->getDiplome()->getReferentiel());
+                $matieres = $typeMatiereManager->findByReferentielOrdreSemestreArray($etudiant->getSemestreActif(),
+                    $etudiant->getDiplome()?->getReferentiel());
             }
             $etudiantAbsences->setEtudiant($etudiant);
             $absences = $etudiantAbsences->getAbsencesParSemestresEtAnneeUniversitaire($matieres,
