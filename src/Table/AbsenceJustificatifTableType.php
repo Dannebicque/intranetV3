@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Table/AbsenceJustificatifTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:10
+ * @lastUpdate 09/02/2026 09:54
  */
 
 namespace App\Table;
@@ -189,7 +189,9 @@ class AbsenceJustificatifTableType extends TableType
             'fetch_join_collection' => false,
             'query' => function (QueryBuilder $qb, array $formData) {
                 $qb->innerJoin(Etudiant::class, 'etu', 'WITH', 'e.etudiant = etu.id')
-                    ->where('e.semestre = :semestre')
+                    ->leftJoin(Semestre::class, 's', 'WITH', 'e.semestre = s.id')
+                    ->leftJoin('e.semestres', 'ss')
+                    ->where('s = :semestre OR ss = :semestre')
                     ->andWhere('e.anneeUniversitaire = :anneeuniversitaire')
                     ->setParameter('semestre', $this->semestre->getId())
                     ->setParameter('anneeuniversitaire', $this->anneeUniversitaire->getId());
