@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/AbsenceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/01/2026 10:08
+ * @lastUpdate 09/02/2026 10:04
  */
 
 namespace App\Controller\administration;
@@ -110,12 +110,15 @@ class AbsenceController extends BaseController
     }
 
     #[Route('/semestre/{semestre}/justifier', name: 'administration_absences_semestre_justifier')]
-    public function justifier(Semestre $semestre): Response
+    public function justifier(
+        EtudiantRepository $etudiantRepository,
+        Semestre           $semestre): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $semestre);
-
+        $etudiants = $etudiantRepository->findBySemestre($semestre);
         return $this->render('administration/absence/justifier.html.twig', [
             'semestre' => $semestre,
+            'etudiants' => $etudiants,
         ]);
     }
 
