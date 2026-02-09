@@ -7,7 +7,7 @@
         {% if user.typeUser|lower == 'permanent' or user.typeUser|lower == 'vacataire' %}
             {{ 'profil.personnel.heading'|trans({'%user%': user.displayPr}) }}
         {% elseif user.typeUser|lower == 'etudiant' %}
-            {{ 'profil.heading'|trans({'%user%': user.displayPr, '%semestre%': user.semestre != null ? user.semestre
+            {{ 'profil.heading'|trans({'%user%': user.displayPr, '%semestre%': user.semestreActif != null ? user.semestreActif
             .libelle : 'non.defini'|trans}) }}
         {% endif %}
     {% endif %}
