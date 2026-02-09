@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/SousCommission/SousCommissionExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/09/2024 11:49
+ * @lastUpdate 09/02/2026 15:39
  */
 
 namespace App\Classes\SousCommission;
@@ -839,9 +839,9 @@ class SousCommissionExport
 
 
         $ues = $semestre->getUes();
-        if ($semestre->getDiplome()->isApc()) {
+        if ($semestre->getDiplome()?->isApc()) {
             $matieres = $this->typeMatiereManager->findBySemestreAndReferentiel($semestre,
-                $semestre->getDiplome()->getReferentiel());
+                $semestre->getDiplome()?->getReferentiel());
         } else {
             $matieres = $this->typeMatiereManager->findBySemestre($semestre);
         }
