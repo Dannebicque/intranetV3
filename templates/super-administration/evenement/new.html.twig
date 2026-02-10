@@ -1,0 +1,28 @@
+{% extends 'base-super_admin.html.twig' %}
+
+{% block header %}
+    {{ 'adm.evenement.new.heading'|trans({'%label%':'Evénement'}) }}
+{% endblock %}
+
+{%block headeractions %}
+    <div class="header-action">
+        {{ include('composants/sadm-buttons-new.html.twig', {elt: 'evenement'}) }}
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'adm.evenement.new.heading'|trans({'%label%':'Evénement'}) }}</h4>
+        <div class="card-body">
+            <div class="mb-3">
+                <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modalEtudiants">
+                    {{ 'adm.evenement.form.ouvrir_selection_etudiants'|trans }}
+                </button>
+            </div>
+            {{ include('composants/adm-form.html.twig') }}
+        </div>
+    </div>
+
+    {# Modal de sélection des étudiants #}
+    {{ include('super-administration/evenement/_modal_etudiants.html.twig') }}
+{% endblock %}
