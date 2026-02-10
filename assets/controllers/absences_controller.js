@@ -61,6 +61,7 @@ export default class extends Controller {
 
     this.listeEtudiantsAbsencesTarget.innerHTML = window.da.loaderStimulus
     const response = await fetch(Routing.generate('api_absence_liste_etudiant', { typegroupe: e.params.typegroupe }))
+    // eslint-disable-next-line no-console
     if (response.ok) {
       this.listeEtudiantsAbsencesTarget.innerHTML = await response.text()
       await this._updateAffichage()
