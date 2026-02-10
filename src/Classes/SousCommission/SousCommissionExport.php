@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/SousCommission/SousCommissionExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 10/02/2026 11:49
+ * @lastUpdate 10/02/2026 11:50
  */
 
 namespace App\Classes\SousCommission;
@@ -757,7 +757,8 @@ class SousCommissionExport
                             $ssCommTravail->matiere($etu->getId(), $m->getTypeIdMatiere()))) {
                             $this->myExcelWriter->writeCellXY($colonne, $ligne, 'N.C.');
                         } else {
-                            if (!is_float($ssCommTravail->etudiant($etu->getId())->getMoyenne())) {
+                            if (!is_float($ssCommTravail->matiere($etu->getId(),
+                                $m->getTypeIdMatiere())['moyenne'])) {
                                 $this->myExcelWriter->writeCellXY($colonne, $ligne,
                                     $ssCommTravail->matiere($etu->getId(),
                                         $m->getTypeIdMatiere())['moyenne']);
