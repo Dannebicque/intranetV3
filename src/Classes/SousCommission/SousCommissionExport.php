@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/SousCommission/SousCommissionExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 10/02/2026 11:40
+ * @lastUpdate 10/02/2026 11:49
  */
 
 namespace App\Classes\SousCommission;
@@ -757,10 +757,19 @@ class SousCommissionExport
                             $ssCommTravail->matiere($etu->getId(), $m->getTypeIdMatiere()))) {
                             $this->myExcelWriter->writeCellXY($colonne, $ligne, 'N.C.');
                         } else {
-                            $this->myExcelWriter->writeCellXY($colonne, $ligne,
-                                number_format($ssCommTravail->matiere($etu->getId(),
-                                    $m->getTypeIdMatiere())['moyenne'], 2),
-                                ['style' => 'numerique']);
+                            if (!is_float($ssCommTravail->etudiant($etu->getId())->getMoyenne())) {
+                                $this->myExcelWriter->writeCellXY($colonne, $ligne,
+                                    $ssCommTravail->matiere($etu->getId(),
+                                        $m->getTypeIdMatiere())['moyenne']);
+                                $this->myExcelWriter->colorCellRange($colonne, $ligne,
+                                    'ffff0000');
+                            } else {
+                                $this->myExcelWriter->writeCellXY($colonne, $ligne,
+                                    number_format($ssCommTravail->matiere($etu->getId(),
+                                        $m->getTypeIdMatiere())['moyenne'], 2),
+                                    ['style' => 'numerique']);
+                            }
+
                         }
                     }
                     ++$colonne;
