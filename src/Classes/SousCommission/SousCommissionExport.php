@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/SousCommission/SousCommissionExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/02/2026 15:39
+ * @lastUpdate 10/02/2026 11:40
  */
 
 namespace App\Classes\SousCommission;
@@ -988,9 +988,17 @@ class SousCommissionExport
                 }
 
                 $colonne = 13;
-                $this->myExcelWriter->writeCellXY($colonne, $ligne,
-                    number_format($ssCommTravail->etudiant($etu->getId())->getMoyenne(), 3),
-                    ['style' => 'numerique3']);
+                if (!is_float($ssCommTravail->etudiant($etu->getId())->getMoyenne())) {
+                    $this->myExcelWriter->writeCellXY($colonne, $ligne,
+                        $ssCommTravail->etudiant($etu->getId())->getMoyenne());
+                    $this->myExcelWriter->colorCellRange($colonne, $ligne,
+                        'ffff0000');
+                } else {
+                    $this->myExcelWriter->writeCellXY($colonne, $ligne,
+                        number_format($ssCommTravail->etudiant($etu->getId())->getMoyenne(), 3),
+                        ['style' => 'numerique3']);
+                }
+
                 ++$colonne;
                 $this->myExcelWriter->writeCellXY($colonne, $ligne,
                     $ssCommTravail->etudiant($etu->getId())->getDecision()->value);
