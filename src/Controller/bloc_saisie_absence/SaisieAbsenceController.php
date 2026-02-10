@@ -40,11 +40,30 @@ class SaisieAbsenceController extends BaseController
         ?EvenementEdt $event = null
     ): Response {
         if (null !== $event) {
-            $groupes = $typeGroupeRepository->findOneBy([
-                'ordreSemestre' => $semestre->getOrdreLmd(),
-                'diplome' => null === $semestre->getDiplome()->getParent() ? $semestre->getDiplome()->getId() : $semestre->getDiplome()->getParent()->getId(),
-                'type' => $event->type_cours,
-            ]);
+            // Récupère tous les types de groupes du diplôme et de l'ordre du semestre, puis sélectionne celui
+            // correspondant au type de cours de l'événement (CM/TD/TP...)
+            $types = $typeGroupeRepository->findByDiplomeAndOrdreSemestre(
+                $semestre->getDiplome(),
+                (int) $semestre->getOrdreLmd()
+            );
+
+            $groupes = null;
+            foreach ($types as $tg) {
+                if (strtoupper($tg->getLibelle() ?? '') === strtoupper((string) $event->type_cours)) {
+                    $groupes = $tg;
+                    break;
+                }
+            }
+
+            // Si non trouvé par libellé, essaie par enum `type` le cas échéant
+            if (null === $groupes) {
+                foreach ($types as $tg) {
+                    if (null !== $tg->getType() && strtoupper($tg->getType()->value) === strtoupper((string) $event->type_cours)) {
+                        $groupes = $tg;
+                        break;
+                    }
+                }
+            }
         } else {
             $groupes = null;
         }
@@ -56,7 +75,6 @@ class SaisieAbsenceController extends BaseController
         }
 
         $typeGroupes = $semestre->getTypeGroupess();
-
 
         return $this->render('bloc_saisie_absence/_saisie_absence.html.twig', [
             'matiere' => $matiere,
