@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Table/EtudiantSemestreTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/03/2024 18:35
+ * @lastUpdate 11/02/2026 16:45
  */
 
 namespace App\Table;
@@ -183,7 +183,9 @@ class EtudiantSemestreTableType extends TableType
             'fetch_join_collection' => false,
             'query' => function (QueryBuilder $qb, array $formData) {
                 $qb
-                    ->where('e.semestre = :semestre')
+                    ->leftJoin(Semestre::class, 's', 'WITH', 'e.semestre = s.id')
+                    ->leftJoin('e.semestres', 'ss')
+                    ->where('s = :semestre OR ss = :semestre')
                     ->setParameter('semestre', $this->semestre->getId());
 
                 if (isset($formData['search'])) {
