@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/TrombinoscopeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 03/07/2024 08:52
+ * @lastUpdate 11/02/2026 11:49
  */
 
 namespace App\Controller;
@@ -39,11 +39,14 @@ use Twig\Error\SyntaxError;
 class TrombinoscopeController extends BaseController
 {
     #[Route('/', name: 'trombinoscope_index')]
-    public function index(): Response
+    public function index(EtudiantRepository $etudiantRepository): Response
     {
         $this->breadcrumbHelper->addItem('trombinoscope', 'trombinoscope_index');
         $semestres = [];
+        $capacitesSemestres = [];
         foreach ($this->dataUserSession->getSemestresActifs() as $semestre) {
+            $capacitesSemestres[$semestre->getId()] = $etudiantRepository->countBySemestre($semestre);
+
             if (!array_key_exists($semestre->getOrdreLmd(), $semestres))
             {
                 $semestres[$semestre->getOrdreLmd()] = [];
@@ -51,8 +54,10 @@ class TrombinoscopeController extends BaseController
             $semestres[$semestre->getOrdreLmd()][] = $semestre;
         }
 
+
         return $this->render('trombinoscope/index.html.twig', [
-            'semestres' => $semestres
+            'semestres' => $semestres,
+            'capacitesSemestres' => $capacitesSemestres
         ]);
     }
 
