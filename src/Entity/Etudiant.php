@@ -182,6 +182,12 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
     private Collection $semestres;
 
     /**
+     * @var Collection<int, Evenement>
+     */
+    #[ORM\ManyToMany(targetEntity: Evenement::class, mappedBy: 'etudiants')]
+    private Collection $evenements;
+
+    /**
      * @throws Exception
      */
     public function __construct()
@@ -206,6 +212,7 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
         $this->projetEtudiants = new ArrayCollection();
         $this->commentaires = new ArrayCollection();
         $this->semestres = new ArrayCollection();
+        $this->evenements = new ArrayCollection();
     }
 
     public function setUuid(UuidInterface $uuid): self
@@ -961,6 +968,33 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
     public function removeSemestre(Semestre $semestre): static
     {
         $this->semestres->removeElement($semestre);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Evenement>
+     */
+    public function getEvenements(): Collection
+    {
+        return $this->evenements;
+    }
+
+    public function addEvenement(Evenement $evenement): static
+    {
+        if (!$this->evenements->contains($evenement)) {
+            $this->evenements->add($evenement);
+            $evenement->addEtudiant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEvenement(Evenement $evenement): static
+    {
+        if ($this->evenements->removeElement($evenement)) {
+            $evenement->removeEtudiant($this);
+        }
 
         return $this;
     }

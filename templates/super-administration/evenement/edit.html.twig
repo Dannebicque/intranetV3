@@ -1,0 +1,44 @@
+{% extends 'base-super_admin.html.twig' %}
+
+{% block header %}
+    {{ 'adm.evenement.modification.heading'|trans({}, 'evenement') }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        {{ include('composants/sadm-buttons-edit.html.twig', {elt:'evenement', id: evenement.id}) }}
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'adm.evenement.modification.heading'|trans({}, 'evenement') }}</h4>
+        <div class="card-body">
+            <div class="mb-3">
+                <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modalEtudiants">
+                    {{ 'adm.evenement.form.ouvrir_selection_etudiants'|trans({}, 'evenement') }}
+                </button>
+                <div id="evenement-selected-summary" class="mt-2">
+                    {% for e in evenement.etudiants %}
+                        <span class="badge bg-primary me-1 mb-1">{{ e.nom }} {{ e.prenom }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+            {{ include('composants/adm-form.html.twig', {'button_label': 'update'|trans}) }}
+        </div>
+    </div>
+
+    {# Modal de sélection des étudiants #}
+    {{ include('super-administration/evenement/_modal_etudiants.html.twig') }}
+
+    {# Pré-remplir le hidden avec les étudiants déjà sélectionnés #}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const input = document.querySelector('input[name="evenement[etudiantsIds]"]');
+            if (input && !input.value) {
+                const ids = [{% for e in evenement.etudiants %}{{ e.id }}{% if not loop.last %},{% endif %}{% endfor %}];
+                input.value = ids.join(',');
+            }
+        });
+    </script>
+{% endblock %}

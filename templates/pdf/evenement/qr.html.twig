@@ -1,0 +1,35 @@
+{% extends "pdf/basepdf.html.twig" %}
+
+{# Titre du document pour l'entête du PDF #}
+{% block title %}{{ evenement.libelle }}{% endblock %}
+
+{# Contenu principal du PDF (structure alignée sur les autres templates PDF) #}
+{% block content %}
+    <h4 style="margin: 0 0 10px 0;">{{ evenement.libelle }}</h4>
+
+    <table class="table noborder" style="width: 100%; margin-bottom: 10px;">
+        <tbody>
+        <tr>
+            <td class="noborder" style="width: 33%;"><strong>{{ 'table.date'|trans }}</strong> : {{ evenement.date ? evenement.date|format_date('long') : '' }}</td>
+            <td class="noborder" style="width: 33%;"><strong>{{ 'table.heure_debut'|trans }}</strong> : {{ evenement.debut ? evenement.debut|date('H:i') : '' }}</td>
+            <td class="noborder" style="width: 33%;">
+                {% if evenement.fin %}
+                    <strong>{{ 'table.heure_fin'|trans }}</strong> : {{ evenement.fin|date('H:i') }}
+                {% endif %}
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="center" style="margin-top: 10px;">
+        {% if qrCode %}
+            <img src="{{ qrCode }}" alt="QR Code" style="width: 260px; height: 260px;"/>
+        {% else %}
+            <p class="center" style="color:#a00;">QR code indisponible.</p>
+        {% endif %}
+    </div>
+
+    <p class="center" style="margin-top:8px; color:#666;">
+        {{ 'voir'|trans }}: {{ absolute_url(path('sa_evenement_show', {id: evenement.id})) }}
+    </p>
+{% endblock %}

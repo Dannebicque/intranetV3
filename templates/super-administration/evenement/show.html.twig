@@ -1,0 +1,61 @@
+{% extends 'base-super_admin.html.twig' %}
+
+{% block header %}
+    {{ 'adm.evenement.show.heading'|trans({}, 'evenement') }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action d-flex gap-2">
+        {{ include('composants/sadm-buttons-show.html.twig', {elt: 'evenement', id: evenement.id}) }}
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'adm.evenement.show.heading'|trans({}, 'evenement') }}</h4>
+        <div class="card-body">
+            <table class="table">
+                <tbody>
+                <tr>
+                    <th>{{ 'table.id'|trans }}</th>
+                    <td>{{ evenement.id }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.libelle'|trans }}</th>
+                    <td>{{ evenement.libelle }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.date'|trans }}</th>
+                    <td>{{ evenement.date ? evenement.date|format_date('long') : '' }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.heure_debut'|trans }}</th>
+                    <td>{{ evenement.debut ? evenement.debut|date('H:i') : '' }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.heure_fin'|trans }}</th>
+                    <td>{{ evenement.fin ? evenement.fin|date('H:i') : '' }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.adresse'|trans }}</th>
+                    <td>
+                        {% for adresseDetail in evenement.adresse %}
+                            {{ adresseDetail.libelle }}{% if not loop.last %}, {% endif %}
+                        {% endfor %}
+                    </td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.description'|trans }}</th>
+                    <td>{{ evenement.description }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.participants'|trans }}</th>
+                    <td>
+                        {{ evenement.etudiants|length }}
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,79 @@
+{# Modal de sélection des étudiants pour un Événement #}
+<div class="modal fade" id="modalEtudiants" tabindex="-1" aria-labelledby="modalEtudiantsLabel" aria-hidden="true"
+     data-controller="evenement-etudiants"
+     data-evenement-etudiants-endpoint-value="{{ path('api_evenement_etudiants') }}"
+     data-evenement-etudiants-semestres-endpoint-value="{{ path('api_evenement_semestres') }}"
+     data-evenement-etudiants-groupes-endpoint-value="{{ path('api_evenement_groupes') }}"
+>
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalEtudiantsLabel">{{ 'adm.evenement.form.selection_etudiants'|trans({}, 'evenement') }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row g-2 mb-2">
+                    <div class="col-md-12">
+                        <label class="form-label">{{ 'adm.evenement.form.recherche'|trans({}, 'evenement') }}</label>
+                        <input type="text" class="form-control" placeholder="{{ 'rechercher.nom_prenom'|trans({}, 'evenement') }}" data-action="input->evenement-etudiants#onSearch" data-evenement-etudiants-target="search">
+                    </div>
+                </div>
+                <div class="row g-2 mb-2">
+                    <div class="col-md-4">
+                        <label class="form-label">{{ 'adm.evenement.form.departement'|trans({}, 'evenement') }}</label>
+                        <select class="form-select" data-action="change->evenement-etudiants#onDepartementChange" data-evenement-etudiants-target="departement">
+                            <option value="">— {{ 'selectionner'|trans }} —</option>
+                            {% for d in departements %}
+                                <option value="{{ d.id }}">{{ d.libelle }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <label class="form-label mb-0">{{ 'adm.evenement.form.semestres'|trans({}, 'evenement') }}</label>
+                            <button type="button" class="btn btn-link btn-sm p-0" data-action="evenement-etudiants#clearSemestres">{{ 'vider'|trans }}</button>
+                        </div>
+                        <select class="form-select" multiple data-action="change->evenement-etudiants#onSemestresChange" data-evenement-etudiants-target="semestres" disabled>
+                            <option value="" disabled>— {{ 'selectionner'|trans }} —</option>
+                        </select>
+                        <small class="text-muted">{{ 'adm.evenement.form.semestres.help'|trans({}, 'evenement') }}</small>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <label class="form-label mb-0">{{ 'adm.evenement.form.groupes'|trans({}, 'evenement') }}</label>
+                            <button type="button" class="btn btn-link btn-sm p-0" data-action="evenement-etudiants#clearGroupes">{{ 'vider'|trans }}</button>
+                        </div>
+                        <select class="form-select" multiple size="4" data-action="change->evenement-etudiants#reload" data-evenement-etudiants-target="groupes" disabled>
+                            <option value="" disabled>— {{ 'selectionner'|trans }} —</option>
+                        </select>
+                        <small class="text-muted">{{ 'adm.evenement.form.groupes.help'|trans({}, 'evenement') }}</small>
+                    </div>
+                </div>
+
+                <div class="row g-2">
+                    <div class="col-md-6">
+                        <label class="form-label">{{ 'adm.evenement.form.liste_etudiants'|trans({}, 'evenement') }}</label>
+                        <select class="form-select" multiple size="12" data-evenement-etudiants-target="liste" data-action="dblclick->evenement-etudiants#addSelected"></select>
+                        <div class="d-flex justify-content-between align-items-center mt-2">
+                            <div class="small text-muted" data-evenement-etudiants-target="status"></div>
+                            <button type="button" class="btn btn-sm btn-outline-secondary" data-action="evenement-etudiants#loadMore">{{ 'charger_plus'|trans }}</button>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">{{ 'adm.evenement.form.selection_courante'|trans({}, 'evenement') }}</label>
+                        <div class="border rounded p-2" style="min-height: 260px;">
+                            <div class="d-flex flex-wrap gap-1" data-evenement-etudiants-target="selectedZone"></div>
+                        </div>
+                        <div class="mt-2 d-flex gap-2">
+                            <button type="button" class="btn btn-sm btn-outline-danger" data-action="evenement-etudiants#clearSelection">{{ 'vider'|trans }}</button>
+                            <button type="button" class="btn btn-sm btn-primary ms-auto" data-action="evenement-etudiants#applySelection" data-bs-dismiss="modal">{{ 'appliquer'|trans }}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ 'annuler'|trans }}</button>
+            </div>
+        </div>
+    </div>
+</div>
