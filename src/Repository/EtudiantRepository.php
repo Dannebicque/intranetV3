@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/EtudiantRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/01/2026 18:34
+ * @lastUpdate 11/02/2026 11:49
  */
 
 namespace App\Repository;
@@ -441,5 +441,15 @@ class EtudiantRepository extends ServiceEntityRepository
             ->addOrderBy('e.prenom', Order::Ascending->value)
             ->getQuery()
             ->getResult();
+    public function countBySemestre(mixed $semestre): int
+    {
+        return $this->createQueryBuilder('e')
+            ->select('count(e.id)')
+            ->leftJoin(Semestre::class, 's', 'WITH', 'e.semestre = s.id')
+            ->leftJoin('e.semestres', 'ss')
+            ->where('s = :semestre OR ss = :semestre')
+            ->setParameter('semestre', $semestre)
+            ->getQuery()
+            ->getSingleScalarResult();
     }
 }
