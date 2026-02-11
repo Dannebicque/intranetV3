@@ -20,7 +20,7 @@
                            href="#" data-sem="{{ semestre[0].id }}" role="tab"
                            data-action="click->trombinoscope#changementSemestre"
                         >{{ semestre[0].display }}
-                            <small>({{ capacitesSemestres[semestre.id] }})</small>
+                            <small>({{ capacitesSemestres[semestre[0].id] }})</small>
                         </a>
                     </li>
                 {% else %}

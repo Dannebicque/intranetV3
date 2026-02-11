@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/TrombinoscopeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/02/2026 11:49
+ * @lastUpdate 11/02/2026 11:58
  */
 
 namespace App\Controller;
@@ -179,6 +179,7 @@ class TrombinoscopeController extends BaseController
             'etudiants' => $etudiants,
             'siteperso' => $semestre->getDiplome()->getOptEspacePersoVisible(),
             'etudiantGroupes' => $etudiantRepository->getEtudiantGroupes($semestre),
+            'countEtudiants' => $etudiantRepository->countBySemestre($semestre),
         ]);
     }
 
