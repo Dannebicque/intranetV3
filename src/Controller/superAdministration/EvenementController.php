@@ -56,19 +56,26 @@ class EvenementController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // Hydrater la relation etudiants depuis le hidden etudiantsIds
+            // Hydrater la relation via la table de liaison EtudiantEvenement depuis le hidden etudiantsIds
             $ids = (string) ($form->get('etudiantsIds')->getData() ?? '');
             $idsArray = array_filter(array_map('intval', array_unique(preg_split('/[,\s]+/', $ids) ?: [])));
-            // Vider puis ajouter
-            foreach ($evenement->getEtudiants()->toArray() as $etu) {
-                $evenement->removeEtudiant($etu);
+
+            // Vider les liaisons existantes
+            foreach ($evenement->getEtudiantEvenements()->toArray() as $ee) {
+                $evenement->removeEtudiantEvenement($ee);
             }
+
+            // Recréer les liaisons
             if (!empty($idsArray)) {
                 $etudiantRepo = $this->entityManager->getRepository(\App\Entity\Etudiant::class);
                 foreach ($idsArray as $id) {
                     $etu = $etudiantRepo->find($id);
                     if (null !== $etu) {
-                        $evenement->addEtudiant($etu);
+                        $ee = new \App\Entity\EtudiantEvenement();
+                        $ee->setEtudiant($etu);
+                        $ee->setEvenement($evenement);
+                        $evenement->addEtudiantEvenement($ee);
+                        $this->entityManager->persist($ee);
                     }
                 }
             }
@@ -109,19 +116,28 @@ class EvenementController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // Mettre à jour la relation depuis les IDs cachés si fournis
+            // Mettre à jour la relation via EtudiantEvenement depuis les IDs cachés si fournis
             $ids = (string) ($form->get('etudiantsIds')->getData() ?? '');
             if ($ids !== '') {
                 $idsArray = array_filter(array_map('intval', array_unique(preg_split('/[,\s]+/', $ids) ?: [])));
-                foreach ($evenement->getEtudiants()->toArray() as $etu) {
-                    $evenement->removeEtudiant($etu);
+
+                // Supprimer les liaisons existantes
+                foreach ($evenement->getEtudiantEvenements()->toArray() as $ee) {
+                    $evenement->removeEtudiantEvenement($ee);
+                    $this->entityManager->remove($ee);
                 }
+
+                // Recréer les liaisons
                 if (!empty($idsArray)) {
                     $etudiantRepo = $this->entityManager->getRepository(\App\Entity\Etudiant::class);
                     foreach ($idsArray as $id) {
                         $etu = $etudiantRepo->find($id);
                         if (null !== $etu) {
-                            $evenement->addEtudiant($etu);
+                            $ee = new \App\Entity\EtudiantEvenement();
+                            $ee->setEtudiant($etu);
+                            $ee->setEvenement($evenement);
+                            $evenement->addEtudiantEvenement($ee);
+                            $this->entityManager->persist($ee);
                         }
                     }
                 }

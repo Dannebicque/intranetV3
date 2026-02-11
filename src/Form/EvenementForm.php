@@ -30,7 +30,7 @@ class EvenementForm extends AbstractType
             ->add('fin')
             ->add('adresse')
             ->add('description')
-            // Champ Doctrine laissé présent mais sans chargement massif; on ne l'affiche pas dans le template.
+            // Champ laissé présent (non mappé) pour compatibilité éventuelle, mais non utilisé; la sélection est gérée via le champ caché et le modal JS.
             ->add('etudiants', EntityType::class, [
                 'class' => Etudiant::class,
                 'choice_label' => 'id',
@@ -38,6 +38,7 @@ class EvenementForm extends AbstractType
                 'required' => false,
                 'choices' => [], // évite de charger tous les étudiants; géré par le modal JS
                 'row_attr' => ['class' => 'd-none'], // masqué dans le rendu par défaut
+                'mapped' => false, // IMPORTANT: l'entité Evenement n'expose plus "etudiants"
             ])
             // IDs sélectionnés via le modal (non mappé)
             ->add('etudiantsIds', HiddenType::class, [

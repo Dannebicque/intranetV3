@@ -32,7 +32,7 @@
                         <td>{{ evenement.date ? evenement.date|format_date('long') : '' }}</td>
                         <td>{{ evenement.debut ? evenement.debut|date('H:i') : '' }}</td>
                         <td>{{ evenement.fin ? evenement.fin|date('H:i') : '' }}</td>
-                        <td>{{ evenement.etudiants|length }}</td>
+                        <td>{{ evenement.etudiantEvenements|length }}</td>
                         <td class="flex justify-end items-">
                             {% set key = qrKeys[evenement.id]|default('') %}
                             {% if key != '' %}
