@@ -33,7 +33,13 @@
                         <td>{{ evenement.debut ? evenement.debut|date('H:i') : '' }}</td>
                         <td>{{ evenement.fin ? evenement.fin|date('H:i') : '' }}</td>
                         <td>{{ evenement.etudiants|length }}</td>
-                        <td>
+                        <td class="flex justify-end items-">
+                            {% set key = qrKeys[evenement.id]|default('') %}
+                            {% if key != '' %}
+                                <a class="btn btn-sm btn-info" href="{{ path('sa_evenement_qr_pdf', {key: key}) }}" title="{{ 'exporter.pdf'|trans }}" data-bs-toggle="tooltip" data-bs-placement="bottom">
+                                    <i class="{{ iconQrCode }}"></i>
+                                </a>
+                            {% endif %}
                             {{ include('composants/sadm-buttons-table-index.html.twig', {elt:'evenement', id: evenement.id}) }}
                         </td>
                     </tr>

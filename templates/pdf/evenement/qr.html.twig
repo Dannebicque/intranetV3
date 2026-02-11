@@ -23,13 +23,9 @@
 
     <div class="center" style="margin-top: 10px;">
         {% if qrCode %}
-            <img src="{{ qrCode }}" alt="QR Code" style="width: 260px; height: 260px;"/>
+            <img src="{{ qrCode }}" alt="QR Code" style="width: 520px; height: 520px;"/>
         {% else %}
             <p class="center" style="color:#a00;">QR code indisponible.</p>
         {% endif %}
     </div>
-
-    <p class="center" style="margin-top:8px; color:#666;">
-        {{ 'voir'|trans }}: {{ absolute_url(path('sa_evenement_show', {id: evenement.id})) }}
-    </p>
 {% endblock %}

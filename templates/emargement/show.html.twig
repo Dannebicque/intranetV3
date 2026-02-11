@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Emargement - {{ evenement.libelle }}{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1>Emargement</h1>
+        <p><strong>ID (décodé) :</strong> {{ evenement.id }}</p>
+        <p><strong>Libellé :</strong> {{ evenement.libelle }}</p>
+        <p>Vous pouvez maintenant afficher le reste de la page d'émargement ici.</p>
+    </div>
+{% endblock %}
+
