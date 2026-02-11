@@ -2192,6 +2192,7 @@ table:
   par.defaut: 'Par défaut'
   parcours: 'Parcours associé'
   parent: Parent
+  participants: 'Participants'
   periode_absence: 'Période de l''absence'
   periode: Période
   personnel: Personnel
