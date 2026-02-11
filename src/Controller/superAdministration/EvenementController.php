@@ -5,6 +5,7 @@
 
 namespace App\Controller\superAdministration;
 
+use App\Classes\Pdf\PdfManager;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Evenement;
@@ -168,9 +169,21 @@ class EvenementController extends BaseController
         return $this->json(['error' => 'QR code generation failed'], Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
-    #[Route(path: '/{id}/qr.pdf', name: 'sa_evenement_qr_pdf', methods: ['GET'])]
-    public function qrPdf(Evenement $evenement, \App\Classes\Pdf\PdfManager $myPDF): Response
+    #[Route(path: '/qr/{key}.pdf', name: 'sa_evenement_qr_pdf', methods: ['GET'])]
+    public function qrPdf(string $key, PdfManager $myPDF): Response
     {
+        // Décoder la clé (base64 de l'id) comme dans EmargementController
+        $decoded = base64_decode($key, true);
+        if (false === $decoded || !ctype_digit($decoded)) {
+            throw $this->createNotFoundException('Clé invalide');
+        }
+
+        $id = (int) $decoded;
+        $evenement = $this->entityManager->getRepository(Evenement::class)->find($id);
+        if (null === $evenement) {
+            throw $this->createNotFoundException('Événement introuvable');
+        }
+
         // Génère le QR code (data URI)
         $qrCodeData = $this->qrCodeService->generateForEvenement($evenement);
         $fileName = 'evenement-qr-' . ($evenement->getId() ?? 'nouveau');
