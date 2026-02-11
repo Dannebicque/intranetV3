@@ -12,6 +12,7 @@ use App\Form\EvenementForm;
 use App\Repository\EvenementRepository;
 use App\Repository\DepartementRepository;
 use App\Repository\EtudiantRepository;
+use App\Service\QrCodeService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -19,6 +20,10 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route(path: '/administratif/evenement')]
 class EvenementController extends BaseController
 {
+    public function __construct(private readonly QrCodeService $qrCodeService)
+    {
+    }
+
     #[Route(path: '/', name: 'sa_evenement_index', methods: ['GET'])]
     public function index(EvenementRepository $evenementRepository): Response
     {
@@ -138,6 +143,36 @@ class EvenementController extends BaseController
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'evenement.duplicate.success.flash');
 
         return $this->redirectToRoute('sa_evenement_edit', ['id' => $newEvenement->getId()]);
+    }
+
+    #[Route(path: '/{id}/generate_qr', name: 'sa_evenement_generate_qr', methods: ['GET', 'POST'])]
+    public function generateQr(Evenement $evenement): Response
+    {
+        $qrCodeData = $this->qrCodeService->generateForEvenement($evenement);
+
+        if ($qrCodeData) {
+            return $this->json(['qrCode' => $qrCodeData], Response::HTTP_OK);
+        }
+
+        return $this->json(['error' => 'QR code generation failed'], Response::HTTP_INTERNAL_SERVER_ERROR);
+    }
+
+    #[Route(path: '/{id}/qr.pdf', name: 'sa_evenement_qr_pdf', methods: ['GET'])]
+    public function qrPdf(Evenement $evenement, \App\Classes\Pdf\PdfManager $myPDF): Response
+    {
+        // Génère le QR code (data URI)
+        $qrCodeData = $this->qrCodeService->generateForEvenement($evenement);
+        $fileName = 'evenement-qr-' . ($evenement->getId() ?? 'nouveau');
+
+        return $myPDF->pdf()::generePdf(
+            'pdf/evenement/qr.html.twig',
+            [
+                'evenement' => $evenement,
+                'qrCode' => $qrCodeData,
+                'titre' => sprintf('QR – %s', (string) $evenement->getLibelle()),
+            ],
+            $fileName
+        );
     }
 
     #[Route(path: '/{id}', name: 'sa_evenement_delete', methods: ['DELETE'])]

@@ -13,6 +13,7 @@ twig:
     iconDelete: '%env(resolve:ICON_DELETE)%'
     iconPrint: '%env(resolve:ICON_PRINT)%'
     iconDuplicate: '%env(resolve:ICON_DUPLICATE)%'
+    iconQrCode: '%env(resolve:ICON_QRCODE)%'
     iconAdd: '%env(resolve:ICON_ADD)%'
     iconHelp: '%env(resolve:ICON_HELP)%'
     iconAdmin: '%env(resolve:ICON_ADMINISTRATION)%' #'fas fa-wrench'

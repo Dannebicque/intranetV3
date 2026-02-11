@@ -1,18 +1,18 @@
 {% extends 'base-super_admin.html.twig' %}
 
 {% block header %}
-    {{ 'adm.evenement.show.heading'|trans({'%label%':'Evénement'}) }}
+    {{ 'adm.evenement.show.heading'|trans({}, 'evenement') }}
 {% endblock %}
 
 {% block headeractions %}
-    <div class="header-action">
+    <div class="header-action d-flex gap-2">
         {{ include('composants/sadm-buttons-show.html.twig', {elt: 'evenement', id: evenement.id}) }}
     </div>
 {% endblock %}
 
 {% block content %}
     <div class="card">
-        <h4 class="card-title">{{ 'adm.evenement.show.heading'|trans({'%label%':'Evénement'}) }}</h4>
+        <h4 class="card-title">{{ 'adm.evenement.show.heading'|trans({}, 'evenement') }}</h4>
         <div class="card-body">
             <table class="table">
                 <tbody>
@@ -38,7 +38,11 @@
                 </tr>
                 <tr>
                     <th>{{ 'table.adresse'|trans }}</th>
-                    <td>{{ evenement.adresse }}</td>
+                    <td>
+                        {% for adresseDetail in evenement.adresse %}
+                            {{ adresseDetail.libelle }}{% if not loop.last %}, {% endif %}
+                        {% endfor %}
+                    </td>
                 </tr>
                 <tr>
                     <th>{{ 'table.description'|trans }}</th>
