@@ -1,10 +1,21 @@
-# Traductions spécifiques au module Événement (modal étudiants)
-"adm.evenement.form.selection_etudiants": "Sélection des étudiants pour %label%"
-"adm.evenement.form.ouvrir_selection_etudiants": "Sélectionner des étudiants…"
-"adm.evenement.form.recherche": "Recherche (nom, prénom)"
-"adm.evenement.form.semestres": "Semestres"
-"adm.evenement.form.semestres.help": "Sélectionner un ou plusieurs semestres"
-"adm.evenement.form.groupes": "Groupes"
-"adm.evenement.form.groupes.help": "Sélectionner un ou plusieurs groupes"
-"adm.evenement.form.liste_etudiants": "Liste des étudiants"
-"adm.evenement.form.selection_courante": "Sélection courante"
+adm:
+  evenement:
+    index:
+      heading: "Gestion des événements"
+    new:
+      heading: "Création d'un événement"
+    modification:
+      heading: "Modification d'un événement"
+    show:
+      heading: "Détails de l'événement"
+    form:
+      selection_etudiants: "Sélection des étudiants pour l'événement"
+      ouvrir_selection_etudiants: "Sélectionner des étudiants"
+      recherche: "Recherche"
+      departement: "Département"
+      semestres: "Semestres"
+      semestres.help: "Sélectionner un ou plusieurs semestres"
+      groupes: "Groupes"
+      groupes.help: "Sélectionner un ou plusieurs groupes"
+      liste_etudiants: "Liste des étudiants"
+      selection_courante: "Sélection courante"

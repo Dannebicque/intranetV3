@@ -1,7 +1,7 @@
 {% extends 'base-super_admin.html.twig' %}
 
 {% block header %}
-    {{ 'adm.evenement.new.heading'|trans({'%label%':'Evénement'}) }}
+    {{ 'adm.evenement.new.heading'|trans({}, 'evenement') }}
 {% endblock %}
 
 {%block headeractions %}
@@ -12,12 +12,13 @@
 
 {% block content %}
     <div class="card">
-        <h4 class="card-title">{{ 'adm.evenement.new.heading'|trans({'%label%':'Evénement'}) }}</h4>
+        <h4 class="card-title">{{ 'adm.evenement.new.heading'|trans({}, 'evenement') }}</h4>
         <div class="card-body">
             <div class="mb-3">
                 <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modalEtudiants">
-                    {{ 'adm.evenement.form.ouvrir_selection_etudiants'|trans }}
+                    {{ 'adm.evenement.form.ouvrir_selection_etudiants'|trans({}, 'evenement') }}
                 </button>
+                <div id="evenement-selected-summary" class="mt-2"></div>
             </div>
             {{ include('composants/adm-form.html.twig') }}
         </div>

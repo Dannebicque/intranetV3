@@ -41,10 +41,13 @@ export default class extends Controller {
     }
   }
 
-  // Récupère le champ hidden dans le formulaire parent pour y stocker les IDs
+  // Récupère le champ hidden pour y stocker les IDs (robuste même si le modal est hors du <form>)
   get hiddenInput () {
-    // Cherche un input dans le formulaire englobant dont le name est evenement[etudiantsIds]
-    return this.element.closest('form')?.querySelector('input[name="evenement[etudiantsIds]"]')
+    // 1) tentative: chercher dans le formulaire englobant
+    const inForm = this.element.closest('form')?.querySelector('input[name="evenement[etudiantsIds]"]')
+    if (inForm) return inForm
+    // 2) fallback: recherche globale dans le document (cas courant: le modal n'est pas dans le <form>)
+    return document.querySelector('input[name="evenement[etudiantsIds]"]')
   }
 
   // Initialiser sélection depuis le champ hidden (cas d'édition)
@@ -265,20 +268,38 @@ export default class extends Controller {
   }
 
   _renderSelected () {
+    // Render inside modal
     this.selectedZoneTarget.innerHTML = ''
+    const badges = this._buildBadges()
+    badges.forEach((badge) => this.selectedZoneTarget.appendChild(badge.cloneNode(true)))
+
+    // Also render under the button in the form if the container exists
+    const external = document.getElementById('evenement-selected-summary')
+    if (external) {
+      external.innerHTML = ''
+      // When rendered outside modal, the remove buttons should still work
+      badges.forEach((badge) => external.appendChild(badge))
+    }
+  }
+
+  _buildBadges () {
+    const out = []
     this.selected.forEach(({ id, text }) => {
       const badge = document.createElement('span')
-      badge.className = 'badge bg-primary d-inline-flex align-items-center gap-1'
-      badge.textContent = text || `#${id}`
+      badge.className = 'badge bg-primary d-inline-flex align-items-center gap-1 me-1 mb-1'
+      const label = document.createElement('span')
+      label.textContent = text || `#${id}`
       const btn = document.createElement('button')
       btn.type = 'button'
       btn.className = 'btn btn-sm btn-link text-white p-0'
       btn.innerHTML = '&times;'
       btn.dataset.id = String(id)
       btn.addEventListener('click', this.removeItem.bind(this))
+      badge.appendChild(label)
       badge.appendChild(btn)
-      this.selectedZoneTarget.appendChild(badge)
+      out.push(badge)
     })
+    return out
   }
 
   _syncHidden () {

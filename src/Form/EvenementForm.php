@@ -53,4 +53,10 @@ class EvenementForm extends AbstractType
             'data_class' => Evenement::class,
         ]);
     }
+
+    // Force le préfixe du formulaire pour générer des noms d'inputs de type "evenement[... ]"
+    public function getBlockPrefix(): string
+    {
+        return 'evenement';
+    }
 }
