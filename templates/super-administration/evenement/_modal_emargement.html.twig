@@ -1,0 +1,30 @@
+<div class="modal fade" id="modalEmargement" tabindex="-1" aria-labelledby="modalEmargementLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalEmargementLabel">{{ 'adm.evenement.emargement.modal.heading'|trans({}, 'evenement') }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <twig:Alert type="warning">
+                    Afin de valider votre présence, nous devons procéder à votre géolocalisation.
+                    <br>
+                    Assurez-vous d'avoir activé la localisation sur votre appareil et de vous trouver à l'emplacement de l'événement.
+                </twig:Alert>
+
+                <p style="font-size: 1.25rem; line-height: 2rem;" class="text-center mb-4">
+                    Acceptez-vous de partager votre position pour confirmer votre présence à cet événement ?
+                </p>
+                <div style="display: flex; justify-content: center; gap: 1rem;">
+                    <a href="{{ path('app_emargement_submit', {key: key, etudiantId: user}) }}" class="btn btn-primary" id="confirmPresenceBtn">
+                        J'accepte et je confirme ma présence
+                    </a>
+                    <button class="btn btn-danger" id="refusePresenceBtn">
+                            Je refuse
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</script>

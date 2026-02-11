@@ -429,4 +429,17 @@ class EtudiantRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function findByEvenement(int $evenementId): array
+    {
+        return $this->createQueryBuilder('e')
+            ->innerJoin('e.etudiantEvenements', 'ee')
+            ->innerJoin('ee.evenement', 'ev')
+            ->where('ev.id = :evenementId')
+            ->setParameter('evenementId', $evenementId)
+            ->orderBy('e.nom', Order::Ascending->value)
+            ->addOrderBy('e.prenom', Order::Ascending->value)
+            ->getQuery()
+            ->getResult();
+    }
 }

@@ -19,3 +19,10 @@ adm:
       groupes.help: "Sélectionner un ou plusieurs groupes"
       liste_etudiants: "Liste des étudiants"
       selection_courante: "Sélection courante"
+    emargement:
+      index:
+        heading: "Émargement"
+        card:
+          heading: "Présence à l'événement"
+      modal:
+        heading: "Confirmation de l'émargement"

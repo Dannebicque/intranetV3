@@ -182,10 +182,10 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
     private Collection $semestres;
 
     /**
-     * @var Collection<int, Evenement>
+     * @var Collection<int, EtudiantEvenement>
      */
-    #[ORM\ManyToMany(targetEntity: Evenement::class, mappedBy: 'etudiants')]
-    private Collection $evenements;
+    #[ORM\OneToMany(mappedBy: 'etudiant', targetEntity: EtudiantEvenement::class, orphanRemoval: true)]
+    private Collection $etudiantEvenements;
 
     /**
      * @throws Exception
@@ -212,7 +212,7 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
         $this->projetEtudiants = new ArrayCollection();
         $this->commentaires = new ArrayCollection();
         $this->semestres = new ArrayCollection();
-        $this->evenements = new ArrayCollection();
+        $this->etudiantEvenements = new ArrayCollection();
     }
 
     public function setUuid(UuidInterface $uuid): self
@@ -973,27 +973,30 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
     }
 
     /**
-     * @return Collection<int, Evenement>
+     * @return Collection<int, EtudiantEvenement>
      */
-    public function getEvenements(): Collection
+    public function getEtudiantEvenements(): Collection
     {
-        return $this->evenements;
+        return $this->etudiantEvenements;
     }
 
-    public function addEvenement(Evenement $evenement): static
+    public function addEtudiantEvenement(EtudiantEvenement $etudiantEvenement): static
     {
-        if (!$this->evenements->contains($evenement)) {
-            $this->evenements->add($evenement);
-            $evenement->addEtudiant($this);
+        if (!$this->etudiantEvenements->contains($etudiantEvenement)) {
+            $this->etudiantEvenements->add($etudiantEvenement);
+            $etudiantEvenement->setEtudiant($this);
         }
 
         return $this;
     }
 
-    public function removeEvenement(Evenement $evenement): static
+    public function removeEtudiantEvenement(EtudiantEvenement $etudiantEvenement): static
     {
-        if ($this->evenements->removeElement($evenement)) {
-            $evenement->removeEtudiant($this);
+        if ($this->etudiantEvenements->removeElement($etudiantEvenement)) {
+            // set the owning side to null (unless already changed)
+            if ($etudiantEvenement->getEtudiant() === $this) {
+                $etudiantEvenement->setEtudiant(null);
+            }
         }
 
         return $this;
