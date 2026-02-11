@@ -27,8 +27,19 @@ class EvenementController extends BaseController
     #[Route(path: '/', name: 'sa_evenement_index', methods: ['GET'])]
     public function index(EvenementRepository $evenementRepository): Response
     {
+        $evenements = $evenementRepository->findBy([], ['date' => 'DESC', 'debut' => 'ASC']);
+
+        $qrKeys = [];
+        foreach ($evenements as $ev) {
+            $id = $ev->getId();
+            if (null !== $id) {
+                $qrKeys[$id] = base64_encode((string) $id);
+            }
+        }
+
         return $this->render('super-administration/evenement/index.html.twig', [
-            'evenements' => $evenementRepository->findBy([], ['date' => 'DESC', 'debut' => 'ASC']),
+            'evenements' => $evenements,
+            'qrKeys' => $qrKeys,
         ]);
     }
 

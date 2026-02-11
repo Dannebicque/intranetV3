@@ -1,8 +1,4 @@
 <div class="text-end">
-    <a class="btn btn-sm btn-info" href="{{ path('sa_evenement_qr_pdf', {id: evenement.id}) }}" title="{{ 'exporter.pdf'|trans }}" data-bs-toggle="tooltip" data-bs-placement="bottom">
-        <i class="{{ iconQrCode }}"></i>
-    </a>
-
     <a href="{{ path('sa_'~elt~'_duplicate', {'id': id}) }}"
        class="text-success fs-6 me-1" data-bs-toggle="tooltip" data-bs-placement="bottom"
        title="{{ 'atitle.dupliquer'|trans }}"><i class="{{ iconDuplicate }}"></i></a>

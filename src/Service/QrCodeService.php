@@ -24,10 +24,12 @@ class QrCodeService
             return null;
         }
 
-        // URL absolue de la page "show" de l'événement
+        // Construire une clé obfusquée (base64 de l'id) et générer l'URL vers EmargementController
+        $key = base64_encode((string) $evenement->getId());
+
         $eventUrl = $this->urlGenerator->generate(
-            'sa_evenement_show',
-            ['id' => $evenement->getId()],
+            'app_emargement_qr',
+            ['key' => $key],
             UrlGeneratorInterface::ABSOLUTE_URL
         );
 
