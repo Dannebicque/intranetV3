@@ -20,10 +20,102 @@
                 </button>
                 <div id="evenement-selected-summary" class="mt-2"></div>
             </div>
-            {{ include('composants/adm-form.html.twig') }}
+
+            {# Rendu du formulaire avec champs d'adresse autocomplétés #}
+            {% form_theme form 'bootstrap_5_layout.html.twig' %}
+            {{ form_start(form) }}
+
+            <div class="mb-3">
+                {{ form_row(form.libelle) }}
+                {{ form_row(form.date) }}
+                {{ form_row(form.debut) }}
+                {{ form_row(form.fin) }}
+            </div>
+
+            <div class="form-group-adresse">
+                <label for="adresseEvenement" class="form-label">Adresse de l'événement :</label> <br>
+                <input type="text" id="adresseEvenement" class="form-control" autocomplete="off">
+                <div class="form-text mb-0 help-text">Veuillez saisir l'adresse puis sélectionner la proposition correspondante</div>
+
+                <ul id="adresselisteEvenement"></ul>
+
+                <hr>
+
+                <div class="form-champs-adresse">
+                    {# Les champs du sous-formulaire adresse (AdresseType) sont rendus ici #}
+                    {{ form_row(form.adresse.adresse1) }}
+                    {{ form_row(form.adresse.adresse2) }}
+                    {{ form_row(form.adresse.adresse3) }}
+                    {{ form_row(form.adresse.code_postal) }}
+                    {{ form_row(form.adresse.ville) }}
+                </div>
+            </div>
+
+            <div class="mb-3">
+                {{ form_row(form.description) }}
+                {{ form_row(form.geoloc) }}
+            </div>
+
+            {# champs cachés + autres widgets (etudiants, etudiantsIds) #}
+            {{ form_widget(form.etudiants) }}
+            {{ form_widget(form.etudiantsIds) }}
+
+            <button class="btn btn-success"><i class="fas fa-floppy-disk"></i> {{ 'label.save'|trans }}</button>
+
+            {{ form_end(form) }}
+
         </div>
     </div>
 
     {# Modal de sélection des étudiants #}
     {{ include('super-administration/evenement/_modal_etudiants.html.twig') }}
+
+    <script defer>
+      window.addEventListener('load', () => {
+        // Autocomplétion via api-adresse.data.gouv.fr
+        document.getElementById('adresseEvenement').addEventListener('keyup', (e) => {
+          let adresseSuite = e.currentTarget.value
+          if (adresseSuite.length < 3) {
+            return
+          }
+
+          fetch('https://api-adresse.data.gouv.fr/search/?q=' + encodeURIComponent(adresseSuite) + '&type=&autocomplete=1')
+            .then((data) => data.json())
+            .then((data) => {
+              let options = document.querySelectorAll('#adresselisteEvenement li')
+              let adresseliste = document.getElementById('adresselisteEvenement')
+
+              options.forEach((option) => { option.remove() })
+
+              data.features.forEach(element => {
+                let autoCompleteOpt = document.createElement('li')
+                autoCompleteOpt.innerHTML = element.properties.label
+                autoCompleteOpt.dataset.name = element.properties.name
+                autoCompleteOpt.dataset.city = element.properties.city
+                autoCompleteOpt.dataset.postcode = element.properties.postcode
+                autoCompleteOpt.classList.add('item')
+                adresseliste.append(autoCompleteOpt)
+              })
+
+              document.querySelectorAll('#adresselisteEvenement .item').forEach((event) => {
+                event.addEventListener('click', (e) => {
+                  document.getElementById('evenement_adresse_ville').innerHTML = ''
+                  let adresse = e.currentTarget
+                  document.getElementById('evenement_adresse_adresse1').value = adresse.dataset.name
+                  document.getElementById('evenement_adresse_code_postal').value = adresse.dataset.postcode
+                  let opt1 = document.createElement('option')
+                  opt1.text = adresse.dataset.city
+                  opt1.value = adresse.dataset.city
+                  document.getElementById('evenement_adresse_ville').append(opt1)
+                })
+              })
+            })
+        })
+
+        // Au submit, s'assurer que les champs disabled (si any) sont bien inclus — similaire à stage
+        // Aucun traitement de submit spécial requis ici (le champ adresse est mappé non-mappé et traité côté contrôleur)
+
+      })
+    </script>
+
 {% endblock %}

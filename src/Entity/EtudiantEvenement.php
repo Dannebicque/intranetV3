@@ -31,8 +31,8 @@ class EtudiantEvenement
     #[ORM\JoinColumn(nullable: false)]
     private ?Evenement $evenement = null;
 
-    #[ORM\Column(nullable: true)]
-    private ?bool $present = null;
+    #[ORM\Column(type: Types::BOOLEAN)]
+    private bool $present = false;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTime $date_signature = null;
@@ -66,12 +66,12 @@ class EtudiantEvenement
         return $this;
     }
 
-    public function isPresent(): ?bool
+    public function isPresent(): bool
     {
         return $this->present;
     }
 
-    public function setPresent(?bool $present): static
+    public function setPresent(bool $present): static
     {
         $this->present = $present;
 
