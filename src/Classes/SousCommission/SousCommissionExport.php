@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/SousCommission/SousCommissionExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 10/02/2026 11:50
+ * @lastUpdate 12/02/2026 15:43
  */
 
 namespace App\Classes\SousCommission;
@@ -878,8 +878,13 @@ class SousCommissionExport
                                 $matApogee[$valueTm]) && array_key_exists('moyenne',
                                 $ssCommTravail->matiere($etuApogee[$valueTe], $matApogee[$valueTm]))) {
                             $moyenne = $ssCommTravail->matiere($etuApogee[$valueTe], $matApogee[$valueTm])['moyenne'];
-                            $this->myExcelRead->writeCellColLigne($keyTm, $keyTe,
-                                number_format($moyenne, 2));
+                            if (is_float($moyenne)) {
+                                $this->myExcelRead->writeCellColLigne($keyTm, $keyTe,
+                                    number_format($moyenne, 2));
+                            } else {
+                                $this->myExcelRead->writeCellColLigne($keyTm, $keyTe,
+                                    number_format(0, 2));
+                            }
                         }
                         $this->myExcelRead->writeCellColLigne($keyTm + 1, $keyTe, 20);
                     }
