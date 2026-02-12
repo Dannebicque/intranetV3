@@ -6,25 +6,99 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <twig:Alert type="warning">
+                <div class="alert alert-warning">
                     Afin de valider votre présence, nous devons procéder à votre géolocalisation.
                     <br>
                     Assurez-vous d'avoir activé la localisation sur votre appareil et de vous trouver à l'emplacement de l'événement.
-                </twig:Alert>
+                </div>
 
                 <p style="font-size: 1.25rem; line-height: 2rem;" class="text-center mb-4">
                     Acceptez-vous de partager votre position pour confirmer votre présence à cet événement ?
                 </p>
-                <div style="display: flex; justify-content: center; gap: 1rem;">
-                    <a href="{{ path('app_emargement_submit', {key: key, etudiantId: user}) }}" class="btn btn-primary" id="confirmPresenceBtn">
+
+                <div class="d-flex justify-content-center gap-3 mb-2">
+                    <button type="button" class="btn btn-primary" id="confirmPresenceBtn"
+                            data-submit-url="{{ path('app_emargement_submit', {key: key, etudiantId: user}) }}">
                         J'accepte et je confirme ma présence
-                    </a>
-                    <button class="btn btn-danger" id="refusePresenceBtn">
-                            Je refuse
+                    </button>
+                    <button class="btn btn-danger" id="refusePresenceBtn" data-bs-dismiss="modal">
+                        Je refuse
                     </button>
                 </div>
+
+                <div id="geolocMessage" class="mt-3 text-center" style="display:none"></div>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+  (function() {
+    const btn = document.getElementById('confirmPresenceBtn');
+    const refuseBtn = document.getElementById('refusePresenceBtn');
+    const msgEl = document.getElementById('geolocMessage');
+
+    function showMessage(text, type = 'info') {
+      msgEl.style.display = 'block';
+      msgEl.className = 'mt-3 text-center text-' + (type === 'error' ? 'danger' : (type === 'success' ? 'success' : 'muted'));
+      msgEl.innerText = text;
+    }
+
+    if (btn) {
+      btn.addEventListener('click', function (e) {
+        e.preventDefault();
+        const submitUrl = btn.dataset.submitUrl;
+
+        if (!navigator.geolocation) {
+          showMessage('Géolocalisation non supportée par votre navigateur.', 'error');
+          return;
+        }
+
+        showMessage('Obtention de la position…');
+
+        navigator.geolocation.getCurrentPosition(function(position) {
+          const payload = {
+            lat: position.coords.latitude,
+            lon: position.coords.longitude,
+            accuracy: position.coords.accuracy
+          };
+
+          fetch(submitUrl, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'X-Requested-With': 'XMLHttpRequest'
+            },
+            body: JSON.stringify(payload),
+            credentials: 'same-origin'
+          }).then(function(response) {
+            return response.json().then(function(data) {
+              if (response.ok) {
+                showMessage(data.message || 'Présence enregistrée.', 'success');
+                setTimeout(function() { window.location.reload(); }, 900);
+              } else {
+                showMessage(data.message || 'Impossible d\'enregistrer la présence.', 'error');
+              }
+            }).catch(function() {
+              showMessage('Réponse invalide du serveur.', 'error');
+            });
+
+          }).catch(function(err) {
+            console.error(err);
+            showMessage('Erreur réseau lors de l\'envoi de la position.', 'error');
+          });
+
+        }, function(error) {
+          console.warn('Géoloc erreur', error);
+          showMessage('Impossible d\'obtenir votre position. L\'émargement ne peut pas être validé sans géolocalisation.', 'error');
+        }, { enableHighAccuracy: true, timeout: 10000 });
+      });
+    }
+
+    if (refuseBtn) {
+      refuseBtn.addEventListener('click', function () {
+        showMessage('Vous avez refusé le partage de position. L\'émargement ne sera pas validé.', 'error');
+      });
+    }
+  })();
 </script>

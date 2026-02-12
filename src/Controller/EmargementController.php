@@ -15,6 +15,7 @@ use App\Entity\Evenement;
 use App\Repository\EtudiantEvenementRepository;
 use App\Repository\EtudiantRepository;
 use App\Repository\EvenementRepository;
+use App\Service\GeolocationService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -78,7 +79,8 @@ final class EmargementController extends AbstractController
         Request $request,
         EvenementRepository $evenementRepository,
         EtudiantRepository $etudiantRepository,
-        EtudiantEvenementRepository $etudiantEvenementRepository
+        EtudiantEvenementRepository $etudiantEvenementRepository,
+        GeolocationService $geoService
     )
     {
         $id = $this->validateSignedKey($key);
@@ -107,12 +109,75 @@ final class EmargementController extends AbstractController
             // Au lieu de retourner du JSON, ajouter un message flash et recharger la page d'émargement
             $this->addFlash('warning', 'Présence déjà enregistrée');
             return $this->redirectToRoute('app_emargement_qr', ['key' => $key]);
-        } else {
-            $etudiantEvenement->setPresent(true);
-            $etudiantEvenementRepository->save($etudiantEvenement, true);
         }
 
-        // Après enregistrement, ajouter un message flash et recharger la page d'émargement
+        // Lire le body JSON si présent (fetch depuis le client)
+        $data = null;
+        $contentType = $request->headers->get('Content-Type');
+        if (str_contains((string)$contentType, 'application/json')) {
+            $content = $request->getContent();
+            $data = json_decode($content, true);
+        }
+
+        // Si pas de coords fournis -> refuser l'émargement
+        if (!is_array($data) || !isset($data['lat']) || !isset($data['lon'])) {
+            // AJAX request ? => retourner JSON
+            if ($request->isXmlHttpRequest()) {
+                return $this->json(['message' => 'Géolocalisation requise pour valider la présence.'], Response::HTTP_BAD_REQUEST);
+            }
+            // sinon message flash
+            $this->addFlash('error', 'Géolocalisation requise pour valider la présence.');
+            return $this->redirectToRoute('app_emargement_qr', ['key' => $key]);
+        }
+
+        $lat = (float) $data['lat'];
+        $lon = (float) $data['lon'];
+
+        // Géocoder l'adresse de l'événement (l'entité conserve l'adresse en base)
+        $adresse = $evenement->getAdresse();
+        $eventCoords = null;
+        if (is_array($adresse) && count($adresse) > 0) {
+            // Si adresse est un tableau (structure existante), on la transforme en string
+            if (isset($adresse['formatted'])) {
+                $addrString = $adresse['formatted'];
+            } else {
+                // concatener les éléments si nécessaire
+                $addrString = implode(', ', array_filter($adresse));
+            }
+            $eventCoords = $geoService->geocodeAddress($addrString);
+        } elseif (is_string($adresse) && trim($adresse) !== '') {
+            $eventCoords = $geoService->geocodeAddress($adresse);
+        }
+
+        if (null === $eventCoords) {
+            // impossible de géocoder l'adresse -> refuser l'émargement par sécurité
+            if ($request->isXmlHttpRequest()) {
+                return $this->json(['message' => 'Impossible de déterminer la position de l\'événement.'], Response::HTTP_SERVICE_UNAVAILABLE);
+            }
+            $this->addFlash('error', 'Impossible de déterminer la position de l\'événement.');
+            return $this->redirectToRoute('app_emargement_qr', ['key' => $key]);
+        }
+
+        // calculer la distance (Haversine)
+        $distance = $this->haversineDistance($lat, $lon, $eventCoords['lat'], $eventCoords['lon']);
+        $thresholdMeters = 200; // seuil d'acceptation
+
+        if ($distance > $thresholdMeters) {
+            if ($request->isXmlHttpRequest()) {
+                return $this->json(['message' => sprintf('Vous êtes trop éloigné (%.0f m). Présence non validée.', $distance)], Response::HTTP_FORBIDDEN);
+            }
+            $this->addFlash('error', sprintf('Vous êtes trop éloigné (%.0f m). Présence non validée.', $distance));
+            return $this->redirectToRoute('app_emargement_qr', ['key' => $key]);
+        }
+
+        // Si on arrive ici, tout est ok : on enregistre la présence
+        $etudiantEvenement->setPresent(true);
+        $etudiantEvenementRepository->save($etudiantEvenement, true);
+
+        if ($request->isXmlHttpRequest()) {
+            return $this->json(['message' => 'Présence enregistrée avec succès'], Response::HTTP_OK);
+        }
+
         $this->addFlash('success', 'Présence enregistrée avec succès');
         return $this->redirectToRoute('app_emargement_qr', ['key' => $key]);
     }
@@ -154,5 +219,15 @@ final class EmargementController extends AbstractController
         }
 
         return null;
+    }
+
+    private function haversineDistance(float $lat1, float $lon1, float $lat2, float $lon2): float
+    {
+        $earthRadius = 6371000; // mètres
+        $dLat = deg2rad($lat2 - $lat1);
+        $dLon = deg2rad($lon2 - $lon1);
+        $a = sin($dLat/2) * sin($dLat/2) + cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * sin($dLon/2) * sin($dLon/2);
+        $c = 2 * atan2(sqrt($a), sqrt(1-$a));
+        return $earthRadius * $c;
     }
 }
