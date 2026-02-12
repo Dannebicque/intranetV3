@@ -10,6 +10,7 @@ use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Evenement;
 use App\Form\EvenementForm;
+use App\Repository\EtudiantEvenementRepository;
 use App\Repository\EvenementRepository;
 use App\Repository\DepartementRepository;
 use App\Repository\EtudiantRepository;
@@ -98,10 +99,13 @@ class EvenementController extends BaseController
     }
 
     #[Route(path: '/{id}', name: 'sa_evenement_show', methods: ['GET'])]
-    public function show(Evenement $evenement): Response
+    public function show(Evenement $evenement, EtudiantEvenementRepository $etudiantEvenementRepository): Response
     {
+        $etudiantsEvenement = $evenement->getEtudiantEvenements();
+
         return $this->render('super-administration/evenement/show.html.twig', [
             'evenement' => $evenement,
+            'etudiantsEvenement' => $etudiantsEvenement,
         ]);
     }
 

@@ -12,6 +12,7 @@
 namespace App\Entity;
 
 use App\Repository\EtudiantEvenementRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: EtudiantEvenementRepository::class)]
@@ -32,6 +33,9 @@ class EtudiantEvenement
 
     #[ORM\Column(nullable: true)]
     private ?bool $present = null;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    private ?\DateTime $date_signature = null;
 
     public function getId(): ?int
     {
@@ -70,6 +74,18 @@ class EtudiantEvenement
     public function setPresent(?bool $present): static
     {
         $this->present = $present;
+
+        return $this;
+    }
+
+    public function getDateSignature(): ?\DateTime
+    {
+        return $this->date_signature;
+    }
+
+    public function setDateSignature(?\DateTime $date_signature): static
+    {
+        $this->date_signature = $date_signature;
 
         return $this;
     }

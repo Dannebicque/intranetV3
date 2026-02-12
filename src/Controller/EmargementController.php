@@ -23,17 +23,16 @@ use Symfony\Component\HttpFoundation\Request;
 final class EmargementController extends AbstractController
 {
     /**
-     * Route utilisée par le QR code. La clé est une base64 de l'ID de l'événement.
+     * Route utilisée par le QR code. La clé est maintenant un token signé HMAC (base64url) contenant id:expires:hmac
      */
     #[Route('/emargement/qr/{key}', name: 'app_emargement_qr', methods: ['GET'])]
     public function qrShow(string $key, Request $request, EvenementRepository $evenementRepository, EtudiantRepository $etudiantRepository, EtudiantEvenementRepository $etudiantEvenementRepository): Response
     {
-        $decoded = base64_decode($key, true);
-        if (false === $decoded || !ctype_digit($decoded)) {
+        $id = $this->validateSignedKey($key);
+        if (null === $id) {
             throw $this->createNotFoundException('Clé invalide');
         }
 
-        $id = (int) $decoded;
         $evenement = $evenementRepository->find($id);
         if (null === $evenement) {
             throw $this->createNotFoundException('Événement introuvable');
@@ -82,12 +81,11 @@ final class EmargementController extends AbstractController
         EtudiantEvenementRepository $etudiantEvenementRepository
     )
     {
-        $decoded = base64_decode($key, true);
-        if (false === $decoded || !ctype_digit($decoded)) {
+        $id = $this->validateSignedKey($key);
+        if (null === $id) {
             throw $this->createNotFoundException('Clé invalide');
         }
 
-        $id = (int) $decoded;
         $evenement = $evenementRepository->find($id);
         if (null === $evenement) {
             throw $this->createNotFoundException('Événement introuvable');
@@ -117,5 +115,44 @@ final class EmargementController extends AbstractController
         // Après enregistrement, ajouter un message flash et recharger la page d'émargement
         $this->addFlash('success', 'Présence enregistrée avec succès');
         return $this->redirectToRoute('app_emargement_qr', ['key' => $key]);
+    }
+
+    private function validateSignedKey(string $key): ?int
+    {
+        // Première tentative : token signé (base64url) attendu : id:expires:hmac
+        $decoded = strtr($key, '-_', '+/');
+        $padding = strlen($decoded) % 4;
+        if ($padding > 0) {
+            $decoded .= str_repeat('=', 4 - $padding);
+        }
+
+        $token = base64_decode($decoded, true);
+        if ($token !== false) {
+            $parts = explode(':', $token);
+            if (count($parts) === 3) {
+                [$idStr, $expiresStr, $hmac] = $parts;
+                if (ctype_digit($idStr) && ctype_digit($expiresStr)) {
+                    $id = (int) $idStr;
+                    $expires = (int) $expiresStr;
+                    if (time() <= $expires) {
+                        $secret = getenv('APP_SECRET') ?: ($_ENV['APP_SECRET'] ?? '');
+                        if ($secret !== '') {
+                            $expected = hash_hmac('sha256', $idStr . ':' . $expiresStr, $secret);
+                            if (hash_equals($expected, $hmac)) {
+                                return $id;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        // Retour arrière : accepter l'ancien format base64(id) pour compatibilité ascendante
+        $legacy = base64_decode($key, true);
+        if ($legacy !== false && ctype_digit($legacy)) {
+            return (int) $legacy;
+        }
+
+        return null;
     }
 }
