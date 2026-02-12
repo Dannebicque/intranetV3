@@ -49,6 +49,9 @@ class Evenement
     #[ORM\OneToMany(mappedBy: 'evenement', targetEntity: EtudiantEvenement::class, orphanRemoval: true)]
     private Collection $etudiantEvenements;
 
+    #[ORM\Column]
+    private ?bool $geoloc = null;
+
     public function __construct()
     {
         $this->etudiantEvenements = new ArrayCollection();
@@ -157,6 +160,18 @@ class Evenement
                 $etudiantEvenement->setEvenement(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isGeoloc(): ?bool
+    {
+        return $this->geoloc;
+    }
+
+    public function setGeoloc(bool $geoloc): static
+    {
+        $this->geoloc = $geoloc;
 
         return $this;
     }

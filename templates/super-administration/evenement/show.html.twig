@@ -56,6 +56,41 @@
                 </tr>
                 </tbody>
             </table>
+
+            <h5>{{ 'adm.evenement.attendance'|trans({}, 'evenement') }}</h5>
+
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>{{ 'table.prenom'|trans }}</th>
+                        <th>{{ 'table.nom'|trans }}</th>
+                        <th>{{ 'table.email'|trans }}</th>
+                        <th>présence</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for etudiantEvenement in etudiantsEvenement %}
+                        <tr>
+                            <td>{{ loop.index }}</td>
+                            <td>{{ etudiantEvenement.etudiant.prenom }}</td>
+                            <td>{{ etudiantEvenement.etudiant.nom ?? '-' }}</td>
+                            <td>{{ etudiantEvenement.etudiant.email ?? '-' }}</td>
+                            <td>
+                                {% if etudiantEvenement.present %}
+                                    <span class="badge bg-success">{{ 'oui'|trans }}</span>
+                                {% else %}
+                                    <span class="badge bg-danger">{{ 'non'|trans }}</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="5">{{ 'table.empty'|trans }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
 {% endblock %}
