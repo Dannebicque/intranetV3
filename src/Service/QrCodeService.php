@@ -7,8 +7,9 @@ use Psr\Log\LoggerInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use BaconQrCode\Renderer\ImageRenderer;
 use BaconQrCode\Renderer\RendererStyle\RendererStyle;
-use BaconQrCode\Renderer\Image\Png;
 use BaconQrCode\Writer;
+use BaconQrCode\Renderer\Image\ImagickImageBackEnd;
+use BaconQrCode\Renderer\Image\SvgImageBackEnd;
 
 class QrCodeService
 {
@@ -21,8 +22,8 @@ class QrCodeService
     }
 
     /**
-     * Génère un QRCode (PNG base64) pointant vers la page de détail de l'événement.
-     * Retourne une data URI (data:image/png;base64,...) ou null en cas d'échec.
+     * Génère un QRCode (PNG ou SVG base64) pointant vers la page de détail de l'événement.
+     * Retourne une data URI (data:image/png;base64,... ou data:image/svg+xml;base64,...) ou null en cas d'échec.
      */
     public function generateForEvenement(Evenement $evenement, int $size = 220): ?string
     {
@@ -39,32 +40,41 @@ class QrCodeService
             UrlGeneratorInterface::ABSOLUTE_URL
         );
 
-        // Génération locale du PNG du QRCode avec BaconQrCode (plus stable selon la version installée)
+        // Génération locale du PNG/SVG du QRCode avec BaconQrCode (version 3.x)
         try {
+            // Choisir le backend d'image : Imagick si disponible (retourne du PNG), sinon SVG
+            if (class_exists(\Imagick::class)) {
+                $imageBackEnd = new ImagickImageBackEnd('png', 100);
+                $mime = 'image/png';
+            } else {
+                $imageBackEnd = new SvgImageBackEnd();
+                $mime = 'image/svg+xml';
+            }
+
             $renderer = new ImageRenderer(
                 new RendererStyle($size),
-                new Png()
+                $imageBackEnd
             );
             $writer = new Writer($renderer);
 
-            $png = $writer->writeString($eventUrl);
+            $blob = $writer->writeString($eventUrl);
 
-            if ($png === null || $png === '') {
+            if ($blob === null || $blob === '') {
                 return null;
             }
 
             // Limite de taille (sécurité) : refus si trop grand (garde pour défense en profondeur)
-            if (strlen($png) > 2000000) { // 2MB
+            if (strlen($blob) > 2000000) { // 2MB
                 if ($this->logger) {
                     $this->logger->warning('QR code generated image too large', [
-                        'size' => strlen($png),
+                        'size' => strlen($blob),
                     ]);
                 }
                 return null;
             }
 
-            $b64 = base64_encode($png);
-            return 'data:image/png;base64,' . $b64;
+            $b64 = base64_encode($blob);
+            return 'data:' . $mime . ';base64,' . $b64;
         } catch (\Throwable $e) {
             if ($this->logger) {
                 $this->logger->warning('QR code generation failed', [

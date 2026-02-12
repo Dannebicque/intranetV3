@@ -64,5 +64,5 @@ yarn-error.log
 /stan
 
 /aide/assets/
-/.idea/
+/.idea/*
 /.npmrc
