@@ -65,27 +65,27 @@ class EtudiantRepository extends ServiceEntityRepository
 
         if (null !== $departementId && $departementId > 0) {
             $qb->andWhere('e.departement = :departement')
-               ->setParameter('departement', $departementId);
+                ->setParameter('departement', $departementId);
         }
 
         if (!empty($semestreIds)) {
             $qb->andWhere('(s.id IN (:semestres) OR ss.id IN (:semestres))')
-               ->setParameter('semestres', $semestreIds);
+                ->setParameter('semestres', $semestreIds);
         }
 
         if (!empty($groupeIds)) {
             $qb->andWhere('g.id IN (:groupes)')
-               ->setParameter('groupes', $groupeIds);
+                ->setParameter('groupes', $groupeIds);
         }
 
         if ('' !== trim($q)) {
             $qb->andWhere('LOWER(e.nom) LIKE :q OR LOWER(e.prenom) LIKE :q')
-               ->setParameter('q', '%' . mb_strtolower($q) . '%');
+                ->setParameter('q', '%' . mb_strtolower($q) . '%');
         }
 
         $qb->orderBy('e.nom', Order::Ascending->value)
-           ->addOrderBy('e.prenom', Order::Ascending->value)
-           ->groupBy('e.id, s.libelle');
+            ->addOrderBy('e.prenom', Order::Ascending->value)
+            ->groupBy('e.id, s.libelle');
 
         // Count total (distinct etudiants)
         $countQb = clone $qb;
@@ -426,6 +426,19 @@ class EtudiantRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('e')
             ->where('e.idEduSign IS NOT NULL')
             ->andWhere('e.anneeSortie != 0')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findByEvenement(int $evenementId): array
+    {
+        return $this->createQueryBuilder('e')
+            ->innerJoin('e.etudiantEvenements', 'ee')
+            ->innerJoin('ee.evenement', 'ev')
+            ->where('ev.id = :evenementId')
+            ->setParameter('evenementId', $evenementId)
+            ->orderBy('e.nom', Order::Ascending->value)
+            ->addOrderBy('e.prenom', Order::Ascending->value)
             ->getQuery()
             ->getResult();
     }

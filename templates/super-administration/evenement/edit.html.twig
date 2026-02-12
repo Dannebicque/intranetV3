@@ -19,7 +19,8 @@
                     {{ 'adm.evenement.form.ouvrir_selection_etudiants'|trans({}, 'evenement') }}
                 </button>
                 <div id="evenement-selected-summary" class="mt-2">
-                    {% for e in evenement.etudiants %}
+                    {% for ee in evenement.etudiantEvenements %}
+                        {% set e = ee.etudiant %}
                         <span class="badge bg-primary me-1 mb-1">{{ e.nom }} {{ e.prenom }}</span>
                     {% endfor %}
                 </div>
@@ -36,7 +37,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             const input = document.querySelector('input[name="evenement[etudiantsIds]"]');
             if (input && !input.value) {
-                const ids = [{% for e in evenement.etudiants %}{{ e.id }}{% if not loop.last %},{% endif %}{% endfor %}];
+                const ids = [{% for ee in evenement.etudiantEvenements %}{{ ee.etudiant.id }}{% if not loop.last %},{% endif %}{% endfor %}];
                 input.value = ids.join(',');
             }
         });

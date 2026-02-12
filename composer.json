@@ -20,6 +20,7 @@
     "doctrine/doctrine-bundle": "^2.10",
     "doctrine/doctrine-migrations-bundle": "^3.2",
     "doctrine/orm": "^2.15.0",
+    "endroid/qr-code": "*",
     "erusev/parsedown": "^1.7",
     "friendsofsymfony/jsrouting-bundle": "^3.5",
     "gotenberg/gotenberg-php": "dev-main",
@@ -145,7 +146,7 @@
   "repositories": [
     {
       "type": "path",
-      "url": "/Users/davidannebicque/Sites/table-bundle"
+      "url": "/Users/cyndel/Web/TableBundle"
     }
   ]
 }

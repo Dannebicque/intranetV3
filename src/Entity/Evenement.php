@@ -37,21 +37,24 @@ class Evenement
     #[ORM\Column(type: Types::TIME_MUTABLE, nullable: true)]
     private ?\DateTime $fin = null;
 
-    /**
-     * @var Collection<int, Etudiant>
-     */
-    #[ORM\ManyToMany(targetEntity: Etudiant::class, inversedBy: 'evenements')]
-    private Collection $etudiants;
-
     #[ORM\Column(type: Types::ARRAY, nullable: true)]
     private ?array $adresse = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
+    /**
+     * @var Collection<int, EtudiantEvenement>
+     */
+    #[ORM\OneToMany(mappedBy: 'evenement', targetEntity: EtudiantEvenement::class, orphanRemoval: true)]
+    private Collection $etudiantEvenements;
+
+    #[ORM\Column]
+    private ?bool $geoloc = null;
+
     public function __construct()
     {
-        $this->etudiants = new ArrayCollection();
+        $this->etudiantEvenements = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -107,30 +110,6 @@ class Evenement
         return $this;
     }
 
-    /**
-     * @return Collection<int, Etudiant>
-     */
-    public function getEtudiants(): Collection
-    {
-        return $this->etudiants;
-    }
-
-    public function addEtudiant(Etudiant $etudiant): static
-    {
-        if (!$this->etudiants->contains($etudiant)) {
-            $this->etudiants->add($etudiant);
-        }
-
-        return $this;
-    }
-
-    public function removeEtudiant(Etudiant $etudiant): static
-    {
-        $this->etudiants->removeElement($etudiant);
-
-        return $this;
-    }
-
     public function getAdresse(): ?array
     {
         return $this->adresse;
@@ -151,6 +130,48 @@ class Evenement
     public function setDescription(?string $description): static
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, EtudiantEvenement>
+     */
+    public function getEtudiantEvenements(): Collection
+    {
+        return $this->etudiantEvenements;
+    }
+
+    public function addEtudiantEvenement(EtudiantEvenement $etudiantEvenement): static
+    {
+        if (!$this->etudiantEvenements->contains($etudiantEvenement)) {
+            $this->etudiantEvenements->add($etudiantEvenement);
+            $etudiantEvenement->setEvenement($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEtudiantEvenement(EtudiantEvenement $etudiantEvenement): static
+    {
+        if ($this->etudiantEvenements->removeElement($etudiantEvenement)) {
+            // set the owning side to null (unless already changed)
+            if ($etudiantEvenement->getEvenement() === $this) {
+                $etudiantEvenement->setEvenement(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function isGeoloc(): ?bool
+    {
+        return $this->geoloc;
+    }
+
+    public function setGeoloc(bool $geoloc): static
+    {
+        $this->geoloc = $geoloc;
 
         return $this;
     }
