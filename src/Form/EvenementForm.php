@@ -13,6 +13,7 @@ namespace App\Form;
 
 use App\Entity\Etudiant;
 use App\Entity\Evenement;
+use App\Form\AdresseType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -28,7 +29,12 @@ class EvenementForm extends AbstractType
             ->add('date')
             ->add('debut')
             ->add('fin')
-            ->add('adresse')
+            // Utilisation du form type Adresse réutilisable (non mappé) : nous stockerons ensuite un array dans l'entité Evenement
+            ->add('adresse', AdresseType::class, [
+                'label' => 'label.adresse',
+                'required' => false,
+                'mapped' => false,
+            ])
             ->add('description')
             -> add('geoloc')
             // Champ laissé présent (non mappé) pour compatibilité éventuelle, mais non utilisé; la sélection est gérée via le champ caché et le modal JS.

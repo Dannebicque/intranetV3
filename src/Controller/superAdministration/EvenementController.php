@@ -81,6 +81,27 @@ class EvenementController extends BaseController
                 }
             }
 
+            // Récupérer les données du sous-formulaire adresse (AdresseType non mappé) et stocker un array dans Evenement::adresse
+            $adresseFormData = $form->get('adresse')->getData();
+            if (is_object($adresseFormData)) {
+                // Si AdresseType utilise une entité Adresse, convertir en array attendue
+                if (method_exists($adresseFormData, 'getArray')) {
+                    $evenement->setAdresse($adresseFormData->getArray());
+                } else {
+                    // Récupération champ par champ
+                    $evenement->setAdresse([
+                        'adresse1' => $adresseFormData->getAdresse1() ?? null,
+                        'adresse2' => $adresseFormData->getAdresse2() ?? null,
+                        'adresse3' => $adresseFormData->getAdresse3() ?? null,
+                        'codePostal' => $adresseFormData->getCodePostal() ?? null,
+                        'ville' => $adresseFormData->getVille() ?? null,
+                        'pays' => $adresseFormData->getPays() ?? null,
+                    ]);
+                }
+            } elseif (is_array($adresseFormData)) {
+                $evenement->setAdresse($adresseFormData);
+            }
+
             $this->entityManager->persist($evenement);
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'evenement.add.success.flash');
@@ -145,6 +166,27 @@ class EvenementController extends BaseController
                         }
                     }
                 }
+            }
+
+            // Récupérer les données du sous-formulaire adresse (AdresseType non mappé) et stocker un array dans Evenement::adresse
+            $adresseFormData = $form->get('adresse')->getData();
+            if (is_object($adresseFormData)) {
+                // Si AdresseType utilise une entité Adresse, convertir en array attendue
+                if (method_exists($adresseFormData, 'getArray')) {
+                    $evenement->setAdresse($adresseFormData->getArray());
+                } else {
+                    // Récupération champ par champ
+                    $evenement->setAdresse([
+                        'adresse1' => $adresseFormData->getAdresse1() ?? null,
+                        'adresse2' => $adresseFormData->getAdresse2() ?? null,
+                        'adresse3' => $adresseFormData->getAdresse3() ?? null,
+                        'codePostal' => $adresseFormData->getCodePostal() ?? null,
+                        'ville' => $adresseFormData->getVille() ?? null,
+                        'pays' => $adresseFormData->getPays() ?? null,
+                    ]);
+                }
+            } elseif (is_array($adresseFormData)) {
+                $evenement->setAdresse($adresseFormData);
             }
 
             $this->entityManager->flush();

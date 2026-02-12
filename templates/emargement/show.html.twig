@@ -35,9 +35,15 @@
                     <p>
                         Confirmez-vous votre présence à cet événement ?
                     </p>
-                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalEmargement">
-                        Oui, je suis présent
-                    </button>
+                    {% if evenement.geoloc %}
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalEmargement">
+                            Oui, je suis présent
+                        </button>
+                    {% else %}
+                        <a href="{{ path('app_emargement_submit', {key: key, etudiantId: user}) }}" class="btn btn-primary" id="confirmPresenceBtn">
+                            Oui je suis présent
+                        </a>
+                    {% endif %}
                 {% endif %}
             {% else %}
                 <p class="text-danger">
@@ -47,5 +53,7 @@
         </div>
     </div>
 
-    {{ include('super-administration/evenement/_modal_emargement.html.twig') }}
+    {% if evenement.geoloc %}
+        {{ include('super-administration/evenement/_modal_emargement.html.twig') }}
+    {% endif %}
 {% endblock %}

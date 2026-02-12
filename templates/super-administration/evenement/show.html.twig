@@ -40,7 +40,7 @@
                     <th>{{ 'table.adresse'|trans }}</th>
                     <td>
                         {% for adresseDetail in evenement.adresse %}
-                            {{ adresseDetail.libelle }}{% if not loop.last %}, {% endif %}
+                            {{ adresseDetail }}
                         {% endfor %}
                     </td>
                 </tr>
