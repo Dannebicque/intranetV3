@@ -109,47 +109,10 @@
           // ignore
         }
 
-        // Autocomplétion via api-adresse.data.gouv.fr
-        document.getElementById('adresseEvenement').addEventListener('keyup', (e) => {
-          let adresseSuite = e.currentTarget.value
-          if (adresseSuite.length < 3) {
-            return
-          }
-
-          fetch('https://api-adresse.data.gouv.fr/search/?q=' + encodeURIComponent(adresseSuite) + '&type=&autocomplete=1')
-            .then((data) => data.json())
-            .then((data) => {
-              let options = document.querySelectorAll('#adresselisteEvenement li')
-              let adresseliste = document.getElementById('adresselisteEvenement')
-
-              options.forEach((option) => { option.remove() })
-
-              data.features.forEach(element => {
-                let autoCompleteOpt = document.createElement('li')
-                autoCompleteOpt.innerHTML = element.properties.label
-                autoCompleteOpt.dataset.name = element.properties.name
-                autoCompleteOpt.dataset.city = element.properties.city
-                autoCompleteOpt.dataset.postcode = element.properties.postcode
-                autoCompleteOpt.classList.add('item')
-                adresseliste.append(autoCompleteOpt)
-              })
-
-              document.querySelectorAll('#adresselisteEvenement .item').forEach((event) => {
-                event.addEventListener('click', (e) => {
-                  document.getElementById('evenement_adresse_ville').innerHTML = ''
-                  let adresse = e.currentTarget
-                  document.getElementById('evenement_adresse_adresse1').value = adresse.dataset.name
-                  document.getElementById('evenement_adresse_code_postal').value = adresse.dataset.postcode
-                  let opt1 = document.createElement('option')
-                  opt1.text = adresse.dataset.city
-                  opt1.value = adresse.dataset.city
-                  document.getElementById('evenement_adresse_ville').append(opt1)
-                })
-              })
-            })
-        })
-
       })
     </script>
+
+    {# Included reusable autocomplete script #}
+    {{ include('super-administration/evenement/_adresse_autocomplete.html.twig') }}
 
 {% endblock %}
