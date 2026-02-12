@@ -370,7 +370,7 @@ class MyExcelMultiExport
         foreach ($matiere->getSemestres() as $semestre) {
             //todo: export brut => Trie selon les noms des étudiants + filtre selon le format des groupes (sens ??) ?
             /** @var Etudiant $etudiant */
-            foreach ($semestre->getEtudiants() as $etudiant) {
+            foreach ($semestre->getEtudiantsSemestres() as $etudiant) {
                 if (count($etudiant->getGroupes()) > 0) {
                     // uniquement si l'étudiant est dans un groupe.
                     $this->myExcelWriter->writeCellXY($colonne, $ligne, $etudiant->getNumEtudiant());
