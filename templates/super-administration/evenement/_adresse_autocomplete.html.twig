@@ -1,0 +1,82 @@
+<script defer>
+(function(){
+  // Autocomplete réutilisable pour l'input #adresseEvenement et la liste #adresselisteEvenement
+  function debounce(fn, wait){ let t; return function(...args){ clearTimeout(t); t = setTimeout(()=>fn.apply(this,args), wait); } }
+
+  function attach() {
+    const input = document.getElementById('adresseEvenement');
+    if(!input) return;
+    const list = document.getElementById('adresselisteEvenement');
+    if(!list) return;
+
+    const clearList = () => { list.innerHTML = ''; };
+
+    const onSelect = (element) => {
+      try {
+        const addrName = element.dataset.name || '';
+        const city = element.dataset.city || '';
+        const postcode = element.dataset.postcode || '';
+
+        const addr1 = document.getElementById('evenement_adresse_adresse1');
+        const codePostal = document.getElementById('evenement_adresse_code_postal');
+        const villeSelect = document.getElementById('evenement_adresse_ville');
+        if (addr1) addr1.value = addrName;
+        if (codePostal) codePostal.value = postcode;
+        if (villeSelect) {
+          villeSelect.innerHTML = '';
+          const opt = document.createElement('option'); opt.text = city; opt.value = city; villeSelect.append(opt);
+        }
+
+        // Mettre le texte sélectionné dans l'input visible pour correspondance visuelle
+        input.value = element.textContent || element.innerText || addrName;
+      } catch (e) {
+        console.error('Erreur lors de la sélection d\'une adresse', e);
+      }
+
+      clearList();
+    };
+
+    const fetchAndRender = (q) => {
+      if (!q || q.length < 3) { clearList(); return; }
+
+      fetch('https://api-adresse.data.gouv.fr/search/?q=' + encodeURIComponent(q) + '&type=&autocomplete=1')
+        .then((r) => r.json())
+        .then((data) => {
+          clearList();
+          (data.features || []).forEach(feat => {
+            const li = document.createElement('li');
+            li.className = 'item list-group-item list-group-item-action';
+            li.textContent = feat.properties.label || '';
+            li.dataset.name = feat.properties.name || '';
+            li.dataset.city = feat.properties.city || '';
+            li.dataset.postcode = feat.properties.postcode || '';
+            li.addEventListener('click', () => onSelect(li));
+            list.append(li);
+          });
+        })
+        .catch((err) => {
+          console.error('Erreur autocomplete adresse:', err);
+          clearList();
+        });
+    };
+
+    const debounced = debounce((val) => fetchAndRender(val), 250);
+    input.addEventListener('input', (e) => debounced(e.currentTarget.value));
+    input.addEventListener('focus', (e) => { if (e.currentTarget.value && e.currentTarget.value.length >= 3) fetchAndRender(e.currentTarget.value); });
+
+    // Fermer la liste si on clique en dehors
+    document.addEventListener('click', (e) => {
+      if (!list.contains(e.target) && e.target !== input) {
+        clearList();
+      }
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', attach);
+  } else {
+    attach();
+  }
+})();
+</script>
+
