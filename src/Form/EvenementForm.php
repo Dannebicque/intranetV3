@@ -37,7 +37,6 @@ class EvenementForm extends AbstractType
             ])
             ->add('description')
             -> add('geoloc')
-            // Champ laissé présent (non mappé) pour compatibilité éventuelle, mais non utilisé; la sélection est gérée via le champ caché et le modal JS.
             ->add('etudiants', EntityType::class, [
                 'class' => Etudiant::class,
                 'choice_label' => 'id',
