@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 13/02/2026 10:14
+ * @lastUpdate 13/02/2026 10:19
  */
 
 /*
@@ -92,7 +92,7 @@ class MyEdtExport
                 } else {
                     if ($user->getSemestre()->getDiplome()->isApc()) {
                         $matieres = $this->typeMatiereManager->findByReferentielOrdreSemestre(
-                            $user->getSemestre(), $user->getDiplome()?->getReferentiel());
+                            $user->getSemestreActif(), $user->getDiplome()?->getReferentiel());
                     } else {
                         $matieres = $this->typeMatiereManager->findBySemestre($user->getSemestreActif());
                     }
