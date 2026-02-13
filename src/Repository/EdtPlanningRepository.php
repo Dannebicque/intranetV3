@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/EdtPlanningRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/01/2026 10:15
+ * @lastUpdate 13/02/2026 10:27
  */
 
 namespace App\Repository;
@@ -156,7 +156,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
                 ->where('p.semaine = :semaine')
                 ->andWhere('p.ordreSemestre = :promo')
                 ->andWhere('p.anneeUniversitaire = :anneeUniversitaire')
-                ->andWhere('(p.groupe = 1 AND p.type = :type) OR p.groupe = :groupetd OR p.groupe = :groupetp')
+                ->andWhere('((p.groupe = 1 AND p.type = :type) OR (p.groupe = 41 AND p.type = :type)) OR p.groupe = :groupetd OR p.groupe = :groupetp')
                 ->setParameters([
                     'type' => 'CM',
                     'semaine' => $semaine,
