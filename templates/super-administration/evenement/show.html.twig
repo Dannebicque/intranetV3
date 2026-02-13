@@ -39,9 +39,8 @@
                 <tr>
                     <th>{{ 'table.adresse'|trans }}</th>
                     <td>
-                        {% for adresseDetail in evenement.adresse %}
-                            {{ adresseDetail }}
-                        {% endfor %}
+                            {{ evenement.adresse.adresse1 }} {{ evenement.adresse.adresse2 }} {{ evenement.adresse.adresse3 }} {{ evenement.adresse.codePostal }} {{ evenement.adresse.ville }} {{ evenement.adresse.pays }}
+
                     </td>
                 </tr>
                 <tr>

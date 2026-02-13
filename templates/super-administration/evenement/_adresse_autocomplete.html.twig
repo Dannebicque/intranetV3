@@ -20,11 +20,35 @@
         const addr1 = document.getElementById('evenement_adresse_adresse1');
         const codePostal = document.getElementById('evenement_adresse_code_postal');
         const villeSelect = document.getElementById('evenement_adresse_ville');
-        if (addr1) addr1.value = addrName;
-        if (codePostal) codePostal.value = postcode;
+        if (addr1) {
+          addr1.value = addrName;
+          addr1.dispatchEvent(new Event('input', { bubbles: true }));
+        }
+        if (codePostal) {
+          codePostal.value = postcode;
+          codePostal.dispatchEvent(new Event('input', { bubbles: true }));
+        }
         if (villeSelect) {
+          // fallback robust pour la ville si dataset.city est vide
+          let cityVal = city;
+          if (!cityVal) {
+            // tenter d'extraire la ville depuis le label/name (dernière partie après une virgule)
+            const labelSource = (element.dataset.name || element.textContent || '').toString();
+            const parts = labelSource.split(',').map(s => s.trim()).filter(Boolean);
+            cityVal = parts.length ? parts[parts.length - 1] : '';
+            // retirer éventuellement un code postal au début (ex: "75000 PARIS")
+            cityVal = cityVal.replace(/^[0-9]{5}\s*/,'').trim();
+          }
+
           villeSelect.innerHTML = '';
-          const opt = document.createElement('option'); opt.text = city; opt.value = city; villeSelect.append(opt);
+          const opt = document.createElement('option'); opt.text = cityVal; opt.value = cityVal; villeSelect.append(opt);
+          // s'assurer que le select est utilisable
+          try { villeSelect.disabled = false; } catch(e) { /* ignore */ }
+          try { villeSelect.value = cityVal; } catch(e) { /* ignore */ }
+          // déclencher l'événement change pour synchroniser d'éventuels listeners/plugins
+          try { villeSelect.dispatchEvent(new Event('change', { bubbles: true })); } catch(e) { /* ignore */ }
+          // si jQuery/select2 est utilisé, déclencher aussi via jQuery
+          try { if (window.jQuery && jQuery(villeSelect).trigger) jQuery(villeSelect).trigger('change'); } catch(e) { /* ignore */ }
         }
 
         // Mettre le texte sélectionné dans l'input visible pour correspondance visuelle
@@ -79,4 +103,3 @@
   }
 })();
 </script>
-
