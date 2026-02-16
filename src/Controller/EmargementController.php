@@ -254,4 +254,24 @@ final class EmargementController extends AbstractController
         $c = 2 * atan2(sqrt($a), sqrt(1-$a));
         return $earthRadius * $c;
     }
+
+    #[Route('/', name: 'app_evenement_confirm_presence', methods: ['GET'])]
+    public function confirmPresence(int $etudiantEvenementId, EtudiantEvenementRepository $etudiantEvenementRepository): Response
+    {
+        $etudiantEvenement = $etudiantEvenementRepository->findOneBy(['id' => $etudiantEvenementId]);
+
+        if (!$etudiantEvenement) {
+            throw $this->createNotFoundException('Inscription à l\'événement introuvable');
+        } elseif ($etudiantEvenement->isPresent()) {
+            $this->addFlash('warning', 'Présence déjà enregistrée');
+            return $this->redirectToRoute('app_emargement_qr', ['key' => '']);
+        } else {
+            $etudiantEvenement->setPresent(true);
+            $etudiantEvenement->setDateSignature(new \DateTime());
+            $etudiantEvenementRepository->save($etudiantEvenement, true);
+
+            $this->addFlash('success', 'Présence enregistrée avec succès');
+            return $this->redirectToRoute('app_emargement_qr', ['key' => '']);
+        }
+    }
 }

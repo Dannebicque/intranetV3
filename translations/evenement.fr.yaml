@@ -1,6 +1,7 @@
 adm:
   evenement:
     exporterqrpdf: "Exporter le QR code de l'événement"
+    exporterresultxlsx: "Exporter les résultats de l'événement"
     index:
       heading: "Gestion des événements"
     new:
