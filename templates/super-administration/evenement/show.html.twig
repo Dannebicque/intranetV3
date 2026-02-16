@@ -68,6 +68,7 @@
                     <th>id</th>
                     <th>{{ 'table.prenom'|trans }}</th>
                     <th>{{ 'table.nom'|trans }}</th>
+                    <th>semestre</th>
                     <th>présence</th>
                     <th>date signature</th>
                     <th>Marquer présent</th>
@@ -79,6 +80,7 @@
                         <td>{{ loop.index }}</td>
                         <td>{{ etudiantEvenement.etudiant.prenom }}</td>
                         <td>{{ etudiantEvenement.etudiant.nom ?? '-' }}</td>
+                        <td>{{ etudiantEvenement.etudiant.semestreActif }}</td>
                         <td>
                             {% if etudiantEvenement.present %}
                                 <span class="badge bg-success">{{ 'oui'|trans }}</span>
