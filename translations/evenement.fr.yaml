@@ -1,5 +1,6 @@
 adm:
   evenement:
+    exporterqrpdf: "Exporter le QR code de l'événement"
     index:
       heading: "Gestion des événements"
     new:
@@ -29,4 +30,3 @@ adm:
           heading: "Présence à l'événement"
       modal:
         heading: "Confirmation de l'émargement"
-
