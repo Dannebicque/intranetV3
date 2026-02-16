@@ -283,19 +283,28 @@ final class EmargementController extends AbstractController
         }
     }
 
-    #[Route('/emargement/export', name: 'app_emargement_export')]
-    public function export(): Response
-    {
-        $data = [
-            ['name' => 'John Doe', 'amount' => 1234.56, 'date' => new \DateTime('2024-02-01')],
-            ['name' => 'Anna Smith', 'amount' => 987.45, 'date' => new \DateTime('2024-02-02')],
-        ];
+    #[Route('/emargement/export/{id}', name: 'app_emargement_export', methods: ['GET'])]
+    public function export(
+        int $id,
+        EvenementRepository $evenementRepository,
+        EtudiantEvenementRepository $etudiantEvenementRepository
+    ): Response {
+        $evenement = $evenementRepository->find($id);
+        if (null === $evenement) {
+            throw $this->createNotFoundException('Événement introuvable');
+        }
 
-        // One-liner: render template + convert + stream
+        // Récupère les inscriptions liées à l'événement
+        $etudiantsEvenement = $etudiantEvenementRepository->findBy(['evenement' => $evenement->getId()], ['id' => 'ASC']);
+
+        // Le bundle attend un template contenant le(s) <table> avec data-xls-sheet
         return $this->renderSpreadsheet(
-            'evenement/show.html.twig',
-            ['lines' => $data],
-            'export.xlsx'
+            'super-administration/evenement/export.html.twig',
+            [
+                'evenement' => $evenement,
+                'etudiantsEvenement' => $etudiantsEvenement,
+            ],
+            sprintf('evenement-%d.xlsx', $evenement->getId())
         );
     }
 }

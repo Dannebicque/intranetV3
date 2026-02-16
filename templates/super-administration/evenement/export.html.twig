@@ -1,0 +1,28 @@
+<table class="table table-striped" data-xls-sheet="Émargement">
+    <thead>
+        <tr>
+            <th>id</th>
+            <th>{{ 'table.prenom'|trans }}</th>
+            <th>{{ 'table.nom'|trans }}</th>
+            <th>semestre</th>
+            <th>présence</th>
+            <th>date signature</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for etudiantEvenement in etudiantsEvenement %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ etudiantEvenement.etudiant.prenom }}</td>
+                <td>{{ etudiantEvenement.etudiant.nom ?: '-' }}</td>
+                <td>{{ etudiantEvenement.etudiant.semestreActif }}</td>
+                <td>{{ etudiantEvenement.present ? 'oui'|trans : 'non'|trans }}</td>
+                <td>{% if etudiantEvenement.dateSignature %}{{ etudiantEvenement.dateSignature|date('d/m/Y H:i') }}{% else %}-{% endif %}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">{{ 'table.empty'|trans }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
