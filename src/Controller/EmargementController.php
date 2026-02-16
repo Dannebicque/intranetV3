@@ -124,6 +124,7 @@ final class EmargementController extends AbstractController
         // Si la géolocalisation n'est pas requise, on enregistre la présence directement
         if (!$requiresGeoloc) {
             $etudiantEvenement->setPresent(true);
+            $etudiantEvenement->setDateSignature(new \DateTime());
             $etudiantEvenementRepository->save($etudiantEvenement, true);
 
             if ($request->isXmlHttpRequest()) {
@@ -194,6 +195,7 @@ final class EmargementController extends AbstractController
 
         // Si on arrive ici, tout est ok : on enregistre la présence
         $etudiantEvenement->setPresent(true);
+        $etudiantEvenement->setDateSignature(new \DateTime());
         $etudiantEvenementRepository->save($etudiantEvenement, true);
 
         if ($request->isXmlHttpRequest()) {

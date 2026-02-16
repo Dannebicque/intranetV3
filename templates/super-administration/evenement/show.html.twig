@@ -64,8 +64,8 @@
                         <th>id</th>
                         <th>{{ 'table.prenom'|trans }}</th>
                         <th>{{ 'table.nom'|trans }}</th>
-                        <th>{{ 'table.email'|trans }}</th>
                         <th>présence</th>
+                        <th>date signature</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -74,12 +74,43 @@
                             <td>{{ loop.index }}</td>
                             <td>{{ etudiantEvenement.etudiant.prenom }}</td>
                             <td>{{ etudiantEvenement.etudiant.nom ?? '-' }}</td>
-                            <td>{{ etudiantEvenement.etudiant.email ?? '-' }}</td>
                             <td>
                                 {% if etudiantEvenement.present %}
                                     <span class="badge bg-success">{{ 'oui'|trans }}</span>
                                 {% else %}
                                     <span class="badge bg-danger">{{ 'non'|trans }}</span>
+                                {% endif %}
+                            </td>
+
+                            {# Calcul de la classe 'text-danger' :
+                               - si pas la même date que l'événement
+                               - ou si la signature est avant l'heure de début -1h
+                               - ou si la signature est après l'heure de fin +1h
+                               Si les heures de début/fin ne sont pas définies, on ne fait que la vérification de la date. #}
+                            {% set sig = etudiantEvenement.dateSignature %}
+                            {% set danger = false %}
+                            {% if sig %}
+                                {% set sigDate = sig|date('Y-m-d') %}
+                                {% set eventDate = evenement.date ? evenement.date|date('Y-m-d') : '' %}
+
+                                {% set timeChecksOk = true %}
+                                {% if evenement.date and evenement.debut and evenement.fin %}
+                                    {% set startDt = date(eventDate ~ ' ' ~ (evenement.debut|date('H:i')) ~ ' -1 hour') %}
+                                    {% set endDt = date(eventDate ~ ' ' ~ (evenement.fin|date('H:i')) ~ ' +1 hour') %}
+
+                                    {% set timeChecksOk = (sig.timestamp >= startDt.timestamp) and (sig.timestamp <= endDt.timestamp) %}
+                                {% endif %}
+
+                                {% if sigDate != eventDate or not timeChecksOk %}
+                                    {% set danger = true %}
+                                {% endif %}
+                            {% endif %}
+
+                            <td class="{{ danger ? 'text-danger' : '' }}">
+                                {% if sig %}
+                                    {{ sig|date('d/m/Y H:i') }}
+                                {% else %}
+                                    -
                                 {% endif %}
                             </td>
                         </tr>
