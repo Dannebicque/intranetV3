@@ -119,7 +119,7 @@ final class EmargementController extends AbstractController
         } elseif (is_string($adresse)) {
             $hasAdresse = trim($adresse) !== '';
         }
-        $requiresGeoloc = (bool) $evenement->getGeoloc() && $hasAdresse;
+        $requiresGeoloc = (bool) $evenement->isGeoloc() && $hasAdresse;
 
         // Si la géolocalisation n'est pas requise, on enregistre la présence directement
         if (!$requiresGeoloc) {
