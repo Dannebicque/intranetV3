@@ -1,11 +1,4 @@
 <?php
-/*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/Sites/intranetV3/config/bundles.php
- * @author davidannebicque
- * @project intranetV3
- * @lastUpdate 16/02/2024 23:01
- */
 
 return [
     Symfony\Bundle\FrameworkBundle\FrameworkBundle::class => ['all' => true],
@@ -31,4 +24,5 @@ return [
     Symfony\UX\Autocomplete\AutocompleteBundle::class => ['all' => true],
     Dannebicque\TableBundle\DannebicqueTableBundle::class => ['all' => true],
     Symfony\UX\StimulusBundle\StimulusBundle::class => ['all' => true],
+    Davidannebicque\HtmlToSpreadsheetBundle\HtmlToSpreadsheetBundle::class => ['all' => true],
 ];

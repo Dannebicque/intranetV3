@@ -16,6 +16,7 @@ use App\Repository\EtudiantEvenementRepository;
 use App\Repository\EtudiantRepository;
 use App\Repository\EvenementRepository;
 use App\Service\GeolocationService;
+use Davidannebicque\HtmlToSpreadsheetBundle\Controller\SpreadsheetTrait;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -23,6 +24,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 final class EmargementController extends AbstractController
 {
+    use SpreadsheetTrait;
+
     /**
      * Route utilisée par le QR code. La clé est maintenant un token signé HMAC (base64url) contenant id:expires:hmac
      */
@@ -278,5 +281,30 @@ final class EmargementController extends AbstractController
             $this->addFlash('success', 'Présence enregistrée avec succès');
             return $this->redirectToRoute('sa_evenement_show', ['id' => $etudiantEvenement->getEvenement()->getId()]);
         }
+    }
+
+    #[Route('/emargement/export/{id}', name: 'app_emargement_export', methods: ['GET'])]
+    public function export(
+        int $id,
+        EvenementRepository $evenementRepository,
+        EtudiantEvenementRepository $etudiantEvenementRepository
+    ): Response {
+        $evenement = $evenementRepository->find($id);
+        if (null === $evenement) {
+            throw $this->createNotFoundException('Événement introuvable');
+        }
+
+        // Récupère les inscriptions liées à l'événement
+        $etudiantsEvenement = $etudiantEvenementRepository->findBy(['evenement' => $evenement->getId()], ['id' => 'ASC']);
+
+        // Le bundle attend un template contenant le(s) <table> avec data-xls-sheet
+        return $this->renderSpreadsheet(
+            'super-administration/evenement/export.html.twig',
+            [
+                'evenement' => $evenement,
+                'etudiantsEvenement' => $etudiantsEvenement,
+            ],
+            sprintf('evenement-%d.xlsx', $evenement->getId())
+        );
     }
 }

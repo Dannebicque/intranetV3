@@ -40,7 +40,7 @@
                                     <i class="{{ iconQrCode }}"></i>
                                 </a>
                             {% endif %}
-                            <a class="btn btn-sm btn-secondary" href="{{ path('sa_evenement_show', {id: evenement.id}) }}" title="{{ 'adm.evenement.exporterresultxlsx'|trans({}, 'evenement') }}" data-bs-toggle="tooltip" data-bs-placement="bottom">
+                            <a class="btn btn-sm btn-secondary" href="{{ path('app_emargement_export', {id: evenement.id}) }}" title="{{ 'adm.evenement.exporterresultxlsx'|trans({}, 'evenement') }}" data-bs-toggle="tooltip" data-bs-placement="bottom">
                                 <i class="fas fa-download"></i>
                             </a>
                             {{ include('composants/sadm-buttons-table-index.html.twig', {elt:'evenement', id: evenement.id}) }}
