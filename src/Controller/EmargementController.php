@@ -111,7 +111,30 @@ final class EmargementController extends AbstractController
             return $this->redirectToRoute('app_emargement_qr', ['key' => $key]);
         }
 
-        // Lire le body JSON si présent (fetch depuis le client)
+        // Déterminer si la géolocalisation est requise : événement avec geoloc true ET une adresse renseignée
+        $adresse = $evenement->getAdresse();
+        $hasAdresse = false;
+        if (is_array($adresse)) {
+            $hasAdresse = count(array_filter($adresse)) > 0;
+        } elseif (is_string($adresse)) {
+            $hasAdresse = trim($adresse) !== '';
+        }
+        $requiresGeoloc = (bool) $evenement->getGeoloc() && $hasAdresse;
+
+        // Si la géolocalisation n'est pas requise, on enregistre la présence directement
+        if (!$requiresGeoloc) {
+            $etudiantEvenement->setPresent(true);
+            $etudiantEvenementRepository->save($etudiantEvenement, true);
+
+            if ($request->isXmlHttpRequest()) {
+                return $this->json(['message' => 'Présence enregistrée avec succès'], Response::HTTP_OK);
+            }
+
+            $this->addFlash('success', 'Présence enregistrée avec succès');
+            return $this->redirectToRoute('app_emargement_qr', ['key' => $key]);
+        }
+
+        // --- Géolocalisation requise : lire le body JSON si présent (fetch depuis le client)
         $data = null;
         $contentType = $request->headers->get('Content-Type');
         if (str_contains((string)$contentType, 'application/json')) {
@@ -134,7 +157,6 @@ final class EmargementController extends AbstractController
         $lon = (float) $data['lon'];
 
         // Géocoder l'adresse de l'événement (l'entité conserve l'adresse en base)
-        $adresse = $evenement->getAdresse();
         $eventCoords = null;
         if (is_array($adresse) && count($adresse) > 0) {
             // Si adresse est un tableau (structure existante), on la transforme en string
@@ -160,7 +182,7 @@ final class EmargementController extends AbstractController
 
         // calculer la distance (Haversine)
         $distance = $this->haversineDistance($lat, $lon, $eventCoords['lat'], $eventCoords['lon']);
-        $thresholdMeters = 200; // seuil d'acceptation
+        $thresholdMeters = 500; // seuil d'acceptation
 
         if ($distance > $thresholdMeters) {
             if ($request->isXmlHttpRequest()) {
