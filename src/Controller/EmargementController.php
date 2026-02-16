@@ -16,6 +16,7 @@ use App\Repository\EtudiantEvenementRepository;
 use App\Repository\EtudiantRepository;
 use App\Repository\EvenementRepository;
 use App\Service\GeolocationService;
+use Davidannebicque\HtmlToSpreadsheetBundle\Controller\SpreadsheetTrait;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -23,6 +24,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 final class EmargementController extends AbstractController
 {
+    use SpreadsheetTrait;
+
     /**
      * Route utilisée par le QR code. La clé est maintenant un token signé HMAC (base64url) contenant id:expires:hmac
      */
@@ -278,5 +281,21 @@ final class EmargementController extends AbstractController
             $this->addFlash('success', 'Présence enregistrée avec succès');
             return $this->redirectToRoute('sa_evenement_show', ['id' => $etudiantEvenement->getEvenement()->getId()]);
         }
+    }
+
+    #[Route('/emargement/export', name: 'app_emargement_export')]
+    public function export(): Response
+    {
+        $data = [
+            ['name' => 'John Doe', 'amount' => 1234.56, 'date' => new \DateTime('2024-02-01')],
+            ['name' => 'Anna Smith', 'amount' => 987.45, 'date' => new \DateTime('2024-02-02')],
+        ];
+
+        // One-liner: render template + convert + stream
+        return $this->renderSpreadsheet(
+            'evenement/show.html.twig',
+            ['lines' => $data],
+            'export.xlsx'
+        );
     }
 }
