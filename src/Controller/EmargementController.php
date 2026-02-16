@@ -94,7 +94,10 @@ final class EmargementController extends AbstractController
         }
 
         $etudiant = $etudiantRepository->find($etudiantId);
-        if (null === $etudiant) {
+
+        // si l'étudiant connecté ne correspond pas à l'étudiantId de la route, refuser l'émargement (tentative de fraude)
+        $user = $this->getUser();
+        if (!$user || $user->getId() !== $etudiantId || !$etudiant) {
             throw $this->createNotFoundException('Étudiant introuvable');
         }
 
@@ -255,23 +258,25 @@ final class EmargementController extends AbstractController
         return $earthRadius * $c;
     }
 
-    #[Route('/', name: 'app_evenement_confirm_presence', methods: ['GET'])]
-    public function confirmPresence(int $etudiantEvenementId, EtudiantEvenementRepository $etudiantEvenementRepository): Response
+    #[Route('/emargement/submit/{id}', name: 'app_evenement_confirm_presence', methods: ['GET'])]
+    public function confirmPresence(int $id, EtudiantEvenementRepository $etudiantEvenementRepository): Response
     {
-        $etudiantEvenement = $etudiantEvenementRepository->findOneBy(['id' => $etudiantEvenementId]);
+        $this->isGranted('ROLE_SUPER_ADMIN');
+
+        $etudiantEvenement = $etudiantEvenementRepository->findOneBy(['id' => $id]);
 
         if (!$etudiantEvenement) {
             throw $this->createNotFoundException('Inscription à l\'événement introuvable');
         } elseif ($etudiantEvenement->isPresent()) {
             $this->addFlash('warning', 'Présence déjà enregistrée');
-            return $this->redirectToRoute('app_emargement_qr', ['key' => '']);
+            return $this->redirectToRoute('sa_evenement_show', ['id' => $etudiantEvenement->getEvenement()->getId()]);
         } else {
             $etudiantEvenement->setPresent(true);
             $etudiantEvenement->setDateSignature(new \DateTime());
             $etudiantEvenementRepository->save($etudiantEvenement, true);
 
             $this->addFlash('success', 'Présence enregistrée avec succès');
-            return $this->redirectToRoute('app_emargement_qr', ['key' => '']);
+            return $this->redirectToRoute('sa_evenement_show', ['id' => $etudiantEvenement->getEvenement()->getId()]);
         }
     }
 }
