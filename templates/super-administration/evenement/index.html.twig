@@ -33,13 +33,16 @@
                         <td>{{ evenement.debut ? evenement.debut|date('H:i') : '' }}</td>
                         <td>{{ evenement.fin ? evenement.fin|date('H:i') : '' }}</td>
                         <td>{{ evenement.etudiantEvenements|length }}</td>
-                        <td class="flex justify-end items-">
+                        <td style="display: flex; justify-content: flex-end; gap: 5px; align-items: center">
                             {% set key = qrKeys[evenement.id]|default('') %}
                             {% if key != '' %}
-                                <a class="btn btn-sm btn-info" href="{{ path('sa_evenement_qr_pdf', {key: key}) }}" title="{{ 'exporter.pdf'|trans }}" data-bs-toggle="tooltip" data-bs-placement="bottom">
+                                <a class="btn btn-sm btn-info" href="{{ path('sa_evenement_qr_pdf', {key: key}) }}" title="{{ 'adm.evenement.exporterqrpdf'|trans({}, 'evenement') }}" data-bs-toggle="tooltip" data-bs-placement="bottom">
                                     <i class="{{ iconQrCode }}"></i>
                                 </a>
                             {% endif %}
+                            <a class="btn btn-sm btn-secondary" href="{{ path('sa_evenement_show', {id: evenement.id}) }}" title="{{ 'adm.evenement.exporterresultxlsx'|trans({}, 'evenement') }}" data-bs-toggle="tooltip" data-bs-placement="bottom">
+                                <i class="fas fa-download"></i>
+                            </a>
                             {{ include('composants/sadm-buttons-table-index.html.twig', {elt:'evenement', id: evenement.id}) }}
                         </td>
                     </tr>

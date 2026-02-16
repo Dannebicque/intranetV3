@@ -94,7 +94,10 @@ final class EmargementController extends AbstractController
         }
 
         $etudiant = $etudiantRepository->find($etudiantId);
-        if (null === $etudiant) {
+
+        // si l'étudiant connecté ne correspond pas à l'étudiantId de la route, refuser l'émargement (tentative de fraude)
+        $user = $this->getUser();
+        if (!$user || $user->getId() !== $etudiantId || !$etudiant) {
             throw $this->createNotFoundException('Étudiant introuvable');
         }
 
@@ -124,6 +127,7 @@ final class EmargementController extends AbstractController
         // Si la géolocalisation n'est pas requise, on enregistre la présence directement
         if (!$requiresGeoloc) {
             $etudiantEvenement->setPresent(true);
+            $etudiantEvenement->setDateSignature(new \DateTime());
             $etudiantEvenementRepository->save($etudiantEvenement, true);
 
             if ($request->isXmlHttpRequest()) {
@@ -194,6 +198,7 @@ final class EmargementController extends AbstractController
 
         // Si on arrive ici, tout est ok : on enregistre la présence
         $etudiantEvenement->setPresent(true);
+        $etudiantEvenement->setDateSignature(new \DateTime());
         $etudiantEvenementRepository->save($etudiantEvenement, true);
 
         if ($request->isXmlHttpRequest()) {
@@ -251,5 +256,27 @@ final class EmargementController extends AbstractController
         $a = sin($dLat/2) * sin($dLat/2) + cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * sin($dLon/2) * sin($dLon/2);
         $c = 2 * atan2(sqrt($a), sqrt(1-$a));
         return $earthRadius * $c;
+    }
+
+    #[Route('/emargement/submit/{id}', name: 'app_evenement_confirm_presence', methods: ['GET'])]
+    public function confirmPresence(int $id, EtudiantEvenementRepository $etudiantEvenementRepository): Response
+    {
+        $this->isGranted('ROLE_SUPER_ADMIN');
+
+        $etudiantEvenement = $etudiantEvenementRepository->findOneBy(['id' => $id]);
+
+        if (!$etudiantEvenement) {
+            throw $this->createNotFoundException('Inscription à l\'événement introuvable');
+        } elseif ($etudiantEvenement->isPresent()) {
+            $this->addFlash('warning', 'Présence déjà enregistrée');
+            return $this->redirectToRoute('sa_evenement_show', ['id' => $etudiantEvenement->getEvenement()->getId()]);
+        } else {
+            $etudiantEvenement->setPresent(true);
+            $etudiantEvenement->setDateSignature(new \DateTime());
+            $etudiantEvenementRepository->save($etudiantEvenement, true);
+
+            $this->addFlash('success', 'Présence enregistrée avec succès');
+            return $this->redirectToRoute('sa_evenement_show', ['id' => $etudiantEvenement->getEvenement()->getId()]);
+        }
     }
 }

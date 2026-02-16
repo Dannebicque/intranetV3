@@ -39,7 +39,7 @@
                 <tr>
                     <th>{{ 'table.adresse'|trans }}</th>
                     <td>
-                            {{ evenement.adresse.adresse1 }} {{ evenement.adresse.adresse2 }} {{ evenement.adresse.adresse3 }} {{ evenement.adresse.codePostal }} {{ evenement.adresse.ville }} {{ evenement.adresse.pays }}
+                        {{ evenement.adresse.adresse1 }} {{ evenement.adresse.adresse2 }} {{ evenement.adresse.adresse3 }} {{ evenement.adresse.codePostal }} {{ evenement.adresse.ville }} {{ evenement.adresse.pays }}
 
                     </td>
                 </tr>
@@ -56,38 +56,81 @@
                 </tbody>
             </table>
 
-            <h5>{{ 'adm.evenement.attendance'|trans({}, 'evenement') }}</h5>
-
+            <div class="d-flex items-center gap-2 mb-3">
+                <h5>{{ 'adm.evenement.attendance'|trans({}, 'evenement') }}</h5>
+                <a class="btn btn-sm btn-secondary" href="{{ path('sa_evenement_show', {id: evenement.id}) }}" title="{{ 'adm.evenement.exporterresultxlsx'|trans({}, 'evenement') }}" data-bs-toggle="tooltip" data-bs-placement="bottom">
+                    <i class="fas fa-download"></i>
+                </a>
+            </div>
             <table class="table table-striped">
                 <thead>
-                    <tr>
-                        <th>id</th>
-                        <th>{{ 'table.prenom'|trans }}</th>
-                        <th>{{ 'table.nom'|trans }}</th>
-                        <th>{{ 'table.email'|trans }}</th>
-                        <th>présence</th>
-                    </tr>
+                <tr>
+                    <th>id</th>
+                    <th>{{ 'table.prenom'|trans }}</th>
+                    <th>{{ 'table.nom'|trans }}</th>
+                    <th>semestre</th>
+                    <th>présence</th>
+                    <th>date signature</th>
+                    <th>Marquer présent</th>
+                </tr>
                 </thead>
                 <tbody>
-                    {% for etudiantEvenement in etudiantsEvenement %}
-                        <tr>
-                            <td>{{ loop.index }}</td>
-                            <td>{{ etudiantEvenement.etudiant.prenom }}</td>
-                            <td>{{ etudiantEvenement.etudiant.nom ?? '-' }}</td>
-                            <td>{{ etudiantEvenement.etudiant.email ?? '-' }}</td>
-                            <td>
-                                {% if etudiantEvenement.present %}
-                                    <span class="badge bg-success">{{ 'oui'|trans }}</span>
-                                {% else %}
-                                    <span class="badge bg-danger">{{ 'non'|trans }}</span>
-                                {% endif %}
-                            </td>
-                        </tr>
-                    {% else %}
-                        <tr>
-                            <td colspan="5">{{ 'table.empty'|trans }}</td>
-                        </tr>
-                    {% endfor %}
+                {% for etudiantEvenement in etudiantsEvenement %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ etudiantEvenement.etudiant.prenom }}</td>
+                        <td>{{ etudiantEvenement.etudiant.nom ?? '-' }}</td>
+                        <td>{{ etudiantEvenement.etudiant.semestreActif }}</td>
+                        <td>
+                            {% if etudiantEvenement.present %}
+                                <span class="badge bg-success">{{ 'oui'|trans }}</span>
+                            {% else %}
+                                <span class="badge bg-danger">{{ 'non'|trans }}</span>
+                            {% endif %}
+                        </td>
+
+                        {# Calcul de la classe 'text-danger' :
+                               - si pas la même date que l'événement
+                               - ou si la signature est avant l'heure de début -1h
+                               - ou si la signature est après l'heure de fin +1h
+                               Si les heures de début/fin ne sont pas définies, on ne fait que la vérification de la date. #}
+                        {% set sig = etudiantEvenement.dateSignature %}
+                        {% set danger = false %}
+                        {% if sig %}
+                            {% set sigDate = sig|date('Y-m-d') %}
+                            {% set eventDate = evenement.date ? evenement.date|date('Y-m-d') : '' %}
+
+                            {% set timeChecksOk = true %}
+                            {% if evenement.date and evenement.debut and evenement.fin %}
+                                {% set startDt = date(eventDate ~ ' ' ~ (evenement.debut|date('H:i')) ~ ' -1 hour') %}
+                                {% set endDt = date(eventDate ~ ' ' ~ (evenement.fin|date('H:i')) ~ ' +1 hour') %}
+
+                                {% set timeChecksOk = (sig.timestamp >= startDt.timestamp) and (sig.timestamp <= endDt.timestamp) %}
+                            {% endif %}
+
+                            {% if sigDate != eventDate or not timeChecksOk %}
+                                {% set danger = true %}
+                            {% endif %}
+                        {% endif %}
+
+                        <td class="{{ danger ? 'text-danger' : '' }}">
+                            {% if sig %}
+                                {{ sig|date('d/m/Y H:i') }}
+                            {% else %}
+                                -
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a class="btn btn-sm btn-primary {{ etudiantEvenement.present !== false ? 'disabled' }}" href="{{ path('app_evenement_confirm_presence', {id:etudiantEvenement.id}) }}" title="Marquer l'étudiant présent" data-bs-toggle="tooltip" data-bs-placement="bottom">
+                                <i class="fas fa-check-circle"></i>
+                            </a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="5">{{ 'table.empty'|trans }}</td>
+                    </tr>
+                {% endfor %}
                 </tbody>
             </table>
         </div>
