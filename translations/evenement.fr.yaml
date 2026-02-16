@@ -19,6 +19,8 @@ adm:
       groupes.help: "Sélectionner un ou plusieurs groupes"
       liste_etudiants: "Liste des étudiants"
       selection_courante: "Sélection courante"
+      selectionner_tout: "Sélectionner tout"
+      deselectionner_tout: "Désélectionner tout"
     attendance: 'Présences'
     emargement:
       index:

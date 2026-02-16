@@ -266,6 +266,20 @@ export default class extends Controller {
     this._syncHidden()
   }
 
+  unselectAllVisible () {
+    // Désélectionne toutes les options visibles dans la liste
+    const options = Array.from(this.listeTarget.options)
+    options.forEach(opt => {
+      if (opt.disabled || opt.value === '') return
+      opt.selected = false
+      const id = parseInt(opt.value, 10)
+      if (isNaN(id)) return
+      this.selected.delete(id)
+    })
+    this._renderSelected()
+    this._syncHidden()
+  }
+
   clearSelection () {
     this.selected.clear()
     this._renderSelected()
