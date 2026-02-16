@@ -182,7 +182,7 @@ final class EmargementController extends AbstractController
 
         // calculer la distance (Haversine)
         $distance = $this->haversineDistance($lat, $lon, $eventCoords['lat'], $eventCoords['lon']);
-        $thresholdMeters = 500; // seuil d'acceptation
+        $thresholdMeters = 200; // seuil d'acceptation
 
         if ($distance > $thresholdMeters) {
             if ($request->isXmlHttpRequest()) {
