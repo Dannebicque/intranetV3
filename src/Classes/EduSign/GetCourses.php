@@ -32,7 +32,9 @@ use Carbon\Carbon;
 use DateInterval;
 use DateTime;
 use DateTimeZone;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\Mailer\MailerInterface;
 
 class GetCourses
 {
@@ -55,6 +57,7 @@ class GetCourses
         protected AnneeUniversitaireRepository $anneeUniversitaireRepository,
         protected CalendrierRepository         $CalendrierRepository,
         protected EventDispatcherInterface     $eventDispatcher,
+        private readonly MailerInterface      $mailer
     )
     {
 
@@ -68,13 +71,12 @@ class GetCourses
             $keyEduSign = $diplome->getKeyEduSign();
             $semestres = $this->semestreRepository->findByDiplome($diplome);
             $today = Carbon::create('today');
-//            $today = Carbon::create('2024-10-05');
             $yesterday = Carbon::create('yesterday');
-//            $yesterday = Carbon::create('2024-10-04');
             $semaineReelle = date('W');
-//            $semaineReelle = 40;
 
             foreach ($semestres as $semestre) {
+                $errors = []; // collecte des erreurs pour cet envoi
+
                 $eventSemaine = $this->CalendrierRepository->findOneBy([
                     'semaineReelle' => $semaineReelle,
                     'anneeUniversitaire' => $semestre->getAnneeUniversitaire()
@@ -92,25 +94,59 @@ class GetCourses
                         if ($evenement->dateObjet->isBetween($today, $yesterday)) {
                             $id = $evenement->getIdEduSign();
 
+                            $result = [];
                             if ($id !== null) {
                                 $course = $this->apiCours->getCourse($id, $keyEduSign);
                                 if ($course !== null) {
+                                    $result['evenement'.$evenement->getId()][] = $course;
+
+                                    // si signature du professeur absente mais il y a des étudiants absents -> signaler
+                                    if (!empty($course['STUDENTS']) && (empty($course['PROFESSOR_SIGNATURE']) || $course['PROFESSOR_SIGNATURE'] === null)) {
+                                        foreach ($course['STUDENTS'] as $student) {
+                                            if (isset($student['state']) && $student['state'] === false) {
+                                                $errors[] = sprintf('Evenement %d : cours trouvé mais professeur non signé pour le cours edusign id %s (étudiant %s)', $evenement->getId(), $id, $student['studentId'] ?? 'inconnu');
+                                            }
+                                        }
+                                    }
+
                                     if (!empty($course['STUDENTS']) && $course['PROFESSOR_SIGNATURE'] !== null && $course['PROFESSOR_SIGNATURE'] !== "") {
                                         foreach ($course['STUDENTS'] as $student) {
-                                            if ($student['state'] === false) {
+                                            if (isset($student['state']) && $student['state'] === false) {
+                                                $result['evenement'.$evenement->getId()][] = $student;
                                                 $matiere = $this->typeMatiereManager->getMatiere($evenement->getIdMatiere(), $evenement->getTypeMatiere());
                                                 if ($matiere !== null) {
-                                                    $this->newAbsence($course, $student, $matiere);
+                                                    $reason = $this->newAbsence($course, $student, $matiere);
+                                                    if ($reason !== null) {
+                                                        $errors[] = sprintf('Evenement %d (edusign id %s) - étudiant %s : %s', $evenement->getId(), $id, $student['studentId'] ?? 'inconnu', $reason);
+                                                    }
+                                                } else {
+                                                    $errors[] = sprintf('Evenement %d : matière introuvable (idMatiere=%s, type=%s)', $evenement->getId(), $evenement->getIdMatiere(), $evenement->getTypeMatiere());
                                                 }
                                             }
                                         }
                                     }
                                 } else {
-                                    dump('cours non trouvé');
+                                    // cours non trouvé sur edusign
+                                    $errors[] = sprintf('Evenement %d : cours edusign id %s non trouvé', $evenement->getId(), $id);
                                 }
                             }
                         }
                     }
+                }
+
+                // n'envoyer un mail que s'il y a des erreurs à reporter
+                if (!empty($errors)) {
+                    $email = (new TemplatedEmail())
+                        ->from('no-reply@univ-reims.fr')
+                        ->to('cyndel.herolt@univ-reims.fr')
+                        ->subject('EduSign absences - rapport')
+                        ->htmlTemplate('emails/error_report.html.twig')
+                        ->context([
+                            'errors' => $errors,
+                            'diplome' => $diplome->getLibelle(),
+                            'type' => 'Initialisation',
+                        ]);
+                    $this->mailer->send($email);
                 }
             }
         }
@@ -128,18 +164,28 @@ class GetCourses
         return $matieresSemestre;
     }
 
-    public function newAbsence(array $course, array $student, Matiere $matiere): void
+    public function newAbsence(array $course, array $student, Matiere $matiere): ?string
     {
         $enseignant = $this->personnelRepository->findByIdEdusign($course['PROFESSOR']);
         $etudiant = $this->etudiantRepository->findOneBy(['idEduSign' => $student['studentId']]);
 
         if ($etudiant === null) {
-            return;
+            return sprintf('étudiant introuvable (idEduSign=%s)', $student['studentId'] ?? 'inconnu');
         }
 
-        $startRaw = Carbon::parse($student['start'], 'UTC');
-        $startRaw->setTimezone(new DateTimeZone('Europe/Paris'));
-        $endRaw = Carbon::parse($student['end']);
+        try {
+            $startRaw = Carbon::parse($student['start'], 'UTC');
+            $startRaw->setTimezone(new DateTimeZone('Europe/Paris'));
+        } catch (\Throwable $e) {
+            return sprintf('impossible de parser la date de début (%s) : %s', $student['start'] ?? 'inconnu', $e->getMessage());
+        }
+
+        try {
+            $endRaw = Carbon::parse($student['end'], 'UTC');
+            $endRaw->setTimezone(new DateTimeZone('Europe/Paris'));
+        } catch (\Throwable $e) {
+            return sprintf('impossible de parser la date de fin (%s) : %s', $student['end'] ?? 'inconnu', $e->getMessage());
+        }
 
         $startFormat = $startRaw->format('Y-m-d H:i:s');
         $endFormat = $endRaw->format('Y-m-d H:i:s');
@@ -147,7 +193,7 @@ class GetCourses
         $start = Carbon::createFromFormat("Y-m-d H:i:s", $startFormat);
 
         if ($start === null) {
-            return;
+            return 'date de début invalide après formatage';
         }
 
         // Vérification si l'absence existe déjà
@@ -159,8 +205,8 @@ class GetCourses
         ]);
 
         if ($existingAbsence) {
-            // Absence déjà existante, on ne fait rien
-            return;
+            // Absence déjà existante
+            return 'absence déjà existante';
         }
 
         $dureeSecs = $endRaw->diffInSeconds($startRaw);
@@ -183,9 +229,15 @@ class GetCourses
         $newAbsence->setIdEduSign($student['_id']);
 
         $this->absenceRepository->save($newAbsence);
-        dump('absence enregistrée');
 
         $event = new AbsenceEvent($newAbsence);
         $this->eventDispatcher->dispatch($event, AbsenceEvent::ADDED);
+
+        // null signifie succès
+        return null;
+    }
+
+    public function getCourseBetween(mixed $debut, mixed $fin)
+    {
     }
 }
