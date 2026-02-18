@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/EdtPlanningRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 13/02/2026 10:27
+ * @lastUpdate 18/02/2026 11:39
  */
 
 namespace App\Repository;
@@ -152,11 +152,17 @@ class EdtPlanningRepository extends ServiceEntityRepository
         if (null !== $user->getSemestreActif()) {
             $this->groupes($user);
 
+            if ($user->getSemestreActif()->getOrdreLmd() === 3 || $user->getSemestreActif()->getOrdreLmd() === 4) {
+                $or = '(p.groupe = 41 AND p.type = :type)';
+            } else {
+                $or = '(p.groupe = 1 AND p.type = :type)';
+            }
+
             return $this->createQueryBuilder('p')
                 ->where('p.semaine = :semaine')
                 ->andWhere('p.ordreSemestre = :promo')
                 ->andWhere('p.anneeUniversitaire = :anneeUniversitaire')
-                ->andWhere('((p.groupe = 1 AND p.type = :type) OR (p.groupe = 41 AND p.type = :type)) OR p.groupe = :groupetd OR p.groupe = :groupetp')
+                ->andWhere($or . ' OR p.groupe = :groupetd OR p.groupe = :groupetp')
                 ->setParameters([
                     'type' => 'CM',
                     'semaine' => $semaine,
