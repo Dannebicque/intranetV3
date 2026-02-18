@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2025. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtIntranet.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 10/09/2025 16:26
+ * @lastUpdate 18/02/2026 11:44
  */
 
 namespace App\Classes\Edt;
@@ -106,7 +106,9 @@ class MyEdtIntranet extends BaseEdt
                 $this->groupes();
                 $pl = $this->edtPlanningRepository->findEdtEtu($this->user, $this->semaineFormationIUT,
                     $this->anneeUniversitaire);
-                if (null !== $this->user->getSemestre() && ($this->user->getSemestre()->getOrdreLmd() === 3 || $this->user->getSemestre()->getOrdreLmd() === 5)) {
+                if (null !== $this->user->getSemestreActif() && ($this->user->getSemestreActif()->getOrdreLmd() === 3 ||
+                        $this->user->getSemestreActif()->getOrdreLmd() === 4 ||
+                        $this->user->getSemestreActif()->getOrdreLmd() === 5)) {
                     $pl2 = $this->edtPlanningRepository->findEdtEtuCmFi($this->user, $this->semaineFormationIUT,
                         $this->anneeUniversitaire);
                     if ($pl2 !== null) {
