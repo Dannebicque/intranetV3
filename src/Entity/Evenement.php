@@ -18,6 +18,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: EvenementRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Evenement
 {
     #[ORM\Id]
@@ -37,7 +38,7 @@ class Evenement
     #[ORM\Column(type: Types::TIME_MUTABLE, nullable: true)]
     private ?\DateTime $fin = null;
 
-    #[ORM\Column(type: Types::ARRAY, nullable: true)]
+    #[ORM\Column(type: Types::JSON, nullable: true)]
     private ?array $adresse = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
@@ -112,12 +113,16 @@ class Evenement
 
     public function getAdresse(): ?array
     {
-        return $this->adresse;
+        // Toujours renvoyer une structure normalisée (même si la BDD contient null ou une chaîne)
+        return self::normalizeAdresse($this->adresse);
     }
 
-    public function setAdresse(?array $adresse): static
+    /**
+     * Accepte un array, une string JSON, une string sérialisée PHP ou null.
+     */
+    public function setAdresse(mixed $adresse): static
     {
-        $this->adresse = $adresse;
+        $this->adresse = self::normalizeAdresse($adresse);
 
         return $this;
     }
@@ -174,5 +179,105 @@ class Evenement
         $this->geoloc = $geoloc;
 
         return $this;
+    }
+
+    /**
+     * Normalize une adresse pour garantir les clés attendues par l'application.
+     * Accepte en entrée : array, null, JSON string, PHP-serialized string.
+     * Retourne toujours un tableau associatif avec les clés :
+     * adresse1, adresse2, adresse3, codePostal, ville, pays
+     */
+    public static function normalizeAdresse(mixed $adresse): array
+    {
+        $defaults = [
+            'adresse1'  => '',
+            'adresse2'  => '',
+            'adresse3'  => '',
+            'codePostal'=> '',
+            'ville'     => '',
+            'pays'      => '',
+        ];
+
+        if ($adresse === null) {
+            return $defaults;
+        }
+
+        // Si c'est déjà un array
+        if (is_array($adresse)) {
+            $raw = $adresse;
+        } elseif (is_string($adresse)) {
+            $trim = trim($adresse);
+
+            // Tenter JSON
+            $decodedJson = json_decode($trim, true);
+            if (json_last_error() === JSON_ERROR_NONE && is_array($decodedJson)) {
+                $raw = $decodedJson;
+            } else {
+                // Tenter unserialize (PHP serialize)
+                $maybe = @unserialize($trim);
+                if ($maybe !== false || $trim === serialize(false)) {
+                    $raw = (array) $maybe;
+                } else {
+                    // Inconnu -> retour par défaut
+                    return $defaults;
+                }
+            }
+        } else {
+            // Type inattendu -> retour par défaut
+            return $defaults;
+        }
+
+        $out = $defaults;
+
+        // Mappage simple des clés possibles
+        if (array_key_exists('adresse1', $raw)) {
+            $out['adresse1'] = (string) ($raw['adresse1'] ?? '');
+        } elseif (array_key_exists('adresse', $raw)) {
+            $out['adresse1'] = (string) ($raw['adresse'] ?? '');
+        }
+
+        if (array_key_exists('adresse2', $raw)) {
+            $out['adresse2'] = (string) ($raw['adresse2'] ?? '');
+        }
+
+        if (array_key_exists('adresse3', $raw)) {
+            $out['adresse3'] = (string) ($raw['adresse3'] ?? '');
+        }
+
+        // codePostal peut venir sous forme 'codePostal' ou 'code_postal'
+        if (array_key_exists('codePostal', $raw)) {
+            $out['codePostal'] = (string) ($raw['codePostal'] ?? '');
+        } elseif (array_key_exists('code_postal', $raw)) {
+            $out['codePostal'] = (string) ($raw['code_postal'] ?? '');
+        }
+
+        if (array_key_exists('ville', $raw)) {
+            $out['ville'] = (string) ($raw['ville'] ?? '');
+        }
+
+        if (array_key_exists('pays', $raw)) {
+            $out['pays'] = (string) ($raw['pays'] ?? '');
+        }
+
+        return $out;
+    }
+
+    /**
+     * Lifecycle callbacks pour s'assurer que l'adresse est correctement structurée
+     * avant la persistance et après le chargement depuis la BDD.
+     */
+    #[ORM\PrePersist]
+    #[ORM\PreUpdate]
+    public function ensureAdresseStructureBeforeSave(): void
+    {
+        // Normaliser avant sauvegarde (Doctrine acceptera alors array et convertira en JSON)
+        $this->adresse = self::normalizeAdresse($this->adresse);
+    }
+
+    #[ORM\PostLoad]
+    public function ensureAdresseStructureAfterLoad(): void
+    {
+        // Après chargement, s'assurer que la propriété adresse est un array structuré
+        $this->adresse = self::normalizeAdresse($this->adresse);
     }
 }

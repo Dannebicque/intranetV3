@@ -55,8 +55,12 @@
                         <label class="form-label">{{ 'adm.evenement.form.liste_etudiants'|trans({}, 'evenement') }}</label>
                         <select class="form-select" multiple size="12" data-evenement-etudiants-target="liste" data-action="dblclick->evenement-etudiants#addSelected"></select>
                         <div class="d-flex justify-content-between align-items-center mt-2">
-                            <div class="small text-muted" data-evenement-etudiants-target="status"></div>
-                            <button type="button" class="btn btn-sm btn-outline-secondary" data-action="evenement-etudiants#loadMore">{{ 'charger_plus'|trans }}</button>
+                            <div class="d-flex align-items-center gap-2">
+                                <button type="button" class="btn btn-sm btn-outline-primary" data-action="evenement-etudiants#selectAllVisible">{{ 'adm.evenement.form.selectionner_tout'|trans({}, 'evenement') }}</button>
+                                <button type="button" class="btn btn-sm btn-outline-secondary" data-action="evenement-etudiants#unselectAllVisible">{{ 'adm.evenement.form.deselectionner_tout'|trans({}, 'evenement') }}</button>
+                                <div class="small text-muted" data-evenement-etudiants-target="status"></div>
+                            </div>
+                            <button type="button" class="btn btn-sm btn-outline-secondary" data-action="evenement-etudiants#loadMore">charger plus</button>
                         </div>
                     </div>
                     <div class="col-md-6">

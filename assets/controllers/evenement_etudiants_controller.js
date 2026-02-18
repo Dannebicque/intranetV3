@@ -250,6 +250,36 @@ export default class extends Controller {
     this._syncHidden()
   }
 
+  selectAllVisible () {
+    // Sélectionne toutes les options visibles dans la liste (utile pour "Tout sélectionner")
+    const options = Array.from(this.listeTarget.options)
+    options.forEach(opt => {
+      // ignorer placeholders ou options désactivées
+      if (opt.disabled || opt.value === '') return
+      // marquer l'option comme sélectionnée visuellement
+      opt.selected = true
+      const id = parseInt(opt.value, 10)
+      if (isNaN(id)) return
+      if (!this.selected.has(id)) this.selected.set(id, { id, text: opt.textContent })
+    })
+    this._renderSelected()
+    this._syncHidden()
+  }
+
+  unselectAllVisible () {
+    // Désélectionne toutes les options visibles dans la liste
+    const options = Array.from(this.listeTarget.options)
+    options.forEach(opt => {
+      if (opt.disabled || opt.value === '') return
+      opt.selected = false
+      const id = parseInt(opt.value, 10)
+      if (isNaN(id)) return
+      this.selected.delete(id)
+    })
+    this._renderSelected()
+    this._syncHidden()
+  }
+
   clearSelection () {
     this.selected.clear()
     this._renderSelected()
@@ -323,3 +353,4 @@ export default class extends Controller {
     while (select.options.length > 0) select.remove(0)
   }
 }
+

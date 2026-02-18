@@ -16,6 +16,7 @@ use App\Repository\EtudiantEvenementRepository;
 use App\Repository\EtudiantRepository;
 use App\Repository\EvenementRepository;
 use App\Service\GeolocationService;
+use Davidannebicque\HtmlToSpreadsheetBundle\Controller\SpreadsheetTrait;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -23,6 +24,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 final class EmargementController extends AbstractController
 {
+    use SpreadsheetTrait;
+
     /**
      * Route utilisée par le QR code. La clé est maintenant un token signé HMAC (base64url) contenant id:expires:hmac
      */
@@ -94,7 +97,10 @@ final class EmargementController extends AbstractController
         }
 
         $etudiant = $etudiantRepository->find($etudiantId);
-        if (null === $etudiant) {
+
+        // si l'étudiant connecté ne correspond pas à l'étudiantId de la route, refuser l'émargement (tentative de fraude)
+        $user = $this->getUser();
+        if (!$user || $user->getId() !== $etudiantId || !$etudiant) {
             throw $this->createNotFoundException('Étudiant introuvable');
         }
 
@@ -111,7 +117,31 @@ final class EmargementController extends AbstractController
             return $this->redirectToRoute('app_emargement_qr', ['key' => $key]);
         }
 
-        // Lire le body JSON si présent (fetch depuis le client)
+        // Déterminer si la géolocalisation est requise : événement avec geoloc true ET une adresse renseignée
+        $adresse = $evenement->getAdresse();
+        $hasAdresse = false;
+        if (is_array($adresse)) {
+            $hasAdresse = count(array_filter($adresse)) > 0;
+        } elseif (is_string($adresse)) {
+            $hasAdresse = trim($adresse) !== '';
+        }
+        $requiresGeoloc = (bool) $evenement->isGeoloc() && $hasAdresse;
+
+        // Si la géolocalisation n'est pas requise, on enregistre la présence directement
+        if (!$requiresGeoloc) {
+            $etudiantEvenement->setPresent(true);
+            $etudiantEvenement->setDateSignature(new \DateTime());
+            $etudiantEvenementRepository->save($etudiantEvenement, true);
+
+            if ($request->isXmlHttpRequest()) {
+                return $this->json(['message' => 'Présence enregistrée avec succès'], Response::HTTP_OK);
+            }
+
+            $this->addFlash('success', 'Présence enregistrée avec succès');
+            return $this->redirectToRoute('app_emargement_qr', ['key' => $key]);
+        }
+
+        // --- Géolocalisation requise : lire le body JSON si présent (fetch depuis le client)
         $data = null;
         $contentType = $request->headers->get('Content-Type');
         if (str_contains((string)$contentType, 'application/json')) {
@@ -134,7 +164,6 @@ final class EmargementController extends AbstractController
         $lon = (float) $data['lon'];
 
         // Géocoder l'adresse de l'événement (l'entité conserve l'adresse en base)
-        $adresse = $evenement->getAdresse();
         $eventCoords = null;
         if (is_array($adresse) && count($adresse) > 0) {
             // Si adresse est un tableau (structure existante), on la transforme en string
@@ -172,6 +201,7 @@ final class EmargementController extends AbstractController
 
         // Si on arrive ici, tout est ok : on enregistre la présence
         $etudiantEvenement->setPresent(true);
+        $etudiantEvenement->setDateSignature(new \DateTime());
         $etudiantEvenementRepository->save($etudiantEvenement, true);
 
         if ($request->isXmlHttpRequest()) {
@@ -229,5 +259,52 @@ final class EmargementController extends AbstractController
         $a = sin($dLat/2) * sin($dLat/2) + cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * sin($dLon/2) * sin($dLon/2);
         $c = 2 * atan2(sqrt($a), sqrt(1-$a));
         return $earthRadius * $c;
+    }
+
+    #[Route('/emargement/submit/{id}', name: 'app_evenement_confirm_presence', methods: ['GET'])]
+    public function confirmPresence(int $id, EtudiantEvenementRepository $etudiantEvenementRepository): Response
+    {
+        $this->isGranted('ROLE_SUPER_ADMIN');
+
+        $etudiantEvenement = $etudiantEvenementRepository->findOneBy(['id' => $id]);
+
+        if (!$etudiantEvenement) {
+            throw $this->createNotFoundException('Inscription à l\'événement introuvable');
+        } elseif ($etudiantEvenement->isPresent()) {
+            $this->addFlash('warning', 'Présence déjà enregistrée');
+            return $this->redirectToRoute('sa_evenement_show', ['id' => $etudiantEvenement->getEvenement()->getId()]);
+        } else {
+            $etudiantEvenement->setPresent(true);
+            $etudiantEvenement->setDateSignature(new \DateTime());
+            $etudiantEvenementRepository->save($etudiantEvenement, true);
+
+            $this->addFlash('success', 'Présence enregistrée avec succès');
+            return $this->redirectToRoute('sa_evenement_show', ['id' => $etudiantEvenement->getEvenement()->getId()]);
+        }
+    }
+
+    #[Route('/emargement/export/{id}', name: 'app_emargement_export', methods: ['GET'])]
+    public function export(
+        int $id,
+        EvenementRepository $evenementRepository,
+        EtudiantEvenementRepository $etudiantEvenementRepository
+    ): Response {
+        $evenement = $evenementRepository->find($id);
+        if (null === $evenement) {
+            throw $this->createNotFoundException('Événement introuvable');
+        }
+
+        // Récupère les inscriptions liées à l'événement
+        $etudiantsEvenement = $etudiantEvenementRepository->findBy(['evenement' => $evenement->getId()], ['id' => 'ASC']);
+
+        // Le bundle attend un template contenant le(s) <table> avec data-xls-sheet
+        return $this->renderSpreadsheet(
+            'super-administration/evenement/export.html.twig',
+            [
+                'evenement' => $evenement,
+                'etudiantsEvenement' => $etudiantsEvenement,
+            ],
+            sprintf('evenement-%d.xlsx', $evenement->getId())
+        );
     }
 }

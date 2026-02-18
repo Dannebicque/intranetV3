@@ -25,11 +25,11 @@
             {% form_theme form 'bootstrap_5_layout.html.twig' %}
             {{ form_start(form) }}
 
-            <div class="mb-3">
-                {{ form_row(form.libelle) }}
-                {{ form_row(form.date) }}
-                {{ form_row(form.debut) }}
-                {{ form_row(form.fin) }}
+            <div class="mb-3 d-flex gap-3">
+                <div class="w-1/2">{{ form_row(form.libelle) }}</div>
+                <div>{{ form_row(form.date) }}</div>
+                <div>{{ form_row(form.debut) }}</div>
+                <div>{{ form_row(form.fin) }}</div>
             </div>
 
             <div class="form-group-adresse">
@@ -41,13 +41,13 @@
 
                 <hr>
 
-                <div class="form-champs-adresse">
-                    {# Les champs du sous-formulaire adresse (AdresseType) sont rendus ici #}
+                <div class="form-champs-adresse d-flex gap-3">
                     {{ form_row(form.adresse.adresse1) }}
                     {{ form_row(form.adresse.adresse2) }}
                     {{ form_row(form.adresse.adresse3) }}
                     {{ form_row(form.adresse.code_postal) }}
                     {{ form_row(form.adresse.ville) }}
+                    {{ form_row(form.adresse.pays) }}
                 </div>
             </div>
 
@@ -56,9 +56,11 @@
                 {{ form_row(form.geoloc) }}
             </div>
 
-            {# champs cachés + autres widgets (etudiants, etudiantsIds) #}
+            {# champs cachés #}
+            <div style="display:none;">
             {{ form_widget(form.etudiants) }}
             {{ form_widget(form.etudiantsIds) }}
+            </div>
 
             <button class="btn btn-success"><i class="fas fa-floppy-disk"></i> {{ 'label.save'|trans }}</button>
 

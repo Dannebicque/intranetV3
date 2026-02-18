@@ -39,7 +39,7 @@ class EduSignGetCourseCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        $this->getCourses->getCourse();
+        $this->getCourses->getCoursesToday();
 
         $io->success('Absences créées.');
 

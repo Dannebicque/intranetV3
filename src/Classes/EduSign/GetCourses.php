@@ -32,15 +32,17 @@ use Carbon\Carbon;
 use DateInterval;
 use DateTime;
 use DateTimeZone;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\Mailer\MailerInterface;
 
 class GetCourses
 {
-
+    protected TypeMatiereManager $typeMatiereManager;
     public function __construct(
         private readonly ApiCours               $apiCours,
         private readonly EdtManager            $edtManager,
-        private readonly TypeMatiereManager    $typeMatiereManager,
+        TypeMatiereManager                     $typeMatiereManager,
         protected SemestreRepository           $semestreRepository,
         protected PersonnelRepository          $personnelRepository,
         protected EtudiantRepository           $etudiantRepository,
@@ -55,121 +57,147 @@ class GetCourses
         protected AnneeUniversitaireRepository $anneeUniversitaireRepository,
         protected CalendrierRepository         $CalendrierRepository,
         protected EventDispatcherInterface     $eventDispatcher,
+        private readonly MailerInterface      $mailer
     )
     {
+        $this->typeMatiereManager = $typeMatiereManager;
 
     }
 
-    public function getCourse(): void
+    public function getCoursesToday(): void
     {
         $diplomes = $this->diplomeRepository->findAllWithEduSign();
+        $today = Carbon::today()->format('Y-m-d');
+        $yesterday = Carbon::yesterday()->format('Y-m-d');
 
         foreach ($diplomes as $diplome) {
             $keyEduSign = $diplome->getKeyEduSign();
-            $semestres = $this->semestreRepository->findByDiplome($diplome);
-            $today = Carbon::create('today');
-//            $today = Carbon::create('2024-10-05');
-            $yesterday = Carbon::create('yesterday');
-//            $yesterday = Carbon::create('2024-10-04');
-            $semaineReelle = date('W');
-//            $semaineReelle = 40;
+            $source = $diplome->isOptUpdateCelcat() ? 'celcat' : 'intranet';
+            $courses = $this->apiCours->getAllCoursesBetween($keyEduSign, $yesterday, $today) ?? [];
 
-            foreach ($semestres as $semestre) {
-                $eventSemaine = $this->CalendrierRepository->findOneBy([
-                    'semaineReelle' => $semaineReelle,
-                    'anneeUniversitaire' => $semestre->getAnneeUniversitaire()
-                ]);
-                $semaine = $eventSemaine->getSemaineFormation();
-                $matieresSemestre = $this->getMatieresSemestre($semestre);
-                $groupes = $this->groupeRepository->findBySemestre($semestre);
-                $edt = $this->edtManager->getPlanningSemestreSemaine(
-                    $semestre, $semaine, $semestre->getAnneeUniversitaire(), $matieresSemestre, $groupes
-                );
+            if (empty($courses)) {
+                continue;
+            }
+            $errors = $this->processCourses($courses, $source, $today, $yesterday);
 
-                foreach ($edt->evenements as $evenement) {
-                    if (!($evenement->matiere === null || $evenement->matiere === "Inconnue" || $evenement->groupeObjet === null || $evenement->personnelObjet === null)) {
+            if (!empty($errors)) {
+                $this->sendErrorReport($errors, $diplome->getLibelle(), $source);
+            }
+        }
+    }
 
-                        if ($evenement->dateObjet->isBetween($today, $yesterday)) {
-                            $id = $evenement->getIdEduSign();
+    private function processCourses(array $courses, string $source, string $today, string $yesterday): array
+    {
+        $errors = [];
 
-                            if ($id !== null) {
-                                $course = $this->apiCours->getCourse($id, $keyEduSign);
-                                if ($course !== null) {
-                                    if (!empty($course['STUDENTS']) && $course['PROFESSOR_SIGNATURE'] !== null && $course['PROFESSOR_SIGNATURE'] !== "") {
-                                        foreach ($course['STUDENTS'] as $student) {
-                                            if ($student['state'] === false) {
-                                                $matiere = $this->typeMatiereManager->getMatiere($evenement->getIdMatiere(), $evenement->getTypeMatiere());
-                                                if ($matiere !== null) {
-                                                    $this->newAbsence($course, $student, $matiere);
-                                                }
-                                            }
-                                        }
-                                    }
-                                } else {
-                                    dump('cours non trouvé');
-                                }
-                            }
-                        }
+        foreach ($courses as $course) {
+            if (!Carbon::parse($course['START'], 'Europe/Paris')->isBetween($yesterday, $today)) {
+                $errors[] = sprintf('Cours edusign id %s : date de début %s hors de la plage attendue', $course['ID'] ?? 'inconnu', $course['START'] ?? 'inconnu');
+                continue;
+            }
+
+            $evenement = $this->edtManager->findCourse($source, $course['API_ID']);
+            if (!$evenement) {
+                $errors[] = sprintf('Cours edusign id %s : introuvable dans l\'EDT local', $course['ID'] ?? 'inconnu');
+                continue;
+            }
+
+            // 1) vérifier signature professeur absente -> signaler
+            $this->checkProfessorSignature($course, $evenement, $errors);
+
+            // 2) si le cours est signé, créer les absences pour les étudiants marqués absents
+            if (!empty($course['STUDENTS']) && !empty($course['PROFESSOR_SIGNATURE'])) {
+                foreach ($course['STUDENTS'] as $student) {
+                    if (!(isset($student['state']) && $student['state'] === false)) {
+                        continue;
+                    }
+
+                    // récupérer la matière depuis l'événement
+                    $matiere = $this->typeMatiereManager->getMatiere($evenement->getIdMatiere(), $evenement->getTypeMatiere());
+                    if ($matiere === null) {
+                        $errors[] = sprintf('Evenement %d : matière introuvable (idMatiere=%s, type=%s)', $evenement->getId(), $evenement->getIdMatiere(), $evenement->getTypeMatiere());
+                        continue;
+                    }
+
+                    $reason = $this->newAbsence($course, $student, $matiere);
+                    if ($reason !== null) {
+                        $errors[] = sprintf('Evenement %d (edusign id %s) - étudiant %s : %s', $evenement->getId(), $course['ID'] ?? $course['API_ID'] ?? 'inconnu', $student['studentId'] ?? 'inconnu', $reason);
                     }
                 }
             }
         }
+
+        return $errors;
     }
 
-    public function getMatieresSemestre(Semestre $semestre): array
+    private function checkProfessorSignature(array $course, $evenement, array &$errors): void
     {
-        $matieres = $this->typeMatiereManager->findBySemestre($semestre);
-        $matieresSemestre = [];
-        foreach ($matieres as $matiere) {
-            if ($matiere->getSemestres()->contains($semestre)) {
-                $matieresSemestre[$matiere->getTypeIdMatiere()] = $matiere;
-            }
+        if (empty($course['STUDENTS']) || !empty($course['PROFESSOR_SIGNATURE'])) {
+            return;
         }
-        return $matieresSemestre;
+        $errors[] = sprintf(
+            'Evenement %d : professeur non signé pour le cours edusign id %s (étudiant %s)',
+            $evenement->getId(),
+            $course['ID'] ?? 'inconnu',
+            $student['studentId'] ?? 'inconnu'
+        );
     }
 
-    public function newAbsence(array $course, array $student, Matiere $matiere): void
+    private function sendErrorReport(array $errors, string $diplomeLibelle, string $source): void
     {
-        $enseignant = $this->personnelRepository->findByIdEdusign($course['PROFESSOR']);
-        $etudiant = $this->etudiantRepository->findOneBy(['idEduSign' => $student['studentId']]);
+        $email = (new TemplatedEmail())
+            ->from('no-reply@univ-reims.fr')
+            ->to('cyndel.herolt@univ-reims.fr')
+            ->subject('EduSign absences - rapport')
+            ->htmlTemplate('emails/error_report.html.twig')
+            ->context(['errors' => $errors, 'diplome' => $diplomeLibelle, 'type' => $source]);
+
+        dump($email);
+
+        $this->mailer->send($email);
+    }
+
+    private function newAbsence(array $course, array $student, Matiere $matiere): ?string
+    {
+        // retrouver enseignant et étudiant
+        $enseignant = $this->personnelRepository->findByIdEdusign($course['PROFESSOR'] ?? null);
+        $etudiant = $this->etudiantRepository->findOneBy(['idEduSign' => $student['studentId'] ?? null]);
 
         if ($etudiant === null) {
-            return;
+            return sprintf('étudiant introuvable (idEduSign=%s)', $student['studentId'] ?? 'inconnu');
         }
 
-        $startRaw = Carbon::parse($student['start'], 'UTC');
-        $startRaw->setTimezone(new DateTimeZone('Europe/Paris'));
-        $endRaw = Carbon::parse($student['end']);
-
-        $startFormat = $startRaw->format('Y-m-d H:i:s');
-        $endFormat = $endRaw->format('Y-m-d H:i:s');
-
-        $start = Carbon::createFromFormat("Y-m-d H:i:s", $startFormat);
-
-        if ($start === null) {
-            return;
+        try {
+            $startRaw = Carbon::parse($student['start'], 'UTC')->setTimezone(new DateTimeZone('Europe/Paris'));
+            $endRaw = Carbon::parse($student['end'], 'UTC')->setTimezone(new DateTimeZone('Europe/Paris'));
+        } catch (\Throwable $e) {
+            return sprintf('impossible de parser les dates (%s/%s) : %s', $student['start'] ?? 'inconnu', $student['end'] ?? 'inconnu', $e->getMessage());
         }
 
-        // Vérification si l'absence existe déjà
-        $existingAbsence = $this->absenceRepository->findOneBy([
+        $start = Carbon::createFromFormat('Y-m-d H:i:s', $startRaw->format('Y-m-d H:i:s'));
+        if ($start === false) {
+            return 'date de début invalide après formatage';
+        }
+
+        // vérifier existence
+        $existing = $this->absenceRepository->findOneBy([
             'etudiant' => $etudiant,
             'dateHeure' => $start,
             'idMatiere' => $matiere->id,
             'typeMatiere' => $matiere->typeMatiere,
         ]);
 
-        if ($existingAbsence) {
-            // Absence déjà existante, on ne fait rien
-            return;
+        if ($existing) {
+            return 'absence déjà existante';
         }
 
-        $dureeSecs = $endRaw->diffInSeconds($startRaw);
+        // calcul durée
+        $dureeSecs = abs($endRaw->diffInSeconds($startRaw));
         $refDate = new DateTime('2023-01-01 00:00:00');
-        $dureeSecs = abs($dureeSecs);
         $refDate->add(new DateInterval('PT' . $dureeSecs . 'S'));
-        $dureeFormat = $refDate->format('Y-m-d H:i:s.u');
-        $duree = Carbon::createFromFormat("Y-m-d H:i:s.u", $dureeFormat);
+        $duree = Carbon::createFromFormat('Y-m-d H:i:s.u', $refDate->format('Y-m-d H:i:s.u'));
 
+        // création de l'absence
         $newAbsence = new Absence();
         $newAbsence->setPersonnel($enseignant ?? null);
         $newAbsence->setEtudiant($etudiant);
@@ -180,12 +208,13 @@ class GetCourses
         $newAbsence->setTypeMatiere($matiere->typeMatiere);
         $newAbsence->setIdMatiere($matiere->id);
         $newAbsence->setSemestre($etudiant->getSemestreActif());
-        $newAbsence->setIdEduSign($student['_id']);
+        $newAbsence->setIdEduSign($student['_id'] ?? null);
 
         $this->absenceRepository->save($newAbsence);
-        dump('absence enregistrée');
 
         $event = new AbsenceEvent($newAbsence);
         $this->eventDispatcher->dispatch($event, AbsenceEvent::ADDED);
+
+        return null;
     }
 }

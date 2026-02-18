@@ -86,20 +86,22 @@ class EvenementController extends BaseController
             if (is_object($adresseFormData)) {
                 // Si AdresseType utilise une entité Adresse, convertir en array attendue
                 if (method_exists($adresseFormData, 'getArray')) {
-                    $evenement->setAdresse($adresseFormData->getArray());
+                    $rawAddr = $adresseFormData->getArray();
+                    $evenement->setAdresse(\App\Entity\Evenement::normalizeAdresse($rawAddr));
                 } else {
                     // Récupération champ par champ
-                    $evenement->setAdresse([
+                    $rawAddr = [
                         'adresse1' => $adresseFormData->getAdresse1() ?? null,
                         'adresse2' => $adresseFormData->getAdresse2() ?? null,
                         'adresse3' => $adresseFormData->getAdresse3() ?? null,
                         'codePostal' => $adresseFormData->getCodePostal() ?? null,
                         'ville' => $adresseFormData->getVille() ?? null,
                         'pays' => $adresseFormData->getPays() ?? null,
-                    ]);
+                    ];
+                    $evenement->setAdresse(\App\Entity\Evenement::normalizeAdresse($rawAddr));
                 }
             } elseif (is_array($adresseFormData)) {
-                $evenement->setAdresse($adresseFormData);
+                $evenement->setAdresse(\App\Entity\Evenement::normalizeAdresse($adresseFormData));
             }
 
             $this->entityManager->persist($evenement);
@@ -173,20 +175,22 @@ class EvenementController extends BaseController
             if (is_object($adresseFormData)) {
                 // Si AdresseType utilise une entité Adresse, convertir en array attendue
                 if (method_exists($adresseFormData, 'getArray')) {
-                    $evenement->setAdresse($adresseFormData->getArray());
+                    $rawAddr = $adresseFormData->getArray();
+                    $evenement->setAdresse(\App\Entity\Evenement::normalizeAdresse($rawAddr));
                 } else {
                     // Récupération champ par champ
-                    $evenement->setAdresse([
+                    $rawAddr = [
                         'adresse1' => $adresseFormData->getAdresse1() ?? null,
                         'adresse2' => $adresseFormData->getAdresse2() ?? null,
                         'adresse3' => $adresseFormData->getAdresse3() ?? null,
                         'codePostal' => $adresseFormData->getCodePostal() ?? null,
                         'ville' => $adresseFormData->getVille() ?? null,
                         'pays' => $adresseFormData->getPays() ?? null,
-                    ]);
+                    ];
+                    $evenement->setAdresse(\App\Entity\Evenement::normalizeAdresse($rawAddr));
                 }
             } elseif (is_array($adresseFormData)) {
-                $evenement->setAdresse($adresseFormData);
+                $evenement->setAdresse(\App\Entity\Evenement::normalizeAdresse($adresseFormData));
             }
 
             $this->entityManager->flush();

@@ -51,7 +51,7 @@ class FixCourses
         foreach ($diplomes as $diplome) {
             $this->source = $diplome->isOptUpdateCelcat() === true ? 'celcat' : 'intranet';
             $keyEduSign = $keyEduSign ?? $diplome->getKeyEduSign();
-            $courses = $this->apiCours->getAllCoursesWeek($keyEduSign, $start, $end);
+            $courses = $this->apiCours->getAllCoursesBetween($keyEduSign, $start, $end);
 
             if ($courses) {
                 foreach ($courses as $course) {
