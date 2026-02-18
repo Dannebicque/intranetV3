@@ -1,0 +1,161 @@
+{% extends 'base-super_admin.html.twig' %}
+
+{% block header %}
+    {{ 'adm.evenement.modification.heading'|trans({}, 'evenement') }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        {{ include('composants/sadm-buttons-edit.html.twig', {elt:'evenement', id: evenement.id}) }}
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'adm.evenement.modification.heading'|trans({}, 'evenement') }}</h4>
+        <div class="card-body">
+            <div class="mb-3">
+                <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modalEtudiants">
+                    {{ 'adm.evenement.form.ouvrir_selection_etudiants'|trans({}, 'evenement') }}
+                </button>
+                <div id="evenement-selected-summary" class="mt-2">
+                    {% for ee in evenement.etudiantEvenements %}
+                        {% set e = ee.etudiant %}
+                        <span class="badge bg-primary me-1 mb-1">{{ e.nom }} {{ e.prenom }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+
+            {# Rendu du formulaire (édition) avec champs d'adresse autocomplétés #}
+            {% form_theme form 'bootstrap_5_layout.html.twig' %}
+            {{ form_start(form) }}
+
+            <div class="mb-3">
+                {{ form_row(form.libelle) }}
+                {{ form_row(form.date) }}
+                {{ form_row(form.debut) }}
+                {{ form_row(form.fin) }}
+            </div>
+
+            <div class="form-group-adresse">
+                <label for="adresseEvenement" class="form-label">Adresse de l'événement :</label> <br>
+                <input type="text" id="adresseEvenement" class="form-control" autocomplete="off">
+                <div class="form-text mb-0 help-text">Veuillez saisir l'adresse puis sélectionner la proposition correspondante</div>
+
+                <ul id="adresselisteEvenement"></ul>
+
+                <hr>
+
+                <div class="form-champs-adresse">
+                    {{ form_row(form.adresse.adresse1) }}
+                    {{ form_row(form.adresse.adresse2) }}
+                    {{ form_row(form.adresse.adresse3) }}
+                    {{ form_row(form.adresse.code_postal) }}
+                    {{ form_row(form.adresse.ville) }}
+                    {{ form_row(form.adresse.pays) }}
+                </div>
+            </div>
+
+            <div class="mb-3">
+                {{ form_row(form.description) }}
+                {{ form_row(form.geoloc) }}
+            </div>
+
+            {# champs cachés (même logique que new.html.twig) #}
+            <div style="display: none">
+                {{ form_widget(form.etudiants) }}
+                {{ form_widget(form.etudiantsIds) }}
+            </div>
+
+            <button class="btn btn-success" value="redirect_to_index" name="btn_update"><i class="fas fa-floppy-disk-circle-arrow-right"></i> {{ 'button_update_index'|trans }}</button>
+
+            {{ form_end(form) }}
+
+        </div>
+    </div>
+
+    {# Modal de sélection des étudiants #}
+    {{ include('super-administration/evenement/_modal_etudiants.html.twig') }}
+
+    {# Pré-remplir le hidden avec les étudiants déjà sélectionnés (construction sûre côté serveur/Twig) #}
+    {% set _ids = [] %}
+    {% for ee in evenement.etudiantEvenements %}
+        {% set _ids = _ids|merge([ee.etudiant.id]) %}
+    {% endfor %}
+
+    {# Normalisation de l'adresse : construire un tableau associatif clair pour JS #}
+    {% set _rawAddr = evenement.adresse ?: {} %}
+    {% set addr_struct = {
+        'adresse1': _rawAddr.adresse1|default(_rawAddr.adresse|default('')),
+        'adresse2': _rawAddr.adresse2|default(''),
+        'adresse3': _rawAddr.adresse3|default(''),
+        'code_postal': _rawAddr.code_postal|default(_rawAddr.codePostal|default('')),
+        'ville': _rawAddr.ville|default(''),
+        'pays': _rawAddr.pays|default('')
+    } %}
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const input = document.querySelector('input[name="evenement[etudiantsIds]"]');
+            if (input) {
+                if (!input.value) {
+                    input.value = '{{ _ids|join(',')|e('js') }}';
+                }
+            }
+        });
+    </script>
+
+    <script defer>
+      window.addEventListener('load', () => {
+        // Pré-remplissage des champs d'adresse à partir de evenement.adresse (normalisé) si présent
+        try {
+          const addr = {{ addr_struct|json_encode(constant('JSON_HEX_TAG'))|raw }};
+          if (addr) {
+            // Supporter différentes clés possibles (code_postal / codePostal)
+            const elAdr1 = document.getElementById('evenement_adresse_adresse1');
+            const elAdr2 = document.getElementById('evenement_adresse_adresse2');
+            const elAdr3 = document.getElementById('evenement_adresse_adresse3');
+            const elCode = document.getElementById('evenement_adresse_code_postal');
+            const villeSelect = document.getElementById('evenement_adresse_ville');
+            const paysSelect = document.getElementById('evenement_adresse_pays');
+
+            if (addr && elAdr1 && addr.adresse1 !== undefined) elAdr1.value = addr.adresse1;
+            if (addr && elAdr2 && addr.adresse2 !== undefined) elAdr2.value = addr.adresse2;
+            if (addr && elAdr3 && addr.adresse3 !== undefined) elAdr3.value = addr.adresse3;
+            if (addr && elCode && addr.code_postal !== undefined) elCode.value = addr.code_postal;
+            if (addr && elCode && addr.codePostal !== undefined && !elCode.value) elCode.value = addr.codePostal;
+
+            if (addr && villeSelect && addr.ville !== undefined) {
+                villeSelect.innerHTML = '';
+                const opt = document.createElement('option'); opt.text = addr.ville; opt.value = addr.ville; villeSelect.append(opt);
+            }
+            if (addr && paysSelect && addr.pays !== undefined) {
+                paysSelect.innerHTML = '';
+                const optp = document.createElement('option'); optp.text = addr.pays; optp.value = addr.pays; paysSelect.append(optp);
+            }
+
+            // Optionnel : remplir le champ principal d'adresse si une adresse1 existe
+            try {
+              const principal = document.getElementById('adresseEvenement');
+              if (principal) {
+                let v = '';
+                if (addr) {
+                  if (addr.adresse1) { v = addr.adresse1; }
+                  else if (addr.adresse) { v = addr.adresse; }
+                }
+                principal.value = v;
+              }
+            } catch (e) { /* ignore */ }
+
+          }
+        } catch (e) {
+          // ignore
+        }
+
+      })
+    </script>
+
+    {# Included reusable autocomplete script #}
+    {{ include('super-administration/evenement/_adresse_autocomplete.html.twig') }}
+
+{% endblock %}

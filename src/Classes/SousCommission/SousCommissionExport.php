@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/SousCommission/SousCommissionExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/09/2024 11:49
+ * @lastUpdate 12/02/2026 15:47
  */
 
 namespace App\Classes\SousCommission;
@@ -757,10 +757,20 @@ class SousCommissionExport
                             $ssCommTravail->matiere($etu->getId(), $m->getTypeIdMatiere()))) {
                             $this->myExcelWriter->writeCellXY($colonne, $ligne, 'N.C.');
                         } else {
-                            $this->myExcelWriter->writeCellXY($colonne, $ligne,
-                                number_format($ssCommTravail->matiere($etu->getId(),
-                                    $m->getTypeIdMatiere())['moyenne'], 2),
-                                ['style' => 'numerique']);
+                            if (!is_float($ssCommTravail->matiere($etu->getId(),
+                                $m->getTypeIdMatiere())['moyenne'])) {
+                                $this->myExcelWriter->writeCellXY($colonne, $ligne,
+                                    $ssCommTravail->matiere($etu->getId(),
+                                        $m->getTypeIdMatiere())['moyenne']);
+                                $this->myExcelWriter->colorCellRange($colonne, $ligne,
+                                    'ffff0000');
+                            } else {
+                                $this->myExcelWriter->writeCellXY($colonne, $ligne,
+                                    number_format($ssCommTravail->matiere($etu->getId(),
+                                        $m->getTypeIdMatiere())['moyenne'], 2),
+                                    ['style' => 'numerique']);
+                            }
+
                         }
                     }
                     ++$colonne;
@@ -839,9 +849,9 @@ class SousCommissionExport
 
 
         $ues = $semestre->getUes();
-        if ($semestre->getDiplome()->isApc()) {
+        if ($semestre->getDiplome()?->isApc()) {
             $matieres = $this->typeMatiereManager->findBySemestreAndReferentiel($semestre,
-                $semestre->getDiplome()->getReferentiel());
+                $semestre->getDiplome()?->getReferentiel());
         } else {
             $matieres = $this->typeMatiereManager->findBySemestre($semestre);
         }
@@ -868,8 +878,14 @@ class SousCommissionExport
                                 $matApogee[$valueTm]) && array_key_exists('moyenne',
                                 $ssCommTravail->matiere($etuApogee[$valueTe], $matApogee[$valueTm]))) {
                             $moyenne = $ssCommTravail->matiere($etuApogee[$valueTe], $matApogee[$valueTm])['moyenne'];
-                            $this->myExcelRead->writeCellColLigne($keyTm, $keyTe,
-                                number_format($moyenne, 2));
+                            if (is_string($moyenne) || $moyenne === null) {
+                                $this->myExcelRead->writeCellColLigne($keyTm, $keyTe,
+                                    number_format(0, 2));
+                            } else {
+                                $this->myExcelRead->writeCellColLigne($keyTm, $keyTe,
+                                    number_format($moyenne, 2));
+
+                            }
                         }
                         $this->myExcelRead->writeCellColLigne($keyTm + 1, $keyTe, 20);
                     }
@@ -988,9 +1004,17 @@ class SousCommissionExport
                 }
 
                 $colonne = 13;
-                $this->myExcelWriter->writeCellXY($colonne, $ligne,
-                    number_format($ssCommTravail->etudiant($etu->getId())->getMoyenne(), 3),
-                    ['style' => 'numerique3']);
+                if (!is_float($ssCommTravail->etudiant($etu->getId())->getMoyenne())) {
+                    $this->myExcelWriter->writeCellXY($colonne, $ligne,
+                        $ssCommTravail->etudiant($etu->getId())->getMoyenne());
+                    $this->myExcelWriter->colorCellRange($colonne, $ligne,
+                        'ffff0000');
+                } else {
+                    $this->myExcelWriter->writeCellXY($colonne, $ligne,
+                        number_format($ssCommTravail->etudiant($etu->getId())->getMoyenne(), 3),
+                        ['style' => 'numerique3']);
+                }
+
                 ++$colonne;
                 $this->myExcelWriter->writeCellXY($colonne, $ligne,
                     $ssCommTravail->etudiant($etu->getId())->getDecision()->value);

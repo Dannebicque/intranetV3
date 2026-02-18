@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/BlocNotesAbsencesController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/12/2022 17:40
+ * @lastUpdate 06/01/2026 10:04
  */
 
 namespace App\Controller;
@@ -57,10 +57,10 @@ class BlocNotesAbsencesController extends BaseController
         // todo: mutualiser avec ProfilEtudiant... (TwigComponent ?)
 
         if ($this->getUser()->getDiplome()->isApc()) {
-            $matieres = $typeMatiereManager->findByReferentielOrdreSemestreArray($etudiant->getSemestre(),
+            $matieres = $typeMatiereManager->findByReferentielOrdreSemestreArray($etudiant->getSemestreActif(),
                 $this->getEtudiantSemestre()?->getDiplome()?->getReferentiel());
         } else {
-            $matieres = $typeMatiereManager->findBySemestreArray($etudiant->getSemestre());
+            $matieres = $typeMatiereManager->findBySemestreArray($etudiant->getSemestreActif());
         }
 
         $etudiantNotes->setEtudiant($etudiant);
@@ -77,7 +77,7 @@ class BlocNotesAbsencesController extends BaseController
     {
         return $this->render('bloc_notes_absences/mcc.html.twig', [
             'matieres' => $typeMatiereManager->findBySemestreAndReferentiel($this->getEtudiantSemestre(), $this->getEtudiantSemestre()?->getDiplome()?->getReferentiel()),
-            'apc' => $this->getUser()?->getSemestre()?->getDiplome()?->isApc(),
+            'apc' => $this->getUser()?->getDiplome()?->isApc(),
         ]);
     }
 }

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Semestre.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/02/2024 08:51
+ * @lastUpdate 06/01/2026 08:37
  */
 
 namespace App\Entity;
@@ -240,6 +240,12 @@ class Semestre extends BaseEntity implements Stringable, GroupeInterface
     #[ORM\Column(nullable: true)]
     private ?bool $optMailRattrapage = false;
 
+    /**
+     * @var Collection<int, Etudiant>
+     */
+    #[ORM\ManyToMany(targetEntity: Etudiant::class, mappedBy: 'semestres')]
+    private Collection $etudiantsSemestres;
+
     public function __construct()
     {
         $this->init();
@@ -254,6 +260,7 @@ class Semestre extends BaseEntity implements Stringable, GroupeInterface
         $this->semestreLienArrive = new ArrayCollection();
         $this->projetPeriodeSemestres = new ArrayCollection();
         $this->typeGroupess = new ArrayCollection();
+        $this->etudiantsSemestres = new ArrayCollection();
     }
 
     private function init(): void
@@ -1420,6 +1427,33 @@ class Semestre extends BaseEntity implements Stringable, GroupeInterface
     public function setOptMailRattrapage(?bool $optMailRattrapage): static
     {
         $this->optMailRattrapage = $optMailRattrapage;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Etudiant>
+     */
+    public function getEtudiantsSemestres(): Collection
+    {
+        return $this->etudiantsSemestres;
+    }
+
+    public function addEtudiantsSemestre(Etudiant $etudiantsSemestre): static
+    {
+        if (!$this->etudiantsSemestres->contains($etudiantsSemestre)) {
+            $this->etudiantsSemestres->add($etudiantsSemestre);
+            $etudiantsSemestre->addSemestre($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEtudiantsSemestre(Etudiant $etudiantsSemestre): static
+    {
+        if ($this->etudiantsSemestres->removeElement($etudiantsSemestre)) {
+            $etudiantsSemestre->removeSemestre($this);
+        }
 
         return $this;
     }

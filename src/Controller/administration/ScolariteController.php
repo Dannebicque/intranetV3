@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2025. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/ScolariteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/07/2025 08:45
+ * @lastUpdate 06/01/2026 10:08
  */
 
 namespace App\Controller\administration;
@@ -41,10 +41,10 @@ class ScolariteController extends BaseController
         #[MapEntity(mapping: ['slug' => 'slug'])] Etudiant $etudiant,
         ?Scolarite                                         $scolarite = null): Response
     {
-        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $etudiant->getSemestre());
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $etudiant->getSemestreActif());
         $edit = true;
         if (null === $scolarite) {
-            $scolarite = new Scolarite($etudiant, $etudiant->getSemestre(),
+            $scolarite = new Scolarite($etudiant, $etudiant->getSemestreActif(),
                 $this->dataUserSession->getAnneeUniversitaire());
             $edit = false;
         }

@@ -26,6 +26,18 @@
     "dannebicque/table-bundle": {
         "version": "0.1"
     },
+    "davidannebicque/html-to-spreadsheet-bundle": {
+        "version": "0.2",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "0.1",
+            "ref": "f054008082babf0f3e5e26d34eade43a74af5ede"
+        },
+        "files": [
+            "config/packages/html_to_spreadsheet.yaml"
+        ]
+    },
     "davidannebicque/table-bundle": {
         "version": "dev-main"
     },
@@ -128,9 +140,6 @@
     },
     "erusev/parsedown": {
         "version": "1.7.4"
-    },
-    "ezyang/htmlpurifier": {
-        "version": "v4.13.0"
     },
     "friendsofphp/php-cs-fixer": {
         "version": "3.2",
@@ -252,6 +261,18 @@
     },
     "php-cs-fixer/diff": {
         "version": "v2.0.2"
+    },
+    "php-http/discovery": {
+        "version": "1.20",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "1.18",
+            "ref": "f45b5dd173a27873ab19f5e3180b2f661c21de02"
+        },
+        "files": [
+            "config/packages/http_discovery.yaml"
+        ]
     },
     "php-parallel-lint/php-parallel-lint": {
         "version": "v1.3.1"

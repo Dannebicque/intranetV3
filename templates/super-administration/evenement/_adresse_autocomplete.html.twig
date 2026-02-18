@@ -1,0 +1,105 @@
+<script defer>
+(function(){
+  // Autocomplete réutilisable pour l'input #adresseEvenement et la liste #adresselisteEvenement
+  function debounce(fn, wait){ let t; return function(...args){ clearTimeout(t); t = setTimeout(()=>fn.apply(this,args), wait); } }
+
+  function attach() {
+    const input = document.getElementById('adresseEvenement');
+    if(!input) return;
+    const list = document.getElementById('adresselisteEvenement');
+    if(!list) return;
+
+    const clearList = () => { list.innerHTML = ''; };
+
+    const onSelect = (element) => {
+      try {
+        const addrName = element.dataset.name || '';
+        const city = element.dataset.city || '';
+        const postcode = element.dataset.postcode || '';
+
+        const addr1 = document.getElementById('evenement_adresse_adresse1');
+        const codePostal = document.getElementById('evenement_adresse_code_postal');
+        const villeSelect = document.getElementById('evenement_adresse_ville');
+        if (addr1) {
+          addr1.value = addrName;
+          addr1.dispatchEvent(new Event('input', { bubbles: true }));
+        }
+        if (codePostal) {
+          codePostal.value = postcode;
+          codePostal.dispatchEvent(new Event('input', { bubbles: true }));
+        }
+        if (villeSelect) {
+          // fallback robust pour la ville si dataset.city est vide
+          let cityVal = city;
+          if (!cityVal) {
+            // tenter d'extraire la ville depuis le label/name (dernière partie après une virgule)
+            const labelSource = (element.dataset.name || element.textContent || '').toString();
+            const parts = labelSource.split(',').map(s => s.trim()).filter(Boolean);
+            cityVal = parts.length ? parts[parts.length - 1] : '';
+            // retirer éventuellement un code postal au début (ex: "75000 PARIS")
+            cityVal = cityVal.replace(/^[0-9]{5}\s*/,'').trim();
+          }
+
+          villeSelect.innerHTML = '';
+          const opt = document.createElement('option'); opt.text = cityVal; opt.value = cityVal; villeSelect.append(opt);
+          // s'assurer que le select est utilisable
+          try { villeSelect.disabled = false; } catch(e) { /* ignore */ }
+          try { villeSelect.value = cityVal; } catch(e) { /* ignore */ }
+          // déclencher l'événement change pour synchroniser d'éventuels listeners/plugins
+          try { villeSelect.dispatchEvent(new Event('change', { bubbles: true })); } catch(e) { /* ignore */ }
+          // si jQuery/select2 est utilisé, déclencher aussi via jQuery
+          try { if (window.jQuery && jQuery(villeSelect).trigger) jQuery(villeSelect).trigger('change'); } catch(e) { /* ignore */ }
+        }
+
+        // Mettre le texte sélectionné dans l'input visible pour correspondance visuelle
+        input.value = element.textContent || element.innerText || addrName;
+      } catch (e) {
+        console.error('Erreur lors de la sélection d\'une adresse', e);
+      }
+
+      clearList();
+    };
+
+    const fetchAndRender = (q) => {
+      if (!q || q.length < 3) { clearList(); return; }
+
+      fetch('https://api-adresse.data.gouv.fr/search/?q=' + encodeURIComponent(q) + '&type=&autocomplete=1')
+        .then((r) => r.json())
+        .then((data) => {
+          clearList();
+          (data.features || []).forEach(feat => {
+            const li = document.createElement('li');
+            li.className = 'item list-group-item list-group-item-action';
+            li.textContent = feat.properties.label || '';
+            li.dataset.name = feat.properties.name || '';
+            li.dataset.city = feat.properties.city || '';
+            li.dataset.postcode = feat.properties.postcode || '';
+            li.addEventListener('click', () => onSelect(li));
+            list.append(li);
+          });
+        })
+        .catch((err) => {
+          console.error('Erreur autocomplete adresse:', err);
+          clearList();
+        });
+    };
+
+    const debounced = debounce((val) => fetchAndRender(val), 250);
+    input.addEventListener('input', (e) => debounced(e.currentTarget.value));
+    input.addEventListener('focus', (e) => { if (e.currentTarget.value && e.currentTarget.value.length >= 3) fetchAndRender(e.currentTarget.value); });
+
+    // Fermer la liste si on clique en dehors
+    document.addEventListener('click', (e) => {
+      if (!list.contains(e.target) && e.target !== input) {
+        clearList();
+      }
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', attach);
+  } else {
+    attach();
+  }
+})();
+</script>

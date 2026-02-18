@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2025. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/EtudiantRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/09/2025 11:26
+ * @lastUpdate 11/02/2026 11:49
  */
 
 namespace App\Repository;
@@ -39,9 +39,79 @@ class EtudiantRepository extends ServiceEntityRepository
         parent::__construct($registry, Etudiant::class);
     }
 
+    /**
+     * Recherche paginée pour le sélecteur d'étudiants de l'Événement.
+     *
+     * @param int|null $departementId
+     * @param int[] $semestreIds
+     * @param int[] $groupeIds
+     * @param int|null $groupeTypeId
+     * @param string $q
+     * @param int $page
+     * @param int $limit
+     * @return array{data: array<int, array<string, mixed>>, total: int}
+     */
+    public function searchForEvenement(?int $departementId, array $semestreIds, array $groupeIds, string $q, int $page, int $limit): array
+    {
+        $qb = $this->createQueryBuilder('e')
+            ->select('e.id as id, e.nom as nom, e.prenom as prenom, s.libelle as semestre')
+            ->leftJoin(Semestre::class, 's', 'WITH', 'e.semestre = s.id')
+            ->leftJoin('e.semestres', 'ss')
+            ->leftJoin('e.groupes', 'g')
+        ;
+
+        // Ne retourner que les étudiants en formation
+        $qb->andWhere('e.anneeSortie = 0');
+
+        if (null !== $departementId && $departementId > 0) {
+            $qb->andWhere('e.departement = :departement')
+                ->setParameter('departement', $departementId);
+        }
+
+        if (!empty($semestreIds)) {
+            $qb->andWhere('(s.id IN (:semestres) OR ss.id IN (:semestres))')
+                ->setParameter('semestres', $semestreIds);
+        }
+
+        if (!empty($groupeIds)) {
+            $qb->andWhere('g.id IN (:groupes)')
+                ->setParameter('groupes', $groupeIds);
+        }
+
+        if ('' !== trim($q)) {
+            $qb->andWhere('LOWER(e.nom) LIKE :q OR LOWER(e.prenom) LIKE :q')
+                ->setParameter('q', '%' . mb_strtolower($q) . '%');
+        }
+
+        $qb->orderBy('e.nom', Order::Ascending->value)
+            ->addOrderBy('e.prenom', Order::Ascending->value)
+            ->groupBy('e.id, s.libelle');
+
+        // Count total (distinct etudiants)
+        $countQb = clone $qb;
+        $countQb->resetDQLPart('select')
+            ->resetDQLPart('orderBy')
+            ->resetDQLPart('groupBy')
+            ->select('COUNT(DISTINCT e.id)');
+        $total = (int) $countQb->getQuery()->getSingleScalarResult();
+
+        // Pagination
+        $offset = ($page - 1) * $limit;
+        $data = $qb->setFirstResult($offset)
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getArrayResult();
+
+        return [
+            'data' => $data,
+            'total' => $total,
+        ];
+    }
+
     public function getByDepartement(
         Departement $departement
-    ): mixed {
+    ): mixed
+    {
         $qb = $this->createQueryBuilder('u');
         $qb
             ->leftJoin(Semestre::class, 's', 'WITH', 's.id=u.semestre')
@@ -51,11 +121,23 @@ class EtudiantRepository extends ServiceEntityRepository
         return $qb->getQuery()->getResult();
     }
 
+//    public function findBySemestreBuilder(Semestre $semestre): QueryBuilder
+//    {
+//        return $this->createQueryBuilder('e')
+//            ->where('e.semestre = :semestre')
+//            ->andWhere('e.anneeSortie = 0')
+//            ->setParameter('semestre', $semestre)
+//            ->orderBy('e.nom', Order::Ascending->value)
+//            ->addOrderBy('e.prenom', Order::Ascending->value);
+//    }
+
+
     public function findBySemestreBuilder(Semestre $semestre): QueryBuilder
     {
         return $this->createQueryBuilder('e')
-            ->where('e.semestre = :semestre')
-            ->andWhere('e.anneeSortie = 0')
+            ->leftJoin(Semestre::class, 's', 'WITH', 'e.semestre = s.id')
+            ->leftJoin('e.semestres', 'ss')
+            ->where('s = :semestre OR ss = :semestre')
             ->setParameter('semestre', $semestre)
             ->orderBy('e.nom', Order::Ascending->value)
             ->addOrderBy('e.prenom', Order::Ascending->value);
@@ -94,15 +176,15 @@ class EtudiantRepository extends ServiceEntityRepository
             $tt['photo'] = $etudiant->getPhotoName();
             $tt['mailUniv'] = $etudiant->getMailUniv();
             $tt['mailPerso'] = $etudiant->getMailPerso();
-            $tt['semestre'] = null !== $etudiant->getSemestre() ? $etudiant->getSemestre()->getLibelle() : 'non défini';
-            $tt['semestreId'] = $etudiant->getSemestre()?->getId();
-            $tt['diplomeId'] = null !== $etudiant->getSemestre() ? $etudiant->getDiplome()?->getId() : null;
+            $tt['semestre'] = null !== $etudiant->getSemestreActif() ? $etudiant->getSemestreActif()->getLibelle() : 'non défini';
+            $tt['semestreId'] = $etudiant->getSemestreActif()?->getId();
+            $tt['diplomeId'] = null !== $etudiant->getSemestreActif() ? $etudiant->getDiplome()?->getId() : null;
             $tt['promo'] = $etudiant->getPromotion();
             $tt['anneeSortie'] = $etudiant->getAnneeSortie();
             $tt['avatarInitiales'] = $etudiant->getAvatarInitiales();
             $gr = '';
             foreach ($etudiant->getGroupes() as $groupe) {
-                $gr .= $groupe->getLibelle().', ';
+                $gr .= $groupe->getLibelle() . ', ';
             }
             $tt['groupes'] = mb_substr($gr, 0, -2);
             $t[] = $tt;
@@ -116,7 +198,7 @@ class EtudiantRepository extends ServiceEntityRepository
         $query = $this->createQueryBuilder('e');
         $i = 1;
         foreach ($annee->getSemestres() as $semestre) {
-            $query->orWhere('e.semestre = ?'.$i)
+            $query->orWhere('e.semestre = ?' . $i)
                 ->setParameter($i, $semestre->getId());
             ++$i;
         }
@@ -137,7 +219,7 @@ class EtudiantRepository extends ServiceEntityRepository
             ->orWhere('p.numEtudiant LIKE :needle')
             ->orWhere('p.numIne LIKE :needle')
             ->andWhere('p.departement = :departement')
-            ->setParameter('needle', '%'.$needle.'%')
+            ->setParameter('needle', '%' . $needle . '%')
             ->setParameter('departement', $departement->getId())
             ->orderBy('p.nom', Order::Ascending->value)
             ->addOrderBy('p.prenom', Order::Ascending->value)
@@ -154,7 +236,7 @@ class EtudiantRepository extends ServiceEntityRepository
             ->orWhere('p.mailUniv LIKE :needle')
             ->orWhere('p.numEtudiant LIKE :needle')
             ->orWhere('p.numIne LIKE :needle')
-            ->setParameter('needle', '%'.$needle.'%')
+            ->setParameter('needle', '%' . $needle . '%')
             ->orderBy('p.nom', Order::Ascending->value)
             ->addOrderBy('p.prenom', Order::Ascending->value)
             ->getQuery()
@@ -284,28 +366,50 @@ class EtudiantRepository extends ServiceEntityRepository
             $diplome = $diplome->getParent();
         }
 
-        return $this->createQueryBuilder('e')
-            ->innerJoin(Semestre::class, 's', 'WITH', 'e.semestre=s.id')
-            ->innerJoin(Annee::class, 'a', 'WITH', 'a.id=s.annee')
-            ->innerJoin(Diplome::class, 'd', 'WITH', 'd.id=a.diplome')
+        $qb = $this->createQueryBuilder('e');
+        $qb->leftJoin(Semestre::class, 's', 'WITH', 'e.semestre = s.id')
+            ->leftJoin('e.semestres', 'ss')
+            ->leftJoin('s.annee', 'a')
+            ->leftJoin('a.diplome', 'd')
+            ->leftJoin('ss.annee', 'a2')
+            ->leftJoin('a2.diplome', 'd2');
 
-            ->where('d.id = :diplome')
-            ->orWhere('d.parent = :diplome')
-            ->andWhere('s.ordreLmd = :ordreLmd')
+        $cond1 = $qb->expr()->andX(
+            $qb->expr()->orX('d.id = :diplome', 'd.parent = :diplome'),
+            $qb->expr()->eq('s.ordreLmd', ':ordreLmd')
+        );
+
+        $cond2 = $qb->expr()->andX(
+            $qb->expr()->orX('d2.id = :diplome', 'd2.parent = :diplome'),
+            $qb->expr()->eq('ss.ordreLmd', ':ordreLmd')
+        );
+
+        return $qb->andWhere($qb->expr()->orX($cond1, $cond2))
             ->andWhere('e.anneeSortie = 0')
             ->setParameter('ordreLmd', $ordreLmd)
-            ->setParameter('diplome', $diplome->getid())
+            ->setParameter('diplome', $diplome->getId())
             ->orderBy('e.nom', Order::Ascending->value)
             ->addOrderBy('e.prenom', Order::Ascending->value)
             ->getQuery()
             ->getResult();
     }
 
+//    public function findBySemestresBuilder(Collection $semestres): QueryBuilder
+//    {
+//        return $this->createQueryBuilder('e')
+//            ->innerJoin(Semestre::class, 's', 'WITH', 'e.semestre=s.id')
+//            ->where('s IN (:semestres)')
+//            ->setParameter('semestres', $semestres)
+//            ->orderBy('e.nom', Order::Ascending->value)
+//            ->addOrderBy('e.prenom', Order::Ascending->value);
+//    }
+
     public function findBySemestresBuilder(Collection $semestres): QueryBuilder
     {
         return $this->createQueryBuilder('e')
-            ->innerJoin(Semestre::class, 's', 'WITH', 'e.semestre=s.id')
-            ->where('s IN (:semestres)')
+            ->leftJoin(Semestre::class, 's', 'WITH', 'e.semestre = s.id')
+            ->leftJoin('e.semestres', 'ss')
+            ->where('s IN (:semestres) OR ss IN (:semestres)')
             ->setParameter('semestres', $semestres)
             ->orderBy('e.nom', Order::Ascending->value)
             ->addOrderBy('e.prenom', Order::Ascending->value);
@@ -324,5 +428,30 @@ class EtudiantRepository extends ServiceEntityRepository
             ->andWhere('e.anneeSortie != 0')
             ->getQuery()
             ->getResult();
+    }
+
+    public function findByEvenement(int $evenementId): array
+    {
+        return $this->createQueryBuilder('e')
+            ->innerJoin('e.etudiantEvenements', 'ee')
+            ->innerJoin('ee.evenement', 'ev')
+            ->where('ev.id = :evenementId')
+            ->setParameter('evenementId', $evenementId)
+            ->orderBy('e.nom', Order::Ascending->value)
+            ->addOrderBy('e.prenom', Order::Ascending->value)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function countBySemestre(mixed $semestre): int
+    {
+        return $this->createQueryBuilder('e')
+            ->select('count(e.id)')
+            ->leftJoin(Semestre::class, 's', 'WITH', 'e.semestre = s.id')
+            ->leftJoin('e.semestres', 'ss')
+            ->where('s = :semestre OR ss = :semestre')
+            ->setParameter('semestre', $semestre)
+            ->getQuery()
+            ->getSingleScalarResult();
     }
 }

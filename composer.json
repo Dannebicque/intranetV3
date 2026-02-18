@@ -16,10 +16,12 @@
     "bugsnag/bugsnag-symfony": "^1.13",
     "composer/package-versions-deprecated": "^1.11",
     "dannebicque/table-bundle": "*",
+    "davidannebicque/html-to-spreadsheet-bundle": "*",
     "doctrine/annotations": "^1.14",
     "doctrine/doctrine-bundle": "^2.10",
     "doctrine/doctrine-migrations-bundle": "^3.2",
     "doctrine/orm": "^2.15.0",
+    "endroid/qr-code": "*",
     "erusev/parsedown": "^1.7",
     "friendsofsymfony/jsrouting-bundle": "^3.5",
     "gotenberg/gotenberg-php": "dev-main",
@@ -28,7 +30,7 @@
     "nesbot/carbon": "^3.0",
     "ninsuo/symfony-collection": "^2.1",
     "phpdocumentor/reflection-docblock": "^5.3",
-    "phpoffice/phpspreadsheet": "^1.29",
+    "phpoffice/phpspreadsheet": "^5.2",
     "phpoffice/phpword": "^0.18",
     "ramsey/uuid-doctrine": "^1.8",
     "symfony/asset": "7.0.*",
@@ -145,7 +147,7 @@
   "repositories": [
     {
       "type": "path",
-      "url": "/Users/davidannebicque/Sites/table-bundle"
+      "url": "/Users/cyndel/Web/TableBundle"
     }
   ]
 }

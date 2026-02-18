@@ -1,0 +1,78 @@
+{% extends 'base-super_admin.html.twig' %}
+
+{% block header %}
+    {{ 'adm.evenement.new.heading'|trans({}, 'evenement') }}
+{% endblock %}
+
+{%block headeractions %}
+    <div class="header-action">
+        {{ include('composants/sadm-buttons-new.html.twig', {elt: 'evenement'}) }}
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'adm.evenement.new.heading'|trans({}, 'evenement') }}</h4>
+        <div class="card-body">
+            <div class="mb-3">
+                <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modalEtudiants">
+                    {{ 'adm.evenement.form.ouvrir_selection_etudiants'|trans({}, 'evenement') }}
+                </button>
+                <div id="evenement-selected-summary" class="mt-2"></div>
+            </div>
+
+            {# Rendu du formulaire avec champs d'adresse autocomplétés #}
+            {% form_theme form 'bootstrap_5_layout.html.twig' %}
+            {{ form_start(form) }}
+
+            <div class="mb-3 d-flex gap-3">
+                <div class="w-1/2">{{ form_row(form.libelle) }}</div>
+                <div>{{ form_row(form.date) }}</div>
+                <div>{{ form_row(form.debut) }}</div>
+                <div>{{ form_row(form.fin) }}</div>
+            </div>
+
+            <div class="form-group-adresse">
+                <label for="adresseEvenement" class="form-label">Adresse de l'événement :</label> <br>
+                <input type="text" id="adresseEvenement" class="form-control" autocomplete="off">
+                <div class="form-text mb-0 help-text">Veuillez saisir l'adresse puis sélectionner la proposition correspondante</div>
+
+                <ul id="adresselisteEvenement"></ul>
+
+                <hr>
+
+                <div class="form-champs-adresse d-flex gap-3">
+                    {{ form_row(form.adresse.adresse1) }}
+                    {{ form_row(form.adresse.adresse2) }}
+                    {{ form_row(form.adresse.adresse3) }}
+                    {{ form_row(form.adresse.code_postal) }}
+                    {{ form_row(form.adresse.ville) }}
+                    {{ form_row(form.adresse.pays) }}
+                </div>
+            </div>
+
+            <div class="mb-3">
+                {{ form_row(form.description) }}
+                {{ form_row(form.geoloc) }}
+            </div>
+
+            {# champs cachés #}
+            <div style="display:none;">
+            {{ form_widget(form.etudiants) }}
+            {{ form_widget(form.etudiantsIds) }}
+            </div>
+
+            <button class="btn btn-success"><i class="fas fa-floppy-disk"></i> {{ 'label.save'|trans }}</button>
+
+            {{ form_end(form) }}
+
+        </div>
+    </div>
+
+    {# Modal de sélection des étudiants #}
+    {{ include('super-administration/evenement/_modal_etudiants.html.twig') }}
+
+    {# Included reusable autocomplete script #}
+    {{ include('super-administration/evenement/_adresse_autocomplete.html.twig') }}
+
+{% endblock %}

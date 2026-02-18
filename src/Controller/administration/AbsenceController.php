@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/AbsenceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 19/04/2024 18:59
+ * @lastUpdate 09/02/2026 10:04
  */
 
 namespace App\Controller\administration;
@@ -55,12 +55,12 @@ class AbsenceController extends BaseController
             return JsonReponse::error('Etudiant non trouvé');
         }
 
-        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $etudiant->getSemestre());
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $etudiant->getSemestreActif());
 
         if ($etudiant->getDiplome()?->isApc() === false) {
-            $matieres = $typeMatiereManager->findBySemestreArray($etudiant->getSemestre());
+            $matieres = $typeMatiereManager->findBySemestreArray($etudiant->getSemestreActif());
         } else {
-            $mats = $typeMatiereManager->findByReferentielOrdreSemestre($etudiant->getSemestre(), $etudiant->getDiplome()?->getReferentiel());
+            $mats = $typeMatiereManager->findByReferentielOrdreSemestre($etudiant->getSemestreActif(), $etudiant->getDiplome()?->getReferentiel());
 
             $matieres = [];
             foreach ($mats as $mat) {
@@ -110,12 +110,15 @@ class AbsenceController extends BaseController
     }
 
     #[Route('/semestre/{semestre}/justifier', name: 'administration_absences_semestre_justifier')]
-    public function justifier(Semestre $semestre): Response
+    public function justifier(
+        EtudiantRepository $etudiantRepository,
+        Semestre           $semestre): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $semestre);
-
+        $etudiants = $etudiantRepository->findBySemestre($semestre);
         return $this->render('administration/absence/justifier.html.twig', [
             'semestre' => $semestre,
+            'etudiants' => $etudiants,
         ]);
     }
 
@@ -238,7 +241,7 @@ class AbsenceController extends BaseController
         $etat = (bool)$request->query->get('etat');
 
 
-        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $absence->getEtudiant()?->getSemestre());
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $absence->getSemestre());
 
         $absence->setJustifie($etat);
         $this->entityManager->flush();
@@ -264,7 +267,7 @@ class AbsenceController extends BaseController
         $etudiant = $etudiantRepository->find($request->request->get('etudiant'));
 
         if (null !== $etudiant) {
-            $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $etudiant->getSemestre());
+            $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $etudiant->getSemestreActif());
 
             $matiere = $typeMatiereManager->getMatiereFromSelect($request->request->get('matiere'));
             if (null !== $matiere) {
@@ -288,7 +291,7 @@ class AbsenceController extends BaseController
     #[Route('/{id}', name: 'administration_absence_delete', options: ['expose' => true], methods: ['DELETE', 'POST'])]
     public function delete(Request $request, Absence $absence): Response
     {
-        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $absence->getEtudiant()?->getSemestre());
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $absence->getSemestre());
 
         $id = $absence->getId();
         if ($this->isCsrfTokenValid('delete'.$id, $request->server->get('HTTP_X_CSRF_TOKEN'))) {

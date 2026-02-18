@@ -1,0 +1,33 @@
+adm:
+  evenement:
+    exporterqrpdf: "Exporter le QR code de l'événement"
+    exporterresultxlsx: "Exporter les résultats de l'événement"
+    index:
+      heading: "Gestion des événements"
+    new:
+      heading: "Création d'un événement"
+    modification:
+      heading: "Modification d'un événement"
+    show:
+      heading: "Détails de l'événement"
+    form:
+      selection_etudiants: "Sélection des étudiants pour l'événement"
+      ouvrir_selection_etudiants: "Sélectionner des étudiants"
+      recherche: "Recherche"
+      departement: "Département"
+      semestres: "Semestres"
+      semestres.help: "Sélectionner un ou plusieurs semestres"
+      groupes: "Groupes"
+      groupes.help: "Sélectionner un ou plusieurs groupes"
+      liste_etudiants: "Liste des étudiants"
+      selection_courante: "Sélection courante"
+      selectionner_tout: "Sélectionner tout"
+      deselectionner_tout: "Désélectionner tout"
+    attendance: 'Présences'
+    emargement:
+      index:
+        heading: "Émargement"
+        card:
+          heading: "Présence à l'événement"
+      modal:
+        heading: "Confirmation de l'émargement"

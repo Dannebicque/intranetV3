@@ -8,7 +8,7 @@
             <label class="sr-only" for="anneeUniversitaire_{{ diplome.id }}">anneeUniversitaire_{{ diplome.id }}</label>
             <select class="form-select col-sm-6 changeOptionSelect"
                     name="anneeUniversitaire"
-                    id="anneeUniversitaire"
+                    id="anneeUniversitaire_{{ diplome.id }}"
                     data-type="diplome"
                     data-id="{{ diplome.id }}"
             >
@@ -29,7 +29,7 @@
             <label class="sr-only" for="optNbJoursSaisie_{{ diplome.id }}">optNbJoursSaisie_{{ diplome.id }}</label>
             <select class="form-select col-sm-6 changeOptionSelect"
                     name="optNbJoursSaisie"
-                    id="optNbJoursSaisie"
+                    id="optNbJoursSaisie_{{ diplome.id }}"
                     data-type="diplome"
                     data-id="{{ diplome.id }}"
             >

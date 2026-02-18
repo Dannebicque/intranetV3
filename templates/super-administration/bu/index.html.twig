@@ -1,0 +1,25 @@
+{% extends 'base-super_admin.html.twig' %}
+
+{% block header %}
+    Accès BU / Rapports de stage
+{% endblock %}
+
+{% block headeractions %}
+
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <header class="card-header">
+                    <h2 class="card-title">Accès BU / Rapports de stage</h2>
+                </header>
+
+                <div class="card-body">
+                    {{ table_render(table) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

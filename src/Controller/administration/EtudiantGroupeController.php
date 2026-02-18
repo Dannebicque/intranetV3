@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EtudiantGroupeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:17
+ * @lastUpdate 06/01/2026 10:10
  */
 
 namespace App\Controller\administration;
@@ -114,7 +114,7 @@ class EtudiantGroupeController extends BaseController
     #[Route(path: '/{id}/{etudiant}', name: 'administration_etudiant_groupe_delete', methods: 'DELETE')]
     public function delete(Request $request, Groupe $groupe, Etudiant $etudiant): Response
     {
-        $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $etudiant->getSemestre());
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $etudiant->getSemestreActif());
         if ($this->isCsrfTokenValid('delete'.$groupe->getId(), $request->server->get('HTTP_X_CSRF_TOKEN'))) {
             $id = $groupe->getId();
             $etudiant->removeGroupe($groupe);

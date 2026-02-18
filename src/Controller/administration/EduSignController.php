@@ -5,7 +5,6 @@ namespace App\Controller\administration;
 use App\Classes\Edt\EdtManager;
 use App\Classes\EduSign\Adapter\IntranetEdtEduSignAdapter;
 use App\Classes\EduSign\Api\ApiCours;
-use App\Classes\EduSign\Api\ApiPersonnel;
 use App\Classes\EduSign\CreateEnseignant;
 use App\Classes\EduSign\FixCourses;
 use App\Classes\EduSign\UpdateEdt;

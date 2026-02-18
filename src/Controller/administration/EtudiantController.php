@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EtudiantController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 10/09/2024 19:25
+ * @lastUpdate 06/01/2026 10:08
  */
 
 namespace App\Controller\administration;
@@ -79,15 +79,15 @@ class EtudiantController extends BaseController
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'etudiant.edit.success.flash');
 
             if (null !== $request->request->get('btn_update')) {
-                if ('semestre' === $origin && null !== $etudiant->getSemestre()) {
+                if ('semestre' === $origin && null !== $etudiant->getSemestreActif()) {
                     return $this->redirectToRoute('administration_semestre_index',
-                        ['semestre' => $etudiant->getSemestre()->getId()]);
+                        ['semestre' => $etudiant->getSemestreActif()->getId()]);
                 }
 
                 return $this->redirectToRoute('administration_etudiant_index');
             }
 
-            $this->redirectToRoute('administration_etudiant_index', ['semestre' => $etudiant->getSemestre()->getId()]);
+            $this->redirectToRoute('administration_etudiant_index', ['semestre' => $etudiant->getSemestreActif()?->getId()]);
         }
 
         return $this->render('administration/etudiant/edit.html.twig', [
@@ -154,7 +154,7 @@ class EtudiantController extends BaseController
     public function delete(EtudiantScolarite $etudiantScolarite, #[MapEntity(mapping: ['uuid' => 'uuid'])]
     Etudiant                                 $etudiant): RedirectResponse
     {
-        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $etudiant->getSemestre());
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $etudiant->getSemestreActif());
         $etudiantScolarite->setEtudiant($etudiant);
         $etudiantScolarite->changeEtat(Constantes::SUPPRIMER_FORMATION);
 

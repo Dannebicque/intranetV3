@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/FinSemestreController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:17
+ * @lastUpdate 14/01/2026 18:22
  */
 
 namespace App\Controller\administration;
@@ -80,7 +80,9 @@ class FinSemestreController extends BaseController
                         // transfert dans un semestre
                         $se = $semestreRepository->find($valeur);
                         if (null !== $se) {
-                            $e->setSemestre($se);
+                            //on ajoute le semestre à la liste des semestres
+                            $e->addSemestre($se);
+                            $se->addEtudiantsSemestre($e);
                         }
                         break;
                 }

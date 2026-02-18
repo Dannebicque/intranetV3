@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Etudiant/EtudiantAbsences.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/10/2022 20:27
+ * @lastUpdate 06/01/2026 10:26
  */
 
 namespace App\Classes\Etudiant;
@@ -16,11 +16,11 @@ use App\Entity\Etudiant;
 use App\Entity\Personnel;
 use App\Event\AbsenceEvent;
 use App\Repository\AbsenceRepository;
-use function array_key_exists;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
+use function array_key_exists;
 
 class EtudiantAbsences
 {
@@ -60,7 +60,7 @@ class EtudiantAbsences
 
         $absence = new Absence();
         $absence->setEtudiant($this->etudiant);
-        $absence->setSemestre($this->etudiant->getSemestre());
+        $absence->setSemestre($this->etudiant->getSemestreActif());
         $absence->setPersonnel($personnel);
         $absence->setDateHeure($dateHeure);
         $absence->setAnneeUniversitaire($personnel->getAnneeUniversitaire());

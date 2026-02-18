@@ -164,7 +164,7 @@ class ApiCours
         return $data['result'] ?? null;
     }
 
-    public function getAllCoursesWeek(string $cleApi, $start, $end): mixed
+    public function getAllCoursesBetween(string $cleApi, $start, $end): mixed
     {
         $client = HttpClient::create();
 

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/QuestionnaireExportExcelBrut.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/02/2024 08:39
+ * @lastUpdate 16/01/2026 11:36
  */
 
 namespace App\Components\Questionnaire;
@@ -15,6 +15,7 @@ use App\Components\Questionnaire\Exceptions\TypeQuestionNotFoundException;
 use App\Components\Questionnaire\Section\EndSection;
 use App\Components\Questionnaire\Section\StartSection;
 use App\Components\Questionnaire\TypeQuestion\AbstractQuestion;
+use App\Components\Questionnaire\TypeQuestion\TypeChainee;
 use App\Entity\QuestChoix;
 use App\Entity\QuestQuestion;
 use App\Entity\QuestQuestionnaire;
@@ -61,6 +62,15 @@ class QuestionnaireExportExcelBrut
             if ($questSection->typeSection !== StartSection::class && $questSection->typeSection !== EndSection::class) {
                 foreach ($questSection->getQuestions() as $questQuestion) {
                     $this->myExcelWriter->writeCellXY($col, $ligne, $questQuestion->libelle);
+                    if ($questQuestion instanceof TypeChainee) {
+                        foreach ($questQuestion->questions as $subQuestion) {
+                            ++$col;
+                            if (method_exists($subQuestion, '__load')) {
+                                $subQuestion->__load();
+                            }
+                            $this->myExcelWriter->writeCellXY($col, $ligne, $subQuestion->getLibelle());
+                        }
+                    }
                     ++$col;
                 }
 
@@ -78,6 +88,14 @@ class QuestionnaireExportExcelBrut
                     foreach ($questSection->getQuestions() as $questQuestion) {
                         if (array_key_exists($questQuestion->cle, $reponse)) {
                             $this->myExcelWriter->writeCellXY($col, $ligne, $this->writeExcelReponses($questQuestion, $reponse[$questQuestion->cle]));
+                        }
+                        if ($questQuestion instanceof TypeChainee) {
+                            foreach ($questQuestion->questions as $subQuestion) {
+                                ++$col;
+                                if (array_key_exists($subQuestion->getCle(), $reponse)) {
+                                    $this->myExcelWriter->writeCellXY($col, $ligne, $this->writeExcelReponses($subQuestion, $reponse[$subQuestion->getCle()]));
+                                }
+                            }
                         }
                         ++$col;
                     }
@@ -115,7 +133,7 @@ class QuestionnaireExportExcelBrut
         //récupérer le dernier element du tableau
         $cleReponse = $tCleReponse[count($tCleReponse) - 1];
 
-        if (array_key_exists($cleReponse, $question->getReponsesArray())) {
+        if (method_exists($question, 'getReponsesArray') && array_key_exists($cleReponse, $question->getReponsesArray())) {
             return $question->getReponsesArray()[$cleReponse];
         }
 

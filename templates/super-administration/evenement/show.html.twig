@@ -1,0 +1,138 @@
+{% extends 'base-super_admin.html.twig' %}
+
+{% block header %}
+    {{ 'adm.evenement.show.heading'|trans({}, 'evenement') }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action d-flex gap-2">
+        {{ include('composants/sadm-buttons-show.html.twig', {elt: 'evenement', id: evenement.id}) }}
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'adm.evenement.show.heading'|trans({}, 'evenement') }}</h4>
+        <div class="card-body">
+            <table class="table">
+                <tbody>
+                <tr>
+                    <th>{{ 'table.id'|trans }}</th>
+                    <td>{{ evenement.id }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.libelle'|trans }}</th>
+                    <td>{{ evenement.libelle }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.date'|trans }}</th>
+                    <td>{{ evenement.date ? evenement.date|format_date('long') : '' }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.heure_debut'|trans }}</th>
+                    <td>{{ evenement.debut ? evenement.debut|date('H:i') : '' }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.heure_fin'|trans }}</th>
+                    <td>{{ evenement.fin ? evenement.fin|date('H:i') : '' }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.adresse'|trans }}</th>
+                    <td>
+                        {{ evenement.adresse.adresse1 }} {{ evenement.adresse.adresse2 }} {{ evenement.adresse.adresse3 }} {{ evenement.adresse.codePostal }} {{ evenement.adresse.ville }} {{ evenement.adresse.pays }}
+
+                    </td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.description'|trans }}</th>
+                    <td>{{ evenement.description }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.participants'|trans }}</th>
+                    <td>
+                        {{ evenement.etudiantEvenements|length }}
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <div class="d-flex items-center gap-2 mb-3">
+                <h5>{{ 'adm.evenement.attendance'|trans({}, 'evenement') }}</h5>
+                <a class="btn btn-sm btn-secondary" href="{{ path('app_emargement_export', {id: evenement.id}) }}" title="{{ 'adm.evenement.exporterresultxlsx'|trans({}, 'evenement') }}" data-bs-toggle="tooltip" data-bs-placement="bottom">
+                    <i class="fas fa-download"></i>
+                </a>
+            </div>
+            <table class="table table-striped" data-xls-sheet="Émargement">
+                <thead>
+                <tr>
+                    <th>id</th>
+                    <th>{{ 'table.prenom'|trans }}</th>
+                    <th>{{ 'table.nom'|trans }}</th>
+                    <th>semestre</th>
+                    <th>présence</th>
+                    <th>date signature</th>
+                    <th>Marquer présent</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for etudiantEvenement in etudiantsEvenement %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ etudiantEvenement.etudiant.prenom }}</td>
+                        <td>{{ etudiantEvenement.etudiant.nom ?? '-' }}</td>
+                        <td>{{ etudiantEvenement.etudiant.semestreActif }}</td>
+                        <td>
+                            {% if etudiantEvenement.present %}
+                                <span class="badge bg-success">{{ 'oui'|trans }}</span>
+                            {% else %}
+                                <span class="badge bg-danger">{{ 'non'|trans }}</span>
+                            {% endif %}
+                        </td>
+
+                        {# Calcul de la classe 'text-danger' :
+                               - si pas la même date que l'événement
+                               - ou si la signature est avant l'heure de début -1h
+                               - ou si la signature est après l'heure de fin +1h
+                               Si les heures de début/fin ne sont pas définies, on ne fait que la vérification de la date. #}
+                        {% set sig = etudiantEvenement.dateSignature %}
+                        {% set danger = false %}
+                        {% if sig %}
+                            {% set sigDate = sig|date('Y-m-d') %}
+                            {% set eventDate = evenement.date ? evenement.date|date('Y-m-d') : '' %}
+
+                            {% set timeChecksOk = true %}
+                            {% if evenement.date and evenement.debut and evenement.fin %}
+                                {% set startDt = date(eventDate ~ ' ' ~ (evenement.debut|date('H:i')) ~ ' -1 hour') %}
+                                {% set endDt = date(eventDate ~ ' ' ~ (evenement.fin|date('H:i')) ~ ' +1 hour') %}
+
+                                {% set timeChecksOk = (sig.timestamp >= startDt.timestamp) and (sig.timestamp <= endDt.timestamp) %}
+                            {% endif %}
+
+                            {% if sigDate != eventDate or not timeChecksOk %}
+                                {% set danger = true %}
+                            {% endif %}
+                        {% endif %}
+
+                        <td class="{{ danger ? 'text-danger' : '' }}">
+                            {% if sig %}
+                                {{ sig|date('d/m/Y H:i') }}
+                            {% else %}
+                                -
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a class="btn btn-sm btn-primary {{ etudiantEvenement.present !== false ? 'disabled' }}" href="{{ path('app_evenement_confirm_presence', {id:etudiantEvenement.id}) }}" title="Marquer l'étudiant présent" data-bs-toggle="tooltip" data-bs-placement="bottom">
+                                <i class="fas fa-check-circle"></i>
+                            </a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="5">{{ 'table.empty'|trans }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

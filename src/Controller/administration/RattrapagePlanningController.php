@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/RattrapagePlanningController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/02/2024 22:46
+ * @lastUpdate 06/01/2026 10:10
  */
 
 namespace App\Controller\administration;
@@ -86,7 +86,7 @@ class RattrapagePlanningController extends BaseController
     public function change(Request $request, #[MapEntity(mapping: ['uuid' => 'uuid'])]
     Rattrapage                     $rattrapage, string $type): Response
     {
-        $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $rattrapage->getEtudiant()?->getSemestre());
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $rattrapage->getSemestre());
         $data = $request->request->get('data');
         switch ($type) {
             case 'date':

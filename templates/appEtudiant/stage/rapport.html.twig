@@ -1,0 +1,112 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    Dépôt de votre rapport de stage
+{% endblock %}
+
+{% block content %}
+    {% set etudiant = stageEtudiant.etudiant %}
+    <div class="card">
+        <div class="card-body">
+            <twig:Alert type="info">
+                Le dépôt de votre rapport est soumis à la délcaration pour l'enregistrement auprès de la bibliothèque
+                universitaire.
+            </twig:Alert>
+            {% form_theme form 'form/my-form.html.twig' %}
+            {{ form_start(form) }}
+            <h3 class="titre_rub">Vos informations</h3>
+            <div class="form-group row">
+                <div class="col-sm-3" style="text-align: right">
+                    <b>Nom Prénom</b> <span class="required"
+                                            title="Ce champ est obligatoire">*</span> :
+                </div>
+                <div class="col-sm-9">
+                    <p>{{ etudiant.display }}</p>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-3" style="text-align: right">
+                    <b>Diplôme préparé</b> <span class="required"
+                                                 title="Ce champ est obligatoire">*</span> :
+                </div>
+                <div class="col-sm-9">
+                    <p>{{ etudiant.diplome.display }}</p>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-3" style="text-align: right">
+                    <b>Semestre / Année</b> <span class="required"
+                                                  title="Ce champ est obligatoire">*</span> :
+                </div>
+                <div class="col-sm-9">
+                    <p>{{ etudiant.semestreActif.libelle }} // {{ etudiant.semestreActif.annee.libelle }}
+                        (BUT {{ etudiant.semestreActif.annee.ordre }})</p>
+                </div>
+            </div>
+
+            <h3 class="titre_rub">Vos informations sur le stage</h3>
+            <div class="form-group row">
+                <div class="col-sm-3" style="text-align: right">
+                    <b>Entreprise</b> <span class="required"
+                                            title="Ce champ est obligatoire">*</span> :
+                </div>
+                <div class="col-sm-9">
+                    <p>{{ stageEtudiant.entreprise.raisonSociale }}</p>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-3" style="text-align: right">
+                    <b>Adresse entreprise</b> <span class="required"
+                                                    title="Ce champ est obligatoire">*</span> :
+                </div>
+                <div class="col-sm-9">
+                    <p>{{ stageEtudiant.entreprise.adresse.display|raw }}</p>
+                </div>
+            </div>
+            {{ form_row(form.groupeEntreprise) }}
+            <h3 class="titre_rub">Informations complémentaires pour la bibliothèque universitaire</h3>
+            {{ form_row(form.titreRapport) }}
+            {{ form_row(form.motsCles) }}
+            {{ form_row(form.resumeRapport) }}
+            {{ form_row(form.confidentialite) }}
+            <h3 class="titre_rub">Déclaration anti-plagiat</h3>
+            <p>En déposant votre rapport vous attestez la déclaration anti-plagiat ci-dessous :</p>
+            <div>
+                <ul>
+                    <li>déclare que ce travail (mémoire, thèse, rapport de stage...) est un document original
+                        fruit d’un travail personnel ;
+                    </li>
+                    <li>déclare être informé que le plagiat est un délit sévèrement sanctionné par les articles
+                        L335-2 et suivants du Code de la propriété intellectuelle qui consiste notamment à
+                        prétendre être l’auteur d’un travail écrit par une autre personne ;
+                    </li>
+                    <li>atteste que les citations d’auteurs apparaissent entre guillemets dans le corps du
+                        mémoire ;
+                    </li>
+                    <li>atteste que les sources ayant servi à élaborer mon travail de réflexion et de rédaction
+                        sont référencées de manière exhaustive et claire dans la bibliographie figurant à la fin
+                        du mémoire ;
+                    </li>
+                    <li>déclare avoir vérifié que les images, extraits, figures ou tableaux empruntés à
+                        d’autres œuvres sont libres de droit ou avoir sollicité l’accord des ayants droit pour la
+                        reproduction de ces images, extraits, figures ou tableaux empruntés à d’autres
+                        œuvres.
+                    </li>
+                </ul>
+                {{ form_row(form.valideAntiPlagiat) }}
+            </div>
+            <h3 class="titre_rub">Votre rapport de stage</h3>
+            {{ form_row(form.documentFile) }}
+            <strong>Ou</strong>
+            {{ form_row(form.lienFichier) }}
+            <button class="btn btn-success">{{ button_label|default('label.save'|trans) }}</button>
+            {{ form_end(form) }}
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block headeractions %}
+
+{% endblock %}
+

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/bloc_saisie_absence/SaisieAbsenceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 20/02/2024 18:55
+ * @lastUpdate 06/01/2026 10:14
  */
 
 namespace App\Controller\bloc_saisie_absence;
@@ -40,11 +40,30 @@ class SaisieAbsenceController extends BaseController
         ?EvenementEdt $event = null
     ): Response {
         if (null !== $event) {
-            $groupes = $typeGroupeRepository->findOneBy([
-                'ordreSemestre' => $semestre->getOrdreLmd(),
-                'diplome' => null === $semestre->getDiplome()->getParent() ? $semestre->getDiplome()->getId() : $semestre->getDiplome()->getParent()->getId(),
-                'type' => $event->type_cours,
-            ]);
+            // Récupère tous les types de groupes du diplôme et de l'ordre du semestre, puis sélectionne celui
+            // correspondant au type de cours de l'événement (CM/TD/TP...)
+            $types = $typeGroupeRepository->findByDiplomeAndOrdreSemestre(
+                $semestre->getDiplome(),
+                (int) $semestre->getOrdreLmd()
+            );
+
+            $groupes = null;
+            foreach ($types as $tg) {
+                if (strtoupper($tg->getLibelle() ?? '') === strtoupper((string) $event->type_cours)) {
+                    $groupes = $tg;
+                    break;
+                }
+            }
+
+            // Si non trouvé par libellé, essaie par enum `type` le cas échéant
+            if (null === $groupes) {
+                foreach ($types as $tg) {
+                    if (null !== $tg->getType() && strtoupper($tg->getType()->value) === strtoupper((string) $event->type_cours)) {
+                        $groupes = $tg;
+                        break;
+                    }
+                }
+            }
         } else {
             $groupes = null;
         }
@@ -56,7 +75,6 @@ class SaisieAbsenceController extends BaseController
         }
 
         $typeGroupes = $semestre->getTypeGroupess();
-
 
         return $this->render('bloc_saisie_absence/_saisie_absence.html.twig', [
             'matiere' => $matiere,
@@ -92,7 +110,7 @@ class SaisieAbsenceController extends BaseController
                 'typeMatiere' => $mat->typeMatiere,
                 'etudiant' => $etudiant->getId(),
                 'dateHeure' => $dateHeure,
-                'anneeUniversitaire' => $etudiant->getSemestre() ? $etudiant->getSemestre()->getAnneeUniversitaire()->getId() : 0,
+                'anneeUniversitaire' => $etudiant->getSemestreActif() ? $etudiant->getSemestreActif()?->getAnneeUniversitaire()?->getId() : 0,
             ]);
 
             if ('saisie' === $request->get('action') && 0 === count($absence)) {

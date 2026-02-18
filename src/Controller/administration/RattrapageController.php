@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/RattrapageController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:17
+ * @lastUpdate 06/01/2026 10:10
  */
 
 namespace App\Controller\administration;
@@ -110,7 +110,7 @@ class RattrapageController extends BaseController
     public function accepte(EventDispatcherInterface $eventDispatcher, #[MapEntity(mapping: ['uuid' => 'uuid'])]
     Rattrapage                                       $rattrapage, string $etat): Response
     {
-        $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $rattrapage->getEtudiant()?->getSemestre());
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $rattrapage->getSemestre());
         if (Rattrapage::DEMANDE_ACCEPTEE === $etat || Rattrapage::DEMANDE_REFUSEE === $etat) {
             $rattrapage->setEtatDemande($etat);
             $this->entityManager->flush();
@@ -146,7 +146,7 @@ class RattrapageController extends BaseController
     public function delete(Request $request, #[MapEntity(mapping: ['uuid' => 'uuid'])]
     Rattrapage                     $rattrapage): Response
     {
-        $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $rattrapage->getEtudiant()?->getSemestre());
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $rattrapage->getSemestre());
         $id = $rattrapage->getUuidString();
         if ($this->isCsrfTokenValid('delete'.$id, $request->server->get('HTTP_X_CSRF_TOKEN'))) {
             $this->entityManager->remove($rattrapage);

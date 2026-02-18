@@ -5,12 +5,12 @@
             <p><strong>{{ this.label }}</strong></p>
             <p>{{ this.help }}</p>
         </div>
-        <label class="switch" for="{{ this.cle }}">
+        <label class="switch" for="{{ this.cle }}_{{ this.id }}">
             <input type="checkbox" {{ this.value ? 'checked': '' }}
                    data-action="live#action"
                    data-live-action-param="changeOption"
                    name="{{ this.cle }}"
-                   id="{{ this.cle }}">
+                   id="{{ this.cle }}_{{ this.id }}">
             <span class="switch-indicator"></span>
         </label>
     </div>

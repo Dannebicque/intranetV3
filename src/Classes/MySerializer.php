@@ -96,7 +96,8 @@ class MySerializer
                             if (is_array($row[$key])) {
                                 if (is_array($col)) {
                                     foreach ($col as $col2) {
-                                        if (array_key_exists($col2, $row[$key][$key2])) {
+                                        // Protéger l'accès : s'assurer que $row[$key][$key2] existe et est un tableau
+                                        if (isset($row[$key][$key2]) && is_array($row[$key][$key2]) && array_key_exists($col2, $row[$key][$key2])) {
                                             $dataArray[$ligne][$i] = $this->transformValue($row[$key][$key2][$col2], $key2);
                                         } else {
                                             $dataArray[$ligne][$i] = '-';

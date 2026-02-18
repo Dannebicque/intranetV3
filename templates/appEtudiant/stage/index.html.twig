@@ -32,8 +32,8 @@
                                     <p>Période de stage du
                                         <strong>{{ stagePeriode.dateDebut ? stagePeriode.dateDebut|format_date('long') : 'non.defini'|trans }}
                                             au {{ stagePeriode.dateFin ? stagePeriode.dateFin|format_date('long') : 'non.defini'|trans }}</strong>
-                                       soit {{ stagePeriode.nbJours }} jour(s) ou {{ stagePeriode.nbSemaines }}
-                                       semaine(s)
+                                        soit {{ stagePeriode.nbJours }} jour(s) ou {{ stagePeriode.nbSemaines }}
+                                        semaine(s)
                                     </p>
                                     <p>Les responsables de cette période sont : </p>
                                     <ul>
@@ -45,8 +45,7 @@
                                     </ul>
                                     <p>
                                         Les dates de cette période de stage sont
-                                        <strong>{{ stagePeriode.datesFlexibles ? 'flexibles'|trans : 'fixes'|trans
-                                            }}</strong>.
+                                        <strong>{{ stagePeriode.datesFlexibles ? 'flexibles'|trans : 'fixes'|trans }}</strong>.
                                     </p>
                                 </div>
                                 <div class="col-md-6 col-sm-12">
@@ -82,10 +81,10 @@
                                    target="_blank" class="btn btn-primary">la fiche de stage</a> à faire compléter et
                                 signer par l'entreprise.
                                 <strong>Ce document n'est pas la convention de stage !</strong></twig:Alert>
-<div class="d-grid">
-                            <a href="{{ path('stage_offre_stage_index') }}" class="btn d-block btn-large
+                            <div class="d-grid">
+                                <a href="{{ path('stage_offre_stage_index') }}" class="btn d-block btn-large
                             btn-info">Consultez les offres de stage</a>
-</div>
+                            </div>
                         {% endif %}
                         {% if ((stageEtudiants[stagePeriode.id] is  defined) and (stageEtudiants[stagePeriode.id].etatStage is constant('ETAT_STAGE_AUTORISE', stageEtudiants[stagePeriode.id]) )) %}
                             <twig:Alert type="warning"><p>Votre proposition a été acceptée le
@@ -94,41 +93,54 @@
                             <div class="d-grid">
                                 <a href="{{ path('app_stage_etudiant_formulaire', {stageEtudiant:stageEtudiants[stagePeriode.id]
                                 .uuidString}) }}"
-                               class="btn d-block btn-large btn-info">Compléter la proposition de stage</a>
+                                   class="btn d-block btn-large btn-info">Compléter la proposition de stage</a>
                             </div>
                         {% elseif ((stageEtudiants[stagePeriode.id] is  defined) and (stageEtudiants[stagePeriode.id].etatStage is constant('ETAT_STAGE_DEPOSE', stageEtudiants[stagePeriode.id]) )) %}
                             <twig:Alert type="success">Vous avez complété le formulaire. Il est en cours de
-                                                             validation
-                                                             par les responsables de stage. Vous recevrez un mail dés
-                                                             que vous pourrez signer la
-                                                             convention. <a href="{{ path
+                                validation
+                                par les responsables de stage. Vous recevrez un mail dés
+                                que vous pourrez signer la
+                                convention. <a href="{{ path
                                     ('application_etudiant_stage_detail', {id:stageEtudiants[stagePeriode.id].id }) }}">Voir
-                                                                                                                        les
-                                                                                                                        informations
-                                                                                                                        de
-                                                                                                                        votre
-                                                                                                                        stage</a>
+                                    les
+                                    informations
+                                    de
+                                    votre
+                                    stage</a>
                             </twig:Alert>
                         {% elseif ((stageEtudiants[stagePeriode.id] is  defined) and (stageEtudiants[stagePeriode.id].etatStage is constant('ETAT_STAGE_VALIDE', stageEtudiants[stagePeriode.id]) )) %}
                             <twig:Alert type="success">Votre formulaire a été validé. La convention va être
-                                                             imprimée
-                                                             prochainement.
+                                imprimée
+                                prochainement.
                             </twig:Alert>
                         {% elseif ((stageEtudiants[stagePeriode.id] is  defined) and (stageEtudiants[stagePeriode.id]
-                            .etatStage is constant('ETAT_STAGE_CONVENTION_IMPRIMEE', stageEtudiants[stagePeriode.id]) )) %}
+                        .etatStage is constant('ETAT_STAGE_CONVENTION_IMPRIMEE', stageEtudiants[stagePeriode.id]) )) %}
                             <twig:Alert type="success">La convention est imprimée. Vous devez venir signer votre
-                                                             convention de stage
+                                convention de stage
                             </twig:Alert>
                         {% elseif ((stageEtudiants[stagePeriode.id] is  defined) and (stageEtudiants[stagePeriode.id].etatStage is constant('ETAT_STAGE_CONVENTION_ENVOYEE', stageEtudiants[stagePeriode.id]) )) %}
                             <twig:Alert type="success">Votre convention a été envoyée à l'entreprise pour
-                                                             signature
+                                signature
                             </twig:Alert>
                         {% elseif ((stageEtudiants[stagePeriode.id] is  defined) and (stageEtudiants[stagePeriode.id].etatStage is constant('ETAT_STAGE_CONVENTION_RECUE', stageEtudiants[stagePeriode.id]) )) %}
                             <twig:Alert type="success">La convention est signée par l'ensemble des parties. Vous
-                                                             devez
-                                                             venir récupérer votre exemplaire de convention de stage
-                                                             signée
+                                devez
+                                venir récupérer votre exemplaire de convention de stage
+                                signée
                             </twig:Alert>
+                        {% endif %}
+                </div>
+                <div>
+                    {% if stageEtudiants[stagePeriode.id] is  defined %}
+                        <h3>Déposez votre rapport de stage</h3>
+                        <a href="{{ path('application_etudiant_stage_rapport', {stageEtudiant:stageEtudiants[stagePeriode.id].uuidString}) }}"
+                           class="btn btn-primary"
+                        >
+                            Déposer votre rapport de stage
+                        </a>
+                        {% if stageEtudiants[stagePeriode.id].stageRapport is  defined %}
+                            Modifier...
+                        {% endif %}
                         {% endif %}
                     </div>
                 {% endfor %}

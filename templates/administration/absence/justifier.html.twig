@@ -47,7 +47,7 @@
                         {{ stimulus_action('adm--justifier-absences', 'changeEtudiant') }}
                         class="form-select">
                     <option value="">{{ 'choisir.letudiant'|trans }}</option>
-                    {% for etudiant in semestre.etudiants %}
+                    {% for etudiant in etudiants %}
                         <option value="{{ etudiant.id }}">{{ etudiant.display }}</option>
                     {% endfor %}
                 </select>

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2025. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/EdtPlanningRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 20/02/2025 09:28
+ * @lastUpdate 13/02/2026 10:27
  */
 
 namespace App\Repository;
@@ -149,18 +149,18 @@ class EdtPlanningRepository extends ServiceEntityRepository
 
     public function findEdtEtu(Etudiant $user, int $semaine, AnneeUniversitaire $anneeUniversitaire): ?array
     {
-        if (null !== $user->getSemestre()) {
+        if (null !== $user->getSemestreActif()) {
             $this->groupes($user);
 
             return $this->createQueryBuilder('p')
                 ->where('p.semaine = :semaine')
                 ->andWhere('p.ordreSemestre = :promo')
                 ->andWhere('p.anneeUniversitaire = :anneeUniversitaire')
-                ->andWhere('(p.groupe = 1 AND p.type = :type) OR p.groupe = :groupetd OR p.groupe = :groupetp')
+                ->andWhere('((p.groupe = 1 AND p.type = :type) OR (p.groupe = 41 AND p.type = :type)) OR p.groupe = :groupetd OR p.groupe = :groupetp')
                 ->setParameters([
                     'type' => 'CM',
                     'semaine' => $semaine,
-                    'promo' => $user->getSemestre()->getOrdreLmd(),
+                    'promo' => $user->getSemestreActif()?->getOrdreLmd(),
                     'groupetd' => $this->groupetd,
                     'groupetp' => $this->groupetp,
                     'anneeUniversitaire' => $anneeUniversitaire->getId(),
@@ -176,7 +176,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
 
     public function findEdtEtuCmFi(Etudiant $user, int $semaine, AnneeUniversitaire $anneeUniversitaire): ?array
     {
-        if (null !== $user->getSemestre() && ($user->getSemestre()->getOrdreLmd() === 3 || $user->getSemestre()->getOrdreLmd() === 4)) {
+        if (null !== $user->getSemestreActif() && ($user->getSemestreActif()->getOrdreLmd() === 3 || $user->getSemestreActif()->getOrdreLmd() === 4)) {
             $this->groupes($user);
             if ($this->groupetp <= 4) {
                 return $this->createQueryBuilder('p')
@@ -186,7 +186,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
                     ->andWhere('p.groupe = 41')
                     ->setParameters([
                         'semaine' => $semaine,
-                        'promo' => $user->getSemestre()->getOrdreLmd(),
+                        'promo' => $user->getSemestreActif()?->getOrdreLmd(),
                         'anneeUniversitaire' => $anneeUniversitaire->getId(),
                     ])
                     ->orderBy('p.jour', Order::Ascending->value)

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appEtudiant/StageController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:17
+ * @lastUpdate 29/01/2026 10:38
  */
 
 namespace App\Controller\appEtudiant;
@@ -13,8 +13,10 @@ use App\Controller\BaseController;
 use App\Entity\Alternance;
 use App\Entity\Constantes;
 use App\Entity\StageEtudiant;
+use App\Entity\StageRapport;
 use App\Event\StageEvent;
 use App\Form\StageEtudiantEtudiantType;
+use App\Form\StageRapportType;
 use App\Repository\StagePeriodeRepository;
 use Carbon\Carbon;
 use Exception;
@@ -36,7 +38,7 @@ class StageController extends BaseController
     #[Route(path: '/', name: 'application_etudiant_stage_index')]
     public function index(StagePeriodeRepository $stagePeriodeRepository): Response
     {
-        $stagePeriodes = $stagePeriodeRepository->findStageEtudiant($this->getUser()->getSemestre(),
+        $stagePeriodes = $stagePeriodeRepository->findStageEtudiant($this->getUser()->getSemestreActif(),
             $this->getAnneeUniversitaire());
 
         $stageEtudiants = [];
@@ -107,6 +109,39 @@ class StageController extends BaseController
         }
 
         return $this->render('bundles/TwigBundle/Exception/error500.html.twig');
+    }
+
+
+    #[Route(path: '/rapport/{stageEtudiant}', name: 'application_etudiant_stage_rapport', methods: 'GET|POST')]
+    public function rapportStage(EventDispatcherInterface $eventDispatcher,
+                                 Request                  $request,
+                                 #[MapEntity(mapping: ['stageEtudiant' => 'uuid'])]
+                                 StageEtudiant            $stageEtudiant): Response
+    {
+        if ($stageEtudiant->getEtudiant()->getId() !== $this->getUser()->getId()) {
+            // si incohérence entre l'utilisateur connecté et le stage
+            throw $this->createAccessDeniedException('Vous n\'êtes pas l\'auteur de ce formulaire de stage');
+        }
+
+        $stageRapport = new StageRapport($stageEtudiant);
+        $form = $this->createForm(StageRapportType::class, $stageRapport, [
+        ]);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->entityManager->persist($stageRapport);
+            $this->entityManager->flush();
+
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'stage_etudiant.rapport.success.flash');
+
+            return $this->redirectToRoute('application_index', ['onglet' => 'stage']);
+        }
+
+        return $this->render('appEtudiant/stage/rapport.html.twig', [
+            'stageEtudiant' => $stageEtudiant,
+            'form' => $form,
+        ]);
     }
 
     #[Route(path: '/periode/info/{id}', name: 'application_etudiant_stage_periode_info')]

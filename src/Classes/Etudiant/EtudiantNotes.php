@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Etudiant/EtudiantNotes.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 17/06/2024 18:06
+ * @lastUpdate 06/01/2026 09:58
  */
 
 namespace App\Classes\Etudiant;
@@ -150,7 +150,7 @@ class EtudiantNotes
 
     public function calculGraphique(): void
     {
-        $matieres = $this->typeMatiereManager->findBySemestre($this->etudiant->getSemestre());
+        $matieres = $this->typeMatiereManager->findBySemestre($this->etudiant->getSemestreActif());
         $tabKey = [];
         foreach ($matieres as $matiere) {
             $this->tabGraphique[$matiere->codeMatiere] = ['notes' => 0, 'coefficient' => 0];

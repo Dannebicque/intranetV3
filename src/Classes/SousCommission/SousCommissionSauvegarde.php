@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/SousCommission/SousCommissionSauvegarde.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:35
+ * @lastUpdate 09/02/2026 15:42
  */
 
 /*
@@ -103,7 +103,11 @@ class SousCommissionSauvegarde
                                 } else {
                                     $tMatiere[$matiere->getTypeIdMatiere()]['moyenne'] = max(0,
                                         $scEtudiant->moyenneMatieres[$matiere->getTypeIdMatiere()]->getMoyenne());
+                                }
 
+                                // si note = 0 (pas de bonif), on met ""
+                                if (0 === $tMatiere[$matiere->getTypeIdMatiere()]['moyenne']) {
+                                    $tMatiere[$matiere->getTypeIdMatiere()]['moyenne'] = '';
                                 }
                             } elseif (true === $scEtudiant->moyenneMatieres[$matiere->getTypeIdMatiere()]->matiereAAnnuler) {
                                 $tMatiere[$matiere->getTypeIdMatiere()]['matiereAAnnuler'] = true;

@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'adm.evenement.emargement.index.heading'|trans({}, 'evenement') }}
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'adm.evenement.emargement.index.card.heading'|trans({}, 'evenement') }}</h4>
+        <div class="card-body">
+            <h5 class="text-lg">{{ evenement.libelle ?: '—' }}</h5>
+            <p>
+                <strong>Date</strong> :
+                {% if evenement.date %}
+                    {{ evenement.date|date('d/m/Y') }}
+                {% else %}
+                    —
+                {% endif %}
+                de
+                {% if evenement.debut and evenement.fin %}
+                    {{ evenement.debut|date('H:i') }} à {{ evenement.fin|date('H:i') }}
+                {% elseif evenement.debut %}
+                    {{ evenement.debut|date('H:i') }}
+                {% else %}
+                    —
+                {% endif %}
+            </p>
+
+            {% if attendu %}
+                {%  if present %}
+                    <p class="text-success">
+                        Votre présence à cet événement a été confirmée.
+                    </p>
+                {% else %}
+                    <p>
+                        Confirmez-vous votre présence à cet événement ?
+                    </p>
+                    {% if evenement.geoloc %}
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalEmargement">
+                            Oui, je suis présent
+                        </button>
+                    {% else %}
+                        <a href="{{ path('app_emargement_submit', {key: key, etudiantId: user}) }}" class="btn btn-primary" id="confirmPresenceBtn">
+                            Oui je suis présent
+                        </a>
+                    {% endif %}
+                {% endif %}
+            {% else %}
+                <p class="text-danger">
+                    Vous ne faites pas partie des participants attendus pour cet événement.
+                </p>
+            {% endif %}
+        </div>
+    </div>
+
+    {% if evenement.geoloc %}
+        {{ include('super-administration/evenement/_modal_emargement.html.twig') }}
+    {% endif %}
+{% endblock %}

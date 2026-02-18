@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2025. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 20/02/2025 09:32
+ * @lastUpdate 13/02/2026 10:19
  */
 
 /*
@@ -92,9 +92,9 @@ class MyEdtExport
                 } else {
                     if ($user->getSemestre()->getDiplome()->isApc()) {
                         $matieres = $this->typeMatiereManager->findByReferentielOrdreSemestre(
-                            $user->getSemestre(), $user->getSemestre()->getDiplome()->getReferentiel());
+                            $user->getSemestreActif(), $user->getDiplome()?->getReferentiel());
                     } else {
-                        $matieres = $this->typeMatiereManager->findBySemestre($user->getSemestre());
+                        $matieres = $this->typeMatiereManager->findBySemestre($user->getSemestreActif());
                     }
 
                     $tMatieres = [];

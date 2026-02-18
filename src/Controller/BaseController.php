@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/BaseController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/04/2024 06:41
+ * @lastUpdate 06/01/2026 10:03
  */
 
 namespace App\Controller;
@@ -126,7 +126,7 @@ class BaseController extends AbstractController
     {
         $this->denyAccessUnlessGranted('ROLE_ETUDIANT');
 
-        return null !== $this->getUser() ? $this->getUser()->getSemestre() : null;
+        return null !== $this->getUser() ? $this->getUser()->getSemestreActif() : null;
     }
 
     public function getDepartement(): ?Departement

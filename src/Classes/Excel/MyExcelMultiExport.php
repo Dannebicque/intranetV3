@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Excel/MyExcelMultiExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/02/2024 08:59
+ * @lastUpdate 12/02/2026 16:08
  */
 
 /*
@@ -21,6 +21,7 @@ use App\Entity\Etudiant;
 use App\Entity\Evaluation;
 use App\Entity\Groupe;
 use App\Entity\Semestre;
+use App\Repository\EtudiantRepository;
 use Doctrine\Common\Collections\Collection;
 use PhpOffice\PhpSpreadsheet\Worksheet\PageSetup;
 use PhpOffice\PhpSpreadsheet\Writer\Csv;
@@ -37,6 +38,7 @@ use function count;
 class MyExcelMultiExport
 {
     public function __construct(
+        private EtudiantRepository $etudiantRepository,
         private MyExcelWriter $myExcelWriter
     )
     {
@@ -182,12 +184,13 @@ class MyExcelMultiExport
     public function genereModeleExcel(Semestre $semestre): void
     {
         $this->myExcelWriter->createSheet('import');
+        $etudiants = $this->etudiantRepository->findBySemestre($semestre);
 
         $this->myExcelWriter->writeHeader(['num_etudiant', 'nom', 'prenom', 'note', 'commentaire'], 1, 1, false);
         $ligne = 2;
         $colonne = 1;
         /** @var Etudiant $etudiant */
-        foreach ($semestre->getEtudiants() as $etudiant) {
+        foreach ($etudiants as $etudiant) {
             if (count($etudiant->getGroupes()) > 0) {
                 // uniquement si l'étudiant est dans un groupe.
                 $this->myExcelWriter->writeCellXY($colonne, $ligne, $etudiant->getNumEtudiant());
@@ -370,7 +373,7 @@ class MyExcelMultiExport
         foreach ($matiere->getSemestres() as $semestre) {
             //todo: export brut => Trie selon les noms des étudiants + filtre selon le format des groupes (sens ??) ?
             /** @var Etudiant $etudiant */
-            foreach ($semestre->getEtudiants() as $etudiant) {
+            foreach ($semestre->getEtudiantsSemestres() as $etudiant) {
                 if (count($etudiant->getGroupes()) > 0) {
                     // uniquement si l'étudiant est dans un groupe.
                     $this->myExcelWriter->writeCellXY($colonne, $ligne, $etudiant->getNumEtudiant());

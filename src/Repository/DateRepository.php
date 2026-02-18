@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/DateRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/04/2024 17:55
+ * @lastUpdate 06/01/2026 10:14
  */
 
 namespace App\Repository;
@@ -122,7 +122,7 @@ class DateRepository extends ServiceEntityRepository
             ->leftJoin('d.semestres', 's')
             ->where('s.id = :semestre')
             ->andWhere('d.typeDestinataire = :typeDestinataire')
-            ->setParameter('semestre', $etudiant->getSemestre()?->getId())
+            ->setParameter('semestre', $etudiant->getSemestreActif()?->getId())
             ->setParameter('typeDestinataire', Constantes::TYPE_DESTINATAIRE_ETUDIANT)
             ->orderBy('d.dateDebut', Order::Descending->value);
         if (0 !== $nbResult) {

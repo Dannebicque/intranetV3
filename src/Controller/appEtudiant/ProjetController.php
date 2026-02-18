@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appEtudiant/ProjetController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:35
+ * @lastUpdate 06/01/2026 10:14
  */
 
 namespace App\Controller\appEtudiant;
@@ -31,7 +31,7 @@ class ProjetController extends BaseController
     #[Route(path: '/', name: 'application_etudiant_projet_index')]
     public function index(ProjetPeriodeRepository $projetPeriodeRepository): Response
     {
-        $projetsPeriodes = $projetPeriodeRepository->findBySemestre($this->getUser()->getSemestre());
+        $projetsPeriodes = $projetPeriodeRepository->findBySemestre($this->getUser()->getSemestreActif());
         $projetsEtudiants = [];
         foreach ($this->getUser()->getProjetEtudiants() as $projetEtudiant) {
             if (null !== $projetEtudiant->getProjetPeriode()) {
