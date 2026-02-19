@@ -91,11 +91,6 @@ class GetCourses
         $errors = [];
 
         foreach ($courses as $course) {
-            if (!Carbon::parse($course['START'], 'Europe/Paris')->isBetween($yesterday, $today)) {
-                $errors[] = sprintf('Cours edusign id %s : date de début %s hors de la plage attendue', $course['ID'] ?? 'inconnu', $course['START'] ?? 'inconnu');
-                continue;
-            }
-
             $evenement = $this->edtManager->findCourse($source, $course['API_ID']);
             if (!$evenement) {
                 $errors[] = sprintf('Cours edusign id %s : introuvable dans l\'EDT local', $course['ID'] ?? 'inconnu');
