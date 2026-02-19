@@ -100,6 +100,11 @@ class GetCourses
 
         foreach ($courses as $course) {
             $enseignant = $this->personnelRepository->findByIdEdusign($course['PROFESSOR']);
+            if (!$enseignant) {
+                $errors[] = sprintf('Cours edusign id %s : professeur introuvable (idEduSign=%s)', $course['ID'] ?? 'inconnu', $course['PROFESSOR'] ?? 'inconnu');
+                continue;
+            }
+
             $evenement = empty($course['API_ID'] || $source === 'intranet')
                 ? $this->getCourse($diplome, $course, $enseignant, $source)
                 : $this->edtManager->findCourse($source, $course['API_ID']);
