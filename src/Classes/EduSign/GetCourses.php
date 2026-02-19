@@ -88,9 +88,15 @@ class GetCourses
                 continue;
             }
 
-            $evenement = empty($course['API_ID'] || $source === 'intranet')
-                ? $this->getCourse($diplome, $course, $enseignant, $source)
-                : $this->edtManager->findCourse($source, $course['API_ID']);
+//            $evenement = empty($course['API_ID'] || $source === 'intranet')
+//                ? $this->getCourse($diplome, $course, $enseignant, $source)
+//                : $this->edtManager->findCourse($source, $course['API_ID']);
+            if (empty($course['API_ID']) || $source === 'intranet') {
+                $evenement = $this->getCourse($diplome, $course, $enseignant, $source);
+                dump($evenement);
+            } else {
+                dump($source, $course['API_ID']);
+            }
 
             if (!$evenement) {
                 $errors[] = sprintf('Cours edusign id %s : introuvable dans l\'EDT local', $course['API_ID'] ?? 'inconnu');
