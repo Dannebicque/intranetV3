@@ -127,7 +127,7 @@ class GetCourses
         $date = Carbon::parse($course['START'], 'UTC')->setTimezone(new DateTimeZone('Europe/Paris'))->startOfDay();
         $heureDebut = Carbon::parse($course['START'], 'UTC')->setTimezone(new DateTimeZone('Europe/Paris'))->format('Y-m-d H:i:s');
         $heureFin = Carbon::parse($course['END'], 'UTC')->setTimezone(new DateTimeZone('Europe/Paris'))->format('Y-m-d H:i:s');
-        $enseignant = $this->personnelRepository->findByIdEdusign($enseignant);
+        $enseignant = $this->personnelRepository->findByIdEdusign($course['PROFESSOR']);
         $groupe = $this->groupeRepository->findOneBy(['idEduSign' => $course['GROUP'] ?? null]);
 
         if ($source === 'celcat') {
