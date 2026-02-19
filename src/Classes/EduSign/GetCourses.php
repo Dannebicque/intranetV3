@@ -88,10 +88,6 @@ class GetCourses
                 continue;
             }
 
-//            $evenement = empty($course['API_ID'] || $source === 'intranet')
-//                ? $this->getCourse($diplome, $course, $enseignant, $source)
-//                : $this->edtManager->findCourse($source, $course['API_ID']);
-
             if(empty($course['API_ID'] || $source === 'intranet')) {
                 $evenement = $this->getCourse($diplome, $course, $enseignant, $source);
                 dump($evenement);
@@ -128,8 +124,19 @@ class GetCourses
 
     private function getCourse($diplome, $course, $enseignant, $source)
     {
-        $adapterClass = $source === 'celcat' ? EduSignEdtCelcatAdapter::class : EduSignEdtIntranetAdapter::class;
-        return (new $adapterClass($course, $enseignant))->getCourse();
+        $date = Carbon::parse($course['START'], 'UTC')->setTimezone(new DateTimeZone('Europe/Paris'))->startOfDay();
+        $heureDebut = Carbon::parse($course['START'], 'UTC')->setTimezone(new DateTimeZone('Europe/Paris'))->format('Y-m-d H:i:s');
+        $heureFin = Carbon::parse($course['END'], 'UTC')->setTimezone(new DateTimeZone('Europe/Paris'))->format('Y-m-d H:i:s');
+        $enseignant = $this->personnelRepository->findByIdEdusign($enseignant);
+        $groupe = $this->groupeRepository->findOneBy(['idEduSign' => $course['GROUP'] ?? null]);
+
+        if ($source === 'celcat') {
+            $evenement = $this->edtCelcatRepository->findOneBy([]);
+        } else {
+            $evenement = $this->edtPlanningRepository->findOneBy(['intervenant' => $enseignant, 'date' => $date, 'groupe' => $groupe, 'heureDebut' => $heureDebut, 'heureFin' => $heureFin]);
+        }
+
+        return $evenement;
     }
 
     private function checkProfessorSignature(array $course, $evenement, array &$errors): void
