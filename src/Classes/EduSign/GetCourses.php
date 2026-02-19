@@ -88,7 +88,7 @@ class GetCourses
         }
     }
 
-    private function getCourse($course, $enseignant, $source)
+    private function getCourse($diplome, $course, $enseignant, $source)
     {
         $adapterClass = $source === 'celcat' ? EduSignEdtCelcatAdapter::class : EduSignEdtIntranetAdapter::class;
         return (new $adapterClass($course, $enseignant))->getCourse();
