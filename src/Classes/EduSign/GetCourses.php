@@ -91,6 +91,10 @@ class GetCourses
         $errors = [];
 
         foreach ($courses as $course) {
+            //si course[API_ID] est un string, convertir en int si possible, sinon null
+            if (isset($course['API_ID']) && is_string($course['API_ID'])) {
+                $course['API_ID'] = ctype_digit($course['API_ID']) ? (int)$course['API_ID'] : null;
+            }
             $evenement = $this->edtManager->findCourse($source, $course['API_ID']);
             if (!$evenement) {
                 $errors[] = sprintf('Cours edusign id %s : introuvable dans l\'EDT local', $course['ID'] ?? 'inconnu');
