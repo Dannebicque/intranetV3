@@ -10,6 +10,8 @@
 namespace App\Classes\EduSign;
 
 use App\Classes\Edt\EdtManager;
+use App\Classes\EduSign\Adapter\EduSignEdtCelcatAdapter;
+use App\Classes\EduSign\Adapter\EduSignEdtIntranetAdapter;
 use App\Classes\EduSign\Api\ApiCours;
 use App\Classes\Matieres\TypeMatiereManager;
 use App\DTO\Matiere;
@@ -78,7 +80,7 @@ class GetCourses
             if (empty($courses)) {
                 continue;
             }
-            $errors = $this->processCourses($courses, $source, $today, $yesterday);
+            $errors = $this->processCourses($courses, $source, $diplome);
 
             if (!empty($errors)) {
                 $this->sendErrorReport($errors, $diplome->getLibelle(), $source);
@@ -86,16 +88,22 @@ class GetCourses
         }
     }
 
-    private function processCourses(array $courses, string $source, string $today, string $yesterday): array
+    private function getCourse($diplome, $course, $enseignant, $source)
+    {
+        $adapterClass = $source === 'celcat' ? EduSignEdtCelcatAdapter::class : EduSignEdtIntranetAdapter::class;
+        return (new $adapterClass($course, $enseignant))->getCourse();
+    }
+
+    private function processCourses(array $courses, string $source, $diplome): array
     {
         $errors = [];
 
         foreach ($courses as $course) {
-            if ($course['API_ID'] === '') {
-                dump($course);
-                continue;
-            }
-            $evenement = $this->edtManager->findCourse($source, $course['API_ID']);
+            $enseignant = $this->personnelRepository->findByIdEdusign($course['PROFESSOR']);
+            $evenement = empty($course['API_ID'] || $source === 'intranet')
+                ? $this->getCourse($diplome, $course, $enseignant, $source)
+                : $this->edtManager->findCourse($source, $course['API_ID']);
+
             if (!$evenement) {
                 $errors[] = sprintf('Cours edusign id %s : introuvable dans l\'EDT local', $course['ID'] ?? 'inconnu');
                 continue;
