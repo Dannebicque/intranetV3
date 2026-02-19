@@ -88,7 +88,7 @@ class GetCourses
         }
     }
 
-    private function getCourse($diplome, $course, $enseignant, $source)
+    private function getCourse($course, $enseignant, $source)
     {
         $adapterClass = $source === 'celcat' ? EduSignEdtCelcatAdapter::class : EduSignEdtIntranetAdapter::class;
         return (new $adapterClass($course, $enseignant))->getCourse();
@@ -110,7 +110,7 @@ class GetCourses
                 : $this->edtManager->findCourse($source, $course['API_ID']);
 
             if (!$evenement) {
-                $errors[] = sprintf('Cours edusign id %s : introuvable dans l\'EDT local', $course['ID'] ?? 'inconnu');
+                $errors[] = sprintf('Cours edusign id %s : introuvable dans l\'EDT local', $course['API_ID'] ?? 'inconnu');
                 continue;
             }
 
