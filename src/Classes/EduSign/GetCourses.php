@@ -91,14 +91,17 @@ class GetCourses
 //            $evenement = empty($course['API_ID'] || $source === 'intranet')
 //                ? $this->getCourse($diplome, $course, $enseignant, $source)
 //                : $this->edtManager->findCourse($source, $course['API_ID']);
-            if (empty($course['API_ID']) || $source === 'intranet') {
+
+            if(empty($course['API_ID'] || $source === 'intranet')) {
                 $evenement = $this->getCourse($diplome, $course, $enseignant, $source);
                 dump($evenement);
-            } else {
-                dump($source, $course['API_ID']);
+             } else {
+                $evenement = $this->edtManager->findCourse($source, $course['API_ID']);
             }
 
             if (!$evenement) {
+                dump('introuvable', $diplome->getId(), $course['API_ID'], $enseignant->getId(), $source);
+
                 $errors[] = sprintf('Cours edusign id %s : introuvable dans l\'EDT local', $course['API_ID'] ?? 'inconnu');
                 continue;
             }
@@ -146,7 +149,7 @@ class GetCourses
             ->htmlTemplate('emails/error_report.html.twig')
             ->context(['errors' => $errors, 'diplome' => $diplomeLibelle, 'type' => $source]);
 
-        dump($email);
+//        dump($email);
         $this->mailer->send($email);
     }
 
