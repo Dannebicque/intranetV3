@@ -116,7 +116,15 @@ class GetCourses
 
                     $reason = $this->newAbsence($course, $student, $matiere);
                     if ($reason !== null) {
-                        $errors[] = sprintf('Evenement %d (edusign id %s) - étudiant %s : %s', $evenement->getId(), $course['ID'] ?? $course['API_ID'] ?? 'inconnu', $student['studentId'] ?? 'inconnu', $reason);
+                        // $reason peut être une string legacy ou un tableau structuré ['message' => ..., 'cause' => [...]]
+                        if (is_array($reason)) {
+                            $errors[] = [
+                                'text' => sprintf('Evenement %d (edusign id %s) - étudiant %s : %s', $evenement->getId(), $course['ID'] ?? $course['API_ID'] ?? 'inconnu', $student['studentId'] ?? 'inconnu', $reason['message'] ?? 'erreur sans message'),
+                                'cause' => $reason['cause'] ?? null,
+                            ];
+                        } else {
+                            $errors[] = sprintf('Evenement %d (edusign id %s) - étudiant %s : %s', $evenement->getId(), $course['ID'] ?? $course['API_ID'] ?? 'inconnu', $student['studentId'] ?? 'inconnu', $reason);
+                        }
                     }
                 }
             }
@@ -140,38 +148,95 @@ class GetCourses
 
     private function sendErrorReport(array $errors, string $diplomeLibelle, string $source): void
     {
+        // Normaliser en deux tableaux indexés pour garder la compatibilité
+        $errorStrings = [];
+        $errorsRawIndexed = [];
+
+        foreach ($errors as $key => $e) {
+            $text = '';
+            $cause = null;
+
+            if (is_array($e) && isset($e['text'])) {
+                // format interne que l'on a utilisé ailleurs
+                $text = $e['text'];
+                $cause = $e['cause'] ?? null;
+            } elseif (is_string($e)) {
+                // simple message string, si la clé est informative (non-int), on la préfixe
+                if (!is_int($key)) {
+                    $text = sprintf('%s => %s', $key, $e);
+                } else {
+                    $text = $e;
+                }
+            } elseif (is_array($e)) {
+                // tableau associatif ou autre forme, on json_encode pour le message lisible
+                $encoded = json_encode($e, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+                if (!is_int($key)) {
+                    $text = sprintf('%s => %s', $key, $encoded);
+                } else {
+                    $text = $encoded;
+                }
+                $cause = $e;
+            } else {
+                // autre type
+                $text = (string)$e;
+            }
+
+            $errorStrings[] = $text;
+            $errorsRawIndexed[] = $cause ?? (is_array($e) ? $e : null);
+        }
+
         $email = (new TemplatedEmail())
             ->from('no-reply@univ-reims.fr')
             ->to('cyndel.herolt@univ-reims.fr')
             ->subject('EduSign absences - rapport')
             ->htmlTemplate('emails/error_report.html.twig')
-            ->context(['errors' => $errors, 'diplome' => $diplomeLibelle, 'type' => $source]);
-
+            ->context([
+                'errors' => $errorStrings,
+                'errors_raw' => $errorsRawIndexed,
+                'diplome' => $diplomeLibelle,
+                'type' => $source,
+            ]);
         dump($email);
 
         $this->mailer->send($email);
     }
 
-    private function newAbsence(array $course, array $student, Matiere $matiere): ?string
+    private function newAbsence(array $course, array $student, Matiere $matiere): ?array
     {
         // retrouver enseignant et étudiant
         $enseignant = $this->personnelRepository->findByIdEdusign($course['PROFESSOR'] ?? null);
         $etudiant = $this->etudiantRepository->findOneBy(['idEduSign' => $student['studentId'] ?? null]);
 
         if ($etudiant === null) {
-            return sprintf('étudiant introuvable (idEduSign=%s)', $student['studentId'] ?? 'inconnu');
+            return [
+                'message' => sprintf('étudiant introuvable (idEduSign=%s)', $student['studentId'] ?? 'inconnu'),
+                'cause' => [
+                    'studentId' => $student['studentId'] ?? null,
+                    'course' => $course['ID'] ?? $course['API_ID'] ?? null,
+                ],
+            ];
         }
 
         try {
             $startRaw = Carbon::parse($student['start'], 'UTC')->setTimezone(new DateTimeZone('Europe/Paris'));
             $endRaw = Carbon::parse($student['end'], 'UTC')->setTimezone(new DateTimeZone('Europe/Paris'));
         } catch (\Throwable $e) {
-            return sprintf('impossible de parser les dates (%s/%s) : %s', $student['start'] ?? 'inconnu', $student['end'] ?? 'inconnu', $e->getMessage());
+            return [
+                'message' => sprintf('impossible de parser les dates (%s/%s) : %s', $student['start'] ?? 'inconnu', $student['end'] ?? 'inconnu', $e->getMessage()),
+                'cause' => [
+                    'start_raw' => $student['start'] ?? null,
+                    'end_raw' => $student['end'] ?? null,
+                    'exception' => $e->getMessage(),
+                ],
+            ];
         }
 
         $start = Carbon::createFromFormat('Y-m-d H:i:s', $startRaw->format('Y-m-d H:i:s'));
         if ($start === false) {
-            return 'date de début invalide après formatage';
+            return [
+                'message' => 'date de début invalide après formatage',
+                'cause' => ['start_raw' => $startRaw->toDateTimeString() ?? null],
+            ];
         }
 
         // vérifier existence
@@ -183,7 +248,15 @@ class GetCourses
         ]);
 
         if ($existing) {
-            return 'absence déjà existante';
+            return [
+                'message' => 'absence déjà existante',
+                'cause' => [
+                    'etudiant' => $etudiant->getId() ?? null,
+                    'dateHeure' => $start->toDateTimeString(),
+                    'idMatiere' => $matiere->id,
+                    'typeMatiere' => $matiere->typeMatiere,
+                ],
+            ];
         }
 
         // calcul durée
@@ -205,10 +278,85 @@ class GetCourses
         $newAbsence->setSemestre($etudiant->getSemestreActif());
         $newAbsence->setIdEduSign($student['_id'] ?? null);
 
-        $this->absenceRepository->save($newAbsence);
+        // sauvegarde et vérifications avec récupération d'un récap d'erreur si nécessaire
+        try {
+            $this->absenceRepository->save($newAbsence);
+        } catch (\Throwable $e) {
+            return [
+                'message' => sprintf('erreur lors de la sauvegarde de l\'absence : %s', $e->getMessage()),
+                'cause' => [
+                    'exception' => $e->getMessage(),
+                    'student' => $student,
+                    'course' => $course['ID'] ?? $course['API_ID'] ?? null,
+                ],
+            ];
+        }
 
-        $event = new AbsenceEvent($newAbsence);
-        $this->eventDispatcher->dispatch($event, AbsenceEvent::ADDED);
+        // Vérification post-save : on tente d'utiliser getId() si disponible, sinon on vérifie via le repository
+        $saved = false;
+        if (method_exists($newAbsence, 'getId')) {
+            try {
+                $id = $newAbsence->getId();
+                if (!empty($id)) {
+                    $saved = true;
+                }
+            } catch (\Throwable $e) {
+                // ignore, on tentera la vérification via le repo
+            }
+        }
+
+        if (!$saved) {
+            // tentative de récupération via repository en utilisant les mêmes critères que précédemment
+            try {
+                $found = $this->absenceRepository->findOneBy([
+                    'etudiant' => $etudiant,
+                    'dateHeure' => $start,
+                    'idMatiere' => $matiere->id,
+                    'typeMatiere' => $matiere->typeMatiere,
+                ]);
+
+                if ($found) {
+                    $saved = true;
+                }
+            } catch (\Throwable $e) {
+                return [
+                    'message' => sprintf('échec vérification post-save (exception lors de la recherche) : %s', $e->getMessage()),
+                    'cause' => [
+                        'exception' => $e->getMessage(),
+                        'criteria' => [
+                            'etudiant' => $etudiant->getId() ?? null,
+                            'dateHeure' => $start->toDateTimeString(),
+                            'idMatiere' => $matiere->id,
+                            'typeMatiere' => $matiere->typeMatiere,
+                        ],
+                    ],
+                ];
+            }
+        }
+
+        if (!$saved) {
+            return [
+                'message' => 'échec enregistrement absence (vérification post-save)',
+                'cause' => [
+                    'student' => $student,
+                    'newAbsence' => method_exists($newAbsence, 'getId') ? $newAbsence->getId() : null,
+                ],
+            ];
+        }
+
+        // dispatch de l'événement et vérification d'erreur éventuelle
+        try {
+            $event = new AbsenceEvent($newAbsence);
+            $this->eventDispatcher->dispatch($event, AbsenceEvent::ADDED);
+        } catch (\Throwable $e) {
+            return [
+                'message' => sprintf('absence enregistrée mais erreur pendant le dispatch de l\'événement : %s', $e->getMessage()),
+                'cause' => [
+                    'exception' => $e->getMessage(),
+                    'absence_id' => method_exists($newAbsence, 'getId') ? $newAbsence->getId() : null,
+                ],
+            ];
+        }
 
         return null;
     }
