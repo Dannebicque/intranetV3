@@ -91,7 +91,6 @@ class GetCourses
 
             if(empty($course['API_ID']) || $source === 'intranet') {
                 $evenement = $this->getCourse($diplome, $course, $enseignant, $source);
-                dump($evenement);
             } else {
                 $evenement = $this->edtManager->findCourse($source, $course['API_ID']);
             }
@@ -162,8 +161,6 @@ class GetCourses
             ->subject('EduSign absences - rapport')
             ->htmlTemplate('emails/error_report.html.twig')
             ->context(['errors' => $errors, 'diplome' => $diplomeLibelle, 'type' => $source]);
-
-//        dump($email);
         $this->mailer->send($email);
     }
 
@@ -189,7 +186,7 @@ class GetCourses
         ]);
 
         if ($existing) {
-            return ['message' => 'absence déjà existante'];
+            return ['message' => 'absence déjà existante : id ' . $existing->getId()];
         }
 
         $newAbsence = new Absence();
