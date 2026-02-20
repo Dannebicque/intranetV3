@@ -15,6 +15,7 @@ use App\Classes\EduSign\Adapter\EduSignEdtIntranetAdapter;
 use App\Classes\EduSign\Api\ApiCours;
 use App\Classes\Matieres\TypeMatiereManager;
 use App\Entity\Absence;
+use App\Entity\Semestre;
 use App\Event\AbsenceEvent;
 use App\Repository\AbsenceRepository;
 use App\Repository\AnneeUniversitaireRepository;
@@ -108,7 +109,7 @@ class GetCourses
                     if (!($student['state'] ?? true)) {
                         $matiere = $this->typeMatiereManager->getMatiere($evenement->getIdMatiere(), $evenement->getTypeMatiere());
                         if ($matiere) {
-                            $reason = $this->newAbsence($course, $student, $matiere);
+                            $reason = $this->newAbsence($course, $student, $matiere, $enseignant);
                             if ($reason) {
                                 $errors[] = is_array($reason) ? $reason['message'] : $reason;
                             }
@@ -164,19 +165,21 @@ class GetCourses
         $this->mailer->send($email);
     }
 
-    private function newAbsence(array $course, array $student, $matiere): ?array
+    private function newAbsence(array $course, array $student, $matiere, $enseignant): ?array
     {
         $etudiant = $this->etudiantRepository->findOneBy(['idEduSign' => $student['studentId'] ?? null]);
         if (!$etudiant) {
             return ['message' => 'étudiant introuvable'];
         }
 
-        try {
-            $start = Carbon::parse($student['start'], 'UTC')->setTimezone(new DateTimeZone('Europe/Paris'));
-            $end = Carbon::parse($student['end'], 'UTC')->setTimezone(new DateTimeZone('Europe/Paris'));
-        } catch (\Throwable $e) {
-            return ['message' => 'impossible de parser les dates'];
-        }
+        $startRaw = Carbon::parse($student['start'], 'UTC');
+        $startRaw->setTimezone(new DateTimeZone('Europe/Paris'));
+        $endRaw = Carbon::parse($student['end']);
+
+        $startFormat = $startRaw->format('Y-m-d H:i:s');
+        $endFormat = $endRaw->format('Y-m-d H:i:s');
+
+        $start = Carbon::createFromFormat("Y-m-d H:i:s", $startFormat);
 
         $existing = $this->absenceRepository->findOneBy([
             'etudiant' => $etudiant,
@@ -189,11 +192,24 @@ class GetCourses
             return ['message' => 'absence déjà existante : id ' . $existing->getId()];
         }
 
+        $dureeSecs = $endRaw->diffInSeconds($startRaw);
+        $refDate = new DateTime('2023-01-01 00:00:00');
+        $dureeSecs = abs($dureeSecs);
+        $refDate->add(new DateInterval('PT' . $dureeSecs . 'S'));
+        $dureeFormat = $refDate->format('Y-m-d H:i:s.u');
+        $duree = Carbon::createFromFormat("Y-m-d H:i:s.u", $dureeFormat);
+
         $newAbsence = new Absence();
+        $newAbsence->setPersonnel($enseignant ?? null);
         $newAbsence->setEtudiant($etudiant);
+        $newAbsence->setAnneeUniversitaire($this->anneeUniversitaireRepository->findOneBy(['active' => true]));
+        $newAbsence->setDuree($duree ?? null);
+        $newAbsence->setJustifie(false);
         $newAbsence->setDateHeure($start);
         $newAbsence->setTypeMatiere($matiere->typeMatiere);
         $newAbsence->setIdMatiere($matiere->id);
+        $newAbsence->setSemestre($etudiant->getSemestreActif());
+        $newAbsence->setIdEduSign($student['_id']);
 
         try {
             $this->absenceRepository->save($newAbsence);
