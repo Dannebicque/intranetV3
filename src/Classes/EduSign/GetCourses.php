@@ -202,7 +202,7 @@ class GetCourses
             $this->absenceRepository->save($newAbsence);
             $this->eventDispatcher->dispatch(new AbsenceEvent($newAbsence), AbsenceEvent::ADDED);
         } catch (\Throwable $e) {
-            return ['message' => 'erreur lors de la sauvegarde'];
+            return ['message' => sprintf('erreur lors de la sauvegarde de l\'absence : %s', $e->getMessage())];
         }
 
         return null;
