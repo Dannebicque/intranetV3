@@ -35,6 +35,7 @@ use DateTimeZone;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Mailer\MailerInterface;
+use App\Entity\Constantes;
 
 class GetCourses
 {
@@ -88,15 +89,14 @@ class GetCourses
                 continue;
             }
 
-            if(empty($course['API_ID'] || $source === 'intranet')) {
+            if(empty($course['API_ID']) || $source === 'intranet') {
                 $evenement = $this->getCourse($diplome, $course, $enseignant, $source);
                 dump($evenement);
-             } else {
+            } else {
                 $evenement = $this->edtManager->findCourse($source, $course['API_ID']);
             }
 
             if (!$evenement) {
-                dump('introuvable', $diplome->getId(), $course['API_ID'], $enseignant->getId(), $source);
 
                 $errors[] = sprintf('Cours edusign id %s : introuvable dans l\'EDT local', $course['API_ID'] ?? 'inconnu');
                 continue;
@@ -125,15 +125,22 @@ class GetCourses
     private function getCourse($diplome, $course, $enseignant, $source)
     {
         $date = Carbon::parse($course['START'], 'UTC')->setTimezone(new DateTimeZone('Europe/Paris'))->startOfDay();
-        $heureDebut = Carbon::parse($course['START'], 'UTC')->setTimezone(new DateTimeZone('Europe/Paris'))->format('Y-m-d H:i:s');
-        $heureFin = Carbon::parse($course['END'], 'UTC')->setTimezone(new DateTimeZone('Europe/Paris'))->format('Y-m-d H:i:s');
+        // Retourner des objets Carbon (ou DateTime) plutôt que des chaînes formatées
+        $heureDebut = Carbon::parse($course['START'], 'UTC')->setTimezone(new DateTimeZone('Europe/Paris'));
+        $heureFin = Carbon::parse($course['END'], 'UTC')->setTimezone(new DateTimeZone('Europe/Paris'));
         $enseignant = $this->personnelRepository->findByIdEdusign($course['PROFESSOR']);
         $groupe = $this->groupeRepository->findOneBy(['idEduSign' => $course['GROUP'] ?? null]);
 
         if ($source === 'celcat') {
             $evenement = $this->edtCelcatRepository->findOneBy([]);
         } else {
-            $evenement = $this->edtPlanningRepository->findOneBy(['intervenant' => $enseignant, 'date' => $date, 'groupe' => $groupe, 'heureDebut' => $heureDebut, 'heureFin' => $heureFin]);
+            $dateStr = $date->format('Y-m-d');
+            $start = Constantes::TAB_HEURES_INDEX[$heureDebut->format('H:i:s')] ?? 0;
+            $end = Constantes::TAB_HEURES_INDEX[$heureFin->format('H:i:s')] ?? 0;
+            $salle = $course['CLASSROOM'] ?? null;
+
+            $results = $this->edtPlanningRepository->findByEduSignDatas($dateStr, $start, $end, $salle, $enseignant);
+            $evenement = !empty($results) ? $results[0] : null;
         }
 
         return $evenement;
