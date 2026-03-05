@@ -10,9 +10,10 @@
 namespace App\Classes\EduSign;
 
 use App\Classes\Edt\EdtManager;
+use App\Classes\EduSign\Adapter\EduSignEdtCelcatAdapter;
+use App\Classes\EduSign\Adapter\EduSignEdtIntranetAdapter;
 use App\Classes\EduSign\Api\ApiCours;
 use App\Classes\Matieres\TypeMatiereManager;
-use App\DTO\Matiere;
 use App\Entity\Absence;
 use App\Entity\Semestre;
 use App\Event\AbsenceEvent;
@@ -35,93 +36,84 @@ use DateTimeZone;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Mailer\MailerInterface;
+use App\Entity\Constantes;
 
 class GetCourses
 {
-    protected TypeMatiereManager $typeMatiereManager;
     public function __construct(
-        private readonly ApiCours               $apiCours,
-        private readonly EdtManager            $edtManager,
-        TypeMatiereManager                     $typeMatiereManager,
-        protected SemestreRepository           $semestreRepository,
-        protected PersonnelRepository          $personnelRepository,
-        protected EtudiantRepository           $etudiantRepository,
-        protected CreateEnseignant             $updateEnseignant,
-        protected DepartementRepository        $departementRepository,
-        protected EdtPlanningRepository        $edtPlanningRepository,
-        protected EdtCelcatRepository          $edtCelcatRepository,
-        protected GroupeRepository             $groupeRepository,
-        protected DiplomeRepository            $diplomeRepository,
-        protected ApcReferentielRepository     $apcReferentielRepository,
-        protected AbsenceRepository            $absenceRepository,
-        protected AnneeUniversitaireRepository $anneeUniversitaireRepository,
-        protected CalendrierRepository         $CalendrierRepository,
-        protected EventDispatcherInterface     $eventDispatcher,
-        private readonly MailerInterface      $mailer
-    )
-    {
-        $this->typeMatiereManager = $typeMatiereManager;
-
-    }
+        private ApiCours $apiCours,
+        private EdtManager $edtManager,
+        private TypeMatiereManager $typeMatiereManager,
+        private SemestreRepository $semestreRepository,
+        private PersonnelRepository $personnelRepository,
+        private EtudiantRepository $etudiantRepository,
+        private CreateEnseignant $updateEnseignant,
+        private DepartementRepository $departementRepository,
+        private EdtPlanningRepository $edtPlanningRepository,
+        private EdtCelcatRepository $edtCelcatRepository,
+        private GroupeRepository $groupeRepository,
+        private DiplomeRepository $diplomeRepository,
+        private ApcReferentielRepository $apcReferentielRepository,
+        private AbsenceRepository $absenceRepository,
+        private AnneeUniversitaireRepository $anneeUniversitaireRepository,
+        private CalendrierRepository $CalendrierRepository,
+        private EventDispatcherInterface $eventDispatcher,
+        private MailerInterface $mailer
+    ) {}
 
     public function getCoursesToday(): void
     {
-        $diplomes = $this->diplomeRepository->findAllWithEduSign();
         $today = Carbon::today()->format('Y-m-d');
         $yesterday = Carbon::yesterday()->format('Y-m-d');
 
-        foreach ($diplomes as $diplome) {
-            $keyEduSign = $diplome->getKeyEduSign();
+        foreach ($this->diplomeRepository->findAllWithEduSign() as $diplome) {
             $source = $diplome->isOptUpdateCelcat() ? 'celcat' : 'intranet';
-            $courses = $this->apiCours->getAllCoursesBetween($keyEduSign, $yesterday, $today) ?? [];
+            $courses = $this->apiCours->getAllCoursesBetween($diplome->getKeyEduSign(), $yesterday, $today) ?? [];
 
-            if (empty($courses)) {
-                continue;
-            }
-            $errors = $this->processCourses($courses, $source, $today, $yesterday);
-
-            if (!empty($errors)) {
-                $this->sendErrorReport($errors, $diplome->getLibelle(), $source);
+            if ($courses) {
+                $errors = $this->processCourses($courses, $source, $diplome);
+                if ($errors) {
+                    $this->sendErrorReport($errors, $diplome->getLibelle(), $source);
+                }
             }
         }
     }
 
-    private function processCourses(array $courses, string $source, string $today, string $yesterday): array
+    private function processCourses(array $courses, string $source, $diplome): array
     {
         $errors = [];
 
         foreach ($courses as $course) {
-            if (!Carbon::parse($course['START'], 'Europe/Paris')->isBetween($yesterday, $today)) {
-                $errors[] = sprintf('Cours edusign id %s : date de début %s hors de la plage attendue', $course['ID'] ?? 'inconnu', $course['START'] ?? 'inconnu');
+            $enseignant = $this->personnelRepository->findByIdEdusign($course['PROFESSOR']);
+            if (!$enseignant) {
+                $errors[] = sprintf('Cours edusign id %s : professeur introuvable', $course['ID'] ?? 'inconnu');
                 continue;
             }
 
-            $evenement = $this->edtManager->findCourse($source, $course['API_ID']);
+            if(empty($course['API_ID']) || $source === 'intranet') {
+                $evenement = $this->getCourse($diplome, $course, $enseignant, $source);
+            } else {
+                $evenement = $this->edtManager->findCourse($source, $course['API_ID']);
+            }
+
             if (!$evenement) {
-                $errors[] = sprintf('Cours edusign id %s : introuvable dans l\'EDT local', $course['ID'] ?? 'inconnu');
+
+                $errors[] = sprintf('Cours edusign id %s : introuvable dans l\'EDT local', $course['API_ID'] ?? 'inconnu');
                 continue;
             }
 
-            // 1) vérifier signature professeur absente -> signaler
             $this->checkProfessorSignature($course, $evenement, $errors);
 
-            // 2) si le cours est signé, créer les absences pour les étudiants marqués absents
             if (!empty($course['STUDENTS']) && !empty($course['PROFESSOR_SIGNATURE'])) {
                 foreach ($course['STUDENTS'] as $student) {
-                    if (!(isset($student['state']) && $student['state'] === false)) {
-                        continue;
-                    }
-
-                    // récupérer la matière depuis l'événement
-                    $matiere = $this->typeMatiereManager->getMatiere($evenement->getIdMatiere(), $evenement->getTypeMatiere());
-                    if ($matiere === null) {
-                        $errors[] = sprintf('Evenement %d : matière introuvable (idMatiere=%s, type=%s)', $evenement->getId(), $evenement->getIdMatiere(), $evenement->getTypeMatiere());
-                        continue;
-                    }
-
-                    $reason = $this->newAbsence($course, $student, $matiere);
-                    if ($reason !== null) {
-                        $errors[] = sprintf('Evenement %d (edusign id %s) - étudiant %s : %s', $evenement->getId(), $course['ID'] ?? $course['API_ID'] ?? 'inconnu', $student['studentId'] ?? 'inconnu', $reason);
+                    if (!($student['state'] ?? true)) {
+                        $matiere = $this->typeMatiereManager->getMatiere($evenement->getIdMatiere(), $evenement->getTypeMatiere());
+                        if ($matiere) {
+                            $reason = $this->newAbsence($course, $student, $matiere, $enseignant);
+                            if ($reason) {
+                                $errors[] = is_array($reason) ? $reason['message'] : $reason;
+                            }
+                        }
                     }
                 }
             }
@@ -130,17 +122,36 @@ class GetCourses
         return $errors;
     }
 
+    private function getCourse($diplome, $course, $enseignant, $source)
+    {
+        $date = Carbon::parse($course['START'], 'UTC')->setTimezone(new DateTimeZone('Europe/Paris'))->startOfDay();
+        // Retourner des objets Carbon (ou DateTime) plutôt que des chaînes formatées
+        $heureDebut = Carbon::parse($course['START'], 'UTC')->setTimezone(new DateTimeZone('Europe/Paris'));
+        $heureFin = Carbon::parse($course['END'], 'UTC')->setTimezone(new DateTimeZone('Europe/Paris'));
+        $enseignant = $this->personnelRepository->findByIdEdusign($course['PROFESSOR']);
+        $groupe = $this->groupeRepository->findOneBy(['idEduSign' => $course['GROUP'] ?? null]);
+
+        if ($source === 'celcat') {
+            $evenement = $this->edtCelcatRepository->findOneBy([]);
+        } else {
+            $dateStr = $date->format('Y-m-d');
+            $start = Constantes::TAB_HEURES_INDEX[$heureDebut->format('H:i:s')] ?? 0;
+            $end = Constantes::TAB_HEURES_INDEX[$heureFin->format('H:i:s')] ?? 0;
+            $salle = $course['CLASSROOM'] ?? null;
+
+            $results = $this->edtPlanningRepository->findByEduSignDatas($dateStr, $start, $end, $salle, $enseignant);
+            $evenement = !empty($results) ? $results[0] : null;
+        }
+
+        return $evenement;
+    }
+
     private function checkProfessorSignature(array $course, $evenement, array &$errors): void
     {
         if (empty($course['STUDENTS']) || !empty($course['PROFESSOR_SIGNATURE'])) {
             return;
         }
-        $errors[] = sprintf(
-            'Evenement %d : professeur non signé pour le cours edusign id %s (étudiant %s)',
-            $evenement->getId(),
-            $course['ID'] ?? 'inconnu',
-            $student['studentId'] ?? 'inconnu'
-        );
+        $errors[] = sprintf('Evenement %d : professeur non signé', $evenement->getId());
     }
 
     private function sendErrorReport(array $errors, string $diplomeLibelle, string $source): void
@@ -151,35 +162,25 @@ class GetCourses
             ->subject('EduSign absences - rapport')
             ->htmlTemplate('emails/error_report.html.twig')
             ->context(['errors' => $errors, 'diplome' => $diplomeLibelle, 'type' => $source]);
-
-        dump($email);
-
         $this->mailer->send($email);
     }
 
-    private function newAbsence(array $course, array $student, Matiere $matiere): ?string
+    private function newAbsence(array $course, array $student, $matiere, $enseignant): ?array
     {
-        // retrouver enseignant et étudiant
-        $enseignant = $this->personnelRepository->findByIdEdusign($course['PROFESSOR'] ?? null);
         $etudiant = $this->etudiantRepository->findOneBy(['idEduSign' => $student['studentId'] ?? null]);
-
-        if ($etudiant === null) {
-            return sprintf('étudiant introuvable (idEduSign=%s)', $student['studentId'] ?? 'inconnu');
+        if (!$etudiant) {
+            return ['message' => 'étudiant introuvable'];
         }
 
-        try {
-            $startRaw = Carbon::parse($student['start'], 'UTC')->setTimezone(new DateTimeZone('Europe/Paris'));
-            $endRaw = Carbon::parse($student['end'], 'UTC')->setTimezone(new DateTimeZone('Europe/Paris'));
-        } catch (\Throwable $e) {
-            return sprintf('impossible de parser les dates (%s/%s) : %s', $student['start'] ?? 'inconnu', $student['end'] ?? 'inconnu', $e->getMessage());
-        }
+        $startRaw = Carbon::parse($student['start'], 'UTC');
+        $startRaw->setTimezone(new DateTimeZone('Europe/Paris'));
+        $endRaw = Carbon::parse($student['end']);
 
-        $start = Carbon::createFromFormat('Y-m-d H:i:s', $startRaw->format('Y-m-d H:i:s'));
-        if ($start === false) {
-            return 'date de début invalide après formatage';
-        }
+        $startFormat = $startRaw->format('Y-m-d H:i:s');
+        $endFormat = $endRaw->format('Y-m-d H:i:s');
 
-        // vérifier existence
+        $start = Carbon::createFromFormat("Y-m-d H:i:s", $startFormat);
+
         $existing = $this->absenceRepository->findOneBy([
             'etudiant' => $etudiant,
             'dateHeure' => $start,
@@ -188,16 +189,16 @@ class GetCourses
         ]);
 
         if ($existing) {
-            return 'absence déjà existante';
+            return ['message' => 'absence déjà existante : id ' . $existing->getId()];
         }
 
-        // calcul durée
-        $dureeSecs = abs($endRaw->diffInSeconds($startRaw));
+        $dureeSecs = $endRaw->diffInSeconds($startRaw);
         $refDate = new DateTime('2023-01-01 00:00:00');
+        $dureeSecs = abs($dureeSecs);
         $refDate->add(new DateInterval('PT' . $dureeSecs . 'S'));
-        $duree = Carbon::createFromFormat('Y-m-d H:i:s.u', $refDate->format('Y-m-d H:i:s.u'));
+        $dureeFormat = $refDate->format('Y-m-d H:i:s.u');
+        $duree = Carbon::createFromFormat("Y-m-d H:i:s.u", $dureeFormat);
 
-        // création de l'absence
         $newAbsence = new Absence();
         $newAbsence->setPersonnel($enseignant ?? null);
         $newAbsence->setEtudiant($etudiant);
@@ -208,12 +209,14 @@ class GetCourses
         $newAbsence->setTypeMatiere($matiere->typeMatiere);
         $newAbsence->setIdMatiere($matiere->id);
         $newAbsence->setSemestre($etudiant->getSemestreActif());
-        $newAbsence->setIdEduSign($student['_id'] ?? null);
+        $newAbsence->setIdEduSign($student['_id']);
 
-        $this->absenceRepository->save($newAbsence);
-
-        $event = new AbsenceEvent($newAbsence);
-        $this->eventDispatcher->dispatch($event, AbsenceEvent::ADDED);
+        try {
+            $this->absenceRepository->save($newAbsence);
+            $this->eventDispatcher->dispatch(new AbsenceEvent($newAbsence), AbsenceEvent::ADDED);
+        } catch (\Throwable $e) {
+            return ['message' => sprintf('erreur lors de la sauvegarde de l\'absence : %s', $e->getMessage())];
+        }
 
         return null;
     }

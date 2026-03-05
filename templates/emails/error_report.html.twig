@@ -3,29 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <title>Récapitulatif des erreurs EduSign</title>
+    <style>
+        pre.cause { background:#f6f8fa; padding:10px; border:1px solid #ddd; white-space:pre-wrap; word-break:break-word }
+        .error-item { margin-bottom:12px }
+    </style>
 </head>
 <body>
 <h1>EduSign - Récapitulatif des erreurs</h1>
-<h2>{{ diplome }}</h2>
-<h3>{{ app.user?.prenom }} {{ app.user?.nom }}</h3>
+{% if diplome is defined %}
+    <h2>{{ diplome }}</h2>
+{% endif %}
+{% if type is defined %}
+    <p><strong>Type :</strong> {{ type }}</p>
+{% endif %}
+{% if app is defined and app.user is defined and app.user %}
+    <h3>{{ app.user.prenom }} {{ app.user.nom }}</h3>
+{% endif %}
 {% if course is defined %}
     <h3>{{ course }}</h3>
 {% endif %}
 {% if errors %}
     <ul>
-        {% for key, value in errors %}
-            {% if value is iterable %}
-                <li>{{ key }}:</li>
-                <ul>
-                    {% for subKey, subValue in value %}
-                        <li>{{ subKey }}: {{ subValue }}</li>
-                    {% endfor %}
-                </ul>
+        {# Si errors_raw est défini, on s'attend au nouveau format : errors = ['msg1', 'msg2', ...], errors_raw = [detail1, detail2, ...] #}
+        {% if errors_raw is defined %}
+            {% for i, message in errors %}
+                <li class="error-item">
+                    <strong>{{ message }}</strong>
+                    {% if errors_raw[i] is defined and errors_raw[i] %}
+                        {% set raw = errors_raw[i] %}
+                        {% if raw is iterable and raw.cause is defined and raw.cause %}
+                            <div>
+                                <em>Détails :</em>
+                                <pre class="cause">{{ raw.cause|json_encode(constant('JSON_PRETTY_PRINT')) }}</pre>
+                            </div>
+                        {% elseif raw is iterable %}
+                            <div>
+                                <em>Détails :</em>
+                                <pre class="cause">{{ raw|json_encode(constant('JSON_PRETTY_PRINT')) }}</pre>
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                </li>
+                <hr>
+            {% endfor %}
+        {% else %}
+            {# Ancien format : déterminer si errors est une liste indexée (first key == 0) #}
+            {% set keys = errors|keys %}
+            {% set firstKey = keys|first %}
+            {% if firstKey is defined and firstKey == 0 %}
+                {# liste simple de messages #}
+                {% for _, message in errors %}
+                    <li>{{ message }}</li>
+                    <hr>
+                {% endfor %}
             {% else %}
-                <li>{{ type }} id : {{ key }} => {{ value }}</li>
+                {# erreurs structurées comme key => value (value peut être iterable) #}
+                {% for key, value in errors %}
+                    {% if value is iterable %}
+                        <li>
+                            <strong>{{ key }}:</strong>
+                            <ul>
+                                {% for subKey, subValue in value %}
+                                    <li>{{ subKey }}: {{ subValue }}</li>
+                                {% endfor %}
+                            </ul>
+                        </li>
+                    {% else %}
+                        <li>{{ key }} => {{ value }}</li>
+                    {% endif %}
+                    <hr>
+                {% endfor %}
             {% endif %}
-            <hr>
-        {% endfor %}
+        {% endif %}
     </ul>
 {% else %}
     <p>Aucune erreur rencontrée lors de la mise à jour.</p>
