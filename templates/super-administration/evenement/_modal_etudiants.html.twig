@@ -1,9 +1,20 @@
 {# Modal de sélection des étudiants pour un Événement #}
+{% set _initialEtudiants = [] %}
+{% if evenement is defined and evenement.etudiantEvenements is not null %}
+    {% for ee in evenement.etudiantEvenements %}
+        {% set e = ee.etudiant %}
+        {% if e is not null %}
+            {% set _initialEtudiants = _initialEtudiants|merge([{id: e.id, text: e.nom ~ ' ' ~ e.prenom}]) %}
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
 <div class="modal fade" id="modalEtudiants" tabindex="-1" aria-labelledby="modalEtudiantsLabel" aria-hidden="true"
      data-controller="evenement-etudiants"
      data-evenement-etudiants-endpoint-value="{{ path('api_evenement_etudiants') }}"
      data-evenement-etudiants-semestres-endpoint-value="{{ path('api_evenement_semestres') }}"
      data-evenement-etudiants-groupes-endpoint-value="{{ path('api_evenement_groupes') }}"
+     data-evenement-etudiants-initial-etudiants-value="{{ _initialEtudiants|json_encode|e('html_attr') }}"
 >
     <div class="modal-dialog modal-lg modal-dialog-scrollable">
         <div class="modal-content">
