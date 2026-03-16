@@ -309,15 +309,17 @@ export default class extends Controller {
   _renderSelected () {
     // Render inside modal
     this.selectedZoneTarget.innerHTML = ''
-    const badges = this._buildBadges()
-    badges.forEach((badge) => this.selectedZoneTarget.appendChild(badge.cloneNode(true)))
+    this._buildBadges().forEach((badge) => {
+      this.selectedZoneTarget.appendChild(badge)
+    })
 
     // Also render under the button in the form if the container exists
     const external = document.getElementById('evenement-selected-summary')
     if (external) {
       external.innerHTML = ''
-      // When rendered outside modal, the remove buttons should still work
-      badges.forEach((badge) => external.appendChild(badge))
+      this._buildBadges().forEach((badge) => {
+        external.appendChild(badge)
+      })
     }
   }
 
@@ -333,7 +335,7 @@ export default class extends Controller {
       btn.className = 'btn btn-sm btn-link text-white p-0'
       btn.innerHTML = '&times;'
       btn.dataset.id = String(id)
-      btn.addEventListener('click', this.removeItem.bind(this))
+      btn.addEventListener('click', (event) => this.removeItem(event))
       badge.appendChild(label)
       badge.appendChild(btn)
       out.push(badge)
