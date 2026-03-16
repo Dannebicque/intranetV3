@@ -77,11 +77,6 @@
     {# Modal de sélection des étudiants #}
     {{ include('super-administration/evenement/_modal_etudiants.html.twig') }}
 
-    {# Pré-remplir le hidden avec les étudiants déjà sélectionnés (construction sûre côté serveur/Twig) #}
-    {% set _ids = [] %}
-    {% for ee in evenement.etudiantEvenements %}
-        {% set _ids = _ids|merge([ee.etudiant.id]) %}
-    {% endfor %}
 
     {# Normalisation de l'adresse : construire un tableau associatif clair pour JS #}
     {% set _rawAddr = evenement.adresse ?: {} %}
@@ -94,16 +89,6 @@
         'pays': _rawAddr.pays|default('')
     } %}
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const input = document.querySelector('input[name="evenement[etudiantsIds]"]');
-            if (input) {
-                if (!input.value) {
-                    input.value = '{{ _ids|join(',')|e('js') }}';
-                }
-            }
-        });
-    </script>
 
     <script defer>
       window.addEventListener('load', () => {

@@ -145,27 +145,26 @@ class EvenementController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
             // Mettre à jour la relation via EtudiantEvenement depuis les IDs cachés si fournis
             $ids = (string) ($form->get('etudiantsIds')->getData() ?? '');
-            if ($ids !== '') {
-                $idsArray = array_filter(array_map('intval', array_unique(preg_split('/[,\s]+/', $ids) ?: [])));
 
-                // Supprimer les liaisons existantes
-                foreach ($evenement->getEtudiantEvenements()->toArray() as $ee) {
-                    $evenement->removeEtudiantEvenement($ee);
-                    $this->entityManager->remove($ee);
-                }
+            $idsArray = array_filter(array_map('intval', array_unique(preg_split('/[,\s]+/', $ids) ?: [])));
 
-                // Recréer les liaisons
-                if (!empty($idsArray)) {
-                    $etudiantRepo = $this->entityManager->getRepository(\App\Entity\Etudiant::class);
-                    foreach ($idsArray as $id) {
-                        $etu = $etudiantRepo->find($id);
-                        if (null !== $etu) {
-                            $ee = new \App\Entity\EtudiantEvenement();
-                            $ee->setEtudiant($etu);
-                            $ee->setEvenement($evenement);
-                            $evenement->addEtudiantEvenement($ee);
-                            $this->entityManager->persist($ee);
-                        }
+            // Supprimer les liaisons existantes
+            foreach ($evenement->getEtudiantEvenements()->toArray() as $ee) {
+                $evenement->removeEtudiantEvenement($ee);
+                $this->entityManager->remove($ee);
+            }
+
+            // Recréer les liaisons
+            if (!empty($idsArray)) {
+                $etudiantRepo = $this->entityManager->getRepository(\App\Entity\Etudiant::class);
+                foreach ($idsArray as $id) {
+                    $etu = $etudiantRepo->find($id);
+                    if (null !== $etu) {
+                        $ee = new \App\Entity\EtudiantEvenement();
+                        $ee->setEtudiant($etu);
+                        $ee->setEvenement($evenement);
+                        $evenement->addEtudiantEvenement($ee);
+                        $this->entityManager->persist($ee);
                     }
                 }
             }

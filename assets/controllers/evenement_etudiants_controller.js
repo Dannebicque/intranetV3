@@ -12,6 +12,7 @@ export default class extends Controller {
     loadingMessage: String,
     errorMessage: String,
     emptyMessage: String,
+    initialEtudiants: Array,
   }
 
   connect () {
@@ -32,12 +33,12 @@ export default class extends Controller {
     this.groupesTarget.setAttribute('disabled', 'disabled')
 
     // Si des IDs sont déjà présents dans le champ hidden, les recharger (texte non dispo ici, on affichera l’ID)
-    this._initFromHidden()
+    this._initFromValues()
 
     // Si un département est déjà sélectionné (cas d'édition), charger les semestres
     const depId = this.departementTarget?.value
     if (depId) {
-      this.onDepartementChange()
+      this.onDepartementChange(false)
     }
   }
 
@@ -50,19 +51,29 @@ export default class extends Controller {
     return document.querySelector('input[name="evenement[etudiantsIds]"]')
   }
 
-  // Initialiser sélection depuis le champ hidden (cas d'édition)
-  _initFromHidden () {
-    const hidden = this.hiddenInput
-    if (!hidden || !hidden.value) return
-    const ids = hidden.value.split(/[\s,]+/).map(v => parseInt(v, 10)).filter(v => !isNaN(v))
-    ids.forEach(id => {
-      if (!this.selected.has(id)) this.selected.set(id, { id, text: `#${id}` })
-    })
+  _initFromValues () {
+    const items = this.initialEtudiantsValue || []
+    if (items.length > 0) {
+      items.forEach((it) => {
+        if (!this.selected.has(it.id)) this.selected.set(it.id, { id: it.id, text: it.text })
+      })
+    } else {
+      // Fallback sur le hidden si initialEtudiants n'est pas fourni
+      const hidden = this.hiddenInput
+      if (hidden && hidden.value) {
+        const ids = hidden.value.split(/[\s,]+/).map((v) => parseInt(v, 10)).filter((v) => !isNaN(v))
+        ids.forEach((id) => {
+          if (!this.selected.has(id)) this.selected.set(id, { id, text: `#${id}` })
+        })
+      }
+    }
     this._renderSelected()
+    this._syncHidden()
   }
 
-  onDepartementChange () {
-    // Quand le département change, réinitialiser filtres, page, résultats et sélection
+  onDepartementChange (event) {
+    // Quand le département change, réinitialiser filtres, page, résultats.
+    // NOTE: on ne réinitialise plus la sélection (this.selected) pour permettre de filtrer et ajouter des étudiants de différents départements.
     this.page = 1
     this.currentResults = []
 
@@ -77,8 +88,6 @@ export default class extends Controller {
 
     this.semestresTarget.setAttribute('disabled', 'disabled')
     this.groupesTarget.setAttribute('disabled', 'disabled')
-
-    this.clearSelection()
 
     // Charger les semestres du département si défini
     const depId = this.departementTarget.value
