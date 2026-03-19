@@ -222,8 +222,11 @@ class SecurityController extends AbstractController
     public function login(AuthenticationUtils $authenticationUtils, Request $request, RequestStack $requestStack, string $message = ''): Response
     {
         // récupérer l'url d'origine via le referer
-        $urlOrigin = $request->headers->get('referer');
+        $urlOrigin = $request->headers->get('referer') ?? $this->generateUrl('default_homepage'); // ou une autre URL par défaut
         $session = $requestStack->getSession();
+        if (!$session->isStarted()) {
+            $session->start();
+        }
         // stocker l'url dans la session
         $session->set('url_origin', $urlOrigin);
 
