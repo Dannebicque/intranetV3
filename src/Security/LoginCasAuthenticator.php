@@ -72,10 +72,9 @@ class LoginCasAuthenticator extends AbstractAuthenticator
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
         $session = $this->requestStack->getSession();
-        $urlOrigin = $session->get('url_origin');
+        $urlOrigin = $session->get('_security.main.target_path');
 
         if ($urlOrigin) {
-            $session->remove('url_origin');
             return new RedirectResponse($urlOrigin);
         } else {
             return new RedirectResponse(
