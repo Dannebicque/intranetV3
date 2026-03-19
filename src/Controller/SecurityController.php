@@ -219,11 +219,11 @@ class SecurityController extends AbstractController
     }
 
     #[Route(path: '/connexion/{message}', name: 'security_login')]
-    public function login(AuthenticationUtils $authenticationUtils, Request $request, string $message = ''): Response
+    public function login(AuthenticationUtils $authenticationUtils, Request $request, RequestStack $requestStack, string $message = ''): Response
     {
         // récupérer l'url d'origine via le referer
         $urlOrigin = $request->headers->get('referer');
-        $session = $request->getSession();
+        $session = $requestStack->getSession();
         // stocker l'url dans la session
         $session->set('url_origin', $urlOrigin);
 
