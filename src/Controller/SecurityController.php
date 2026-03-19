@@ -219,8 +219,14 @@ class SecurityController extends AbstractController
     }
 
     #[Route(path: '/connexion/{message}', name: 'security_login')]
-    public function login(AuthenticationUtils $authenticationUtils, string $message = ''): Response
+    public function login(AuthenticationUtils $authenticationUtils, Request $request, RequestStack $requestStack, string $message = ''): Response
     {
+        // récupérer l'url d'origine via le referer
+        $urlOrigin = $request->headers->get('referer') ?? $this->generateUrl('default_homepage'); // ou une autre URL par défaut
+        $session = $requestStack->getSession();
+        // stocker l'url dans la session
+        $session->set('url_origin', $urlOrigin);
+
         return $this->render('security/login.html.twig',
             [
                 'message' => $message,

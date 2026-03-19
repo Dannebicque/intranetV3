@@ -14,6 +14,7 @@ use phpCAS;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
@@ -27,7 +28,7 @@ use Symfony\Component\Security\Http\Authenticator\Passport\SelfValidatingPasspor
 
 class LoginCasAuthenticator extends AbstractAuthenticator
 {
-    public function __construct(private readonly ParameterBagInterface $parameterBag, private readonly RouterInterface $router, private readonly UrlGeneratorInterface $urlGenerator)
+    public function __construct(private readonly ParameterBagInterface $parameterBag, private readonly RouterInterface $router, private readonly UrlGeneratorInterface $urlGenerator, private RequestStack $requestStack)
     {
     }
 
@@ -70,9 +71,17 @@ class LoginCasAuthenticator extends AbstractAuthenticator
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
-        return new RedirectResponse(
-            $this->router->generate('default_homepage')
-        );
+        $session = $this->requestStack->getSession();
+        $urlOrigin = $session->get('url_origin');
+
+        if ($urlOrigin) {
+            $session->remove('url_origin');
+            return new RedirectResponse($urlOrigin);
+        } else {
+            return new RedirectResponse(
+                $this->router->generate('default_homepage')
+            );
+        }
     }
 
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception): ?Response

@@ -13,7 +13,7 @@ use BaconQrCode\Renderer\Image\SvgImageBackEnd;
 
 class QrCodeService
 {
-    private const KEY_TTL = 86400; // 24 heures
+    private const KEY_TTL = 2592000; // 30 jours (30 * 24 * 3600)
 
     public function __construct(
         private readonly UrlGeneratorInterface $urlGenerator,

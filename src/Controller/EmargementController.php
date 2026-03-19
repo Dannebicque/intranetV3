@@ -229,13 +229,14 @@ final class EmargementController extends AbstractController
                 if (ctype_digit($idStr) && ctype_digit($expiresStr)) {
                     $id = (int) $idStr;
                     $expires = (int) $expiresStr;
-                    if (time() <= $expires) {
-                        $secret = getenv('APP_SECRET') ?: ($_ENV['APP_SECRET'] ?? '');
-                        if ($secret !== '') {
-                            $expected = hash_hmac('sha256', $idStr . ':' . $expiresStr, $secret);
-                            if (hash_equals($expected, $hmac)) {
-                                return $id;
-                            }
+                    if (time() > $expires) {
+                        throw $this->createNotFoundException('Le lien de ce QR code a expiré.');
+                    }
+                    $secret = getenv('APP_SECRET') ?: ($_ENV['APP_SECRET'] ?? '');
+                    if ($secret !== '') {
+                        $expected = hash_hmac('sha256', $idStr . ':' . $expiresStr, $secret);
+                        if (hash_equals($expected, $hmac)) {
+                            return $id;
                         }
                     }
                 }
