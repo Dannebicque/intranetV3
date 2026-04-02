@@ -203,7 +203,7 @@ class DocumentController extends BaseController
                 ]
             );
         } else {
-            $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $document->getSemestres()[0]);
+            $this->denyAccessUnlessGranted('ROLE_PERMANENT', $document->getSemestres()[0]);
             $form = $this->createForm(
                 DocumentType::class,
                 $document,
