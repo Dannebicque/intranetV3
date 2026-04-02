@@ -156,11 +156,12 @@ class DocumentTableType extends TableType
             'fetch_join_collection' => false,
             'query' => function (QueryBuilder $qb, array $formData) {
                 if (Document::DOCUMENTS === $this->source) {
-                    $qb->join('e.semestres', 'c')// récupération de la jointure dans la table dédiée
-                    ->innerJoin(Semestre::class, 's', 'WITH', 'c.id = s.id')
-                        ->innerJoin(Annee::class, 'a', 'WITH', 'c.annee = a.id')
-                        ->innerJoin(Diplome::class, 'd', 'WITH', 'a.diplome = d.id')
-                        ->where('d.departement = :departement')
+                    $qb->leftJoin('e.semestres', 'c')
+                        ->leftJoin(Semestre::class, 's', 'WITH', 'c.id = s.id')
+                        ->leftJoin('s.annee', 'a')
+                        ->leftJoin('a.diplome', 'd')
+                        ->innerJoin('e.typeDocument', 't')
+                        ->where('d.departement = :departement OR t.departement = :departement')
                         ->distinct()
                         ->setParameter('departement', $this->departement->getId());
                 } else {
