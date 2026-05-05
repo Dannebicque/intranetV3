@@ -39,8 +39,12 @@
                 <tr>
                     <th>{{ 'table.adresse'|trans }}</th>
                     <td>
-                        {{ evenement.adresse.adresse1 }} {{ evenement.adresse.adresse2 }} {{ evenement.adresse.adresse3 }} {{ evenement.adresse.codePostal }} {{ evenement.adresse.ville }} {{ evenement.adresse.pays }}
-
+                        {{ evenement.adresse.adresse1 }}
+                        {{ evenement.adresse.adresse2 }}
+                        {{ evenement.adresse.adresse3 }}
+                        {{ evenement.adresse.codePostal }}
+                        {{ evenement.adresse.ville }}
+                        {{ evenement.adresse.pays }}
                     </td>
                 </tr>
                 <tr>
@@ -49,90 +53,155 @@
                 </tr>
                 <tr>
                     <th>{{ 'table.participants'|trans }}</th>
-                    <td>
-                        {{ evenement.etudiantEvenements|length }}
-                    </td>
+                    <td>{{ evenement.etudiantEvenements|length }}</td>
                 </tr>
                 </tbody>
             </table>
 
-            <div class="d-flex items-center gap-2 mb-3">
+            <div class="d-flex align-items-center gap-2 mb-3">
                 <h5>{{ 'adm.evenement.attendance'|trans({}, 'evenement') }}</h5>
-                <a class="btn btn-sm btn-secondary" href="{{ path('app_emargement_export', {id: evenement.id}) }}" title="{{ 'adm.evenement.exporterresultxlsx'|trans({}, 'evenement') }}" data-bs-toggle="tooltip" data-bs-placement="bottom">
+                <a class="btn btn-sm btn-secondary"
+                   href="{{ path('app_emargement_export', {id: evenement.id}) }}"
+                   title="{{ 'adm.evenement.exporterresultxlsx'|trans({}, 'evenement') }}"
+                   data-bs-toggle="tooltip"
+                   data-bs-placement="bottom">
                     <i class="fas fa-download"></i>
                 </a>
             </div>
-            <table class="table table-striped" data-xls-sheet="Émargement">
-                <thead>
-                <tr>
-                    <th>id</th>
-                    <th>{{ 'table.prenom'|trans }}</th>
-                    <th>{{ 'table.nom'|trans }}</th>
-                    <th>semestre</th>
-                    <th>présence</th>
-                    <th>date signature</th>
-                    <th>Marquer présent</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for etudiantEvenement in etudiantsEvenement %}
-                    <tr>
-                        <td>{{ loop.index }}</td>
-                        <td>{{ etudiantEvenement.etudiant.prenom }}</td>
-                        <td>{{ etudiantEvenement.etudiant.nom ?? '-' }}</td>
-                        <td>{{ etudiantEvenement.etudiant.semestreActif }}</td>
-                        <td>
-                            {% if etudiantEvenement.present %}
-                                <span class="badge bg-success">{{ 'oui'|trans }}</span>
-                            {% else %}
-                                <span class="badge bg-danger">{{ 'non'|trans }}</span>
-                            {% endif %}
-                        </td>
 
-                        {# Calcul de la classe 'text-danger' :
-                               - si pas la même date que l'événement
-                               - ou si la signature est avant l'heure de début -1h
-                               - ou si la signature est après l'heure de fin +1h
-                               Si les heures de début/fin ne sont pas définies, on ne fait que la vérification de la date. #}
-                        {% set sig = etudiantEvenement.dateSignature %}
-                        {% set danger = false %}
-                        {% if sig %}
-                            {% set sigDate = sig|date('Y-m-d') %}
-                            {% set eventDate = evenement.date ? evenement.date|date('Y-m-d') : '' %}
+            {# Onglets par département #}
+            {% if etudiantsParDepartement is not empty %}
+                <ul class="nav nav-tabs mb-3" id="departementTabs" role="tablist">
+                    {# Onglet "Tous" #}
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active"
+                                id="tab-all"
+                                data-bs-toggle="tab"
+                                data-bs-target="#pane-all"
+                                type="button"
+                                role="tab"
+                                aria-controls="pane-all"
+                                aria-selected="true">
+                            Tous
+                            <span class="badge bg-secondary ms-1">{{ etudiantsEvenement|length }}</span>
+                        </button>
+                    </li>
+                    {% for departement, etudiants in etudiantsParDepartement %}
+                        {% set tabId = 'tab-' ~ loop.index %}
+                        {% set paneId = 'pane-' ~ loop.index %}
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link"
+                                    id="{{ tabId }}"
+                                    data-bs-toggle="tab"
+                                    data-bs-target="#{{ paneId }}"
+                                    type="button"
+                                    role="tab"
+                                    aria-controls="{{ paneId }}"
+                                    aria-selected="false">
+                                {{ departement }}
+                                <span class="badge bg-secondary ms-1">{{ etudiants|length }}</span>
+                            </button>
+                        </li>
+                    {% endfor %}
+                </ul>
 
-                            {% set timeChecksOk = true %}
-                            {% if evenement.date and evenement.debut and evenement.fin %}
-                                {% set startDt = date(eventDate ~ ' ' ~ (evenement.debut|date('H:i')) ~ ' -1 hour') %}
-                                {% set endDt = date(eventDate ~ ' ' ~ (evenement.fin|date('H:i')) ~ ' +1 hour') %}
+                <div class="tab-content" id="departementTabsContent">
+                    {# Panneau "Tous" #}
+                    <div class="tab-pane fade show active"
+                         id="pane-all"
+                         role="tabpanel"
+                         aria-labelledby="tab-all">
+                        {{ _self.tableEmargement(etudiantsEvenement, evenement) }}
+                    </div>
 
-                                {% set timeChecksOk = (sig.timestamp >= startDt.timestamp) and (sig.timestamp <= endDt.timestamp) %}
-                            {% endif %}
+                    {% for departement, etudiants in etudiantsParDepartement %}
+                        {% set paneId = 'pane-' ~ loop.index %}
+                        {% set tabId = 'tab-' ~ loop.index %}
+                        <div class="tab-pane fade"
+                             id="{{ paneId }}"
+                             role="tabpanel"
+                             aria-labelledby="{{ tabId }}">
+                            {{ _self.tableEmargement(etudiants, evenement) }}
+                        </div>
+                    {% endfor %}
+                </div>
 
-                            {% if sigDate != eventDate or not timeChecksOk %}
-                                {% set danger = true %}
-                            {% endif %}
-                        {% endif %}
+            {% else %}
+                <p class="text-muted">{{ 'table.empty'|trans }}</p>
+            {% endif %}
 
-                        <td class="{{ danger ? 'text-danger' : '' }}">
-                            {% if sig %}
-                                {{ sig|date('d/m/Y H:i') }}
-                            {% else %}
-                                -
-                            {% endif %}
-                        </td>
-                        <td>
-                            <a class="btn btn-sm btn-primary {{ etudiantEvenement.present !== false ? 'disabled' }}" href="{{ path('app_evenement_confirm_presence', {id:etudiantEvenement.id}) }}" title="Marquer l'étudiant présent" data-bs-toggle="tooltip" data-bs-placement="bottom">
-                                <i class="fas fa-check-circle"></i>
-                            </a>
-                        </td>
-                    </tr>
-                {% else %}
-                    <tr>
-                        <td colspan="5">{{ 'table.empty'|trans }}</td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
         </div>
     </div>
 {% endblock %}
+
+{# Macro pour éviter la duplication du tableau d'émargement #}
+{% macro tableEmargement(etudiants, evenement) %}
+    <table class="table table-striped" data-xls-sheet="Émargement">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>{{ 'table.prenom'|trans }}</th>
+            <th>{{ 'table.nom'|trans }}</th>
+            <th>Semestre</th>
+            <th>Présence</th>
+            <th>Date signature</th>
+            <th>Marquer présent</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for etudiantEvenement in etudiants %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ etudiantEvenement.etudiant.prenom }}</td>
+                <td>{{ etudiantEvenement.etudiant.nom ?? '-' }}</td>
+                <td>{{ etudiantEvenement.etudiant.semestreActif }}</td>
+                <td>
+                    {% if etudiantEvenement.present %}
+                        <span class="badge bg-success">{{ 'oui'|trans }}</span>
+                    {% else %}
+                        <span class="badge bg-danger">{{ 'non'|trans }}</span>
+                    {% endif %}
+                </td>
+
+                {# Vérification de cohérence de la date/heure de signature #}
+                {% set sig = etudiantEvenement.dateSignature %}
+                {% set danger = false %}
+                {% if sig %}
+                    {% set sigDate = sig|date('Y-m-d') %}
+                    {% set eventDate = evenement.date ? evenement.date|date('Y-m-d') : '' %}
+                    {% set timeChecksOk = true %}
+                    {% if evenement.date and evenement.debut and evenement.fin %}
+                        {% set startDt = date(eventDate ~ ' ' ~ (evenement.debut|date('H:i')) ~ ' -1 hour') %}
+                        {% set endDt   = date(eventDate ~ ' ' ~ (evenement.fin|date('H:i'))   ~ ' +1 hour') %}
+                        {% set timeChecksOk = (sig.timestamp >= startDt.timestamp) and (sig.timestamp <= endDt.timestamp) %}
+                    {% endif %}
+                    {% if sigDate != eventDate or not timeChecksOk %}
+                        {% set danger = true %}
+                    {% endif %}
+                {% endif %}
+
+                <td class="{{ danger ? 'text-danger' : '' }}">
+                    {% if sig %}
+                        {{ sig|date('d/m/Y H:i') }}
+                    {% else %}
+                        -
+                    {% endif %}
+                </td>
+                <td>
+                    <a class="btn btn-sm btn-primary {{ etudiantEvenement.present !== false ? 'disabled' }}"
+                       href="{{ path('app_evenement_confirm_presence', {id: etudiantEvenement.id}) }}"
+                       title="Marquer l'étudiant présent"
+                       data-bs-toggle="tooltip"
+                       data-bs-placement="bottom">
+                        <i class="fas fa-check-circle"></i>
+                    </a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">{{ 'table.empty'|trans }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endmacro %}

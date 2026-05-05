@@ -295,17 +295,31 @@ final class EmargementController extends AbstractController
             throw $this->createNotFoundException('Événement introuvable');
         }
 
-        // Récupère les inscriptions liées à l'événement
         $etudiantsEvenement = $etudiantEvenementRepository->findBy(['evenement' => $evenement->getId()], ['id' => 'ASC']);
 
-        // Le bundle attend un template contenant le(s) <table> avec data-xls-sheet
+        $etudiantsParDepartement = [];
+        foreach ($etudiantsEvenement as $ee) {
+            $departement = $ee->getEtudiant()->getDepartement();
+            if (null === $departement) {
+                continue;
+            }
+            $libelle = $departement->getLibelle();
+            if (!isset($etudiantsParDepartement[$libelle])) {
+                $etudiantsParDepartement[$libelle] = [];
+            }
+            $etudiantsParDepartement[$libelle][] = $ee;
+        }
+        ksort($etudiantsParDepartement);
+
         return $this->renderSpreadsheet(
             'super-administration/evenement/export.html.twig',
             [
                 'evenement' => $evenement,
                 'etudiantsEvenement' => $etudiantsEvenement,
+                'etudiantsParDepartement' => $etudiantsParDepartement,
             ],
             sprintf('evenement-%d.xlsx', $evenement->getId())
         );
     }
+
 }
