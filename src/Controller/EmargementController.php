@@ -305,7 +305,12 @@ final class EmargementController extends AbstractController
             }
             $libelle = $departement->getLibelle();
             if (!isset($etudiantsParDepartement[$libelle])) {
-                $etudiantsParDepartement[$libelle] = [];
+                $etudiantsParDepartement[$libelle] = ['etudiants' => [], 'presents' => 0, 'total' => 0];
+            }
+            $etudiantsParDepartement[$libelle]['etudiants'][] = $ee;
+            $etudiantsParDepartement[$libelle]['total']++;
+            if ($ee->isPresent()) {
+                $etudiantsParDepartement[$libelle]['presents']++;
             }
             $etudiantsParDepartement[$libelle][] = $ee;
         }

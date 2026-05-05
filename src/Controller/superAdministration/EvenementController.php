@@ -135,11 +135,14 @@ class EvenementController extends BaseController
             }
             $libelle = $departement->getLibelle();
             if (!isset($etudiantsParDepartement[$libelle])) {
-                $etudiantsParDepartement[$libelle] = [];
+                $etudiantsParDepartement[$libelle] = ['etudiants' => [], 'presents' => 0, 'total' => 0];
             }
-            $etudiantsParDepartement[$libelle][] = $ee;
+            $etudiantsParDepartement[$libelle]['etudiants'][] = $ee;
+            $etudiantsParDepartement[$libelle]['total']++;
+            if ($ee->isPresent()) {
+                $etudiantsParDepartement[$libelle]['presents']++;
+            }
         }
-
         ksort($etudiantsParDepartement);
 
         return $this->render('super-administration/evenement/show.html.twig', [
@@ -148,6 +151,7 @@ class EvenementController extends BaseController
             'etudiantsParDepartement' => $etudiantsParDepartement,
         ]);
     }
+
 
 
     #[Route(path: '/{id}/edit', name: 'sa_evenement_edit', methods: ['GET', 'POST'])]
