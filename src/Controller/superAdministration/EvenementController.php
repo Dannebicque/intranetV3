@@ -8,6 +8,7 @@ namespace App\Controller\superAdministration;
 use App\Classes\Pdf\PdfManager;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
+use App\Entity\EtudiantEvenement;
 use App\Entity\Evenement;
 use App\Form\EvenementForm;
 use App\Repository\EtudiantEvenementRepository;
@@ -126,11 +127,28 @@ class EvenementController extends BaseController
     {
         $etudiantsEvenement = $evenement->getEtudiantEvenements();
 
+        $etudiantsParDepartement = [];
+        foreach ($etudiantsEvenement as $ee) {
+            $departement = $ee->getEtudiant()->getDepartement();
+            if (null === $departement) {
+                continue;
+            }
+            $libelle = $departement->getLibelle();
+            if (!isset($etudiantsParDepartement[$libelle])) {
+                $etudiantsParDepartement[$libelle] = [];
+            }
+            $etudiantsParDepartement[$libelle][] = $ee;
+        }
+
+        ksort($etudiantsParDepartement);
+
         return $this->render('super-administration/evenement/show.html.twig', [
             'evenement' => $evenement,
             'etudiantsEvenement' => $etudiantsEvenement,
+            'etudiantsParDepartement' => $etudiantsParDepartement,
         ]);
     }
+
 
     #[Route(path: '/{id}/edit', name: 'sa_evenement_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Evenement $evenement): Response
@@ -216,11 +234,22 @@ class EvenementController extends BaseController
     {
         $newEvenement = clone $evenement;
         $this->entityManager->persist($newEvenement);
+
+        foreach ($evenement->getEtudiantEvenements() as $etudiantEvenement) {
+            $newEtudiantEvenement = new EtudiantEvenement();
+            $newEtudiantEvenement->setEvenement($newEvenement);
+            $newEtudiantEvenement->setEtudiant($etudiantEvenement->getEtudiant());
+            $newEtudiantEvenement->setPresent(false);
+            $newEtudiantEvenement->setDateSignature(null);
+            $this->entityManager->persist($newEtudiantEvenement);
+        }
+
         $this->entityManager->flush();
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'evenement.duplicate.success.flash');
 
         return $this->redirectToRoute('sa_evenement_edit', ['id' => $newEvenement->getId()]);
     }
+
 
     #[Route(path: '/{id}/generate_qr', name: 'sa_evenement_generate_qr', methods: ['GET', 'POST'])]
     public function generateQr(Evenement $evenement): Response

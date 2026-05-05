@@ -1,5 +1,39 @@
-<table class="table table-striped" data-xls-sheet="Émargement">
+{# Feuille "Tous" : tous les étudiants confondus #}
+<table class="table table-striped" data-xls-sheet="Tous">
     <thead>
+    <tr>
+        <th>id</th>
+        <th>{{ 'table.prenom'|trans }}</th>
+        <th>{{ 'table.nom'|trans }}</th>
+        <th>département</th>
+        <th>semestre</th>
+        <th>présence</th>
+        <th>date signature</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for etudiantEvenement in etudiantsEvenement %}
+        <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ etudiantEvenement.etudiant.prenom }}</td>
+            <td>{{ etudiantEvenement.etudiant.nom ?: '-' }}</td>
+            <td>{{ etudiantEvenement.etudiant.departement ? etudiantEvenement.etudiant.departement.libelle : '-' }}</td>
+            <td>{{ etudiantEvenement.etudiant.semestreActif }}</td>
+            <td>{{ etudiantEvenement.present ? 'oui'|trans : 'non'|trans }}</td>
+            <td>{% if etudiantEvenement.dateSignature %}{{ etudiantEvenement.dateSignature|date('d/m/Y H:i') }}{% else %}-{% endif %}</td>
+        </tr>
+    {% else %}
+        <tr>
+            <td colspan="7">{{ 'table.empty'|trans }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+{# Une feuille par département #}
+{% for departement, etudiants in etudiantsParDepartement %}
+    <table class="table table-striped" data-xls-sheet="{{ departement }}">
+        <thead>
         <tr>
             <th>id</th>
             <th>{{ 'table.prenom'|trans }}</th>
@@ -8,9 +42,9 @@
             <th>présence</th>
             <th>date signature</th>
         </tr>
-    </thead>
-    <tbody>
-        {% for etudiantEvenement in etudiantsEvenement %}
+        </thead>
+        <tbody>
+        {% for etudiantEvenement in etudiants %}
             <tr>
                 <td>{{ loop.index }}</td>
                 <td>{{ etudiantEvenement.etudiant.prenom }}</td>
@@ -24,5 +58,6 @@
                 <td colspan="6">{{ 'table.empty'|trans }}</td>
             </tr>
         {% endfor %}
-    </tbody>
-</table>
+        </tbody>
+    </table>
+{% endfor %}
