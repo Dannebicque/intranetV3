@@ -86,7 +86,7 @@
                             <span class="badge bg-secondary ms-1">{{ etudiantsEvenement|length }}</span>
                         </button>
                     </li>
-                    {% for departement, etudiants in etudiantsParDepartement %}
+                    {% for departement, data in etudiantsParDepartement %}
                         {% set tabId = 'tab-' ~ loop.index %}
                         {% set paneId = 'pane-' ~ loop.index %}
                         <li class="nav-item" role="presentation">
@@ -99,7 +99,7 @@
                                     aria-controls="{{ paneId }}"
                                     aria-selected="false">
                                 {{ departement }}
-                                <span class="badge bg-secondary ms-1">{{ etudiants|length }}</span>
+                                <span class="badge bg-secondary ms-1">{{ data.total }}</span>
                             </button>
                         </li>
                     {% endfor %}
@@ -111,19 +111,41 @@
                          id="pane-all"
                          role="tabpanel"
                          aria-labelledby="tab-all">
+                        {% set totalPresents = 0 %}
+                        {% for ee in etudiantsEvenement %}
+                            {% if ee.present %}
+                                {% set totalPresents = totalPresents + 1 %}
+                            {% endif %}
+                        {% endfor %}
+
+                        <p class="mb-2">
+                            <strong>Présences : </strong>
+                            <span class="badge fs-6 bg-{% if totalPresents == etudiantsEvenement|length %}success{% elseif totalPresents == 0 %}danger{% else %}warning{% endif %}">
+            {{ totalPresents }} / {{ etudiantsEvenement|length }}
+        </span>
+                        </p>
                         {{ _self.tableEmargement(etudiantsEvenement, evenement) }}
                     </div>
 
-                    {% for departement, etudiants in etudiantsParDepartement %}
+                    {% for departement, data in etudiantsParDepartement %}
                         {% set paneId = 'pane-' ~ loop.index %}
                         {% set tabId = 'tab-' ~ loop.index %}
                         <div class="tab-pane fade"
                              id="{{ paneId }}"
                              role="tabpanel"
                              aria-labelledby="{{ tabId }}">
-                            {{ _self.tableEmargement(etudiants, evenement) }}
+
+                            <p class="mb-2">
+                                <strong>Présences : </strong>
+                                <span class="badge fs-6 bg-{% if data.presents == data.total %}success{% elseif data.presents == 0 %}danger{% else %}warning{% endif %}">
+                {{ data.presents }} / {{ data.total }}
+            </span>
+                            </p>
+
+                            {{ _self.tableEmargement(data.etudiants, evenement) }}
                         </div>
                     {% endfor %}
+
                 </div>
 
             {% else %}
