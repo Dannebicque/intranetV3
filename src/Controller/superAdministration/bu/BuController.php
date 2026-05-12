@@ -11,6 +11,7 @@ namespace App\Controller\superAdministration\bu;
 
 use App\Controller\BaseController;
 use App\Entity\StageRapport;
+use App\Repository\DepartementRepository;
 use App\Table\BuRapportTableType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,10 +22,25 @@ class BuController extends BaseController
 {
     // Autorise GET et POST car le composant de table peut faire des requêtes POST (callbacks / actions)
     #[Route(path: '/', name: 'sa_bu_index', methods: ['GET', 'POST'])]
-    public function index(Request $request): Response
+    public function index(Request $request, DepartementRepository $departementRepository): Response
     {
+        $departement = null;
+        if ($request->isMethod('POST')) {
+            try {
+                $payload = json_decode($request->getContent(), true, 512, JSON_THROW_ON_ERROR);
+                $departementId = $payload['filter']['departement'] ?? null;
+
+                if (null !== $departementId && '' !== $departementId) {
+                    $departement = $departementRepository->find($departementId);
+                }
+            } catch (\JsonException) {
+                // Ignore invalid callback payload and keep default filters
+            }
+        }
+
         $table = $this->createTable(BuRapportTableType::class, [
-            'type' => 'administratif'
+            'type' => 'administratif',
+            'departement' => $departement,
         ]);
         $table->handleRequest($request);
 

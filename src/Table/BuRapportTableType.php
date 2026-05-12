@@ -14,9 +14,10 @@ use App\Entity\Annee;
 use App\Entity\Departement;
 use App\Entity\Diplome;
 use App\Entity\Semestre;
+use App\Entity\StagePeriode;
 use App\Entity\StageRapport;
 use App\Form\Type\DatePickerType;
-use App\Repository\SemestreRepository;
+use App\Repository\StagePeriodeRepository;
 use App\Table\ColumnType\EtudiantColumnType;
 use Dannebicque\TableBundle\Adapter\EntityAdapter;
 use Dannebicque\TableBundle\Column\BooleanColumnType;
@@ -42,33 +43,34 @@ class BuRapportTableType extends TableType
         $this->diplome = $options['diplome'];
         $this->type = $options['type'];
 
-        $builder->addFilter('from', DatePickerType::class, [
-            'input_prefix_text' => 'Du',
+        $builder->addFilter('departement', EntityType::class, [
+            'class' => Departement::class,
+            'choice_label' => 'libelle',
+            'required' => true,
+            'placeholder' => 'Sélectionner un département',
         ]);
-        $builder->addFilter('to', DatePickerType::class, [
-            'input_prefix_text' => 'Au',
-        ]);
+
+        $periodeFilterOptions = [
+            'class' => StagePeriode::class,
+            'choice_label' => static fn(StagePeriode $stagePeriode): string => $stagePeriode->getLibelle() ?? ('Période '.$stagePeriode->getId()),
+            'required' => false,
+            'placeholder' => 'Filtrer par période de stage',
+            'choices' => [],
+        ];
+
         if (null !== $this->departement) {
-            $builder->addFilter('semestre', EntityType::class,
-                [
-                    'class' => Semestre::class,
-                    'choice_label' => 'libelle',
-                    'required' => false,
-                    'query_builder' => fn(SemestreRepository $semestreRepository
-                    ) => $semestreRepository->findByDepartementBuilder($this->departement),
-                ]);
+            $periodeFilterOptions['query_builder'] = fn(StagePeriodeRepository $stagePeriodeRepository
+            ) => $stagePeriodeRepository->createQueryBuilder('p')
+                ->innerJoin(Semestre::class, 's', 'WITH', 'p.semestre = s.id')
+                ->innerJoin(Annee::class, 'a', 'WITH', 's.annee = a.id')
+                ->innerJoin(Diplome::class, 'd', 'WITH', 'a.diplome = d.id')
+                ->where('d.departement = :departement')
+                ->setParameter('departement', $this->departement->getId())
+                ->orderBy('p.anneeUniversitaire', 'DESC')
+                ->addOrderBy('p.numeroPeriode', 'ASC');
         }
 
-        if (null !== $this->diplome) {
-            $builder->addFilter('semestre', EntityType::class,
-                [
-                    'class' => Semestre::class,
-                    'choice_label' => 'libelle',
-                    'required' => false,
-                    'query_builder' => fn(SemestreRepository $semestreRepository
-                    ) => $semestreRepository->findByDiplomeBuilder($this->diplome),
-                ]);
-        }
+        $builder->addFilter('stagePeriode', EntityType::class, $periodeFilterOptions);
         $builder->addColumn('stageEtudiant.etudiant', EtudiantColumnType::class, ['label' => 'table.etudiant']);
 
         $builder->addColumn('motsCles', PropertyColumnType::class, ['label' => 'table.motsCles']);
@@ -108,19 +110,33 @@ class BuRapportTableType extends TableType
             'class' => StageRapport::class,
             'fetch_join_collection' => false,
             'query' => function (QueryBuilder $qb, array $formData) {
+                $departement = $formData['departement'] ?? $this->departement;
+                $departementId = $this->extractEntityId($departement);
 
-                if (null !== $this->departement) {
+                if (null === $departementId) {
+                    $qb->andWhere('1 = 0');
+                } else {
                     $qb
-                        ->andWhere('e.departement = :departement')
-                        ->setParameter('departement', $this->departement->getId());
+                        ->innerJoin('e.stageEtudiant', 'se')
+                        ->innerJoin('se.stagePeriode', 'sp')
+                        ->innerJoin(Semestre::class, 's', 'WITH', 'sp.semestre = s.id')
+                        ->innerJoin(Annee::class, 'a', 'WITH', 'a.id = s.annee')
+                        ->innerJoin(Diplome::class, 'd', 'WITH', 'd.id = a.diplome')
+                        ->andWhere('d.departement = :departement')
+                        ->setParameter('departement', $departementId);
                 }
 
                 if (null !== $this->diplome) {
                     $qb
-                        ->innerJoin(Semestre::class, 's', 'WITH', 'e.semestre = s.id')
-                        ->innerJoin(Annee::class, 'a', 'WITH', 'a.id = s.annee')
                         ->andWhere('a.diplome = :diplome')
                         ->setParameter('diplome', $this->diplome->getId());
+                }
+
+                $stagePeriodeId = $this->extractEntityId($formData['stagePeriode'] ?? null);
+                if (null !== $stagePeriodeId) {
+                    $qb
+                        ->andWhere('sp.id = :stagePeriode')
+                        ->setParameter('stagePeriode', $stagePeriodeId);
                 }
 
                 if (isset($formData['from'])) {
@@ -134,6 +150,19 @@ class BuRapportTableType extends TableType
                 }
             },
         ]);
+    }
+
+    private function extractEntityId(mixed $value): int|string|null
+    {
+        if (null === $value || '' === $value) {
+            return null;
+        }
+
+        if ($value instanceof Departement || $value instanceof Semestre || $value instanceof Diplome || $value instanceof StagePeriode) {
+            return $value->getId();
+        }
+
+        return $value;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
