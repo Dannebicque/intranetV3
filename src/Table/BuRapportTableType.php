@@ -33,6 +33,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class BuRapportTableType extends TableType
 {
+    public function __construct()
+    {
+    }
+
     private ?Departement $departement = null;
     private ?Diplome $diplome = null;
     private string $type;
@@ -50,27 +54,6 @@ class BuRapportTableType extends TableType
             'placeholder' => 'Sélectionner un département',
         ]);
 
-        $periodeFilterOptions = [
-            'class' => StagePeriode::class,
-            'choice_label' => static fn(StagePeriode $stagePeriode): string => $stagePeriode->getLibelle() ?? ('Période '.$stagePeriode->getId()),
-            'required' => false,
-            'placeholder' => 'Filtrer par période de stage',
-            'choices' => [],
-        ];
-
-        if (null !== $this->departement) {
-            $periodeFilterOptions['query_builder'] = fn(StagePeriodeRepository $stagePeriodeRepository
-            ) => $stagePeriodeRepository->createQueryBuilder('p')
-                ->innerJoin(Semestre::class, 's', 'WITH', 'p.semestre = s.id')
-                ->innerJoin(Annee::class, 'a', 'WITH', 's.annee = a.id')
-                ->innerJoin(Diplome::class, 'd', 'WITH', 'a.diplome = d.id')
-                ->where('d.departement = :departement')
-                ->setParameter('departement', $this->departement->getId())
-                ->orderBy('p.anneeUniversitaire', 'DESC')
-                ->addOrderBy('p.numeroPeriode', 'ASC');
-        }
-
-        $builder->addFilter('stagePeriode', EntityType::class, $periodeFilterOptions);
         $builder->addColumn('stageEtudiant.etudiant', EtudiantColumnType::class, ['label' => 'table.etudiant']);
 
         $builder->addColumn('motsCles', PropertyColumnType::class, ['label' => 'table.motsCles']);
