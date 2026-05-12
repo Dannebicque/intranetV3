@@ -15,6 +15,7 @@ use App\Classes\Pdf\PdfManager;
 use App\Controller\BaseController;
 use App\Entity\Alternance;
 use App\Entity\StageEtudiant;
+use App\Entity\StageRapport;
 use App\Repository\AlternanceRepository;
 use App\Repository\StageEtudiantRepository;
 use Symfony\Component\HttpFoundation\Response;
@@ -152,6 +153,22 @@ class StageController extends BaseController
     {
         return $this->render('appPersonnel/stage/alternanceEntrepriseInfo.html.twig', [
             'alternance' => $alternance,
+        ]);
+    }
+
+    #[Route(path: '/stage/show/rapport/{id}', name: 'app_personnel_stage_show_rapport')]
+    public function showRapport(StageRapport $stageRapport): Response
+    {
+        return $this->render('stage/rapport_show.html.twig', [
+            'stageRapport' => $stageRapport,
+        ]);
+    }
+
+    #[Route(path: '/stage/show/rapport/{id}', name: 'app_personnel_stage_download_rapport')]
+    public function downloadRapport(StageRapport $stageRapport): Response
+    {
+        return $this->render('stage/rapport_show.html.twig', [
+            'stageRapport' => $stageRapport,
         ]);
     }
 }

@@ -70,10 +70,6 @@ class BuRapportTableType extends TableType
                     ) => $semestreRepository->findByDiplomeBuilder($this->diplome),
                 ]);
         }
-
-//        $builder->addColumn('departement', PropertyColumnType::class, ['label' => 'table.departement']);
-//
-//        $builder->addColumn('semestre', PropertyColumnType::class, ['label' => 'table.semestre']);
         $builder->addColumn('stageEtudiant.etudiant', EtudiantColumnType::class, ['label' => 'table.etudiant']);
 
         $builder->addColumn('motsCles', PropertyColumnType::class, ['label' => 'table.motsCles']);
@@ -83,19 +79,24 @@ class BuRapportTableType extends TableType
         $builder->addColumn('links', WidgetColumnType::class, [
             'build' => function (WidgetBuilder $builder, StageRapport $s) {
                 $builder->add('show', RowLinkType::class, [
-                    'route' => 'adm_questionnaire_qualite_detail',
+                    'route' => 'app_personnel_stage_show_rapport',
                     'route_params' => [
                         'id' => $s->getId(),
                         'type' => $this->type,
                     ],
                     'xhr' => false,
-                    'icon' => 'fas fa-list-check',
+                    'icon' => 'fas fa-eye',
                     'attr' => ['class' => 'btn btn-square btn-primary-outline btn-sm me-1'],
                 ]);
-                $builder->add('edit', RowEditLinkType::class, [
-                    'route' => 'adm_questionnaire_creation_index',
-                    'route_params' => ['questionnaire' => $s->getId(), 'type' => $this->type],
+                $builder->add('download', RowLinkType::class, [
+                    'route' => 'app_personnel_stage_download_rapport',
+                    'route_params' => [
+                        'id' => $s->getId(),
+                        'type' => $this->type,
+                    ],
                     'xhr' => false,
+                    'icon' => 'fas fa-download',
+                    'attr' => ['class' => 'btn btn-square btn-primary-outline btn-sm me-1'],
                 ]);
             },
         ]);
@@ -108,8 +109,6 @@ class BuRapportTableType extends TableType
             'class' => StageRapport::class,
             'fetch_join_collection' => false,
             'query' => function (QueryBuilder $qb, array $formData) {
-                $qb->where('e.typeDestinataire = :typeDestinataire')
-                    ->setParameter('typeDestinataire', Etudiant::class);
 
                 if (null !== $this->departement) {
                     $qb

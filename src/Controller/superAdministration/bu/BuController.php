@@ -18,7 +18,8 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route(path: '/administratif/bu')]
 class BuController extends BaseController
 {
-    #[Route(path: '/', name: 'sa_bu_index', methods: 'GET')]
+    // Autorise GET et POST car le composant de table peut faire des requêtes POST (callbacks / actions)
+    #[Route(path: '/', name: 'sa_bu_index', methods: ['GET', 'POST'])]
     public function index(Request $request): Response
     {
         $table = $this->createTable(BuRapportTableType::class, [
