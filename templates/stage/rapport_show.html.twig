@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends type == 'bu' ? 'base-super_admin.html.twig' : 'base.html.twig' %}
 
 {% block header %}
     Détails d'un rapport de stage

@@ -24,7 +24,6 @@ use Dannebicque\TableBundle\Column\PropertyColumnType;
 use Dannebicque\TableBundle\Column\WidgetColumnType;
 use Dannebicque\TableBundle\TableBuilder;
 use Dannebicque\TableBundle\TableType;
-use Dannebicque\TableBundle\Widget\Type\RowEditLinkType;
 use Dannebicque\TableBundle\Widget\Type\RowLinkType;
 use Dannebicque\TableBundle\Widget\WidgetBuilder;
 use Doctrine\ORM\QueryBuilder;
@@ -79,7 +78,7 @@ class BuRapportTableType extends TableType
         $builder->addColumn('links', WidgetColumnType::class, [
             'build' => function (WidgetBuilder $builder, StageRapport $s) {
                 $builder->add('show', RowLinkType::class, [
-                    'route' => 'app_personnel_stage_show_rapport',
+                    'route' => 'app_bu_stage_show_rapport',
                     'route_params' => [
                         'id' => $s->getId(),
                         'type' => $this->type,
@@ -89,7 +88,7 @@ class BuRapportTableType extends TableType
                     'attr' => ['class' => 'btn btn-square btn-primary-outline btn-sm me-1'],
                 ]);
                 $builder->add('download', RowLinkType::class, [
-                    'route' => 'app_personnel_stage_download_rapport',
+                    'route' => 'app_bu_stage_download_rapport',
                     'route_params' => [
                         'id' => $s->getId(),
                         'type' => $this->type,

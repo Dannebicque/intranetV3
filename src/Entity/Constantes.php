@@ -37,6 +37,7 @@ class Constantes
     final public const ROLE_AUTEUR = 'ROLE_AUTEUR';
     final public const ROLE_MAT = 'ROLE_MAT';
     final public const ROLE_PERMANENT = 'ROLE_PERMANENT';
+    final public const ROLE_BU = 'ROLE_BU';
 
     final public const DUREE_SEMESTRE = 5;
 
@@ -71,6 +72,7 @@ class Constantes
     final public const ROLE_LISTE = [
         self::ROLE_CDD,
         self::ROLE_PERMANENT,
+        self::ROLE_BU,
         self::ROLE_DDE,
         self::ROLE_ASS,
         self::ROLE_RP,
