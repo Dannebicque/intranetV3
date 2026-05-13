@@ -82,7 +82,7 @@ class BuRapportTableType extends TableType
 
         $builder->addColumn('stageEtudiant.etudiant', EtudiantColumnType::class, ['label' => 'table.etudiant']);
 
-        $builder->addColumn('motsCles', PropertyColumnType::class, ['label' => 'table.motsCles']);
+        $builder->addColumn('motsCles', PropertyColumnType::class, ['label' => 'table.mots_cles']);
         $builder->addColumn('confidentialite', BooleanColumnType::class, ['label' => 'table.confidentialite']);
 
 
