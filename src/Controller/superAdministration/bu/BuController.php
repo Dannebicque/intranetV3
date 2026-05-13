@@ -25,17 +25,19 @@ class BuController extends BaseController
     public function index(Request $request, DepartementRepository $departementRepository): Response
     {
         $departement = null;
-        if ($request->isMethod('POST')) {
+        $departementId = $request->query->all('filter')['departement'] ?? null;
+
+        if ((null === $departementId || '' === $departementId) && $request->isMethod('POST')) {
             try {
                 $payload = json_decode($request->getContent(), true, 512, JSON_THROW_ON_ERROR);
                 $departementId = $payload['filter']['departement'] ?? null;
-
-                if (null !== $departementId && '' !== $departementId) {
-                    $departement = $departementRepository->find($departementId);
-                }
             } catch (\JsonException) {
                 // Ignore invalid callback payload and keep default filters
             }
+        }
+
+        if (null !== $departementId && '' !== $departementId) {
+            $departement = $departementRepository->find($departementId);
         }
 
         $table = $this->createTable(BuRapportTableType::class, [
