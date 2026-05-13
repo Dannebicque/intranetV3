@@ -37,13 +37,14 @@ class BuRapportTableType extends TableType
     }
 
     private ?Departement $departement = null;
+    private ?Annee $annee = null;
     private ?Diplome $diplome = null;
     private string $type;
 
     public function buildTable(TableBuilder $builder, array $options): void
     {
         $this->departement = $options['departement'];
-        $this->diplome = $options['diplome'];
+        $this->annee = $options['annee'];
         $this->type = $options['type'];
 
         $builder->addFilter('departement', EntityType::class, [
@@ -53,7 +54,7 @@ class BuRapportTableType extends TableType
             'data' => $this->departement,
             'placeholder' => 'Sélectionner un département',
             'attr' => [
-                'onchange' => 'this.form.requestSubmit();',
+                'onchange' => 'const anneeField = this.form.querySelector(\'[name="filter[annee]"]\'); if (anneeField) { anneeField.value = \'\'; anneeField.disabled = true; } this.form.requestSubmit();',
             ],
         ]);
 
@@ -61,7 +62,11 @@ class BuRapportTableType extends TableType
             'class' => Annee::class,
             'choice_label' => 'libelle',
             'required' => false,
+            'data' => $this->annee,
             'placeholder' => 'Toutes les années',
+            'attr' => [
+                'onchange' => 'this.form.requestSubmit();',
+            ],
             'query_builder' => function (EntityRepository $er): QueryBuilder {
                 $qb = $er->createQueryBuilder('a')
                     ->innerJoin('a.diplome', 'd')
@@ -113,12 +118,18 @@ class BuRapportTableType extends TableType
 
 
         $loadUrlDepartementId = $this->extractEntityId($this->getSelectedDepartementId() ?? $this->departement);
-        if (null !== $loadUrlDepartementId) {
-            $builder->setLoadUrl('sa_bu_index', [
-                'filter' => [
-                    'departement' => $loadUrlDepartementId,
-                ],
-            ]);
+        $loadUrlAnneeId = $this->extractEntityId($this->getSelectedAnneeId() ?? $this->annee);
+
+        if (null !== $loadUrlDepartementId || null !== $loadUrlAnneeId) {
+            $filter = [];
+            if (null !== $loadUrlDepartementId) {
+                $filter['departement'] = $loadUrlDepartementId;
+            }
+            if (null !== $loadUrlAnneeId) {
+                $filter['annee'] = $loadUrlAnneeId;
+            }
+
+            $builder->setLoadUrl('sa_bu_index', ['filter' => $filter]);
         } else {
             $builder->setLoadUrl('sa_bu_index');
         }
@@ -129,6 +140,7 @@ class BuRapportTableType extends TableType
             'fetch_join_collection' => false,
             'query' => function (QueryBuilder $qb, array $formData) {
                 $departement = $formData['departement'] ?? $this->departement;
+                $annee = $formData['annee'] ?? $this->annee;
                 $departementId = $this->extractEntityId($departement);
 
                 $qb
@@ -146,12 +158,6 @@ class BuRapportTableType extends TableType
                         ->setParameter('departement', $departementId);
                 }
 
-                if (null !== $this->diplome) {
-                    $qb
-                        ->andWhere('a.diplome = :diplome')
-                        ->setParameter('diplome', $this->diplome->getId());
-                }
-
                 $stagePeriodeId = $this->extractEntityId($formData['stagePeriode'] ?? null);
                 if (null !== $stagePeriodeId) {
                     $qb
@@ -159,7 +165,7 @@ class BuRapportTableType extends TableType
                         ->setParameter('stagePeriode', $stagePeriodeId);
                 }
 
-                $anneeId = $this->extractEntityId($formData['annee'] ?? null);
+                $anneeId = $this->extractEntityId($annee);
                 if (null !== $anneeId) {
                     $qb
                         ->andWhere('a.id = :annee')
@@ -242,6 +248,56 @@ class BuRapportTableType extends TableType
         return null;
     }
 
+    private function getSelectedAnneeId(): int|string|null
+    {
+        $request = $this->requestStack->getCurrentRequest();
+        if (null === $request) {
+            return null;
+        }
+
+        $queryFilter = $request->query->all('filter');
+        if (isset($queryFilter['annee']) && '' !== $queryFilter['annee']) {
+            return $queryFilter['annee'];
+        }
+
+        $requestFilter = $request->request->all('filter');
+        if (isset($requestFilter['annee']) && '' !== $requestFilter['annee']) {
+            return $requestFilter['annee'];
+        }
+
+        $payload = $this->getCurrentRequestPayload();
+
+        return $this->findAnneeIdInArray($payload);
+    }
+
+    private function findAnneeIdInArray(?array $data): int|string|null
+    {
+        if (null === $data) {
+            return null;
+        }
+
+        if (isset($data['filter']) && is_array($data['filter']) && isset($data['filter']['annee']) && '' !== $data['filter']['annee']) {
+            return $data['filter']['annee'];
+        }
+
+        if (isset($data['annee']) && '' !== $data['annee']) {
+            return $data['annee'];
+        }
+
+        foreach ($data as $value) {
+            if (!is_array($value)) {
+                continue;
+            }
+
+            $anneeId = $this->findAnneeIdInArray($value);
+            if (null !== $anneeId) {
+                return $anneeId;
+            }
+        }
+
+        return null;
+    }
+
     private function getCurrentRequestPayload(): ?array
     {
         $request = $this->requestStack->getCurrentRequest();
@@ -268,8 +324,8 @@ class BuRapportTableType extends TableType
         $resolver->setDefaults([
             'orderable' => true,
             'toolbar_form_name' => 'filter',
-            'departement' => null,
-            'diplome' => null,
+            'departement' => $this->departement,
+            'annee' => $this->annee,
             'type' => 'administration',
         ]);
     }

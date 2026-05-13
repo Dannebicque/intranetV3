@@ -1,0 +1,106 @@
+{% extends 'pdf/basepdf.html.twig' %}
+
+{% block content %}
+    {% set stageEtudiant = stageRapport.stageEtudiant %}
+    {% set etudiant = stageEtudiant ? stageEtudiant.etudiant : null %}
+    {% set stagePeriode = stageEtudiant ? stageEtudiant.stagePeriode : null %}
+    {% set semestre = stagePeriode ? stagePeriode.semestre : null %}
+    {% set diplome = etudiant ? etudiant.diplome : null %}
+
+    <h2>Informations pour archivage</h2>
+
+    <table class="table table-archivage">
+        <tbody>
+        <tr>
+            <th>Titre du rapport</th>
+            <td>{{ stageRapport.titreRapport ?: 'Non renseigné' }}</td>
+        </tr>
+        <tr>
+            <th>Nom</th>
+            <td>{{ etudiant and etudiant.nom ? etudiant.nom : 'Non renseigné' }}</td>
+        </tr>
+        <tr>
+            <th>Prénom</th>
+            <td>{{ etudiant and etudiant.prenom ? etudiant.prenom : 'Non renseigné' }}</td>
+        </tr>
+        <tr>
+            <th>Département</th>
+            <td>{{ etudiant and etudiant.departement ? etudiant.departement.libelle : 'Non renseigné' }}</td>
+        </tr>
+        <tr>
+            <th>Diplôme</th>
+            <td>{{ diplome ? diplome.display : 'Non renseigné' }}</td>
+        </tr>
+        <tr>
+            <th>Année de l'étudiant</th>
+            <td>{{ semestre and semestre.annee ? semestre.annee.libelle : 'Non renseigné' }}</td>
+        </tr>
+        <tr>
+            <th>Année universitaire</th>
+            <td>{{ stagePeriode and stagePeriode.anneeUniversitaire ? stagePeriode.anneeUniversitaire.libelle : 'Non renseigné' }}</td>
+        </tr>
+        <tr>
+            <th>Entreprise / Groupe</th>
+            <td>
+                {% if stageEtudiant and stageEtudiant.entreprise and stageRapport.groupeEntreprise %}
+                    {{ stageEtudiant.entreprise.raisonSociale }} / {{ stageRapport.groupeEntreprise }}
+                {% elseif stageEtudiant and stageEtudiant.entreprise %}
+                    {{ stageEtudiant.entreprise.raisonSociale }}
+                {% elseif stageRapport.groupeEntreprise %}
+                    {{ stageRapport.groupeEntreprise }}
+                {% else %}
+                    Non renseigné
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <th>Adresse</th>
+            <td>{{ stageEtudiant and stageEtudiant.adresseStage ? stageEtudiant.adresseStage.display|raw : 'Non renseigné' }}</td>
+        </tr>
+        <tr>
+            <th>Résumé</th>
+            <td>{{ stageRapport.resumeRapport ? stageRapport.resumeRapport|raw : 'Non renseigné' }}</td>
+        </tr>
+        <tr>
+            <th>Mots clés</th>
+            <td>{{ stageRapport.motsCles ?: 'Non renseigné' }}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    {% if includeAttachmentPage|default(true) and (stageRapport.lienFichier or stageRapport.documentName) %}
+        <div style="page-break-after: always"></div>
+
+        <h2>Fichier du rapport</h2>
+        {% if stageRapport.lienFichier %}
+            <p>Le rapport est disponible via le lien de téléchargement suivant :</p>
+            <p><a href="{{ stageRapport.lienFichier }}">{{ stageRapport.lienFichier }}</a></p>
+        {% elseif stageRapport.documentName %}
+            <p>Le rapport PDF associé est : <strong>{{ stageRapport.documentName }}</strong></p>
+        {% endif %}
+    {% endif %}
+
+{% endblock %}
+
+{% block style %}
+    h2 {
+        margin-bottom: 12px;
+    }
+
+    .table-archivage {
+        width: 100%;
+    }
+
+    .table-archivage th {
+        width: 30%;
+        vertical-align: top;
+        text-align: left;
+        background-color: #efefef;
+    }
+
+    .table-archivage td {
+        width: 70%;
+    }
+
+{% endblock %}
+

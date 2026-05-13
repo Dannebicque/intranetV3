@@ -15,6 +15,11 @@
                 <header class="card-header">
                     <h2 class="card-title">Accès BU / Rapports de stage</h2>
                 </header>
+                {% if anneeId is not empty %}
+                    <button class="btn btn-primary mx-10" onclick="window.location.href='{{ path('app_bu_stage_rapport_download_all', {annee: anneeId}) }}'">Télécharger tous les rapports de l'année sélectionnée</button>
+                {% else %}
+                    <button class="btn btn-primary" disabled>Télécharger tous les rapports de l'année sélectionnée</button>
+                {% endif %}
 
                 <div class="card-body">
                     {{ table_render(table) }}

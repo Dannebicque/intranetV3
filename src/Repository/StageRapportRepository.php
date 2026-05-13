@@ -48,4 +48,18 @@ class StageRapportRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+
+    public function findByAnneeNonConfidentiel($annee)
+    {
+//        récupérer les rapports dont stage_etudiant->stage_periode->semestre->annee = $annee
+        return $this->createQueryBuilder('r')
+            ->innerJoin('r.stageEtudiant', 'se')
+            ->innerJoin('se.stagePeriode', 'sp')
+            ->innerJoin('sp.semestre', 's')
+            ->where('s.annee = :annee')
+            ->andWhere('r.confidentialite = false')
+            ->setParameter('annee', $annee)
+            ->getQuery()
+            ->getResult();
+    }
 }
