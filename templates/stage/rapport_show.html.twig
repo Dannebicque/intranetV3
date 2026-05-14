@@ -1,0 +1,64 @@
+{% extends type == 'bu' ? 'base-super_admin.html.twig' : 'base.html.twig' %}
+
+{% block header %}
+    Détails d'un rapport de stage
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        <div class="buttons">
+            <a href="{{ path('application_index') }}"
+               class="btn btn-primary btn-float" data-bs-toggle="tooltip"
+               data-bs-placement="bottom" title=""><i class="fas fa-arrow-left"></i></a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+
+<div class="card card-slided-up">
+    <header class="card-header">
+        <h4 class="card-title"><strong>{{stageRapport.stageEtudiant.etudiant.prenom}} {{ stageRapport.stageEtudiant.etudiant.nom }}</strong> - {{ stageRapport.stageEtudiant.stagePeriode.libelle }}</h4>
+    </header>
+    <div class="card-body">
+        <ul>
+            <li>{{ stageRapport.stageEtudiant.entreprise.raisonSociale }}</li>
+            <li>Du {{ stageRapport.stageEtudiant.dateDebutStage.format('d/m/Y') }} au {{ stageRapport.stageEtudiant.dateFinStage.format('d/m/Y') }}</li>
+        </ul>
+
+        <hr>
+
+        <div class="flexbox flex-row justify-content-between align-items-center">
+            <div class="mb-3">
+                <h3 class="mb-0">{{ stageRapport.titreRapport }}</h3>
+                <em>{{ stageRapport.groupeEntreprise }}</em>
+            </div>
+            <span class="badge bg-danger">{{ stageRapport.confidentialite ? 'Confidentiel' : '' }}</span>
+        </div>
+        <p>{{ stageRapport.resumeRapport|raw }}</p>
+        <p>Mots clés : {{ stageRapport.motsCles|join(', ') }}</p>
+
+        {% if stageRapport.lienFichier %}
+            <a href="{{ stageRapport.lienFichier }}" class="btn btn-primary" target="_blank" rel="noopener">Télécharger le rapport</a>
+        {% elseif stageRapport.documentName %}
+            {# URL relative vers le fichier uploadé #}
+            {% set rapport_url = asset('upload/rapport-stage/' ~ stageRapport.documentName) %}
+
+            <div class="mb-3">
+                <a href="{{ rapport_url }}" class="btn btn-primary me-2" target="_blank" rel="noopener">Ouvrir le rapport dans un nouvel onglet</a>
+                <a href="{{ rapport_url }}" class="btn btn-secondary" download>Télécharger le rapport</a>
+            </div>
+
+            {# Aperçu embarqué du PDF (fallback: lien de téléchargement si le navigateur ne supporte pas l'embed) #}
+            <div class="rapport-preview">
+                <embed src="{{ rapport_url }}" type="application/pdf" width="100%" height="800px">
+                <p>Si l'aperçu ne s'affiche pas, <a href="{{ rapport_url }}" target="_blank" rel="noopener">cliquez ici pour télécharger le rapport</a>.</p>
+            </div>
+
+        {% else %}
+            <p>Aucun fichier de rapport disponible.</p>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

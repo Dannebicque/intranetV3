@@ -33,9 +33,8 @@ class StageRapportType extends AbstractType
             ->add('titreRapport', TextType::class, ['label' => 'Titre du rapport'])
             ->add('groupeEntreprise', TextType::class, ['label' => 'Si votre entreprise fait partie d\'un groupe, indiquez-le ici', 'required' => false])
             ->add('resumeRapport', TextareaType::class, ['label' => 'Résumé de votre rapport', 'attr' => ['rows' => 10, 'minlength' => 150], 'help' => 'Minimum 150 caractères', 'constraints' => [new Length(['min' => 150])]])
-            ->add('motsCles', TextareaType::class, ['label' => 'Mots clés', 'help' => 'Au moins 3 mots clés, séparés par une virgule (,)'])
-            ->add('motsCles', TextareaType::class, ['label' => 'Mots clés', 'help' => 'Au moins 3 mots clés, séparés par une virgule (,)'])
-            ->add('confidentialite', YesNoType::class, ['label' => 'Confidentialité de votre rapport de stage'])
+            ->add('motsCles', TextareaType::class, ['label' => 'Mots clés', 'help' => 'Indiquez au moins 3 mots clés permettant d\'identifier le sujet de votre stage, séparés par une virgule (,)'])
+            ->add('confidentialite', YesNoType::class, ['label' => 'Votre rapport est-il confidentiel ?'])
             ->add('documentFile', VichFileType::class, [
                 'label' => 'Fichier du rapport',
                 'required' => false,

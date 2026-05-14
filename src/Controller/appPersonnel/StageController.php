@@ -15,6 +15,7 @@ use App\Classes\Pdf\PdfManager;
 use App\Controller\BaseController;
 use App\Entity\Alternance;
 use App\Entity\StageEtudiant;
+use App\Entity\StageRapport;
 use App\Repository\AlternanceRepository;
 use App\Repository\StageEtudiantRepository;
 use Symfony\Component\HttpFoundation\Response;
@@ -153,5 +154,37 @@ class StageController extends BaseController
         return $this->render('appPersonnel/stage/alternanceEntrepriseInfo.html.twig', [
             'alternance' => $alternance,
         ]);
+    }
+
+    #[Route(path: '/stage/show/rapport/{id}', name: 'app_personnel_stage_show_rapport')]
+    public function showRapport(StageRapport $stageRapport): Response
+    {
+        return $this->render('stage/rapport_show.html.twig', [
+            'stageRapport' => $stageRapport,
+            'type' => 'personnel',
+        ]);
+    }
+
+    #[Route(path: '/stage/download/rapport/{id}', name: 'app_personnel_stage_download_rapport')]
+    public function downloadRapport(StageRapport $stageRapport): Response
+    {
+        // If an external link is provided, redirect to it
+        if (null !== $stageRapport->getLienFichier()) {
+            return $this->redirect($stageRapport->getLienFichier());
+        }
+
+        // If a stored document name exists, serve the file from public/upload/rapport-stage
+        if (null !== $stageRapport->getDocumentName()) {
+            $filePath = $this->getParameter('kernel.project_dir').'/public/upload/rapport-stage/'.$stageRapport->getDocumentName();
+
+            if (!is_file($filePath)) {
+                throw $this->createNotFoundException('Fichier de rapport introuvable.');
+            }
+
+            // Return a BinaryFileResponse to force download
+            return $this->file($filePath, $stageRapport->getDocumentName());
+        }
+
+        throw $this->createNotFoundException('Aucun fichier de rapport disponible.');
     }
 }

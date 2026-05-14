@@ -165,11 +165,8 @@ class StageEtudiant extends BaseEntity
     #[ORM\OneToMany(mappedBy: 'stage', targetEntity: StageFicheSuivi::class)]
     private Collection $stageFicheSuivis;
 
-    /**
-     * @var Collection<int, StageRapport>
-     */
-    #[ORM\OneToMany(mappedBy: 'stageEtudiant', targetEntity: StageRapport::class)]
-    private Collection $stageRapports;
+    #[ORM\OneToOne(targetEntity: StageRapport::class, mappedBy: 'stageEtudiant', cascade: ['persist', 'remove'])]
+    private ?StageRapport $stageRapport = null;
 
     public function __construct(?float $gratificationMontant)
     {
@@ -177,7 +174,6 @@ class StageEtudiant extends BaseEntity
         $this->setGratificationMontant($gratificationMontant);
         $this->stageAvenants = new ArrayCollection();
         $this->stageFicheSuivis = new ArrayCollection();
-        $this->stageRapports = new ArrayCollection();
     }
 
     public function setUuid(UuidInterface $uuid): self
@@ -585,33 +581,22 @@ class StageEtudiant extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return Collection<int, StageRapport>
-     */
-    public function getStageRapports(): Collection
+    public function getStageRapport(): ?StageRapport
     {
-        return $this->stageRapports;
+        return $this->stageRapport;
     }
 
-    public function addStageRapport(StageRapport $stageRapport): static
+    public function setStageRapport(?StageRapport $stageRapport): static
     {
-        if (!$this->stageRapports->contains($stageRapport)) {
-            $this->stageRapports->add($stageRapport);
+        if ($stageRapport === null && $this->stageRapport !== null) {
+            $this->stageRapport->setStageEtudiant(null);
+        }
+
+        if ($stageRapport !== null && $stageRapport->getStageEtudiant() !== $this) {
             $stageRapport->setStageEtudiant($this);
         }
 
-        return $this;
-    }
-
-    public function removeStageRapport(StageRapport $stageRapport): static
-    {
-        if ($this->stageRapports->removeElement($stageRapport)) {
-            // set the owning side to null (unless already changed)
-            if ($stageRapport->getStageEtudiant() === $this) {
-                $stageRapport->setStageEtudiant(null);
-            }
-        }
-
+        $this->stageRapport = $stageRapport;
         return $this;
     }
 }

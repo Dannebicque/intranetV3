@@ -9,14 +9,12 @@
 
 namespace App\Table;
 
-use App\Components\Questionnaire\TypeDestinataire\Etudiant;
 use App\Entity\Annee;
 use App\Entity\Departement;
 use App\Entity\Diplome;
 use App\Entity\Semestre;
+use App\Entity\StagePeriode;
 use App\Entity\StageRapport;
-use App\Form\Type\DatePickerType;
-use App\Repository\SemestreRepository;
 use App\Table\ColumnType\EtudiantColumnType;
 use Dannebicque\TableBundle\Adapter\EntityAdapter;
 use Dannebicque\TableBundle\Column\BooleanColumnType;
@@ -24,105 +22,154 @@ use Dannebicque\TableBundle\Column\PropertyColumnType;
 use Dannebicque\TableBundle\Column\WidgetColumnType;
 use Dannebicque\TableBundle\TableBuilder;
 use Dannebicque\TableBundle\TableType;
-use Dannebicque\TableBundle\Widget\Type\RowEditLinkType;
 use Dannebicque\TableBundle\Widget\Type\RowLinkType;
 use Dannebicque\TableBundle\Widget\WidgetBuilder;
+use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class BuRapportTableType extends TableType
 {
+    public function __construct(private readonly RequestStack $requestStack)
+    {
+    }
+
     private ?Departement $departement = null;
+    private ?Annee $annee = null;
     private ?Diplome $diplome = null;
     private string $type;
 
     public function buildTable(TableBuilder $builder, array $options): void
     {
         $this->departement = $options['departement'];
-        $this->diplome = $options['diplome'];
+        $this->annee = $options['annee'];
         $this->type = $options['type'];
 
-        $builder->addFilter('from', DatePickerType::class, [
-            'input_prefix_text' => 'Du',
+        $builder->addFilter('departement', EntityType::class, [
+            'class' => Departement::class,
+            'choice_label' => 'libelle',
+            'required' => true,
+            'data' => $this->departement,
+            'placeholder' => 'Sélectionner un département',
+            'attr' => [
+                'onchange' => 'const anneeField = this.form.querySelector(\'[name="filter[annee]"]\'); if (anneeField) { anneeField.value = \'\'; anneeField.disabled = true; } this.form.requestSubmit();',
+            ],
         ]);
-        $builder->addFilter('to', DatePickerType::class, [
-            'input_prefix_text' => 'Au',
+
+        $builder->addFilter('annee', EntityType::class, [
+            'class' => Annee::class,
+            'choice_label' => 'libelle',
+            'required' => false,
+            'data' => $this->annee,
+            'placeholder' => 'Toutes les années',
+            'attr' => [
+                'onchange' => 'this.form.requestSubmit();',
+            ],
+            'query_builder' => function (EntityRepository $er): QueryBuilder {
+                $qb = $er->createQueryBuilder('a')
+                    ->innerJoin('a.diplome', 'd')
+                    ->where('a.optAlternance = false')
+                    ->andWhere('a.actif = true')
+                    ->orderBy('a.ordre', 'ASC');
+
+                $departementId = $this->extractEntityId($this->getSelectedDepartementId() ?? $this->departement);
+                if (null !== $departementId) {
+                    $qb
+                        ->andWhere('d.departement = :departement')
+                        ->setParameter('departement', $departementId);
+                }
+
+                return $qb;
+            },
         ]);
-        if (null !== $this->departement) {
-            $builder->addFilter('semestre', EntityType::class,
-                [
-                    'class' => Semestre::class,
-                    'choice_label' => 'libelle',
-                    'required' => false,
-                    'query_builder' => fn(SemestreRepository $semestreRepository
-                    ) => $semestreRepository->findByDepartementBuilder($this->departement),
-                ]);
-        }
 
-        if (null !== $this->diplome) {
-            $builder->addFilter('semestre', EntityType::class,
-                [
-                    'class' => Semestre::class,
-                    'choice_label' => 'libelle',
-                    'required' => false,
-                    'query_builder' => fn(SemestreRepository $semestreRepository
-                    ) => $semestreRepository->findByDiplomeBuilder($this->diplome),
-                ]);
-        }
-
-//        $builder->addColumn('departement', PropertyColumnType::class, ['label' => 'table.departement']);
-//
-//        $builder->addColumn('semestre', PropertyColumnType::class, ['label' => 'table.semestre']);
         $builder->addColumn('stageEtudiant.etudiant', EtudiantColumnType::class, ['label' => 'table.etudiant']);
 
-        $builder->addColumn('motsCles', PropertyColumnType::class, ['label' => 'table.motsCles']);
+        $builder->addColumn('motsCles', PropertyColumnType::class, ['label' => 'table.mots_cles']);
         $builder->addColumn('confidentialite', BooleanColumnType::class, ['label' => 'table.confidentialite']);
 
 
         $builder->addColumn('links', WidgetColumnType::class, [
             'build' => function (WidgetBuilder $builder, StageRapport $s) {
                 $builder->add('show', RowLinkType::class, [
-                    'route' => 'adm_questionnaire_qualite_detail',
+                    'route' => 'app_bu_stage_show_rapport',
                     'route_params' => [
                         'id' => $s->getId(),
                         'type' => $this->type,
                     ],
                     'xhr' => false,
-                    'icon' => 'fas fa-list-check',
+                    'icon' => 'fas fa-eye',
                     'attr' => ['class' => 'btn btn-square btn-primary-outline btn-sm me-1'],
                 ]);
-                $builder->add('edit', RowEditLinkType::class, [
-                    'route' => 'adm_questionnaire_creation_index',
-                    'route_params' => ['questionnaire' => $s->getId(), 'type' => $this->type],
+                $builder->add('download', RowLinkType::class, [
+                    'route' => 'app_bu_stage_download_rapport',
+                    'route_params' => [
+                        'id' => $s->getId(),
+                        'type' => $this->type,
+                    ],
                     'xhr' => false,
+                    'icon' => 'fas fa-download',
+                    'attr' => ['class' => 'btn btn-square btn-primary-outline btn-sm me-1'],
                 ]);
             },
         ]);
 
 
-        $builder->setLoadUrl('sa_bu_index');
+        $loadUrlDepartementId = $this->extractEntityId($this->getSelectedDepartementId() ?? $this->departement);
+        $loadUrlAnneeId = $this->extractEntityId($this->getSelectedAnneeId() ?? $this->annee);
+
+        if (null !== $loadUrlDepartementId || null !== $loadUrlAnneeId) {
+            $filter = [];
+            if (null !== $loadUrlDepartementId) {
+                $filter['departement'] = $loadUrlDepartementId;
+            }
+            if (null !== $loadUrlAnneeId) {
+                $filter['annee'] = $loadUrlAnneeId;
+            }
+
+            $builder->setLoadUrl('sa_bu_index', ['filter' => $filter]);
+        } else {
+            $builder->setLoadUrl('sa_bu_index');
+        }
 
 
         $builder->useAdapter(EntityAdapter::class, [
             'class' => StageRapport::class,
             'fetch_join_collection' => false,
             'query' => function (QueryBuilder $qb, array $formData) {
-                $qb->where('e.typeDestinataire = :typeDestinataire')
-                    ->setParameter('typeDestinataire', Etudiant::class);
+                $departement = $formData['departement'] ?? $this->departement;
+                $annee = $formData['annee'] ?? $this->annee;
+                $departementId = $this->extractEntityId($departement);
 
-                if (null !== $this->departement) {
+                $qb
+                    ->innerJoin('e.stageEtudiant', 'se')
+                    ->innerJoin('se.stagePeriode', 'sp')
+                    ->innerJoin(Semestre::class, 's', 'WITH', 'sp.semestre = s.id')
+                    ->innerJoin(Annee::class, 'a', 'WITH', 'a.id = s.annee')
+                    ->innerJoin(Diplome::class, 'd', 'WITH', 'd.id = a.diplome');
+
+                if (null === $departementId) {
+                    $qb->andWhere('1 = 0');
+                } else {
                     $qb
-                        ->andWhere('e.departement = :departement')
-                        ->setParameter('departement', $this->departement->getId());
+                        ->andWhere('d.departement = :departement')
+                        ->setParameter('departement', $departementId);
                 }
 
-                if (null !== $this->diplome) {
+                $stagePeriodeId = $this->extractEntityId($formData['stagePeriode'] ?? null);
+                if (null !== $stagePeriodeId) {
                     $qb
-                        ->innerJoin(Semestre::class, 's', 'WITH', 'e.semestre = s.id')
-                        ->innerJoin(Annee::class, 'a', 'WITH', 'a.id = s.annee')
-                        ->andWhere('a.diplome = :diplome')
-                        ->setParameter('diplome', $this->diplome->getId());
+                        ->andWhere('sp.id = :stagePeriode')
+                        ->setParameter('stagePeriode', $stagePeriodeId);
+                }
+
+                $anneeId = $this->extractEntityId($annee);
+                if (null !== $anneeId) {
+                    $qb
+                        ->andWhere('a.id = :annee')
+                        ->setParameter('annee', $anneeId);
                 }
 
                 if (isset($formData['from'])) {
@@ -138,14 +185,147 @@ class BuRapportTableType extends TableType
         ]);
     }
 
+    private function extractEntityId(mixed $value): int|string|null
+    {
+        if (null === $value || '' === $value) {
+            return null;
+        }
+
+        if ($value instanceof Departement || $value instanceof Semestre || $value instanceof Diplome || $value instanceof StagePeriode || $value instanceof Annee) {
+            return $value->getId();
+        }
+
+        return $value;
+    }
+
+    private function getSelectedDepartementId(): int|string|null
+    {
+        $request = $this->requestStack->getCurrentRequest();
+        if (null === $request) {
+            return null;
+        }
+
+        $queryFilter = $request->query->all('filter');
+        if (isset($queryFilter['departement']) && '' !== $queryFilter['departement']) {
+            return $queryFilter['departement'];
+        }
+
+        $requestFilter = $request->request->all('filter');
+        if (isset($requestFilter['departement']) && '' !== $requestFilter['departement']) {
+            return $requestFilter['departement'];
+        }
+
+        $payload = $this->getCurrentRequestPayload();
+
+        return $this->findDepartementIdInArray($payload);
+    }
+
+    private function findDepartementIdInArray(?array $data): int|string|null
+    {
+        if (null === $data) {
+            return null;
+        }
+
+        if (isset($data['filter']) && is_array($data['filter']) && isset($data['filter']['departement']) && '' !== $data['filter']['departement']) {
+            return $data['filter']['departement'];
+        }
+
+        if (isset($data['departement']) && '' !== $data['departement']) {
+            return $data['departement'];
+        }
+
+        foreach ($data as $value) {
+            if (!is_array($value)) {
+                continue;
+            }
+
+            $departementId = $this->findDepartementIdInArray($value);
+            if (null !== $departementId) {
+                return $departementId;
+            }
+        }
+
+        return null;
+    }
+
+    private function getSelectedAnneeId(): int|string|null
+    {
+        $request = $this->requestStack->getCurrentRequest();
+        if (null === $request) {
+            return null;
+        }
+
+        $queryFilter = $request->query->all('filter');
+        if (isset($queryFilter['annee']) && '' !== $queryFilter['annee']) {
+            return $queryFilter['annee'];
+        }
+
+        $requestFilter = $request->request->all('filter');
+        if (isset($requestFilter['annee']) && '' !== $requestFilter['annee']) {
+            return $requestFilter['annee'];
+        }
+
+        $payload = $this->getCurrentRequestPayload();
+
+        return $this->findAnneeIdInArray($payload);
+    }
+
+    private function findAnneeIdInArray(?array $data): int|string|null
+    {
+        if (null === $data) {
+            return null;
+        }
+
+        if (isset($data['filter']) && is_array($data['filter']) && isset($data['filter']['annee']) && '' !== $data['filter']['annee']) {
+            return $data['filter']['annee'];
+        }
+
+        if (isset($data['annee']) && '' !== $data['annee']) {
+            return $data['annee'];
+        }
+
+        foreach ($data as $value) {
+            if (!is_array($value)) {
+                continue;
+            }
+
+            $anneeId = $this->findAnneeIdInArray($value);
+            if (null !== $anneeId) {
+                return $anneeId;
+            }
+        }
+
+        return null;
+    }
+
+    private function getCurrentRequestPayload(): ?array
+    {
+        $request = $this->requestStack->getCurrentRequest();
+        if (null === $request) {
+            return null;
+        }
+
+        $content = $request->getContent();
+        if ('' === $content) {
+            return null;
+        }
+
+        try {
+            return json_decode($content, true, 512, JSON_THROW_ON_ERROR);
+        } catch (\JsonException) {
+            return null;
+        }
+    }
+
     public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
 
         $resolver->setDefaults([
             'orderable' => true,
-            'departement' => null,
-            'diplome' => null,
+            'toolbar_form_name' => 'filter',
+            'departement' => $this->departement,
+            'annee' => $this->annee,
             'type' => 'administration',
         ]);
     }

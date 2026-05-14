@@ -25,7 +25,8 @@ class StageRapport extends BaseEntity
 {
     use LifeCycleTrait;
 
-    #[ORM\ManyToOne(inversedBy: 'stageRapports')]
+    #[ORM\OneToOne(targetEntity: StageEtudiant::class, inversedBy: 'stageRapport')]
+    #[ORM\JoinColumn(nullable: false)]
     private ?StageEtudiant $stageEtudiant = null;
 
     #[ORM\Column(length: 255)]
