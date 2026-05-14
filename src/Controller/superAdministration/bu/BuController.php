@@ -9,7 +9,6 @@
 
 namespace App\Controller\superAdministration\bu;
 
-use App\Classes\Pdf\MyGotenbergPdf;
 use App\Classes\Pdf\PdfManager;
 use App\Controller\BaseController;
 use App\Entity\StageRapport;
@@ -18,10 +17,13 @@ use App\Repository\DepartementRepository;
 use App\Repository\StageRapportRepository;
 use App\Table\BuRapportTableType;
 use App\Utils\Tools;
+use GuzzleHttp\Psr7\Request as Psr7Request;
 use Gotenberg\Gotenberg;
 use Gotenberg\Stream;
 use Psr\Http\Client\ClientInterface;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Routing\Attribute\Route;
@@ -138,6 +140,7 @@ class BuController extends BaseController
         $publicDir = $kernel->getProjectDir().'/public';
         $tempToken = date('YmdHis').'-'.uniqid('', true);
         $pdfDirRelative = 'upload/temp/pdf/'.$tempToken;
+        $pdfDirRelativeForGenerator = $pdfDirRelative.'/';
         $pdfDir = $publicDir.'/'.$pdfDirRelative;
         $zipDir = $publicDir.'/upload/temp/zip';
 
@@ -161,18 +164,23 @@ class BuController extends BaseController
                 $rapport->getId()
             );
 
-            $rapportSourcePath = $this->resolveRapportSourcePath($rapport, $publicDir);
-            $includeAttachmentPage = null === $rapportSourcePath;
+            $rapportSourcePath = $this->resolveRapportSourcePath($rapport, $pdfDir, $httpClient);
+            if (null === $rapportSourcePath) {
+                ++$index;
+                continue;
+            }
 
             $pdfFileName = $pdfService::genereAndSavePdf('pdf/rapportPDF.html.twig', [
                 'stageRapport' => $rapport,
-                'includeAttachmentPage' => $includeAttachmentPage,
-            ], $pdfBaseName, $pdfDirRelative);
+                'includeAttachmentPage' => false,
+            ], $pdfBaseName, $pdfDirRelativeForGenerator);
 
             $finalPdfPath = $this->resolveGeneratedPdfPath($publicDir, $pdfDir, $pdfFileName);
             $finalPdfName = basename($finalPdfPath);
 
-            if (null !== $rapportSourcePath && $pdfService instanceof MyGotenbergPdf) {
+            $isTemporarySourceFile = str_starts_with($rapportSourcePath, $pdfDir.'/rapport-source-');
+
+            try {
                 $mergedFileName = $this->mergeRapportPdfWithArchivePage(
                     $finalPdfPath,
                     $rapportSourcePath,
@@ -180,14 +188,18 @@ class BuController extends BaseController
                     $pdfDir,
                     $httpClient
                 );
-
-                if (is_file($finalPdfPath)) {
-                    unlink($finalPdfPath);
+            } finally {
+                if ($isTemporarySourceFile && is_file($rapportSourcePath)) {
+                    unlink($rapportSourcePath);
                 }
-
-                $finalPdfPath = $pdfDir.'/'.$mergedFileName;
-                $finalPdfName = $mergedFileName;
             }
+
+            if (is_file($finalPdfPath)) {
+                unlink($finalPdfPath);
+            }
+
+            $finalPdfPath = $pdfDir.'/'.$mergedFileName;
+            $finalPdfName = $mergedFileName;
 
             $generatedFiles[] = [
                 'path' => $finalPdfPath,
@@ -204,13 +216,31 @@ class BuController extends BaseController
             throw new \RuntimeException('Impossible de créer le fichier ZIP.');
         }
 
+        $addedFilesCount = 0;
         foreach ($generatedFiles as $file) {
             if (is_file($file['path'])) {
                 $zip->addFile($file['path'], $file['name']);
+                ++$addedFilesCount;
             }
         }
 
-        $zip->close();
+        if (true !== $zip->close()) {
+            throw new \RuntimeException('Impossible de finaliser le fichier ZIP.');
+        }
+
+        if (0 === $addedFilesCount || !is_file($zipPath)) {
+            foreach ($generatedFiles as $file) {
+                if (is_file($file['path'])) {
+                    unlink($file['path']);
+                }
+            }
+
+            if (is_dir($pdfDir)) {
+                @rmdir($pdfDir);
+            }
+
+            throw $this->createNotFoundException('Aucun fichier PDF valide à intégrer dans l\'archive.');
+        }
 
         foreach ($generatedFiles as $file) {
             if (is_file($file['path'])) {
@@ -228,20 +258,95 @@ class BuController extends BaseController
         return $response;
     }
 
-    private function resolveRapportSourcePath(StageRapport $rapport, string $publicDir): ?string
+    private function resolveRapportSourcePath(
+        StageRapport $rapport,
+        string $pdfDir,
+        ClientInterface $httpClient
+    ): ?string
     {
-        $documentName = $rapport->getDocumentName();
-        if (null === $documentName || '' === trim($documentName)) {
+        try {
+            $downloadResponse = $this->downloadRapport($rapport);
+        } catch (\Throwable) {
             return null;
         }
 
-        $filePath = $publicDir.'/upload/rapport-stage/'.$documentName;
+        if ($downloadResponse instanceof BinaryFileResponse) {
+            $sourcePath = $downloadResponse->getFile()->getPathname();
 
-        return is_file($filePath) ? $filePath : null;
+            return is_file($sourcePath) ? $sourcePath : null;
+        }
+
+        if ($downloadResponse instanceof RedirectResponse) {
+            $linkPath = $this->downloadRapportSourceFromUrl($downloadResponse->getTargetUrl(), $rapport->getId(), $pdfDir, $httpClient);
+
+            return is_file($linkPath ?? '') ? $linkPath : null;
+        }
+
+        return null;
+    }
+
+    private function downloadRapportSourceFromUrl(
+        string $url,
+        int $rapportId,
+        string $pdfDir,
+        ClientInterface $httpClient
+    ): ?string
+    {
+        if ('' === trim($url)) {
+            return null;
+        }
+
+        $url = trim($url);
+
+        try {
+            $response = $httpClient->sendRequest(new Psr7Request('GET', $url));
+        } catch (\Throwable) {
+            return null;
+        }
+
+        if ($response->getStatusCode() < 200 || $response->getStatusCode() >= 300) {
+            return null;
+        }
+
+        $content = $response->getBody()->getContents();
+        if ('' === $content) {
+            return null;
+        }
+
+        $contentType = mb_strtolower($response->getHeaderLine('Content-Type'));
+        $looksLikePdf = str_starts_with($content, '%PDF-');
+        $isPdfMime = '' === $contentType
+            || str_contains($contentType, 'application/pdf')
+            || str_contains($contentType, 'application/octet-stream');
+
+        if (!$looksLikePdf && !$isPdfMime) {
+            return null;
+        }
+
+        $downloadedSourcePath = sprintf(
+            '%s/rapport-source-%d-%s.pdf',
+            $pdfDir,
+            $rapportId,
+            uniqid('', true)
+        );
+
+        if (false === file_put_contents($downloadedSourcePath, $content)) {
+            return null;
+        }
+
+        return $downloadedSourcePath;
     }
 
     private function resolveGeneratedPdfPath(string $publicDir, string $pdfDir, string $pdfFileName): string
     {
+        if (str_starts_with($pdfFileName, $publicDir.'/')) {
+            return $pdfFileName;
+        }
+
+        if (str_starts_with($pdfFileName, '/upload/')) {
+            return $publicDir.$pdfFileName;
+        }
+
         if (str_starts_with($pdfFileName, 'upload/')) {
             return $publicDir.'/'.$pdfFileName;
         }
