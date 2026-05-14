@@ -164,7 +164,7 @@ class BuController extends BaseController
                 $rapport->getId()
             );
 
-            $rapportSourcePath = $this->resolveRapportSourcePath($rapport, $pdfDir, $httpClient);
+            $rapportSourcePath = $this->resolveRapportSourcePath($rapport, $publicDir, $pdfDir, $httpClient);
             if (null === $rapportSourcePath) {
                 ++$index;
                 continue;
@@ -260,10 +260,22 @@ class BuController extends BaseController
 
     private function resolveRapportSourcePath(
         StageRapport $rapport,
+        string $publicDir,
         string $pdfDir,
         ClientInterface $httpClient
     ): ?string
     {
+        $storedPath = $this->resolveStoredRapportFilePath($rapport->getDocumentName());
+        if (is_file($storedPath ?? '')) {
+            return $storedPath;
+        }
+
+        $lienFichier = $rapport->getLienFichier();
+        $localPathFromLink = $this->resolveStoredRapportPathFromUrl($lienFichier, $publicDir);
+        if (is_file($localPathFromLink ?? '')) {
+            return $localPathFromLink;
+        }
+
         try {
             $downloadResponse = $this->downloadRapport($rapport);
         } catch (\Throwable) {
@@ -277,9 +289,51 @@ class BuController extends BaseController
         }
 
         if ($downloadResponse instanceof RedirectResponse) {
-            $linkPath = $this->downloadRapportSourceFromUrl($downloadResponse->getTargetUrl(), $rapport->getId(), $pdfDir, $httpClient);
+            $targetUrl = $downloadResponse->getTargetUrl();
+            $localPathFromRedirect = $this->resolveStoredRapportPathFromUrl($targetUrl, $publicDir);
+            if (is_file($localPathFromRedirect ?? '')) {
+                return $localPathFromRedirect;
+            }
+
+            $linkPath = $this->downloadRapportSourceFromUrl($targetUrl, $rapport->getId(), $pdfDir, $httpClient);
 
             return is_file($linkPath ?? '') ? $linkPath : null;
+        }
+
+        return null;
+    }
+
+    private function resolveStoredRapportPathFromUrl(?string $url, string $publicDir): ?string
+    {
+        if (null === $url || '' === trim($url)) {
+            return null;
+        }
+
+        $url = trim($url);
+        $parsedPath = parse_url($url, PHP_URL_PATH);
+        if (!is_string($parsedPath) || '' === trim($parsedPath)) {
+            return null;
+        }
+
+        $decodedPath = rawurldecode($parsedPath);
+        $candidates = [];
+
+        foreach (array_unique([$parsedPath, $decodedPath]) as $candidatePath) {
+            if (str_starts_with($candidatePath, $publicDir.'/')) {
+                $candidates[] = $candidatePath;
+            } elseif (str_starts_with($candidatePath, '/upload/')) {
+                $candidates[] = $publicDir.$candidatePath;
+            } elseif (str_starts_with($candidatePath, 'upload/')) {
+                $candidates[] = $publicDir.'/'.$candidatePath;
+            }
+
+            $candidates[] = $publicDir.'/upload/rapport-stage/'.basename($candidatePath);
+        }
+
+        foreach (array_unique($candidates) as $candidate) {
+            if (is_file($candidate)) {
+                return $candidate;
+            }
         }
 
         return null;
