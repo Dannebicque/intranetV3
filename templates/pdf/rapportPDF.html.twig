@@ -68,18 +68,6 @@
         </tbody>
     </table>
 
-    {% if includeAttachmentPage|default(true) and (stageRapport.lienFichier or stageRapport.documentName) %}
-        <div style="page-break-after: always"></div>
-
-        <h2>Fichier du rapport</h2>
-        {% if stageRapport.lienFichier %}
-            <p>Le rapport est disponible via le lien de téléchargement suivant :</p>
-            <p><a href="{{ stageRapport.lienFichier }}">{{ stageRapport.lienFichier }}</a></p>
-        {% elseif stageRapport.documentName %}
-            <p>Le rapport PDF associé est : <strong>{{ stageRapport.documentName }}</strong></p>
-        {% endif %}
-    {% endif %}
-
 {% endblock %}
 
 {% block style %}
