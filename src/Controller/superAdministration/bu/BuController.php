@@ -137,275 +137,129 @@ class BuController extends BaseController
             throw $this->createNotFoundException('Aucun rapport non confidentiel trouvé pour cette année.');
         }
 
-        $publicDir = $kernel->getProjectDir().'/public';
-        $tempToken = date('YmdHis').'-'.uniqid('', true);
-        $pdfDirRelative = 'upload/temp/pdf/'.$tempToken;
-        $pdfDirRelativeForGenerator = $pdfDirRelative.'/';
-        $pdfDir = $publicDir.'/'.$pdfDirRelative;
-        $zipDir = $publicDir.'/upload/temp/zip';
+        $tempDirectory = $kernel->getProjectDir().'/var/tmp';
+        Tools::checkDirectoryExist($tempDirectory);
 
-        if (!is_dir($pdfDir) && !mkdir($pdfDir, 0775, true) && !is_dir($pdfDir)) {
-            throw new \RuntimeException('Impossible de créer le dossier temporaire des PDFs.');
+        $anneeLabel = null === $annee ? 'inconnue' : (string)$annee;
+        $zipDownloadName = 'rapports-stage-'.$anneeLabel.'.zip';
+        $zipPath = $tempDirectory.'/'.Tools::FileName('rapports-stage-'.$anneeLabel.'-'.date('YmdHis'), 150).'.zip';
+
+        @unlink($zipPath);
+
+        $zip = new ZipArchive();
+        if (true !== $zip->open($zipPath, ZipArchive::CREATE | ZipArchive::OVERWRITE)) {
+            throw new \RuntimeException('Impossible de créer l’archive ZIP des rapports.');
         }
 
-        if (!is_dir($zipDir) && !mkdir($zipDir, 0775, true) && !is_dir($zipDir)) {
-            throw new \RuntimeException('Impossible de créer le dossier temporaire des ZIP.');
-        }
-
-        $generatedFiles = [];
-        $index = 1;
-        $pdfService = $myPdf->pdf();
-
-        foreach ($rapports as $rapport) {
-            $nomRapport = $rapport->getTitreRapport() ?? 'rapport';
-            $pdfBaseName = sprintf('rapport-%02d-%s-%d',
-                $index,
-                Tools::slug($nomRapport),
-                $rapport->getId()
-            );
-
-            $rapportSourcePath = $this->resolveRapportSourcePath($rapport, $publicDir, $pdfDir, $httpClient);
-            if (null === $rapportSourcePath) {
-                ++$index;
+        $addedFiles = 0;
+        foreach ($rapports as $stageRapport) {
+            $rapportPdfContent = $this->getRapportPdfContent($stageRapport, $httpClient);
+            if (null === $rapportPdfContent) {
                 continue;
             }
 
-            $pdfFileName = $pdfService::genereAndSavePdf('pdf/rapportPDF.html.twig', [
-                'stageRapport' => $rapport,
-                'includeAttachmentPage' => false,
-            ], $pdfBaseName, $pdfDirRelativeForGenerator);
+            try {
+                $archivagePdfResponse = $myPdf->pdf()::generePdf(
+                    'pdf/rapportPDF.html.twig',
+                    ['stageRapport' => $stageRapport],
+                    'rapport-archivage-'.$stageRapport->getId()
+                );
+            } catch (\Throwable) {
+                continue;
+            }
 
-            $finalPdfPath = $this->resolveGeneratedPdfPath($publicDir, $pdfDir, $pdfFileName);
-            $finalPdfName = basename($finalPdfPath);
-
-            $isTemporarySourceFile = str_starts_with($rapportSourcePath, $pdfDir.'/rapport-source-');
+            $archivagePdfContent = $archivagePdfResponse->getContent();
+            if (false === $archivagePdfContent || '' === $archivagePdfContent) {
+                continue;
+            }
 
             try {
-                $mergedFileName = $this->mergeRapportPdfWithArchivePage(
-                    $finalPdfPath,
-                    $rapportSourcePath,
-                    $pdfBaseName,
-                    $pdfDir,
-                    $httpClient
+                $mergeRequest = Gotenberg::pdfEngines('http://localhost:3000')->merge(
+                    Stream::string('rapport.pdf', $rapportPdfContent),
+                    Stream::string('informations-archivage.pdf', $archivagePdfContent)
                 );
-            } finally {
-                if ($isTemporarySourceFile && is_file($rapportSourcePath)) {
-                    unlink($rapportSourcePath);
-                }
+                $mergedResponse = Gotenberg::send($mergeRequest, $httpClient);
+                $mergedPdfContent = $mergedResponse->getBody()->getContents();
+            } catch (\Throwable) {
+                continue;
             }
 
-            if (is_file($finalPdfPath)) {
-                unlink($finalPdfPath);
+            if ('' === $mergedPdfContent) {
+                continue;
             }
 
-            $finalPdfPath = $pdfDir.'/'.$mergedFileName;
-            $finalPdfName = $mergedFileName;
-
-            $generatedFiles[] = [
-                'path' => $finalPdfPath,
-                'name' => $finalPdfName,
-            ];
-            ++$index;
-        }
-
-        $zipFileName = sprintf('rapports-%s-%s.zip', $annee ?? 'all', date('YmdHis'));
-        $zipPath = $zipDir.'/'.$zipFileName;
-        $zip = new ZipArchive();
-
-        if (true !== $zip->open($zipPath, ZipArchive::CREATE | ZipArchive::OVERWRITE)) {
-            throw new \RuntimeException('Impossible de créer le fichier ZIP.');
-        }
-
-        $addedFilesCount = 0;
-        foreach ($generatedFiles as $file) {
-            if (is_file($file['path'])) {
-                $zip->addFile($file['path'], $file['name']);
-                ++$addedFilesCount;
+            if (false !== $zip->addFromString($this->buildRapportArchiveFileName($stageRapport), $mergedPdfContent)) {
+                ++$addedFiles;
             }
         }
 
-        if (true !== $zip->close()) {
-            throw new \RuntimeException('Impossible de finaliser le fichier ZIP.');
+        $zip->close();
+
+        if (0 === $addedFiles) {
+            @unlink($zipPath);
+            throw $this->createNotFoundException('Aucun rapport PDF exploitable pour créer l’archive.');
         }
 
-        if (0 === $addedFilesCount || !is_file($zipPath)) {
-            foreach ($generatedFiles as $file) {
-                if (is_file($file['path'])) {
-                    unlink($file['path']);
-                }
-            }
-
-            if (is_dir($pdfDir)) {
-                @rmdir($pdfDir);
-            }
-
-            throw $this->createNotFoundException('Aucun fichier PDF valide à intégrer dans l\'archive.');
-        }
-
-        foreach ($generatedFiles as $file) {
-            if (is_file($file['path'])) {
-                unlink($file['path']);
-            }
-        }
-
-        if (is_dir($pdfDir)) {
-            @rmdir($pdfDir);
-        }
-
-        $response = $this->file($zipPath, $zipFileName);
+        $response = new BinaryFileResponse($zipPath);
+        $response->setContentDisposition('attachment', $zipDownloadName);
         $response->deleteFileAfterSend(true);
 
         return $response;
     }
 
-    private function resolveRapportSourcePath(
-        StageRapport $rapport,
-        string $publicDir,
-        string $pdfDir,
-        ClientInterface $httpClient
-    ): ?string
+    private function getRapportPdfContent(StageRapport $stageRapport, ClientInterface $httpClient): ?string
     {
-        $storedPath = $this->resolveStoredRapportFilePath($rapport->getDocumentName());
-        if (is_file($storedPath ?? '')) {
-            return $storedPath;
-        }
+        if (null !== $stageRapport->getLienFichier()) {
+            try {
+                $request = new Psr7Request('GET', $stageRapport->getLienFichier());
+                $response = $httpClient->sendRequest($request);
 
-        $lienFichier = $rapport->getLienFichier();
-        $localPathFromLink = $this->resolveStoredRapportPathFromUrl($lienFichier, $publicDir);
-        if (is_file($localPathFromLink ?? '')) {
-            return $localPathFromLink;
-        }
+                if ($response->getStatusCode() >= 200 && $response->getStatusCode() < 300) {
+                    $content = $response->getBody()->getContents();
 
-        try {
-            $downloadResponse = $this->downloadRapport($rapport);
-        } catch (\Throwable) {
+                    return '' === $content ? null : $content;
+                }
+            } catch (\Throwable) {
+                return null;
+            }
+
             return null;
         }
 
-        if ($downloadResponse instanceof BinaryFileResponse) {
-            $sourcePath = $downloadResponse->getFile()->getPathname();
+        if (null !== $stageRapport->getDocumentName()) {
+            $filePath = $this->resolveStoredRapportFilePath($stageRapport->getDocumentName());
 
-            return is_file($sourcePath) ? $sourcePath : null;
-        }
-
-        if ($downloadResponse instanceof RedirectResponse) {
-            $targetUrl = $downloadResponse->getTargetUrl();
-            $localPathFromRedirect = $this->resolveStoredRapportPathFromUrl($targetUrl, $publicDir);
-            if (is_file($localPathFromRedirect ?? '')) {
-                return $localPathFromRedirect;
+            if (null === $filePath || !is_file($filePath)) {
+                return null;
             }
 
-            $linkPath = $this->downloadRapportSourceFromUrl($targetUrl, $rapport->getId(), $pdfDir, $httpClient);
+            $content = file_get_contents($filePath);
 
-            return is_file($linkPath ?? '') ? $linkPath : null;
+            if (false === $content || '' === $content) {
+                return null;
+            }
+
+            return $content;
         }
 
         return null;
     }
 
-    private function resolveStoredRapportPathFromUrl(?string $url, string $publicDir): ?string
+    private function buildRapportArchiveFileName(StageRapport $stageRapport): string
     {
-        if (null === $url || '' === trim($url)) {
-            return null;
-        }
-
-        $url = trim($url);
-        $parsedPath = parse_url($url, PHP_URL_PATH);
-        if (!is_string($parsedPath) || '' === trim($parsedPath)) {
-            return null;
-        }
-
-        $decodedPath = rawurldecode($parsedPath);
-        $candidates = [];
-
-        foreach (array_unique([$parsedPath, $decodedPath]) as $candidatePath) {
-            if (str_starts_with($candidatePath, $publicDir.'/')) {
-                $candidates[] = $candidatePath;
-            } elseif (str_starts_with($candidatePath, '/upload/')) {
-                $candidates[] = $publicDir.$candidatePath;
-            } elseif (str_starts_with($candidatePath, 'upload/')) {
-                $candidates[] = $publicDir.'/'.$candidatePath;
-            }
-
-            $candidates[] = $publicDir.'/upload/rapport-stage/'.basename($candidatePath);
-        }
-
-        foreach (array_unique($candidates) as $candidate) {
-            if (is_file($candidate)) {
-                return $candidate;
-            }
-        }
-
-        return null;
-    }
-
-    private function downloadRapportSourceFromUrl(
-        string $url,
-        int $rapportId,
-        string $pdfDir,
-        ClientInterface $httpClient
-    ): ?string
-    {
-        if ('' === trim($url)) {
-            return null;
-        }
-
-        $url = trim($url);
-
-        try {
-            $response = $httpClient->sendRequest(new Psr7Request('GET', $url));
-        } catch (\Throwable) {
-            return null;
-        }
-
-        if ($response->getStatusCode() < 200 || $response->getStatusCode() >= 300) {
-            return null;
-        }
-
-        $content = $response->getBody()->getContents();
-        if ('' === $content) {
-            return null;
-        }
-
-        $contentType = mb_strtolower($response->getHeaderLine('Content-Type'));
-        $looksLikePdf = str_starts_with($content, '%PDF-');
-        $isPdfMime = '' === $contentType
-            || str_contains($contentType, 'application/pdf')
-            || str_contains($contentType, 'application/octet-stream');
-
-        if (!$looksLikePdf && !$isPdfMime) {
-            return null;
-        }
-
-        $downloadedSourcePath = sprintf(
-            '%s/rapport-source-%d-%s.pdf',
-            $pdfDir,
-            $rapportId,
-            uniqid('', true)
+        $stageEtudiant = $stageRapport->getStageEtudiant();
+        $etudiant = $stageEtudiant?->getEtudiant();
+        $baseName = trim(
+            ($etudiant?->getNom() ?? '').' '.
+            ($etudiant?->getPrenom() ?? '').' '.
+            ($stageRapport->getTitreRapport() ?? '')
         );
 
-        if (false === file_put_contents($downloadedSourcePath, $content)) {
-            return null;
+        if ('' === $baseName) {
+            $baseName = 'rapport-stage-'.$stageRapport->getId();
         }
 
-        return $downloadedSourcePath;
-    }
-
-    private function resolveGeneratedPdfPath(string $publicDir, string $pdfDir, string $pdfFileName): string
-    {
-        if (str_starts_with($pdfFileName, $publicDir.'/')) {
-            return $pdfFileName;
-        }
-
-        if (str_starts_with($pdfFileName, '/upload/')) {
-            return $publicDir.$pdfFileName;
-        }
-
-        if (str_starts_with($pdfFileName, 'upload/')) {
-            return $publicDir.'/'.$pdfFileName;
-        }
-
-        return $pdfDir.'/'.$pdfFileName;
+        return $stageRapport->getId().'_'.Tools::FileName($baseName, 180).'.pdf';
     }
 
     private function resolveStoredRapportFilePath(?string $documentName): ?string
@@ -440,27 +294,4 @@ class BuController extends BaseController
 
         return null;
     }
-
-    private function mergeRapportPdfWithArchivePage(
-        string $archivePdfPath,
-        string $rapportPdfPath,
-        string $outputName,
-        string $outputDir,
-        ClientInterface $httpClient
-    ): string
-    {
-        try {
-            $request = Gotenberg::pdfEngines('http://localhost:3000')
-                ->outputFilename($outputName)
-                ->merge(
-                    Stream::path($archivePdfPath),
-                    Stream::path($rapportPdfPath)
-                );
-
-            return Gotenberg::save($request, $outputDir, $httpClient);
-        } catch (\Throwable $e) {
-            throw new \RuntimeException('Impossible d\'assembler le PDF d\'archivage avec le rapport source.', 0, $e);
-        }
-    }
-
 }
