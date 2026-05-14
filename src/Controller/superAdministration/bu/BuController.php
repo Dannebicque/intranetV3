@@ -109,14 +109,14 @@ class BuController extends BaseController
 
         // If a stored document name exists, serve the file from public/upload/rapport-stage
         if (null !== $stageRapport->getDocumentName()) {
-            $filePath = $this->getParameter('kernel.project_dir').'/public/upload/rapport-stage/'.$stageRapport->getDocumentName();
+            $filePath = $this->resolveStoredRapportFilePath($stageRapport->getDocumentName());
 
-            if (!is_file($filePath)) {
+            if (null === $filePath || !is_file($filePath)) {
                 throw $this->createNotFoundException('Fichier de rapport introuvable.');
             }
 
             // Return a BinaryFileResponse to force download
-            return $this->file($filePath, $stageRapport->getDocumentName());
+            return $this->file($filePath, basename($filePath));
         }
 
         throw $this->createNotFoundException('Aucun fichier de rapport disponible.');
@@ -352,6 +352,39 @@ class BuController extends BaseController
         }
 
         return $pdfDir.'/'.$pdfFileName;
+    }
+
+    private function resolveStoredRapportFilePath(?string $documentName): ?string
+    {
+        if (null === $documentName || '' === trim($documentName)) {
+            return null;
+        }
+
+        $publicDir = $this->getParameter('kernel.project_dir').'/public';
+        $documentName = trim($documentName);
+        $decodedDocumentName = rawurldecode($documentName);
+        $candidates = [];
+
+        foreach (array_unique([$documentName, $decodedDocumentName]) as $candidateDocumentName) {
+            if (str_starts_with($candidateDocumentName, $publicDir.'/')) {
+                $candidates[] = $candidateDocumentName;
+            } elseif (str_starts_with($candidateDocumentName, '/upload/')) {
+                $candidates[] = $publicDir.$candidateDocumentName;
+            } elseif (str_starts_with($candidateDocumentName, 'upload/')) {
+                $candidates[] = $publicDir.'/'.$candidateDocumentName;
+            }
+
+            $candidates[] = $publicDir.'/upload/rapport-stage/'.$candidateDocumentName;
+            $candidates[] = $publicDir.'/upload/rapport-stage/'.basename($candidateDocumentName);
+        }
+
+        foreach (array_unique($candidates) as $candidate) {
+            if (is_file($candidate)) {
+                return $candidate;
+            }
+        }
+
+        return null;
     }
 
     private function mergeRapportPdfWithArchivePage(
