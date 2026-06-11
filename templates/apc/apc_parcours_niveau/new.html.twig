@@ -76,23 +76,47 @@
 
 {% block javascripts %}
     {{ parent() }}
-    <script>
-      $(document).on('change', '.checkNiveau', function (e) {
-        let etat = 0
-        if (($(this).is(':checked'))) {
-          etat = 1
-        }
-        const parcours = $(this).data('parcours')
-        $.ajax({
-          url: Routing.generate('administration_apc_parcours_niveau_ajax', {
-            parcours,
-            etat,
-            niveau: $(this).val(),
-          }),
-          success (data) {
+    <script defer>
+      document.addEventListener('change', (event) => {
+        const checkbox = event.target
 
+        if (!checkbox.matches('.checkNiveau')) {
+          return
+        }
+
+        const etat = checkbox.checked ? 1 : 0
+        const parcours = checkbox.dataset.parcours
+        const niveau = checkbox.value
+
+        fetch(Routing.generate('administration_apc_parcours_niveau_ajax', {
+          parcours,
+          etat,
+          niveau,
+        }), {
+          method: 'GET',
+          headers: {
+            'X-Requested-With': 'XMLHttpRequest',
           },
+        }).catch((error) => {
+          console.error('Erreur lors de la mise à jour du niveau :', error)
         })
       })
+      // $(document).on('change', '.checkNiveau', function (e) {
+      //   let etat = 0
+      //   if (($(this).is(':checked'))) {
+      //     etat = 1
+      //   }
+      //   const parcours = $(this).data('parcours')
+      //   $.ajax({
+      //     url: Routing.generate('administration_apc_parcours_niveau_ajax', {
+      //       parcours,
+      //       etat,
+      //       niveau: $(this).val(),
+      //     }),
+      //     success (data) {
+      //
+      //     },
+      //   })
+      // })
     </script>
 {% endblock %}
