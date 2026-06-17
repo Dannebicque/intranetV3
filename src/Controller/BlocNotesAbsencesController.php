@@ -14,8 +14,12 @@ use App\Classes\Etudiant\EtudiantNotes;
 use App\Classes\Matieres\TypeMatiereManager;
 use App\Classes\StatsAbsences;
 use App\Entity\Etudiant;
+use App\Entity\Note;
+use Doctrine\ORM\EntityManagerInterface;
 use Exception;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 
 /**
  * Class BlocNotesAbsencesController.
@@ -71,6 +75,27 @@ class BlocNotesAbsencesController extends BaseController
             'notes' => $notes,
             'matieres' => $matieres,
         ]);
+    }
+
+    #[Route(path: '/notes/pointer/{id}', name: 'bloc_notes_absences_pointer')]
+    public function etudiantNotesPointer(Note $note, Request $request, EntityManagerInterface $em): Response
+    {
+        if($note->getEtudiant() !== $this->getUser()) {
+            throw $this->createAccessDeniedException("Vous n'êtes pas le propriétaire de cette note!");
+        }
+
+        $payload = $request->toArray();
+
+        if(!isset($payload['isVue']) && !is_bool($payload['isVue'])) {
+            throw new \Exception("Le champ 'isVue' est invalide!");
+        }
+
+        $note->setVue($payload['isVue']);
+
+        $em->persist($note);
+        $em->flush();
+
+        return $this->json(['vue' => $note->isVue()]);
     }
 
     public function mccSemestre(TypeMatiereManager $typeMatiereManager): Response
