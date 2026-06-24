@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/SousCommission/SousCommissionSauvegarde.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/06/2026 20:55
+ * @lastUpdate 24/06/2026 20:57
  */
 
 /*
@@ -133,7 +133,7 @@ class SousCommissionSauvegarde
         }
 
         return new SousCommissionTravail($semestre, $anneeUniversitaire,
-            $ues->getValues(), $matieres, $etudiants->getValues(), $ssComm);
+            $ues->getValues(), $matieres, $etudiants, $ssComm);
     }
 
     private function getOrCreateScolariteEtudiant(
