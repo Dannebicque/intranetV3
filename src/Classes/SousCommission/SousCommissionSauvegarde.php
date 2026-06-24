@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/SousCommission/SousCommissionSauvegarde.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/02/2026 15:42
+ * @lastUpdate 24/06/2026 20:55
  */
 
 /*
@@ -39,7 +39,9 @@ class SousCommissionSauvegarde
     {
     }
 
-    public function sauvegardeTravail(SousCommissionInterface $sousCommission, array $matieres): SousCommissionTravail
+    public function sauvegardeTravail(
+        SousCommissionInterface $sousCommission,
+        array                   $matieres): SousCommissionTravail
     {
         $semestre = $sousCommission->getSemestre();
         $anneeUniversitaire = $sousCommission->getAnneeUniversitaire();
@@ -47,7 +49,7 @@ class SousCommissionSauvegarde
             'anneeUniversitaire' => $anneeUniversitaire,
             'semestre' => $semestre,
         ]);
-        $etudiants = $semestre->getEtudiants();
+        $etudiants = $sousCommission->getEtudiants();
         $ues = $semestre->getUes();
 
         if (null === $ssComm) {
