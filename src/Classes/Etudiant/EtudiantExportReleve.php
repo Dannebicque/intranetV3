@@ -16,6 +16,7 @@ use App\Entity\AnneeUniversitaire;
 use App\Entity\Etudiant;
 use App\Entity\Scolarite;
 use App\Entity\Semestre;
+use App\Repository\EtudiantRepository;
 use App\Utils\Tools;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
@@ -38,7 +39,8 @@ class EtudiantExportReleve
         private readonly EtudiantNotes $etudiantNotes,
         private readonly PdfManager $myPdf,
         KernelInterface $kernel,
-        private readonly MyEvaluations $myEvaluations
+        private readonly MyEvaluations $myEvaluations,
+        private readonly EtudiantRepository $etudiantRepository
     ) {
         $this->dir = $kernel->getProjectDir() . '/public/upload/';
     }
@@ -108,7 +110,7 @@ class EtudiantExportReleve
         $zip->open($zipName, ZipArchive::CREATE);
         $tabFiles = [];
 
-        $etudiants = $semestre->getEtudiants();
+        $etudiants = $this->etudiantRepository->findBySemestre($semestre, ['nom' => 'ASC', 'prenom' => 'ASC']);
         foreach ($etudiants as $etudiant) {
             if (0 === $etudiant->getAnneeSortie()) {
                 $this->etudiant = $etudiant;
