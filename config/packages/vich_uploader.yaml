@@ -62,6 +62,6 @@ vich_uploader:
         inject_on_load: true
       justificatif:
         uri_prefix: /upload/justificatif
-        upload_destination: '%kernel.project_dir%/public/upload/justificatif'
+        upload_destination: '%app.justificatif_upload_dir%'
         namer: Vich\UploaderBundle\Naming\UniqidNamer
         inject_on_load: true

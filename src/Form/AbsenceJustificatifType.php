@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Form/AbsenceJustificatifType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/04/2024 21:59
+ * @lastUpdate 29/07/2026 17:26
  */
 
 namespace App\Form;
@@ -63,7 +63,7 @@ class AbsenceJustificatifType extends AbstractType
             ->add('fichierFile', VichFileType::class, [
                 'required' => false,
                 'label' => 'fichier',
-                'download_label' => 'apercu',
+                'download_uri' => false,
                 'allow_delete' => false,
                 'help' => 'Le justificatif doit être une convocation officielle ou un certificat médical',
             ]);

@@ -18,7 +18,8 @@
     <dt class="col-md-5 col-sm-12">{{ 'abs.justificiatif.fichier'|trans }} :</dt>
     <dd class="col-md-7 col-sm-12">
         {% if justificatif.fichierName != null and justificatif.fichierName != '' %}
-            <a href="{{ asset('upload/justificatif/'~justificatif.fichierName) }}" target="_blank" class="btn
+            <a href="{{ path('administration_absence_justificatif_document', {uuid: justificatif.uuidString}) }}"
+               target="_blank" class="btn
             btn-info btn-outline">
                 {{ 'voir.le.document'|trans }}
             </a>
@@ -27,4 +28,3 @@
         {% endif %}
     </dd>
 </dl>
-

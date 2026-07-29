@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appEtudiant/AbsenceJustificatifController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:17
+ * @lastUpdate 29/07/2026 17:29
  */
 
 namespace App\Controller\appEtudiant;
@@ -112,5 +112,30 @@ class AbsenceJustificatifController extends BaseController
         $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'absence_justificatif.delete.error.flash');
 
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
+    }
+
+    #[Route(path: '/document/{id}', name: 'app_etudiant_absence_justificatif_document', methods: 'GET')]
+    public function document(#[MapEntity(mapping: ['id' => 'uuid'])] AbsenceJustificatif $absenceJustificatif): Response
+    {
+        if (!$this->isGranted('ROLE_PERMANENT') or !$this->isGranted('ROLE_ETUDIANT')) {
+            throw $this->createAccessDeniedException('Accès non autorisé à ce justificatif.');
+        }
+
+        $etudiant = $absenceJustificatif->getEtudiant();
+        if (null === $etudiant || $etudiant->getId() !== $this->getUser()->getId()) {
+            throw $this->createAccessDeniedException('Accès non autorisé à ce justificatif.');
+        }
+
+        $fichierName = $absenceJustificatif->getFichierName();
+        if (null === $fichierName || '' === $fichierName) {
+            throw $this->createNotFoundException('Aucun document justificatif disponible.');
+        }
+
+        $filePath = $this->getParameter('app.justificatif_upload_dir') . '/' . $fichierName;
+        if (!is_file($filePath)) {
+            throw $this->createNotFoundException('Document justificatif introuvable.');
+        }
+
+        return $this->file($filePath, $fichierName);
     }
 }

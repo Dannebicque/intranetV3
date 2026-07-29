@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/AbsenceJustificatifController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/01/2026 10:08
+ * @lastUpdate 29/07/2026 17:26
  */
 
 namespace App\Controller\administration;
@@ -177,6 +177,24 @@ class AbsenceJustificatifController extends BaseController
         $this->gereEtat($etat, $absenceJustificatif, $eventDispatcher);
 
         return new Response('', Response::HTTP_OK);
+    }
+
+    #[Route(path: '/document/{uuid}', name: 'administration_absence_justificatif_document', methods: 'GET')]
+    public function document(#[MapEntity(mapping: ['uuid' => 'uuid'])] AbsenceJustificatif $absenceJustificatif): Response
+    {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $absenceJustificatif->getEtudiant()?->getSemestreActif());
+
+        $fichierName = $absenceJustificatif->getFichierName();
+        if (null === $fichierName || '' === $fichierName) {
+            throw $this->createNotFoundException('Aucun document justificatif disponible.');
+        }
+
+        $filePath = $this->getParameter('app.justificatif_upload_dir') . '/' . $fichierName;
+        if (!is_file($filePath)) {
+            throw $this->createNotFoundException('Document justificatif introuvable.');
+        }
+
+        return $this->file($filePath, $fichierName);
     }
 
     private function gereEtat(
