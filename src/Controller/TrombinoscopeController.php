@@ -16,6 +16,7 @@ use App\Classes\MyExportListing;
 use App\Classes\MySerializer;
 use App\Classes\Pdf\PdfManager;
 use App\Entity\Constantes;
+use App\Entity\Etudiant;
 use App\Entity\Groupe;
 use App\Entity\Semestre;
 use App\Entity\TypeGroupe;
@@ -141,6 +142,8 @@ class TrombinoscopeController extends BaseController
         #[MapEntity(mapping: ['typegroupe' => 'id'])]
         ?TypeGroupe $typegroupe = null
     ): Response {
+        $isEtudiant = $this->getUser() instanceof Etudiant;
+
         if (null !== $semestre->getDiplome() && null !== $semestre->getDiplome()->getParent()) {
             $dip = $semestre->getDiplome()?->getParent();
         } else {
@@ -180,6 +183,7 @@ class TrombinoscopeController extends BaseController
             'siteperso' => $semestre->getDiplome()->getOptEspacePersoVisible(),
             'etudiantGroupes' => $etudiantRepository->getEtudiantGroupes($semestre),
             'countEtudiants' => $etudiantRepository->countBySemestre($semestre),
+            'isEtudiant' => $isEtudiant,
         ]);
     }
 
