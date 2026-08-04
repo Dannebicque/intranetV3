@@ -69,7 +69,7 @@
                                                 <div class="flexbox">
                                                     <a href="{{ path('user_profil', {type:'etudiant', slug: etudiant.slug}) }}" target="_blank">
                                                         {% if etudiant.photoName != null and etudiant.photoName !=
-                                                            'noimage.png' %}
+                                                            'noimage.png' and isEtudiant === false %}
                                                             <img class="avatar avatar-xxxl avatar-bordered rounded" src="{{ asset('upload/etudiants/'~etudiant.photoName)|imagine_filter('thumb') }}" alt="photo de {{ etudiant.displayPr }}">
                                                         {% else %}
                                                             {{ include('composants/_avatar.html.twig',

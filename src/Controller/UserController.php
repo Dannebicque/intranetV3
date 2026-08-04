@@ -36,6 +36,7 @@ class UserController extends BaseController
             'onglet' => $onglet,
             'monprofil' => true,
             'siteperso' => $this->getUser() instanceof Etudiant ? $this->getUser()->getSemestreActif()?->getDiplome()?->getOptEspacePersoVisible() : false,
+            'isEtudiant' => false,
         ]);
     }
 
@@ -68,6 +69,12 @@ class UserController extends BaseController
     #[Route(path: '/{type}/{slug}/{onglet}', name: 'user_profil', options: ['expose' => true])]
     public function index(EtudiantRepository $etudiantRepository, PersonnelRepository $personnelRepository, string $type, string $slug, string $onglet = 'scolarite'): RedirectResponse|Response
     {
+        $isEtudiant = $this->getUser() instanceof Etudiant;
+        // passer exceptionnellement isEtudiant à false si le profil est celui de l'étudiant connecté
+        if ($this->getUser() instanceof Etudiant && $this->getUser()->getSlug() === $slug) {
+            $isEtudiant = false;
+        }
+
         if ('personnel' === $type) {
             $user = $personnelRepository->findOneBySlug($slug);
             if (null !== $user) {
@@ -75,6 +82,7 @@ class UserController extends BaseController
                     'user' => $user,
                     'onglet' => $onglet,
                     'monprofil' => false,
+                    'isEtudiant' => $isEtudiant,
                 ]);
             }
         }
@@ -86,6 +94,7 @@ class UserController extends BaseController
                     'onglet' => $onglet,
                     'monprofil' => false,
                     'siteperso' => $user->getDiplome()?->getOptEspacePersoVisible(),
+                    'isEtudiant' => $isEtudiant,
                 ]);
             }
         }
