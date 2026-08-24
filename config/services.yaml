@@ -56,6 +56,7 @@ parameters:
   api_edu_sign: '%env(resolve:API_EDUSIGN)%'
   pdf_service: '%env(resolve:PDF_SERVICE)%'
   app.justificatif_upload_dir: '%kernel.project_dir%/var/upload/justificatif'
+  app.messagerie_pj_dir: '%kernel.project_dir%/var/upload/pj'
 
 
 services:

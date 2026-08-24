@@ -1,8 +1,8 @@
-// Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/Sites/intranetV3/assets/js/pages/profil.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 20/02/2024 18:42
+// @lastUpdate 24/08/2026 09:37
 import $ from 'jquery'
 import Routing from 'fos-router'
 import { addCallout } from '../util'
@@ -194,9 +194,13 @@ $(document).on('click', '.checkAbsence', function (e) {
 })
 
 $(document).on('click', '#btnInit', function () {
+  const $button = $(this)
   $.ajax({
-    url: Routing.generate('security_password_init', { user: $(this).data('personnel') }),
+    url: Routing.generate('security_password_init', { user: $button.data('personnel') }),
     method: 'POST',
+    headers: {
+      'X-CSRF-TOKEN': $button.data('csrf-token'),
+    },
     success(e) {
       addCallout('Mot de passe initialisé !', 'success')
     },

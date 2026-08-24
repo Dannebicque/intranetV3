@@ -7,7 +7,8 @@
             Cette fonctionnalité ne devrait être eutilisée que pour les utilisateurs ne disposant pas d'accès URCA.
         </twig:Alert>
         <br>
-        <a href="#" class="btn btn-warning" id="btnInit" data-personnel="{{ personnel.id }}" data-bs-toggle="tooltip"
+        <a href="#" class="btn btn-warning" id="btnInit" data-personnel="{{ personnel.id }}"
+           data-csrf-token="{{ csrf_token('init-password-' ~ personnel.id) }}" data-bs-toggle="tooltip"
            data-bs-placement="bottom"
            title="Ré/initiliser le mot de passe"><i class="fa fa-magic"></i> Initialiser le mot de passe.</a>
     </div>
