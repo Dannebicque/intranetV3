@@ -21,10 +21,17 @@
                     <tr>
                         <td>{{ entry.etudiant.nom }} {{ entry.etudiant.prenom }}</td>
                         <td>{{ entry.semestre.libelle }}</td>
-                        <td>{{ entry.anneeUniversitaire.libelle }}</td>
                         <td>
-                            <a href="{{ path('administration_etudiant_semestre_annee_edit', {id: entry.id}) }}"
-                               class="btn btn-sm btn-primary">Modifier</a>
+                            <select class="form-control annee-select" data-id="{{ entry.id }}">
+                                {% for annee in anneeUniversitaires %}
+                                    <option value="{{ annee.id }}"
+                                            {% if annee.id == entry.anneeUniversitaire.id %}selected{% endif %}>
+                                        {{ annee.libelle }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                        <td>
                             <form method="post"
                                   action="{{ path('administration_etudiant_semestre_annee_delete', {id: entry.id}) }}"
                                   onsubmit="return confirm('Êtes-vous sûr ?');" style="display:inline-block;">
@@ -38,4 +45,30 @@
             </table>
         </div>
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+      document.querySelectorAll('.annee-select').forEach(select => {
+        select.addEventListener('change', function () {
+          const id = this.getAttribute('data-id')
+          const anneeId = this.value
+          fetch(`{{ path('administration_etudiant_semestre_annee_edit_ajax', {id: 'ID'}) }}`.replace('ID', id), {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `annee_id=${anneeId}`
+          }).then(response => response.json())
+            .then(data => {
+              if (data.success) {
+                alert('Année modifiée')
+              } else {
+                alert('Erreur: ' + data.message)
+              }
+            })
+        })
+      })
+    </script>
 {% endblock %}

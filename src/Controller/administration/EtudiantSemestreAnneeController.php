@@ -4,15 +4,17 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EtudiantSemestreAnneeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/08/2026 10:34
+ * @lastUpdate 28/08/2026 10:36
  */
 
 namespace App\Controller\administration;
 
 use App\Controller\BaseController;
+use App\Entity\AnneeUniversitaire;
 use App\Entity\EtudiantSemestreAnnee;
 use App\Form\EtudiantSemestreAnneeType;
 use App\Repository\EtudiantSemestreAnneeRepository;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -31,7 +33,26 @@ class EtudiantSemestreAnneeController extends BaseController
 
         return $this->render('administration/etudiant_semestre_annee/index.html.twig', [
             'entries' => $entries,
+            'anneeUniversitaires' => $this->entityManager->getRepository(AnneeUniversitaire::class)->findAll(),
         ]);
+    }
+
+    #[Route(path: '/edit-ajax/{id}', name: 'administration_etudiant_semestre_annee_edit_ajax', methods: ['POST'])]
+    public function editAjax(Request $request, EtudiantSemestreAnnee $etudiantSemestreAnnee): JsonResponse
+    {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL');
+
+        $anneeId = $request->request->get('annee_id');
+        $annee = $this->entityManager->getRepository(AnneeUniversitaire::class)->find($anneeId);
+
+        if (!$annee) {
+            return new JsonResponse(['success' => false, 'message' => 'Année introuvable'], 404);
+        }
+
+        $etudiantSemestreAnnee->setAnneeUniversitaire($annee);
+        $this->entityManager->flush();
+
+        return new JsonResponse(['success' => true]);
     }
 
     #[Route(path: '/edit/{id}', name: 'administration_etudiant_semestre_annee_edit', methods: ['GET', 'POST'])]

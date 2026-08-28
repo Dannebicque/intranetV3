@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/EtudiantSemestreAnneeRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/08/2026 10:24
+ * @lastUpdate 28/08/2026 10:36
  */
 
 namespace App\Repository;
@@ -33,10 +33,12 @@ class EtudiantSemestreAnneeRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('e')
             ->join('e.etudiant', 'etu')
+            ->join('e.semestre', 'sem')
             ->where('etu.departement = :departement')
             ->setParameter('departement', $departement)
             ->orderBy('etu.nom', 'ASC')
             ->addOrderBy('etu.prenom', 'ASC')
+            ->addOrderBy('sem.ordreLmd', 'ASC')
             ->getQuery()
             ->getResult();
     }
