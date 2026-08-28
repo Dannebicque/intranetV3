@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Semestre.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/01/2026 08:37
+ * @lastUpdate 28/08/2026 10:12
  */
 
 namespace App\Entity;
@@ -246,6 +246,12 @@ class Semestre extends BaseEntity implements Stringable, GroupeInterface
     #[ORM\ManyToMany(targetEntity: Etudiant::class, mappedBy: 'semestres')]
     private Collection $etudiantsSemestres;
 
+    /**
+     * @var Collection<int, EtudiantSemestreAnnee>
+     */
+    #[ORM\OneToMany(mappedBy: 'semestre', targetEntity: EtudiantSemestreAnnee::class, orphanRemoval: true)]
+    private Collection $etudiantSemestreAnnees;
+
     public function __construct()
     {
         $this->init();
@@ -261,6 +267,7 @@ class Semestre extends BaseEntity implements Stringable, GroupeInterface
         $this->projetPeriodeSemestres = new ArrayCollection();
         $this->typeGroupess = new ArrayCollection();
         $this->etudiantsSemestres = new ArrayCollection();
+        $this->etudiantSemestreAnnees = new ArrayCollection();
     }
 
     private function init(): void
@@ -1453,6 +1460,35 @@ class Semestre extends BaseEntity implements Stringable, GroupeInterface
     {
         if ($this->etudiantsSemestres->removeElement($etudiantsSemestre)) {
             $etudiantsSemestre->removeSemestre($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, EtudiantSemestreAnnee>
+     */
+    public function getEtudiantSemestreAnnees(): Collection
+    {
+        return $this->etudiantSemestreAnnees;
+    }
+
+    public function addEtudiantSemestreAnnee(EtudiantSemestreAnnee $etudiantSemestreAnnee): static
+    {
+        if (!$this->etudiantSemestreAnnees->contains($etudiantSemestreAnnee)) {
+            $this->etudiantSemestreAnnees->add($etudiantSemestreAnnee);
+            $etudiantSemestreAnnee->setSemestre($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEtudiantSemestreAnnee(EtudiantSemestreAnnee $etudiantSemestreAnnee): static
+    {
+        if ($this->etudiantSemestreAnnees->removeElement($etudiantSemestreAnnee)) {
+            if ($etudiantSemestreAnnee->getSemestre() === $this) {
+                $etudiantSemestreAnnee->setSemestre(null);
+            }
         }
 
         return $this;

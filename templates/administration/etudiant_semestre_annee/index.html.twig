@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    Gestion des semestres des étudiants
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Étudiant</th>
+                    <th>Semestre</th>
+                    <th>Année Universitaire</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for entry in entries %}
+                    <tr>
+                        <td>{{ entry.etudiant.nom }} {{ entry.etudiant.prenom }}</td>
+                        <td>{{ entry.semestre.libelle }}</td>
+                        <td>{{ entry.anneeUniversitaire.libelle }}</td>
+                        <td>
+                            <a href="{{ path('administration_etudiant_semestre_annee_edit', {id: entry.id}) }}"
+                               class="btn btn-sm btn-primary">Modifier</a>
+                            <form method="post"
+                                  action="{{ path('administration_etudiant_semestre_annee_delete', {id: entry.id}) }}"
+                                  onsubmit="return confirm('Êtes-vous sûr ?');" style="display:inline-block;">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ entry.id) }}">
+                                <button class="btn btn-sm btn-danger">Supprimer</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
