@@ -22,7 +22,11 @@
                         <td>{{ entry.etudiant.nom }} {{ entry.etudiant.prenom }}</td>
                         <td>{{ entry.semestre.libelle }}</td>
                         <td>
-                            <select class="form-control annee-select" data-id="{{ entry.id }}">
+                            <select class="form-control annee-select"
+                                    data-controller="annee-select"
+                                    data-action="change->annee-select#change"
+                                    data-annee-select-url-value="{{ path('administration_etudiant_semestre_annee_edit_ajax', {id: 'ID'}) }}"
+                                    data-annee-select-id-value="{{ entry.id }}">
                                 {% for annee in anneeUniversitaires %}
                                     <option value="{{ annee.id }}"
                                             {% if annee.id == entry.anneeUniversitaire.id %}selected{% endif %}>
@@ -45,30 +49,4 @@
             </table>
         </div>
     </div>
-{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-    <script>
-      document.querySelectorAll('.annee-select').forEach(select => {
-        select.addEventListener('change', function () {
-          const id = this.getAttribute('data-id')
-          const anneeId = this.value
-          fetch(`{{ path('administration_etudiant_semestre_annee_edit_ajax', {id: 'ID'}) }}`.replace('ID', id), {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: `annee_id=${anneeId}`
-          }).then(response => response.json())
-            .then(data => {
-              if (data.success) {
-                alert('Année modifiée')
-              } else {
-                alert('Erreur: ' + data.message)
-              }
-            })
-        })
-      })
-    </script>
 {% endblock %}
