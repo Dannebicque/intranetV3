@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EtudiantSemestreAnneeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/08/2026 10:24
+ * @lastUpdate 28/08/2026 10:34
  */
 
 namespace App\Controller\administration;
@@ -23,7 +23,7 @@ class EtudiantSemestreAnneeController extends BaseController
     #[Route(path: '/', name: 'administration_etudiant_semestre_annee_index')]
     public function index(EtudiantSemestreAnneeRepository $repository): Response
     {
-        $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL');
+        //$this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL');
 
         $departement = $this->getDepartement();
 
@@ -37,7 +37,7 @@ class EtudiantSemestreAnneeController extends BaseController
     #[Route(path: '/edit/{id}', name: 'administration_etudiant_semestre_annee_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, EtudiantSemestreAnnee $etudiantSemestreAnnee): Response
     {
-        $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL');
+        //$this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL');
 
         $form = $this->createForm(EtudiantSemestreAnneeType::class, $etudiantSemestreAnnee);
         $form->handleRequest($request);
