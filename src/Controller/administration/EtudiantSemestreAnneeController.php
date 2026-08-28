@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EtudiantSemestreAnneeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/08/2026 10:36
+ * @lastUpdate 28/08/2026 10:49
  */
 
 namespace App\Controller\administration;
@@ -40,7 +40,7 @@ class EtudiantSemestreAnneeController extends BaseController
     #[Route(path: '/edit-ajax/{id}', name: 'administration_etudiant_semestre_annee_edit_ajax', methods: ['POST'])]
     public function editAjax(Request $request, EtudiantSemestreAnnee $etudiantSemestreAnnee): JsonResponse
     {
-        $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL');
+        // $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL');
 
         $anneeId = $request->request->get('annee_id');
         $annee = $this->entityManager->getRepository(AnneeUniversitaire::class)->find($anneeId);
