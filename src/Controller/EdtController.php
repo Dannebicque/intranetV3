@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/EdtController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/08/2026 11:34
+ * @lastUpdate 30/08/2026 20:17
  */
 
 namespace App\Controller;
@@ -235,7 +235,7 @@ class EdtController extends BaseController
         if (null !== $this->getAnneeUniversitaire()) {
             $matieres = $this->typeMatiereManager->tableauApogeeDiplome($this->getUser()->getDiplome($this->getAnneeUniversitaire()));
             // todo: passer pour l'edt manager
-            if (null !== $this->getUser()->getDiplome($this->getAnneeUniversitaire()) && $this->getUser()->getDiplome()?->isOptUpdateCelcat()) {
+            if (null !== $this->getUser()->getDiplome($this->getAnneeUniversitaire()) && $this->getUser()->getDiplome($this->getAnneeUniversitaire())?->isOptUpdateCelcat()) {
                 $this->myEdtCelcat->initEtudiant($this->getUser(),
                     $this->getAnneeUniversitaire(), $semaine, $matieres);
 
