@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Semestre/NotesExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:35
+ * @lastUpdate 30/08/2026 09:17
  */
 
 /*
@@ -74,7 +74,7 @@ class NotesExport
             $matieres = $this->typeMatiereManager->findBySemestreArray($semestre);
         }
 
-        $etudiants = $this->etudiantRepository->findByOrdreSemestreAndDiplome($semestre->getOrdreLmd(), $semestre->getDiplome());
+        $etudiants = $this->etudiantRepository->findByOrdreSemestreAndDiplome($semestre->getOrdreLmd(), $semestre->getDiplome(), $anneeUniversitaire);
         $evaluations = $this->evaluationRepository->findByReferentielOrdreSemestre($semestre->getDiplome()?->getReferentiel(),
             $semestre->getOrdreLmd(), $anneeUniversitaire);
         $notes = $this->noteRepository->findByEtudiantSemestreArray($matieres, $anneeUniversitaire, $etudiants);

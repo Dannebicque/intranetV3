@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MyExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/03/2024 16:31
+ * @lastUpdate 30/08/2026 11:21
  */
 
 /*
@@ -16,6 +16,7 @@ namespace App\Classes;
 use App\Classes\Excel\MyExcelMultiExport;
 use App\Classes\Pdf\PdfManager;
 use App\DTO\Matiere;
+use App\Entity\AnneeUniversitaire;
 use App\Entity\Evaluation;
 use App\Exception\SemestreNotFoundException;
 use Symfony\Component\HttpFoundation\Response;
@@ -49,7 +50,7 @@ class MyExport
     /**
      * @throws SemestreNotFoundException
      */
-    public function genereModeleImportNote(?Evaluation $evaluation, Matiere $matiere): ?Response
+    public function genereModeleImportNote(?Evaluation $evaluation, Matiere $matiere, AnneeUniversitaire $anneeUniversitaire): ?Response
     {
         if (null === $evaluation) {
             throw new SemestreNotFoundException();
@@ -64,7 +65,7 @@ class MyExport
         if (null === $semestre) {
             throw new SemestreNotFoundException();
         }
-        $this->excel->genereModeleExcel($semestre);
+        $this->excel->genereModeleExcel($semestre, $anneeUniversitaire);
         return $this->excel->saveXlsx('modele-import-note-' . $semestre->getLibelle());
 
 

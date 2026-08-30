@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EtudiantSemestreController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:35
+ * @lastUpdate 30/08/2026 11:21
  */
 
 namespace App\Controller\administration;
@@ -34,7 +34,7 @@ class EtudiantSemestreController extends BaseController
     public function parcoursSemestre(EtudiantRepository $etudiantRepository, Semestre $semestre): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $semestre);
-        $etudiants = $etudiantRepository->findBySemestre($semestre);
+        $etudiants = $etudiantRepository->findBySemestre($semestre, $this->getAnneeUniversitaire());
 
         return $this->render('administration/etudiant/parcours.html.twig', [
             'semestre' => $semestre,
@@ -114,7 +114,7 @@ class EtudiantSemestreController extends BaseController
     public function exportEtudiantsSemestre(MySerializer $mySerializer, MyExport $myExport, EtudiantRepository $etudiantRepository, Semestre $semestre, string $_format): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $semestre);
-        $etudiants = $etudiantRepository->findBySemestre($semestre);
+        $etudiants = $etudiantRepository->findBySemestre($semestre, $this->getAnneeUniversitaire());
         $data = $mySerializer->getDataFromSerialization(
             $etudiants,
             [

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyStage.php
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MyStage.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/06/2021 17:48
+ * @lastUpdate 30/08/2026 11:21
  */
 
 /*
@@ -48,7 +48,7 @@ class MyStage
             $anneeUniversitaire = null !== $stagePeriode->getAnneeUniversitaire() ? $stagePeriode->getAnneeUniversitaire()->getAnnee() : (int) date('Y');
         }
 
-        $etudiants = $this->etudiantRepository->findBySemestre($stagePeriode->getSemestre());
+        $etudiants = $this->etudiantRepository->findBySemestre($stagePeriode->getSemestre(), $stagePeriode->getAnneeUniversitaire());
         if (0 === count($etudiants)) {
             $etudiants = $this->etudiantRepository->findByAnnee($stagePeriode->getSemestre()->getAnnee());
         }

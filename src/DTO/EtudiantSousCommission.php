@@ -1,14 +1,15 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/DTO/EtudiantSousCommission.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/08/2023 10:16
+ * @lastUpdate 28/08/2026 11:34
  */
 
 namespace App\DTO;
 
+use App\Entity\AnneeUniversitaire;
 use App\Entity\Constantes;
 use App\Entity\Etudiant;
 use App\Entity\Semestre;
@@ -220,11 +221,11 @@ class EtudiantSousCommission
         return $this->scolarite;
     }
 
-    public function recupereScolarite(): void
+    public function recupereScolarite(AnneeUniversitaire $anneeUniversitaire): void
     {
         // on ne récupère la scolarité que par rapport au diplôme en cours
         foreach ($this->etudiant->getScolarites() as $scolarite) {
-            if ($scolarite->getSemestre()->getDiplome() === $this->etudiant->getDiplome()) {
+            if ($scolarite->getSemestre()->getDiplome() === $this->etudiant->getDiplome($anneeUniversitaire)) {
                 $this->scolarite[$scolarite->getSemestre()->getOrdreLmd()] = new Scolarite($scolarite);
             }
         }

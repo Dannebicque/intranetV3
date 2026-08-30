@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MyEvaluation.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 19/04/2024 17:48
+ * @lastUpdate 30/08/2026 11:13
  */
 
 /*
@@ -16,6 +16,7 @@ namespace App\Classes;
 use App\Classes\Excel\MyExcelMultiExport;
 use App\Classes\Matieres\TypeMatiereManager;
 use App\Classes\Pdf\PdfManager;
+use App\Entity\AnneeUniversitaire;
 use App\Entity\Constantes;
 use App\Entity\Etudiant;
 use App\Entity\Evaluation;
@@ -281,6 +282,7 @@ class MyEvaluation
         Evaluation $evaluation,
         string   $fichier,
         Semestre $semestre,
+        AnneeUniversitaire $anneeUniversitaire,
         bool     $ecrase = false
     ): bool
     {
@@ -291,11 +293,11 @@ class MyEvaluation
             case 'xlsx':
                 $data = $this->importXlsx($fichier);
 
-                return $this->insertNotes($evaluation, $data, $semestre, $ecrase);
+                return $this->insertNotes($evaluation, $data, $semestre, $anneeUniversitaire, $ecrase);
             case 'csv':
                 $data = $this->importCsv($fichier);
 
-                return $this->insertNotes($evaluation, $data, $semestre, $ecrase);
+                return $this->insertNotes($evaluation, $data, $semestre, $anneeUniversitaire, $ecrase);
             default:
                 return false; // erreur
         }
@@ -304,16 +306,17 @@ class MyEvaluation
     /**
      * @throws Exception
      */
-    private function insertNotes(Evaluation $evaluation, array $data, Semestre $semestre, bool $ecrase = false): bool
+    private function insertNotes(Evaluation         $evaluation, array $data, Semestre $semestre,
+                                 AnneeUniversitaire $anneeUniversitaire, bool $ecrase = false): bool
     {
         $matiere = $this->typeMatiereManager->getMatiereFromSelect($evaluation->getTypeIdMatiere());
         $evaluation->setVisible(false); // on masque l'évaluation le temps de l'import et de la vérification
         $notes = [];
 
         if (true === $matiere->mutualisee) {
-            $req = $this->etudiantRepository->findByOrdreSemestreAndDiplome($semestre->getOrdreLmd(), $semestre->getDiplome()); // todo: améliorer pour éviter la FC ? Diplômes différents à la base pour le parent ? ou via les parcours ?
+            $req = $this->etudiantRepository->findByOrdreSemestreAndDiplome($semestre->getOrdreLmd(), $semestre->getDiplome(), $anneeUniversitaire); // todo: améliorer pour éviter la FC ? Diplômes différents à la base pour le parent ? ou via les parcours ?
         } else {
-            $req = $this->etudiantRepository->findBySemestre($semestre); // todo: améliorer pour filtrer les étudiants si parcours...
+            $req = $this->etudiantRepository->findBySemestre($semestre, $anneeUniversitaire); // todo: améliorer pour filtrer les étudiants si parcours...ts si parcours...
         }
 
         $etudiants = [];

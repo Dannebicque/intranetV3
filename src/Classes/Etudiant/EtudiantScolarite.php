@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Etudiant/EtudiantScolarite.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/01/2026 09:58
+ * @lastUpdate 30/08/2026 11:25
  */
 
 /*
@@ -45,10 +45,10 @@ class EtudiantScolarite
         $this->anneeUniversitaire = $anneeUniversitaire;
     }
 
-    public function setEtudiant(Etudiant $etudiant): void
+    public function setEtudiant(Etudiant $etudiant, AnneeUniversitaire $anneeUniversitaire): void
     {
         $this->etudiant = $etudiant;
-        $this->semestre = $etudiant->getSemestreActif();
+        $this->semestre = $etudiant->getSemestreActif($anneeUniversitaire);
     }
 
     public function changeEtat(string $etat): void
@@ -64,11 +64,13 @@ class EtudiantScolarite
                 break;
             case 'erreur':
                 $this->etudiant->setSemestre(null);
+                $this->supprimeSemestreAnnee();
                 $this->etudiant->setDepartement(null);
                 $this->etudiantsGroupes->setEtudiant($this->etudiant);
                 $this->etudiantsGroupes->suppressionGroupes();
                 break;
             case Constantes::SUPPRIMER_FORMATION:
+                $this->supprimeSemestreAnnee();
                 $this->etudiant->setSemestre(null);
                 $this->etudiant->setDepartement(null);
                 $this->etudiant->setAnneeSortie((int) date('Y'));
@@ -84,10 +86,23 @@ class EtudiantScolarite
 
     private function finFormation(): void
     {
+        $this->supprimeSemestreAnnee();
         $this->etudiant->setSemestre(null);
         $this->etudiant->setAnneeSortie((int) date('Y'));
+
         $this->etudiantsGroupes->setEtudiant($this->etudiant);
         $this->etudiantsGroupes->suppressionGroupes();
+    }
+
+    private function supprimeSemestreAnnee(): void
+    {
+        // suppression des semestres dans EtudiantSemestreAnnee
+        $semestres = $this->etudiant->getEtudiantSemestreAnnees();
+        foreach ($semestres as $semestre) {
+            $this->etudiant->removeEtudiantSemestreAnnee($semestre);
+            $this->entityManger->remove($semestre);
+        }
+        $this->entityManger->flush();
     }
 
     public function updateScolarite(

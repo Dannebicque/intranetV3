@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MySalleExamen.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/03/2024 16:30
+ * @lastUpdate 30/08/2026 11:21
  */
 
 /*
@@ -16,6 +16,7 @@ namespace App\Classes;
 use App\Classes\Matieres\TypeMatiereManager;
 use App\Classes\Pdf\PdfManager;
 use App\DTO\Matiere;
+use App\Entity\AnneeUniversitaire;
 use App\Entity\Etudiant;
 use App\Entity\Groupe;
 use App\Entity\SalleExamen;
@@ -67,6 +68,7 @@ class MySalleExamen
         int|string $requestenseignant1,
         int|string $requestenseignant2,
         Semestre $semestre,
+        AnneeUniversitaire $anneeUniversitaire
     ): ?Response
     {
         $this->matiere = $this->typeMatiereManager->getMatiereFromSelect($requestmatiere);
@@ -89,7 +91,7 @@ class MySalleExamen
         } else {
             $grdetail = $this->groupeDefaut($semestre);
             $this->typeGroupe = $grdetail[0]->getTypeGroupe();
-            $etudiants = $this->etudiantRepository->findBySemestre($semestre);
+            $etudiants = $this->etudiantRepository->findBySemestre($semestre, $anneeUniversitaire);
         }
 
         if (count($etudiants) <= $this->salle->getCapacite()) {

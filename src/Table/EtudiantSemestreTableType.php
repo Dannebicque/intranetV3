@@ -4,12 +4,11 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Table/EtudiantSemestreTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/08/2026 11:06
+ * @lastUpdate 28/08/2026 11:15
  */
 
 namespace App\Table;
 
-use App\Entity\AnneeUniversitaire;
 use App\Entity\Bac;
 use App\Entity\Departement;
 use App\Entity\Etudiant;
@@ -64,12 +63,6 @@ class EtudiantSemestreTableType extends TableType
             'required' => false,
             'placeholder' => 'Filtrer par bac',
         ]);
-        $builder->addFilter('anneeUniversitaire', EntityType::class, [
-            'class' => AnneeUniversitaire::class,
-            'choice_label' => 'libelle',
-            'required' => false,
-            'placeholder' => 'Filtrer par année universitaire',
-        ]);
 
         $builder->addWidget('export', ExportDropdownType::class, [
             'route' => 'administration_etudiant_semestre_export',
@@ -113,25 +106,6 @@ class EtudiantSemestreTableType extends TableType
                     ],
                     'value' => $s->getBac()?->getId(),
                     'entity' => Bac::class,
-                    'choice_label' => 'libelle',
-                ]);
-            },
-        ]);
-
-        $builder->addColumn('anneeUniversitaire', WidgetColumnType::class, [
-            'label' => 'table.anneeUniversitaire',
-            'translation_domain' => 'messages',
-            'build' => function (WidgetBuilder $builder, Etudiant $s) {
-                $builder->add('anneeUniversitaire', SelectChangeType::class, [
-                    'route' => 'adm_etudiant_edit_ajax',
-                    'route_params' => [
-                        'id' => $s->getId(),
-                    ],
-                    'post_params' => [
-                        'field' => 'anneeUniversitaire',
-                    ],
-                    'value' => $s->getAnneeUniversitaire()?->getId(),
-                    'entity' => AnneeUniversitaire::class,
                     'choice_label' => 'libelle',
                 ]);
             },

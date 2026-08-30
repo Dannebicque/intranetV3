@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appEtudiant/AbsenceJustificatifController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/07/2026 17:29
+ * @lastUpdate 28/08/2026 14:59
  */
 
 namespace App\Controller\appEtudiant;
@@ -29,7 +29,7 @@ class AbsenceJustificatifController extends BaseController
     public function index(AbsenceJustificatifRepository $absenceJustificatifRepository): Response
     {
         return $this->render('appEtudiant/absence_justificatif/index.html.twig',
-            ['absence_justificatifs' => $absenceJustificatifRepository->findByEtudiant($this->getUser())]);
+            ['absence_justificatifs' => $absenceJustificatifRepository->findByEtudiant($this->getUser(), $this->getAnneeUniversitaire())]);
     }
 
     /**

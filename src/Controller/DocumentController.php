@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/DocumentController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/01/2026 10:04
+ * @lastUpdate 28/08/2026 11:28
  */
 
 namespace App\Controller;
@@ -109,7 +109,7 @@ class DocumentController extends BaseController
         if ($this->isEtudiant()) {
             //vérifier si le semestre de l'utilisateur est l'un des semestres du document
             $documents = array_filter($documents, function ($document) {
-                return $document->getSemestres()->contains($this->getUser()->getSemestreActif());
+                return $document->getSemestres()->contains($this->getUser()->getSemestreActif($this->getAnneeUniversitaire()));
             });
         }
         $idDocuments = $myDocument->idMesDocumentsFavoris($this->getUser());

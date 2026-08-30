@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/stage/StageEtudiantController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/10/2024 19:31
+ * @lastUpdate 30/08/2026 11:21
  */
 
 namespace App\Controller\administration\stage;
@@ -265,7 +265,7 @@ class StageEtudiantController extends BaseController
         $etudiants = [];
         foreach ($semestresAlternance as $semestre) {
             $etudiants = array_merge($etudiants,
-                $etudiantRepository->findBySemestre($semestre));
+                $etudiantRepository->findBySemestre($semestre, $this->getAnneeUniversitaire()));
         }
 
         $personnels = $personnelRepository->findByDepartement($departement);

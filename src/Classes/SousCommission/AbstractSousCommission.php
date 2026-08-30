@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/SousCommission/AbstractSousCommission.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:40
+ * @lastUpdate 30/08/2026 10:15
  */
 
 namespace App\Classes\SousCommission;
@@ -50,7 +50,7 @@ abstract class AbstractSousCommission
     ) {
     }
 
-    public function initDataSousCommission(): void
+    public function initDataSousCommission(AnneeUniversitaire $anneeUniversitaire): void
     {
         if ($this->semestre->getDiplome()->getTypeDiplome()->getApc()) {
             $this->matieres = $this->typeMatiereManager->findBySemestreAndReferentiel($this->semestre,
@@ -59,7 +59,7 @@ abstract class AbstractSousCommission
             $this->matieres = $this->typeMatiereManager->findBySemestre($this->semestre);
         }
         $this->ues = $this->ueRepository->findBySemestre($this->semestre);
-        $this->etudiants = $this->etudiantRepository->findBySemestre($this->semestre);
+        $this->etudiants = $this->etudiantRepository->findBySemestre($this->semestre, $anneeUniversitaire);
 
         // récupération des semestres précédents
         $sem = $this->semestre;

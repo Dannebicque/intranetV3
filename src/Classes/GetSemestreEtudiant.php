@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/GetSemestreEtudiant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/01/2026 08:41
+ * @lastUpdate 28/08/2026 10:53
  */
 
 namespace App\Classes;
 
+use App\Entity\AnneeUniversitaire;
 use App\Entity\Etudiant;
 use App\Entity\Semestre;
 
@@ -16,14 +17,15 @@ class GetSemestreEtudiant
 {
     // Patch pour récupérer le semestre d'un étudiant
     // Condition : Un seul semestre doit être actif
-    public function getSemestreActif(Etudiant $etudiant): ?Semestre
+    public function getSemestreActif(Etudiant $etudiant, AnneeUniversitaire $anneeUniversitaire): ?Semestre
     {
         // Récupère tous les semestres de l'étudiant
-        $semestres = $etudiant->getSemestres();
+        $semestres = $etudiant->getEtudiantSemestreAnnees();
 
         // Filtre celui qui est actif (via ta logique existante dans Semestre)
         foreach ($semestres as $semestre) {
-            if ($semestre->isActif()) {
+            if ($semestre->getSemestre()->isActif() &&
+                $semestre->getAnneeUniversitaire()->getId() === $anneeUniversitaire->getId()) {
                 return $semestre;
             }
         }

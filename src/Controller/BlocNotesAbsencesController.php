@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/BlocNotesAbsencesController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/01/2026 10:04
+ * @lastUpdate 28/08/2026 11:29
  */
 
 namespace App\Controller;
@@ -33,7 +33,7 @@ class BlocNotesAbsencesController extends BaseController
         // todo: mutualiser avec ProfilEtudiant... (TwigComponent ?)
 
         $etudiantAbsences->setEtudiant($this->getUser());
-        if (false === $this->getUser()->getDiplome()->isApc()) {
+        if (false === $this->getUser()->getDiplome($this->getAnneeUniversitaire())->isApc()) {
             $matieres = $typeMatiereManager->findBySemestreArray($this->getEtudiantSemestre());
         } else {
             $matieres = $typeMatiereManager->findByReferentielOrdreSemestreArray($this->getEtudiantSemestre(),
@@ -56,11 +56,11 @@ class BlocNotesAbsencesController extends BaseController
     {
         // todo: mutualiser avec ProfilEtudiant... (TwigComponent ?)
 
-        if ($this->getUser()->getDiplome()->isApc()) {
-            $matieres = $typeMatiereManager->findByReferentielOrdreSemestreArray($etudiant->getSemestreActif(),
+        if ($this->getUser()->getDiplome($this->getAnneeUniversitaire())->isApc()) {
+            $matieres = $typeMatiereManager->findByReferentielOrdreSemestreArray($etudiant->getSemestreActif($this->getAnneeUniversitaire()),
                 $this->getEtudiantSemestre()?->getDiplome()?->getReferentiel());
         } else {
-            $matieres = $typeMatiereManager->findBySemestreArray($etudiant->getSemestreActif());
+            $matieres = $typeMatiereManager->findBySemestreArray($etudiant->getSemestreActif($this->getAnneeUniversitaire()));
         }
 
         $etudiantNotes->setEtudiant($etudiant);
@@ -77,7 +77,7 @@ class BlocNotesAbsencesController extends BaseController
     {
         return $this->render('bloc_notes_absences/mcc.html.twig', [
             'matieres' => $typeMatiereManager->findBySemestreAndReferentiel($this->getEtudiantSemestre(), $this->getEtudiantSemestre()?->getDiplome()?->getReferentiel()),
-            'apc' => $this->getUser()?->getDiplome()?->isApc(),
+            'apc' => $this->getUser()?->getDiplome($this->getAnneeUniversitaire())?->isApc(),
         ]);
     }
 }

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/api/EtudiantApiController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:17
+ * @lastUpdate 30/08/2026 11:21
  */
 
 namespace App\Controller\api;
@@ -34,7 +34,7 @@ class EtudiantApiController extends BaseController
     {
         $this->denyAccessUnlessGranted('ROLE_PERMANENT');
 
-        $etudiants = $this->etudiantRepository->findBySemestre($semestre);
+        $etudiants = $this->etudiantRepository->findBySemestre($semestre, $this->getAnneeUniversitaire());
         $etus = [];
         /** @var Etudiant $p */
         foreach ($etudiants as $p) {

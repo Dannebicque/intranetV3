@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/superAdministration/GroupesController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 20/02/2024 18:55
+ * @lastUpdate 30/08/2026 09:17
  */
 
 namespace App\Controller\superAdministration;
@@ -157,7 +157,7 @@ class GroupesController extends BaseController
     public function importEtudiant(MyGroupes $myGroupes, Request $request, Semestre $semestre): Response
     {
         if ($request->isMethod('POST')) {
-            $myGroupes->importGroupeEtudiantCsv($request->files->get('fichier'), $semestre);
+            $myGroupes->importGroupeEtudiantCsv($request->files->get('fichier'), $semestre, $this->getAnneeUniversitaire());
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'groupes.etudiants.import.success.flash');
             $this->redirectToRoute('sa_groupes_departement_index',
                 ['departement' => $semestre->getDiplome()->getDepartement()->getId()]);

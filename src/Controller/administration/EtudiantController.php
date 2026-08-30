@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EtudiantController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/01/2026 10:08
+ * @lastUpdate 28/08/2026 11:28
  */
 
 namespace App\Controller\administration;
@@ -79,15 +79,15 @@ class EtudiantController extends BaseController
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'etudiant.edit.success.flash');
 
             if (null !== $request->request->get('btn_update')) {
-                if ('semestre' === $origin && null !== $etudiant->getSemestreActif()) {
+                if ('semestre' === $origin && null !== $etudiant->getSemestreActif($this->getAnneeUniversitaire())) {
                     return $this->redirectToRoute('administration_semestre_index',
-                        ['semestre' => $etudiant->getSemestreActif()->getId()]);
+                        ['semestre' => $etudiant->getSemestreActif($this->getAnneeUniversitaire())->getId()]);
                 }
 
                 return $this->redirectToRoute('administration_etudiant_index');
             }
 
-            $this->redirectToRoute('administration_etudiant_index', ['semestre' => $etudiant->getSemestreActif()?->getId()]);
+            $this->redirectToRoute('administration_etudiant_index', ['semestre' => $etudiant->getSemestreActif($this->getAnneeUniversitaire())?->getId()]);
         }
 
         return $this->render('administration/etudiant/edit.html.twig', [
@@ -133,7 +133,7 @@ class EtudiantController extends BaseController
     {
         //todo: utilisé ?
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
-        $etudiantScolarite->setEtudiant($etudiant);
+        $etudiantScolarite->setEtudiant($etudiant, $this->getAnneeUniversitaire());
         $etudiantScolarite->changeEtat($etat);
 
         return $this->json(true, Response::HTTP_OK);
@@ -144,7 +144,7 @@ class EtudiantController extends BaseController
     Etudiant                                         $etudiant): RedirectResponse
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
-        $etudiantScolarite->setEtudiant($etudiant);
+        $etudiantScolarite->setEtudiant($etudiant, $this->getAnneeUniversitaire());
         $etudiantScolarite->changeEtat(Constantes::SEMESTRE_DEMISSIONNAIRE);
 
         return $this->redirectToRoute('trombinoscope_index');
@@ -154,8 +154,8 @@ class EtudiantController extends BaseController
     public function delete(EtudiantScolarite $etudiantScolarite, #[MapEntity(mapping: ['uuid' => 'uuid'])]
     Etudiant                                 $etudiant): RedirectResponse
     {
-        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $etudiant->getSemestreActif());
-        $etudiantScolarite->setEtudiant($etudiant);
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $etudiant->getSemestreActif($this->getAnneeUniversitaire()));
+        $etudiantScolarite->setEtudiant($etudiant, $this->getAnneeUniversitaire());
         $etudiantScolarite->changeEtat(Constantes::SUPPRIMER_FORMATION);
 
         return $this->redirectToRoute('trombinoscope_index');

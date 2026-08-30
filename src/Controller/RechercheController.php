@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/RechercheController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:17
+ * @lastUpdate 28/08/2026 11:34
  */
 
 namespace App\Controller;
@@ -30,7 +30,7 @@ class RechercheController extends BaseController
         PersonnelDepartementRepository $personnelRepository): Response
     {
         $keyword = $request->query->get('q');
-        $etudiants = $etudiantRepository->search($keyword, $this->getDepartement());
+        $etudiants = $etudiantRepository->search($keyword, $this->getDepartement(), $this->getAnneeUniversitaire());
         $personnels = $personnelRepository->search($keyword, $this->getDepartement());
         $documents = $documentRepository->search($keyword, $this->getDepartement());
 

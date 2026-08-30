@@ -4,15 +4,17 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/EtudiantRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/02/2026 11:49
+ * @lastUpdate 30/08/2026 10:21
  */
 
 namespace App\Repository;
 
 use App\Entity\Annee;
+use App\Entity\AnneeUniversitaire;
 use App\Entity\Departement;
 use App\Entity\Diplome;
 use App\Entity\Etudiant;
+use App\Entity\EtudiantSemestreAnnee;
 use App\Entity\Semestre;
 use Carbon\CarbonInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -56,7 +58,8 @@ class EtudiantRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder('e')
             ->select('e.id as id, e.nom as nom, e.prenom as prenom, s.libelle as semestre')
             ->leftJoin(Semestre::class, 's', 'WITH', 'e.semestre = s.id')
-            ->leftJoin('e.semestres', 'ss')
+            ->leftJoin('e.etudiantSemestreAnnees', 'esa')
+            ->leftJoin('esa.semestre', 'esa_s')
             ->leftJoin('e.groupes', 'g')
         ;
 
@@ -69,7 +72,7 @@ class EtudiantRepository extends ServiceEntityRepository
         }
 
         if (!empty($semestreIds)) {
-            $qb->andWhere('(s.id IN (:semestres) OR ss.id IN (:semestres))')
+            $qb->andWhere('(s.id IN (:semestres) OR esa_s.id IN (:semestres))')
                 ->setParameter('semestres', $semestreIds);
         }
 
@@ -121,31 +124,35 @@ class EtudiantRepository extends ServiceEntityRepository
         return $qb->getQuery()->getResult();
     }
 
-//    public function findBySemestreBuilder(Semestre $semestre): QueryBuilder
-//    {
-//        return $this->createQueryBuilder('e')
-//            ->where('e.semestre = :semestre')
-//            ->andWhere('e.anneeSortie = 0')
-//            ->setParameter('semestre', $semestre)
-//            ->orderBy('e.nom', Order::Ascending->value)
-//            ->addOrderBy('e.prenom', Order::Ascending->value);
-//    }
 
-
-    public function findBySemestreBuilder(Semestre $semestre): QueryBuilder
+    public function findBySemestreBuilder(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire): QueryBuilder
     {
-        return $this->createQueryBuilder('e')
+        $qb = $this->createQueryBuilder('e')
             ->leftJoin(Semestre::class, 's', 'WITH', 'e.semestre = s.id')
-            ->leftJoin('e.semestres', 'ss')
-            ->where('s = :semestre OR ss = :semestre')
-            ->setParameter('semestre', $semestre)
+            ->leftJoin('e.etudiantSemestreAnnees', 'esa', 'WITH', 'esa.anneeUniversitaire = :anneeUniversitaire')
+            ->leftJoin('esa.semestre', 'esa_s');
+
+        return $qb->where(
+            $qb->expr()->orX(
+                $qb->expr()->andX(
+                    $qb->expr()->isNotNull('esa.id'),
+                    $qb->expr()->eq('esa_s.id', ':semestreId')
+                ),
+                $qb->expr()->andX(
+                    $qb->expr()->isNull('esa.id'),
+                    $qb->expr()->eq('s.id', ':semestreId')
+                )
+            )
+        )
+            ->setParameter('semestreId', $semestre->getId())
+            ->setParameter('anneeUniversitaire', $anneeUniversitaire)
             ->orderBy('e.nom', Order::Ascending->value)
             ->addOrderBy('e.prenom', Order::Ascending->value);
     }
 
-    public function findBySemestre(Semestre $semestre): array
+    public function findBySemestre(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire): array
     {
-        return $this->findBySemestreBuilder($semestre)
+        return $this->findBySemestreBuilder($semestre, $anneeUniversitaire)
             ->getQuery()
             ->getResult();
     }
@@ -162,7 +169,7 @@ class EtudiantRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
-    public function search(string $needle, Departement $departement): array
+    public function search(string $needle, Departement $departement, AnneeUniversitaire $anneeUniversitaire): array
     {
         $query = $this->searchObject($needle, $departement);
 
@@ -176,9 +183,9 @@ class EtudiantRepository extends ServiceEntityRepository
             $tt['photo'] = $etudiant->getPhotoName();
             $tt['mailUniv'] = $etudiant->getMailUniv();
             $tt['mailPerso'] = $etudiant->getMailPerso();
-            $tt['semestre'] = null !== $etudiant->getSemestreActif() ? $etudiant->getSemestreActif()->getLibelle() : 'non défini';
-            $tt['semestreId'] = $etudiant->getSemestreActif()?->getId();
-            $tt['diplomeId'] = null !== $etudiant->getSemestreActif() ? $etudiant->getDiplome()?->getId() : null;
+            $tt['semestre'] = null !== $etudiant->getSemestreActif($anneeUniversitaire) ? $etudiant->getSemestreActif($anneeUniversitaire)->getLibelle() : 'non défini';
+            $tt['semestreId'] = $etudiant->getSemestreActif($anneeUniversitaire)?->getId();
+            $tt['diplomeId'] = null !== $etudiant->getSemestreActif($anneeUniversitaire) ? $etudiant->getDiplome($anneeUniversitaire)?->getId() : null;
             $tt['promo'] = $etudiant->getPromotion();
             $tt['anneeSortie'] = $etudiant->getAnneeSortie();
             $tt['avatarInitiales'] = $etudiant->getAvatarInitiales();
@@ -255,9 +262,9 @@ class EtudiantRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
-    public function findBySemestreArray(Semestre $semestre): array
+    public function findBySemestreArray(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire): array
     {
-        $etudiants = $this->findByOrdreSemestreAndDiplome($semestre->getOrdreLmd(), $semestre->getDiplome());
+        $etudiants = $this->findByOrdreSemestreAndDiplome($semestre->getOrdreLmd(), $semestre->getDiplome(), $anneeUniversitaire);
         $t = [];
 
         /** @var Etudiant $etudiant */
@@ -268,12 +275,12 @@ class EtudiantRepository extends ServiceEntityRepository
         return $t;
     }
 
-    public function findByDepartementArray(Departement $departement): array
+    public function findByDepartementArray(Departement $departement, AnneeUniversitaire $anneeUniversitaire): array
     {
         $t = [];
         foreach ($departement->getDiplomes() as $diplome) {
             foreach ($diplome->getSemestres() as $semestre) {
-                $etudiants = $this->findBySemestre($semestre);
+                $etudiants = $this->findBySemestre($semestre, $anneeUniversitaire);
                 /** @var Etudiant $etudiant */
                 foreach ($etudiants as $etudiant) {
                     $t[$etudiant->getNumEtudiant()] = $etudiant;
@@ -360,7 +367,7 @@ class EtudiantRepository extends ServiceEntityRepository
         return $t;
     }
 
-    public function findByOrdreSemestreAndDiplome(int $ordreLmd, Diplome $diplome): array
+    public function findByOrdreSemestreAndDiplome(int $ordreLmd, Diplome $diplome, AnneeUniversitaire $anneeUniversitaire): array
     {
         if (null !== $diplome->getParent()) {
             $diplome = $diplome->getParent();
@@ -368,10 +375,11 @@ class EtudiantRepository extends ServiceEntityRepository
 
         $qb = $this->createQueryBuilder('e');
         $qb->leftJoin(Semestre::class, 's', 'WITH', 'e.semestre = s.id')
-            ->leftJoin('e.semestres', 'ss')
+            ->leftJoin(EtudiantSemestreAnnee::class, 'ss', 'WITH', 'e.id = ss.etudiant AND ss.anneeUniversitaire = :anneeUniversitaire')
             ->leftJoin('s.annee', 'a')
             ->leftJoin('a.diplome', 'd')
-            ->leftJoin('ss.annee', 'a2')
+            ->leftJoin('ss.semestre', 's2')
+            ->leftJoin('s2.annee', 'a2')
             ->leftJoin('a2.diplome', 'd2');
 
         $cond1 = $qb->expr()->andX(
@@ -381,36 +389,34 @@ class EtudiantRepository extends ServiceEntityRepository
 
         $cond2 = $qb->expr()->andX(
             $qb->expr()->orX('d2.id = :diplome', 'd2.parent = :diplome'),
-            $qb->expr()->eq('ss.ordreLmd', ':ordreLmd')
+            $qb->expr()->eq('s2.ordreLmd', ':ordreLmd')
         );
 
-        return $qb->andWhere($qb->expr()->orX($cond1, $cond2))
+        return $qb->andWhere(
+            $qb->expr()->orX(
+                $qb->expr()->andX($qb->expr()->isNotNull('ss.id'), $cond2),
+                $qb->expr()->andX($qb->expr()->isNull('ss.id'), $cond1)
+            )
+        )
             ->andWhere('e.anneeSortie = 0')
             ->setParameter('ordreLmd', $ordreLmd)
             ->setParameter('diplome', $diplome->getId())
+            ->setParameter('anneeUniversitaire', $anneeUniversitaire->getId())
             ->orderBy('e.nom', Order::Ascending->value)
             ->addOrderBy('e.prenom', Order::Ascending->value)
             ->getQuery()
             ->getResult();
     }
 
-//    public function findBySemestresBuilder(Collection $semestres): QueryBuilder
-//    {
-//        return $this->createQueryBuilder('e')
-//            ->innerJoin(Semestre::class, 's', 'WITH', 'e.semestre=s.id')
-//            ->where('s IN (:semestres)')
-//            ->setParameter('semestres', $semestres)
-//            ->orderBy('e.nom', Order::Ascending->value)
-//            ->addOrderBy('e.prenom', Order::Ascending->value);
-//    }
-
-    public function findBySemestresBuilder(Collection $semestres): QueryBuilder
+    public function findBySemestresBuilder(Collection $semestres, AnneeUniversitaire $anneeUniversitaire): QueryBuilder
     {
         return $this->createQueryBuilder('e')
             ->leftJoin(Semestre::class, 's', 'WITH', 'e.semestre = s.id')
-            ->leftJoin('e.semestres', 'ss')
-            ->where('s IN (:semestres) OR ss IN (:semestres)')
+            ->leftJoin('e.etudiantSemestreAnnees', 'esa', 'WITH', 'esa.anneeUniversitaire = :anneeUniversitaire')
+            ->leftJoin('esa.semestre', 'esa_s')
+            ->where('s IN (:semestres) OR esa_s IN (:semestres)')
             ->setParameter('semestres', $semestres)
+            ->setParameter('anneeUniversitaire', $anneeUniversitaire)
             ->orderBy('e.nom', Order::Ascending->value)
             ->addOrderBy('e.prenom', Order::Ascending->value);
     }
@@ -443,14 +449,28 @@ class EtudiantRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function countBySemestre(mixed $semestre): int
+    public function countBySemestre(mixed $semestre, AnneeUniversitaire $anneeUniversitaire): int
     {
-        return $this->createQueryBuilder('e')
+        $qb = $this->createQueryBuilder('e')
             ->select('count(e.id)')
             ->leftJoin(Semestre::class, 's', 'WITH', 'e.semestre = s.id')
-            ->leftJoin('e.semestres', 'ss')
-            ->where('s = :semestre OR ss = :semestre')
-            ->setParameter('semestre', $semestre)
+            ->leftJoin('e.etudiantSemestreAnnees', 'esa', 'WITH', 'esa.anneeUniversitaire = :anneeUniversitaire')
+            ->leftJoin('esa.semestre', 'esa_s');
+
+        return (int)$qb->where(
+            $qb->expr()->orX(
+                $qb->expr()->andX(
+                    $qb->expr()->isNotNull('esa.id'),
+                    $qb->expr()->eq('esa_s.id', ':semestreId')
+                ),
+                $qb->expr()->andX(
+                    $qb->expr()->isNull('esa.id'),
+                    $qb->expr()->eq('s.id', ':semestreId')
+                )
+            )
+        )
+            ->setParameter('semestreId', $semestre->getId())
+            ->setParameter('anneeUniversitaire', $anneeUniversitaire)
             ->getQuery()
             ->getSingleScalarResult();
     }

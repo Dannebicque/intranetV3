@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/controllers/annee-select_controller.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 28/08/2026 10:38
+// @lastUpdate 28/08/2026 13:43
 
 import { Controller } from '@hotwired/stimulus'
 
@@ -12,10 +12,16 @@ export default class extends Controller {
     id: Number,
   }
 
+  connect () {
+    console.log('AnneeSelectController connected')
+  }
+
   change(event) {
+    console.log('Change detected', event.target.value)
     const anneeId = event.target.value
     const id = this.idValue
     const url = this.urlValue.replace('ID', id)
+    console.log('URL:', url)
 
     fetch(url, {
       method: 'POST',
@@ -25,6 +31,7 @@ export default class extends Controller {
       body: `annee_id=${anneeId}`,
     }).then((response) => response.json())
       .then((data) => {
+        console.log('Response:', data)
         if (data.success) {
           // Optional: add a visual feedback if needed
         } else {

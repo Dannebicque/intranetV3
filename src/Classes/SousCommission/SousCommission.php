@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/SousCommission/SousCommission.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/02/2024 08:35
+ * @lastUpdate 30/08/2026 10:15
  */
 
 namespace App\Classes\SousCommission;
@@ -31,7 +31,7 @@ class SousCommission extends AbstractSousCommission implements SousCommissionInt
     {
         $this->semestre = $semestre;
         $this->anneeUniversitaire = $anneeUniversitaire;
-        $this->initDataSousCommission();
+        $this->initDataSousCommission($anneeUniversitaire);
         $matieres = $this->typeMatiereManager->findBySemestre($semestre);
 
         $this->sousCommissionEtudiant = [];
@@ -60,7 +60,7 @@ class SousCommission extends AbstractSousCommission implements SousCommissionInt
                 }
             }
 
-            $etudiantSousCommission->recupereScolarite();
+            $etudiantSousCommission->recupereScolarite($anneeUniversitaire);
 
             // calcul de la décision du semestre
             $etudiantSousCommission->calculDecision();

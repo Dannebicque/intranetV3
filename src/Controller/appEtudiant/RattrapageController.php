@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appEtudiant/RattrapageController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/01/2026 10:11
+ * @lastUpdate 28/08/2026 11:34
  */
 
 namespace App\Controller\appEtudiant;
@@ -32,8 +32,8 @@ class RattrapageController extends BaseController
     {
         $rattrapage = new Rattrapage($this->getUser());
 
-        if ($this->getUser()->getDiplome()?->isApc()) {
-            $matieres = $typeMatiereManager->findByReferentielOrdreSemestreArray($this->getEtudiantSemestre(), $this->getUser()->getDiplome()?->getReferentiel());
+        if ($this->getUser()->getDiplome($this->getAnneeUniversitaire())?->isApc()) {
+            $matieres = $typeMatiereManager->findByReferentielOrdreSemestreArray($this->getEtudiantSemestre(), $this->getUser()->getDiplome($this->getAnneeUniversitaire())?->getReferentiel());
         } else {
             $matieres = $typeMatiereManager->findBySemestreArray($this->getEtudiantSemestre());
         }
@@ -48,7 +48,7 @@ class RattrapageController extends BaseController
             RattrapageType::class,
             $rattrapage,
             [
-                'semestre' => $this->getUser()->getSemestreActif(),
+                'semestre' => $this->getUser()->getSemestreActif($this->getAnneeUniversitaire()),
                 'matieres' => $t,
                 'locale' => $request->getLocale(),
                 'attr' => [

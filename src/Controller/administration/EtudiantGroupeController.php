@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EtudiantGroupeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/01/2026 10:10
+ * @lastUpdate 30/08/2026 09:17
  */
 
 namespace App\Controller\administration;
@@ -44,7 +44,7 @@ class EtudiantGroupeController extends BaseController
     public function affecte(GroupeRepository $groupeRepository, EtudiantRepository $etudiantRepository, TypeGroupe $typeGroupe): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $typeGroupe->getSemestres()->first());
-        $etudiants = $etudiantRepository->findByOrdreSemestreAndDiplome($typeGroupe->getSemestres()->first()->getOrdreLmd(), $typeGroupe->getSemestres()->first()->getDiplome());
+        $etudiants = $etudiantRepository->findByOrdreSemestreAndDiplome($typeGroupe->getSemestres()->first()->getOrdreLmd(), $typeGroupe->getSemestres()->first()->getDiplome(), $this->getAnneeUniversitaire());
         $groupes = $groupeRepository->findByTypeGroupe($typeGroupe);
 
         return $this->render('administration/etudiant_groupe/affecte.html.twig', [
@@ -58,7 +58,7 @@ class EtudiantGroupeController extends BaseController
     public function synchroApogee(MyGroupes $myGroupes, Semestre $semestre): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $semestre);
-        $myGroupes->updateFromApogee($semestre);
+        $myGroupes->updateFromApogee($semestre, $this->getAnneeUniversitaire());
         $this->addFlashBag('success', 'groupes.synchronises');
 
         return $this->redirectToRoute('administration_etudiant_groupe_semestre_index',
@@ -114,7 +114,7 @@ class EtudiantGroupeController extends BaseController
     #[Route(path: '/{id}/{etudiant}', name: 'administration_etudiant_groupe_delete', methods: 'DELETE')]
     public function delete(Request $request, Groupe $groupe, Etudiant $etudiant): Response
     {
-        $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $etudiant->getSemestreActif());
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $etudiant->getSemestreActif($this->getAnneeUniversitaire()));
         if ($this->isCsrfTokenValid('delete'.$groupe->getId(), $request->server->get('HTTP_X_CSRF_TOKEN'))) {
             $id = $groupe->getId();
             $etudiant->removeGroupe($groupe);

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EtudiantSemestreAnneeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/08/2026 10:49
+ * @lastUpdate 30/08/2026 19:30
  */
 
 namespace App\Controller\administration;
@@ -78,7 +78,7 @@ class EtudiantSemestreAnneeController extends BaseController
     #[Route(path: '/delete/{id}', name: 'administration_etudiant_semestre_annee_delete', methods: ['POST'])]
     public function delete(Request $request, EtudiantSemestreAnnee $etudiantSemestreAnnee): Response
     {
-        $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL');
+        // $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL');
 
         if ($this->isCsrfTokenValid('delete' . $etudiantSemestreAnnee->getId(), $request->request->get('_token'))) {
             $this->entityManager->remove($etudiantSemestreAnnee);
@@ -86,6 +86,6 @@ class EtudiantSemestreAnneeController extends BaseController
             $this->addFlashBag('success', 'Entrée supprimée.');
         }
 
-        return $this->redirectToRoute('administration_etudiant_semestre_annee_index');
+        return $this->redirect($request->headers->get('referer') ?? $this->generateUrl('administration_etudiant_semestre_annee_index'));
     }
 }

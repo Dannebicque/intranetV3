@@ -1,4 +1,48 @@
 <div class="card">
+    <h4 class="card-title">Historique des semestres</h4>
+    <div class="card-body">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Semestre</th>
+                <th>Année</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for entry in etudiant.etudiantSemestreAnnees %}
+                <tr>
+                    <td>{{ entry.semestre.libelle }}</td>
+                    <td>
+                        <select class="form-control annee-select"
+                                data-controller="annee-select"
+                                data-action="change->annee-select#change"
+                                data-annee-select-url-value="{{ path('administration_etudiant_semestre_annee_edit_ajax', {id: 'ID'}) }}"
+                                data-annee-select-id-value="{{ entry.id }}">
+                            {% for annee in anneeUniversitaires|default([]) %}
+                                <option value="{{ annee.id }}"
+                                        {% if annee.id == entry.anneeUniversitaire.id %}selected{% endif %}>
+                                    {{ annee.libelle }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                    <td>
+                        <form method="post"
+                              action="{{ path('administration_etudiant_semestre_annee_delete', {id: entry.id}) }}"
+                              onsubmit="return confirm('Êtes-vous sûr ?');" style="display:inline-block;">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ entry.id) }}">
+                            <button class="btn btn-sm btn-danger">Supprimer</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="card">
     <h4 class="card-title">Liste des groupes</h4>
     <div class="card-body">
         <h5>Liste des groupes</h5>

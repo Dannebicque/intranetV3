@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/SemestreExportController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/01/2026 10:10
+ * @lastUpdate 28/08/2026 11:28
  */
 
 namespace App\Controller\administration;
@@ -54,11 +54,11 @@ class SemestreExportController extends BaseController
     public function exportReleveProvisoire(EtudiantExportReleve $etudiantExportReleve, #[MapEntity(mapping: ['slug' => 'slug'])]
     Etudiant $etudiant, Semestre $semestre = null): Response
     {
-        $this->denyAccessUnlessGranted('MINIMAL_ROLE_NOTE', $semestre ?: $etudiant->getSemestreActif());
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_NOTE', $semestre ?: $etudiant->getSemestreActif($this->getAnneeUniversitaire()));
         $etudiantExportReleve->setEtudiant($etudiant);
 
-        return $etudiantExportReleve->exportReleveProvisoire($semestre ?: $etudiant->getSemestreActif(),
-            $etudiant->getAnneeUniversitaire());
+        return $etudiantExportReleve->exportReleveProvisoire($semestre ?: $etudiant->getSemestreActif($this->getAnneeUniversitaire()),
+            $this->getAnneeUniversitaire());
     }
 
     #[Route(path: '/definitif/{slug}/{scolarite}', name: 'administration_semestre_export_releve_definitif')]

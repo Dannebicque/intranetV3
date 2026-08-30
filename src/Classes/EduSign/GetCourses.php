@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/EduSign/GetCourses.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/01/2026 09:56
+ * @lastUpdate 28/08/2026 11:28
  */
 
 namespace App\Classes\EduSign;
@@ -198,17 +198,17 @@ class GetCourses
         $refDate->add(new DateInterval('PT' . $dureeSecs . 'S'));
         $dureeFormat = $refDate->format('Y-m-d H:i:s.u');
         $duree = Carbon::createFromFormat("Y-m-d H:i:s.u", $dureeFormat);
-
+        $anneeU = $this->anneeUniversitaireRepository->findOneBy(['active' => true]);
         $newAbsence = new Absence();
         $newAbsence->setPersonnel($enseignant ?? null);
         $newAbsence->setEtudiant($etudiant);
-        $newAbsence->setAnneeUniversitaire($this->anneeUniversitaireRepository->findOneBy(['active' => true]));
+        $newAbsence->setAnneeUniversitaire($anneeU);
         $newAbsence->setDuree($duree ?? null);
         $newAbsence->setJustifie(false);
         $newAbsence->setDateHeure($start);
         $newAbsence->setTypeMatiere($matiere->typeMatiere);
         $newAbsence->setIdMatiere($matiere->id);
-        $newAbsence->setSemestre($etudiant->getSemestreActif());
+        $newAbsence->setSemestre($etudiant->getSemestreActif($anneeU));
         $newAbsence->setIdEduSign($student['_id']);
 
         try {

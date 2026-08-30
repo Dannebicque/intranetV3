@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/BaseController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/08/2026 09:37
+ * @lastUpdate 28/08/2026 11:28
  */
 
 namespace App\Controller;
@@ -126,7 +126,7 @@ class BaseController extends AbstractController
     {
         $this->denyAccessUnlessGranted('ROLE_ETUDIANT');
 
-        return null !== $this->getUser() ? $this->getUser()->getSemestreActif() : null;
+        return null !== $this->getUser() ? $this->getUser()->getSemestreActif($this->getAnneeUniversitaire()) : null;
     }
 
     public function getDepartement(): ?Departement

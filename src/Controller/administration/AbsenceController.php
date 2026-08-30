@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/AbsenceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/02/2026 10:04
+ * @lastUpdate 30/08/2026 11:21
  */
 
 namespace App\Controller\administration;
@@ -55,12 +55,12 @@ class AbsenceController extends BaseController
             return JsonReponse::error('Etudiant non trouvé');
         }
 
-        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $etudiant->getSemestreActif());
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $etudiant->getSemestreActif($this->getAnneeUniversitaire()));
 
-        if ($etudiant->getDiplome()?->isApc() === false) {
-            $matieres = $typeMatiereManager->findBySemestreArray($etudiant->getSemestreActif());
+        if ($etudiant->getDiplome($this->getAnneeUniversitaire())?->isApc() === false) {
+            $matieres = $typeMatiereManager->findBySemestreArray($etudiant->getSemestreActif($this->getAnneeUniversitaire()));
         } else {
-            $mats = $typeMatiereManager->findByReferentielOrdreSemestre($etudiant->getSemestreActif(), $etudiant->getDiplome()?->getReferentiel());
+            $mats = $typeMatiereManager->findByReferentielOrdreSemestre($etudiant->getSemestreActif($this->getAnneeUniversitaire()), $etudiant->getDiplome($this->getAnneeUniversitaire())?->getReferentiel());
 
             $matieres = [];
             foreach ($mats as $mat) {
@@ -115,7 +115,7 @@ class AbsenceController extends BaseController
         Semestre           $semestre): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $semestre);
-        $etudiants = $etudiantRepository->findBySemestre($semestre);
+        $etudiants = $etudiantRepository->findBySemestre($semestre, $this->getAnneeUniversitaire());
         return $this->render('administration/absence/justifier.html.twig', [
             'semestre' => $semestre,
             'etudiants' => $etudiants,
@@ -164,7 +164,7 @@ class AbsenceController extends BaseController
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $semestre);
 
         $matieres = $typeMatiereManager->findBySemestreArray($semestre);
-        $myAbsences->getAbsencesSemestre($matieres, $semestre);
+        $myAbsences->getAbsencesSemestre($matieres, $semestre, $this->getAnneeUniversitaire());
 
         return $myExport->genereFichierAbsence($_format, $myAbsences, 'absences_'.$semestre->getLibelle());
     }
@@ -267,7 +267,7 @@ class AbsenceController extends BaseController
         $etudiant = $etudiantRepository->find($request->request->get('etudiant'));
 
         if (null !== $etudiant) {
-            $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $etudiant->getSemestreActif());
+            $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $etudiant->getSemestreActif($this->getAnneeUniversitaire()));
 
             $matiere = $typeMatiereManager->getMatiereFromSelect($request->request->get('matiere'));
             if (null !== $matiere) {

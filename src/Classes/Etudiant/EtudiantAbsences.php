@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Etudiant/EtudiantAbsences.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/01/2026 10:26
+ * @lastUpdate 28/08/2026 11:28
  */
 
 namespace App\Classes\Etudiant;
@@ -60,7 +60,7 @@ class EtudiantAbsences
 
         $absence = new Absence();
         $absence->setEtudiant($this->etudiant);
-        $absence->setSemestre($this->etudiant->getSemestreActif());
+        $absence->setSemestre($this->etudiant->getSemestreActif($personnel->getAnneeUniversitaire()));
         $absence->setPersonnel($personnel);
         $absence->setDateHeure($dateHeure);
         $absence->setAnneeUniversitaire($personnel->getAnneeUniversitaire());

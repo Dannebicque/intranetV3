@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Etudiant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/08/2026 10:12
+ * @lastUpdate 30/08/2026 09:36
  */
 
 namespace App\Entity;
@@ -177,6 +177,7 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
 
     /**
      * @var Collection<int, Semestre>
+     * @deprecated Use getEtudiantSemestreAnnees() instead
      */
     #[ORM\ManyToMany(targetEntity: Semestre::class, inversedBy: 'etudiantsSemestres')]
     private Collection $semestres;
@@ -636,25 +637,28 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
         return $this;
     }
 
-    public function getDiplome(): ?Diplome
+    public function getDiplome(AnneeUniversitaire $anneeUniversitaire): ?Diplome
     {
-        if (null !== $this->getSemestreActif() && null !== $this->getSemestreActif()->getAnnee() && null !== $this->getSemestreActif()->getAnnee()->getDiplome()) {
-            return $this->getSemestreActif()->getAnnee()->getDiplome();
+        if (null !== $this->getSemestreActif($anneeUniversitaire) && null !== $this->getSemestreActif($anneeUniversitaire)->getAnnee() && null !== $this->getSemestreActif($anneeUniversitaire)->getAnnee()->getDiplome()) {
+            return $this->getSemestreActif($anneeUniversitaire)->getAnnee()->getDiplome();
         }
 
         return null;
     }
 
+    /**
+     * @deprecated Use getSemestreActif(AnneeUniversitaire $anneeUniversitaire) instead
+     */
     public function getSemestre(): ?Semestre
     {
         return $this->semestre;
     }
 
-    public function getSemestreActif(): ?Semestre
+    public function getSemestreActif(AnneeUniversitaire $anneeUniversitaire): ?Semestre
     {
-        foreach ($this->getSemestres() as $es) {
-            if ($es->isActif()) {
-                return $es;
+        foreach ($this->getEtudiantSemestreAnnees() as $es) {
+            if ($es->getSemestre()->isActif() && $es->getAnneeUniversitaire() === $anneeUniversitaire) {
+                return $es->getSemestre();
             }
         }
 
@@ -662,6 +666,9 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
         return $this->semestre;
     }
 
+    /**
+     * @deprecated Use addEtudiantSemestreAnnee() instead
+     */
     public function setSemestre(?Semestre $semestre): void
     {
         $this->semestre = $semestre;
@@ -724,6 +731,7 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
         return $this;
     }
 
+    /** @deprecated */
     public function getAnneeUniversitaire(): ?AnneeUniversitaire
     {
         return $this->getSemestre()?->getAnneeUniversitaire();
@@ -957,12 +965,16 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
 
     /**
      * @return Collection<int, Semestre>
+     * @deprecated Use getEtudiantSemestreAnnees() instead
      */
     public function getSemestres(): Collection
     {
         return $this->semestres;
     }
 
+    /**
+     * @deprecated Use addEtudiantSemestreAnnee() instead
+     */
     public function addSemestre(Semestre $semestre): static
     {
         if (!$this->semestres->contains($semestre)) {
@@ -972,6 +984,9 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
         return $this;
     }
 
+    /**
+     * @deprecated Use removeEtudiantSemestreAnnee() instead
+     */
     public function removeSemestre(Semestre $semestre): static
     {
         $this->semestres->removeElement($semestre);

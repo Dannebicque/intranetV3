@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Table/EtudiantDepartementTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/08/2026 11:06
+ * @lastUpdate 28/08/2026 11:15
  */
 
 namespace App\Table;
@@ -29,7 +29,6 @@ use Dannebicque\TableBundle\Widget\Type\SelectChangeType;
 use Dannebicque\TableBundle\Widget\WidgetBuilder;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
@@ -59,16 +58,11 @@ class EtudiantDepartementTableType extends TableType
             'required' => false,
             'placeholder' => 'Filtrer par bac',
         ]);
-        $builder->addFilter('anneeUniversitaire', EntityType::class, [
+        $builder->addFilter('bac', EntityType::class, [
             'class' => AnneeUniversitaire::class,
             'choice_label' => 'libelle',
             'required' => false,
-            'placeholder' => 'Filtrer par année universitaire',
-        ]);
-        $builder->addFilter('anneeSortie', NumberType::class, [
-            'choice_label' => 'libelle',
-            'required' => false,
-            'placeholder' => 'Filtrer par année de sortie (0 pour ceux en cours)',
+            'placeholder' => 'Filtrer par bac',
         ]);
 
         $builder->addWidget('export', ExportDropdownType::class, [
@@ -114,24 +108,6 @@ class EtudiantDepartementTableType extends TableType
                     ],
                     'value' => $s->getBac()?->getId(),
                     'entity' => Bac::class,
-                    'choice_label' => 'libelle',
-                ]);
-            },
-        ]);
-        $builder->addColumn('anneeUniversitaire', WidgetColumnType::class, [
-            'label' => 'table.anneeUniversitaire',
-            'translation_domain' => 'messages',
-            'build' => function (WidgetBuilder $builder, Etudiant $s) {
-                $builder->add('anneeUniversitaire', SelectChangeType::class, [
-                    'route' => 'adm_etudiant_edit_ajax',
-                    'route_params' => [
-                        'id' => $s->getId(),
-                    ],
-                    'post_params' => [
-                        'field' => 'anneeUniversitaire',
-                    ],
-                    'value' => $s->getAnneeUniversitaire()?->getId(),
-                    'entity' => AnneeUniversitaire::class,
                     'choice_label' => 'libelle',
                 ]);
             },

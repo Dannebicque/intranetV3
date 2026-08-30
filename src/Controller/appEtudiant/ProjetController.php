@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appEtudiant/ProjetController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/01/2026 10:14
+ * @lastUpdate 28/08/2026 11:28
  */
 
 namespace App\Controller\appEtudiant;
@@ -31,7 +31,7 @@ class ProjetController extends BaseController
     #[Route(path: '/', name: 'application_etudiant_projet_index')]
     public function index(ProjetPeriodeRepository $projetPeriodeRepository): Response
     {
-        $projetsPeriodes = $projetPeriodeRepository->findBySemestre($this->getUser()->getSemestreActif());
+        $projetsPeriodes = $projetPeriodeRepository->findBySemestre($this->getUser()->getSemestreActif($this->getAnneeUniversitaire()));
         $projetsEtudiants = [];
         foreach ($this->getUser()->getProjetEtudiants() as $projetEtudiant) {
             if (null !== $projetEtudiant->getProjetPeriode()) {
