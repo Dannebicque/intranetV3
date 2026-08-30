@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/SousCommission/SousCommissionSauvegarde.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/08/2026 20:02
+ * @lastUpdate 30/08/2026 20:09
  */
 
 /*
@@ -51,7 +51,7 @@ class SousCommissionSauvegarde
             'anneeUniversitaire' => $anneeUniversitaire,
             'semestre' => $semestre,
         ]);
-        $etudiants = $this->etudiantRepository->findBySemestre($semestre, $anneeUniversitaire);
+        $etudiants = $this->etudiantRepository->findBySemestreArray($semestre, $anneeUniversitaire);
         $ues = $semestre->getUes();
 
         if (null === $ssComm) {
