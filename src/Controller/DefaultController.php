@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/DefaultController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:17
+ * @lastUpdate 30/08/2026 19:54
  */
 
 namespace App\Controller;
@@ -32,7 +32,7 @@ class DefaultController extends BaseController
             return $this->redirectToRoute('security_choix_departement');
         }
         if ($this->getUser() instanceof Etudiant) {
-            $dates = $dateRepository->findByDateForEtudiant($this->getUser(), 2);
+            $dates = $dateRepository->findByDateForEtudiant($this->getUser(), 2, $this->getAnneeUniversitaire());
         } else {
             $dates = $dateRepository->findByDateForPersonnel($this->getDepartement(), 2);
         }

@@ -4,12 +4,13 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/DateRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/01/2026 10:14
+ * @lastUpdate 30/08/2026 19:54
  */
 
 namespace App\Repository;
 
 use App\Entity\Annee;
+use App\Entity\AnneeUniversitaire;
 use App\Entity\Constantes;
 use App\Entity\Date;
 use App\Entity\Departement;
@@ -116,13 +117,13 @@ class DateRepository extends ServiceEntityRepository
         return $tab;
     }
 
-    public function findByDateForEtudiant(Etudiant $etudiant, int $nbResult = 0): array
+    public function findByDateForEtudiant(Etudiant $etudiant, int $nbResult = 0, AnneeUniversitaire $anneeUniversitaire): array
     {
         $query = $this->createQueryBuilder('d')
             ->leftJoin('d.semestres', 's')
             ->where('s.id = :semestre')
             ->andWhere('d.typeDestinataire = :typeDestinataire')
-            ->setParameter('semestre', $etudiant->getSemestreActif()?->getId())
+            ->setParameter('semestre', $etudiant->getSemestreActif($anneeUniversitaire)?->getId())
             ->setParameter('typeDestinataire', Constantes::TYPE_DESTINATAIRE_ETUDIANT)
             ->orderBy('d.dateDebut', Order::Descending->value);
         if (0 !== $nbResult) {
