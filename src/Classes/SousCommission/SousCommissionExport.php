@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/SousCommission/SousCommissionExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/02/2026 15:47
+ * @lastUpdate 30/08/2026 19:56
  */
 
 namespace App\Classes\SousCommission;
@@ -673,7 +673,7 @@ class SousCommissionExport
             throw new SemestreNotFoundException();
         }
         $ues = $semestre->getUes();
-        $etudiants = $semestre->getEtudiants();
+        $etudiants = $scolaritePromo->getEtudiants();
         $matieres = $this->typeMatiereManager->findBySemestreAndReferentiel($semestre,
             $semestre->getDiplome()?->getReferentiel());
 

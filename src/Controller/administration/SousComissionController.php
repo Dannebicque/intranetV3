@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/SousComissionController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/08/2026 09:51
+ * @lastUpdate 30/08/2026 19:56
  */
 
 namespace App\Controller\administration;
@@ -233,10 +233,10 @@ class SousComissionController extends BaseController
 
         if (true === $scolaritePromo->getSemestre()?->getDiplome()?->isApc()) {
             return $sousCommissionExport->exportGrandJuryApc($scolaritePromo,
-                $this->dataUserSession->getAnneeUniversitaire());
+                $this->getAnneeUniversitaire());
         }
 
-        return $sousCommissionExport->exportGrandJury($scolaritePromo, $this->dataUserSession->getAnneeUniversitaire());
+        return $sousCommissionExport->exportGrandJury($scolaritePromo, $this->getAnneeUniversitaire());
     }
 
     #[Route(path: '/ajax/semestre/{id}/{type}', name: 'administration_ss_comm_ajax_edit', options: ['expose' => true])]
