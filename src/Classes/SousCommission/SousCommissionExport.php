@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/SousCommission/SousCommissionExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/08/2026 19:56
+ * @lastUpdate 30/08/2026 20:07
  */
 
 namespace App\Classes\SousCommission;
@@ -673,7 +673,12 @@ class SousCommissionExport
             throw new SemestreNotFoundException();
         }
         $ues = $semestre->getUes();
-        $etudiants = $scolaritePromo->getEtudiants();
+
+        $etudiants = new ArrayCollection();
+        foreach ($scolaritePromo->getScolarites() as $scol) {
+            $etudiants->add($scol->getEtudiant());
+        }
+
         $matieres = $this->typeMatiereManager->findBySemestreAndReferentiel($semestre,
             $semestre->getDiplome()?->getReferentiel());
 
@@ -732,7 +737,7 @@ class SousCommissionExport
                 $colonne = 7;
 
                 $this->myExcelWriter->writeCellXY($colonne, $ligne,
-                    count($ssCommTravail->recupereScolarite($etu)));
+                    count($ssCommTravail->recupereScolarite($etu, $anneeUniversitaire)));
 
                 foreach ($ues as $ue) {
                     $this->myExcelWriter->writeCellXY($colonne, $ligne,
@@ -780,7 +785,7 @@ class SousCommissionExport
             }
         }
 
-        for ($i = 0; $i < 100; ++$i) {
+        for ($i = 1; $i < 100; ++$i) {
             $this->myExcelWriter->getColumnAutoSize($i);
         }
 

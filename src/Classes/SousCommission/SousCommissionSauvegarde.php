@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/SousCommission/SousCommissionSauvegarde.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/06/2026 20:57
+ * @lastUpdate 30/08/2026 20:02
  */
 
 /*
@@ -20,6 +20,7 @@ use App\Entity\Scolarite;
 use App\Entity\ScolaritePromo;
 use App\Entity\Semestre;
 use App\Enums\DecisionSemestreEnum;
+use App\Repository\EtudiantRepository;
 use App\Repository\ScolaritePromoRepository;
 use App\Repository\ScolariteRepository;
 use Carbon\Carbon;
@@ -32,6 +33,7 @@ class SousCommissionSauvegarde
      * SousCommissionSauvegarde constructor.
      */
     public function __construct(
+        private EtudiantRepository $etudiantRepository,
         private Configuration            $configuration,
         private ScolaritePromoRepository $scolaritePromoRepository,
         private ScolariteRepository      $scolariteRepository,
@@ -49,7 +51,7 @@ class SousCommissionSauvegarde
             'anneeUniversitaire' => $anneeUniversitaire,
             'semestre' => $semestre,
         ]);
-        $etudiants = $sousCommission->getEtudiants();
+        $etudiants = $this->etudiantRepository->findBySemestre($semestre, $anneeUniversitaire);
         $ues = $semestre->getUes();
 
         if (null === $ssComm) {
