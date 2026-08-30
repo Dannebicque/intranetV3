@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/TrombinoscopeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/02/2026 11:58
+ * @lastUpdate 30/08/2026 20:13
  */
 
 namespace App\Controller;
@@ -46,7 +46,7 @@ class TrombinoscopeController extends BaseController
         $semestres = [];
         $capacitesSemestres = [];
         foreach ($this->dataUserSession->getSemestresActifs() as $semestre) {
-            $capacitesSemestres[$semestre->getId()] = $etudiantRepository->countBySemestre($semestre);
+            $capacitesSemestres[$semestre->getId()] = $etudiantRepository->countBySemestre($semestre, $this->getAnneeUniversitaire());
 
             if (!array_key_exists($semestre->getOrdreLmd(), $semestres))
             {
@@ -182,7 +182,7 @@ class TrombinoscopeController extends BaseController
             'etudiants' => $etudiants,
             'siteperso' => $semestre->getDiplome()->getOptEspacePersoVisible(),
             'etudiantGroupes' => $etudiantRepository->getEtudiantGroupes($semestre),
-            'countEtudiants' => $etudiantRepository->countBySemestre($semestre),
+            'countEtudiants' => $etudiantRepository->countBySemestre($semestre, $this->getAnneeUniversitaire()),
             'isEtudiant' => $isEtudiant,
         ]);
     }
