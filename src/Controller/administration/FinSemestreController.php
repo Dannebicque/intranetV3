@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/FinSemestreController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 31/08/2026 17:13
+ * @lastUpdate 31/08/2026 17:22
  */
 
 namespace App\Controller\administration;
@@ -42,11 +42,9 @@ class FinSemestreController extends BaseController
         Semestre                     $semestre): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_NOTE', $semestre);
-        $annee = $request->query->get('annee', $this->getAnneeUniversitaire()->getId());
-        $anneeUniversitaire = $anneeUniversitaireRepository->find($annee);
 
-        $etudiants = $etudiantRepository->findBySemestre($semestre, $anneeUniversitaire);
-        $scolarites = $scolariteRepository->findBySemestreArray($semestre, $anneeUniversitaire);
+        $etudiants = $etudiantRepository->findBySemestre($semestre, $this->getAnneeUniversitaire());
+        $scolarites = $scolariteRepository->findBySemestreArray($semestre, $this->getAnneeUniversitaire());
 
         $semestresSuivants = $semestreLienRepository->findSuivants($semestre);
         $semestresPrecedents = $semestreLienRepository->findPrecedents($semestre);
@@ -61,7 +59,7 @@ class FinSemestreController extends BaseController
             'scolarites' => $scolarites,
             'departements' => $departementRepository->findAll(),
             'annees' => $anneeUniversitaireRepository->findAll(),
-            'anneeActive' => $anneeUniversitaire,
+            'anneeActive' => $anneeUniversitaireRepository->findOneBy(['active' => 1]),
         ]);
     }
 

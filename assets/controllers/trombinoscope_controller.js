@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/controllers/trombinoscope_controller.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 31/08/2026 11:40
+// @lastUpdate 31/08/2026 17:51
 
 import { Controller } from '@hotwired/stimulus'
 
@@ -54,6 +54,24 @@ export default class extends Controller {
 
       if (response.ok) {
         el.parentElement.remove()
+      } else {
+        alert('Erreur lors du retrait de l\'étudiant')
+      }
+    }
+  }
+
+  async removeStudentFromAllGroups (event) {
+    if (confirm('Voulez-vous vraiment retirer cet étudiant de tous ses groupes ?')) {
+      const el = event.currentTarget
+      const response = await fetch(Routing.generate('trombinoscope_etudiant_groupe_remove_all', {
+        etudiant: el.dataset.etudiant
+      }), {
+        method: 'POST'
+      })
+
+      if (response.ok) {
+        // Remove all groups badges for this student
+        el.parentElement.parentElement.innerHTML = ''
       } else {
         alert('Erreur lors du retrait de l\'étudiant')
       }

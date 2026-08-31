@@ -33,7 +33,7 @@
             <form action="{{ path('administration_fin_semestre_index', {semestre:semestre.id}) }}" method="get">
                 <div class="row">
                     <div class="col-md-3">
-                        <select name="annee" class="form-control" onchange="this.form.submit()">
+                        <select name="annee" class="form-control">
                             {% for a in annees %}
                                 <option value="{{ a.id }}"
                                         {% if anneeActive.id == a.id %}selected{% endif %}>{{ a.libelle }}</option>

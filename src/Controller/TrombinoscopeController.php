@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/TrombinoscopeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 31/08/2026 11:49
+ * @lastUpdate 31/08/2026 17:51
  */
 
 namespace App\Controller;
@@ -215,6 +215,19 @@ class TrombinoscopeController extends BaseController
         $entityManager->flush();
 
         return new Response('Etudiant retiré du groupe', Response::HTTP_OK);
+    }
+
+    #[Route(path: '/etudiant/groupe/remove-all/{etudiant}', name: 'trombinoscope_etudiant_groupe_remove_all', methods: ['POST'], options: ['expose' => true])]
+    public function removeEtudiantFromAllGroupes(Etudiant $etudiant, EntityManagerInterface $entityManager): Response
+    {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
+        foreach ($etudiant->getGroupes() as $groupe) {
+            $etudiant->removeGroupe($groupe);
+            $groupe->removeEtudiant($etudiant);
+        }
+        $entityManager->flush();
+
+        return new Response('Etudiant retiré de tous les groupes', Response::HTTP_OK);
     }
 
     /**
