@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Table/EtudiantSemestreTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 31/08/2026 16:55
+ * @lastUpdate 31/08/2026 17:01
  */
 
 namespace App\Table;
@@ -196,21 +196,20 @@ class EtudiantSemestreTableType extends TableType
                 $qb
                     ->leftJoin(Semestre::class, 's', 'WITH', 'e.semestre = s.id')
                     ->leftJoin('e.etudiantSemestreAnnees', 'esa', 'WITH', 'esa.anneeUniversitaire = :anneeUniversitaire')
-                    ->leftJoin('esa.semestre', 'esa_s');
-
-                $qb->where(
-                    $qb->expr()->orX(
-                        $qb->expr()->andX(
-                            $qb->expr()->isNotNull('esa.id'),
-                            $qb->expr()->eq('esa_s.id', ':semestreId')
-                        ),
-                        $qb->expr()->andX(
-                            $qb->expr()->isNull('esa.id'),
-                            $qb->expr()->eq('s.id', ':semestreId')
+                    ->join('esa.semestre', 'esa_s')
+                    ->where(
+                        $qb->expr()->orX(
+                            $qb->expr()->andX(
+                                $qb->expr()->isNotNull('esa.id'),
+                                $qb->expr()->eq('esa_s.id', ':semestreId')
+                            ),
+                            $qb->expr()->andX(
+                                $qb->expr()->isNull('esa.id'),
+                                $qb->expr()->eq('s.id', ':semestreId')
+                            )
                         )
                     )
-                )
-                    ->setParameter('semestreId', $semestre->getId())
+                    ->setParameter('semestreId', $this->semestre->getId())
                     ->setParameter('anneeUniversitaire', $this->anneeUniversitaire)
                     ->orderBy('e.nom', Order::Ascending->value)
                     ->addOrderBy('e.prenom', Order::Ascending->value);
