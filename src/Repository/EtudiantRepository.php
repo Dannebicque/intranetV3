@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/EtudiantRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/08/2026 10:21
+ * @lastUpdate 31/08/2026 11:40
  */
 
 namespace App\Repository;
@@ -349,7 +349,7 @@ class EtudiantRepository extends ServiceEntityRepository
     public function getEtudiantGroupes(Semestre $semestre): array
     {
         $query = $this->createQueryBuilder('e')
-            ->select('e.id, g.libelle')
+            ->select('e.id, g.libelle, g.id as groupeId')
             ->join('e.groupes', 'g')
             ->where('e.semestre = :semestre')
             ->setParameter('semestre', $semestre->getId())
@@ -361,7 +361,7 @@ class EtudiantRepository extends ServiceEntityRepository
             if (!array_key_exists($q['id'], $t)) {
                 $t[$q['id']] = [];
             }
-            $t[$q['id']][] = $q['libelle'];
+            $t[$q['id']][] = ['libelle' => $q['libelle'], 'id' => $q['groupeId']];
         }
 
         return $t;
