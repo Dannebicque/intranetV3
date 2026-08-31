@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/EdtCelcatRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/01/2026 10:26
+ * @lastUpdate 31/08/2026 09:25
  */
 
 namespace App\Repository;
@@ -55,7 +55,7 @@ class EdtCelcatRepository extends ServiceEntityRepository
 
     public function findEdtEtu(Etudiant $user, int $semaine, AnneeUniversitaire $anneeUniversitaire): null|array|int
     {
-        if (null !== $user->getSemestreActif()) {
+        if (null !== $user->getSemestreActif($anneeUniversitaire)) {
             $this->chaine = '';
             $this->params = [];
 
