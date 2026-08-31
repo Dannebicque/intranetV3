@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Table/EtudiantSemestreTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/08/2026 11:15
+ * @lastUpdate 31/08/2026 16:53
  */
 
 namespace App\Table;
 
+use App\Entity\AnneeUniversitaire;
 use App\Entity\Bac;
 use App\Entity\Departement;
 use App\Entity\Etudiant;
@@ -30,6 +31,7 @@ use Dannebicque\TableBundle\Widget\Type\RowEditLinkType;
 use Dannebicque\TableBundle\Widget\Type\RowShowLinkType;
 use Dannebicque\TableBundle\Widget\Type\SelectChangeType;
 use Dannebicque\TableBundle\Widget\WidgetBuilder;
+use Doctrine\Common\Collections\Order;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -39,6 +41,7 @@ class EtudiantSemestreTableType extends TableType
 {
     private ?Semestre $semestre = null;
     private ?Departement $departement = null;
+    private ?AnneeUniversitaire $anneeUniversitaire = null;
 
     public function __construct(private readonly CsrfTokenManagerInterface $csrfToken)
     {
@@ -182,11 +185,35 @@ class EtudiantSemestreTableType extends TableType
             'class' => Etudiant::class,
             'fetch_join_collection' => false,
             'query' => function (QueryBuilder $qb, array $formData) {
-                $qb
+//                $qb
+//                    ->leftJoin(Semestre::class, 's', 'WITH', 'e.semestre = s.id')
+//                    ->leftJoin('e.semestres', 'ss')
+//                    ->where('s = :semestre OR ss = :semestre')
+//                    ->setParameter('semestre', $this->semestre->getId());
+
+
+                $qb = $this->createQueryBuilder('e')
                     ->leftJoin(Semestre::class, 's', 'WITH', 'e.semestre = s.id')
-                    ->leftJoin('e.semestres', 'ss')
-                    ->where('s = :semestre OR ss = :semestre')
-                    ->setParameter('semestre', $this->semestre->getId());
+                    ->leftJoin('e.etudiantSemestreAnnees', 'esa', 'WITH', 'esa.anneeUniversitaire = :anneeUniversitaire')
+                    ->leftJoin('esa.semestre', 'esa_s');
+
+                $qb->where(
+                    $qb->expr()->orX(
+                        $qb->expr()->andX(
+                            $qb->expr()->isNotNull('esa.id'),
+                            $qb->expr()->eq('esa_s.id', ':semestreId')
+                        ),
+                        $qb->expr()->andX(
+                            $qb->expr()->isNull('esa.id'),
+                            $qb->expr()->eq('s.id', ':semestreId')
+                        )
+                    )
+                )
+                    ->setParameter('semestreId', $semestre->getId())
+                    ->setParameter('anneeUniversitaire', $this->anneeUniversitaire)
+                    ->orderBy('e.nom', Order::Ascending->value)
+                    ->addOrderBy('e.prenom', Order::Ascending->value);
+
 
                 if (isset($formData['search'])) {
                     $qb->andWhere('LOWER(e.nom) LIKE :search');
@@ -211,6 +238,7 @@ class EtudiantSemestreTableType extends TableType
             'orderable' => true,
             'semestre' => null,
             'departement' => null,
+            'anneeUniversitaire' => null,
             'exportable' => true,
         ]);
     }

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EtudiantSemestreController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/08/2026 11:21
+ * @lastUpdate 31/08/2026 16:53
  */
 
 namespace App\Controller\administration;
@@ -98,6 +98,7 @@ class EtudiantSemestreController extends BaseController
         $table = $this->createTable(EtudiantSemestreTableType::class, [
             'semestre' => $semestre,
             'departement' => $this->getDepartement(),
+            'anneeUniversitaire' => $this->getAnneeUniversitaire(),
         ]);
         $table->handleRequest($request);
         if ($table->isCallback()) {
