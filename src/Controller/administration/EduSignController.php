@@ -233,7 +233,7 @@ class EduSignController extends BaseController
         $keyEduSign = $diplome->getKeyEduSign();
         $updateGroupeResult = $updateGroupe->update($keyEduSign);
         $fixEtudiantsResult = $updateEtudiant->fixEtudiants($keyEduSign);
-        $updateSemestreResult = $updateEtudiant->changeSemestre($diplome, $keyEduSign);
+        $updateSemestreResult = $updateEtudiant->changeSemestre($diplome);
 
         // Vérifier que les résultats sont des tableaux
         if ($updateGroupeResult === null) {

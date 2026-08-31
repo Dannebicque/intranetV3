@@ -123,7 +123,7 @@ class UpdateEtudiant
         return $result;
     }
 
-    public function changeSemestre(?Diplome $diplome, string $keyEduSign): array
+    public function changeSemestre(?Diplome $diplome): array
     {
         // set l'execution time to infinite
         set_time_limit(0);
