@@ -193,7 +193,7 @@ class EtudiantSemestreTableType extends TableType
 //                    ->setParameter('semestre', $this->semestre->getId());
 
 
-                $qb = $this->createQueryBuilder('e')
+                $qb
                     ->leftJoin(Semestre::class, 's', 'WITH', 'e.semestre = s.id')
                     ->leftJoin('e.etudiantSemestreAnnees', 'esa', 'WITH', 'esa.anneeUniversitaire = :anneeUniversitaire')
                     ->leftJoin('esa.semestre', 'esa_s');
