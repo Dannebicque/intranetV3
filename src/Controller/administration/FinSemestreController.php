@@ -4,14 +4,13 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/FinSemestreController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/08/2026 11:12
+ * @lastUpdate 31/08/2026 17:13
  */
 
 namespace App\Controller\administration;
 
 use App\Classes\Etudiant\EtudiantScolarite;
 use App\Controller\BaseController;
-use App\Entity\AnneeUniversitaire;
 use App\Entity\Constantes;
 use App\Entity\Etudiant;
 use App\Entity\EtudiantSemestreAnnee;
@@ -99,9 +98,11 @@ class FinSemestreController extends BaseController
                         $se = $semestreRepository->find($valeur);
                         if (null !== $se) {
                             //on ajoute le semestre à la liste des semestres
-//                            $e->addSemestre($se);
-//                            $se->addEtudiantsSemestre($e);
                             $etuSemestre = new EtudiantSemestreAnnee();
+                            //suppression des groupes de l'étudiant pour le semestre en cours
+                            foreach ($e->getGroupes() as $etudiantGroupe) {
+                                $e->removeGroupe($etudiantGroupe);
+                            }
                             $etuSemestre->setEtudiant($e);
                             $etuSemestre->setSemestre($se);
                             $etuSemestre->setAnneeUniversitaire($anneeUniversitaire);
