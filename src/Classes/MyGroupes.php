@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MyGroupes.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:41
+ * @lastUpdate 30/08/2026 09:17
  */
 
 /*
@@ -14,6 +14,7 @@
 namespace App\Classes;
 
 use App\Classes\Apogee\ApogeeGroupe;
+use App\Entity\AnneeUniversitaire;
 use App\Entity\Departement;
 use App\Entity\Diplome;
 use App\Entity\Groupe;
@@ -127,11 +128,11 @@ class MyGroupes
         $this->entityManager->flush();
     }
 
-    public function updateFromApogee(Semestre $semestre): void
+    public function updateFromApogee(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire): void
     {
         $this->removeGroupeFromSemestre($semestre);
         $tGroupes = $this->groupeRepository->findBySemestreArray($semestre);
-        $tEtudiants = $this->etudiantRepository->findBySemestreArray($semestre);
+        $tEtudiants = $this->etudiantRepository->findBySemestreArray($semestre, $anneeUniversitaire);
         $semestres = $this->semestreRepository->findByDiplomeEtNumero($semestre->getDiplome(),
             $semestre->getOrdreLmd());
 
@@ -224,10 +225,10 @@ class MyGroupes
     /**
      * @throws Exception
      */
-    public function importGroupeEtudiantCsv(?UploadedFile $fichier, Semestre $semestre): bool
+    public function importGroupeEtudiantCsv(?UploadedFile $fichier, Semestre $semestre, AnneeUniversitaire $anneeUniversitaire): bool
     {
         $groupes = $this->groupeRepository->findBySemestreArray($semestre);
-        $etudiants = $this->etudiantRepository->findBySemestreArray($semestre);
+        $etudiants = $this->etudiantRepository->findBySemestreArray($semestre, $anneeUniversitaire);
         foreach ($etudiants as $etudiant) {
             foreach ($etudiant->getGroupes() as $groupe) {
                 $etudiant->removeGroupe($groupe);

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MyUpload.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 10:52
+ * @lastUpdate 31/07/2026 11:14
  */
 
 /*
@@ -14,13 +14,13 @@
 namespace App\Classes;
 
 use App\Exception\ExtensionInterditeException;
-use function count;
 use Exception;
-use function in_array;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpKernel\KernelInterface;
 use ZipArchive;
+use function count;
+use function in_array;
 
 class MyUpload
 {
@@ -138,6 +138,40 @@ class MyUpload
     public function getTypeFichier(): string
     {
         return $this->typeFichier;
+    }
+
+    /**
+     * Upload a file to an absolute directory (outside public/).
+     *
+     * @throws Exception
+     */
+    public function uploadAbsolute(?UploadedFile $fichier, string $absoluteDir, array $extensions = []): ?string
+    {
+        if (null !== $fichier) {
+            $extension = $this->getExtension($fichier);
+            $this->typeFichier = $fichier->getMimeType();
+            $this->taille = $fichier->getSize();
+
+            if ((count($extensions) > 0) && !in_array($extension, $extensions, true)) {
+                throw new ExtensionInterditeException();
+            }
+
+            $absoluteDir = rtrim($absoluteDir, '/') . '/';
+            if (!is_dir($absoluteDir)) {
+                mkdir($absoluteDir, 0755, true);
+            }
+
+            $this->nomfile = random_int(1, 99999) . '_' . date('YmdHis') . '.' . $extension;
+            try {
+                $fichier->move($absoluteDir, $this->nomfile);
+            } catch (FileException) {
+                // handle exception if something happens during file upload
+            }
+
+            return $absoluteDir . $this->nomfile;
+        }
+
+        return null;
     }
 
     public function deleteFile(?string $getDocumentName, string $dir): void

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/SecurityController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:40
+ * @lastUpdate 24/08/2026 09:52
  */
 
 namespace App\Controller;
@@ -103,14 +103,26 @@ class SecurityController extends AbstractController
      * @throws TransportExceptionInterface
      * @throws Exception
      */
-    #[Route(path: '/connexion/init-password/{user}', name: 'security_password_init', options: ['expose' => true])]
+    #[Route(path: '/connexion/init-password/{user}', name: 'security_password_init', options: ['expose' => true], methods: ['POST'])]
     public function initPassword(
+        Request $request,
         UserPasswordHasherInterface $passwordEncoder,
         EntityManagerInterface $entityManager,
         MailerFromTwig $mailerFromTwig,
         Personnel $user
     ): JsonResponse {
-        $password = mb_substr(md5(time()), 0, 10);
+        if (
+            false === $this->isGranted('ROLE_CDD')
+            && false === $this->isGranted('ROLE_SUPER_ADMIN')
+        ) {
+            throw $this->createAccessDeniedException('Vous n\'avez pas accès à cette fonctionnalité.');
+        }
+
+        if (!$this->isCsrfTokenValid('init-password-' . $user->getId(), (string)$request->headers->get('X-CSRF-TOKEN'))) {
+            throw $this->createAccessDeniedException('Jeton CSRF invalide.');
+        }
+
+        $password = rtrim(strtr(base64_encode(random_bytes(12)), '+/', '-_'), '=');
         $passwordEncode = $passwordEncoder->hashPassword($user, $password);
         $user->setPassword($passwordEncode);
         $entityManager->flush();

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/superAdministration/RhController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:40
+ * @lastUpdate 24/08/2026 09:37
  */
 
 namespace App\Controller\superAdministration;
@@ -16,6 +16,7 @@ use App\Form\PersonnelType;
 use App\Repository\PersonnelDepartementRepository;
 use App\Table\PersonnelTableType;
 use JsonException;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Ldap\Ldap;
@@ -53,19 +54,20 @@ class RhController extends BaseController
     }
 
     #[Route(path: '/import', name: 'sa_rh_import_personnel')]
-    public function import(Request $request): Response
+    public function import(Request $request, ParameterBagInterface $parameterBag): Response
     {
         // Todo: si fonctionne à faire en ajax?
         if ('POST' === $request->getMethod()) {
-            $username = $request->request->get('username');
+            $username = trim((string)$request->request->get('username'));
+            $escapedUsername = ldap_escape($username, '', LDAP_ESCAPE_FILTER);
             $ldap = Ldap::create('ext_ldap', [
-                'host' => 'ldap.univ-reims.fr',
-                'encryption' => 'ssl',
+                'connection_string' => (string)$parameterBag->get('LDAP_HOST'),
+                'version' => 3,
             ]);
-            $ldap->bind('uid=app-intranet-iut,ou=account,ou=app,dc=univ-reims,dc=fr', 'heXzHr7p7MKuccQ2UqKu');
+            $ldap->bind((string)$parameterBag->get('LDAP_LOGIN'), (string)$parameterBag->get('LDAP_PASSWORD'));
             // supannEmpId ou uid
-            $query = $ldap->query('ou=people,dc=univ-reims,dc=fr',
-                '(|(supannEmpId='.$username.')(uid='.$username.')(mail='.$username.')(sn='.$username.'))');
+            $query = $ldap->query((string)$parameterBag->get('LDAP_BASE_DN'),
+                '(|(supannEmpId=' . $escapedUsername . ')(uid=' . $escapedUsername . ')(mail=' . $escapedUsername . ')(sn=' . $escapedUsername . '))');
             $results = $query->execute();
 
             return $this->render('super-administration/rh/liste-result.html.twig');

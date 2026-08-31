@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/DTO/SousCommissionTravail.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:40
+ * @lastUpdate 28/08/2026 11:34
  */
 
 namespace App\DTO;
@@ -68,12 +68,12 @@ class SousCommissionTravail
         return $this->ssComm;
     }
 
-    public function recupereScolarite(Etudiant $etudiant): array
+    public function recupereScolarite(Etudiant $etudiant, AnneeUniversitaire $anneeUniversitaire): array
     {
         $tScolarite = [];
         // on ne récupère la scolarité que par rapport au diplôme en cours
         foreach ($etudiant->getScolarites() as $scolarite) {
-            if ($scolarite->getSemestre()?->getDiplome() === $etudiant->getDiplome()) {
+            if ($scolarite->getSemestre()?->getDiplome() === $etudiant->getDiplome($anneeUniversitaire)) {
                 $tScolarite[$scolarite->getSemestre()?->getOrdreLmd()] = new Scolarite($scolarite);
             }
         }

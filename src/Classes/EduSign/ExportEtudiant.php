@@ -1,16 +1,17 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/EduSign/ExportEtudiant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/04/2024 17:37
+ * @lastUpdate 30/08/2026 11:21
  */
 
 namespace App\Classes\EduSign;
 
 use App\Classes\EduSign\Adapter\IntranetEtudiantEduSignAdapter;
 use App\Classes\Excel\MyExcelWriter;
+use App\Entity\AnneeUniversitaire;
 use App\Repository\EtudiantRepository;
 use App\Repository\SemestreRepository;
 use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
@@ -29,11 +30,11 @@ class ExportEtudiant
     {
     }
 
-    public function genereFichier(): StreamedResponse
+    public function genereFichier(AnneeUniversitaire $anneeUniversitaire): StreamedResponse
     {
         $this->myExcelWriter->createSheet('edusign-etudiants');
 
-        $this->ecritEtudiant();
+        $this->ecritEtudiant($anneeUniversitaire);
 
         $writer = new Xlsx($this->myExcelWriter->getSpreadsheet());
 
@@ -84,7 +85,7 @@ class ExportEtudiant
 //        }
 //    }
 
-    public function ecritEtudiant(): void
+    public function ecritEtudiant(AnneeUniversitaire $anneeUniversitaire): void
     {
         $semestres = $this->semestreRepository->findSemestreEduSign();
         $sheet = $this->myExcelWriter->getSpreadsheet()->getActiveSheet();
@@ -93,7 +94,7 @@ class ExportEtudiant
         $maxItems = 0;
 
         foreach ($semestres as $semestre) {
-            $etudiants = $this->etudiantRepository->findBySemestre($semestre);
+            $etudiants = $this->etudiantRepository->findBySemestre($semestre, $anneeUniversitaire);
 
             foreach ($etudiants as $etudiant) {
                 $groupes = [];
@@ -160,7 +161,7 @@ class ExportEtudiant
         // Commence à la ligne 2
         $row = 2;
         foreach ($semestres as $semestre) {
-            $etudiants = $this->etudiantRepository->findBySemestre($semestre);
+            $etudiants = $this->etudiantRepository->findBySemestre($semestre, $anneeUniversitaire);
 
             foreach ($etudiants as $etudiant) {
                 $groupes = [];

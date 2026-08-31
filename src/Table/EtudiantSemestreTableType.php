@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Table/EtudiantSemestreTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/02/2026 16:45
+ * @lastUpdate 28/08/2026 11:15
  */
 
 namespace App\Table;

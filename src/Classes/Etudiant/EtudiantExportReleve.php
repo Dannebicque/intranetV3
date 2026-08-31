@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Etudiant/EtudiantExportReleve.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 17/06/2024 18:41
+ * @lastUpdate 30/08/2026 11:21
  */
 
 namespace App\Classes\Etudiant;
@@ -110,7 +110,7 @@ class EtudiantExportReleve
         $zip->open($zipName, ZipArchive::CREATE);
         $tabFiles = [];
 
-        $etudiants = $this->etudiantRepository->findBySemestre($semestre, ['nom' => 'ASC', 'prenom' => 'ASC']);
+        $etudiants = $this->etudiantRepository->findBySemestre($semestre, $anneeUniversitaire);
         foreach ($etudiants as $etudiant) {
             if (0 === $etudiant->getAnneeSortie()) {
                 $this->etudiant = $etudiant;

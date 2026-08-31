@@ -43,7 +43,7 @@
         <div class="row justify-content-end">
             <div class="col-md-3 col-sm-12 mt-2 d-grid">
                 <div class="btn-group">
-                    {% if user_data.user.diplome.optSemainesVisibles > 2 or user_data.user.diplome
+                    {% if user_data.user.diplome.optSemainesVisibles > 2 or user_data.user.diplome(user_data.anneeUniversitaire)
                     .optSemainesVisibles == 0 %}
                         <a class="btn btn-primary" href="{{ path('agenda_index', {semaine:edt.semainePrecedente,
                             filtre:'etudiant'}) }}"

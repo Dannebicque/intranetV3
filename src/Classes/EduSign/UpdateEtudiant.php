@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/EduSign/UpdateEtudiant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 19/04/2024 10:44
+ * @lastUpdate 30/08/2026 11:21
  */
 
 namespace App\Classes\EduSign;
@@ -12,6 +12,7 @@ namespace App\Classes\EduSign;
 use App\Classes\EduSign\Adapter\IntranetEtudiantEduSignAdapter;
 use App\Classes\EduSign\Api\ApiEtudiant;
 use App\Classes\EduSign\DTO\EduSignEtudiant;
+use App\Entity\AnneeUniversitaire;
 use App\Entity\Diplome;
 use App\Repository\DiplomeRepository;
 use App\Repository\EtudiantRepository;
@@ -29,15 +30,16 @@ class UpdateEtudiant
     {
     }
 
-    public function update(?string $keyEduSign): array
+    public function update(?string $keyEduSign, AnneeUniversitaire $anneeUniversitaire): array
     {
         $diplomes = $this->diplomeRepository->findBy(['keyEduSign' => $keyEduSign]);
 
         foreach ($diplomes as $diplome) {
             $semestres = $diplome->getSemestres();
+            $anneeUniversitaire = $diplome->getAnneeUniversitaire();
 
             foreach ($semestres as $semestre) {
-                $etudiants = $this->etudiantRepository->findBySemestre($semestre);
+                $etudiants = $this->etudiantRepository->findBySemestre($semestre, $anneeUniversitaire);
 
                 foreach ($etudiants as $etudiant) {
                     // faire un tableau qui regroupe $etudiant->getSemestre()->getIdEduSign() et les id des groupes
@@ -68,7 +70,7 @@ class UpdateEtudiant
         return $result;
     }
 
-    public function deleteMissingEtudiants(?string $keyEduSign): array
+    public function deleteMissingEtudiants(?string $keyEduSign, AnneeUniversitaire $anneeUniversitaire): array
     {
         $diplomes = $this->diplomeRepository->findBy(['keyEduSign' => $keyEduSign]);
         $etudiantOut = $this->etudiantRepository->findEduSignOutdated();
@@ -99,7 +101,7 @@ class UpdateEtudiant
                     }
 
                     foreach ($semestres as $semestre) {
-                        $etudiantSemestres = $this->etudiantRepository->findBySemestre($semestre);
+                        $etudiantSemestres = $this->etudiantRepository->findBySemestre($semestre, $anneeUniversitaire);
 
                         if (!in_array($etudiant, $etudiantSemestres) || in_array($etudiant, $etudiantOut)) {
                             $response = $this->apiEtudiant->deleteEtudiant($etudiant['ID'], $keyEduSign);
@@ -123,7 +125,7 @@ class UpdateEtudiant
         return $result;
     }
 
-    public function changeSemestre(?Diplome $diplome): array
+    public function changeSemestre(?Diplome $diplome, string $keyEduSign, AnneeUniversitaire $anneeUniversitaire): array
     {
         // set l'execution time to infinite
         set_time_limit(0);
@@ -141,7 +143,7 @@ class UpdateEtudiant
             $semestres = $diplomeItem->getSemestres();
 
             foreach ($semestres as $semestre) {
-                $etudiants = $this->etudiantRepository->findBySemestre($semestre);
+                $etudiants = $this->etudiantRepository->findBySemestre($semestre, $anneeUniversitaire);
 
                 if ($etudiants !== null) {
                     foreach ($etudiants as $etudiant) {

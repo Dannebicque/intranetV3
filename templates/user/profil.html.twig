@@ -7,7 +7,7 @@
         {% if user.typeUser|lower == 'permanent' or user.typeUser|lower == 'vacataire' %}
             {{ 'profil.personnel.heading'|trans({'%user%': user.displayPr}) }}
         {% elseif user.typeUser|lower == 'etudiant' %}
-            {{ 'profil.heading'|trans({'%user%': user.displayPr, '%semestre%': user.semestreActif != null ? user.semestreActif
+            {{ 'profil.heading'|trans({'%user%': user.displayPr, '%semestre%': user.semestreActif(user_data.anneeUniversitaire) != null ? user.semestreActif(user_data.anneeUniversitaire)
             .libelle : 'non.defini'|trans}) }}
         {% endif %}
     {% endif %}
@@ -58,7 +58,7 @@
                     <h5 class="mt-2 mb-0 profil-nom">{{ user.displayPr }}</h5>
                     {% if user.typeUser|lower == 'etudiant' %}
                         <h6 class="overlay" style="background-color: #FAB001;">
-                            {{ user.diplome != null ? user.diplome.display() : 'Sans département' }}
+                            {{ user.diplome(user_data.anneeUniversitaire) != null ? user.diplome(user_data.anneeUniversitaire).display() : 'Sans département' }}
                             <br>{% for gr in user.groupes %} {{ gr.libelle }}{% if not loop.last %}, {% endif %}
                             {% endfor %}</h6>
                     {% else %}

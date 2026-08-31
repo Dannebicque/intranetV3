@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/MessagerieController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/11/2024 13:12
+ * @lastUpdate 31/07/2026 11:15
  */
 
 namespace App\Controller;
@@ -15,6 +15,7 @@ use App\Classes\MyUpload;
 use App\Entity\Etudiant;
 use App\Entity\Message;
 use App\Entity\MessageDestinataire;
+use App\Entity\MessagePieceJointe;
 use App\Entity\Personnel;
 use App\Repository\MessageDestinataireEtudiantRepository;
 use App\Repository\MessageDestinatairePersonnelRepository;
@@ -177,10 +178,11 @@ class MessagerieController extends BaseController
         $sujet = $request->request->get('messageSubject');
         $copie = $request->request->has('messageCopy') ? $request->request->all()['messageCopy'] : [];
         $message = $request->request->get('messageMessage');
+        $pjDir = $this->getParameter('app.messagerie_pj_dir');
         foreach ($request->files as $file) {
             if (null !== $file) {
-                $fichier = $myUpload->upload($file, 'pj/');
-                chmod($fichier, 775);
+                $fichier = $myUpload->uploadAbsolute($file, $pjDir);
+                chmod($fichier, 0775);
                 $messagerie->addPj($fichier);
             }
         }
@@ -266,7 +268,7 @@ class MessagerieController extends BaseController
                 }
 
                 foreach ($message->getMessagePieceJointes() as $pj) {
-                    $file = $this->getParameter('kernel.project_dir') . '/public/uploads/pj/' . $pj->getFichier();
+                    $file = $this->getParameter('app.messagerie_pj_dir') . '/' . $pj->getFichier();
                     if (file_exists($file)) {
                         unlink($file);
                     }
@@ -303,6 +305,52 @@ class MessagerieController extends BaseController
         return $this->render('messagerie/_message.html.twig', [
             'message' => $message,
         ]);
+    }
+
+    /**
+     * @throws NonUniqueResultException
+     */
+    #[Route(path: '/pj/{id}', name: 'messagerie_pj_download', methods: 'GET')]
+    public function downloadPj(
+        MessagePieceJointe                     $pj,
+        MessageDestinatairePersonnelRepository $messagePersonnelRepository,
+        MessageDestinataireEtudiantRepository  $messageEtudiantRepository
+    ): Response
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        $message = $pj->getMessage();
+        if (null === $message) {
+            throw $this->createNotFoundException('Message introuvable.');
+        }
+
+        $user = $this->getUser();
+        $hasAccess = false;
+
+        // L'expéditeur a accès à ses propres pièces jointes
+        if ($user instanceof Personnel && $message->getExpediteur() === $user) {
+            $hasAccess = true;
+        }
+
+        // Vérification si l'utilisateur est destinataire du message
+        if (!$hasAccess) {
+            if ($user instanceof Etudiant) {
+                $hasAccess = null !== $messageEtudiantRepository->findDest($user, $message);
+            } elseif ($user instanceof Personnel) {
+                $hasAccess = null !== $messagePersonnelRepository->findDest($user, $message);
+            }
+        }
+
+        if (!$hasAccess) {
+            throw $this->createAccessDeniedException('Accès non autorisé à cette pièce jointe.');
+        }
+
+        $filePath = $this->getParameter('app.messagerie_pj_dir') . '/' . $pj->getFichier();
+        if (!is_file($filePath)) {
+            throw $this->createNotFoundException('Pièce jointe introuvable.');
+        }
+
+        return $this->file($filePath, $pj->getFichier());
     }
 
     private function checkArray(mixed $get): array

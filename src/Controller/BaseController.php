@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/BaseController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/01/2026 10:03
+ * @lastUpdate 28/08/2026 11:28
  */
 
 namespace App\Controller;
@@ -126,7 +126,7 @@ class BaseController extends AbstractController
     {
         $this->denyAccessUnlessGranted('ROLE_ETUDIANT');
 
-        return null !== $this->getUser() ? $this->getUser()->getSemestreActif() : null;
+        return null !== $this->getUser() ? $this->getUser()->getSemestreActif($this->getAnneeUniversitaire()) : null;
     }
 
     public function getDepartement(): ?Departement
@@ -164,11 +164,12 @@ class BaseController extends AbstractController
 
     protected function checkAccessApi(Request $request): void
     {
-        if (!$request->headers->has('x-api-key')) {
+        $apiKey = $request->headers->get('x-api-key');
+        if (null === $apiKey || '' === trim($apiKey)) {
             throw $this->createAccessDeniedException('Accès non autorisé');
         }
 
-        if ($request->headers->get('x-api-key') !== $this->getParameter('api_key')) {
+        if (!hash_equals((string)$this->getParameter('api_key'), $apiKey)) {
             throw $this->createAccessDeniedException('Accès non autorisé');
         }
     }

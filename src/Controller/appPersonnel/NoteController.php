@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appPersonnel/NoteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:17
+ * @lastUpdate 30/08/2026 11:21
  */
 
 namespace App\Controller\appPersonnel;
@@ -133,11 +133,11 @@ class NoteController extends BaseController
     #[Route(path: '/import/{evaluation}/{semestre}', name: 'application_personnel_note_import', requirements: ['evaluation' => '\d+'])]
     public function import(
         TypeMatiereManager $typeMatiereManager,
-        Request $request,
-        MyUpload $myUpload,
+        Request      $request,
+        MyUpload     $myUpload,
         MyEvaluation $myEvaluation,
-        Evaluation $evaluation,
-        Semestre $semestre): Response
+        Evaluation   $evaluation,
+        Semestre     $semestre): Response
     {
         // upload
         $fichier = $myUpload->upload($request->files->get('fichier_import'));
@@ -147,7 +147,7 @@ class NoteController extends BaseController
             throw new MatiereNotFoundException();
         }
         // traitement de l'import des notes.
-        $myEvaluation->importEvaluation($evaluation, $fichier, $semestre,
+        $myEvaluation->importEvaluation($evaluation, $fichier, $semestre, $this->getAnneeUniversitaire(),
             $request->request->has('ecrase_notes') && 'true' === $request->request->get('ecrase_notes'));
         $this->addFlashBag('success', 'import_note_a_verifier');
 
@@ -167,7 +167,7 @@ class NoteController extends BaseController
             throw new MatiereNotFoundException();
         }
 
-        return $myExport->genereModeleImportNote($evaluation, $matiere);
+        return $myExport->genereModeleImportNote($evaluation, $matiere, $this->getAnneeUniversitaire());
     }
 
     /**

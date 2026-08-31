@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/ScolariteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/01/2026 10:08
+ * @lastUpdate 28/08/2026 11:28
  */
 
 namespace App\Controller\administration;
@@ -41,11 +41,11 @@ class ScolariteController extends BaseController
         #[MapEntity(mapping: ['slug' => 'slug'])] Etudiant $etudiant,
         ?Scolarite                                         $scolarite = null): Response
     {
-        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $etudiant->getSemestreActif());
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $etudiant->getSemestreActif($this->getAnneeUniversitaire()));
         $edit = true;
         if (null === $scolarite) {
-            $scolarite = new Scolarite($etudiant, $etudiant->getSemestreActif(),
-                $this->dataUserSession->getAnneeUniversitaire());
+            $scolarite = new Scolarite($etudiant, $etudiant->getSemestreActif($this->getAnneeUniversitaire()),
+                $this->getAnneeUniversitaire());
             $edit = false;
         }
         $isApc = $scolarite->getSemestre()?->getDiplome()?->isApc();

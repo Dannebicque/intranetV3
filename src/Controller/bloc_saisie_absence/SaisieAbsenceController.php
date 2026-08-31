@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/bloc_saisie_absence/SaisieAbsenceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/01/2026 10:14
+ * @lastUpdate 28/08/2026 11:28
  */
 
 namespace App\Controller\bloc_saisie_absence;
@@ -110,7 +110,7 @@ class SaisieAbsenceController extends BaseController
                 'typeMatiere' => $mat->typeMatiere,
                 'etudiant' => $etudiant->getId(),
                 'dateHeure' => $dateHeure,
-                'anneeUniversitaire' => $etudiant->getSemestreActif() ? $etudiant->getSemestreActif()?->getAnneeUniversitaire()?->getId() : 0,
+                'anneeUniversitaire' => $this->getAnneeUniversitaire(),
             ]);
 
             if ('saisie' === $request->get('action') && 0 === count($absence)) {

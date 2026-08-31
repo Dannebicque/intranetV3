@@ -30,7 +30,21 @@
                 propositions correspondent aux propositions lorsque complétées.
             </twig:Alert>
             <br/>
+            <form action="{{ path('administration_fin_semestre_index', {semestre:semestre.id}) }}" method="get">
+                <div class="row">
+                    <div class="col-md-3">
+                        <select name="annee" class="form-control" onchange="this.form.submit()">
+                            {% for a in annees %}
+                                <option value="{{ a.id }}"
+                                        {% if anneeActive.id == a.id %}selected{% endif %}>{{ a.libelle }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </form>
+            <br/>
             <form action="{{ path('administration_fin_semestre_confirme',{semestre:semestre.id}) }}" method="post">
+                <input type="hidden" name="annee_universitaire" value="{{ anneeActive.id }}">
                 <table class="table table-stripped">
                     <thead>
                     <tr>

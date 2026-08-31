@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/EdtPlanningRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/02/2026 11:44
+ * @lastUpdate 31/08/2026 10:07
  */
 
 namespace App\Repository;
@@ -149,7 +149,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
 
     public function findEdtEtu(Etudiant $user, int $semaine, AnneeUniversitaire $anneeUniversitaire): ?array
     {
-        if (null !== $user->getSemestreActif()) {
+        if (null !== $user->getSemestreActif($anneeUniversitaire)) {
             $this->groupes($user);
 
             return $this->createQueryBuilder('p')
@@ -160,7 +160,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
                 ->setParameters([
                     'type' => 'CM',
                     'semaine' => $semaine,
-                    'promo' => $user->getSemestreActif()?->getOrdreLmd(),
+                    'promo' => $user->getSemestreActif($anneeUniversitaire)?->getOrdreLmd(),
                     'groupetd' => $this->groupetd,
                     'groupetp' => $this->groupetp,
                     'anneeUniversitaire' => $anneeUniversitaire->getId(),
@@ -176,7 +176,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
 
     public function findEdtEtuCmFi(Etudiant $user, int $semaine, AnneeUniversitaire $anneeUniversitaire): ?array
     {
-        if (null !== $user->getSemestreActif() && ($user->getSemestreActif()->getOrdreLmd() === 3 || $user->getSemestreActif()->getOrdreLmd() === 4)) {
+        if (null !== $user->getSemestreActif($anneeUniversitaire) && ($user->getSemestreActif($anneeUniversitaire)->getOrdreLmd() === 3 || $user->getSemestreActif($anneeUniversitaire)->getOrdreLmd() === 4)) {
             $this->groupes($user);
             if ($this->groupetp <= 4) {
                 return $this->createQueryBuilder('p')
@@ -186,7 +186,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
                     ->andWhere('p.groupe = 41')
                     ->setParameters([
                         'semaine' => $semaine,
-                        'promo' => $user->getSemestreActif()?->getOrdreLmd(),
+                        'promo' => $user->getSemestreActif($anneeUniversitaire)?->getOrdreLmd(),
                         'anneeUniversitaire' => $anneeUniversitaire->getId(),
                     ])
                     ->orderBy('p.jour', Order::Ascending->value)

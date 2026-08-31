@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MyScolarite.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:41
+ * @lastUpdate 30/08/2026 09:51
  */
 
 namespace App\Classes;
@@ -41,7 +41,7 @@ class MyScolarite
 
         $ues = $this->ueRepository->tableauUeApogee($departement);
         $semestres = $this->semestreRepository->tableauSemestresApogee($departement);
-        $etudiants = $this->etudiantRepository->findByDepartementArray($departement);
+        $etudiants = $this->etudiantRepository->findByDepartementArray($departement, $anneeUniversitaire);
 
         $handle = fopen($file, 'rb');
 

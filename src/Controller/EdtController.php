@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/EdtController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/01/2026 10:04
+ * @lastUpdate 30/08/2026 20:17
  */
 
 namespace App\Controller;
@@ -233,9 +233,9 @@ class EdtController extends BaseController
         $calendrier = $this->calendrier->calculSemaine($semaine, $this->getAnneeUniversitaire());
 
         if (null !== $this->getAnneeUniversitaire()) {
-            $matieres = $this->typeMatiereManager->tableauApogeeDiplome($this->getUser()->getDiplome());
+            $matieres = $this->typeMatiereManager->tableauApogeeDiplome($this->getUser()->getDiplome($this->getAnneeUniversitaire()));
             // todo: passer pour l'edt manager
-            if (null !== $this->getUser()->getDiplome() && $this->getUser()->getDiplome()?->isOptUpdateCelcat()) {
+            if (null !== $this->getUser()->getDiplome($this->getAnneeUniversitaire()) && $this->getUser()->getDiplome($this->getAnneeUniversitaire())?->isOptUpdateCelcat()) {
                 $this->myEdtCelcat->initEtudiant($this->getUser(),
                     $this->getAnneeUniversitaire(), $semaine, $matieres);
 
@@ -330,7 +330,7 @@ class EdtController extends BaseController
         if ($semaine !== (int)date('W') && $semaine !== ((int)date('W') + 1)) {
             return $this->redirectToRoute('erreur_666');
         }
-        if (null !== $this->getUser()->getDiplome() && $this->getUser()->getDiplome()->isOptUpdateCelcat()) {
+        if (null !== $this->getUser()->getDiplome($this->getAnneeUniversitaire()) && $this->getUser()->getDiplome($this->getAnneeUniversitaire())->isOptUpdateCelcat()) {
             $edt = $this->myEdtCelcat->initEtudiant($this->getUser(),
                 $this->getAnneeUniversitaire(), $semaine);
         } else {

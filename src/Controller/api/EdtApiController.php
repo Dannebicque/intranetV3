@@ -1,23 +1,24 @@
 <?php
 /*
- * Copyright (c) 2025. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/api/EdtApiController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 10/03/2025 12:41
+ * @lastUpdate 24/08/2026 09:37
  */
 
 namespace App\Controller\api;
 
 use App\Classes\Matieres\TypeMatiereManager;
+use App\Controller\BaseController;
 use App\Repository\AnneeUniversitaireRepository;
 use App\Repository\DepartementRepository;
 use App\Repository\EdtPlanningRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-class EdtApiController extends AbstractController
+class EdtApiController extends BaseController
 {
     #[Route(path: '/api/export-chronologique/{annee}/{departement}', name: 'administration_edt_api_chronologique', options: ['expose' => true])]
     public function apiChronologique(
@@ -25,10 +26,13 @@ class EdtApiController extends AbstractController
         AnneeUniversitaireRepository $anneeUniversitaireRepository,
         DepartementRepository        $departementRepository,
         EdtPlanningRepository        $edtPlanningRepository,
+        Request $request,
         mixed                        $annee,
         mixed                        $departement
     ): Response
     {
+        $this->checkAccessApi($request);
+
         $annee = $anneeUniversitaireRepository->findOneBy(['annee' => $annee]);
         $departement = $departementRepository->findOneBy(['libelle' => $departement]);
         if (null === $annee || null === $departement) {

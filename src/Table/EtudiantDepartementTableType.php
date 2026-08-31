@@ -1,14 +1,15 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Table/EtudiantDepartementTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/04/2024 08:38
+ * @lastUpdate 28/08/2026 11:15
  */
 
 namespace App\Table;
 
+use App\Entity\AnneeUniversitaire;
 use App\Entity\Bac;
 use App\Entity\Departement;
 use App\Entity\Etudiant;
@@ -53,6 +54,12 @@ class EtudiantDepartementTableType extends TableType
         ]);
         $builder->addFilter('bac', EntityType::class, [
             'class' => Bac::class,
+            'choice_label' => 'libelle',
+            'required' => false,
+            'placeholder' => 'Filtrer par bac',
+        ]);
+        $builder->addFilter('bac', EntityType::class, [
+            'class' => AnneeUniversitaire::class,
             'choice_label' => 'libelle',
             'required' => false,
             'placeholder' => 'Filtrer par bac',

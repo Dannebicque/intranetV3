@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/api/unifolio/EtudiantController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/01/2026 10:11
+ * @lastUpdate 28/08/2026 11:28
  */
 
 namespace App\Controller\api\unifolio;
@@ -42,7 +42,7 @@ class EtudiantController extends BaseController
                     ];
                 }
 
-                $semestre = $etudiant->getSemestreActif();
+                $semestre = $etudiant->getSemestreActif($this->getAnneeUniversitaire());
                 if (null !== $semestre) {
                     $semestre = [
                         'id' => $semestre->getId(),
@@ -79,7 +79,7 @@ class EtudiantController extends BaseController
                     ];
                 }
 
-                $semestre = $etudiant->getSemestreActif();
+                $semestre = $etudiant->getSemestreActif($this->getAnneeUniversitaire());
                 if (null !== $semestre) {
                     $semestre = [
                         'id' => $semestre->getId(),

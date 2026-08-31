@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Excel/MyExcelMultiExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/02/2026 16:08
+ * @lastUpdate 30/08/2026 11:21
  */
 
 /*
@@ -17,6 +17,7 @@ use App\Classes\MyAbsences;
 use App\DTO\Matiere;
 use App\Entity\Absence;
 use App\Entity\AbsenceJustificatif;
+use App\Entity\AnneeUniversitaire;
 use App\Entity\Etudiant;
 use App\Entity\Evaluation;
 use App\Entity\Groupe;
@@ -181,10 +182,10 @@ class MyExcelMultiExport
         }
     }
 
-    public function genereModeleExcel(Semestre $semestre): void
+    public function genereModeleExcel(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire): void
     {
         $this->myExcelWriter->createSheet('import');
-        $etudiants = $this->etudiantRepository->findBySemestre($semestre);
+        $etudiants = $this->etudiantRepository->findBySemestre($semestre, $anneeUniversitaire);
 
         $this->myExcelWriter->writeHeader(['num_etudiant', 'nom', 'prenom', 'note', 'commentaire'], 1, 1, false);
         $ligne = 2;

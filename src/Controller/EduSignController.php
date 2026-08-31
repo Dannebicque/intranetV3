@@ -1,11 +1,11 @@
 <?php
 
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/EduSignController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 19/04/2024 10:44
+ * @lastUpdate 30/08/2026 11:21
  */
 
 namespace App\Controller;
@@ -100,7 +100,7 @@ class EduSignController extends BaseController
 
         // Update groups and students, collect errors
         $updateGroupeResult = $updateGroupe->update($keyEduSign);
-        $updateEtudiantResult = $updateEtudiant->update($keyEduSign);
+        $updateEtudiantResult = $updateEtudiant->update($keyEduSign, $this->getAnneeUniversitaire());
 
         if ($updateGroupeResult) {
             $errors['updateGroupe'] = $updateGroupeResult;
@@ -134,9 +134,9 @@ class EduSignController extends BaseController
 
         $updateResults = [
             'deleteMissingGroupes' => $updateGroupe->deleteMissingGroupes($keyEduSign),
-            'deleteMissingEtudiants' => $updateEtudiant->deleteMissingEtudiants($keyEduSign),
+            'deleteMissingEtudiants' => $updateEtudiant->deleteMissingEtudiants($keyEduSign, $this->getAnneeUniversitaire()),
             'updateGroupes' => $updateGroupe->update($keyEduSign),
-            'updateEtudiants' => $updateEtudiant->update($keyEduSign),
+            'updateEtudiants' => $updateEtudiant->update($keyEduSign, $this->getAnneeUniversitaire()),
         ];
 
         $email = (new TemplatedEmail())

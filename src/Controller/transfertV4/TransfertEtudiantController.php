@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/transfertV4/TransfertEtudiantController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/01/2026 10:26
+ * @lastUpdate 28/08/2026 11:28
  */
 
 namespace App\Controller\transfertV4;
@@ -131,7 +131,7 @@ public function getScolaritesEtudiant(
             ];
 
             // Ajouter les semestres
-            $semestreId = $etudiant->getSemestreActif()?->getId();
+            $semestreId = $etudiant->getSemestreActif($this->getAnneeUniversitaire())?->getId();
 
 
                 // Filtrer les groupes pour ce semestre

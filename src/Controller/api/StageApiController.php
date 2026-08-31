@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2025. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/api/StageApiController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 03/06/2025 14:32
+ * @lastUpdate 24/08/2026 09:37
  */
 
 declare(strict_types=1);
@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace App\Controller\api;
 
 use App\Controller\BaseController;
+use App\Entity\Personnel;
 use App\Entity\StageEtudiant;
 use App\Entity\StagePeriode;
 use App\Repository\PersonnelRepository;
@@ -22,27 +23,34 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class StageApiController extends BaseController
 {
-    #[Route('/api/generate-token', name: 'api_generate_token')]
+    #[Route('/api/generate-token', name: 'api_generate_token', methods: ['POST'])]
     public function generateToken(
         PersonnelRepository $personnelRepository,
         Request             $request): Response
     {
-        $log = $request->request->get('username');
-        $user = $personnelRepository->findOneBy(['username' => $log]);
-        $token = md5(bin2hex(random_bytes(16)) . md5($log));
-        // Stockez le token dans la base de données ou un cache temporaire
-        if (null === $user) {
-            return $this->json(['error' => 'Utilisateur non trouvé'], Response::HTTP_NOT_FOUND);
+        $currentUser = $this->getUser();
+        if (!$currentUser instanceof Personnel) {
+            throw $this->createAccessDeniedException('Seuls les personnels peuvent générer un jeton API.');
         }
-        //ajouter le token à l'utilisateur dans la base de données dans le champ configuration qui est un tableau json
 
-        $config = $user->getConfiguration();
+        $username = trim((string)$request->request->get('username', $currentUser->getUserIdentifier()));
+        if ('' === $username) {
+            return $this->json(['error' => 'Username manquant'], Response::HTTP_BAD_REQUEST);
+        }
+
+        if ($username !== $currentUser->getUserIdentifier()) {
+            throw $this->createAccessDeniedException('Vous ne pouvez générer un jeton que pour votre propre compte.');
+        }
+
+        $token = bin2hex(random_bytes(32));
+
+        $config = $currentUser->getConfiguration();
         if (!is_array($config)) {
             $config = [];
         }
-        $config['api_token'] = $token;
-        $user->setConfiguration($config);
-        $personnelRepository->save($user);
+        $config['api_token'] = hash('sha256', $token);
+        $currentUser->setConfiguration($config);
+        $personnelRepository->save($currentUser);
 
         return $this->json(['token' => $token]);
     }
@@ -56,10 +64,10 @@ class StageApiController extends BaseController
     ): Response
     {
         // vérification du token dans la requête et sa correspondance avec l'utilisateur
-        $token = $request->headers->get('Authorization');
-        $login = $request->headers->get('X-Username');
+        $token = $this->extractApiToken($request->headers->get('Authorization'));
+        $login = trim((string)$request->headers->get('X-Username'));
 
-        if (null === $token || null === $login) {
+        if (null === $token || '' === $login) {
             return $this->json(['error' => 'Token ou login manquant'], Response::HTTP_UNAUTHORIZED);
         }
 
@@ -69,8 +77,15 @@ class StageApiController extends BaseController
         }
 
         $config = $user->getConfiguration();
-        if (!is_array($config) || !isset($config['api_token']) || $config['api_token'] !== $token) {
+        $storedToken = is_array($config) ? ($config['api_token'] ?? null) : null;
+        if (!is_string($storedToken) || !$this->isStageApiTokenValid($storedToken, $token)) {
             return $this->json(['error' => 'Token invalide'], Response::HTTP_UNAUTHORIZED);
+        }
+
+        if (64 !== strlen($storedToken)) {
+            $config['api_token'] = hash('sha256', $token);
+            $user->setConfiguration($config);
+            $personnelRepository->save($user);
         }
 
 
@@ -110,5 +125,34 @@ class StageApiController extends BaseController
             'semestre' => $stagePeriode->getSemestre()?->getLibelle(),
             'etudiants' => $tJson,
         ]);
+    }
+
+    private function extractApiToken(?string $authorizationHeader): ?string
+    {
+        if (null === $authorizationHeader) {
+            return null;
+        }
+
+        $authorizationHeader = trim($authorizationHeader);
+        if ('' === $authorizationHeader) {
+            return null;
+        }
+
+        if (str_starts_with($authorizationHeader, 'Bearer ')) {
+            $authorizationHeader = substr($authorizationHeader, 7);
+        }
+
+        $authorizationHeader = trim($authorizationHeader);
+
+        return '' === $authorizationHeader ? null : $authorizationHeader;
+    }
+
+    private function isStageApiTokenValid(string $storedToken, string $providedToken): bool
+    {
+        if (64 === strlen($storedToken)) {
+            return hash_equals($storedToken, hash('sha256', $providedToken));
+        }
+
+        return hash_equals($storedToken, $providedToken);
     }
 }

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/ProfilEtudiantController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/02/2026 15:01
+ * @lastUpdate 28/08/2026 14:45
  */
 
 namespace App\Controller;
@@ -16,6 +16,7 @@ use App\Classes\Matieres\TypeMatiereManager;
 use App\Classes\NotesTri;
 use App\Classes\StatsAbsences;
 use App\DTO\EtudiantSousCommissionApc;
+use App\Entity\AnneeUniversitaire;
 use App\Entity\Commentaire;
 use App\Entity\Constantes;
 use App\Entity\Etudiant;
@@ -65,6 +66,7 @@ class ProfilEtudiantController extends BaseController
         return $this->render('user/composants/_actions_etudiant.html.twig', [
             'etudiant' => $etudiant,
             'departements' => $departementRepository->findActifs(),
+            'anneeUniversitaires' => $this->entityManager->getRepository(AnneeUniversitaire::class)->findAll(),
         ]);
     }
 
@@ -83,7 +85,7 @@ class ProfilEtudiantController extends BaseController
 
         $tabUes = [];
         //uniquement si APC
-        if ($etudiant->getDiplome() !== null && $etudiant->getDiplome()?->isApc()) {
+        if ($etudiant->getDiplome($this->getAnneeUniversitaire()) !== null && $etudiant->getDiplome($this->getAnneeUniversitaire())?->isApc()) {
             foreach ($scolarite as $scol) {
                 $bilanAnnees[$scol->getSemestre()?->getAnnee()?->getOrdre()][$scol->getSemestre()?->getOrdreLmd()] = $scol->getMoyennesUes();
 
@@ -170,18 +172,18 @@ class ProfilEtudiantController extends BaseController
 
         //todo: mutualiser avec BlocNotesAbsencesController... (TwigComponent ?)
 
-        if (null !== $etudiant->getSemestreActif()) {
+        if (null !== $etudiant->getSemestreActif($this->getAnneeUniversitaire())) {
             $etudiantNotes->setEtudiant($etudiant);
-            if (false === $etudiant->getDiplome()?->isApc()) {
-                $matieres = $typeMatiereManager->findBySemestreArray($etudiant->getSemestreActif());
+            if (false === $etudiant->getDiplome($this->getAnneeUniversitaire())?->isApc()) {
+                $matieres = $typeMatiereManager->findBySemestreArray($etudiant->getSemestreActif($this->getAnneeUniversitaire()));
             } else {
-                $matieres = $typeMatiereManager->findByReferentielOrdreSemestreArray($etudiant->getSemestreActif(),
-                    $etudiant->getDiplome()?->getReferentiel());
+                $matieres = $typeMatiereManager->findByReferentielOrdreSemestreArray($etudiant->getSemestreActif($this->getAnneeUniversitaire()),
+                    $etudiant->getDiplome($this->getAnneeUniversitaire())?->getReferentiel());
             }
 
             $notes = $etudiantNotes->getNotesParSemestresEtAnneeUniversitaire($matieres,
-                $etudiant->getAnneeUniversitaire());
-            $etudiantNotes->calculGraphique();
+                $this->getAnneeUniversitaire());
+            $etudiantNotes->calculGraphique($this->getAnneeUniversitaire());
 
             if (null !== $notes) {
                 // todo: à revoir, qu'est ce que cela donne si pas trié.
@@ -193,7 +195,7 @@ class ProfilEtudiantController extends BaseController
                 'labels' => $etudiantNotes->getLabelsGraphique(),
                 'datasets' => [
                     [// todo: intégrer l'historique des semestres
-                        'label' => $etudiant->getSemestreActif()?->getLibelle(),
+                        'label' => $etudiant->getSemestreActif($this->getAnneeUniversitaire())?->getLibelle(),
                         'data' => $etudiantNotes->getDataGraphique(),
                         'backgroundColor' => 'rgb(255, 99, 132)',
                         'borderColor' => 'rgb(255, 99, 132)',
@@ -298,7 +300,7 @@ class ProfilEtudiantController extends BaseController
         }
 
         $semestresPrecedents = $scolariteRepository->findByEtudiant($etudiant);
-        $semestre = $etudiant->getSemestreActif();
+        $semestre = $etudiant->getSemestreActif($this->getAnneeUniversitaire());
         if (null !== $semestre) {
 
             $ressources = $apcRessourceCompetenceRepository->findBySemestreArray($semestre);
@@ -307,7 +309,7 @@ class ProfilEtudiantController extends BaseController
             $etudiantSousCommissionApc = new EtudiantSousCommissionApc($etudiant, $semestre, $ues);
             $etudiantNotes->setEtudiant($etudiant);
             $matieres = $typeMatiereManager->findBySemestreAndReferentiel($semestre,
-                $etudiant->getDiplome()?->getReferentiel());
+                $etudiant->getDiplome($this->getAnneeUniversitaire())?->getReferentiel());
             $etudiantSousCommissionApc->moyenneMatieres = $etudiantNotes->getMoyenneParMatiereParSemestresEtAnneeUniversitaire($matieres,
                 $semestre,
                 $this->getAnneeUniversitaire(), true);
@@ -346,15 +348,15 @@ class ProfilEtudiantController extends BaseController
         }
 
         //todo: mutualiser avec BlocNotesAbsencesController... (TwigComponent ?)
-        if (null !== $etudiant->getSemestreActif()) {
+        if (null !== $etudiant->getSemestreActif($this->getAnneeUniversitaire())) {
             Calendrier::calculPlanning($this->dataUserSession->getAnneeUniversitaire()?->getAnnee(), 2,
                 Constantes::DUREE_SEMESTRE);
 
-            if ($etudiant->getDiplome()?->isApc() === false) {
-                $matieres = $typeMatiereManager->findBySemestreArray($etudiant->getSemestreActif());
+            if ($etudiant->getDiplome($this->getAnneeUniversitaire())?->isApc() === false) {
+                $matieres = $typeMatiereManager->findBySemestreArray($etudiant->getSemestreActif($this->getAnneeUniversitaire()));
             } else {
-                $matieres = $typeMatiereManager->findByReferentielOrdreSemestreArray($etudiant->getSemestreActif(),
-                    $etudiant->getDiplome()?->getReferentiel());
+                $matieres = $typeMatiereManager->findByReferentielOrdreSemestreArray($etudiant->getSemestreActif($this->getAnneeUniversitaire()),
+                    $etudiant->getDiplome($this->getAnneeUniversitaire())?->getReferentiel());
             }
             $etudiantAbsences->setEtudiant($etudiant);
             $absences = $etudiantAbsences->getAbsencesParSemestresEtAnneeUniversitaire($matieres,

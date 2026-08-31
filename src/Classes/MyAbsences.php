@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MyAbsences.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 17/02/2024 07:09
+ * @lastUpdate 30/08/2026 11:13
  */
 
 namespace App\Classes;
@@ -67,15 +67,15 @@ class MyAbsences
     /**
      * @throws Exception
      */
-    public function getAbsencesSemestre(array $matieres, Semestre $semestre): void
+    public function getAbsencesSemestre(array $matieres, Semestre $semestre, AnneeUniversitaire $anneeUniversitaire): void
     {
-        $this->etudiants = $this->etudiantRepository->findBySemestre($semestre);
+        $this->etudiants = $this->etudiantRepository->findBySemestre($semestre, $anneeUniversitaire);
 
         /** @var Etudiant $etudiant */
         foreach ($this->etudiants as $etudiant) {
             $this->etudiantAbsences->setEtudiant($etudiant);
             $absencesEtudiant = $this->etudiantAbsences->getAbsencesParSemestresEtAnneeUniversitaire($matieres,
-                $semestre->getAnneeUniversitaire());
+                $anneeUniversitaire);
             $statistiques = new StatsAbsences();
             $this->statistiques[$etudiant->getId()] = $statistiques->calculStatistiquesAbsencesEtudiant($absencesEtudiant);
         }
@@ -120,7 +120,7 @@ class MyAbsences
 
     public function getAbsencesSemestreDto(array $matieres, Semestre $semestre, AnneeUniversitaire $anneeUniversitaire): array
     {
-        $this->etudiants = $this->etudiantRepository->findBySemestre($semestre);
+        $this->etudiants = $this->etudiantRepository->findBySemestre($semestre, $anneeUniversitaire);
 
         $t = [];
         foreach ($this->etudiants as $etudiant) {

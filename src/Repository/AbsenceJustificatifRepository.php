@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/AbsenceJustificatifRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/04/2024 17:52
+ * @lastUpdate 28/08/2026 14:59
  */
 
 namespace App\Repository;
@@ -84,14 +84,14 @@ class AbsenceJustificatifRepository extends ServiceEntityRepository
         return (is_countable($query) ? count($query) : 0) >= 1;
     }
 
-    public function findByEtudiant(Etudiant $etudiant): array
+    public function findByEtudiant(Etudiant $etudiant, AnneeUniversitaire $anneeUniversitaire): array
     {
         return $this->createQueryBuilder('j')
             ->innerJoin(Etudiant::class, 'e', 'WITH', 'j.etudiant = e.id')
             ->where('j.etudiant = :etudiant')
             ->andWhere('j.anneeUniversitaire = :annee')
             ->setParameter('etudiant', $etudiant->getId())
-            ->setParameter('annee', $etudiant->getAnneeUniversitaire())
+            ->setParameter('annee', $anneeUniversitaire->getId())
             ->orderBy('j.created', Order::Descending->value)
             ->getQuery()
             ->getResult();

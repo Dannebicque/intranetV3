@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/TrombinoscopeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/02/2026 11:58
+ * @lastUpdate 31/08/2026 11:49
  */
 
 namespace App\Controller;
@@ -25,6 +25,7 @@ use App\Repository\EtudiantRepository;
 use App\Repository\GroupeRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\SemestreRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use JsonException;
 use PhpOffice\PhpSpreadsheet\Exception;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
@@ -46,7 +47,7 @@ class TrombinoscopeController extends BaseController
         $semestres = [];
         $capacitesSemestres = [];
         foreach ($this->dataUserSession->getSemestresActifs() as $semestre) {
-            $capacitesSemestres[$semestre->getId()] = $etudiantRepository->countBySemestre($semestre);
+            $capacitesSemestres[$semestre->getId()] = $etudiantRepository->countBySemestre($semestre, $this->getAnneeUniversitaire());
 
             if (!array_key_exists($semestre->getOrdreLmd(), $semestres))
             {
@@ -182,7 +183,7 @@ class TrombinoscopeController extends BaseController
             'etudiants' => $etudiants,
             'siteperso' => $semestre->getDiplome()->getOptEspacePersoVisible(),
             'etudiantGroupes' => $etudiantRepository->getEtudiantGroupes($semestre),
-            'countEtudiants' => $etudiantRepository->countBySemestre($semestre),
+            'countEtudiants' => $etudiantRepository->countBySemestre($semestre, $this->getAnneeUniversitaire()),
             'isEtudiant' => $isEtudiant,
         ]);
     }
@@ -203,6 +204,17 @@ class TrombinoscopeController extends BaseController
             'personnels' => $personnels,
             'type' => $type,
         ]);
+    }
+
+    #[Route(path: '/etudiant/groupe/remove/{etudiant}/{groupe}', name: 'trombinoscope_etudiant_groupe_remove', methods: ['POST'], options: ['expose' => true])]
+    public function removeEtudiantFromGroupe(Etudiant $etudiant, Groupe $groupe, EntityManagerInterface $entityManager): Response
+    {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
+        $etudiant->removeGroupe($groupe);
+        $groupe->removeEtudiant($etudiant);
+        $entityManager->flush();
+
+        return new Response('Etudiant retiré du groupe', Response::HTTP_OK);
     }
 
     /**

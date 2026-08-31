@@ -44,7 +44,7 @@
             {{ render(controller(
                 'App\\Controller\\appEtudiant\\AlternanceController::index'
             )) }}
-        {% elseif user_data.user.diplome.optCertifieQualite == true and  onglet == 'qualite' %}
+        {% elseif user_data.user.diplome(user_data.anneeUniversitaire).optCertifieQualite == true and  onglet == 'qualite' %}
             {{ render(controller(
                 'App\\Controller\\appEtudiant\\QualiteController::index'
             )) }}

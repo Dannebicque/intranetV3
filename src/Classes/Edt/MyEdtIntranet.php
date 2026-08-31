@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtIntranet.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/02/2026 11:44
+ * @lastUpdate 30/08/2026 09:28
  */
 
 namespace App\Classes\Edt;
@@ -106,9 +106,9 @@ class MyEdtIntranet extends BaseEdt
                 $this->groupes();
                 $pl = $this->edtPlanningRepository->findEdtEtu($this->user, $this->semaineFormationIUT,
                     $this->anneeUniversitaire);
-                if (null !== $this->user->getSemestreActif() && ($this->user->getSemestreActif()->getOrdreLmd() === 3 ||
-                        $this->user->getSemestreActif()->getOrdreLmd() === 4 ||
-                        $this->user->getSemestreActif()->getOrdreLmd() === 5)) {
+                if (null !== $this->user->getSemestreActif($this->anneeUniversitaire) && ($this->user->getSemestreActif($this->anneeUniversitaire)->getOrdreLmd() === 3 ||
+                        $this->user->getSemestreActif($this->anneeUniversitaire)->getOrdreLmd() === 4 ||
+                        $this->user->getSemestreActif($this->anneeUniversitaire)->getOrdreLmd() === 5)) {
                     $pl2 = $this->edtPlanningRepository->findEdtEtuCmFi($this->user, $this->semaineFormationIUT,
                         $this->anneeUniversitaire);
                     if ($pl2 !== null) {
@@ -117,7 +117,7 @@ class MyEdtIntranet extends BaseEdt
                 }
 
                 if (null !== $pl) {
-                    $this->semestre = $this->user->getSemestre();
+                    $this->semestre = $this->user->getSemestreActif($this->anneeUniversitaire);
                     $this->planning = $this->transformeEtudiant($pl, $this->semestre->getAnnee()->getCouleur());
                 } else {
                     return false;

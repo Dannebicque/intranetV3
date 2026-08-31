@@ -29,7 +29,7 @@
                 </h6>
                 <div class="gap-items-2 gap-y">
                     {% for pj in message.messagePieceJointes %}
-                        <a class="d-inline-block" href="{{ asset('upload/pj/'~pj.fichier) }}">
+                        <a class="d-inline-block" href="{{ path('messagerie_pj_download', {id: pj.id}) }}">
                             <i class="fas fa-file fa-5x"></i>
                         </a>
                     {% endfor %}

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Etudiant/EtudiantNotes.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/01/2026 09:58
+ * @lastUpdate 28/08/2026 11:28
  */
 
 namespace App\Classes\Etudiant;
@@ -28,6 +28,7 @@ use function count;
 class EtudiantNotes
 {
     private Etudiant $etudiant;
+
 
     private ?array $notes = [];
     private ?array $tabGraphique = [];
@@ -148,9 +149,9 @@ class EtudiantNotes
         return $tabMatiere;
     }
 
-    public function calculGraphique(): void
+    public function calculGraphique(AnneeUniversitaire $anneeUniversitaire): void
     {
-        $matieres = $this->typeMatiereManager->findBySemestre($this->etudiant->getSemestreActif());
+        $matieres = $this->typeMatiereManager->findBySemestre($this->etudiant->getSemestreActif($anneeUniversitaire));
         $tabKey = [];
         foreach ($matieres as $matiere) {
             $this->tabGraphique[$matiere->codeMatiere] = ['notes' => 0, 'coefficient' => 0];
