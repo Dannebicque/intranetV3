@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Table/EtudiantSemestreTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 31/08/2026 16:53
+ * @lastUpdate 31/08/2026 16:55
  */
 
 namespace App\Table;
@@ -51,6 +51,7 @@ class EtudiantSemestreTableType extends TableType
     {
         $this->semestre = $options['semestre'];
         $this->departement = $options['departement'];
+        $this->anneeUniversitaire = $options['anneeUniversitaire'];
 
         $builder->addFilter('search', SearchType::class);
         $builder->addFilter('groupe', EntityType::class, [
