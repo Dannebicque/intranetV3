@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/EtudiantRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 31/08/2026 17:05
+ * @lastUpdate 31/08/2026 18:33
  */
 
 namespace App\Repository;
@@ -130,7 +130,7 @@ class EtudiantRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder('e')
             ->leftJoin(Semestre::class, 's', 'WITH', 'e.semestre = s.id')
             ->leftJoin('e.etudiantSemestreAnnees', 'esa', 'WITH', 'esa.anneeUniversitaire = :anneeUniversitaire')
-            ->join('esa.semestre', 'esa_s');
+            ->leftJoin('esa.semestre', 'esa_s');
 
         return $qb->where(
             $qb->expr()->orX(
