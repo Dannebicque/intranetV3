@@ -18,6 +18,7 @@ use App\Entity\Constantes;
 use App\Entity\Departement;
 use App\Entity\Diplome;
 use App\Entity\Semestre;
+use App\Repository\AnneeUniversitaireRepository;
 use App\Repository\CalendrierRepository;
 use App\Repository\DiplomeRepository;
 use App\Repository\GroupeRepository;
@@ -50,7 +51,7 @@ class EduSignController extends BaseController
         private EdtManager                     $edtManager,
         private TypeMatiereManager             $typeMatiereManager,
         private SalleRepository                $salleRepository,
-        private ApiCours                       $apiCours,
+        private ApiCours                       $apiCours, private readonly AnneeUniversitaireRepository $anneeUniversitaireRepository,
     )
     {
     }
@@ -229,11 +230,13 @@ class EduSignController extends BaseController
     #[Route('/update/etudiants/{id}', name: 'app_admin_edu_sign_update_etudiants')]
     public function updateEtudiants(?int $id, UpdateEtudiant $updateEtudiant, UpdateGroupe $updateGroupe, MailerInterface $mailer): RedirectResponse
     {
+        // récupérer l'année universitaire active
+        $anneeUniv = $this->anneeUniversitaireRepository->findOneBy(['active' => true]);
         $diplome = $this->diplomeRepository->findOneBy(['id' => $id]);
         $keyEduSign = $diplome->getKeyEduSign();
         $updateGroupeResult = $updateGroupe->update($keyEduSign);
         $fixEtudiantsResult = $updateEtudiant->fixEtudiants($keyEduSign);
-        $updateSemestreResult = $updateEtudiant->changeSemestre($diplome, $keyEduSign);
+        $updateSemestreResult = $updateEtudiant->changeSemestre($diplome, $anneeUniv);
 
         // Vérifier que les résultats sont des tableaux
         if ($updateGroupeResult === null) {
