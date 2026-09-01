@@ -82,7 +82,7 @@
                                                                 {% for grEtu in etudiantGroupes[etudiant.id] %}
                                                                     <span class="badge bg-primary">
                                                                         {{ grEtu.libelle }}
-                                                                        {% if is_granted('MINIMAL_ROLE_ASS', user_data.departement) %}
+                                                                        {% if canManageGroupes %}
                                                                             <i class="fa fa-times"
                                                                                style="cursor: pointer"
                                                                                data-action="click->trombinoscope#removeStudentFromGroup"
@@ -158,6 +158,13 @@
                                         <twig:Alert type="warning">
                                             {{ 'aucun.etudiant.groupe'|trans }}
                                         </twig:Alert>
+                                        {% if canManageGroupes %}
+                                            <button class="btn btn-danger btn-sm"
+                                                    data-action="click->trombinoscope#deleteGroupe"
+                                                    data-id="{{ groupe.id }}">
+                                                <i class="fa fa-trash"></i> {{ 'supprimer'|trans }}
+                                            </button>
+                                        {% endif %}
                                     </div>
                                 {% endif %}
                             </div>
