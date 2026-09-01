@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/EtudiantRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 31/08/2026 11:40
+ * @lastUpdate 31/08/2026 18:33
  */
 
 namespace App\Repository;

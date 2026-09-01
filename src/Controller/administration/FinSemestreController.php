@@ -4,14 +4,13 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/FinSemestreController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/08/2026 11:12
+ * @lastUpdate 01/09/2026 09:22
  */
 
 namespace App\Controller\administration;
 
 use App\Classes\Etudiant\EtudiantScolarite;
 use App\Controller\BaseController;
-use App\Entity\AnneeUniversitaire;
 use App\Entity\Constantes;
 use App\Entity\Etudiant;
 use App\Entity\EtudiantSemestreAnnee;
@@ -43,11 +42,9 @@ class FinSemestreController extends BaseController
         Semestre                     $semestre): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_NOTE', $semestre);
-        $annee = $request->query->get('annee', $this->getAnneeUniversitaire()->getId());
-        $anneeUniversitaire = $anneeUniversitaireRepository->find($annee);
 
-        $etudiants = $etudiantRepository->findBySemestre($semestre, $anneeUniversitaire);
-        $scolarites = $scolariteRepository->findBySemestreArray($semestre, $anneeUniversitaire);
+        $etudiants = $etudiantRepository->findBySemestre($semestre, $this->getAnneeUniversitaire());
+        $scolarites = $scolariteRepository->findBySemestreArray($semestre, $this->getAnneeUniversitaire());
 
         $semestresSuivants = $semestreLienRepository->findSuivants($semestre);
         $semestresPrecedents = $semestreLienRepository->findPrecedents($semestre);
@@ -62,7 +59,7 @@ class FinSemestreController extends BaseController
             'scolarites' => $scolarites,
             'departements' => $departementRepository->findAll(),
             'annees' => $anneeUniversitaireRepository->findAll(),
-            'anneeActive' => $anneeUniversitaire,
+            'anneeActive' => $anneeUniversitaireRepository->findOneBy(['active' => 1]),
         ]);
     }
 
@@ -76,7 +73,7 @@ class FinSemestreController extends BaseController
             $anneeUniversitaire = $this->getAnneeUniversitaire();
         }
 
-        $etudiants = $etudiantRepository->findBySemestre($semestre, $anneeUniversitaire);
+        $etudiants = $etudiantRepository->findBySemestre($semestre, $this->getAnneeUniversitaire());
         /** @var Etudiant $e */
         foreach ($etudiants as $e) {
             $valeur = $request->request->get('etu_'.$e->getId());
@@ -98,9 +95,12 @@ class FinSemestreController extends BaseController
                         // transfert dans un semestre
                         $se = $semestreRepository->find($valeur);
                         if (null !== $se) {
+
+                            //suppression des groupes de l'étudiant pour le semestre en cours
+                            foreach ($e->getGroupes() as $etudiantGroupe) {
+                                $e->removeGroupe($etudiantGroupe);
+                            }
                             //on ajoute le semestre à la liste des semestres
-//                            $e->addSemestre($se);
-//                            $se->addEtudiantsSemestre($e);
                             $etuSemestre = new EtudiantSemestreAnnee();
                             $etuSemestre->setEtudiant($e);
                             $etuSemestre->setSemestre($se);
