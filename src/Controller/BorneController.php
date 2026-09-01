@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/BorneController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/02/2026 10:39
+ * @lastUpdate 01/09/2026 09:31
  */
 
 namespace App\Controller;
@@ -28,15 +28,15 @@ class BorneController extends AbstractController
     {
         $nbBornes = [
             1 => [
-                'zone1' => ['type' => 'semestre', 'valeur' => 80],
+                'zone1' => ['type' => 'semestre', 'valeur' => 79],
                 'zone3' => ['type' => 'message', 'valeur' => Borne::class],
             ],
             2 => [
-                'zone1' => ['type' => 'semestre', 'valeur' => 102],
+                'zone1' => ['type' => 'semestre', 'valeur' => 101],
                 'zone3' => ['type' => 'message', 'valeur' => Borne::class],
             ],
             3 => [
-                'zone1' => ['type' => 'semestre', 'valeur' => 104],
+                'zone1' => ['type' => 'semestre', 'valeur' => 103],
                 'zone3' => ['type' => 'message', 'valeur' => Borne::class],
             ],
         ];
