@@ -18,8 +18,10 @@ use App\Classes\Pdf\PdfManager;
 use App\Entity\Constantes;
 use App\Entity\Etudiant;
 use App\Entity\Groupe;
+use App\Entity\Personnel;
 use App\Entity\Semestre;
 use App\Entity\TypeGroupe;
+use App\Security\Voter\AbstractVoter;
 use App\Exception\DiplomeNotFoundException;
 use App\Repository\EtudiantRepository;
 use App\Repository\GroupeRepository;
@@ -144,6 +146,21 @@ class TrombinoscopeController extends BaseController
         ?TypeGroupe $typegroupe = null
     ): Response {
         $isEtudiant = $this->getUser() instanceof Etudiant;
+        $canManageGroupes = false;
+
+        if ($this->getUser() instanceof Personnel && null !== $this->getDepartement()) {
+            foreach ($this->getUser()->getPersonnelDepartements() as $personnelDepartement) {
+                if ($personnelDepartement->getDepartement()?->getId() !== $this->getDepartement()->getId()) {
+                    continue;
+                }
+
+                $roles = $personnelDepartement->getRoles() ?? [];
+                if (count(array_intersect(AbstractVoter::HIERARCHICAL_ACCESS_FROM_ROLE[AbstractVoter::MINIMAL_ROLE_ASS], $roles)) > 0) {
+                    $canManageGroupes = true;
+                    break;
+                }
+            }
+        }
 
         if (null !== $semestre->getDiplome() && null !== $semestre->getDiplome()->getParent()) {
             $dip = $semestre->getDiplome()?->getParent();
@@ -185,6 +202,7 @@ class TrombinoscopeController extends BaseController
             'etudiantGroupes' => $etudiantRepository->getEtudiantGroupes($semestre),
             'countEtudiants' => $etudiantRepository->countBySemestre($semestre, $this->getAnneeUniversitaire()),
             'isEtudiant' => $isEtudiant,
+            'canManageGroupes' => $canManageGroupes,
         ]);
     }
 
