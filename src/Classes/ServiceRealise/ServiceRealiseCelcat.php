@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/ServiceRealise/ServiceRealiseCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/02/2024 08:10
+ * @lastUpdate 01/09/2026 09:49
  */
 
 /*
@@ -78,9 +78,30 @@ class ServiceRealiseCelcat implements ServiceRealiseInterface
         return $ev;
     }
 
+    /**
+     * @throws MatiereNotFoundException
+     */
     public function getServiceRealiseParPersonnelMatiere(UtilisateurInterface $personnel, int $idMatiere, string $type, AnneeUniversitaire $anneeUniversitaire): array
     {
-        // TODO: Implement getServiceRealiseParPersonnelMatiere() method.
-        return [];
+        if (!$personnel instanceof Personnel) {
+            return [];
+        }
+
+        $matiere = $this->typeMatiereManager->getMatiere($idMatiere, $type);
+        if (null === $matiere) {
+            throw new MatiereNotFoundException();
+        }
+
+        $events = $this->celcatEventsRepository->findBy([
+            'codeModule' => $matiere->codeElement,
+            'codePersonnel' => $personnel->getNumeroHarpege(),
+        ],
+            ['semaine' => 'ASC', 'jour' => 'ASC', 'debut' => 'ASC']);
+        $tabEvent = [];
+        foreach ($events as $event) {
+            $tabEvent[] = $this->convertToEvenementEdt($event);
+        }
+
+        return $tabEvent;
     }
 }
