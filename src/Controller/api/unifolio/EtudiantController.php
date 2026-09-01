@@ -24,7 +24,7 @@ class EtudiantController extends BaseController
     ): JsonResponse
     {
         $this->checkAccessApi($request);
-
+        $tabEtudiant = [];
         $username = $request->query->get('username');
         $semestreId = $request->query->get('semestre');
 
