@@ -4,12 +4,14 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/api/unifolio/EtudiantController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/09/2026 09:59
+ * @lastUpdate 02/09/2026 10:16
  */
 
 namespace App\Controller\api\unifolio;
 
 use App\Controller\BaseController;
+use App\Entity\AnneeUniversitaire;
+use App\Repository\AnneeUniversitaireRepository;
 use App\Repository\EtudiantRepository;
 use App\Repository\SemestreRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -18,8 +20,13 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class EtudiantController extends BaseController
 {
-    public function __construct(private readonly SemestreRepository $semestreRepository)
+    private AnneeUniversitaire $anneeUniversitaire;
+
+    public function __construct(
+        private readonly AnneeUniversitaireRepository $anneeUniversitaireRepository,
+        private readonly SemestreRepository           $semestreRepository)
     {
+        $this->anneeUniversitaire = $this->anneeUniversitaireRepository->findOneBy(['active' => true]);
     }
 
     #[Route(path: '/api/unifolio/etudiant', name: 'api_etudiant_liste')]
@@ -47,7 +54,7 @@ class EtudiantController extends BaseController
                     ];
                 }
 
-                $semestre = $etudiant->getSemestreActif($this->getAnneeUniversitaire());
+                $semestre = $etudiant->getSemestreActif($this->anneeUniversitaire);
                 if (null !== $semestre) {
                     $semestre = [
                         'id' => $semestre->getId(),
@@ -75,7 +82,7 @@ class EtudiantController extends BaseController
             if (null === $semestre) {
                 return $this->json(['error' => 'Semestre introuvable'], 404);
             }
-            $etudiants = $etudiantRepository->findBySemestre($semestre, $this->getAnneeUniversitaire());
+            $etudiants = $etudiantRepository->findBySemestre($semestre, $this->anneeUniversitaire);
             $semestre = [
                 'id' => $semestre->getId(),
                 'libelle' => $semestre->getLibelle(),
