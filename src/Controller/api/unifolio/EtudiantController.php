@@ -4,19 +4,24 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/api/unifolio/EtudiantController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/08/2026 11:28
+ * @lastUpdate 02/09/2026 09:59
  */
 
 namespace App\Controller\api\unifolio;
 
 use App\Controller\BaseController;
 use App\Repository\EtudiantRepository;
+use App\Repository\SemestreRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 
 class EtudiantController extends BaseController
 {
+    public function __construct(private readonly SemestreRepository $semestreRepository)
+    {
+    }
+
     #[Route(path: '/api/unifolio/etudiant', name: 'api_etudiant_liste')]
     public function listeEtudiant(
         Request            $request,
@@ -66,7 +71,15 @@ class EtudiantController extends BaseController
                 ];
             }
         } elseif ($semestreId) {
-            $etudiants = $etudiantRepository->findBy(['semestre' => $semestreId]);
+            $semestre = $this->semestreRepository->find($semestreId);
+            if (null === $semestre) {
+                return $this->json(['error' => 'Semestre introuvable'], 404);
+            }
+            $etudiants = $etudiantRepository->findBySemestre($semestre, $this->getAnneeUniversitaire());
+            $semestre = [
+                'id' => $semestre->getId(),
+                'libelle' => $semestre->getLibelle(),
+            ];
 
             $tabEtudiant = [];
             foreach ($etudiants as $etudiant) {
@@ -77,16 +90,6 @@ class EtudiantController extends BaseController
                         'id' => $groupe->getId(),
                         'libelle' => $groupe->getLibelle(),
                     ];
-                }
-
-                $semestre = $etudiant->getSemestreActif($this->getAnneeUniversitaire());
-                if (null !== $semestre) {
-                    $semestre = [
-                        'id' => $semestre->getId(),
-                        'libelle' => $semestre->getLibelle(),
-                    ];
-                } else {
-                    $semestre = null;
                 }
 
                 $tabEtudiant[$etudiant->getId()] = [
