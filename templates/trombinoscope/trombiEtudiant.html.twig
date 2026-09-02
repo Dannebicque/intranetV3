@@ -91,7 +91,7 @@
                                                                         {% endif %}
                                                                     </span>
                                                                 {% endfor %}
-                                                                {% if is_granted('MINIMAL_ROLE_ASS', user_data.departement) %}
+                                                                {% if canManageGroupes %}
                                                                     <i class="fa fa-times text-danger"
                                                                        style="cursor: pointer"
                                                                        title="{{ 'supprimer.tous.groupes'|trans }}"
