@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appEtudiant/AbsenceJustificatifController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/08/2026 14:59
+ * @lastUpdate 03/09/2026 16:37
  */
 
 namespace App\Controller\appEtudiant;
@@ -36,13 +36,19 @@ class AbsenceJustificatifController extends BaseController
      * @throws Exception
      */
     #[Route(path: '/depot', name: 'app_etudiant_absence_justificatif_new', methods: 'GET|POST')]
-    public function depot(EventDispatcherInterface $eventDispatcher, Request $request): Response
+    public function depot(
+        AnneeUniversitaireRepository $anneeUniversitaireRepository,
+        EventDispatcherInterface     $eventDispatcher, Request $request): Response
     {
         if (null !== $this->getUser()) {
+
+            $etudiant = $this->getUser();
+            $anneeUniversitaire = $anneeUniversitaireRepository->findOneBy(['active' => true]);
+
             $absenceJustificatif = new AbsenceJustificatif();
-            $absenceJustificatif->setEtudiant($this->getUser());
-            $absenceJustificatif->setSemestre($this->getEtudiantSemestre());
-            $absenceJustificatif->setAnneeUniversitaire($this->getAnneeUniversitaire());
+            $absenceJustificatif->setEtudiant($etudiant);
+            $absenceJustificatif->setSemestre($etudiant->getSemestreActif($anneeUniversitaire));
+            $absenceJustificatif->setAnneeUniversitaire($anneeUniversitaire);
             $form = $this->createForm(AbsenceJustificatifType::class, $absenceJustificatif);
             $form->handleRequest($request);
 
