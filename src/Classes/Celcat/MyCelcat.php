@@ -266,7 +266,7 @@ class MyCelcat
             //éventuellement envoyer dans EduSign ? ou laisser le script quotidien
 
             if ($event->getIdEduSign() === null && ($event->getDateCours()->greaterThan(Carbon::now()) && $event->getDateCours()->lessThan(Carbon::now()->nextWeekendDay())) && $event->getSemestre() !== null && $event->getSemestre()->getDiplome()->getKeyEduSign() !== null ) {
-                dump('Mise à jour de l\'événement edusign');
+                $this->log->addItem('Mise à jour de l\'événement edusign', 'info');
                 $intranetEvt = $this->edtManager->getEventNew('celcat_' . $event->getId());
 
                 $eduEvent = new EduSignEvent(null, $intranetEvt, $event->getSemestre()->getDiplome()->getKeyEduSign());
@@ -309,7 +309,7 @@ class MyCelcat
 
         // suppression du cours dans EduSign
         if ($intranet->getIdEduSign() !== null && $intranet->getDateCours()->greaterThan(Carbon::now()) && $intranet->getSemestre() !== null && $intranet->getSemestre()->getDiplome()->getKeyEduSign() !== null ) {
-            dump('Mise à jour de l\'événement edusign');
+            $this->log->addItem('Mise à jour de l\'événement edusign', 'info');
             $intranetEvt = $this->edtManager->getEventNew('celcat_' . $intranet->getId());
 
             $eduEvent = new EduSignEvent(null, $intranetEvt, $intranet->getSemestre()->getDiplome()->getKeyEduSign());
@@ -319,7 +319,6 @@ class MyCelcat
 
     private function updateEvent(EdtCelcat $intranet, EdtCelcat $celcat): void
     {
-        dump('Mise à jour de l\'événement ' . $intranet->getId());
         $this->log->addItem('Mise à jour de l\'événement ' . $intranet->getId(), 'info');
         // Mise à jour des données existantes de $intranet avec celles de $celcat
 
@@ -350,7 +349,7 @@ class MyCelcat
         // éventuellement optionnel le flush pour faire un lot
 
         if ($intranet->getIdEduSign() !== null && $intranet->getDateCours()->greaterThan(Carbon::now()) && $intranet->getSemestre() !== null && $intranet->getSemestre()->getDiplome()->getKeyEduSign() !== null ) {
-            dump('Mise à jour de l\'événement edusign');
+            $this->log->addItem('Mise à jour de l\'événement edusign', 'info');
             $intranetEvt = $this->edtManager->getEventNew('celcat_' . $intranet->getId());
 
             $eduEvent = new EduSignEvent(null, $intranetEvt, $intranet->getSemestre()->getDiplome()->getKeyEduSign());
