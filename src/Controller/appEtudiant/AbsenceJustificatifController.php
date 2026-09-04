@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appEtudiant/AbsenceJustificatifController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 03/09/2026 16:37
+ * @lastUpdate 04/09/2026 11:10
  */
 
 namespace App\Controller\appEtudiant;
@@ -15,6 +15,7 @@ use App\Entity\Constantes;
 use App\Event\JustificatifEvent;
 use App\Form\AbsenceJustificatifType;
 use App\Repository\AbsenceJustificatifRepository;
+use App\Repository\AnneeUniversitaireRepository;
 use Exception;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\Request;
