@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Celcat/MyCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/09/2026 10:26
+ * @lastUpdate 07/09/2026 10:28
  */
 
 namespace App\Classes\Celcat;
@@ -401,7 +401,7 @@ class MyCelcat
                     // non cours
                     $notes = odbc_result($resultCelcat, 17);
                     $event->setCodeModule($eventId);
-                    $event->setLibModule(utf8_encode(odbc_result($resultCelcat, 6)) + ' ' + utf8_encode($notes));
+                    $event->setLibModule(utf8_encode(odbc_result($resultCelcat, 6)) . ' ' . utf8_encode($notes));
                     $event->setType($this->tGroupes[$codeGroupe]?->getTypeGroupe()->getType() ?? 'CM');
                 } else {
                     $event->setCodeModule($codeModule);
