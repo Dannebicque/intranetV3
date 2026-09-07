@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MyMessagerie.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/09/2026 11:42
+ * @lastUpdate 07/09/2026 12:12
  */
 
 namespace App\Classes;
@@ -19,6 +19,7 @@ use App\Entity\MessageDestinatairePersonnel;
 use App\Entity\MessagePieceJointe;
 use App\Entity\Personnel;
 use App\Interfaces\UtilisateurInterface;
+use App\Repository\AnneeUniversitaireRepository;
 use App\Repository\EtudiantRepository;
 use App\Repository\GroupeRepository;
 use App\Repository\PersonnelRepository;
