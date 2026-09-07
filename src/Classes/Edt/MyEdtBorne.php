@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtBorne.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/09/2026 11:31
+ * @lastUpdate 07/09/2026 11:33
  */
 
 namespace App\Classes\Edt;
@@ -31,7 +31,11 @@ class MyEdtBorne
         private readonly AnneeUniversitaireRepository $anneeUniversitaireRepository,
         private readonly CalendrierRepository         $calendrierRepository, private readonly GroupeRepository $groupeRepository, private readonly EdtManager $edtManager, private readonly SemestreRepository $semestreRepository, private readonly EdtPlanningRepository $edtPlanningRepository)
     {
-        $this->anneeUniversitaire = $this->anneeUniversitaireRepository->findOneBy(['actif' => true]);
+        $this->anneeUniversitaire = $this->anneeUniversitaireRepository->findOneBy(['active' => true]);
+
+        if (null === $this->anneeUniversitaire) {
+            throw new \RuntimeException('Aucune année universitaire active');
+        }
     }
 
     public function init(): void
