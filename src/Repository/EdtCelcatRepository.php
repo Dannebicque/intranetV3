@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/EdtCelcatRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 31/08/2026 09:25
+ * @lastUpdate 07/09/2026 11:24
  */
 
 namespace App\Repository;
@@ -228,6 +228,25 @@ class EdtCelcatRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('p')
             ->where('p.idEduSign IS NOT NULL')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function recupereEdtBorne(int $numSemaine, Semestre $semestre, int $jour, AnneeUniversitaire $anneeUniversitaire): array
+    {
+        return $this->createQueryBuilder('p')
+            ->where('p.semaineFormation = :semaine')
+            ->andWhere('p.jour = :jour ')
+            ->andWhere('p.semestre = :semestre')
+            ->andWhere('p.anneeUniversitaire = :anneeUniversitaire')
+            ->setParameters([
+                'semaine' => $numSemaine,
+                'jour' => $jour,
+                'semestre' => $semestre,
+                'anneeUniversitaire' => $anneeUniversitaire,
+            ])
+            ->orderBy('p.jour', Order::Ascending->value)
+            ->addOrderBy('p.debut', Order::Ascending->value)
             ->getQuery()
             ->getResult();
     }
