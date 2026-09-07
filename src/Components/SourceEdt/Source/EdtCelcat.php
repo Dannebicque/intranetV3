@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/SourceEdt/Source/EdtCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 19/04/2024 18:06
+ * @lastUpdate 07/09/2026 11:24
  */
 
 namespace App\Components\SourceEdt\Source;
@@ -13,11 +13,11 @@ use App\Classes\Edt\Calendrier;
 use App\Components\SourceEdt\Adapter\EdtCelcatAdapter;
 use App\DTO\EvenementEdt;
 use App\DTO\EvenementEdtCollection;
+use App\DTO\Matiere;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Constantes;
 use App\Entity\Etudiant;
 use App\Entity\Groupe;
-use App\DTO\Matiere;
 use App\Entity\Personnel;
 use App\Entity\Semestre;
 use App\Repository\EdtCelcatRepository;
@@ -112,8 +112,18 @@ class EdtCelcat extends AbstractEdt implements EdtInterface
         array              $groupes,
         AnneeUniversitaire $anneeUniversitaire
     ): EvenementEdtCollection {
-        // TODO: Implement recupereEdtJourBorne() method.
-        return new EvenementEdtCollection();
+        $evts = $this->edtCelcatRepository->recupereEdtBorne($semaineFormation, $semestre, $jourSemaine, $anneeUniversitaire);
+        $tGroupes = [];
+        foreach ($groupes as $groupe) {
+            $tGroupes[$groupe->getCodeApogee()] = $groupe;
+        }
+
+        $tMatieres = [];
+        foreach ($matieres as $matiere) {
+            $tMatieres[$matiere->getTypeIdMatiere()] = $matiere;
+        }
+
+        return $this->edtCelcatAdapter->collection($evts, $tMatieres, $tGroupes);
     }
 
     public function getPlanningSemestreSemaine(
