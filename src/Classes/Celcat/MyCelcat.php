@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2025. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Celcat/MyCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/11/2025 10:13
+ * @lastUpdate 07/09/2026 10:16
  */
 
 namespace App\Classes\Celcat;
@@ -151,7 +151,8 @@ class MyCelcat
             $this->tMatieres = $this->typeMatiereManager->tableauMatieresCodeApogee($departement);
             $this->tGroupes = $this->groupeRepository->tableauGroupesCodeApogee($departement);
             // SELECT CT_EVENT.event_id, CT_EVENT.day_of_week, CT_EVENT.start_time, CT_EVENT.end_time, CT_EVENT.weeks, CT_EVENT_CAT.name, CT_VIEW_EVENT_MODULE001.resourcecode, CT_VIEW_EVENT_MODULE001.resourcename, CT_VIEW_EVENT_STAFF001.resourcecode, CT_VIEW_EVENT_STAFF001.resourcename, CT_VIEW_EVENT_ROOM001.resourcecode, CT_VIEW_EVENT_ROOM001.resourcename, CT_VIEW_EVENT_GROUP001.resourcecode, CT_VIEW_EVENT_GROUP001.resourcename, CT_EVENT.date_change, CT_VIEW_EVENT_ROOM001.resourceweeks FROM CT_EVENT INNER JOIN CT_EVENT_CAT ON CT_EVENT_CAT.event_cat_id = CT_EVENT.event_cat_id LEFT JOIN CT_VIEW_EVENT_STAFF001 ON CT_VIEW_EVENT_STAFF001.eid=CT_EVENT.event_id INNER JOIN CT_VIEW_EVENT_GROUP001 ON CT_VIEW_EVENT_GROUP001.eid=CT_EVENT.event_id INNER JOIN CT_VIEW_EVENT_MODULE001 ON CT_VIEW_EVENT_MODULE001.eid=CT_EVENT.event_id INNER JOIN CT_VIEW_EVENT_ROOM001 ON CT_VIEW_EVENT_ROOM001.eid=CT_EVENT.event_id WHERE CT_EVENT.day_of_week=2 AND dept_id=894 AND CT_VIEW_EVENT_MODULE001.resourcename LIKE 'JR513%' ORDER BY CT_EVENT.date_change DESC, CT_EVENT.event_id DESC
-            $query = 'SELECT CT_EVENT.event_id, CT_EVENT.day_of_week, CT_EVENT.start_time, CT_EVENT.end_time, CT_EVENT.weeks, CT_EVENT_CAT.name, CT_VIEW_EVENT_MODULE001.resourcecode, CT_VIEW_EVENT_MODULE001.resourcename, CT_VIEW_EVENT_STAFF001.resourcecode, CT_VIEW_EVENT_STAFF001.resourcename, CT_VIEW_EVENT_ROOM001.resourcecode, CT_VIEW_EVENT_ROOM001.resourcename, CT_VIEW_EVENT_GROUP001.resourcecode, CT_VIEW_EVENT_GROUP001.resourcename, CT_EVENT.date_change, CT_VIEW_EVENT_ROOM001.resourceweeks FROM CT_EVENT INNER JOIN CT_EVENT_CAT ON CT_EVENT_CAT.event_cat_id = CT_EVENT.event_cat_id LEFT JOIN CT_VIEW_EVENT_STAFF001 ON CT_VIEW_EVENT_STAFF001.eid=CT_EVENT.event_id INNER JOIN CT_VIEW_EVENT_GROUP001 ON CT_VIEW_EVENT_GROUP001.eid=CT_EVENT.event_id INNER JOIN CT_VIEW_EVENT_MODULE001 ON CT_VIEW_EVENT_MODULE001.eid=CT_EVENT.event_id INNER JOIN CT_VIEW_EVENT_ROOM001 ON CT_VIEW_EVENT_ROOM001.eid=CT_EVENT.event_id WHERE dept_id=' . $codeCelcat . ' ORDER BY CT_EVENT.date_change DESC, CT_EVENT.event_id DESC';
+
+            $query = 'SELECT CT_EVENT.event_id, CT_EVENT.day_of_week, CT_EVENT.start_time, CT_EVENT.end_time, CT_EVENT.weeks, CT_EVENT_CAT.name, CT_VIEW_EVENT_MODULE001.resourcecode, CT_VIEW_EVENT_MODULE001.resourcename, CT_VIEW_EVENT_STAFF001.resourcecode, CT_VIEW_EVENT_STAFF001.resourcename, CT_VIEW_EVENT_ROOM001.resourcecode, CT_VIEW_EVENT_ROOM001.resourcename, CT_VIEW_EVENT_GROUP001.resourcecode, CT_VIEW_EVENT_GROUP001.resourcename, CT_EVENT.date_change, CT_VIEW_EVENT_ROOM001.resourceweeks FROM CT_EVENT INNER JOIN CT_EVENT_CAT ON CT_EVENT_CAT.event_cat_id = CT_EVENT.event_cat_id LEFT JOIN CT_VIEW_EVENT_STAFF001 ON CT_VIEW_EVENT_STAFF001.eid=CT_EVENT.event_id INNER JOIN CT_VIEW_EVENT_GROUP001 ON CT_VIEW_EVENT_GROUP001.eid=CT_EVENT.event_id LEFT JOIN CT_VIEW_EVENT_MODULE001 ON CT_VIEW_EVENT_MODULE001.eid=CT_EVENT.event_id LEFT JOIN CT_VIEW_EVENT_ROOM001 ON CT_VIEW_EVENT_ROOM001.eid=CT_EVENT.event_id WHERE dept_id=' . $codeCelcat . ' ORDER BY CT_EVENT.date_change DESC, CT_EVENT.event_id DESC';
 
             $resultCelcat = odbc_exec($this->conn, $query);
 
@@ -161,7 +162,7 @@ class MyCelcat
             while (odbc_fetch_row($resultCelcat)) {
                 $eventId = odbc_result($resultCelcat, 1);
                 $events = $this->transformeCelcatToDto($resultCelcat, $anneeUniversitaire, $diplome);
-
+                dump($events);
                 if (!array_key_exists($eventId, $celcatIndex)) {
                     $celcatIndex[$eventId] = $events;
                 } else {
@@ -169,6 +170,7 @@ class MyCelcat
                 }
             }
 
+            die('fin celcat');
             $intranetIndex = [];
             foreach ($resultIntranet as $row) {
                 if (!array_key_exists($row->getEventId(), $intranetIndex)) {
@@ -387,8 +389,16 @@ class MyCelcat
                 $event->setSemaineFormation($semaine);
                 $event->setType(utf8_encode($type));
 
-                $event->setCodeModule(odbc_result($resultCelcat, 7));
-                $event->setLibModule((odbc_result($resultCelcat, 8)));
+                $codeModule = odbc_result($resultCelcat, 7);
+                $libModule = odbc_result($resultCelcat, 8);
+
+                if ($codeModule === null || $codeModule === '') {
+                    $event->setCodeModule($eventId);
+                    $event->setLibModule(utf8_encode(odbc_result($resultCelcat, 6)));
+                } else {
+                    $event->setCodeModule($codeModule);
+                    $event->setLibModule($libModule);
+                }
 
                 if (array_key_exists($event->getCodeModule(), $this->tMatieres)) {
                     $event->setTypeMatiere($this->tMatieres[$event->getCodeModule()]->typeMatiere);
