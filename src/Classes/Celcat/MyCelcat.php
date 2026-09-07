@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Celcat/MyCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/09/2026 10:28
+ * @lastUpdate 07/09/2026 10:29
  */
 
 namespace App\Classes\Celcat;
@@ -162,7 +162,6 @@ class MyCelcat
             while (odbc_fetch_row($resultCelcat)) {
                 $eventId = odbc_result($resultCelcat, 1);
                 $events = $this->transformeCelcatToDto($resultCelcat, $anneeUniversitaire, $diplome);
-                dump($events);
                 if (!array_key_exists($eventId, $celcatIndex)) {
                     $celcatIndex[$eventId] = $events;
                 } else {
@@ -170,7 +169,6 @@ class MyCelcat
                 }
             }
 
-            die('fin celcat');
             $intranetIndex = [];
             foreach ($resultIntranet as $row) {
                 if (!array_key_exists($row->getEventId(), $intranetIndex)) {
