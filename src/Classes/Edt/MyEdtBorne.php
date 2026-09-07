@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2025. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtBorne.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/02/2025 17:18
+ * @lastUpdate 07/09/2026 11:31
  */
 
 namespace App\Classes\Edt;
@@ -13,6 +13,7 @@ use App\Classes\Matieres\TypeMatiereManager;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Semestre;
 use App\Exception\SemestreNotFoundException;
+use App\Repository\AnneeUniversitaireRepository;
 use App\Repository\CalendrierRepository;
 use App\Repository\EdtPlanningRepository;
 use App\Repository\GroupeRepository;
@@ -21,12 +22,16 @@ use App\Repository\SemestreRepository;
 class MyEdtBorne
 {
     public array $data = []; // todo: passer par EvenementCollection pour gérer tous les cas??
+    private AnneeUniversitaire $anneeUniversitaire;
 
     /**
      * MyEdtBorne constructor.
      */
-    public function __construct(private readonly CalendrierRepository $calendrierRepository, private readonly GroupeRepository $groupeRepository, private readonly EdtManager $edtManager, private readonly SemestreRepository $semestreRepository, private readonly EdtPlanningRepository $edtPlanningRepository)
+    public function __construct(
+        private readonly AnneeUniversitaireRepository $anneeUniversitaireRepository,
+        private readonly CalendrierRepository         $calendrierRepository, private readonly GroupeRepository $groupeRepository, private readonly EdtManager $edtManager, private readonly SemestreRepository $semestreRepository, private readonly EdtPlanningRepository $edtPlanningRepository)
     {
+        $this->anneeUniversitaire = $this->anneeUniversitaireRepository->findOneBy(['actif' => true]);
     }
 
     public function init(): void
@@ -81,15 +86,9 @@ class MyEdtBorne
             throw new SemestreNotFoundException();
         }
 
-        $anneeUniversitaire = $semestre->getAnneeUniversitaire();
-
-        if (null === $anneeUniversitaire) {
-            throw new SemestreNotFoundException();
-        }
-
         $semaine = $this->calendrierRepository->findOneBy([
             'semaineReelle' => $this->data['semaine'],
-            'anneeUniversitaire' => $anneeUniversitaire->getId(),
+            'anneeUniversitaire' => $this->anneeUniversitaire->getId(),
         ]);
 
         $groupes = $this->groupeRepository->findByDiplomeAndOrdreSemestre($semestre->getDiplome(), $semestre->getOrdreLmd());
@@ -102,7 +101,7 @@ class MyEdtBorne
         }
         if (null !== $semaine) {
             $planning = $this->edtManager->recupereEDTBornes($semaine->getSemaineFormation(),
-                $semestre, $this->data['jsem'], $tMatieres, $groupes, $anneeUniversitaire);
+                $semestre, $this->data['jsem'], $tMatieres, $groupes, $this->anneeUniversitaire);
             $tab = [];
             foreach ($planning->getEvents() as $pl) {
                 if ($pl->ordreGroupe === 41) {
