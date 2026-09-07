@@ -1,15 +1,16 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MyMessagerie.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 31/07/2023 16:34
+ * @lastUpdate 07/09/2026 11:42
  */
 
 namespace App\Classes;
 
 use App\Classes\Previsionnel\PrevisionnelManager;
+use App\Entity\AnneeUniversitaire;
 use App\Entity\Departement;
 use App\Entity\Etudiant;
 use App\Entity\Message;
@@ -50,10 +51,13 @@ class MyMessagerie
     private array $pjs = [];
     private array $personnels = [];
 
+    private AnneeUniversitaire $anneeUniversitaire;
+
     /**
      * MyMessagerie constructor.
      */
     public function __construct(
+        private readonly AnneeUniversitaireRepository $anneeUniversitaireRepository,
         private readonly MailerInterface $myMailer,
         private readonly EntityManagerInterface $entityManager,
         private readonly GroupeRepository $groupeRepository,
@@ -63,6 +67,11 @@ class MyMessagerie
         private readonly PrevisionnelManager $previsionnelManager,
         private readonly Configuration $configuration
     ) {
+        $this->anneeUniversitaire = $this->anneeUniversitaireRepository->findOneBy(['active' => true]);
+
+        if (null === $this->anneeUniversitaire) {
+            throw new \RuntimeException('Aucune année universitaire active');
+        }
     }
 
     /**
@@ -246,7 +255,7 @@ class MyMessagerie
     {
         $semestre = $this->semestreRepository->find($codeSemestre);
         // récupére tous les étudiants d'un semestre
-        $this->etudiants = $this->etudiantRepository->findBySemestre($semestre);
+        $this->etudiants = $this->etudiantRepository->findBySemestre($semestre, $this->anneeUniversitaire);
     }
 
     private function getEtudiantsGroupe(int|string $codeGroupe): void
