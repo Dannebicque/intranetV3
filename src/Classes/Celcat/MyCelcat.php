@@ -400,7 +400,9 @@ class MyCelcat
                     $notes = odbc_result($resultCelcat, 17);
                     $event->setCodeModule($eventId);
                     $event->setLibModule(odbc_result($resultCelcat, 6) . ' ' . $notes);
-                    $event->setType($this->tGroupes[$codeGroupe]?->getTypeGroupe()->getType() ?? 'CM');
+
+                    $typeGroupe = $this->tGroupes[$codeGroupe]?->getTypeGroupe()?->getType();
+                    $event->setType(is_string($typeGroupe?->value) ? $typeGroupe->value : 'CM');
                 } else {
                     $event->setCodeModule($codeModule);
                     $event->setLibModule($libModule);
