@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Semestre.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/08/2026 10:12
+ * @lastUpdate 09/09/2026 17:03
  */
 
 namespace App\Entity;
@@ -743,6 +743,7 @@ class Semestre extends BaseEntity implements Stringable, GroupeInterface
         return $this;
     }
 
+    /** @deprecated */
     public function getAnneeUniversitaire(): ?AnneeUniversitaire
     {
         if (null !== $this->getDiplome() && null !== $this->getDiplome()->getAnneeUniversitaire()) {

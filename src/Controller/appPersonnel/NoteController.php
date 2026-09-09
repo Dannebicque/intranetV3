@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appPersonnel/NoteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/08/2026 11:21
+ * @lastUpdate 09/09/2026 17:03
  */
 
 namespace App\Controller\appPersonnel;
@@ -47,6 +47,7 @@ class NoteController extends BaseController
         }
         $this->denyAccessUnlessGranted('CAN_ADD_NOTE', ['matiere' => $mat, 'semestre' => $semestre]);
         $evaluation = new Evaluation($this->getUser(), $mat, $semestre);
+        $evaluation->setAnneeUniversitaire($this->getAnneeUniversitaire());
         $form = $this->createForm(
             EvaluationType::class,
             $evaluation,

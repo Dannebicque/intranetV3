@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/superAdministration/ApogeeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:35
+ * @lastUpdate 09/09/2026 17:03
  */
 
 namespace App\Controller\superAdministration;
@@ -59,7 +59,7 @@ class ApogeeController extends BaseController
             // pour chaque étudiant, s'il existe, on update, sinon on ajoute (et si type=force).
             $stid = $apogeeEtudiant->getEtudiantsAnnee($semestre->getAnnee());
             while ($row = $stid->fetch()) {
-                if ((int) $row['DAA_ETB'] === $semestre->getAnneeUniversitaire()->getAnnee()) {
+                if ((int)$row['DAA_ETB'] === $this->getAnneeUniversitaire()->getAnnee()) {
                     // if ((int)Tools::convertDateToObject($row['DAT_MOD_IND'])->format('Y') === $semestre->getAnneeUniversitaire()->getAnnee()) {
                     $dataApogee = $apogeeEtudiant->transformeApogeeToArray($row, $bacRepository->getApogeeArray());
                     $numEtudiant = $dataApogee['etudiant']['setNumEtudiant'];

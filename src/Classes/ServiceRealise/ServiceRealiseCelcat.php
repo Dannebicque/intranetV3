@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/ServiceRealise/ServiceRealiseCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/09/2026 10:10
+ * @lastUpdate 01/09/2026 10:28
  */
 
 /*
@@ -72,6 +72,7 @@ class ServiceRealiseCelcat implements ServiceRealiseInterface
 //        $ev->heure = $event->getDebut();
         // todo: revoir.
         $ev->matiere = $event->getLibModule();
+        $ev->typeIdMatiere = $event->getLibModule();
         $ev->type_cours = $event->getType();
         $ev->personnel = $event->getLibPersonnel();
 

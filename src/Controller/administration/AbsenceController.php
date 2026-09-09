@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/AbsenceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/08/2026 11:21
+ * @lastUpdate 09/09/2026 17:03
  */
 
 namespace App\Controller\administration;
@@ -181,7 +181,7 @@ class AbsenceController extends BaseController
     ): Response {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $semestre);
         $matieres = $typeMatiereManager->findBySemestreArray($semestre);
-        $absences = $absenceRepository->getBySemestre($semestre, $semestre->getAnneeUniversitaire());
+        $absences = $absenceRepository->getBySemestre($semestre, $this->getAnneeUniversitaire());
 
         return $myExportListing->exportExcelAbsence($absences, $matieres, 'absences_'.$semestre->getLibelle());
 

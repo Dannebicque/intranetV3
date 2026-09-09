@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appPersonnel/AbsenceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/09/2026 16:59
+ * @lastUpdate 09/09/2026 17:03
  */
 
 namespace App\Controller\appPersonnel;
@@ -196,7 +196,7 @@ class AbsenceController extends BaseController
             throw new MatiereNotFoundException();
         }
 
-        return $this->myAbsences->export($mat, $semestre->getAnneeUniversitaire(), $semestre, $_format);
+        return $this->myAbsences->export($mat, $this->getAnneeUniversitaire(), $semestre, $_format);
     }
 
     #[Route(path: '/{uuid}', name: 'application_personnel_absence_delete', methods: 'DELETE')]
