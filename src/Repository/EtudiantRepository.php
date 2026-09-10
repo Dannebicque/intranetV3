@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/EtudiantRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 31/08/2026 18:33
+ * @lastUpdate 10/09/2026 09:56
  */
 
 namespace App\Repository;
@@ -200,18 +200,34 @@ class EtudiantRepository extends ServiceEntityRepository
         return $t;
     }
 
-    public function findByAnnee(Annee $annee): array
+    public function findByAnneeBuilder(Annee $annee, AnneeUniversitaire $anneeUniversitaire): QueryBuilder
     {
-        $query = $this->createQueryBuilder('e');
-        $i = 1;
-        foreach ($annee->getSemestres() as $semestre) {
-            $query->orWhere('e.semestre = ?' . $i)
-                ->setParameter($i, $semestre->getId());
-            ++$i;
-        }
+        $qb = $this->createQueryBuilder('e')
+            ->leftJoin(Semestre::class, 's', 'WITH', 'e.semestre = s.id')
+            ->leftJoin('e.etudiantSemestreAnnees', 'esa', 'WITH', 'esa.anneeUniversitaire = :anneeUniversitaire')
+            ->leftJoin('esa.semestre', 'esa_s');
 
-        return $query->orderBy('e.nom', Order::Ascending->value)
-            ->addOrderBy('e.prenom', Order::Ascending->value)
+        return $qb->where(
+            $qb->expr()->orX(
+                $qb->expr()->andX(
+                    $qb->expr()->isNotNull('esa.id'),
+                    $qb->expr()->in('esa_s.id', ':semestres')
+                ),
+                $qb->expr()->andX(
+                    $qb->expr()->isNull('esa.id'),
+                    $qb->expr()->in('s.id', ':semestres')
+                )
+            )
+        )
+            ->setParameter('semestres', $annee->getSemestres())
+            ->setParameter('anneeUniversitaire', $anneeUniversitaire)
+            ->orderBy('e.nom', Order::Ascending->value)
+            ->addOrderBy('e.prenom', Order::Ascending->value);
+    }
+
+    public function findByAnnee(Annee $annee, AnneeUniversitaire $anneeUniversitaire): array
+    {
+        return $this->findByAnneeBuilder($annee, $anneeUniversitaire)
             ->getQuery()
             ->getResult();
     }
