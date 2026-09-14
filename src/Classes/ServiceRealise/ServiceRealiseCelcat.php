@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/ServiceRealise/ServiceRealiseCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/09/2026 14:48
+ * @lastUpdate 14/09/2026 14:49
  */
 
 /*
@@ -77,9 +77,7 @@ class ServiceRealiseCelcat implements ServiceRealiseInterface
         $ev->groupe = $event->getLibGroupe();
         $ev->jour = $tabJour[$event->getJour()];
         $ev->date = $event->getDateCours()->format('d/m/Y');
-//
-        $ev->heure = $event->getDebut()->format('H:i') . ' - ' . $event->getFin()->format('H:i');
-        // todo: revoir.
+        $ev->heureTexte = $event->getDebut()->format('H:i') . ' - ' . $event->getFin()->format('H:i');
         $ev->matiere = $event->getLibModule();
         $ev->typeIdMatiere = $event->getLibModule();
         $ev->type_cours = $event->getType();
