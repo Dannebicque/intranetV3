@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/ServiceRealise/ServiceRealiseCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/09/2026 14:44
+ * @lastUpdate 14/09/2026 14:47
  */
 
 /*
@@ -64,12 +64,21 @@ class ServiceRealiseCelcat implements ServiceRealiseInterface
 
     public function convertToEvenementEdt($event): EvenementEdt
     {
+        $tabJour = [
+            0 => 'Lundi',
+            1 => 'Mardi',
+            2 => 'Mercredi',
+            3 => 'Jeudi',
+            4 => 'Vendredi',
+            5 => 'Samedi',
+            6 => 'Dimanche',
+        ];
         $ev = new EvenementEdt();
         $ev->groupe = $event->getLibGroupe();
-        $ev->jour = $event->getJour();
-//        $ev->date = $event->getDate();
+        $ev->jour = $tabJour[$event->getJour()];
+        $ev->date = $event->getDate()->format('d/m/Y');
 //
-//        $ev->heure = $event->getDebut();
+        $ev->heure = $event->getDebut()->format('H:i') . ' - ' . $event->getFin()->format('H:i');
         // todo: revoir.
         $ev->matiere = $event->getLibModule();
         $ev->typeIdMatiere = $event->getLibModule();
