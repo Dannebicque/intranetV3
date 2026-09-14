@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/ServiceRealise/ServiceRealiseCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/09/2026 14:49
+ * @lastUpdate 14/09/2026 14:52
  */
 
 /*
@@ -104,12 +104,11 @@ class ServiceRealiseCelcat implements ServiceRealiseInterface
             'codeModule' => $matiere->codeElement,
             'codePersonnel' => $personnel->getNumeroHarpege(),
         ],
-            ['semaine' => 'ASC', 'jour' => 'ASC', 'debut' => 'ASC']);
+            ['semaineFormation' => 'ASC', 'jour' => 'ASC', 'debut' => 'ASC']);
         $tabEvent = [];
         foreach ($events as $event) {
             $tabEvent[] = $this->convertToEvenementEdt($event);
         }
-        dump($tabEvent);
         return $tabEvent;
     }
 }
