@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/ServiceRealise/ServiceRealiseCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/09/2026 10:28
+ * @lastUpdate 14/09/2026 14:44
  */
 
 /*
@@ -51,7 +51,7 @@ class ServiceRealiseCelcat implements ServiceRealiseInterface
 
     public function getServiceRealiserParEnseignant(Personnel $personnel, AnneeUniversitaire $anneeUniversitaire): array
     {
-        $events = $this->celcatEventsRepository->findBy(['codePersonnel' => $personnel->getNumeroHarpege()],
+        $events = $this->celcatEventsRepository->findBy(['codePersonnel' => $personnel->getNumeroHarpege(), 'anneeUniversitaire' => $anneeUniversitaire->getId()],
             ['libModule' => 'ASC', 'semaineFormation' => 'ASC', 'jour' => 'ASC', 'debut' => 'ASC']);
         $tabEvent = [];
         foreach ($events as $event) {

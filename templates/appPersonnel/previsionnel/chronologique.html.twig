@@ -47,7 +47,7 @@
                     <a href="{{ path('previsionnel_chronologique_matiere', {matiere: cours.typeIdMatiere}) }}">
                         <button class="btn btn-secondary" style="margin: 10px">
                             {{ matieres[cours.typeIdMatiere] is defined ? matieres[cours.typeIdMatiere].display :
-                            '-Matière inconnue-' }}
+                            cours.matiere }}
                         </button>
                     </a>
                 {% endif %}
@@ -72,7 +72,7 @@
                         <td>{{ cours.heureTexte }}</td>
                         <td>
                             {{ matieres[cours.typeIdMatiere] is defined ? matieres[cours.typeIdMatiere].display :
-                            '-Matière inconnue-' }}
+                            cours.typeIdMatiere }}
                         </td>
                         <td>{{ cours.type_cours }}</td>
                         <td>{{ cours.groupe }}</td>
