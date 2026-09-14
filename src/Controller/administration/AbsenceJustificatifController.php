@@ -22,6 +22,7 @@ use JsonException;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
@@ -194,7 +195,25 @@ class AbsenceJustificatifController extends BaseController
             throw $this->createNotFoundException('Document justificatif introuvable.');
         }
 
-        return $this->file($filePath, $fichierName);
+        return $this->file($filePath, $fichierName, ResponseHeaderBag::DISPOSITION_INLINE);
+    }
+
+    #[Route(path: '/document/{uuid}/download', name: 'administration_absence_justificatif_document_download', methods: 'GET')]
+    public function downloadDocument(#[MapEntity(mapping: ['uuid' => 'uuid'])] AbsenceJustificatif $absenceJustificatif): Response
+    {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $absenceJustificatif->getEtudiant()?->getSemestreActif($this->getAnneeUniversitaire()));
+
+        $fichierName = $absenceJustificatif->getFichierName();
+        if (null === $fichierName || '' === $fichierName) {
+            throw $this->createNotFoundException('Aucun document justificatif disponible.');
+        }
+
+        $filePath = $this->getParameter('app.justificatif_upload_dir') . '/' . $fichierName;
+        if (!is_file($filePath)) {
+            throw $this->createNotFoundException('Document justificatif introuvable.');
+        }
+
+        return $this->file($filePath, $fichierName, ResponseHeaderBag::DISPOSITION_ATTACHMENT);
     }
 
     private function gereEtat(
