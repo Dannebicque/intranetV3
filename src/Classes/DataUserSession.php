@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/DataUserSession.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/09/2026 14:11
+ * @lastUpdate 14/09/2026 14:13
  */
 
 namespace App\Classes;
@@ -61,6 +61,8 @@ class DataUserSession
 
     private ?string $type_user = null;
 
+    private ?AnneeUniversitaire $anneeUniversitaire = null;
+
     private bool $isInit = false;
 
     public function getTypeUser(): string
@@ -77,7 +79,7 @@ class DataUserSession
         protected Security                     $security,
         protected EventDispatcherInterface     $eventDispatcher,
         protected RequestStack                 $requestStack,
-        protected AnneeUniversitaireRepository $anneeUniversitaireRepository, private readonly AnneeUniversitaire $anneeUniversitaire,
+        protected AnneeUniversitaireRepository $anneeUniversitaireRepository,
     )
     {
     }
