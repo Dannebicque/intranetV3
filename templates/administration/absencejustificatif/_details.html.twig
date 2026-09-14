@@ -23,6 +23,10 @@
             btn-info btn-outline">
                 {{ 'voir.le.document'|trans }}
             </a>
+            <a href="{{ path('administration_absence_justificatif_document_download', {uuid: justificatif.uuidString}) }}"
+               class="btn btn-primary btn-outline ms-2">
+                {{ 'Télécharger le document' }}
+            </a>
         {% else %}
             <button class="btn btn-danger">Pas de document justificatif</button>
         {% endif %}
