@@ -57,8 +57,6 @@ class DataUserSession
 
     protected ?Departement $departement = null;
 
-    protected AnneeUniversitaireRepository $anneeUniversitaireRepository;
-
     private array $semestresActifs = [];
 
     private ?string $type_user = null;
@@ -78,7 +76,8 @@ class DataUserSession
         protected DepartementRepository $departementRepository,
         protected Security              $security,
         protected EventDispatcherInterface $eventDispatcher,
-        protected RequestStack             $requestStack
+        protected RequestStack             $requestStack,
+        protected AnneeUniversitaireRepository $anneeUniversitaireRepository,
     )
     {
     }
@@ -265,7 +264,7 @@ class DataUserSession
     public function getAnneeUniversitaire(): ?AnneeUniversitaire
     {
         $this->initDataUserSession($this->getUser());
-        return null !== $this->getUser() ? $this->getUser()->getAnneeUniversitaire() : null;
+        return $this->anneeUniversitaireRepository->findOneBy(['active' => true]);
     }
 
     public function displayAnneeUniversitaire(): string
