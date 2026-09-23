@@ -12,6 +12,7 @@ namespace App\Controller\administration;
 use App\Classes\Etudiant\EtudiantImport;
 use App\Classes\MyUpload;
 use App\Controller\BaseController;
+use App\Repository\SemestreRepository;
 use Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,6 +22,12 @@ use Symfony\Component\Routing\Attribute\Route;
 class EtudiantImportController extends BaseController
 {
     // todo: a finaliser ou inutile ?
+    private $semestreRepository;
+
+    public function __construct(SemestreRepository $semestreRepository)
+    {
+        $this->semestreRepository = $semestreRepository;
+    }
 
     /**
      * @throws Exception
@@ -33,9 +40,11 @@ class EtudiantImportController extends BaseController
     ): Response {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
 
+        // récupérer les semestres existants du département
+        $semestres = $this->semestreRepository->findByDepartement($this->getDepartement());
         // traitement de l'import
         $fichier = $myUpload->upload($request->files->get('fichierimportcsv'), 'temp');
-        $etudiantImport->importFomCsv($fichier);
+        $etudiantImport->importFomCsv($fichier, $semestres);
 
         return $this->redirectToRoute('administration_etudiant_import_liste_csv'); // page de synthèse ? ou nouvel import ?
     }
