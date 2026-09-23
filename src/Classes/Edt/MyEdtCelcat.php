@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/02/2024 08:10
+ * @lastUpdate 23/09/2026 12:04
  */
 
 /*
@@ -167,7 +167,7 @@ class MyEdtCelcat extends BaseEdt
             $evt->heureFin = $p->getFin();
             $evt->dateObjet = $p->getDateCours();
             $evt->matiere = $p->getLibModule();
-            $evt->salle = $p->getLibSalle();
+            $evt->salle = $this->transformeSalle($p->getLibSalle());
             $evt->personnel = $p->getLibPersonnel();
             $evt->groupe = $p->getLibGroupe();
             $evt->typeIdMatiere = $this->getTypeIdMatiere($p);
@@ -184,6 +184,15 @@ class MyEdtCelcat extends BaseEdt
         }
 
         return $tab;
+    }
+
+    private function transformeSalle(string $salle): string
+    {
+        if ($salle === 'H.023') {
+            return 'H.203';
+        }
+
+        return $salle;
     }
 
     public function initSemestre(int $semaine, Semestre $semestre, AnneeUniversitaire $anneeUniversitaire): self

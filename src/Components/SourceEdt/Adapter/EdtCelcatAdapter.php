@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/SourceEdt/Adapter/EdtCelcatAdapter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/09/2026 12:29
+ * @lastUpdate 23/09/2026 12:04
  */
 
 namespace App\Components\SourceEdt\Adapter;
@@ -89,7 +89,7 @@ class EdtCelcatAdapter extends AbstractEdtAdapter implements EdtAdapterInterface
             $evt->code_matiere = $matiere->codeMatiere;
         }
 
-        $evt->salle = $event->getLibSalle();
+        $evt->salle = $this->transformeSalle($event->getLibSalle());
         $evt->personnel = utf8_decode($event->getLibPersonnel());
         $evt->personnelObjet = $event->getPersonnel();
 
@@ -129,6 +129,15 @@ class EdtCelcatAdapter extends AbstractEdtAdapter implements EdtAdapterInterface
         $evt->idEduSign = $event->getIdEduSign();
 
         return $evt;
+    }
+
+    private function transformeSalle(string $salle): string
+    {
+        if ($salle === 'H.023') {
+            return 'H.203';
+        }
+
+        return $salle;
     }
 
     private function getLargeur(mixed $evt): int
