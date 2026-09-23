@@ -63,7 +63,7 @@ class EduSignCourse
 
     public function toArray(): array
     {
-        return [
+        return $this->sanitizeForJson([
             'ID' => $this->id,
             'NAME' => $this->name,
             'DESCRIPTION' => $this->description,
@@ -82,6 +82,31 @@ class EduSignCourse
             'TYPE' => $this->type_edt,
             'ID_MATIERE' => $this->id_matiere,
             'TYPE_MATIERE' => $this->type_matiere,
-        ];
+        ]);
+    }
+
+    private function sanitizeForJson(array $data): array
+    {
+        foreach ($data as $key => $value) {
+            if (is_string($value)) {
+                $data[$key] = $this->sanitizeUtf8String($value);
+                continue;
+            }
+
+            if (is_array($value)) {
+                $data[$key] = $this->sanitizeForJson($value);
+            }
+        }
+
+        return $data;
+    }
+
+    private function sanitizeUtf8String(string $value): string
+    {
+        if (mb_check_encoding($value, 'UTF-8')) {
+            return $value;
+        }
+
+        return mb_convert_encoding($value, 'UTF-8', 'UTF-8, ISO-8859-1, ISO-8859-15, Windows-1252');
     }
 }
