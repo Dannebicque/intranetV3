@@ -42,9 +42,14 @@ class EtudiantImportController extends BaseController
 
         // récupérer les semestres existants du département
         $semestres = $this->semestreRepository->findByDepartement($this->getDepartement());
+        // faire un tableau avec les code_element des semestres
+        $tabSemestres = [];
+        foreach ($semestres as $semestre) {
+            $tabSemestres[$semestre->getCodeElement()] = $semestre;
+        }
         // traitement de l'import
         $fichier = $myUpload->upload($request->files->get('fichierimportcsv'), 'temp');
-        $etudiantImport->importFomCsv($fichier, $semestres);
+        $etudiantImport->importFomCsv($fichier, $tabSemestres);
 
         return $this->redirectToRoute('administration_etudiant_import_liste_csv'); // page de synthèse ? ou nouvel import ?
     }

@@ -16,9 +16,12 @@ namespace App\Classes\Etudiant;
 use App\Classes\LDAP\MyLdap;
 use App\Entity\Adresse;
 use App\Entity\Etudiant;
+use App\Entity\EtudiantSemestreAnnee;
 use App\Entity\Semestre;
+use App\Repository\AnneeUniversitaireRepository;
 use App\Repository\BacRepository;
 use App\Utils\Tools;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use function array_key_exists;
@@ -28,13 +31,20 @@ use function is_array;
 class EtudiantImport
 {
     private array $tBac;
+    private AnneeUniversitaireRepository $anneeUniversitaireRepository;
+    private EntityManagerInterface $entityManager;
 
     public function __construct(
         BacRepository                  $bacRepository,
         private MyLdap                 $myLdap,
-        private EntityManagerInterface $entity)
+        private EntityManagerInterface $entity,
+        AnneeUniversitaireRepository $anneeUniversitaireRepository,
+        EntityManagerInterface $entityManager,
+    )
     {
         $this->tBac = $bacRepository->getApogeeArray();
+        $this->anneeUniversitaireRepository = $anneeUniversitaireRepository;
+        $this->entityManager = $entityManager;
     }
 
     public function createEtudiant(?Semestre $semestre, array $dataApogee): ?Etudiant
@@ -113,10 +123,8 @@ class EtudiantImport
             /* supprime la première ligne */
             fgetcsv($handle, 1024, ';');
             /* Tant que l'on est pas à la fin du fichier */
-            while (!feof($handle)) {
-                /* On lit la ligne courante */
-                $ligne = fgetcsv($handle, 1024, ';');
-                if (array_key_exists($ligne[10], $tabSemestres)) {
+            while (($ligne = fgetcsv($handle, 1024, ';')) !== false) {
+                if (isset($ligne[10]) && array_key_exists($ligne[10], $tabSemestres)) {
                     $this->createEtudiantFromCsv($ligne, $tabSemestres[$ligne[10]]);
                 }
             }
@@ -133,11 +141,11 @@ class EtudiantImport
     {
         // todo: importer les bacs... Revoir cette partie.
         $adresse = new Adresse();
-        $adresse->setAdresse1($ligne[10]);
-        $adresse->setAdresse2($ligne[11]);
-        $adresse->setAdresse3($ligne[12]);
-        $adresse->setCodePostal($ligne[13]);
-        $adresse->setVille($ligne[14]);
+        $adresse->setAdresse1($ligne[11]);
+        $adresse->setAdresse2($ligne[12]);
+        $adresse->setAdresse3($ligne[13]);
+        $adresse->setCodePostal($ligne[14]);
+        $adresse->setVille($ligne[15]);
         $this->entity->persist($adresse);
 
         $etudiant = new Etudiant();
@@ -148,6 +156,9 @@ class EtudiantImport
         $etudiant->setPrenom($ligne[3]);
         $etudiant->setDateNaissance(Tools::convertDateToObject($ligne[4])); // en fr?
         $etudiant->setPromotion($ligne[5]);
+        $etudiant->setUsername('');
+        $etudiant->setSlug(strtolower($ligne[3].'.'.$ligne[2]));
+        $etudiant->setMailUniv($ligne[3].'.'.$ligne[2].'@etudiant.univ-reims.fr');
 
         $etudiant->setAnneeBac($ligne[6]);
         $etudiant->setBac(true === array_key_exists($ligne[7], $this->tBac) ? $this->tBac[$ligne[7]] : null);
@@ -155,7 +166,12 @@ class EtudiantImport
 
         $etudiant->setTel1($ligne[9]);
         $etudiant->setTypeUser('etudiant');
-        $etudiant->setSemestre($semestre);
+        $anneeUniversitaire = $this->anneeUniversitaireRepository->findOneBy(['active' => 1]);
+        $etuSemestre = new EtudiantSemestreAnnee();
+        $etuSemestre->setEtudiant($etudiant);
+        $etuSemestre->setSemestre($semestre);
+        $etuSemestre->setAnneeUniversitaire($anneeUniversitaire);
+        $this->entityManager->persist($etuSemestre);
 
         $this->entity->persist($etudiant);
     }
