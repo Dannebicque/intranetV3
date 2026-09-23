@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/BorneController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/09/2026 09:31
+ * @lastUpdate 07/09/2026 12:34
  */
 
 namespace App\Controller;
@@ -55,10 +55,13 @@ class BorneController extends AbstractController
         }
         $largeur = [
             'TP' => 1,
+            'tp' => 1,
             'PTTP' => 1,
             'TD' => 2,
+            'td' => 2,
             'PTTD' => 2,
             'CM' => 8,
+            'cm' => 8,
             'PTCM' => 8
         ];
         $crenaux = ["0800", "0930", "1100", "1230", "1400", "1530", "1700", "1830", "1930"];

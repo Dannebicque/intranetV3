@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/ServiceRealise/ServiceRealiseCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/09/2026 10:10
+ * @lastUpdate 14/09/2026 14:52
  */
 
 /*
@@ -51,7 +51,7 @@ class ServiceRealiseCelcat implements ServiceRealiseInterface
 
     public function getServiceRealiserParEnseignant(Personnel $personnel, AnneeUniversitaire $anneeUniversitaire): array
     {
-        $events = $this->celcatEventsRepository->findBy(['codePersonnel' => $personnel->getNumeroHarpege()],
+        $events = $this->celcatEventsRepository->findBy(['codePersonnel' => $personnel->getNumeroHarpege(), 'anneeUniversitaire' => $anneeUniversitaire->getId()],
             ['libModule' => 'ASC', 'semaineFormation' => 'ASC', 'jour' => 'ASC', 'debut' => 'ASC']);
         $tabEvent = [];
         foreach ($events as $event) {
@@ -64,14 +64,22 @@ class ServiceRealiseCelcat implements ServiceRealiseInterface
 
     public function convertToEvenementEdt($event): EvenementEdt
     {
+        $tabJour = [
+            0 => 'Lundi',
+            1 => 'Mardi',
+            2 => 'Mercredi',
+            3 => 'Jeudi',
+            4 => 'Vendredi',
+            5 => 'Samedi',
+            6 => 'Dimanche',
+        ];
         $ev = new EvenementEdt();
         $ev->groupe = $event->getLibGroupe();
-        $ev->jour = $event->getJour();
-//        $ev->date = $event->getDate();
-//
-//        $ev->heure = $event->getDebut();
-        // todo: revoir.
+        $ev->jour = $tabJour[$event->getJour()];
+        $ev->date = $event->getDateCours()->format('d/m/Y');
+        $ev->heureTexte = $event->getDebut()->format('H:i') . ' - ' . $event->getFin()->format('H:i');
         $ev->matiere = $event->getLibModule();
+        $ev->typeIdMatiere = $event->getLibModule();
         $ev->type_cours = $event->getType();
         $ev->personnel = $event->getLibPersonnel();
 
@@ -96,12 +104,11 @@ class ServiceRealiseCelcat implements ServiceRealiseInterface
             'codeModule' => $matiere->codeElement,
             'codePersonnel' => $personnel->getNumeroHarpege(),
         ],
-            ['semaine' => 'ASC', 'jour' => 'ASC', 'debut' => 'ASC']);
+            ['semaineFormation' => 'ASC', 'jour' => 'ASC', 'debut' => 'ASC']);
         $tabEvent = [];
         foreach ($events as $event) {
             $tabEvent[] = $this->convertToEvenementEdt($event);
         }
-        dump($tabEvent);
         return $tabEvent;
     }
 }

@@ -42,12 +42,11 @@
             {# todo: liste déroulante + stimulus load_content #}
             {% set seen = [] %}
             {% for cours in chronologique %}
-                {% if matieres[cours.typeIdMatiere] is defined and matieres[cours.typeIdMatiere] not in seen %}
-                    {% set seen = seen|merge([matieres[cours.typeIdMatiere]]) %}
+                {% if cours.typeIdMatiere is defined and cours.typeIdMatiere not in seen %}
+                    {% set seen = seen|merge([cours.typeIdMatiere]) %}
                     <a href="{{ path('previsionnel_chronologique_matiere', {matiere: cours.typeIdMatiere}) }}">
                         <button class="btn btn-secondary" style="margin: 10px">
-                            {{ matieres[cours.typeIdMatiere] is defined ? matieres[cours.typeIdMatiere].display :
-                            '-Matière inconnue-' }}
+                            {{ cours.typeIdMatiere }}
                         </button>
                     </a>
                 {% endif %}
@@ -72,7 +71,7 @@
                         <td>{{ cours.heureTexte }}</td>
                         <td>
                             {{ matieres[cours.typeIdMatiere] is defined ? matieres[cours.typeIdMatiere].display :
-                            '-Matière inconnue-' }}
+                            cours.typeIdMatiere }}
                         </td>
                         <td>{{ cours.type_cours }}</td>
                         <td>{{ cours.groupe }}</td>

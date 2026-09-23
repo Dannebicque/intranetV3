@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EvaluationInitialisationController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:35
+ * @lastUpdate 09/09/2026 17:03
  */
 
 namespace App\Controller\administration;
@@ -84,6 +84,7 @@ class EvaluationInitialisationController extends BaseController
                             $pers = $this->getUser();
                         }
                         $eval = new Evaluation($pers, $matiere, $semestre);
+                        $eval->setAnneeUniversitaire($this->getAnneeUniversitaire());
                         $eval->setCoefficient($request->request->get('coefficient_'.$matiere->getTypeIdMatiere().'_'.$i));
                         $eval->setLibelle($request->request->get('commentaire_'.$matiere->getTypeIdMatiere().'_'.$i));
                         $eval->setTypegroupe($tGroupes[$request->request->get('typeGroupe_'.$matiere->getTypeIdMatiere().'_'.$i)]);

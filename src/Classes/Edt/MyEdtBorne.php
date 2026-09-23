@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtBorne.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/09/2026 11:33
+ * @lastUpdate 07/09/2026 12:29
  */
 
 namespace App\Classes\Edt;
@@ -42,7 +42,7 @@ class MyEdtBorne
     {
         $this->data['semaine'] = (int) date('W');
         $this->data['njour'] = (int) date('d');
-        $this->data['jsem'] = (int) date('N');
+        $this->data['jsem'] = (int)date('N') - 1; // lundi = 0 dans celcat
     }
 
     public function getData(): array

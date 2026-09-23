@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/TypeDestinataire/Etudiant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/08/2026 19:26
+ * @lastUpdate 18/09/2026 08:45
  */
 
 namespace App\Components\Questionnaire\TypeDestinataire;
@@ -13,8 +13,10 @@ use App\Classes\Mail\MailerFromTwig;
 use App\Components\Questionnaire\DTO\ReponsesUser;
 use App\Components\Questionnaire\Interfaces\QuestChoixInterface;
 use App\Components\Questionnaire\Interfaces\TypeDestinataireInterface;
+use App\Entity\AnneeUniversitaire;
 use App\Entity\QuestChoixEtudiant;
 use App\Event\QualiteRelanceEvent;
+use App\Repository\AnneeUniversitaireRepository;
 use App\Repository\EtudiantRepository;
 use App\Repository\QuestChoixEtudiantRepository;
 use App\Repository\QuestChoixRepository;
@@ -29,8 +31,10 @@ class Etudiant extends AbstractTypeDestinataire implements TypeDestinataireInter
 {
     public const LABEL = 'etudiant';
     public const ENTITY = QuestChoixEtudiant::class;
+    private AnneeUniversitaire $anneeUniversitaire;
 
     public function __construct(
+        AnneeUniversitaireRepository $anneeUniversitaireRepository,
         QuestChoixRepository $questChoixRepository,
         QuestQuestionRepository $questQuestionRepository,
         QuestReponseRepository $questReponseRepository,
@@ -40,6 +44,7 @@ class Etudiant extends AbstractTypeDestinataire implements TypeDestinataireInter
         protected QuestChoixEtudiantRepository $questChoixEtudiantRepository,
         protected EtudiantRepository $etudiantRepository
     ) {
+        $this->anneeUniversitaire = $anneeUniversitaireRepository->findOneBy(['active' => true]);
         parent::__construct($eventDispatcher, $entityManager, $questChoixRepository, $questQuestionRepository,
             $questReponseRepository);
     }
@@ -47,7 +52,7 @@ class Etudiant extends AbstractTypeDestinataire implements TypeDestinataireInter
     public function getListe(): array
     {
         if ($this->questionnaire->getSemestre() !== null) {
-            $etudiants = $this->etudiantRepository->findBySemestre($this->questionnaire->getSemestre(), $anneeUniversitaire);
+            $etudiants = $this->etudiantRepository->findBySemestre($this->questionnaire->getSemestre(), $this->anneeUniversitaire);
             $dest = $this->questChoixEtudiantRepository->findByQuestionnaire($this->questionnaire);
 
             $ld = [];

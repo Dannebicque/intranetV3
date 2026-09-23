@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Etudiant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/08/2026 09:36
+ * @lastUpdate 15/09/2026 09:17
  */
 
 namespace App\Entity;
@@ -792,7 +792,7 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
         return $this->photoName;
     }
 
-    public function setPhotoName(?string $photoName): void
+    public function setPhotoName(?string $photoName = 'noimage.png'): void
     {
         $this->photoName = $photoName;
     }

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/AgendaController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/06/2024 20:01
+ * @lastUpdate 14/09/2026 14:51
  */
 
 namespace App\Controller;
@@ -51,7 +51,7 @@ class AgendaController extends BaseController
         // todo: a généraliser avec SAE, Ressources
         if (null !== $this->getDepartement() && true === $this->getDepartement()->getOptUpdateCelcat()) {
             $chronologique = $serviceRealiseCelcat->getServiceRealiseParPersonnelMatiere($this->getUser(),
-                $previ->getIdMatiere(), $previ->getTypeMatiere());
+                $previ->getIdMatiere(), $previ->getTypeMatiere(), $this->getAnneeUniversitaire());
         } else {
             $chronologique = $serviceRealiseIntranet->getServiceRealiseParPersonnelMatiere($this->getUser(),
                 $previ->getIdMatiere(), $previ->getTypeMatiere(), $this->getAnneeUniversitaire());

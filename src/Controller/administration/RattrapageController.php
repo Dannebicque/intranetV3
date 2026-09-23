@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/RattrapageController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/01/2026 10:10
+ * @lastUpdate 09/09/2026 17:03
  */
 
 namespace App\Controller\administration;
@@ -46,7 +46,7 @@ class RattrapageController extends BaseController
             'semestre' => $semestre,
             'anneeUniversitaire' => $this->getAnneeUniversitaire(),
             'absences' => $absenceRepository->findBySemestreRattrapage($semestre,
-                $semestre->getAnneeUniversitaire()),
+                $this->getAnneeUniversitaire()),
             'matieres' => $typeMatiereManager->findBySemestreArray($semestre),
         ]);
         $table->handleRequest($request);
@@ -67,7 +67,7 @@ class RattrapageController extends BaseController
         TypeMatiereManager $typeMatiereManager, MyExport $myExport, RattrapageRepository $rattrapageRepository, Semestre $semestre, string $_format): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $semestre);
-        $rattrapages = $rattrapageRepository->findBySemestre($semestre, $semestre->getAnneeUniversitaire());
+        $rattrapages = $rattrapageRepository->findBySemestre($semestre, $this->getAnneeUniversitaire());
         $matieres = $typeMatiereManager->findBySemestreArray($semestre);
         $tab = [];
         foreach ($rattrapages as $rattrapage) {

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/DataUserSession.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/09/2024 11:04
+ * @lastUpdate 14/09/2026 14:13
  */
 
 namespace App\Classes;
@@ -61,6 +61,8 @@ class DataUserSession
 
     private ?string $type_user = null;
 
+    private ?AnneeUniversitaire $anneeUniversitaire = null;
+
     private bool $isInit = false;
 
     public function getTypeUser(): string
@@ -69,14 +71,14 @@ class DataUserSession
     }
 
     public function __construct(
-        protected SemestreRepository    $semestreRepository,
-        protected AnneeRepository       $anneeRepository,
-        protected DiplomeRepository     $diplomeRepository,
-        protected PersonnelRepository   $personnelRepository,
-        protected DepartementRepository $departementRepository,
-        protected Security              $security,
-        protected EventDispatcherInterface $eventDispatcher,
-        protected RequestStack             $requestStack,
+        protected SemestreRepository           $semestreRepository,
+        protected AnneeRepository              $anneeRepository,
+        protected DiplomeRepository            $diplomeRepository,
+        protected PersonnelRepository          $personnelRepository,
+        protected DepartementRepository        $departementRepository,
+        protected Security                     $security,
+        protected EventDispatcherInterface     $eventDispatcher,
+        protected RequestStack                 $requestStack,
         protected AnneeUniversitaireRepository $anneeUniversitaireRepository,
     )
     {
@@ -90,7 +92,9 @@ class DataUserSession
             if ($user instanceof Etudiant) {
                 $this->type_user = 'e';
                 $this->departement = $this->departementRepository->findDepartementEtudiant($user);
+                $this->anneeUniversitaire = $this->anneeUniversitaireRepository->findOneBy(['active' => true]);
             } elseif ($this->getUser() instanceof Personnel) {
+                $this->anneeUniversitaire = $this->getUser()->getAnneeUniversitaire() ?? $this->anneeUniversitaireRepository->findOneBy(['active' => true]);
                 $this->type_user = 'p';
                 if (null !== $this->requestStack->getSession()->get('departement')) {
                     $this->departement = $this->departementRepository->findOneBy(['uuid' => $this->requestStack->getSession()->get('departement')]);
@@ -264,7 +268,7 @@ class DataUserSession
     public function getAnneeUniversitaire(): ?AnneeUniversitaire
     {
         $this->initDataUserSession($this->getUser());
-        return $this->anneeUniversitaireRepository->findOneBy(['active' => true]);
+        return $this->anneeUniversitaire;
     }
 
     public function displayAnneeUniversitaire(): string

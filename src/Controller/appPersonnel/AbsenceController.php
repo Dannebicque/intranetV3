@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appPersonnel/AbsenceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/02/2024 08:28
+ * @lastUpdate 09/09/2026 17:03
  */
 
 namespace App\Controller\appPersonnel;
@@ -130,7 +130,7 @@ class AbsenceController extends BaseController
             'semestre' => $semestre,
             'absences' => $this->myAbsences->getAbsencesMatiere(
                 $mat,
-                $semestre->getAnneeUniversitaire()
+                $this->getAnneeUniversitaire()
             ),
         ]);
     }
@@ -196,7 +196,7 @@ class AbsenceController extends BaseController
             throw new MatiereNotFoundException();
         }
 
-        return $this->myAbsences->export($mat, $semestre->getAnneeUniversitaire(), $semestre, $_format);
+        return $this->myAbsences->export($mat, $this->getAnneeUniversitaire(), $semestre, $_format);
     }
 
     #[Route(path: '/{uuid}', name: 'application_personnel_absence_delete', methods: 'DELETE')]

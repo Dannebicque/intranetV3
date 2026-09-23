@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EvaluationController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/04/2024 06:24
+ * @lastUpdate 09/09/2026 17:03
  */
 
 namespace App\Controller\administration;
@@ -83,6 +83,7 @@ class EvaluationController extends BaseController
 
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $semestre);
         $evaluation = new Evaluation($this->getUser(), $mat, $semestre);
+        $evaluation->setAnneeUniversitaire($this->getAnneeUniversitaire());
         $form = $this->createForm(
             EvaluationType::class,
             $evaluation,
