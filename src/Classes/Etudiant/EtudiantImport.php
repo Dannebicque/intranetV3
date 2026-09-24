@@ -160,7 +160,7 @@ class EtudiantImport
         $etudiant->setSlug(strtolower($ligne[3].'.'.$ligne[2]));
         $etudiant->setMailUniv($ligne[3].'.'.$ligne[2].'@etudiant.univ-reims.fr');
 
-        $etudiant->setAnneeBac($ligne[6]);
+        $etudiant->setAnneeBac($ligne[6] ? $ligne[6] : null);
         $etudiant->setBac(true === array_key_exists($ligne[7], $this->tBac) ? $this->tBac[$ligne[7]] : null);
         $etudiant->setCivilite('M' === $ligne[8] ? 'M.' : 'Mme'); // M ou F
 
