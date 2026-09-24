@@ -278,11 +278,12 @@ class EdtExportController extends BaseController
     #[Route(path: '/profs/{source}.pdf', name: 'administration_edt_export_profs', requirements: ['source' => 'intranet|celcat'])]
     public function exportProfs(Request $request, PersonnelRepository $personnelRepository, MyEdtExport $myEdtExport, string $source): Response
     {
+        $anneeUniv = $this->getUser()->getAnneeUniversitaire();
         $profs = $request->request->all()['personnels'];
         foreach ($profs as $prof) {
             $personnel = $personnelRepository->find($prof);
             if (null !== $personnel) {
-                $myEdtExport->generePdf($personnel, $source, $this->getDepartement());
+                $myEdtExport->generePdf($personnel, $source, $this->getDepartement(), $anneeUniv);
             }
         }
 
