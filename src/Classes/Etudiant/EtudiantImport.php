@@ -154,7 +154,7 @@ class EtudiantImport
         $etudiant->setNumIne($ligne[1]);
         $etudiant->setNom($ligne[2]);
         $etudiant->setPrenom($ligne[3]);
-        $etudiant->setDateNaissance(Tools::convertDateToObject($ligne[4])); // en fr?
+        $etudiant->setDateNaissance($ligne[4] ? Tools::convertDateToObject($ligne[4]) : null); // en fr?
         $etudiant->setPromotion($ligne[5]);
         $etudiant->setUsername('');
         $etudiant->setSlug(strtolower($ligne[3].'.'.$ligne[2]));
