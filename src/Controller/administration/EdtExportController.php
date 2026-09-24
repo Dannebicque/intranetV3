@@ -265,7 +265,8 @@ class EdtExportController extends BaseController
     #[Route(path: '/tous/{source}.{_format}', name: 'administration_edt_export_all', requirements: ['source' => 'intranet|celcat'])]
     public function exportAll(MyEdtExport $myEdtExport, string $source, string $_format): Response
     {
-        $myEdtExport->genereAllDocument($source, $_format, $this->getDepartement());
+        $anneeUniv = $this->getUser()->getAnneeUniversitaire();
+        $myEdtExport->genereAllDocument($source, $_format, $this->getDepartement(), $anneeUniv);
 
         return $this->redirectToRoute('administration_edt_export_voir');
     }

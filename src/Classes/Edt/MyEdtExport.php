@@ -188,10 +188,10 @@ class MyEdtExport
         return $t;
     }
 
-    public function genereAllDocument(string $source, string $_format, ?Departement $departement): void
+    public function genereAllDocument(string $source, string $_format, ?Departement $departement, AnneeUniversitaire $anneeUniv): void
     {
         if ('pdf' === $_format) {
-            $this->genereaAllPdf($source, $departement);
+            $this->genereaAllPdf($source, $departement, $anneeUniv);
         }
         // todo: export CSV/XLSX
     }
@@ -201,11 +201,11 @@ class MyEdtExport
      * @throws SyntaxError
      * @throws LoaderError
      */
-    private function genereaAllPdf(string $source, ?Departement $departement): void
+    private function genereaAllPdf(string $source, ?Departement $departement, AnneeUniversitaire $anneeUniv): void
     {
         set_time_limit(120);
         foreach ($departement->getPersonnelDepartements() as $personnelDepartement) {
-            $this->generePdf($personnelDepartement->getPersonnel(), $source, $departement);
+            $this->generePdf($personnelDepartement->getPersonnel(), $source, $departement, $anneeUniv);
         }
     }
 
