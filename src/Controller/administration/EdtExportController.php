@@ -214,7 +214,8 @@ class EdtExportController extends BaseController
     #[Route(path: '/one/{personnel}/{source}.{_format}', name: 'administration_edt_export_one', requirements: ['source' => 'intranet|celcat'])]
     public function exportOne(MyEdtExport $myEdtExport, Personnel $personnel, string $source, string $_format): Response
     {
-        $myEdtExport->genereOneDocument($source, $_format, $personnel, $this->getDepartement());
+        $anneeUniv = $this->getUser()->getAnneeUniversitaire();
+        $myEdtExport->genereOneDocument($source, $_format, $personnel, $this->getDepartement(), $anneeUniv);
 
         return JsonReponse::success('PDF généré');
     }

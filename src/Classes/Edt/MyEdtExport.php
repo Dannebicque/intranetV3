@@ -214,14 +214,14 @@ class MyEdtExport
      * @throws RuntimeError
      * @throws SyntaxError
      */
-    public function generePdf(Personnel $personnel, string $source, Departement $departement): void
+    public function generePdf(Personnel $personnel, string $source, Departement $departement, AnneeUniversitaire $anneeUniv): void
     {
         $dir = 'upload/pdfedt/' . $departement->getId();
         Tools::checkDirectoryExist($this->dir . $dir);
         // todo: passer par le DTO Evenement, comme ca compatible avec celcat
         // todo: gérer l'année universitaire d'export
         if ('intranet' === $source) {
-            $planning = $this->edtPlanningRepository->findEdtProf($personnel->getId(), $personnel->getAnneeUniversitaire());
+            $planning = $this->edtPlanningRepository->findEdtProf($personnel->getId(), $anneeUniv);
             //supprimer l'ancien fichier
             if (file_exists($this->dir . $dir . '/' . $personnel->getId() . '-' . $personnel->getInitiales() . '.pdf')) {
                 unlink($this->dir . $dir . '/' . $personnel->getId() . '-' . $personnel->getInitiales() . '.pdf');
@@ -301,9 +301,9 @@ class MyEdtExport
      * @throws SyntaxError
      * @throws LoaderError
      */
-    public function genereOneDocument(string $source, string $_format, Personnel $personnel, Departement $departement): void
+    public function genereOneDocument(string $source, string $_format, Personnel $personnel, Departement $departement, AnneeUniversitaire $anneeUniv): void
     {
-        $this->generePdf($personnel, $source, $departement);
+        $this->generePdf($personnel, $source, $departement, $anneeUniv);
     }
 
     public function getOneDoc(Personnel $personnel, Departement $departement): ?array
