@@ -76,13 +76,6 @@
                     {{ responsable.displayPr }}<br/>
                 {% endfor %}
             {% endif %}
-            {% if stageEtudiant.stagePeriode.responsables[0].signatureElectronique != null %}
-                <br/>
-                <img src="{{ settings('BASE_PATH') }}signature/{{ stageEtudiant.stagePeriode.responsables[0].signatureElectronique }}"
-                     width="100px"
-                     alt="signature"
-                />
-            {% endif %}
         </div>
     </div>
     <div style="text-align: right; position:fixed; bottom: 50px; right:15px; font-size:11px">

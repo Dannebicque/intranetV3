@@ -318,11 +318,6 @@
         <tr>
             <td><strong>Tuteur Universitaire</strong><br/>Nom et signature
                                                           :<br/>{% if proposition.tuteurUniversitaire != null %}{{ proposition.tuteurUniversitaire.displayPr }}{% endif %}
-                {% if proposition.tuteurUniversitaire.signatureElectronique != null %}
-                    <br/>
-                    <img src="{{ settings('BASE_PATH') }}signature/{{ proposition.tuteurUniversitaire
-                    .signatureElectronique }}" width="100px" alt="Signature électronique"/>
-                {% endif %}
             </td>
             <td><strong>Le tuteur de l’organisme d’accueil</strong><br/>
                 Nom et signature :<br/>{% if proposition.tuteur != null %}
