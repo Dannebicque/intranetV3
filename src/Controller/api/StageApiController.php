@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/api/StageApiController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/09/2026 18:47
+ * @lastUpdate 28/09/2026 19:02
  */
 
 declare(strict_types=1);
@@ -30,7 +30,9 @@ class StageApiController extends BaseController
         UserPasswordHasherInterface $passwordHasher,
         Request                     $request): Response
     {
-        $currentUser = $this->getUser();
+        // Ne pas utiliser $this->getUser() (surchargé dans BaseController) qui force
+        // IS_AUTHENTICATED_FULLY : cette route doit rester accessible aux anonymes.
+        $currentUser = parent::getUser();
 
         if ($currentUser instanceof Personnel) {
             // Utilisateur déjà authentifié via la session web : on ne génère un jeton
