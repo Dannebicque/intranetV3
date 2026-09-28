@@ -4,25 +4,24 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/api/StageApiController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/09/2026 19:02
+ * @lastUpdate 28/09/2026 19:04
  */
 
 declare(strict_types=1);
 
 namespace App\Controller\api;
 
-use App\Controller\BaseController;
-use App\Entity\Personnel;
 use App\Entity\StageEtudiant;
 use App\Entity\StagePeriode;
 use App\Repository\PersonnelRepository;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 
-class StageApiController extends BaseController
+class StageApiController extends AbstractController
 {
     #[Route('/api/stage/generate-token', name: 'api_generate_token', methods: ['POST'])]
     public function generateToken(
@@ -30,37 +29,20 @@ class StageApiController extends BaseController
         UserPasswordHasherInterface $passwordHasher,
         Request                     $request): Response
     {
-        // Ne pas utiliser $this->getUser() (surchargé dans BaseController) qui force
-        // IS_AUTHENTICATED_FULLY : cette route doit rester accessible aux anonymes.
-        $currentUser = parent::getUser();
 
-        if ($currentUser instanceof Personnel) {
-            // Utilisateur déjà authentifié via la session web : on ne génère un jeton
-            // que pour son propre compte.
-            $username = trim((string)$request->request->get('username', $currentUser->getUserIdentifier()));
-            if ('' === $username) {
-                return $this->json(['error' => 'Username manquant'], Response::HTTP_BAD_REQUEST);
-            }
+        // Pas de session : authentification par login/mot de passe fournis dans la requête.
+        $username = trim((string)$request->request->get('username', ''));
+        $password = (string)$request->request->get('password', '');
 
-            if ($username !== $currentUser->getUserIdentifier()) {
-                throw $this->createAccessDeniedException('Vous ne pouvez générer un jeton que pour votre propre compte.');
-            }
-
-            $user = $currentUser;
-        } else {
-            // Pas de session : authentification par login/mot de passe fournis dans la requête.
-            $username = trim((string)$request->request->get('username', ''));
-            $password = (string)$request->request->get('password', '');
-
-            if ('' === $username || '' === $password) {
-                return $this->json(['error' => 'Identifiants manquants'], Response::HTTP_BAD_REQUEST);
-            }
-
-            $user = $personnelRepository->findOneBy(['username' => $username]);
-            if (null === $user || !$passwordHasher->isPasswordValid($user, $password)) {
-                return $this->json(['error' => 'Identifiants invalides'], Response::HTTP_UNAUTHORIZED);
-            }
+        if ('' === $username || '' === $password) {
+            return $this->json(['error' => 'Identifiants manquants'], Response::HTTP_BAD_REQUEST);
         }
+
+        $user = $personnelRepository->findOneBy(['username' => $username]);
+        if (null === $user || !$passwordHasher->isPasswordValid($user, $password)) {
+            return $this->json(['error' => 'Identifiants invalides'], Response::HTTP_UNAUTHORIZED);
+        }
+
 
         $token = bin2hex(random_bytes(32));
 
