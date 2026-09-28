@@ -214,7 +214,8 @@ class EdtExportController extends BaseController
     #[Route(path: '/one/{personnel}/{source}.{_format}', name: 'administration_edt_export_one', requirements: ['source' => 'intranet|celcat'])]
     public function exportOne(MyEdtExport $myEdtExport, Personnel $personnel, string $source, string $_format): Response
     {
-        $myEdtExport->genereOneDocument($source, $_format, $personnel, $this->getDepartement());
+        $anneeUniv = $this->getUser()->getAnneeUniversitaire();
+        $myEdtExport->genereOneDocument($source, $_format, $personnel, $this->getDepartement(), $anneeUniv);
 
         return JsonReponse::success('PDF généré');
     }
@@ -264,7 +265,8 @@ class EdtExportController extends BaseController
     #[Route(path: '/tous/{source}.{_format}', name: 'administration_edt_export_all', requirements: ['source' => 'intranet|celcat'])]
     public function exportAll(MyEdtExport $myEdtExport, string $source, string $_format): Response
     {
-        $myEdtExport->genereAllDocument($source, $_format, $this->getDepartement());
+        $anneeUniv = $this->getUser()->getAnneeUniversitaire();
+        $myEdtExport->genereAllDocument($source, $_format, $this->getDepartement(), $anneeUniv);
 
         return $this->redirectToRoute('administration_edt_export_voir');
     }
@@ -277,11 +279,12 @@ class EdtExportController extends BaseController
     #[Route(path: '/profs/{source}.pdf', name: 'administration_edt_export_profs', requirements: ['source' => 'intranet|celcat'])]
     public function exportProfs(Request $request, PersonnelRepository $personnelRepository, MyEdtExport $myEdtExport, string $source): Response
     {
+        $anneeUniv = $this->getUser()->getAnneeUniversitaire();
         $profs = $request->request->all()['personnels'];
         foreach ($profs as $prof) {
             $personnel = $personnelRepository->find($prof);
             if (null !== $personnel) {
-                $myEdtExport->generePdf($personnel, $source, $this->getDepartement());
+                $myEdtExport->generePdf($personnel, $source, $this->getDepartement(), $anneeUniv);
             }
         }
 
