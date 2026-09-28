@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/api/StageApiController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/08/2026 09:37
+ * @lastUpdate 28/09/2026 18:47
  */
 
 declare(strict_types=1);
@@ -19,43 +19,61 @@ use App\Repository\PersonnelRepository;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 
 class StageApiController extends BaseController
 {
-    #[Route('/api/generate-token', name: 'api_generate_token', methods: ['POST'])]
+    #[Route('/api/stage/generate-token', name: 'api_generate_token', methods: ['POST'])]
     public function generateToken(
-        PersonnelRepository $personnelRepository,
-        Request             $request): Response
+        PersonnelRepository         $personnelRepository,
+        UserPasswordHasherInterface $passwordHasher,
+        Request                     $request): Response
     {
         $currentUser = $this->getUser();
-        if (!$currentUser instanceof Personnel) {
-            throw $this->createAccessDeniedException('Seuls les personnels peuvent générer un jeton API.');
-        }
 
-        $username = trim((string)$request->request->get('username', $currentUser->getUserIdentifier()));
-        if ('' === $username) {
-            return $this->json(['error' => 'Username manquant'], Response::HTTP_BAD_REQUEST);
-        }
+        if ($currentUser instanceof Personnel) {
+            // Utilisateur déjà authentifié via la session web : on ne génère un jeton
+            // que pour son propre compte.
+            $username = trim((string)$request->request->get('username', $currentUser->getUserIdentifier()));
+            if ('' === $username) {
+                return $this->json(['error' => 'Username manquant'], Response::HTTP_BAD_REQUEST);
+            }
 
-        if ($username !== $currentUser->getUserIdentifier()) {
-            throw $this->createAccessDeniedException('Vous ne pouvez générer un jeton que pour votre propre compte.');
+            if ($username !== $currentUser->getUserIdentifier()) {
+                throw $this->createAccessDeniedException('Vous ne pouvez générer un jeton que pour votre propre compte.');
+            }
+
+            $user = $currentUser;
+        } else {
+            // Pas de session : authentification par login/mot de passe fournis dans la requête.
+            $username = trim((string)$request->request->get('username', ''));
+            $password = (string)$request->request->get('password', '');
+
+            if ('' === $username || '' === $password) {
+                return $this->json(['error' => 'Identifiants manquants'], Response::HTTP_BAD_REQUEST);
+            }
+
+            $user = $personnelRepository->findOneBy(['username' => $username]);
+            if (null === $user || !$passwordHasher->isPasswordValid($user, $password)) {
+                return $this->json(['error' => 'Identifiants invalides'], Response::HTTP_UNAUTHORIZED);
+            }
         }
 
         $token = bin2hex(random_bytes(32));
 
-        $config = $currentUser->getConfiguration();
+        $config = $user->getConfiguration();
         if (!is_array($config)) {
             $config = [];
         }
         $config['api_token'] = hash('sha256', $token);
-        $currentUser->setConfiguration($config);
-        $personnelRepository->save($currentUser);
+        $user->setConfiguration($config);
+        $personnelRepository->save($user);
 
         return $this->json(['token' => $token]);
     }
 
-    #[Route('/api/stage-periode/{uuid}', name: 'api_stage_periode')]
+    #[Route('/api/stage/periode/{uuid}', name: 'api_stage_periode')]
     public function stagePeriode(
         PersonnelRepository $personnelRepository,
         Request             $request,
