@@ -13,6 +13,7 @@
 
 namespace App\Classes;
 
+use App\Entity\AnneeUniversitaire;
 use App\Entity\Etudiant;
 use App\Entity\ProjetEtudiant;
 use App\Entity\ProjetPeriode;
@@ -35,15 +36,11 @@ class MyProjet
     ) {
     }
 
-    public function getDataPeriode(ProjetPeriode $projetPeriode, ?int $anneeUniversitaire = 0): self
+    public function getDataPeriode(ProjetPeriode $projetPeriode, AnneeUniversitaire $anneeUniversitaire): self
     {
-        if (0 === $anneeUniversitaire) {
-            $anneeUniversitaire = null !== $projetPeriode->getAnneeUniversitaire() ? $projetPeriode->getAnneeUniversitaire()->getAnnee() : (int) date('Y');
-        }
-
         $etudiants = [];
         foreach ($projetPeriode->getSemestres() as $semestre) {
-            $etudiants[] = $this->etudiantRepository->findBySemestre($semestre);
+            $etudiants[] = $this->etudiantRepository->findBySemestre($semestre, $anneeUniversitaire);
         }
         $etudiants = array_merge(...$etudiants);
 
