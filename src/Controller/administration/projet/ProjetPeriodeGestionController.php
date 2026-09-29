@@ -71,10 +71,12 @@ class ProjetPeriodeGestionController extends BaseController
             }
         }
 
+        $anneeUniv = $this->getUser()->getAnneeUniversitaire();
+
         return $this->render('administration/projet/projet_periode_gestion/index.html.twig', [
             'projetPeriode' => $projetPeriode,
             'periodes' => $periodes,
-            'myProjet' => $myProjet->getDataPeriode($projetPeriode),
+            'myProjet' => $myProjet->getDataPeriode($projetPeriode, $anneeUniv),
         ]);
     }
 }
