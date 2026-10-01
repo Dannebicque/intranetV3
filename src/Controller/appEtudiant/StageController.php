@@ -123,6 +123,8 @@ class StageController extends BaseController
             throw $this->createAccessDeniedException('Vous n\'êtes pas l\'auteur de ce formulaire de stage');
         }
 
+        $anneeUniversitaire = $this->getAnneeUniversitaire();
+
         $stageRapport = new StageRapport($stageEtudiant);
         $form = $this->createForm(StageRapportType::class, $stageRapport, [
         ]);
@@ -141,6 +143,7 @@ class StageController extends BaseController
         return $this->render('appEtudiant/stage/rapport.html.twig', [
             'stageEtudiant' => $stageEtudiant,
             'form' => $form,
+            'anneeUniv' => $anneeUniversitaire
         ]);
     }
 

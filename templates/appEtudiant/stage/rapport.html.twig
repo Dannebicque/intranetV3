@@ -30,7 +30,7 @@
                                                  title="Ce champ est obligatoire">*</span> :
                 </div>
                 <div class="col-sm-9">
-                    <p>{{ etudiant.diplome.display }}</p>
+                    <p>{{ etudiant.diplome(anneeUniv).display }}</p>
                 </div>
             </div>
             <div class="form-group row">
@@ -39,8 +39,8 @@
                                                   title="Ce champ est obligatoire">*</span> :
                 </div>
                 <div class="col-sm-9">
-                    <p>{{ etudiant.semestreActif.libelle }} // {{ etudiant.semestreActif.annee.libelle }}
-                        (BUT {{ etudiant.semestreActif.annee.ordre }})</p>
+                    <p>{{ etudiant.semestreActif(anneeUniv).libelle }} // {{ etudiant.semestreActif(anneeUniv).annee.libelle }}
+                        (BUT {{ etudiant.semestreActif(anneeUniv).annee.ordre }})</p>
                 </div>
             </div>
 
