@@ -13,6 +13,7 @@ use App\Entity\Etudiant;
 use App\Entity\ProjetEtudiant;
 use App\Form\stage\EntrepriseType;
 use App\Form\Type\YesNoType;
+use App\Repository\AnneeUniversitaireRepository;
 use App\Repository\EtudiantRepository;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -26,10 +27,17 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class ProjetEtudiantEtudiantType extends AbstractType
 {
     protected Collection $semestres;
+    protected AnneeUniversitaireRepository $anneeUniversitaireRepository;
+
+    public function __construct(AnneeUniversitaireRepository $anneeUniversitaireRepository)
+    {
+        $this->anneeUniversitaireRepository = $anneeUniversitaireRepository;
+    }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->semestres = $options['semestres'];
+        $anneeUniv= $this->anneeUniversitaireRepository->findOneBy(['active' => true]);
 
         $builder
             ->add('organisme', EntrepriseType::class, ['label' => 'label.organisme', 'withResponsable' => true])
@@ -38,7 +46,7 @@ class ProjetEtudiantEtudiantType extends AbstractType
             ->add('etudiants', EntityType::class, [
                 'class' => Etudiant::class,
                 'choice_label' => 'displayPr',
-                'query_builder' => fn (EtudiantRepository $etudiantRepository) => $etudiantRepository->findBySemestresBuilder($this->semestres),
+                'query_builder' => fn (EtudiantRepository $etudiantRepository) => $etudiantRepository->findBySemestresBuilder($this->semestres, $anneeUniv),
                 'multiple' => true,
                 'expanded' => true,
             ])

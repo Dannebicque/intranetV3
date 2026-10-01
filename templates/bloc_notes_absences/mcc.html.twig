@@ -24,7 +24,7 @@
                                 {% endfor %}
                             </td>
                         {% else %}
-                            <td class="hide">{{ matiere.ue_id != 0 ? matiere.ue_display : 'non.defini'|trans }}</td>
+                            <td class="hide">{{ matiere.ueId != 0 ? matiere.ueDisplay : 'non.defini'|trans }}</td>
                         {% endif %}
                         <td>{{ matiere.nbNotes }}</td>
                         {% if apc == false %}
