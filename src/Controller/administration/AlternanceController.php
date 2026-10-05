@@ -37,7 +37,7 @@ class AlternanceController extends BaseController
     public function initAll(EtudiantRepository $etudiantRepository, AlternanceRepository $alternanceRepository, Annee $annee): RedirectResponse
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $annee);
-        $etudiants = $etudiantRepository->findByAnnee($annee);
+        $etudiants = $etudiantRepository->findByAnnee($annee, $this->getAnneeUniversitaire());
         /** @var Etudiant $etudiant */
         foreach ($etudiants as $etudiant) {
             $exist = $alternanceRepository->findBy([
@@ -142,7 +142,7 @@ class AlternanceController extends BaseController
     public function index(EtudiantRepository $etudiantRepository, AlternanceRepository $alternanceRepository, Annee $annee): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $annee);
-        $etudiants = $etudiantRepository->findByAnnee($annee);
+        $etudiants = $etudiantRepository->findByAnnee($annee, $this->getAnneeUniversitaire());
 
         return $this->render('administration/alternance/index.html.twig',
             [
