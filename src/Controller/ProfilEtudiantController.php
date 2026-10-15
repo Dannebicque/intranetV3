@@ -30,6 +30,7 @@ use App\Repository\UeRepository;
 use Exception;
 use JsonException;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -68,6 +69,54 @@ class ProfilEtudiantController extends BaseController
             'departements' => $departementRepository->findActifs(),
             'anneeUniversitaires' => $this->entityManager->getRepository(AnneeUniversitaire::class)->findAll(),
         ]);
+    }
+
+    #[Route(path: '/profil/{slug}/actions/photo', name: 'profil_etudiant_action_photo', methods: ['POST'])]
+    public function uploadPhoto(#[MapEntity(mapping: ['slug' => 'slug'])] Etudiant $etudiant, Request $request): Response
+    {
+        if (!($this->isGranted('ROLE_PERMANENT'))) {
+            throw $this->createAccessDeniedException('Vous n\'avez pas accès à cette page');
+        }
+
+        if (!$this->isCsrfTokenValid('upload_photo_etudiant_'.$etudiant->getId(), (string) $request->request->get('_token'))) {
+            throw $this->createAccessDeniedException('Jeton CSRF invalide');
+        }
+
+        $photo = $request->files->get('photo');
+
+        if (!$photo instanceof UploadedFile) {
+            $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'Aucun fichier photo transmis.');
+
+            return $this->redirectToRoute('user_profil', ['type' => 'etudiant', 'slug' => $etudiant->getSlug(), 'onglet' => 'actions']);
+        }
+
+        if (!$photo->isValid()) {
+            $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'Le fichier envoyé est invalide. Merci de réessayer avec une image au format JPEG, PNG ou WebP.');
+
+            return $this->redirectToRoute('user_profil', ['type' => 'etudiant', 'slug' => $etudiant->getSlug(), 'onglet' => 'actions']);
+        }
+
+        $mimeTypesAutorises = ['image/jpeg', 'image/png', 'image/webp'];
+        if (!in_array((string) $photo->getMimeType(), $mimeTypesAutorises, true)) {
+            $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'Format de fichier non autorisé. Merci d\'envoyer une image JPEG, PNG ou WebP.');
+
+            return $this->redirectToRoute('user_profil', ['type' => 'etudiant', 'slug' => $etudiant->getSlug(), 'onglet' => 'actions']);
+        }
+
+        $tailleMax = 2 * 1024 * 1024;
+        if ($photo->getSize() > $tailleMax) {
+            $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'La photo est trop volumineuse. Taille maximale autorisée : 2 Mo.');
+
+            return $this->redirectToRoute('user_profil', ['type' => 'etudiant', 'slug' => $etudiant->getSlug(), 'onglet' => 'actions']);
+        }
+
+        $etudiant->setPhotoFile($photo);
+        $this->entityManager->persist($etudiant);
+        $this->entityManager->flush();
+
+        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'Photo mise à jour avec succès.');
+
+        return $this->redirectToRoute('user_profil', ['type' => 'etudiant', 'slug' => $etudiant->getSlug(), 'onglet' => 'actions']);
     }
 
     #[Route(path: '/profil/{slug}/scolarite', name: 'profil_etudiant_scolarite')]
