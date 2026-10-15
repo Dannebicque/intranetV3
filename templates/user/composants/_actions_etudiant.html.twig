@@ -144,10 +144,11 @@
 <div class="card">
     <h4 class="card-title">Mise à jour de la photo</h4>
     <div class="card-body">
-        <form action="" enctype="multipart/form-data">
+        <form action="{{ path('profil_etudiant_action_photo', {slug: etudiant.slug}) }}" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="_token" value="{{ csrf_token('upload_photo_etudiant_' ~ etudiant.id) }}">
             <div class="form-group">
                 <label for="photo">Photo de l'étudiant</label>
-                <input type="file" name="photo" id="photo" class="form-control">
+                <input type="file" name="photo" id="photo" class="form-control" accept="image/*" required>
             </div>
             <div class="d-grid mt-2">
                 <button class="d-block btn btn-primary">Mettre à jour la photo</button>
