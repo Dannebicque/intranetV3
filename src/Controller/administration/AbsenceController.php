@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/AbsenceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/09/2026 17:03
+ * @lastUpdate 18/10/2026 17:30
  */
 
 namespace App\Controller\administration;
@@ -143,7 +143,7 @@ class AbsenceController extends BaseController
     ): Response {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $semestre);
 
-        $justificatifs = $absenceJustificatifRepository->findBySemestre($semestre);
+        $justificatifs = $absenceJustificatifRepository->findBySemestre($semestre, $this->getAnneeUniversitaire());
 
         return $myExport->genereFichierAbsence($_format, $justificatifs, 'absences_'.$semestre->getLibelle());
     }

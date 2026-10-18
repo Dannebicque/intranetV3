@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/AbsenceJustificatifRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/08/2026 14:59
+ * @lastUpdate 18/10/2026 17:30
  */
 
 namespace App\Repository;
@@ -36,13 +36,13 @@ class AbsenceJustificatifRepository extends ServiceEntityRepository
         parent::__construct($registry, AbsenceJustificatif::class);
     }
 
-    public function findBySemestre(Semestre $semestre): array
+    public function findBySemestre(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire): array
     {
         return $this->createQueryBuilder('j')
             ->where('j.semestre = :semestre')
             ->andWhere('j.anneeUniversitaire = :annee')
             ->setParameter('semestre', $semestre->getId())
-            ->setParameter('annee', $semestre->getAnneeUniversitaire())
+            ->setParameter('annee', $anneeUniversitaire->getId())
             ->orderBy('j.created', Order::Descending->value)
             ->getQuery()
             ->getResult()
