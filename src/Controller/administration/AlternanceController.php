@@ -88,11 +88,11 @@ class AlternanceController extends BaseController
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $annee);
         $alternances = $alternanceRepository->getByAnneeAndAnneeUniversitaire($annee,
             $this->getAnneeUniversitaire());
-
         $data = $mySerializer->getDataFromSerialization(
             $alternances,
             [
                 'entreprise' => ['raisonSociale', 'adresse' => ['adresse1', 'adresse2', 'codePostal', 'ville'], 'responsable' => ['nom', 'prenom', 'email']],
+                'adresseAlternance' => ['adresse1', 'adresse2', 'codePostal', 'ville'],
                 'tuteur' => ['nom', 'prenom', 'fonction', 'telephone', 'email', 'portable'],
                 'etudiant' => ['nom', 'prenom', 'mailUniv'],
                 'tuteurUniversitaire' => ['nom', 'prenom', 'mailUniv'],
@@ -102,6 +102,18 @@ class AlternanceController extends BaseController
             ],
             ['alternance_administration', 'utilisateur', 'adresse'],
         );
+
+        if (isset($data[1])) {
+            $data[1][2] = 'adresseSiege1';
+            $data[1][3] = 'adresseSiege2';
+            $data[1][4] = 'codePostalSiege';
+            $data[1][5] = 'villeSiege';
+
+            $data[1][9] = 'adresseAlternance1';
+            $data[1][10] = 'adresseAlternance2';
+            $data[1][11] = 'codePostalAlternance';
+            $data[1][12] = 'villeAlternance';
+        }
 
         return $myExport->genereFichierGeneriqueFromData(
             $_format,

@@ -57,7 +57,7 @@ class MyExport
         }
 
         if ($matiere->mutualisee === true) {
-            $this->excel->genereModeleExcelMutualise($evaluation, $matiere);
+            $this->excel->genereModeleExcelMutualise($evaluation, $matiere, $anneeUniversitaire);
             return $this->excel->saveXlsx('modele-import-note-' . $evaluation->getLibelle());
         }
 
@@ -67,7 +67,6 @@ class MyExport
         }
         $this->excel->genereModeleExcel($semestre, $anneeUniversitaire);
         return $this->excel->saveXlsx('modele-import-note-' . $semestre->getLibelle());
-
 
     }
 

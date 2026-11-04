@@ -104,24 +104,42 @@ class MySerializer
                                         }
                                         ++$i;
                                     }
-                                }
-                                else if (array_key_exists($col, $row[$key])) {
+                                } elseif (array_key_exists($col, $row[$key])) {
                                     $dataArray[$ligne][$i] = $this->transformValue($row[$key][$col], $key);
                                 } else {
                                     $dataArray[$ligne][$i] = '-';
                                 }
+
+                                if (!is_array($col)) {
+                                    ++$i;
+                                }
                             } else {
-                                $dataArray[$ligne][$i] = '-';
+                                if (is_array($col)) {
+                                    foreach ($col as $col2) {
+                                        $dataArray[$ligne][$i] = '-';
+                                        ++$i;
+                                    }
+                                } else {
+                                    $dataArray[$ligne][$i] = '-';
+                                    ++$i;
+                                }
                             }
-                            ++$i;
                         }
                     } else {
                         $dataArray[$ligne][$i] = $this->transformValue($row[$value], $value);
                         ++$i;
                     }
                 } else {
-                    $dataArray[$ligne][$i] = '-';
-                    ++$i;
+                    if (is_array($value)) {
+                        $nbColonnes = $this->countColumns($value);
+                        for ($j = 0; $j < $nbColonnes; ++$j) {
+                            $dataArray[$ligne][$i] = '-';
+                            ++$i;
+                        }
+                    } else {
+                        $dataArray[$ligne][$i] = '-';
+                        ++$i;
+                    }
                 }
             }
 
@@ -130,6 +148,20 @@ class MySerializer
         }
 
         return $dataArray;
+    }
+
+    private function countColumns(array $definition): int
+    {
+        $count = 0;
+        foreach ($definition as $item) {
+            if (is_array($item)) {
+                $count += $this->countColumns($item);
+            } else {
+                ++$count;
+            }
+        }
+
+        return $count;
     }
 
     // todo: traiter le cas d'une collection ? Exemple des dates avec semestres ?

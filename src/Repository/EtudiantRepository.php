@@ -365,9 +365,11 @@ class EtudiantRepository extends ServiceEntityRepository
     public function getEtudiantGroupes(Semestre $semestre): array
     {
         $query = $this->createQueryBuilder('e')
-            ->select('e.id, g.libelle, g.id as groupeId')
+            ->select('DISTINCT e.id, g.libelle, g.id as groupeId')
             ->join('e.groupes', 'g')
-            ->where('e.semestre = :semestre')
+            ->leftJoin('e.etudiantSemestreAnnees', 'esa')
+            ->leftJoin('esa.semestre', 'esa_s')
+            ->where('e.semestre = :semestre OR esa_s = :semestre')
             ->setParameter('semestre', $semestre->getId())
             ->getQuery()
             ->getResult();

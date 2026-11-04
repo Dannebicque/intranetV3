@@ -78,6 +78,7 @@ class Alternance extends BaseEntity
     #[ORM\ManyToOne(targetEntity: AnneeUniversitaire::class)]
     private ?AnneeUniversitaire $anneeUniversitaire = null;
 
+    #[Groups(groups: ['alternance_administration'])]
     #[ORM\OneToOne(inversedBy: 'alternance', targetEntity: Adresse::class, cascade: ['persist', 'remove'], fetch: 'EAGER')]
     private ?Adresse $adresseAlternance = null;
 

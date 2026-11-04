@@ -364,24 +364,27 @@ class MyExcelMultiExport
         }
     }
 
-    public function genereModeleExcelMutualise(Evaluation $evaluation, Matiere $matiere): void
+    public function genereModeleExcelMutualise(Evaluation $evaluation, Matiere $matiere, AnneeUniversitaire $anneeUniversitaire): void
     {
         $this->myExcelWriter->createSheet('import');
 
         $this->myExcelWriter->writeHeader(['num_etudiant', 'nom', 'prenom', 'note', 'commentaire'], 1, 1, false);
         $ligne = 2;
         $colonne = 1;
+        $etudiantsDejaAjoutes = [];
         foreach ($matiere->getSemestres() as $semestre) {
             //todo: export brut => Trie selon les noms des étudiants + filtre selon le format des groupes (sens ??) ?
+            $etudiants = $this->etudiantRepository->findBySemestre($semestre, $anneeUniversitaire);
             /** @var Etudiant $etudiant */
-            foreach ($semestre->getEtudiantsSemestres() as $etudiant) {
-                if (count($etudiant->getGroupes()) > 0) {
+            foreach ($etudiants as $etudiant) {
+                if (count($etudiant->getGroupes()) > 0 && false === array_key_exists($etudiant->getId(), $etudiantsDejaAjoutes)) {
                     // uniquement si l'étudiant est dans un groupe.
                     $this->myExcelWriter->writeCellXY($colonne, $ligne, $etudiant->getNumEtudiant());
                     ++$colonne;
                     $this->myExcelWriter->writeCellXY($colonne, $ligne, $etudiant->getNom());
                     ++$colonne;
                     $this->myExcelWriter->writeCellXY($colonne, $ligne, $etudiant->getPrenom());
+                    $etudiantsDejaAjoutes[$etudiant->getId()] = true;
                     ++$ligne;
                     $colonne = 1;
                 }
