@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Absences/AbsenceEtatAppel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/10/2024 16:13
+ * @lastUpdate 04/11/2026 21:25
  */
 
 namespace App\Classes\Absences;
@@ -79,23 +79,26 @@ class AbsenceEtatAppel
 
         foreach ($suiviAppel as $ab) {
             if (null !== $ab->getDate() && null !== $ab->getHeure() && null !== $ab->getGroupe()) {
-                if (!array_key_exists($ab->getDate()->format('Ymd'), $tab)) {
-                    $tab[$ab->getDate()->format('Ymd')] = [];
+                $date = $ab->getDate()->format('Ymd');
+                $typeIdMatiere = $ab->getTypeIdMatiere();
+                $heure = $ab->getHeure()->format('Hi');
+                $groupe = $ab->getGroupe()->getOrdre();
+
+                if (!array_key_exists($date, $tab)) {
+                    $tab[$date] = [];
                 }
-                if (!array_key_exists($ab->getTypeIdMatiere(), $tab[$ab->getDate()->format('Ymd')])) {
-                    $tab[$ab->getDate()->format('Ymd')][$ab->getTypeIdMatiere()] = [];
+                if (!array_key_exists($typeIdMatiere, $tab[$date])) {
+                    $tab[$date][$typeIdMatiere] = [];
                 }
-                if (!array_key_exists($ab->getHeure()->format('H:i'),
-                    $tab[$ab->getDate()->format('Ymd')][$ab->getTypeIdMatiere()])) {
-                    $tab[$ab->getDate()->format('Ymd')][$ab->getTypeIdMatiere()][$ab->getHeure()->format('Hi')] = [];
+                if (!array_key_exists($heure, $tab[$date][$typeIdMatiere])) {
+                    $tab[$date][$typeIdMatiere][$heure] = [];
                 }
-                if (!array_key_exists($ab->getGroupe()->getOrdre(),
-                    $tab[$ab->getDate()->format('Ymd')][$ab->getTypeIdMatiere()][$ab->getHeure()->format('Hi')])) {
+                if (!array_key_exists($groupe, $tab[$date][$typeIdMatiere][$heure])) {
                     // todo: ordre risuqe de buguer... faudrait un type+ordre?
-                    $tab[$ab->getDate()->format('Ymd')][$ab->getTypeIdMatiere()][$ab->getHeure()->format('Hi')][$ab->getGroupe()->getOrdre()] = [];
+                    $tab[$date][$typeIdMatiere][$heure][$groupe] = [];
                 }
 
-                $tab[$ab->getDate()->format('Ymd')][$ab->getTypeIdMatiere()][$ab->getHeure()->format('Hi')][$ab->getGroupe()->getOrdre()] = $ab->getTypeSaisie();
+                $tab[$date][$typeIdMatiere][$heure][$groupe] = $ab->getTypeSaisie();
             }
         }
 
