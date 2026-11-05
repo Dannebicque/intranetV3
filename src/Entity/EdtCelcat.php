@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2025. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/EdtCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 20/10/2025 16:12
+ * @lastUpdate 05/11/2026 09:49
  */
 
 namespace App\Entity;
@@ -152,6 +152,12 @@ class EdtCelcat extends BaseEntity
 
     public function getType(): ?string
     {
+        // garde-fou pour les anciennes valeurs : on retrouve le type dans le libellé du groupe (ex : "BUT MMI S5 TD AB - 2024")
+        if (!in_array($this->type, ['CM', 'TD', 'TP'], true)
+            && 1 === preg_match('/\b(CM|TD|TP)\b/i', (string)$this->libGroupe, $matches)) {
+            return strtoupper($matches[1]);
+        }
+
         return $this->type;
     }
 

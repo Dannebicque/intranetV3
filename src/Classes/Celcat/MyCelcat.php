@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Celcat/MyCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/09/2026 10:31
+ * @lastUpdate 05/11/2026 09:43
  */
 
 namespace App\Classes\Celcat;
@@ -406,7 +406,13 @@ class MyCelcat
                 } else {
                     $event->setCodeModule($codeModule);
                     $event->setLibModule($libModule);
-                    $event->setType(utf8_encode($type));
+                    $typeEvent = strtoupper(trim(utf8_encode($type)));
+                    if (!in_array($typeEvent, ['CM', 'TD', 'TP'], true)
+                        && 1 === preg_match('/\b(CM|TD|TP)\b/i', (string)$event->getLibGroupe(), $matches)) {
+                        // ex : "BUT MMI S5 TD AB - 2024"
+                        $typeEvent = strtoupper($matches[1]);
+                    }
+                    $event->setType($typeEvent);
                 }
 
                 if (array_key_exists($event->getCodeModule(), $this->tMatieres)) {
