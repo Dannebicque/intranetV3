@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Absences/AbsenceEtatAppel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/11/2026 21:25
+ * @lastUpdate 05/11/2026 09:24
  */
 
 namespace App\Classes\Absences;
@@ -13,6 +13,7 @@ use App\DTO\Matiere;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Semestre;
 use App\Repository\AbsenceEtatAppelRepository;
+use App\Repository\AbsenceRepository;
 use App\Utils\Tools;
 use App\Utils\ToolsMatiere;
 use Doctrine\ORM\EntityManagerInterface;
@@ -22,6 +23,7 @@ class AbsenceEtatAppel
 {
     public function __construct(
         private AbsenceEtatAppelRepository $absenceEtatAppelRepository,
+        private AbsenceRepository $absenceRepository,
         private EntityManagerInterface     $entityManager
     ) {
     }
@@ -99,6 +101,24 @@ class AbsenceEtatAppel
                 }
 
                 $tab[$date][$typeIdMatiere][$heure][$groupe] = $ab->getTypeSaisie();
+            }
+        }
+
+        // Un appel avec absents ne crée que des Absence (sans groupe) : on les rattache aux groupes de l'étudiant
+        foreach ($this->absenceRepository->getBySemestre($semestre, $anneeUniversitaire) as $absence) {
+            $dateHeure = $absence->getDateHeure();
+            if (null === $dateHeure) {
+                continue;
+            }
+            $date = $dateHeure->format('Ymd');
+            $heure = $dateHeure->format('Hi');
+            $typeIdMatiere = $absence->getTypeIdMatiere();
+
+            foreach ($absence->getEtudiant()->getGroupes() as $groupe) {
+                $ordre = $groupe->getOrdre();
+                if (!isset($tab[$date][$typeIdMatiere][$heure][$ordre])) {
+                    $tab[$date][$typeIdMatiere][$heure][$ordre] = \App\Entity\AbsenceEtatAppel::SAISIE_AVEC_ABSENT;
+                }
             }
         }
 
