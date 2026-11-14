@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/RechercheController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/08/2026 11:34
+ * @lastUpdate 14/11/2026 21:42
  */
 
 namespace App\Controller;
@@ -29,7 +29,19 @@ class RechercheController extends BaseController
         DocumentRepository $documentRepository,
         PersonnelDepartementRepository $personnelRepository): Response
     {
-        $keyword = $request->query->get('q');
+        $rawKeyword = (string)$request->query->get('q', '');
+        $keyword = trim(strip_tags($rawKeyword));
+        $keyword = mb_substr($keyword, 0, 100);
+
+        if (mb_strlen($keyword) < 3) {
+            return $this->render('recherche/_reponses.html.twig', [
+                'etudiants' => [],
+                'personnels' => [],
+                'documents' => [],
+                'q' => $keyword,
+            ]);
+        }
+
         $etudiants = $etudiantRepository->search($keyword, $this->getDepartement(), $this->getAnneeUniversitaire());
         $personnels = $personnelRepository->search($keyword, $this->getDepartement());
         $documents = $documentRepository->search($keyword, $this->getDepartement());
