@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Table/RattrapageTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 21:58
+ * @lastUpdate 14/11/2026 20:41
  */
 
 namespace App\Table;
@@ -123,21 +123,50 @@ class RattrapageTableType extends TableType
                 switch ($s->getEtatDemande()) {
                     case Rattrapage::DEMANDE_ACCEPTEE:
                         $builder->add('demande.acceptee', ButtonType::class, [
-                            'class' => 'btn btn-outline btn-success rattrapage-accepte me-1 bx_'.$s->getUuidString(),
+                            'class' => 'btn btn-outline btn-success me-1 bx_' . $s->getUuidString(),
                             'title' => 'demande.acceptee',
                             'text' => 'demande.acceptee',
                             'translation_domain' => 'messages',
                         ]);
+                        $builder->add('refuser', ButtonType::class, [
+                            'class' => 'btn btn-outline btn-danger rattrapage-refuse me-1 bx_' . $s->getUuidString(),
+                            'title' => 'Refuser / Révoquer la demande',
+                            'icon' => 'fas fa-ban',
+                            'text' => false,
+                            'attr' => ['data-rattrapage' => $s->getUuidString()],
+                        ]);
+                        $builder->add('annuler', ButtonType::class, [
+                            'class' => 'btn btn-outline btn-warning rattrapage-annuler me-1 bx_' . $s->getUuidString(),
+                            'title' => 'Remettre en attente',
+                            'icon' => 'fas fa-rotate-left',
+                            'text' => false,
+                            'attr' => ['data-rattrapage' => $s->getUuidString()],
+                        ]);
                         break;
                     case Rattrapage::DEMANDE_REFUSEE:
                         $builder->add('demande.refusee', ButtonType::class, [
-                            'class' => 'btn btn-outline btn-danger rattrapage-accepte me-1 bx_'.$s->getUuidString(),
+                            'class' => 'btn btn-outline btn-danger me-1 bx_' . $s->getUuidString(),
                             'title' => 'demande.refusee',
                             'text' => 'demande.refusee',
                             'translation_domain' => 'messages',
                         ]);
+                        $builder->add('accepter', ButtonType::class, [
+                            'class' => 'btn btn-outline btn-success rattrapage-accepte me-1 bx_' . $s->getUuidString(),
+                            'title' => 'Accepter la demande',
+                            'icon' => 'fas fa-check',
+                            'text' => false,
+                            'attr' => ['data-rattrapage' => $s->getUuidString()],
+                        ]);
+                        $builder->add('annuler', ButtonType::class, [
+                            'class' => 'btn btn-outline btn-warning rattrapage-annuler me-1 bx_' . $s->getUuidString(),
+                            'title' => 'Remettre en attente',
+                            'icon' => 'fas fa-rotate-left',
+                            'text' => false,
+                            'attr' => ['data-rattrapage' => $s->getUuidString()],
+                        ]);
                         break;
                     case Rattrapage::DEMANDE_FAITE:
+                    default:
                         $builder->add('accepter', ButtonType::class, [
                             'class' => 'btn btn-outline btn-success rattrapage-accepte me-1 bx_'.$s->getUuidString(),
                             'title' => 'Accepter la demande',
@@ -158,6 +187,7 @@ class RattrapageTableType extends TableType
                     'route_params' => ['uuid' => $s->getUuidString()],
                     'attr' => [
                         'data-csrf' => $this->csrfToken->getToken('delete'.$s->getUuidString()),
+                        'data-message' => 'Attention : la suppression efface définitivement la demande de rattrapage. Pour annuler un accord ou refuser un rattrapage, privilégiez plutôt l\'action "Refuser".',
                     ],
                 ]);
             },

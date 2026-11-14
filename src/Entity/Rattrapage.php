@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Rattrapage.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/11/2026 18:48
+ * @lastUpdate 14/11/2026 20:38
  */
 
 namespace App\Entity;
@@ -144,7 +144,7 @@ class Rattrapage extends BaseEntity
         return $this->dateRattrapage;
     }
 
-    public function setDateRattrapage(CarbonInterface $dateRattrapage): self
+    public function setDateRattrapage(?CarbonInterface $dateRattrapage): self
     {
         $this->dateRattrapage = $dateRattrapage;
 

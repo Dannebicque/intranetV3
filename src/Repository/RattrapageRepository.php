@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/RattrapageRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/11/2026 18:48
+ * @lastUpdate 14/11/2026 20:37
  */
 
 namespace App\Repository;
@@ -113,7 +113,7 @@ class RattrapageRepository extends ServiceEntityRepository
             ->andWhere('u.annee = :anneeuniversitaire')
             ->andWhere('r.etatDemande = :etat')
             ->setParameter('diplome', $diplome->getId())
-            ->setParameter('etat', 'A')
+            ->setParameter('etat', Rattrapage::DEMANDE_ACCEPTEE)
             ->setParameter('anneeuniversitaire', $annee)
             ->orderBy('e.semestre.libelle', Order::Ascending->value)
             ->addOrderBy('e.nom', Order::Ascending->value)

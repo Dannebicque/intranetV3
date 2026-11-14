@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/RattrapageController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/09/2026 17:03
+ * @lastUpdate 14/11/2026 20:37
  */
 
 namespace App\Controller\administration;
@@ -106,17 +106,28 @@ class RattrapageController extends BaseController
         );
     }
 
-    #[Route(path: '/change-etat/{uuid}/{etat}', name: 'administration_rattrapage_change_etat', options: ['expose' => true], methods: 'GET')]
+    #[Route(path: '/change-etat/{uuid}/{etat}', name: 'administration_rattrapage_change_etat', requirements: ['etat' => 'a|r|f'], options: ['expose' => true], methods: 'GET')]
     public function accepte(EventDispatcherInterface $eventDispatcher, #[MapEntity(mapping: ['uuid' => 'uuid'])]
     Rattrapage                                       $rattrapage, string $etat): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $rattrapage->getSemestre());
-        if (Rattrapage::DEMANDE_ACCEPTEE === $etat || Rattrapage::DEMANDE_REFUSEE === $etat) {
+        if (Rattrapage::DEMANDE_ACCEPTEE === $etat || Rattrapage::DEMANDE_REFUSEE === $etat || Rattrapage::DEMANDE_FAITE === $etat) {
+            $ancienEtat = $rattrapage->getEtatDemande();
             $rattrapage->setEtatDemande($etat);
+
+            // Si on passe d'accepté à refusé ou en attente, on libère la planification éventuelle
+            if (Rattrapage::DEMANDE_ACCEPTEE === $ancienEtat && Rattrapage::DEMANDE_ACCEPTEE !== $etat) {
+                $rattrapage->setDateRattrapage(null);
+                $rattrapage->setHeureRattrapage(null);
+                $rattrapage->setSalle(null);
+            }
+
             $this->entityManager->flush();
 
-            $event = new RattrapageEvent($rattrapage);
-            $eventDispatcher->dispatch($event, RattrapageEvent::DECISION);
+            if (Rattrapage::DEMANDE_FAITE !== $etat) {
+                $event = new RattrapageEvent($rattrapage);
+                $eventDispatcher->dispatch($event, RattrapageEvent::DECISION);
+            }
 
             return new Response('', Response::HTTP_OK);
         }

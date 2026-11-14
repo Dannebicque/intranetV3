@@ -1,16 +1,17 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/EventSubscriber/RegistrationNotifySubscriber.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:35
+ * @lastUpdate 14/11/2026 20:38
  */
 
 namespace App\EventSubscriber;
 
 use App\Entity\Absence;
 use App\Entity\Notification;
+use App\Entity\Rattrapage;
 use App\Event\AbsenceEvent;
 use App\Event\JustificatifEvent;
 use App\Event\NoteEvent;
@@ -69,7 +70,7 @@ class RegistrationNotifySubscriber implements EventSubscriberInterface
         $notif->setEtudiant($rattrapage->getEtudiant());
         $notif->setPersonnel(null);
         $notif->setTypeUser(Notification::ETUDIANT);
-        if ('A' === $rattrapage->getEtatDemande()) {
+        if (Rattrapage::DEMANDE_ACCEPTEE === $rattrapage->getEtatDemande()) {
             $notif->setType(RattrapageEvent::DECISION_RATTRAPAGE_ACCEPTEE);
         } else {
             $notif->setType(RattrapageEvent::DECISION_RATTRAPAGE_REFUSEE);
@@ -82,7 +83,7 @@ class RegistrationNotifySubscriber implements EventSubscriberInterface
         $notif->setEtudiant(null);
         $notif->setPersonnel($rattrapage->getPersonnel());
         $notif->setTypeUser(Notification::PERSONNEL);
-        if ('A' === $rattrapage->getEtatDemande()) {
+        if (Rattrapage::DEMANDE_ACCEPTEE === $rattrapage->getEtatDemande()) {
             $notif->setType(RattrapageEvent::DECISION_RATTRAPAGE_ACCEPTEE);
         } else {
             $notif->setType(RattrapageEvent::DECISION_RATTRAPAGE_REFUSEE);
