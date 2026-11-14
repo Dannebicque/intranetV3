@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/AbsenceRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/04/2024 17:54
+ * @lastUpdate 14/11/2026 18:48
  */
 
 namespace App\Repository;
@@ -113,6 +113,38 @@ class AbsenceRepository extends ServiceEntityRepository
                     }
                 } else {
                     $trattrapages[$absence->getEtudiant()->getId()][$absence->getDateHeure()->format('Ymd')][$absence->getDateHeure()->format('Hi')] = $absence->isJustifie();
+                }
+            }
+        }
+
+        return $trattrapages;
+    }
+
+    public function findBySemestresRattrapage(array $semestres, AnneeUniversitaire $anneeCourante): array
+    {
+        if (empty($semestres)) {
+            return [];
+        }
+
+        $absences = $this->createQueryBuilder('a')
+            ->where('a.semestre IN (:semestres)')
+            ->andWhere('a.anneeUniversitaire = :annee')
+            ->setParameter('semestres', $semestres)
+            ->setParameter('annee', $anneeCourante->getId())
+            ->orderBy('a.dateHeure', Order::Descending->value)
+            ->getQuery()
+            ->getResult();
+
+        $trattrapages = [];
+
+        /** @var Absence $absence */
+        foreach ($absences as $absence) {
+            if (null !== $absence->getEtudiant() && null !== $absence->getDateHeure()) {
+                $etuId = $absence->getEtudiant()->getId();
+                $date = $absence->getDateHeure()->format('Ymd');
+                $heure = $absence->getDateHeure()->format('Hi');
+                if (!isset($trattrapages[$etuId][$date][$heure])) {
+                    $trattrapages[$etuId][$date][$heure] = $absence->isJustifie();
                 }
             }
         }

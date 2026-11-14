@@ -34,6 +34,10 @@
             {{ render(controller(
                 'App\\Controller\\plan_cours\\personnel\\PlanCoursController::index'
             )) }}
+        {% elseif onglet == 'rattrapage' %}
+            {{ render(controller(
+                'App\\Controller\\appPersonnel\\RattrapageController::index'
+            )) }}
         {% endif %}
     {% else %}
         {% if onglet == 'rattrapage' %}

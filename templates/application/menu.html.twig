@@ -29,6 +29,12 @@
                    href="{{ path('application_personnel_plan_cours_index') }}"
                    role="tab">{{ 'menu.plan_cours'|trans }}</a>
             </li>
+
+            <li class="nav-item">
+                <a class="nav-link changeapplication {% if onglet == 'rattrapage' %}active{% endif %}"
+                   href="{{ path('application_personnel_rattrapage_index') }}"
+                   role="tab">{{ 'menu.rattrapage'|trans }}</a>
+            </li>
         {% else %}
             <li class="nav-item ">
                 <a class="nav-link changeapplication {% if onglet == 'messagerie' %}active{% endif %}"

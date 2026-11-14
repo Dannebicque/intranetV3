@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Rattrapage.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/06/2022 09:19
+ * @lastUpdate 14/11/2026 18:48
  */
 
 namespace App\Entity;
@@ -75,6 +75,7 @@ class Rattrapage extends BaseEntity
     #[Groups(groups: ['rattrapage_administration'])]
     private ?string $libelleMatiere = null;
 
+    #[Groups(groups: ['rattrapage_administration'])]
     #[ORM\ManyToOne(targetEntity: Semestre::class, inversedBy: 'rattrapages')]
     private ?Semestre $semestre = null;
 

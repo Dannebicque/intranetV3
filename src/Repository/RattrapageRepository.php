@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/RattrapageRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/04/2024 17:54
+ * @lastUpdate 14/11/2026 18:48
  */
 
 namespace App\Repository;
@@ -13,6 +13,7 @@ use App\Entity\Annee;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Diplome;
 use App\Entity\Etudiant;
+use App\Entity\Personnel;
 use App\Entity\Rattrapage;
 use App\Entity\Semestre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -61,6 +62,24 @@ class RattrapageRepository extends ServiceEntityRepository
             ->addOrderBy('r.dateEval', Order::Descending->value)
             ->getQuery()
             ->getResult();
+    }
+
+    public function findByPersonnel(Personnel $personnel, ?AnneeUniversitaire $anneeUniversitaire = null): array
+    {
+        $qb = $this->createQueryBuilder('r')
+            ->innerJoin(Etudiant::class, 'e', 'WITH', 'r.etudiant = e.id')
+            ->where('r.personnel = :personnel')
+            ->setParameter('personnel', $personnel->getId())
+            ->orderBy('r.dateEval', Order::Descending->value)
+            ->addOrderBy('e.nom', Order::Ascending->value)
+            ->addOrderBy('e.prenom', Order::Ascending->value);
+
+        if (null !== $anneeUniversitaire) {
+            $qb->andWhere('r.anneeUniversitaire = :anneeUniversitaire')
+                ->setParameter('anneeUniversitaire', $anneeUniversitaire->getId());
+        }
+
+        return $qb->getQuery()->getResult();
     }
 
     /**
