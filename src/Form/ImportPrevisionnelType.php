@@ -1,17 +1,17 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Form/ImportPrevisionnelType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 19/05/2022 14:42
+ * @lastUpdate 14/11/2026 21:20
  */
 
 namespace App\Form;
 
 use App\Entity\Departement;
-use App\Form\Type\YesNoType;
 use App\Entity\Diplome;
+use App\Form\Type\YesNoType;
 use App\Repository\DiplomeRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -19,6 +19,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\File;
 
 /**
  * Class ImportPrevisionnelType.
@@ -66,6 +67,18 @@ class ImportPrevisionnelType extends AbstractType
             ])
             ->add('fichier', FileType::class, [
                 'label' => 'label.fichier',
+                'constraints' => [
+                    new File([
+                        'maxSize' => '10M',
+                        'mimeTypes' => [
+                            'text/csv',
+                            'text/plain',
+                            'application/vnd.ms-excel',
+                            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                        ],
+                        'mimeTypesMessage' => 'Seuls les fichiers CSV ou Excel (.xlsx, .xls) sont acceptés.',
+                    ]),
+                ],
             ]);
     }
 

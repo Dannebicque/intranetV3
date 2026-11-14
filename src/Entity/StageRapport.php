@@ -5,7 +5,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/StageRapport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/01/2026 10:38
+ * @lastUpdate 14/11/2026 21:10
  */
 
 namespace App\Entity;
@@ -16,6 +16,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[Vich\Uploadable]
@@ -47,6 +48,11 @@ class StageRapport extends BaseEntity
     #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
     private ?string $documentName = '';
 
+    #[Assert\File(
+        maxSize: '20M',
+        mimeTypes: ['application/pdf', 'application/x-pdf'],
+        mimeTypesMessage: 'Seuls les fichiers PDF sont acceptés pour le rapport de stage.'
+    )]
     #[Vich\UploadableField(mapping: 'rapportStage', fileNameProperty: 'documentName')]
     private ?File $documentFile = null;
 

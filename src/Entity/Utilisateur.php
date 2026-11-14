@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Utilisateur.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/11/2024 11:22
+ * @lastUpdate 14/11/2026 21:08
  */
 
 namespace App\Entity;
@@ -16,6 +16,7 @@ use JsonException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use const JSON_THROW_ON_ERROR;
 
@@ -48,12 +49,15 @@ abstract class Utilisateur implements UserInterface, PasswordAuthenticatedUserIn
     #[Groups(['etudiants_administration', 'utilisateur'])]
     protected ?string $mailUniv = null;
 
+    #[Assert\Url(protocols: ['http', 'https'], message: 'label.url.invalide')]
     #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
     protected ?string $siteUniv = null;
 
+    #[Assert\Email(message: 'label.email.invalide')]
     #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
     protected ?string $mailPerso = null;
 
+    #[Assert\Url(protocols: ['http', 'https'], message: 'label.url.invalide')]
     #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
     protected ?string $sitePerso = null;
 

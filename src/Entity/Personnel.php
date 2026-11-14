@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Personnel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/11/2024 08:49
+ * @lastUpdate 14/11/2026 21:11
  */
 
 namespace App\Entity;
@@ -20,6 +20,7 @@ use JsonException;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[Vich\Uploadable]
@@ -80,12 +81,22 @@ class Personnel extends Utilisateur implements UtilisateurInterface
     #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
     private ?string $cvName = '';
 
+    #[Assert\File(
+        maxSize: '10M',
+        mimeTypes: ['application/pdf', 'application/x-pdf'],
+        mimeTypesMessage: 'Seuls les fichiers PDF sont acceptés pour le CV.'
+    )]
     #[Vich\UploadableField(mapping: 'cv', fileNameProperty: 'cvName')]
     private ?File $cvFile = null;
 
     #[ORM\Column(type: Types::STRING, length: 255)]
     private ?string $photoName = 'noimage.png';
 
+    #[Assert\File(
+        maxSize: '5M',
+        mimeTypes: ['image/jpeg', 'image/png'],
+        mimeTypesMessage: 'Seuls les formats JPEG et PNG sont acceptés pour la photo.'
+    )]
     #[Vich\UploadableField(mapping: 'personnel', fileNameProperty: 'photoName')]
     private ?File $photoFile = null;
 

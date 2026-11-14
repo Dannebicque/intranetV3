@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/PersonnelType.php
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Form/PersonnelType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/09/2021 12:38
+ * @lastUpdate 14/11/2026 21:09
  */
 
 namespace App\Form;
@@ -14,8 +14,10 @@ use App\Form\Type\CiviliteType;
 use App\Form\Type\DatePickerType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\Exception\AccessException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -56,9 +58,9 @@ class PersonnelType extends AbstractType
                 'expanded' => true,
             ])
             ->add('nbHeuresService', TextType::class, ['label' => 'nbHeuresService'])
-            ->add('site_univ', TextType::class, ['label' => 'site_univ', 'required' => false])
-            ->add('mail_perso', TextType::class, ['label' => 'mail_perso', 'required' => false])
-            ->add('site_perso', TextType::class, ['label' => 'site_perso', 'required' => false])
+            ->add('site_univ', UrlType::class, ['label' => 'site_univ', 'required' => false])
+            ->add('mail_perso', EmailType::class, ['label' => 'mail_perso', 'required' => false])
+            ->add('site_perso', UrlType::class, ['label' => 'site_perso', 'required' => false])
             ->add('poste_interne', TextType::class, ['label' => 'poste_interne', 'required' => false])
             ->add('tel_bureau', TextType::class, ['label' => 'tel_bureau', 'required' => false])
             ->add('tel1', TextType::class, ['label' => 'tel1', 'required' => false])

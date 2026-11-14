@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Twig/AppExtension.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 17/04/2024 21:46
+ * @lastUpdate 14/11/2026 21:20
  */
 
 namespace App\Twig;
@@ -128,7 +128,18 @@ class AppExtension extends AbstractExtension
             return '';
         }
 
-        return '<a href="mailto:'.$email.'" target="_blank">'.$email.'</a>';
+        $email = trim($email);
+        if ('' === $email) {
+            return '';
+        }
+
+        $safeEmail = htmlspecialchars($email, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+
+        if (false === filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            return $safeEmail;
+        }
+
+        return '<a href="mailto:' . $safeEmail . '" target="_blank" rel="noopener noreferrer">' . $safeEmail . '</a>';
     }
 
     public function link(?string $link): string
@@ -137,7 +148,29 @@ class AppExtension extends AbstractExtension
             return '';
         }
 
-        return '<a href="'.$link.'" target="_blank">'.$link.'</a>';
+        $link = trim($link);
+        if ('' === $link) {
+            return '';
+        }
+
+        // Interdire les schémas dangereux (javascript:, data:, vbscript:, etc.)
+        if (preg_match('#^[a-zA-Z0-9+.-]+:#i', $link) && !preg_match('#^https?://#i', $link)) {
+            return htmlspecialchars($link, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+        }
+
+        $url = $link;
+        if (!preg_match('#^https?://#i', $url)) {
+            $url = 'https://' . $url;
+        }
+
+        if (false === filter_var($url, FILTER_VALIDATE_URL)) {
+            return htmlspecialchars($link, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+        }
+
+        $safeUrl = htmlspecialchars($url, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+        $safeText = htmlspecialchars($link, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+
+        return '<a href="' . $safeUrl . '" target="_blank" rel="noopener noreferrer">' . $safeText . '</a>';
     }
 
     public function upper(?string $texte): string

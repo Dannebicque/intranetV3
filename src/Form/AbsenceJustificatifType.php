@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Form/AbsenceJustificatifType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/07/2026 17:26
+ * @lastUpdate 14/11/2026 21:13
  */
 
 namespace App\Form;
@@ -21,6 +21,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Vich\UploaderBundle\Form\Type\VichFileType;
 
@@ -65,7 +66,14 @@ class AbsenceJustificatifType extends AbstractType
                 'label' => 'fichier',
                 'download_uri' => false,
                 'allow_delete' => false,
-                'help' => 'Le justificatif doit être une convocation officielle ou un certificat médical',
+                'help' => 'Le justificatif doit être une convocation officielle ou un certificat médical (PDF, JPG, PNG - max 10 Mo)',
+                'constraints' => [
+                    new File([
+                        'maxSize' => '10M',
+                        'mimeTypes' => ['application/pdf', 'image/jpeg', 'image/png'],
+                        'mimeTypesMessage' => 'Seuls les fichiers PDF, JPEG et PNG sont acceptés.',
+                    ]),
+                ],
             ]);
 
         if ('admin' === $this->role) {

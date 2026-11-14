@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Form/EvaluationType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/10/2024 20:59
+ * @lastUpdate 14/11/2026 21:12
  */
 
 namespace App\Form;
@@ -28,6 +28,7 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Constraints\Positive;
 
 /**
@@ -161,7 +162,22 @@ class EvaluationType extends AbstractType
         }
 
         if (true === $import) {
-            $builder->add('fichier_import', FileType::class, ['mapped' => false]);
+            $builder->add('fichier_import', FileType::class, [
+                'mapped' => false,
+                'required' => false,
+                'constraints' => [
+                    new File([
+                        'maxSize' => '10M',
+                        'mimeTypes' => [
+                            'text/csv',
+                            'text/plain',
+                            'application/vnd.ms-excel',
+                            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                        ],
+                        'mimeTypesMessage' => 'Seuls les fichiers CSV ou Excel (.xlsx, .xls) sont acceptés.',
+                    ]),
+                ],
+            ]);
         }
     }
 

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/PlanCours.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/09/2024 13:02
+ * @lastUpdate 14/11/2026 21:12
  */
 
 namespace App\Entity;
@@ -18,6 +18,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity]
@@ -110,6 +111,21 @@ abstract class PlanCours
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $fichierPlanCours = null;
 
+    #[Assert\File(
+        maxSize: '15M',
+        mimeTypes: [
+            'application/pdf',
+            'application/x-pdf',
+            'application/msword',
+            'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+            'application/vnd.ms-powerpoint',
+            'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+            'application/vnd.ms-excel',
+            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            'text/plain',
+        ],
+        mimeTypesMessage: 'Format de fichier non autorisé pour le plan de cours.'
+    )]
     #[Vich\UploadableField(mapping: 'fichierPlanCours', fileNameProperty: 'fichierPlanCours')]
     private ?File $fichierPlanCoursFile = null;
 

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Diplome.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/10/2024 19:04
+ * @lastUpdate 14/11/2026 21:11
  */
 
 namespace App\Entity;
@@ -17,6 +17,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use function chr;
 use function ord;
@@ -130,6 +131,11 @@ class Diplome extends BaseEntity
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $logoPartenaire = null;
 
+    #[Assert\File(
+        maxSize: '5M',
+        mimeTypes: ['image/jpeg', 'image/png', 'image/svg+xml'],
+        mimeTypesMessage: 'Seuls les formats JPEG, PNG et SVG sont acceptés pour le logo.'
+    )]
     #[Vich\UploadableField(mapping: 'logo', fileNameProperty: 'logoPartenaire')]
     private ?File $logoFile = null;
 

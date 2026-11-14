@@ -5,7 +5,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Form/StageRapportType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/01/2026 10:38
+ * @lastUpdate 14/11/2026 21:14
  */
 
 namespace App\Form;
@@ -41,6 +41,7 @@ class StageRapportType extends AbstractType
                 'allow_delete' => false,
                 'constraints' => [
                     new File([
+                        'maxSize' => '20M',
                         'mimeTypes' => ['application/pdf', 'application/x-pdf'],
                         'mimeTypesMessage' => 'Veuillez téléverser un fichier au format PDF.',
                     ]),

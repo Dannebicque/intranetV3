@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/StagePeriodeOffre.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/09/2024 13:02
+ * @lastUpdate 14/11/2026 21:10
  */
 
 namespace App\Entity;
@@ -18,6 +18,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Exception;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[Vich\Uploadable]
@@ -45,6 +46,16 @@ class StagePeriodeOffre extends BaseEntity
     #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
     private ?string $documentName = '';
 
+    #[Assert\File(
+        maxSize: '10M',
+        mimeTypes: [
+            'application/pdf',
+            'application/x-pdf',
+            'application/msword',
+            'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        ],
+        mimeTypesMessage: 'Seuls les fichiers PDF ou Word (.doc, .docx) sont acceptés.'
+    )]
     #[Vich\UploadableField(mapping: 'offreStage', fileNameProperty: 'documentName')]
     private ?File $documentFile = null;
 

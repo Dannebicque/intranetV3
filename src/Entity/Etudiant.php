@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Etudiant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 15/09/2026 09:17
+ * @lastUpdate 14/11/2026 21:11
  */
 
 namespace App\Entity;
@@ -23,6 +23,7 @@ use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[Vich\Uploadable]
@@ -41,6 +42,11 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
     #[ORM\Column(type: Types::STRING, length: 255)]
     private ?string $photoName = 'noimage.png';
 
+    #[Assert\File(
+        maxSize: '5M',
+        mimeTypes: ['image/jpeg', 'image/png'],
+        mimeTypesMessage: 'Seuls les formats JPEG et PNG sont acceptés pour la photo.'
+    )]
     #[Vich\UploadableField(mapping: 'etudiant', fileNameProperty: 'photoName')]
     private ?File $photoFile = null;
 

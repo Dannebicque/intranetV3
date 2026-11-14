@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Departement.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/09/2024 13:01
+ * @lastUpdate 14/11/2026 21:11
  */
 
 namespace App\Entity;
@@ -22,6 +22,7 @@ use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\MaxDepth;
+use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use function chr;
 use function ord;
@@ -44,6 +45,11 @@ class Departement extends BaseEntity
     #[ORM\Column(type: Types::STRING, length: 255)]
     private ?string $logoName = '';
 
+    #[Assert\File(
+        maxSize: '5M',
+        mimeTypes: ['image/jpeg', 'image/png', 'image/svg+xml'],
+        mimeTypesMessage: 'Seuls les formats JPEG, PNG et SVG sont acceptés pour le logo.'
+    )]
     #[Vich\UploadableField(mapping: 'logo', fileNameProperty: 'logoName')]
     private ?File $logoFile = null;
 
