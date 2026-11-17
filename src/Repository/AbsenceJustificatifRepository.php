@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/AbsenceJustificatifRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/10/2026 17:30
+ * @lastUpdate 17/11/2026 12:16
  */
 
 namespace App\Repository;
@@ -82,6 +82,27 @@ class AbsenceJustificatifRepository extends ServiceEntityRepository
             ->getResult();
 
         return (is_countable($query) ? count($query) : 0) >= 1;
+    }
+
+    public function hasOtherAcceptedJustificatif(Absence $absence, AbsenceJustificatif $justificatif): bool
+    {
+        if (null === $absence->getEtudiant() || null === $absence->getDateHeure()) {
+            return false;
+        }
+
+        $qb = $this->createQueryBuilder('j')
+            ->select('count(j.id)')
+            ->where('j.dateHeureDebut <= :date')
+            ->andWhere('j.dateHeureFin >= :date')
+            ->andWhere('j.etat = :etat')
+            ->andWhere('j.etudiant = :etudiant')
+            ->andWhere('j != :justificatif')
+            ->setParameter('date', $absence->getDateHeure())
+            ->setParameter('etat', AbsenceJustificatif::ACCEPTE)
+            ->setParameter('etudiant', $absence->getEtudiant()->getId())
+            ->setParameter('justificatif', $justificatif);
+
+        return (int)$qb->getQuery()->getSingleScalarResult() > 0;
     }
 
     public function findByEtudiant(Etudiant $etudiant, AnneeUniversitaire $anneeUniversitaire): array

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Table/AbsenceJustificatifTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/02/2026 10:02
+ * @lastUpdate 17/11/2026 12:10
  */
 
 namespace App\Table;
@@ -179,6 +179,7 @@ class AbsenceJustificatifTableType extends TableType
                     'route_params' => ['id' => $s->getId()],
                     'attr' => [
                         'data-csrf' => $this->csrfToken->getToken('delete'.$s->getUuidString()),
+                        'data-message' => 'Les absences associées à la période de ce justificatif ne seront plus justifiées.',
                     ],
                 ]);
             },

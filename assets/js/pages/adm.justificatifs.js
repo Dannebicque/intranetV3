@@ -1,11 +1,12 @@
-// Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/Sites/intranetV3/assets/js/pages/adm.justificatifs.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 13/12/2023 16:48
+// @lastUpdate 17/11/2026 12:16
 import $ from 'jquery'
 import Routing from 'fos-router'
-import { addCallout } from '../util'
+import Swal from 'sweetalert2'
+import {addCallout} from '../util'
 
 $(document).on('click', '.justificatif-accepte', function (e) {
   const justificatif = $(this).data('justificatif')
@@ -51,29 +52,47 @@ $(document).on('click', '.justificatif-refuse', function (e) {
 })
 
 $(document).on('click', '.justificatif-annuler', function (e) {
+  e.preventDefault()
   const justificatif = $(this).data('justificatif')
-  $.ajax({
-    url: Routing.generate('administration_absence_justificatif_change_etat', { uuid: justificatif, etat: 'D' }),
-    success(e) {
-      const bx = $(`.bx_${justificatif}`)
-      const parent = bx.parent()
-      bx.remove()
-      const html = `<a href="#"
-        class="btn btn-success btn-outline btn-square justificatif-accepte bx_${justificatif}" data-provide="tooltip"
-        data-justificatif="${justificatif}"
-        data-placement="bottom" title="atitle.accepter.le.justificatif">
-        <i class="fas fa-check"></i> Accepter</a> 
-        <a href="#"
-           class="btn btn-danger btn-outline btn-square justificatif-refuse bx_${justificatif}" data-provide="tooltip"
-           data-justificatif="${justificatif}"
-           data-placement="bottom" title="atitle.refuser.le.justificatif">
-           <i class="fas fa-ban"></i> Refuser
-        </a>`
-      parent.prepend(html)
-      addCallout('Etat du justificatif d\'absence annulé !', 'success')
+
+  Swal.fire({
+    title: 'Confirmer l\'annulation ?',
+    text: 'Les absences associées à la période de ce justificatif ne seront plus justifiées.',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Oui, annuler',
+    cancelButtonText: 'Non, conserver',
+    customClass: {
+      confirmButton: 'btn btn-primary',
+      cancelButton: 'btn btn-secondary',
     },
-    error(e) {
-      addCallout('Une erreur est survenue !', 'danger')
-    },
+    buttonsStyling: false,
+  }).then((result) => {
+    if (result.value || result.isConfirmed) {
+      $.ajax({
+        url: Routing.generate('administration_absence_justificatif_change_etat', {uuid: justificatif, etat: 'D'}),
+        success(e) {
+          const bx = $(`.bx_${justificatif}`)
+          const parent = bx.parent()
+          bx.remove()
+          const html = `<a href="#"
+            class="btn btn-success btn-outline btn-square justificatif-accepte bx_${justificatif}" data-provide="tooltip"
+            data-justificatif="${justificatif}"
+            data-placement="bottom" title="atitle.accepter.le.justificatif">
+            <i class="fas fa-check"></i> Accepter</a> 
+            <a href="#"
+               class="btn btn-danger btn-outline btn-square justificatif-refuse bx_${justificatif}" data-provide="tooltip"
+               data-justificatif="${justificatif}"
+               data-placement="bottom" title="atitle.refuser.le.justificatif">
+               <i class="fas fa-ban"></i> Refuser
+            </a>`
+          parent.prepend(html)
+          addCallout('Etat du justificatif d\'absence annulé !', 'success')
+        },
+        error(e) {
+          addCallout('Une erreur est survenue !', 'danger')
+        },
+      })
+    }
   })
 })

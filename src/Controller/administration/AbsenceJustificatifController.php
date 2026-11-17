@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/AbsenceJustificatifController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/10/2026 17:30
+ * @lastUpdate 17/11/2026 12:10
  */
 
 namespace App\Controller\administration;
@@ -116,6 +116,7 @@ class AbsenceJustificatifController extends BaseController
         'POST',
     ])]
     public function deleteAllAnnee(
+        EventDispatcherInterface $eventDispatcher,
         AbsenceJustificatifRepository $absenceJustificatifRepository,
         Semestre $semestre
     ): Response {
@@ -123,6 +124,8 @@ class AbsenceJustificatifController extends BaseController
 
         $absenceJustificatifs = $absenceJustificatifRepository->findByAnnee($semestre->getAnnee());
         foreach ($absenceJustificatifs as $absenceJustificatif) {
+            $event = new JustificatifEvent($absenceJustificatif);
+            $eventDispatcher->dispatch($event, JustificatifEvent::DELETED);
             $this->entityManager->remove($absenceJustificatif);
         }
         $this->entityManager->flush();
@@ -221,13 +224,16 @@ class AbsenceJustificatifController extends BaseController
         AbsenceJustificatif $absenceJustificatif,
         EventDispatcherInterface $eventDispatcher
     ): void {
-        //gérer le annuler
-
         if (AbsenceJustificatif::ACCEPTE === $etat) {
             $event = new JustificatifEvent($absenceJustificatif);
             // Justification des absences
             $eventDispatcher->dispatch($event, JustificatifEvent::DECISION_JUSTIFICATIF_ACCEPTEE);
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'absence.justificatif.valide.success.flash');
+        } elseif (AbsenceJustificatif::DEPOSE === $etat) {
+            // Annulation de la décision (remise à l'état déposé)
+            $event = new JustificatifEvent($absenceJustificatif);
+            $eventDispatcher->dispatch($event, JustificatifEvent::DECISION_JUSTIFICATIF_ANNULEE);
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'absence.justificatif.annule.success.flash');
         }
 
         if (AbsenceJustificatif::ACCEPTE === $etat || AbsenceJustificatif::REFUSE === $etat) {

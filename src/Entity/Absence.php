@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Absence.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/12/2022 13:21
+ * @lastUpdate 17/11/2026 12:09
  */
 
 namespace App\Entity;
@@ -111,7 +111,7 @@ class Absence extends BaseEntity
         return $this->dateJustifie;
     }
 
-    public function setDateJustifie(CarbonInterface $dateJustifie): self
+    public function setDateJustifie(?CarbonInterface $dateJustifie): self
     {
         $this->dateJustifie = $dateJustifie;
 

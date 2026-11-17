@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/EventSubscriber/AbsenceSubscriber.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:35
+ * @lastUpdate 17/11/2026 12:10
  */
 
 namespace App\EventSubscriber;
@@ -34,8 +34,28 @@ class AbsenceSubscriber implements EventSubscriberInterface
     {
         return [
             JustificatifEvent::DECISION_JUSTIFICATIF_ACCEPTEE => 'onJustificatifAccepte',
+            JustificatifEvent::DECISION_JUSTIFICATIF_ANNULEE => 'onJustificatifAnnule',
+            JustificatifEvent::DELETED => 'onJustificatifAnnule',
             AbsenceEvent::ADDED => 'onVerificationJustificatif',
         ];
+    }
+
+    public function onJustificatifAnnule(JustificatifEvent $event): void
+    {
+        $justificatif = $event->getAbsenceJustificatif();
+        $absences = $this->absenceRepository->getAJustifier($justificatif);
+
+        if (null !== $absences) {
+            /** @var Absence $absence */
+            foreach ($absences as $absence) {
+                if (!$this->absenceJustificatifRepository->hasOtherAcceptedJustificatif($absence, $justificatif)) {
+                    $absence->setJustifie(false);
+                    $absence->setDateJustifie(null);
+                    $this->entityManager->persist($absence);
+                }
+            }
+            $this->entityManager->flush();
+        }
     }
 
     public function onJustificatifAccepte(JustificatifEvent $event): void
