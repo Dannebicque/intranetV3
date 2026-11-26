@@ -147,7 +147,7 @@
   "repositories": [
     {
       "type": "path",
-      "url": "/Users/cyndel/Web/TableBundle"
+      "url": "../TableBundle"
     }
   ]
 }

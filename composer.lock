@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bb5187cf0773ab16fa2a180fe5b0ff91",
+    "content-hash": "32187c265b10f37c030d944572db8119",
     "packages": [
         {
             "name": "apereo/phpcas",
@@ -623,7 +623,7 @@
             "version": "v1.0.2",
             "dist": {
                 "type": "path",
-                "url": "/Users/cyndel/Web/TableBundle",
+                "url": "../TableBundle",
                 "reference": "2dda97f0ff7d087cacccee5e6213ebcfdd1fbc61"
             },
             "require": {
