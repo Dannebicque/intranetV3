@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Table/ScolariteDiplomesTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 18:43
+ * @lastUpdate 26/11/2026 12:36
  */
 
 namespace App\Table;
@@ -12,8 +12,8 @@ namespace App\Table;
 use App\Entity\Diplome;
 use App\Form\Type\DiplomeEntityType;
 use App\Form\Type\SearchType;
-use App\Form\Type\YesNoType;
 use App\Form\Type\TypeDiplomeEntityType;
+use App\Form\Type\YesNoType;
 use Dannebicque\TableBundle\Adapter\EntityAdapter;
 use Dannebicque\TableBundle\Column\BooleanColumnType;
 use Dannebicque\TableBundle\Column\EntityColumnType;
@@ -37,7 +37,7 @@ class ScolariteDiplomesTableType extends TableType
         $builder->addFilter('actif', YesNoType::class, ['label' => 'Diplômes actifs', "data" => 1]);
 
         $builder->addColumn('typeDiplome', EntityColumnType::class,
-            ['label' => 'table.typeDiplome', 'display_field' => 'libelle', 'order' => Table::SORT_ASCENDING]);
+            ['label' => 'table.typeDiplome', 'display_field' => 'libelle', 'order' => Table::SORT_ASCENDING, 'order_by' => 't.libelle']);
         $builder->addColumn('libelle', PropertyColumnType::class, ['label' => 'table.libelle']);
         $builder->addColumn('actif', BooleanColumnType::class, ['label' => 'table.actif']);
         $builder->addColumn('anneeUniversitaire', EntityColumnType::class,

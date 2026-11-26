@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EtudiantController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/08/2026 11:28
+ * @lastUpdate 26/11/2026 12:36
  */
 
 namespace App\Controller\administration;
@@ -151,14 +151,23 @@ class EtudiantController extends BaseController
     }
 
     #[Route(path: '/supprimer/{uuid}', name: 'administration_etudiant_delete', methods: 'DELETE')]
-    public function delete(EtudiantScolarite $etudiantScolarite, #[MapEntity(mapping: ['uuid' => 'uuid'])]
-    Etudiant                                 $etudiant): RedirectResponse
+    public function delete(
+        Request           $request,
+        EtudiantScolarite $etudiantScolarite,
+        #[MapEntity(mapping: ['uuid' => 'uuid'])]
+        Etudiant          $etudiant
+    ): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $etudiant->getSemestreActif($this->getAnneeUniversitaire()));
-        $etudiantScolarite->setEtudiant($etudiant, $this->getAnneeUniversitaire());
-        $etudiantScolarite->changeEtat(Constantes::SUPPRIMER_FORMATION);
+        $id = $etudiant->getId();
+        if ($this->isCsrfTokenValid('delete' . $id, $request->server->get('HTTP_X_CSRF_TOKEN'))) {
+            $etudiantScolarite->setEtudiant($etudiant, $this->getAnneeUniversitaire());
+            $etudiantScolarite->changeEtat(Constantes::SUPPRIMER_FORMATION);
 
-        return $this->redirectToRoute('trombinoscope_index');
+            return $this->json($id, Response::HTTP_OK);
+        }
+
+        return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
     /**

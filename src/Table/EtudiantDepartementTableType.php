@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Table/EtudiantDepartementTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/08/2026 11:15
+ * @lastUpdate 26/11/2026 12:36
  */
 
 namespace App\Table;
@@ -30,15 +30,10 @@ use Dannebicque\TableBundle\Widget\WidgetBuilder;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 class EtudiantDepartementTableType extends TableType
 {
     private ?Departement $departement = null;
-
-    public function __construct(private readonly CsrfTokenManagerInterface $csrfToken)
-    {
-    }
 
     public function buildTable(TableBuilder $builder, array $options): void
     {
@@ -136,9 +131,7 @@ class EtudiantDepartementTableType extends TableType
                 $builder->add('delete', RowDeleteLinkType::class, [
                     'route' => 'administration_etudiant_delete',
                     'route_params' => ['uuid' => $s->getUuidString()],
-                    'attr' => [
-                        'data-csrf' => $this->csrfToken->getToken('delete'.$s->getId()),
-                    ],
+                    'csrf_token_id' => 'delete' . $s->getId(),
                 ]);
             },
         ]);

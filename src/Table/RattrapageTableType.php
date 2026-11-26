@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Table/RattrapageTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/11/2026 20:41
+ * @lastUpdate 26/11/2026 12:36
  */
 
 namespace App\Table;
@@ -35,16 +35,11 @@ use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 class RattrapageTableType extends TableType
 {
     private ?Semestre $semestre = null;
     private ?AnneeUniversitaire $anneeUniversitaire = null;
-
-    public function __construct(private readonly CsrfTokenManagerInterface $csrfToken)
-    {
-    }
 
     public function buildTable(TableBuilder $builder, array $options): void
     {
@@ -185,10 +180,8 @@ class RattrapageTableType extends TableType
                 $builder->add('delete', RowDeleteLinkType::class, [
                     'route' => 'administration_rattrapage_delete',
                     'route_params' => ['uuid' => $s->getUuidString()],
-                    'attr' => [
-                        'data-csrf' => $this->csrfToken->getToken('delete'.$s->getUuidString()),
-                        'data-message' => 'Attention : la suppression efface définitivement la demande de rattrapage. Pour annuler un accord ou refuser un rattrapage, privilégiez plutôt l\'action "Refuser".',
-                    ],
+                    'csrf_token_id' => 'delete' . $s->getUuidString(),
+                    'confirm' => 'Attention : la suppression efface définitivement la demande de rattrapage. Pour annuler un accord ou refuser un rattrapage, privilégiez plutôt l\'action "Refuser".',
                 ]);
             },
         ]);
@@ -219,12 +212,12 @@ class RattrapageTableType extends TableType
                     $qb->setParameter('to', $formData['to']);
                 }
 
-                if (isset($formData['etat_demande']) && '' !== trim($formData['etat_demande'])) {
+                if (isset($formData['etat_demande']) && '' !== trim((string)$formData['etat_demande'])) {
                     $qb->andWhere('e.etatDemande = :etat_demande');
                     $qb->setParameter('etat_demande', $formData['etat_demande']);
                 }
 
-                if (isset($formData['groupe']) && '' !== trim($formData['groupe'])) {
+                if (isset($formData['groupe'])) {
                     $qb->innerJoin('etu.groupes', 'g');
                     $qb->andWhere('g.id = :groupe');
                     $qb->setParameter('groupe', $formData['groupe']);

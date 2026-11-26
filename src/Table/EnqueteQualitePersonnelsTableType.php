@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Table/EnqueteQualitePersonnelsTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 21:58
+ * @lastUpdate 26/11/2026 12:28
  */
 
 namespace App\Table;
@@ -26,15 +26,10 @@ use Dannebicque\TableBundle\Widget\Type\RowLinkType;
 use Dannebicque\TableBundle\Widget\WidgetBuilder;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 class EnqueteQualitePersonnelsTableType extends TableType
 {
     private string $type;
-
-    public function __construct(private readonly CsrfTokenManagerInterface $csrfToken)
-    {
-    }
 
     public function buildTable(TableBuilder $builder, array $options): void
     {
@@ -86,10 +81,8 @@ class EnqueteQualitePersonnelsTableType extends TableType
                     'route' => 'adm_questionnaire_qualite_delete',
                     'title' => 'Supprimer le questionnaire',
                     'route_params' => ['id' => $s->getId(), 'type' => $this->type],
-                    'attr' => [
-                        'data-csrf' => $this->csrfToken->getToken('delete' . $s->getId()),
-                        'data-message' => 'La suppression entrainera la suppression de toutes les données et réponses associées. Voulez-vous continuer ?',
-                    ],
+                    'csrf_token_id' => 'delete' . $s->getId(),
+                    'confirm' => 'La suppression entrainera la suppression de toutes les données et réponses associées. Voulez-vous continuer ?',
                 ]);
                 $builder->add('edit', RowEditLinkType::class, [
                     'route' => 'adm_questionnaire_creation_index',

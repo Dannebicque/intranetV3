@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Table/HrsTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/02/2024 12:51
+ * @lastUpdate 26/11/2026 12:36
  */
 
 namespace App\Table;
@@ -31,14 +31,13 @@ use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\RouterInterface;
-use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 class HrsTableType extends TableType
 {
     private ?Departement $departement = null;
     private ?int $annee = null;
 
-    public function __construct(private readonly RouterInterface $router, private readonly CsrfTokenManagerInterface $csrfToken)
+    public function __construct(private readonly RouterInterface $router)
     {
     }
 
@@ -98,9 +97,7 @@ class HrsTableType extends TableType
                 $builder->add('delete', RowDeleteLinkType::class, [
                     'route' => 'administration_hrs_delete',
                     'route_params' => ['id' => $s->getId()],
-                    'attr' => [
-                        'data-csrf' => $this->csrfToken->getToken('delete'.$s->getId()),
-                    ],
+                    'csrf_token_id' => 'delete' . $s->getId(),
                 ]);
             },
         ]);

@@ -1,4 +1,11 @@
 <?php
+/*
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/config/reference.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 26/11/2026 12:18
+ */
 
 // This file is auto-generated and is for apps only. Bundles SHOULD NOT rely on its content.
 
@@ -1754,6 +1761,14 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     secret?: scalar|Param|null, // The secret used to compute fingerprints and checksums // Default: "%kernel.secret%"
  *     fetch_credentials?: "same-origin"|"include"|"omit"|Param, // The default fetch credentials mode for all Live Components ('same-origin', 'include', 'omit') // Default: "same-origin"
  * }
+ * @psalm-type DaTableConfig = array{
+ *     icons?: array{
+ *         delete?: scalar|Param|null, // Default: "fas fa-trash"
+ *         edit?: scalar|Param|null, // Default: "fas fa-edit"
+ *         show?: scalar|Param|null, // Default: "fas fa-eye"
+ *         duplicate?: scalar|Param|null, // Default: "fas fa-copy"
+ *     },
+ * }
  * @psalm-type StimulusConfig = array{
  *     controller_paths?: list<scalar|Param|null>,
  *     controllers_json?: scalar|Param|null, // Default: "%kernel.project_dir%/assets/controllers.json"
@@ -1783,6 +1798,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     knp_snappy?: KnpSnappyConfig,
  *     twig_component?: TwigComponentConfig,
  *     live_component?: LiveComponentConfig,
+ *     da_table?: DaTableConfig,
  *     stimulus?: StimulusConfig,
  *     html_to_spreadsheet?: HtmlToSpreadsheetConfig,
  *     "when@dev"?: array{
@@ -1806,6 +1822,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         knp_snappy?: KnpSnappyConfig,
  *         twig_component?: TwigComponentConfig,
  *         live_component?: LiveComponentConfig,
+ *         da_table?: DaTableConfig,
  *         stimulus?: StimulusConfig,
  *         html_to_spreadsheet?: HtmlToSpreadsheetConfig,
  *     },
@@ -1828,6 +1845,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         knp_snappy?: KnpSnappyConfig,
  *         twig_component?: TwigComponentConfig,
  *         live_component?: LiveComponentConfig,
+ *         da_table?: DaTableConfig,
  *         stimulus?: StimulusConfig,
  *         html_to_spreadsheet?: HtmlToSpreadsheetConfig,
  *     },
@@ -1851,6 +1869,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         knp_snappy?: KnpSnappyConfig,
  *         twig_component?: TwigComponentConfig,
  *         live_component?: LiveComponentConfig,
+ *         da_table?: DaTableConfig,
  *         stimulus?: StimulusConfig,
  *         html_to_spreadsheet?: HtmlToSpreadsheetConfig,
  *     },

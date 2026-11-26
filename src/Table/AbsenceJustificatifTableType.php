@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Table/AbsenceJustificatifTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 17/11/2026 12:10
+ * @lastUpdate 26/11/2026 12:36
  */
 
 namespace App\Table;
@@ -40,14 +40,13 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\RouterInterface;
-use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 class AbsenceJustificatifTableType extends TableType
 {
     private ?Semestre $semestre = null;
     private ?AnneeUniversitaire $anneeUniversitaire = null;
 
-    public function __construct(private readonly CsrfTokenManagerInterface $csrfToken, private readonly RouterInterface $router)
+    public function __construct(private readonly RouterInterface $router)
     {
     }
 
@@ -177,10 +176,8 @@ class AbsenceJustificatifTableType extends TableType
                 $builder->add('delete', RowDeleteLinkType::class, [
                     'route' => 'administration_absence_justificatif_delete',
                     'route_params' => ['id' => $s->getId()],
-                    'attr' => [
-                        'data-csrf' => $this->csrfToken->getToken('delete'.$s->getUuidString()),
-                        'data-message' => 'Les absences associées à la période de ce justificatif ne seront plus justifiées.',
-                    ],
+                    'csrf_token_id' => 'delete' . $s->getUuidString(),
+                    'confirm' => 'Les absences associées à la période de ce justificatif ne seront plus justifiées.',
                 ]);
             },
         ]);

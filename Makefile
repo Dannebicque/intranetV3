@@ -61,7 +61,7 @@ cli:
 # Change tous les mots de passe user en "test"
 reset-passwords:
 	@echo "Application du hash pour le mot de passe 'test'..."
-	@docker exec -i intranetv3-db mysql -u"oreof" -p"PASSWORD" "oreof_2026" -e "UPDATE personnel SET password = '$(TEST_PASSWORD_HASH)';"
+	@docker exec -i intranetv3-db mysql -u"root" -p"PASSWORD" "intranetv3" -e "UPDATE personnel SET password = '$(TEST_PASSWORD_HASH)';"
 	@echo "Tous les mots de passe ont été réinitialisés."
 
 
@@ -84,7 +84,22 @@ cypress-open:
 cypress-run:
 	npm run cypress:run
 
-
+import-db:
+ifndef FILE
+	@echo "Erreur: Vous devez spécifier un fichier SQL"
+	@echo "Usage: make import-db FILE=dump.sql DB=intranetv3"
+	@exit 1
+endif
+ifndef DB
+	@echo "Erreur: Vous devez spécifier le nom de la base de données"
+	@echo "Usage: make import-db FILE=dump.sql DB=intranetv3"
+	@exit 1
+endif
+	@echo "Vérification de l'existence de la base $(DB)..."
+	@docker exec intranetv3-db mysql -u"root" -p"PASSWORD" -e "CREATE DATABASE IF NOT EXISTS \`$(DB)\` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;" 2>/dev/null || true
+	@echo "Import de $(FILE) dans la base $(DB)..."
+	@docker exec -i intranetv3-db mysql -u"root" -p"PASSWORD" "$(DB)" < $(FILE)
+	@echo "Import terminé!"
 
 # Affiche l'aide
 help:

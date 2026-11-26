@@ -45,7 +45,6 @@
           let toasts = {{ app.flashes('toast')|json_encode|raw }};
         </script>
         {{ encore_entry_script_tags('app') }}
-        {#        <script src="{{ asset('bundles/dannebicquetable/table.js') }}" defer></script> #}
     {% endblock %}
     <script data-provide="sweetalert"></script>
     <noscript>Votre navigateur ne supporte pas le javascript. Celui-ci est indispensable pour le fonctionnement de

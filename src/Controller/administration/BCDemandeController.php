@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/BCDemandeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:35
+ * @lastUpdate 26/11/2026 12:36
  */
 
 namespace App\Controller\administration;
@@ -121,17 +121,29 @@ class BCDemandeController extends BaseController
         return $this->redirectToRoute('administration_bc_demande_edit', ['id' => $newBCDemande->getId()]);
     }
 
-    #[Route('/{id}', name: 'delete', methods: ['POST'])]
+    #[Route('/{id}', name: 'delete', methods: ['DELETE', 'POST'])]
     public function delete(Request $request, BCDemande $bCDemande): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $bCDemande->getDepartement());
 
-        if ($this->isCsrfTokenValid('delete'.$bCDemande->getId(), $request->server->get('HTTP_X_CSRF_TOKEN'))) {
+        $id = $bCDemande->getId();
+        if ($this->isCsrfTokenValid('delete' . $id, $request->server->get('HTTP_X_CSRF_TOKEN'))) {
             $this->entityManager->remove($bCDemande);
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'bcdemande.delete.success.flash');
+
+            if ($request->isMethod('DELETE') || $request->isXmlHttpRequest()) {
+                return $this->json($id, Response::HTTP_OK);
+            }
+
+            return $this->redirectToRoute('administration_bc_demande_index', [], Response::HTTP_SEE_OTHER);
         }
+
         $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'bcdemande.delete.error.flash');
+
+        if ($request->isMethod('DELETE') || $request->isXmlHttpRequest()) {
+            return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
 
         return $this->redirectToRoute('administration_bc_demande_index', [], Response::HTTP_SEE_OTHER);
     }

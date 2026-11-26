@@ -1,8 +1,8 @@
-// Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/Sites/intranetV3/assets/js/app.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 31/08/2023 17:17
+// @lastUpdate 26/11/2026 12:36
 import '@fortawesome/fontawesome-pro/scss/fontawesome.scss'
 import '@fortawesome/fontawesome-pro/scss/brands.scss'
 import '@fortawesome/fontawesome-pro/scss/solid.scss'
@@ -10,17 +10,17 @@ import $ from 'jquery'
 import PerfectScrollbar from 'perfect-scrollbar'
 import * as bootstrap from 'bootstrap'
 import flatpickr from 'flatpickr'
-import { French } from 'flatpickr/dist/l10n/fr'
+import {French} from 'flatpickr/dist/l10n/fr'
 import Routing from 'fos-router'
 import InPlaceEdit from './inPlaceEdit'
 
-import { addCallout, getParentByTagName } from './util'
+import {addCallout, getParentByTagName} from './util'
 
 import '../css/app.scss'
 
 import SelectComplete from '../components/SelectComplete'
 import SelectChangeWidget from '../components/SelectChangeWidget'
-import { get, post } from './fetch'
+import {get, post} from './fetch'
 
 export const LANG = document.querySelector('html').getAttribute('lang')
 
@@ -162,6 +162,11 @@ function updateInterface() {
         options.dateFormat = 'd/m/Y'
       }
       options.locale = French
+        if (elem.closest('.datable-container')) {
+            options.onChange = () => {
+                elem.dispatchEvent(new Event('input', {bubbles: true}))
+            }
+        }
       flatpickr(elem, options)
     })
   }

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Table/PersonnelTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 13/09/2024 10:05
+ * @lastUpdate 26/11/2026 12:36
  */
 
 namespace App\Table;
@@ -30,14 +30,9 @@ use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 class PersonnelTableType extends TableType
 {
-    public function __construct(private readonly CsrfTokenManagerInterface $csrfToken)
-    {
-    }
-
     public function buildTable(TableBuilder $builder, array $options): void
     {
         $typeAccess = $options['typeAccess'];
@@ -174,9 +169,7 @@ class PersonnelTableType extends TableType
                     $builder->add('delete', RowDeleteLinkType::class, [
                         'route' => 'sa_rh_delete_personnel',
                         'route_params' => ['id' => $s->getId()],
-                        'attr' => [
-                            'data-csrf' => $this->csrfToken->getToken('delete' . $s->getId()),
-                        ],
+                        'csrf_token_id' => 'delete' . $s->getId(),
                     ]);
                 },
             ]);
@@ -211,9 +204,7 @@ class PersonnelTableType extends TableType
                     $builder->add('delete', RowDeleteLinkType::class, [
                         'route' => 'administration_personnel_delete',
                         'route_params' => ['id' => $s->getId()],
-                        'attr' => [
-                            'data-csrf' => $this->csrfToken->getToken('delete'.$s->getId()),
-                        ],
+                        'csrf_token_id' => 'delete' . $s->getId(),
                     ]);
                 },
             ]);

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Table/ActualiteTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/02/2024 07:59
+ * @lastUpdate 26/11/2026 12:36
  */
 
 namespace App\Table;
@@ -28,15 +28,10 @@ use Dannebicque\TableBundle\Widget\WidgetBuilder;
 use Doctrine\Common\Collections\Order;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 class ActualiteTableType extends TableType
 {
     private ?Departement $departement = null;
-
-    public function __construct(private readonly CsrfTokenManagerInterface $csrfToken)
-    {
-    }
 
     public function buildTable(TableBuilder $builder, array $options): void
     {
@@ -91,9 +86,7 @@ class ActualiteTableType extends TableType
                 $builder->add('delete', RowDeleteLinkType::class, [
                     'route' => 'administration_actualite_delete',
                     'route_params' => ['id' => $s->getId()],
-                    'attr' => [
-                        'data-csrf' => $this->csrfToken->getToken('delete'.$s->getId()),
-                    ],
+                    'csrf_token_id' => 'delete' . $s->getId(),
                 ]);
             },
         ]);

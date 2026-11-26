@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Table/BorneTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 18:39
+ * @lastUpdate 26/11/2026 12:36
  */
 
 namespace App\Table;
@@ -33,15 +33,10 @@ use Dannebicque\TableBundle\Widget\Type\RowShowLinkType;
 use Dannebicque\TableBundle\Widget\WidgetBuilder;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 class BorneTableType extends TableType
 {
     private ?Departement $departement = null;
-
-    public function __construct(private readonly CsrfTokenManagerInterface $csrfToken)
-    {
-    }
 
     public function buildTable(TableBuilder $builder, array $options): void
     {
@@ -101,9 +96,7 @@ class BorneTableType extends TableType
                 $builder->add('delete', RowDeleteLinkType::class, [
                     'route' => 'administration_borne_delete',
                     'route_params' => ['id' => $s->getId()],
-                    'attr' => [
-                        'data-csrf' => $this->csrfToken->getToken('delete'.$s->getId()),
-                    ],
+                    'csrf_token_id' => 'delete' . $s->getId(),
                 ]);
             },
         ]);

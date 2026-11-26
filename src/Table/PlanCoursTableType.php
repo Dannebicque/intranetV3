@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Table/PlanCoursTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/02/2024 12:11
+ * @lastUpdate 26/11/2026 12:27
  */
 
 namespace App\Table;
@@ -112,9 +112,9 @@ class PlanCoursTableType extends TableType
                     $t[$semestre->getId()][$previsionnel->getTypeIdMatiere()] = $previsionnel;
                 }
             }
-            if (isset($formData['semestre']) && array_key_exists($formData['semestre'], $t)) {
+            if (isset($formData['semestre']) && array_key_exists($formData['semestre']->getId(), $t)) {
                 // filtre par semestre
-                $t = $t[$formData['semestre']];
+                $t = $t[$formData['semestre']->getId()];
             } else {
                 $t = array_merge(...$t);
             }

@@ -1,8 +1,8 @@
-// Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/Sites/intranetV3/assets/js/util.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 31/08/2023 11:23
+// @lastUpdate 26/11/2026 12:36
 
 import Swal from 'sweetalert2'
 import $ from 'jquery'
@@ -41,6 +41,9 @@ Swal.mixin({
 })
 // pop up de confirmation de suppression
 $(document).on('click', '.supprimer', function (e) {
+    if (this.closest('.datable-container') || this.hasAttribute('data-xhr')) {
+        return
+    }
   e.preventDefault()
   const url = $(this).attr('href')
   const csrf = $(this).data('csrf')

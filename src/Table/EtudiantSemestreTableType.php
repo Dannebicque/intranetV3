@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Table/EtudiantSemestreTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 31/08/2026 18:33
+ * @lastUpdate 26/11/2026 12:36
  */
 
 namespace App\Table;
@@ -35,17 +35,12 @@ use Doctrine\Common\Collections\Order;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 class EtudiantSemestreTableType extends TableType
 {
     private ?Semestre $semestre = null;
     private ?Departement $departement = null;
     private ?AnneeUniversitaire $anneeUniversitaire = null;
-
-    public function __construct(private readonly CsrfTokenManagerInterface $csrfToken)
-    {
-    }
 
     public function buildTable(TableBuilder $builder, array $options): void
     {
@@ -175,9 +170,7 @@ class EtudiantSemestreTableType extends TableType
                 $builder->add('delete', RowDeleteLinkType::class, [
                     'route' => 'administration_etudiant_delete',
                     'route_params' => ['uuid' => $s->getUuidString()],
-                    'attr' => [
-                        'data-csrf' => $this->csrfToken->getToken('delete'.$s->getId()),
-                    ],
+                    'csrf_token_id' => 'delete' . $s->getId(),
                 ]);
             },
         ]);
@@ -221,7 +214,7 @@ class EtudiantSemestreTableType extends TableType
                     $qb->setParameter('search', '%'.$formData['search'].'%');
                 }
 
-                if (isset($formData['groupe']) && '' !== trim($formData['groupe'])) {
+                if (isset($formData['groupe'])) {
                     $qb->innerJoin('e.groupes', 'g');
                     $qb->andWhere('g.id = :groupe');
                     $qb->setParameter('groupe', $formData['groupe']);
