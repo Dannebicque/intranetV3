@@ -5,9 +5,9 @@
                 "enabled": true,
                 "fetch": "eager"
             },
-          "modal": {
-            "enabled": true,
-            "fetch": "eager"
+            "modal": {
+                "enabled": true,
+                "fetch": "eager"
             }
         },
         "@symfony/ux-autocomplete": {

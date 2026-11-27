@@ -1,11 +1,4 @@
 <?php
-/*
- * Copyright (c) 2026. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/Sites/intranetV3/config/reference.php
- * @author davidannebicque
- * @project intranetV3
- * @lastUpdate 26/11/2026 12:18
- */
 
 // This file is auto-generated and is for apps only. Bundles SHOULD NOT rely on its content.
 
